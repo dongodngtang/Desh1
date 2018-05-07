@@ -106,9 +106,11 @@ import ExpandText from '../pages/comm/Record';
 import Square from '../pages/socials/Square';
 import MallPage from '../pages/malls/MallPage';
 import NearFriend from '../pages/socials/NearFriend';
+import HotelSearch from '../pages/macau/HotelSearch';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="HotelSearch" component={HotelSearch} hideNavBar/>
         <Scene key="NearFriend" component={NearFriend} hideNavBar/>
         <Scene key="MallPage" component={MallPage} hideNavBar/>
         <Scene key="Square" component={Square} hideNavBar/>

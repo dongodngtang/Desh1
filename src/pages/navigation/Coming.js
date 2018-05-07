@@ -36,9 +36,9 @@ export default class Coming extends Component {
                             <Image style={styles.comingImg} source={Images.coming}/> : null}
                     </Image>
 
-                    <Text numberOfLines={1} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
-                    <Text style={[styles.moreTwoText,{color:'#888888'}]}>{this.races_time(item)}</Text>
-                    <Text style={[styles.moreTwoTextLocation,{color:'#888888'}]}>{item.location}</Text>
+                    <Text numberOfLines={1} style={[styles.moreTwoText, {color: '#333333'}]}>{item.name}</Text>
+                    <Text style={[styles.moreTwoText, {color: '#888888'}]}>{this.races_time(item)}</Text>
+                    <Text style={[styles.moreTwoTextLocation, {color: '#888888'}]}>{item.location}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -56,7 +56,8 @@ export default class Coming extends Component {
                     <View style={{flex: 1}}/>
                     <TouchableOpacity style={[styles.racesTwo, {marginRight: 14}]} onPress={() => {
                         umengEvent('home_more');
-                        router.toSearchRacesPage()
+                        // router.toSearchRacesPage()
+                        router.toHotelSearch()
                     }}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
@@ -69,7 +70,7 @@ export default class Coming extends Component {
                         horizontal
                         data={this.props.listRace}
                         renderItem={this._renderItem}
-                        keyExtractor={(item, index) => index+"item"}
+                        keyExtractor={(item, index) => index + "item"}
                     />
 
                 </View>
@@ -83,11 +84,11 @@ const styles = StyleSheet.create({
         width: 101, height: 143, borderRadius: 3
     },
 
-    moreTwoText:{
-        fontSize:12,marginTop:7
+    moreTwoText: {
+        fontSize: 12, marginTop: 7
     },
-    moreTwoTextLocation:{
-        fontSize:12,marginTop:2
+    moreTwoTextLocation: {
+        fontSize: 12, marginTop: 2
     },
     coming: {
         backgroundColor: '#fff', marginTop: 8

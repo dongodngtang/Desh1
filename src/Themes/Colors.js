@@ -55,6 +55,7 @@ const colors = {
     _ECE: '#ECECEE',
     _000: '#000000',
     _F34: '#F34A4A',
+    _CD3:'#CD3A1F'
 
 };
 

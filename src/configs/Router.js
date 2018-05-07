@@ -13,32 +13,6 @@ const customFloatFromRight = '';
 
 
 export default class Router {
-    toCamera(params) {
-        this.stackPush({
-            name: "CameraVideo",
-            params
-        })
-    }
-
-    toSocialContact(params) {
-        this.stackPush({
-            name: "SocialContact",
-            params: params
-        })
-    }
-
-    toBlackList() {
-        this.stackPush({
-            name: "Blacklist",
-        })
-    }
-
-    toLocation(params) {
-        this.stackPush({
-            name: "Location",
-            params
-        })
-    }
 
 
     log(...msg) {
@@ -71,6 +45,38 @@ export default class Router {
         getDispatchAction()['BACK_TOP']();
         Actions.popTo('tab_home')
     }
+
+    toHotelSearch() {
+        this.stackPush({name: 'HotelSearch'})
+    }
+
+    toCamera(params) {
+        this.stackPush({
+            name: "CameraVideo",
+            params
+        })
+    }
+
+    toSocialContact(params) {
+        this.stackPush({
+            name: "SocialContact",
+            params: params
+        })
+    }
+
+    toBlackList() {
+        this.stackPush({
+            name: "Blacklist",
+        })
+    }
+
+    toLocation(params) {
+        this.stackPush({
+            name: "Location",
+            params
+        })
+    }
+
 
     toNearFriend() {
         this.stackPush({
