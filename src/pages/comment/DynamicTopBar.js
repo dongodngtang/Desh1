@@ -51,7 +51,7 @@ export default class DynamicTopBar extends PureComponent {
                     </TouchableOpacity>
                     <View style={{flex: 1}}/>
 
-                    {/*<Text style={{color: Colors._161, fontWeight: 'bold', fontSize: 17}}*/}
+                    {/*<Text style={{color: Colors._E54, fontWeight: 'bold', fontSize: 17}}*/}
                     {/*>{hideReceived ? I18n.t('person_dynamic') : nickname + '的动态'}</Text>*/}
                     {tabs_views}
 

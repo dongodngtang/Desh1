@@ -25,7 +25,7 @@ export default class ChangePhonePage extends Component {
             testID="page_change_bind"
             style={ApplicationStyles.bg_black}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t('changeTel')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -91,14 +91,14 @@ const styles = StyleSheet.create({
     },
     btnChange: {
         height: 45,
-        backgroundColor: Colors._161,
+        backgroundColor: Colors._E54,
         borderRadius: 4,
         width: '70%',
         marginBottom: 240
     },
     txtChange: {
         fontSize: 19,
-        color: Colors._F4E,
+        color: Colors._FFF,
     },
     viewPhone: {
         marginTop: 146,

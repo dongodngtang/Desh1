@@ -45,16 +45,16 @@ const colors = {
     _FFE: '#FFE9AD',
 
     bg_ec: '#ECECEE',
-    _F4E: '#F4E3A1',
+    _FFF: '#FFFFFF',
     _DF1: '#DF1D0F',
-    _161: '#161718',
+    _E54: '#E54A2E',
     _333: '#333333',
     _666: '#666666',
     _999: '#999999',
     _CCC: '#CCCCCC',
     _ECE: '#ECECEE',
     _000: '#000000',
-    _F34: '#F34A4A'
+    _F34: '#F34A4A',
 
 };
 

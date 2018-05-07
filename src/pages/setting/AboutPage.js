@@ -16,7 +16,7 @@ export default class AboutPage extends Component {
     render() {
         return (<View style={styles.container}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 title={I18n.t('about')}
                 leftBtnIcon={Images.sign_return}

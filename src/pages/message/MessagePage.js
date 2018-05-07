@@ -64,7 +64,7 @@ class MessagePage extends Component {
             testID="page_message"
             style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 title={I18n.t('messages')}
                 leftBtnIcon={Images.sign_return}
@@ -222,7 +222,7 @@ const
         },
         msgTitle: {
             fontSize: 16,
-            color: Colors._161
+            color: Colors._E54
         },
         msgDesc: {
             fontSize: 14,

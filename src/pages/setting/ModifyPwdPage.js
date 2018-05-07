@@ -35,7 +35,7 @@ class ModifyPwdPage extends Component {
                 testID="page_modify_pwd_by_pwd"
                 style={ApplicationStyles.bg_black}>
                 <NavigationBar
-                    toolbarStyle={{backgroundColor:Colors.bg_09}}
+                    toolbarStyle={{backgroundColor:Colors._E54}}
                     title={I18n.t('modify')}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
@@ -76,14 +76,14 @@ class ModifyPwdPage extends Component {
                     height:50,
                     marginRight:17,
                     marginLeft:17,
-                    backgroundColor:Colors._161,
+                    backgroundColor:Colors._E54,
                     justifyContent:'center',
                     marginTop:60,
                     borderRadius:4,
                     alignItems:'center',
 
                 }}>
-                    <Text style={{fontSize:17,color:Colors._F4E}}>{I18n.t('certain')}</Text>
+                    <Text style={{fontSize:17,color:Colors._FFF}}>{I18n.t('certain')}</Text>
                 </TouchableOpacity>
 
             </View>

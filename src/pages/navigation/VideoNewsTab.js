@@ -80,7 +80,7 @@ class VideoNewsTab extends PureComponent {
 
     renderHead = () => {
         return <View style={{
-            backgroundColor: Colors._161,
+            backgroundColor: Colors._E54,
             height: Metrics.navBarHeight, width: '100%', paddingTop: Metrics.statusBarHeight,
             flexDirection: 'row'
         }}>

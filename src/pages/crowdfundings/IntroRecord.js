@@ -147,7 +147,7 @@ export default class IntroRecord extends PureComponent {
             }}
             style={[{
                 flex: 1, alignItems: 'center', justifyContent: 'center',
-                backgroundColor: select ? Colors._161 : 'white'
+                backgroundColor: select ? Colors._E54 : 'white'
             }, menu === 0 && select ? {borderBottomLeftRadius: 2, borderTopLeftRadius: 2} : {
                 borderTopRightRadius: 2, borderBottomRightRadius: 2
             }]}>

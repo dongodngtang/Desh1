@@ -88,7 +88,7 @@ export default class Discover extends PureComponent {
     render() {
         return <View>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors._161}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t('discover')}
                 titleStyle={{color: Colors._FFE}}
             />

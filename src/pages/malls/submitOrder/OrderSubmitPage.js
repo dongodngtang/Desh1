@@ -221,7 +221,7 @@ export default class OrderSubmitPage extends PureComponent {
                     leftBtnIcon={Images.mall_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 17, marginRight: 20}}
                     leftBtnPress={() => router.pop()}
-                    titleStyle={{color: Colors._161}}
+                    titleStyle={{color: Colors._E54}}
                     title={I18n.t('confirm_order')}/>
                 <ScrollView style={styleO.orderView}>
 

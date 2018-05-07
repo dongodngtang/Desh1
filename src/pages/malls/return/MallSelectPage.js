@@ -45,7 +45,7 @@ export default class MallSelectPage extends PureComponent {
                     this.props.params.mallRefresh &&
                     this.props.params.mallRefresh()
                 }}
-                titleStyle={{color: Colors._161}}
+                titleStyle={{color: Colors._E54}}
                 title={I18n.t('mall_select')}/>
 
             <FlatList

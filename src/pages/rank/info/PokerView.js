@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        color: Colors._F4E,
+        color: Colors._FFF,
         backgroundColor: 'transparent',
         maxWidth: 200
     },

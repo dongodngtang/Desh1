@@ -65,7 +65,7 @@ class BindingPhonePage extends Component {
             testID="page_bind"
             style={ApplicationStyles.bg_black}>
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
+                toolbarStyle={{backgroundColor:Colors._E54}}
                 router={router}
                 title={`${I18n.t('phone')}`}
                 leftBtnIcon={Images.sign_return}

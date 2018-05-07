@@ -193,7 +193,7 @@ export default class PokerInfo extends PureComponent {
                 barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                 toolbarStyle={{backgroundColor: Colors.white}}
                 title={name}
-                titleStyle={{color: Colors._161}}
+                titleStyle={{color: Colors._E54}}
                 leftBtnIcon={Images.mall_return}
                 leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => global.router.pop()}

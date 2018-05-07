@@ -171,7 +171,7 @@ export default class MessageCenter extends Component {
         const {activity, notice, msgUnRead} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 title={I18n.t('msg_center')}
                 leftBtnIcon={Images.sign_return}
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     },
     msgTitle: {
         fontSize: 16,
-        color: Colors._161
+        color: Colors._E54
     },
     msgDesc: {
         fontSize: 14,

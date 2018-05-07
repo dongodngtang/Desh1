@@ -35,7 +35,7 @@ class PokerPersonPage extends Component {
             testID="page_poker_player"
             style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
+                toolbarStyle={{backgroundColor:Colors._E54}}
                 router={router}
                 title={this.getPlayerName()}
                 leftBtnIcon={Images.sign_return}

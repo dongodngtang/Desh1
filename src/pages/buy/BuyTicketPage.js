@@ -445,7 +445,7 @@ export default class BuyTicketPage extends Component {
                 style={{flex: 1, backgroundColor: Colors.bg_f5}}>
                 <NavigationBar
                     refreshPage={this.refreshPage}
-                    toolbarStyle={{backgroundColor: Colors.bg_09}}
+                    toolbarStyle={{backgroundColor: Colors._E54}}
                     title={I18n.t('buy_ticket')}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -604,7 +604,7 @@ export default class BuyTicketPage extends Component {
                         activeOpacity={1}
                         style={{
                             width: 103, height: 62, alignItems: 'center', justifyContent: 'center',
-                            backgroundColor: ordered ? Colors._999 : Colors.bg_09
+                            backgroundColor: ordered ? Colors._999 : Colors._E54
                         }}>
                         <Text style={{
                             fontSize: 18,

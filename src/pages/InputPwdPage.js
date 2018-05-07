@@ -120,7 +120,7 @@ class InputPwdPage extends React.Component {
                 <TouchableOpacity
                     testID="btn_home_page"
                     onPress={()=>router.popToTop()}/>
-                <View style={{backgroundColor:Colors.bg_09}}>
+                <View style={{backgroundColor:Colors._E54}}>
                     <NavigationBar
                         title={I18n.t('input_pwd')}
                         leftBtnIcon={Images.sign_return}
@@ -168,7 +168,7 @@ class InputPwdPage extends React.Component {
                     activeOpacity={1}
                     testID="btn_complete"
                     style={{marginTop:35, alignSelf: 'center',
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         height: 45,
         justifyContent: 'center',
         borderRadius: 5,

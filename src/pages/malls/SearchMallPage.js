@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         opacity:0.8
     },
     txtSearch: {
-        color: Colors._161,
+        color: Colors._E54,
         fontSize: 12,
         height: Platform.OS === 'ios' ? 30 : 40,
         width: 210

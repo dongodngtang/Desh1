@@ -18,7 +18,7 @@ export default class Suggest extends Component {
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 title={I18n.t('suggest')}
                 leftBtnIcon={Images.sign_return}
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     btnSubmit: {
-        backgroundColor: Colors._161,
+        backgroundColor: Colors._E54,
         justifyContent: 'center',
         alignItems: 'center',
         height: 50,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         marginTop: 35
     },
     submit: {
-        color: Colors._F4E,
+        color: Colors._FFF,
         fontSize: 17
     },
     inputPhone: {

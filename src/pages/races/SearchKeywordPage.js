@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         height: Platform.OS === 'android' ? 44 : 64,
         flexDirection: 'row',
         paddingTop: Platform.OS === 'android' ? 0 : 20,
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         alignItems: 'center'
     },
     popBtn: {

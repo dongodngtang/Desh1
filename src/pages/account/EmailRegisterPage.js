@@ -66,7 +66,7 @@ class EmailRegisterPage extends React.Component {
                     activeOpacity={1}
                     testID="btn_home_page"
                     onPress={() => router.popToTop()}/>
-                <View style={{backgroundColor: Colors.bg_09}}>
+                <View style={{backgroundColor: Colors._E54}}>
                     <NavigationBar
                         title={I18n.t('title_email_register')}
                         leftBtnIcon={Images.sign_return}
@@ -105,7 +105,7 @@ class EmailRegisterPage extends React.Component {
                     testID="btn_complete"
                     style={{
                         marginTop: 19, alignSelf: 'center',
-                        backgroundColor: canNextDisable ? Colors._AAA : Colors.bg_09,
+                        backgroundColor: canNextDisable ? Colors._AAA : Colors._E54,
                         height: 45,
                         justifyContent: 'center',
                         borderRadius: 5,
@@ -198,7 +198,7 @@ class EmailRegisterPage extends React.Component {
 const styles = StyleSheet.create({
     btn_sign_in: {
         alignSelf: 'center',
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         height: 45,
         justifyContent: 'center',
         borderRadius: 5,

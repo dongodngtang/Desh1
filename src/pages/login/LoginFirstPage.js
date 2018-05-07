@@ -119,7 +119,7 @@ class LoginFirstPage extends Component {
                     leftImageStyle={{height: 14, width: 14, marginLeft: 20, marginRight: 20}}
                     rightBtnText={I18n.t('register')}
                     btnTextStyle={{
-                        color: Colors._161,
+                        color: Colors._E54,
                         fontSize: 16, marginRight: 20
                     }}
                     leftBtnPress={() => router.pop()}
@@ -289,12 +289,12 @@ const styles = StyleSheet.create({
     },
     btn_text_sign: {
         alignSelf: 'center',
-        color: Colors._F4E,
+        color: Colors._FFF,
         fontSize: 17
     },
     btn_sign_in: {
         alignSelf: 'center',
-        backgroundColor: Colors._161,
+        backgroundColor: Colors._E54,
         height: 50,
         justifyContent: 'center',
         borderRadius: 2,
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     },
 
     text_input: {
-        color: Colors._161,
+        color: Colors._E54,
         flex: 1,
         fontSize: 14,
         marginLeft: 2

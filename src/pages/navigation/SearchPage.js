@@ -85,7 +85,7 @@ export class SearchPage extends Component {
         return (
             <View
                 style={{
-                    backgroundColor: Colors._161,
+                    backgroundColor: Colors._E54,
                     paddingTop: Metrics.statusBarHeight,
                     opacity: 0.98
                 }}>

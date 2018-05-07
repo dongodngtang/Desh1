@@ -182,7 +182,7 @@ class RaceScene extends Component {
             <Animated.View style={[styles.viewTitle, {opacity: titleOpacity}]}>
                 <Text
                     testID="txt_races_title"
-                    style={[styles.txtTitle, {color: Colors._F4E}]}
+                    style={[styles.txtTitle, {color: Colors._FFF}]}
                     numberOfLines={1}>{raceInfo.name}</Text>
             </Animated.View>
             <TouchableOpacity

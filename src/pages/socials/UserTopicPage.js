@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     topBar: {
         width: Metrics.screenWidth,
         alignItems: 'center',
-        backgroundColor: Colors._161,
+        backgroundColor: Colors._E54,
         height: HeadHeight
     },
     person1: {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 40,
         borderRadius: 40,
-        backgroundColor: Colors._161,
+        backgroundColor: Colors._E54,
         alignItems: 'center',
         justifyContent: 'center'
     }

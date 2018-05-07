@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     },
     leftLine: {
         width: 2,
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         height: 80,
         alignSelf: 'center'
     },

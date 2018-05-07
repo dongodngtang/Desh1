@@ -32,7 +32,7 @@ class ChildRaceInfoPage extends Component {
                 refreshPage={() => {
                     this.props.getSubInfo(this.props.params.race_ids)
                 }}
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={this.raceTitle()}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}

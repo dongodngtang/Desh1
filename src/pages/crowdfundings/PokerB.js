@@ -19,7 +19,7 @@ import I18n from 'react-native-i18n'
 const styles = StyleSheet.create({
     view1: {
         paddingTop: 30, paddingBottom: 20,
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
@@ -76,7 +76,7 @@ export default class PokerB extends PureComponent {
 
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t("poker_coins")}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}

@@ -88,7 +88,7 @@ export default class ReturnPage extends Component {
                     leftBtnIcon={Images.mall_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}
-                    titleStyle={{color: Colors._161}}
+                    titleStyle={{color: Colors._E54}}
                     title={I18n.t('apply_returned')}/>
                 <ScrollView style={styleC.orderView}>
                     <View style={{height: 1}}/>

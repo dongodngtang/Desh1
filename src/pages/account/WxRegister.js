@@ -168,7 +168,7 @@ export default class WxRegister extends React.Component {
                 <TouchableOpacity
                     testID="btn_home_page"
                     onPress={() => router.popToTop()}/>
-                <View style={{backgroundColor: Colors.bg_09}}>
+                <View style={{backgroundColor: Colors._E54}}>
                     <NavigationBar
                         title={I18n.t('phone')}
                         leftBtnIcon={Images.sign_return}
@@ -191,7 +191,7 @@ export default class WxRegister extends React.Component {
                     name={I18n.t('bang')}
                     style={{
                         marginTop: 19,
-                        backgroundColor: canNextDisable ? Colors._AAA : Colors.bg_09
+                        backgroundColor: canNextDisable ? Colors._AAA : Colors._E54
                     }}
                     disabled={canNextDisable}
                     textStyle={{color: canNextDisable ? Colors.white : Colors.txt_E0C}}/>
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     },
     btn_sign_in: {
         alignSelf: 'center',
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         height: 45,
         justifyContent: 'center',
         borderRadius: 5,

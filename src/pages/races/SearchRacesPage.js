@@ -472,7 +472,7 @@ const styles = StyleSheet.create({
     },
     topBar: {
         width: Metrics.screenWidth, height: Metrics.navBarHeight,
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         alignItems: 'center', flexDirection: 'row',
         paddingTop: Metrics.statusBarHeight
     },

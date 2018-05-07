@@ -85,7 +85,7 @@ export default class ChoiseTicketPage extends Component {
     topBar = () => {
         return (<View style={styles.topView}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t('selectTicket')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{

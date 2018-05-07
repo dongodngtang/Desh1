@@ -65,7 +65,7 @@ export default class AdrListPage extends Component {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 refreshPage={this.refreshPage}
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t('receive_adr')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{

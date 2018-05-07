@@ -34,7 +34,7 @@ export default class ActivityInfo extends Component {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 title={activity.title}
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}

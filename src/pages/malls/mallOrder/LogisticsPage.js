@@ -138,7 +138,7 @@ export default class LogisticsPage extends Component {
                     leftBtnPress={() => {
                         global.router.pop();
                     }}
-                    titleStyle={{color: Colors._161}}
+                    titleStyle={{color: Colors._E54}}
                     title={I18n.t('logistics_info')}/>
 
                 {util.isEmpty(logisticsInfo) ? null : this.content()}

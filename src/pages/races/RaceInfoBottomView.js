@@ -19,7 +19,7 @@ export default class RaceInfoBottomView extends React.Component{
             testID="btn_buy"
             onPress={this.props.onPress}
             style={{height:50,borderRadius:3,
-                        backgroundColor:Colors.bg_09,flexDirection:'row',
+                        backgroundColor:Colors._E54,flexDirection:'row',
                         alignItems:'center',justifyContent: 'center',
                         position:'absolute',bottom: 5,left: 15,right: 15}}>
             <Text style={{color:Colors.txt_E0C,

@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     },
     btnRight: {
         height: 34,
-        backgroundColor: Colors._161,
+        backgroundColor: Colors._E54,
         borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center',

@@ -72,7 +72,7 @@ export default class NewAddress extends Component {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 refreshPage={this.refreshPage}
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 rightBtnPress={this._postAdr}
                 title={this._getTitle()}
                 rightBtnText={I18n.t('save')}

@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: Metrics.screenWidth,
         paddingTop: Metrics.statusBarHeight,
-        backgroundColor: Colors._161
+        backgroundColor: Colors._E54
     },
     topImgLeft: {
         height: 19,

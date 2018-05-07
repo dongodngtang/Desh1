@@ -334,13 +334,13 @@ const styles = StyleSheet.create({
     },
     txtSubmit: {
         fontSize: 17,
-        color: Colors._F4E
+        color: Colors._FFF
     },
     btnSubmit: {
         height: 44,
         marginLeft: 17,
         marginRight: 17,
-        backgroundColor: Colors._161,
+        backgroundColor: Colors._E54,
         borderRadius: 2,
         marginTop: 30,
         alignItems: 'center',

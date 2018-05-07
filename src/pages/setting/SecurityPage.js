@@ -29,7 +29,7 @@ export default class SecurityPage extends Component {
 
         return (<View style={ApplicationStyles.bg_black}>
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
+                toolbarStyle={{backgroundColor:Colors._E54}}
                 title={I18n.t('account_security')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}

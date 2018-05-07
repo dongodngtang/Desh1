@@ -119,7 +119,7 @@ class LoginCodeView extends React.Component {
                     alignItems: 'center', justifyContent: 'center'
                 }}>
 
-                <View style={{backgroundColor: Colors.bg_09}}>
+                <View style={{backgroundColor: Colors._E54}}>
                     <NavigationBar
                         leftBtnIcon={Images.sign_close}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -170,7 +170,7 @@ class LoginCodeView extends React.Component {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 height: 60, width: 135,
-                                backgroundColor: getCodeDisable ? Colors._BBBB : Colors.bg_09
+                                backgroundColor: getCodeDisable ? Colors._BBBB : Colors._E54
                             }}
                             onPress={this._sendCode}
                             testID="btn_get_code"
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     },
     btn_sign_in: {
         alignSelf: 'center',
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         height: 45,
         justifyContent: 'center',
         borderRadius: 5,

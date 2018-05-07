@@ -584,7 +584,7 @@ class OrderInfoPage extends React.Component {
                 style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     refreshPage={() => this._refreshPage()}
-                    toolbarStyle={{backgroundColor: Colors.bg_09}}
+                    toolbarStyle={{backgroundColor: Colors._E54}}
                     title={orderStatus(!isEmptyObject(order_info) ? order_info.status : I18n.t('order_info'))}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}

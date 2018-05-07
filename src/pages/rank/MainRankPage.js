@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         width: Metrics.screenWidth,
         alignItems: 'center',
         flexDirection: 'row',
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         paddingTop: Metrics.statusBarHeight
     },
     topBtn: {
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title_color: {
-        color: Colors._F4E,
+        color: Colors._FFF,
         fontSize: 18
     },
     right_btn: {

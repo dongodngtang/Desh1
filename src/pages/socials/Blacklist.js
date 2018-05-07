@@ -76,7 +76,7 @@ export default class Blacklist extends Component {
             <View style={styles.container}>
                 {/*导航栏*/}
                 <NavigationBar
-                    toolbarStyle={{backgroundColor: Colors.bg_09}}
+                    toolbarStyle={{backgroundColor: Colors._E54}}
                     router={router}
                     title={I18n.t('blacklist')}
                     leftBtnIcon={Images.sign_return}

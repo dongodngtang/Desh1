@@ -53,7 +53,7 @@ export default class MallOrderInfo extends PureComponent {
                         const {listRefresh} = this.props.params;
                         listRefresh && listRefresh();
                     }}
-                    titleStyle={{color: Colors._161}}
+                    titleStyle={{color: Colors._E54}}
                     title={I18n.t('order_info')}/>
 
                 {util.isEmpty(detail) ? null : this.renderContent()}

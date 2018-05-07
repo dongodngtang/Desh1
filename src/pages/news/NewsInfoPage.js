@@ -40,7 +40,7 @@ export default class NewsInfoPage extends Component {
     renderHeader = () => {
         const {date, description, source, title, id, image,image_thumb} = this.state.newsInfo;
         return <NavigationBar
-            toolbarStyle={{backgroundColor: Colors.bg_09}}
+            toolbarStyle={{backgroundColor: Colors._E54}}
             leftBtnIcon={Images.sign_return}
             leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
             leftBtnPress={() => router.pop()}

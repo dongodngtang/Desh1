@@ -130,7 +130,7 @@ class ForgetPage extends React.Component {
                         style={{alignItems:'center',
             justifyContent:'center',
             height:60,width:135,
-            backgroundColor:getCodeDisable?Colors._BBBB:Colors.bg_09}}
+            backgroundColor:getCodeDisable?Colors._BBBB:Colors._E54}}
                         onPress={this._sendCode}
                         testID="btn_get_code"
                         disabled={getCodeDisable}>
@@ -175,7 +175,7 @@ class ForgetPage extends React.Component {
 
         return (
             <View testID="page_problem" style={{flex:1,backgroundColor:Colors.bg_f5}}>
-                <View style={{backgroundColor:Colors.bg_09}}>
+                <View style={{backgroundColor:Colors._E54}}>
                     <NavigationBar
                         title={I18n.t('forget_mobile')}
                         leftBtnIcon={Images.sign_return}
@@ -191,7 +191,7 @@ class ForgetPage extends React.Component {
                     <BtnSoild
                         testID="btn_next"
                         style={{marginTop:48,
-                     backgroundColor: canNextDisable?Colors._AAA:Colors.bg_09}}
+                     backgroundColor: canNextDisable?Colors._AAA:Colors._E54}}
                         onPress={this._next}
                         disabled={canNextDisable}
                         name={I18n.t('next')}
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     },
     btn_sign_in: {
         alignSelf: 'center',
-        backgroundColor: Colors.bg_09,
+        backgroundColor: Colors._E54,
         height: 45,
         justifyContent: 'center',
         borderRadius: 5,

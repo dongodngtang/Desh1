@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     },
     lbPrice: {
         fontSize: 12,
-        color: Colors._161,
+        color: Colors._E54,
 
     },
     markdown: {

@@ -195,7 +195,7 @@ export default class WebViewPay extends Component {
 
         return (
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t('app_name')}
                 titleStyle={styles.barTitle}
                 leftBtnIcon={Images.sign_return}

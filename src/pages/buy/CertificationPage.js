@@ -21,7 +21,7 @@ export default class CertificationPage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    toolbarStyle={{backgroundColor:Colors.bg_09}}
+                    toolbarStyle={{backgroundColor:Colors._E54}}
                     title={I18n.t('certification')}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}

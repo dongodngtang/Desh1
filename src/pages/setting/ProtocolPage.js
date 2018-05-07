@@ -16,7 +16,7 @@ export default class ProtocolPage extends Component {
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 title={I18n.t('protocol1')}
                 rightBtnText={I18n.t('agree')}

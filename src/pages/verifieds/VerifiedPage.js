@@ -117,7 +117,7 @@ export default class VerifiedPage extends Component {
         return <TouchableOpacity
             onPress={this._toAddVerified}
             style={{
-                height: 44, position: 'absolute', backgroundColor: Colors._161,
+                height: 44, position: 'absolute', backgroundColor: Colors._E54,
                 bottom: 30, right: 17, left: 17, alignItems: 'center',
                 justifyContent: 'center', flexDirection: 'row'
             }}>
@@ -125,7 +125,7 @@ export default class VerifiedPage extends Component {
                 style={{height: 20, width: 20}}
                 source={Images.verified_add}/>
             <Text style={{
-                fontSize: 17, color: Colors._F4E,
+                fontSize: 17, color: Colors._FFF,
                 marginLeft: 9
             }}>{this.state.currentPage === 0 ? I18n.t('verified_add') : I18n.t('verified_pass')}</Text>
 

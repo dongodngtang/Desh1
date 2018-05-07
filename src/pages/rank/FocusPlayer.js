@@ -77,7 +77,7 @@ class FocusPlayer extends Component {
     render() {
         return (<View>
             <NavigationBar leftBtnIcon={Images.sign_return}
-                           toolbarStyle={{backgroundColor: Colors.bg_09}}
+                           toolbarStyle={{backgroundColor: Colors._E54}}
                            leftBtnPress={() => router.pop()}
                            leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                            title={I18n.t('rank_focus_player')}/>

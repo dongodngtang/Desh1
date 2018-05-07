@@ -20,8 +20,8 @@ import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
 import I18n from 'react-native-i18n';
-import Colors from "../../Themes/styles/Colors";
-import {ApplicationStyles} from '../../Themes';
+import {ApplicationStyles, Images, Colors} from '../../Themes';
+import NavigationBar from "../../components/NavigationBar";
 
 class TabHomePage extends Component {
     state = {
@@ -249,8 +249,9 @@ class TabHomePage extends Component {
         return (
 
             <View style={ApplicationStyles.bgContainer}>
-                <SearchPage
-                    unread={this.props.unread}/>
+                <NavigationBar
+                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    title={'澳门通'}/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}

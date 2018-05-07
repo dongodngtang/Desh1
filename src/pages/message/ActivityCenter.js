@@ -19,7 +19,7 @@ export default class ActivityCenter extends Component {
         const {activities} = this.props.params;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 title="活动中心"
                 leftBtnIcon={Images.sign_return}

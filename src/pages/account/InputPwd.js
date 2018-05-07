@@ -25,7 +25,7 @@ export default class InputPwd extends PureComponent {
 
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: Colors._161}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t('input_pwd')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -78,7 +78,7 @@ export default class InputPwd extends PureComponent {
                 testID="btn_complete"
                 style={{
                     marginTop: 35, alignSelf: 'center',
-                    backgroundColor: Colors.bg_09,
+                    backgroundColor: Colors._E54,
                     height: 45,
                     justifyContent: 'center',
                     borderRadius: 5,
