@@ -54,7 +54,7 @@ export default class SearchBar extends PureComponent {
                     this.setState({text})
                 }}
                 style={styles.input}/>
-            {hide ? null : <Image source={Images.hotel.search}
+            {hide ? null : <Image source={Images.macau.search}
                                   style={styles.search}/>}
 
             {hide ? null : <Text style={styles.txt_search}>搜索</Text>}

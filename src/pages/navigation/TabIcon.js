@@ -41,8 +41,7 @@ class TabIcon extends PureComponent {
                 return I18n.t('home');
             case 'news':
                 return '本地';
-            case 'rank':
-                return I18n.t('crowdfunding');
+
             case 'me':
                 return I18n.t('mine');
             case 'mall':
@@ -61,8 +60,6 @@ class TabIcon extends PureComponent {
                 return focused ? Images.home2 : Images.home;
             case 'news':
                 return focused ? Images.information2 : Images.information;
-            case 'rank':
-                return focused ? Images.rank2 : Images.rank;
             case 'me':
                 return focused ? Images.mine2 : Images.mine;
             case 'mall':
@@ -76,10 +73,8 @@ class TabIcon extends PureComponent {
                 return styles.bgHomeStyle;
             case 'news':
                 return styles.bgInformationStyle;
-            case 'rank':
-                return styles.bgRankStyle2;
             case 'me':
-                return styles.bgHomeStyle;
+                return styles.bgRankStyle2;
             case 'mall':
                 return styles.discover;
         }
@@ -96,19 +91,19 @@ const styles = StyleSheet.create({
     },
     discover: {
         height: 24,
-        width: 22
+        width: 21
     },
     bgInformationStyle: {
-        width: 21,
-        height: 24
+        width: 20,
+        height: 23
     },
     bgRankStyle2: {
         height: 23,
-        width: 26
+        width: 20
     },
     bgHomeStyle: {
-        height: 24,
-        width: 24
+        height: 22,
+        width: 22
     },
 });
 

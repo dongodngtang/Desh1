@@ -57,7 +57,7 @@ export default class HotelSearch extends PureComponent {
                     }}>
                     {this.state.search ? <Text style={styles.cancel}>取消</Text> : <Image
                         style={styles.img_search}
-                        source={Images.hotel.search}/>}
+                        source={Images.macau.search}/>}
 
                 </TouchableOpacity>
 

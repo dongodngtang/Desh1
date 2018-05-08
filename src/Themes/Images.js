@@ -207,14 +207,12 @@ const images = {
     time: require('../../source/navigation/time.png'),
     button: require('../../source/navigation/button.png'),
     oval: require('../../source/navigation/oval.png'),
-    home: require('../../source/navigation/home.png'),
-    home2: require('../../source/navigation/home2.png'),
-    information: require('../../source/navigation/information.png'),
-    information2: require('../../source/navigation/information2.png'),
-    mine: require('../../source/navigation/mine.png'),
-    mine2: require('../../source/navigation/mine2.png'),
-    rank: require('../../source/navigation/rank.png'),
-    rank2: require('../../source/navigation/rank2.png'),
+    home: require('../../source/navigation/gray_home.png'),
+    home2: require('../../source/navigation/red_home.png'),
+    information: require('../../source/navigation/gray_explore.png'),
+    information2: require('../../source/navigation/red_explore.png'),
+    mine: require('../../source/navigation/gray_feed.png'),
+    mine2: require('../../source/navigation/red_feed.png'),
     begin: require('../../source/navigation/begin.png'),
     business: require('../../source/navigation/business.png'),
     order: require('../../source/navigation/order.png'),
@@ -227,8 +225,8 @@ const images = {
     search_notice2: require('../../source/navigation/search_notice2.png'),
     top: require('../../source/navigation/top.png'),
     coming: require('../../source/navigation/coming.png'),
-    nav_mall: require('../../source/navigation/nav_mall.png'),
-    nav_malled: require('../../source/navigation/nav_malled.png'),
+    nav_mall: require('../../source/navigation/gray_msg.png'),
+    nav_malled: require('../../source/navigation/red_msg.png'),
     rightImg: require('../../source/navigation/rightImg.png'),
     shopping_cart: require('../../source/mall/cart.png'),
     mall_filter: require('../../source/mall/mall_filter.png'),
@@ -336,8 +334,16 @@ const images = {
         voiceinput: require('../../source/social/icon_chat_voiceinput.png'),
         send_failure: require('../../source/social/send_failure.png'),
     },
-    hotel: {
-        search: require('../../source/macau/search.png')
+    macau: {
+        search: require('../../source/macau/search.png'),
+        book: require('../../source/macau/book.png'),
+        entertainment: require('../../source/macau/entertainment.png'),
+        food: require('../../source/macau/food.png'),
+        gift: require('../../source/macau/gift.png'),
+        hotel: require('../../source/macau/hotel.png'),
+        rate_exchange: require('../../source/macau/rate_exchange.png'),
+        store: require('../../source/macau/store.png'),
+        viewpoint: require('../../source/macau/viewpoint.png')
     }
 
 };

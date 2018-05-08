@@ -13,50 +13,51 @@ export default class Catalog extends PureComponent {
         catalogs: [
             [{
                 name: '汇率',
-                size: {height: 32, width: 32},
-                icon: ''
+                size: {height: 34, width: 30},
+                icon: Images.macau.rate_exchange
             },
                 {
                     name: '娱乐',
-                    size: {height: 29, width: 31},
-                    icon: ''
+                    size: {height: 34, width: 36},
+                    icon: Images.macau.entertainment
                 }
             ],
             [
                 {
                     name: '酒店',
-                    size: {height: 34, width: 34},
-                    icon: ''
+                    size: {height: 34, width: 37},
+                    icon: Images.macau.hotel
                 },
                 {
                     name: '景点',
-                    size: {height: 29, width: 31},
-                    icon: ''
+                    size: {height: 34, width: 36},
+                    icon: Images.macau.viewpoint
                 }
             ],
             [
                 {
                     name: '美食',
-                    size: {height: 34, width: 34},
-                    icon: ''
+                    size: {height: 35, width: 34},
+                    icon: Images.macau.food
                 },
 
                 {
                     name: '人闻',
-                    size: {height: 29, width: 31},
-                    icon: ''
+                    size: {height: 30, width: 34},
+                    icon: Images.macau.book
                 }
             ],
             [
                 {
                     name: '特产',
                     size: {height: 29, width: 31},
-                    icon: ''
+                    icon: Images.macau.gift
                 },
                 {
                     name: '商城',
                     size: {height: 29, width: 31},
-                    icon: ''
+                    icon: Images.macau.store,
+                    onPress: () => global.router.toMallPage()
                 }
             ]
 
@@ -86,12 +87,21 @@ export default class Catalog extends PureComponent {
         return catalogs.map(items => <View>
             {items.map(item => {
                 return <TouchableOpacity
+                    onPress={() => {
+                        item.onPress && item.onPress();
+                    }}
                     style={{
                         alignItems: 'center',
                         padding: 15
                     }}>
-                    <Image style={item.size}
-                           source={Images.social.mall}/>
+                    <View style={{
+                        height: 35, width: 35,
+                        alignItems: 'center', justifyContent: 'center'
+                    }}>
+                        <Image style={item.size}
+                               source={item.icon}/>
+                    </View>
+
                     <Text style={{
                         fontSize: 14, color: Colors._666,
                         marginTop: 5
