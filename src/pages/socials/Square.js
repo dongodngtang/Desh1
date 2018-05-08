@@ -4,9 +4,7 @@ import {
     View,
     Image,
     Text,
-    TouchableOpacity,
-    StatusBar,
-    Platform
+    TouchableOpacity
 } from 'react-native';
 import {reallySize} from "./Header";
 import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";

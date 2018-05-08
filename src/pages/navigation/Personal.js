@@ -231,7 +231,7 @@ class Personal extends Component {
                     <Text style={stylesP.personSignature}>{this._signature()}</Text>
 
                     <View style={{
-                        backgroundColor: Colors.white, height: 1,
+                        backgroundColor: '#D62222', height: 1,
                         width: Metrics.reallySize(248),
                         marginTop: 18
                     }}/>

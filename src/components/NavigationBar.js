@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, Platform, View, Text, StatusBar, TouchableOpacity,
-    Image, Animated,Dimensions
+    Image, Animated, Dimensions
 } from 'react-native';
 import theme from '../Themes/styles/theme';
 import TestRouter from './TestRouter';
@@ -14,8 +14,8 @@ import PropTypes from 'prop-types';
 const ScreenWidth = Dimensions.get('window').width;
 const ScreenHeight = Dimensions.get('window').height;
 
-const navBarHeight = Platform.OS === "ios" ? ScreenWidth===375 && ScreenHeight === 812 ? 88 : 64 : 44;
-const toolMargin = Platform.OS === "ios" ? ScreenWidth===375 && ScreenHeight === 812 ? 44 : 20 : 0;
+const navBarHeight = Platform.OS === "ios" ? ScreenWidth === 375 && ScreenHeight === 812 ? 88 : 64 : 44;
+const toolMargin = Platform.OS === "ios" ? ScreenWidth === 375 && ScreenHeight === 812 ? 44 : 20 : 0;
 
 export default class NavigationBar extends Component {
     static propTypes = {
@@ -47,7 +47,7 @@ export default class NavigationBar extends Component {
 
         return (
             <Animated.View style={[styles.container, toolbarStyle]}>
-                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "light-content"}/>
+                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "dark-content"}/>
                 <View style={styles.toolbar}>
                     <View style={styles.fixedCell}>
                         {(leftBtnIcon || leftBtnText) ?
@@ -66,7 +66,7 @@ export default class NavigationBar extends Component {
                         <TestRouter
                             refreshPage={this.props.refreshPage}/>
                     </View>
-                    <View style={[styles.fixedCell, {justifyContent: 'flex-end'},{alignItems:"flex-end"}]}>
+                    <View style={[styles.fixedCell, {justifyContent: 'flex-end'}, {alignItems: "flex-end"}]}>
                         {(rightBtnIcon || rightBtnText) ?
                             <Button
                                 testID="btn_bar_right"
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     toolbar: {
         height: 44,
         flexDirection: 'row',
-        marginTop:toolMargin,
+        marginTop: toolMargin,
     },
     fixedCell: {
         flexDirection: 'row',
