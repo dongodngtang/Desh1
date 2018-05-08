@@ -60,15 +60,15 @@ export default class SocialContact extends Component {
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
-                <NavigationBar barStyle={'dark-content'}
-                               titleStyle={{fontSize: 17, color: Colors._333}}
-                               toolbarStyle={{backgroundColor: 'white'}}
-                               title={I18n.t('follow_stalwart')}
-                               leftBtnIcon={Images.set_back}
-                               leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                               leftBtnPress={() => {
-                                   router.pop()
-                               }}
+                <NavigationBar
+                    titleStyle={{fontSize: 17, color: Colors.white}}
+                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    title={I18n.t('follow_stalwart')}
+                    leftBtnIcon={Images.set_back}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => {
+                        router.pop()
+                    }}
                 />
 
                 <ScrollableTabView
@@ -162,7 +162,8 @@ export class FollowList extends Component {
                         style={styles.iconImage}/>
                     <View>
                         <Text style={styles.nickname}>{nick_name}</Text>
-                        <Text style={styles.followText}>{`${I18n.t("follow")} ${following_count} | ${I18n.t("stalwart")} ${follower_count}`}</Text>
+                        <Text
+                            style={styles.followText}>{`${I18n.t("follow")} ${following_count} | ${I18n.t("stalwart")} ${follower_count}`}</Text>
                     </View>
                 </View>
                 <TouchableOpacity onPress={() => this.followAction(id, is_following, () => {

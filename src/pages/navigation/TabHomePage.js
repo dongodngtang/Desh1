@@ -22,6 +22,7 @@ import StorageKey from '../../configs/StorageKey';
 import I18n from 'react-native-i18n';
 import {ApplicationStyles, Images, Colors} from '../../Themes';
 import NavigationBar from "../../components/NavigationBar";
+import Catalog from './Catalog'
 
 class TabHomePage extends Component {
     state = {
@@ -264,8 +265,7 @@ class TabHomePage extends Component {
                 >
                     <MainBanner
                         banners={banners}/>
-                    <Headlines
-                        headlines={headlines}/>
+                   <Catalog/>
 
                     <Races
                         raceTickets={raceTickets}/>

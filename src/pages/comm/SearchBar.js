@@ -8,7 +8,7 @@ import * as Animatable from 'react-native-animatable';
 const styles = StyleSheet.create({
     contains: {
         height: 30,
-        width: '60%',
+        width: '75%',
         backgroundColor: Colors._CD3,
         borderRadius: 30,
         flexDirection: 'row',

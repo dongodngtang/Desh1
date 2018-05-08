@@ -9,6 +9,7 @@ import VideoNewsTab from './VideoNewsTab';
 import CustomTabBar from './BottomNavigation';
 import Discover from '../socials/Discover';
 import Square from '../socials/Square';
+import MessageCenter from '../message/MessageCenter';
 
 
 export const Navigation = () => {
@@ -44,7 +45,7 @@ export const Navigation = () => {
 
             <Stack key="tab_3">
                 <Scene key="tab_discover"
-                       component={Discover}
+                       component={MessageCenter}
                        hideNavBar
                 />
             </Stack>

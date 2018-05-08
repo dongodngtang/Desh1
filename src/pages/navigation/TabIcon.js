@@ -40,13 +40,13 @@ class TabIcon extends PureComponent {
             case 'home':
                 return I18n.t('home');
             case 'news':
-                return I18n.t('hot');
+                return '本地';
             case 'rank':
                 return I18n.t('crowdfunding');
             case 'me':
                 return I18n.t('mine');
             case 'mall':
-                return I18n.t('discover');
+                return '消息';
         }
 
     };

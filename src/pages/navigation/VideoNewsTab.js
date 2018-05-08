@@ -40,7 +40,6 @@ class VideoNewsTab extends PureComponent {
     }
 
 
-
     render() {
         return (
             <View style={{flex: 1}}>
@@ -133,7 +132,7 @@ class VideoNewsTab extends PureComponent {
             <View style={styles.headAlign}>
 
                 <TouchableOpacity
-                    onPress={()=>{
+                    onPress={() => {
                         umengEvent('drawer_rank');
                         global.router.toDrawerRank();
                     }}
@@ -152,12 +151,12 @@ class VideoNewsTab extends PureComponent {
 const styles = StyleSheet.create({
     selectTex: {
         fontSize: 14,
-        color: '#CCB984'
+        color: Colors.white
     },
     selectedTex: {
         fontSize: 17,
         fontWeight: 'bold',
-        color: "#FFE9AD"
+        color: Colors.white
     },
     btn: {
         width: 60,

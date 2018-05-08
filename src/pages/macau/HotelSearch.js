@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {
-    StyleSheet, Text, View, Image, FlatList, Button
+    StyleSheet, Text, View, Image, FlatList, TouchableOpacity
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import SearchBar from "../comm/SearchBar";
@@ -21,6 +21,16 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         color: Colors.white
+    },
+    img_search: {
+        height: 17,
+        width: 17
+    },
+    btn_search: {
+        width: 50,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
@@ -34,15 +44,23 @@ export default class HotelSearch extends PureComponent {
             <View style={styles.nav}>
                 <Text>返回</Text>
                 <View style={{flex: 1}}/>
-                {this.state.search ? <SearchBar/> : <Text>酒店</Text>}
+                {this.state.search ? <SearchBar/> : <Text style={styles.title}>酒店</Text>}
                 <View style={{flex: 1}}/>
 
 
-                <Text onPress={() => {
-                    this.setState({
-                        search: !this.state.search
-                    })
-                }}>取消</Text>
+                <TouchableOpacity
+                    style={styles.btn_search}
+                    onPress={() => {
+                        this.setState({
+                            search: !this.state.search
+                        })
+                    }}>
+                    {this.state.search ? <Text style={styles.cancel}>取消</Text> : <Image
+                        style={styles.img_search}
+                        source={Images.hotel.search}/>}
+
+                </TouchableOpacity>
+
 
             </View>
 
