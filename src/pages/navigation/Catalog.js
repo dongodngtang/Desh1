@@ -87,7 +87,7 @@ export default class Catalog extends PureComponent {
 
         return catalogs.map((items, index) => <View
             key={'catalog' + index}>
-            {items.map(item => {
+            {items.map((item, count) => {
                 return <TouchableOpacity
                     key={item.name}
                     onPress={() => {
@@ -95,7 +95,9 @@ export default class Catalog extends PureComponent {
                     }}
                     style={{
                         alignItems: 'center',
-                        padding: 15
+                        paddingLeft: 15,
+                        paddingRight: 15,
+                        paddingTop: count === 1 ? 15 : 0
                     }}>
                     <View style={{
                         height: 35, width: 35,
