@@ -106,9 +106,9 @@ class SquareBar extends PureComponent {
                 width: 90
             }}>
             <Text style={[{fontSize: 15},
-                activeTab === index ? {color: '#F24A4A', fontWeight: 'bold'} : {color: '#333333'}]}>{item}</Text>
+                activeTab === index ? {color: Colors.white, fontWeight: 'bold'} : {color: Colors.white}]}>{item}</Text>
             {activeTab === index ? <View style={{
-                height: 2, width: 48, backgroundColor: '#F24A4A',
+                height: 2, width: 48, backgroundColor: Colors.white,
                 position: 'absolute', bottom: 0
             }}/> : null}
 
@@ -118,19 +118,19 @@ class SquareBar extends PureComponent {
         return <View style={{
             height: Metrics.navBarHeight, width: '100%',
             flexDirection: 'row', justifyContent: 'center',
-            backgroundColor: 'white'
+            backgroundColor: Colors._E54
         }}>
             {/*<TouchableOpacity*/}
-                {/*onPress={() => {*/}
-                    {/*global.router.pop()*/}
-                {/*}}*/}
-                {/*style={{*/}
-                    {/*position: 'absolute', height: 40, width: 50,*/}
-                    {/*alignItems: 'center', justifyContent: 'center',*/}
-                    {/*left: 0, bottom: 0*/}
-                {/*}}>*/}
-                {/*<Image style={{height: 19, width: 10}}*/}
-                       {/*source={Images.social.back}/>*/}
+            {/*onPress={() => {*/}
+            {/*global.router.pop()*/}
+            {/*}}*/}
+            {/*style={{*/}
+            {/*position: 'absolute', height: 40, width: 50,*/}
+            {/*alignItems: 'center', justifyContent: 'center',*/}
+            {/*left: 0, bottom: 0*/}
+            {/*}}>*/}
+            {/*<Image style={{height: 19, width: 10}}*/}
+            {/*source={Images.social.back}/>*/}
             {/*</TouchableOpacity>*/}
             {tabs_views}
         </View>

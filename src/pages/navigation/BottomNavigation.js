@@ -31,7 +31,7 @@ class BottomNavigation extends Component {
         const {shareLink, shareTitle, shareImage, shareText} = share_param;
         return (
             <View style={styleBN.navigation}>
-                <StatusBar barStyle={"dark-content"}/>
+                <StatusBar barStyle={"light-content"}/>
                 {index === 0 && actionType === SHOW_BACK_TOP ? <TouchableOpacity
                         style={styleBN.navigations}
                         onPress={() => {

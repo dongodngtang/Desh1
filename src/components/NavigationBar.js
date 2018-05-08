@@ -47,7 +47,7 @@ export default class NavigationBar extends Component {
 
         return (
             <Animated.View style={[styles.container, toolbarStyle]}>
-                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "dark-content"}/>
+                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "light-content"}/>
                 <View style={styles.toolbar}>
                     <View style={styles.fixedCell}>
                         {(leftBtnIcon || leftBtnText) ?

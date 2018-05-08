@@ -4,8 +4,7 @@ import {
     Image, StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import {Images} from '../../Themes';
-import Colors from "../../Themes/styles/Colors";
+import {Images,Colors} from '../../Themes';
 
 export default class Catalog extends PureComponent {
 
