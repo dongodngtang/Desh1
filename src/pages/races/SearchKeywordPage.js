@@ -41,9 +41,9 @@ class SearchKeywordPage extends Component {
 
                 <View style={styles.searchBar}>
                     <Image style={styles.imgSearch}
-                           source={Images.search_gray}/>
+                           source={Images.macau.search}/>
                     <TextInput
-                        placeholderTextColor="#6A6B6B"
+                        placeholderTextColor={Colors.white}
                         placeholder={I18n.t('serachMore')}
                         testID="input_keyword"
                         underlineColorAndroid='transparent'
@@ -72,7 +72,7 @@ class SearchKeywordPage extends Component {
 
     content = () => {
         return <UltimateListView
-            keyExtractor={(item, index) => index+"item"}
+            keyExtractor={(item, index) => index + "item"}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
             item={this._renderRow}
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         height: 30,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#212325',
+        backgroundColor: Colors._CD3,
         borderRadius: 3,
         width: 270
     },
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     txtCancel: {
-        color: '#E4D57F',
+        color: Colors.white,
         fontSize: 15
     },
 
