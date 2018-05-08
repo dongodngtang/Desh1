@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
         paddingTop: Metrics.statusBarHeight
     },
     titleView: {flex: 1, alignItems: 'center', justifyContent: 'center'},
-    title: {color: Colors.txt_E0C, fontSize: 18},
+    title: {color: Colors.white, fontSize: 18},
     imgBack: {height: 19, width: 11},
     topRight: {
         flexDirection: 'row',
@@ -491,7 +491,7 @@ const styles = StyleSheet.create({
     },
     currentText: {
         fontSize: 15,
-        color: Colors.txt_E0C
+        color: Colors.white
     },
     topLeft: {
         marginLeft: 5,

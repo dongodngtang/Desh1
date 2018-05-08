@@ -37,7 +37,7 @@ export const Navigation = () => {
             </Stack>
             <Stack key="tab_2">
                 <Scene key="tab_news"
-                       component={VideoNewsTab}
+                       component={Square}
                        hideNavBar
 
                 />

@@ -174,9 +174,7 @@ export default class MessageCenter extends Component {
                 toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 title={I18n.t('msg_center')}
-                leftBtnIcon={Images.sign_return}
-                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}/>
+                />
 
 
             <FlatList data={this.state.conversations}

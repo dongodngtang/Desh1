@@ -125,7 +125,7 @@ class LoginCodeView extends React.Component {
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                         rightBtnText={I18n.t('register')}
                         btnTextStyle={{
-                            color: Colors.txt_E0C,
+                            color: Colors.white,
                             fontSize: 16, marginRight: 20
                         }}
                         leftBtnPress={() => router.pop()}
@@ -177,7 +177,7 @@ class LoginCodeView extends React.Component {
                             disabled={getCodeDisable}>
 
                             <CountDownText style={{
-                                color: getCodeDisable ? Colors._747474 : Colors.txt_E0C,
+                                color: getCodeDisable ? Colors._747474 : Colors.white,
                                 fontSize: 15
                             }}
                                            countType='seconds' // 计时类型：seconds / date
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     },
     btn_text_sign: {
         alignSelf: 'center',
-        color: Colors.txt_E0C,
+        color: Colors.white,
         fontSize: 19
     },
     text_problem: {

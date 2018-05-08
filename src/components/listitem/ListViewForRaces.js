@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     txt_ordered: {
-        color: Colors.txt_E0C,
+        color: Colors.white,
         fontSize: 12,
         backgroundColor: 'transparent'
     }

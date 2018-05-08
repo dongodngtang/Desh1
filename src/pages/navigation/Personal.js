@@ -189,22 +189,22 @@ class Personal extends Component {
                 paddingTop: Metrics.statusBarHeight,
                 flexDirection: 'row-reverse'
             }}>
-                <TouchableOpacity
-                    style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: 44
-                    }}
-                    onPress={this.toMessagePage}>
-                    <Image
-                        source={this._imgNotice()}
-                        style={{
-                            height: 22,
-                            width: 21,
-                            marginRight: 20
-                        }}/>
+                {/*<TouchableOpacity*/}
+                    {/*style={{*/}
+                        {/*justifyContent: 'center',*/}
+                        {/*alignItems: 'center',*/}
+                        {/*height: 44*/}
+                    {/*}}*/}
+                    {/*onPress={this.toMessagePage}>*/}
+                    {/*<Image*/}
+                        {/*source={this._imgNotice()}*/}
+                        {/*style={{*/}
+                            {/*height: 22,*/}
+                            {/*width: 21,*/}
+                            {/*marginRight: 20*/}
+                        {/*}}/>*/}
 
-                </TouchableOpacity>
+                {/*</TouchableOpacity>*/}
 
             </View>
 
@@ -231,7 +231,7 @@ class Personal extends Component {
                     <Text style={stylesP.personSignature}>{this._signature()}</Text>
 
                     <View style={{
-                        backgroundColor: '#434343', height: 1,
+                        backgroundColor: Colors.white, height: 1,
                         width: Metrics.reallySize(248),
                         marginTop: 18
                     }}/>
@@ -252,7 +252,7 @@ class Personal extends Component {
                                     })
                             }}>
                             <Text style={{
-                                color: Colors._CCC,
+                                color: Colors.white,
                                 fontSize: 14
                             }}>{`${I18n.t('social.follow')}   ${following_count ? following_count : 0}`}</Text>
 
@@ -261,7 +261,7 @@ class Personal extends Component {
                             style={{
                                 height: 12,
                                 width: 1,
-                                backgroundColor: '#979797',
+                                backgroundColor: Colors.white,
                                 marginLeft: 28,
                                 marginRight: 28
                             }}/>
@@ -279,7 +279,7 @@ class Personal extends Component {
                                     })
                             }}>
                             <Text style={{
-                                color: Colors._CCC,
+                                color: Colors.white,
                                 fontSize: 14
                             }}>{`${I18n.t('stalwart')}   ${follower_count ? follower_count : 0}`}</Text>
 
@@ -401,13 +401,13 @@ const stylesP = StyleSheet.create({
     },
     personSignature: {
         fontSize: 13,
-        color: Colors._888,
+        color: Colors.white,
         marginTop: 8,
         backgroundColor: 'transparent'
     },
     personSignature2: {
         fontSize: 17,
-        color: Colors._CCC,
+        color: Colors.white,
         fontWeight: 'bold',
         marginTop: 8,
         backgroundColor: 'transparent'
@@ -424,7 +424,7 @@ const stylesP = StyleSheet.create({
         marginLeft: 20
     },
     meView: {
-        backgroundColor: '#090909',
+        backgroundColor: Colors._E54,
         alignItems: 'center',
         justifyContent: 'center'
     },

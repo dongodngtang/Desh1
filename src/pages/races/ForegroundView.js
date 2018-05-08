@@ -37,11 +37,11 @@ export default class ForegroundView extends Component {
                 <View style={{flexDirection:'row',marginTop:26,
                                 alignItems:'center'}}>
                     <Text style={{fontSize:14,
-                                    color:Colors.txt_E0C}}>{I18n.t('prize')}</Text>
+                                    color:Colors.white}}>{I18n.t('prize')}</Text>
                     <Text
                         testID="txt_races_prize"
                         style={{fontSize:19,
-                                    color:Colors.txt_E0C}}>{raceInfo.prize}</Text>
+                                    color:Colors.white}}>{raceInfo.prize}</Text>
                 </View>
 
             </View>

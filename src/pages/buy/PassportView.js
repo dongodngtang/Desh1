@@ -263,7 +263,7 @@ class PassportView extends Component {
             {/*style={{height:49,width:Metrics.screenWidth-34,*/}
             {/*alignSelf:'center',backgroundColor:'#161718',*/}
             {/*marginTop:25,justifyContent:'center'}}*/}
-            {/*textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>*/}
+            {/*textStyle={{fontSize:Fonts.size.h17,color:Colors.white}}>*/}
             {/*{I18n.t('submit')}*/}
             {/*</Button>*/}
 
@@ -292,7 +292,7 @@ class PassportView extends Component {
                     alignSelf: 'center', backgroundColor: '#161718',
                     marginTop: 25, justifyContent: 'center', marginBottom: 10
                 }}
-                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_E0C}}/>)
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.white}}/>)
         } else {
             return ( <BtnLong
                 name={I18n.t('contact_customer_service')}

@@ -175,7 +175,7 @@ class InputPwdPage extends React.Component {
         width: 336}}
                     onPress={this._request_register}>
                     <Text style={{ alignSelf: 'center',
-        color: Colors.txt_E0C,
+        color: Colors.white,
         fontSize: 19}}>{I18n.t('complete')}</Text>
                 </TouchableOpacity>
             </View>

@@ -26,7 +26,8 @@ export default class Catalog extends PureComponent {
                 {
                     name: '酒店',
                     size: {height: 34, width: 37},
-                    icon: Images.macau.hotel
+                    icon: Images.macau.hotel,
+                    onPress: () => global.router.toSearchKeywordPage()
                 },
                 {
                     name: '景点',
@@ -84,9 +85,11 @@ export default class Catalog extends PureComponent {
 
     catalogView = (catalogs) => {
 
-        return catalogs.map(items => <View>
+        return catalogs.map((items, index) => <View
+            key={'catalog' + index}>
             {items.map(item => {
                 return <TouchableOpacity
+                    key={item.name}
                     onPress={() => {
                         item.onPress && item.onPress();
                     }}

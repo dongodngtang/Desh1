@@ -10,8 +10,8 @@ import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import NavigationBar from '../../components/NavigationBar';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {CountDownText}from '../../components/countdown/CountDownText';
-import {fetchPostVerifyCode, fetchPostVCode}from '../../actions/AccountAction';
+import {CountDownText} from '../../components/countdown/CountDownText';
+import {fetchPostVerifyCode, fetchPostVCode} from '../../actions/AccountAction';
 import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
 import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {BtnLong, BtnSoild, InputView} from '../../components';
@@ -34,7 +34,7 @@ class RegisterPage extends React.Component {
             if (newProps.actionType === POST_VERIFY_CODE
                 && !newProps.loading && newProps.hasData) {
                 if (!useEmailRegister) {
-                   router.toInputPwdPage(this.props, mobile, vcode)
+                    router.toInputPwdPage(this.props, mobile, vcode)
                 }
             }
 
@@ -118,7 +118,7 @@ class RegisterPage extends React.Component {
                         disabled={getCodeDisable}>
 
                         <CountDownText style={{
-                            color: getCodeDisable ? Colors._747474 : Colors.txt_E0C,
+                            color: getCodeDisable ? Colors._747474 : Colors.white,
                             fontSize: 15
                         }}
                                        countType='seconds' // 计时类型：seconds / date
@@ -198,7 +198,7 @@ class RegisterPage extends React.Component {
                         backgroundColor: canNextDisable ? Colors._AAA : Colors._E54
                     }}
                     disabled={canNextDisable}
-                    textStyle={{color: canNextDisable ? Colors.white : Colors.txt_E0C}}/>
+                    textStyle={{color: canNextDisable ? Colors.white : Colors.white}}/>
 
                 <TouchableOpacity
                     style={{
@@ -224,7 +224,7 @@ class RegisterPage extends React.Component {
                         this.countDownText.end();
                         router.toEmailRegisterPage()
                     }}
-                    name={ I18n.t('email_register')}/>
+                    name={I18n.t('email_register')}/>
 
 
                 <View style={{flex: 1}}/>
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     },
     btn_text_sign: {
         alignSelf: 'center',
-        color: Colors.txt_E0C,
+        color: Colors.white,
         fontSize: 19
     },
     text_problem: {

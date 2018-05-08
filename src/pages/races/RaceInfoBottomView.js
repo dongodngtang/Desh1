@@ -22,7 +22,7 @@ export default class RaceInfoBottomView extends React.Component{
                         backgroundColor:Colors._E54,flexDirection:'row',
                         alignItems:'center',justifyContent: 'center',
                         position:'absolute',bottom: 5,left: 15,right: 15}}>
-            <Text style={{color:Colors.txt_E0C,
+            <Text style={{color:Colors.white,
                                 fontSize:18}}>{I18n.t('buy_ticket')}</Text>
 
         </TouchableOpacity> )

@@ -608,7 +608,7 @@ export default class BuyTicketPage extends Component {
                         }}>
                         <Text style={{
                             fontSize: 18,
-                            color: ordered ? Colors.white : Colors.txt_E0C
+                            color: ordered ? Colors.white : Colors.white
                         }}>{I18n.t('xia_dan')}</Text>
                     </TouchableOpacity>
 

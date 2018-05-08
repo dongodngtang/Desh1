@@ -135,7 +135,7 @@ class ForgetEmailPage extends React.Component {
                         testID="btn_get_code"
                         disabled={getCodeDisable}>
 
-                        <CountDownText style={{color:getCodeDisable?Colors._747474:Colors.txt_E0C,
+                        <CountDownText style={{color:getCodeDisable?Colors._747474:Colors.white,
                                            fontSize:15}}
                                        countType='seconds' // 计时类型：seconds / date
                                        afterEnd={this._can_get_code} // 结束回调
@@ -195,7 +195,7 @@ class ForgetEmailPage extends React.Component {
                         onPress={this._next}
                         disabled={canNextDisable}
                         name={I18n.t('next')}
-                        textStyle={{ color:canNextDisable? Colors.white:Colors.txt_E0C}}/>
+                        textStyle={{ color:canNextDisable? Colors.white:Colors.white}}/>
 
 
                     {/*使用邮箱注册*/}
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     },
     btn_text_sign: {
         alignSelf: 'center',
-        color: Colors.txt_E0C,
+        color: Colors.white,
         fontSize: 19
     },
     text_problem: {

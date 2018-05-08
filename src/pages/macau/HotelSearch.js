@@ -42,7 +42,15 @@ export default class HotelSearch extends PureComponent {
     render() {
         return <View style={ApplicationStyles.bgContainer}>
             <View style={styles.nav}>
-                <Text>返回</Text>
+                <TouchableOpacity
+                    style={styles.btn_search}
+                    onPress={() => {
+                        router.pop()
+                    }}>
+
+                    <Image source={Images.sign_return}/>
+
+                </TouchableOpacity>
                 <View style={{flex: 1}}/>
                 {this.state.search ? <SearchBar/> : <Text style={styles.title}>酒店</Text>}
                 <View style={{flex: 1}}/>

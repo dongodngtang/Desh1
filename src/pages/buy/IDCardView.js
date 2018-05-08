@@ -314,7 +314,7 @@ class IDCardView extends Component {
                     alignSelf: 'center', backgroundColor: '#161718',
                     marginTop: 25, justifyContent: 'center', marginBottom: 10
                 }}
-                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_E0C}}/>)
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.white}}/>)
         } else {
             return (<BtnLong
                 name={I18n.t('contact_customer_service')}

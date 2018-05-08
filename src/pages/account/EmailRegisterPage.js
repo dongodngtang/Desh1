@@ -116,7 +116,7 @@ class EmailRegisterPage extends React.Component {
 
                     <Text style={{
                         alignSelf: 'center',
-                        color: canNextDisable ? Colors.white : Colors.txt_E0C,
+                        color: canNextDisable ? Colors.white : Colors.white,
                         fontSize: 19
                     }}>
                         {I18n.t('complete')}</Text>
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     },
     btn_text_sign: {
         alignSelf: 'center',
-        color: Colors.txt_E0C,
+        color: Colors.white,
         fontSize: 19
     },
     text_problem: {

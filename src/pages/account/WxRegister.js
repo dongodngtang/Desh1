@@ -194,7 +194,7 @@ export default class WxRegister extends React.Component {
                         backgroundColor: canNextDisable ? Colors._AAA : Colors._E54
                     }}
                     disabled={canNextDisable}
-                    textStyle={{color: canNextDisable ? Colors.white : Colors.txt_E0C}}/>
+                    textStyle={{color: canNextDisable ? Colors.white : Colors.white}}/>
 
 
                 <View style={{flex: 1}}/>
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     },
     btn_text_sign: {
         alignSelf: 'center',
-        color: Colors.txt_E0C,
+        color: Colors.white,
         fontSize: 19
     },
     text_problem: {
