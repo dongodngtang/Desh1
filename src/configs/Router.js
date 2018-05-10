@@ -389,9 +389,9 @@ export default class Router {
     }
 
 
-    toInputPwd(props, wx) {
-        this.push(props, {
-
+    toInputPwd(wx) {
+        console.log('微信：', wx)
+        this.stackPush({
             name: 'InputPwd',
             sceneConfig: customFloatFromRight,
             params: {
@@ -402,9 +402,7 @@ export default class Router {
 
     toWxRegister(props, wxAuth) {
         this.push(props, {
-
             name: 'WxRegister',
-            sceneConfig: customFloatFromRight,
             params: {
                 access_token: wxAuth
             }

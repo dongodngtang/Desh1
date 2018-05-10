@@ -122,12 +122,12 @@ export function getActivities(resolve, reject) {
 }
 
 export function getAccountExit(body, resolve, reject) {
-    helper.get(Api.account_exist(body), (ret) => {
+    helper.get(Api.account_exist(), (ret) => {
         resolve(ret.data);
     }, err => {
         showToast(err);
         reject(err);
-    });
+    }, body);
 }
 
 
@@ -357,7 +357,7 @@ export function getProfile(user_id, resolve, reject) {
 
 /*上传头像*/
 export function postAvatar(body, resolve, reject) {
-    helper.post(Api.upload_avatar, body, (ret) => {
+    helper.put(Api.upload_avatar(), body, (ret) => {
         resolve(ret.data)
     }, reject);
 }

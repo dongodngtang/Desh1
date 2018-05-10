@@ -225,7 +225,7 @@ const images = {
     search_notice2: require('../../source/navigation/search_notice2.png'),
     top: require('../../source/navigation/top.png'),
     coming: require('../../source/navigation/coming.png'),
-    nav_mall: require('../../source/navigation/gray_msg.png'),
+    nav_mall: require('../../source/navigation/gray_msg1.png'),
     nav_malled: require('../../source/navigation/red_msg.png'),
     rightImg: require('../../source/navigation/rightImg.png'),
     shopping_cart: require('../../source/mall/cart.png'),

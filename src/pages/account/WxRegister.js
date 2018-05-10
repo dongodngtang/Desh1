@@ -9,7 +9,7 @@ import {
 import I18n from 'react-native-i18n';
 import NavigationBar from '../../components/NavigationBar';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {fetchPostVerifyCode, fetchPostVCode}from '../../actions/AccountAction';
+import {fetchPostVerifyCode, fetchPostVCode} from '../../actions/AccountAction';
 import {checkPhone, strNotNull, showToast, checkMail, getDispatchAction} from '../../utils/ComonHelper';
 import {BtnLong, BtnSoild, InputView, CountDownBtn} from '../../components';
 import {postVCode, postVerifyCode, postWxBind, getAccountExit} from '../../services/AccountDao';
@@ -114,7 +114,7 @@ export default class WxRegister extends React.Component {
                             account: mobile,
                             code: vcode
                         };
-                        router.toInputPwd(this.props, wx)
+                        router.toInputPwd(wx)
 
                     }, err => {
                         showToast(err)

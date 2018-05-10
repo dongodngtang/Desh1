@@ -15,12 +15,12 @@ export default {
 
     //production 用来发布正式生产环境
     staging: 'http://106.75.136.9:8801/v10/',
-    production: 'https://api.deshpro.com/v10/',
+    production: 'http://192.168.2.10:3000/v1/',
 
-    register: 'register',
-    login: 'login',
+    register: 'account/register',
+    login: 'account/login',
     account_profile: putProfile,
-    upload_avatar: 'uploaders/avatar',
+    upload_avatar: upload_avatar,
     account_verify: 'account/verify_vcode',
     account_reset_password: 'account/reset_password',
     account_change_pwd: postChangePwd,
@@ -155,14 +155,14 @@ export default {
     user_topics: user_topics,//获取用户个人动态(说说和长帖)¶
     topics_delete: topics_delete,//删除说说或长帖
     topics_search: topics_search,//获取用户的说说或长帖¶
-    jmessage_visit_other:jmessage_visit_other,//极光IM访问其它用户
-    profile:profile,//获取其他用户信息
-    my_focus:my_focus,//获取长帖／说说列表（关注）
-    nearbys:nearbys,//更新个人位置
-    locations:'third_party/locations',//获取附近位置
-    report_templates:'report_templates',//获取举报模板
-    report_user:report_user,//举报用户
-    report_topic:report_topic,//举报长帖说说
+    jmessage_visit_other: jmessage_visit_other,//极光IM访问其它用户
+    profile: profile,//获取其他用户信息
+    my_focus: my_focus,//获取长帖／说说列表（关注）
+    nearbys: nearbys,//更新个人位置
+    locations: 'third_party/locations',//获取附近位置
+    report_templates: 'report_templates',//获取举报模板
+    report_user: report_user,//举报用户
+    report_topic: report_topic,//举报长帖说说
 
 }
 
@@ -175,10 +175,16 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function upload_avatar() {
+    return `account/users/${getUserId()}/avatar`
+}
+
 function report_topic(topicId) {
     return `topic/user_topics/${topicId}/report`
 
 }
+
 function report_user() {
     return `users/${getUserId()}/im/report`
 
@@ -222,6 +228,7 @@ function jmessage_info() {
 function followships() {
     return `users/${login_user.user_id}/followships`
 }
+
 function followings() {
     return `users/${login_user.user_id}/followships/followings`
 }
@@ -486,9 +493,8 @@ export function activityInfo(body) {
     return 'activities/' + id;
 }
 
-export function account_exist(body) {
-    const {account} = body;
-    return 'account/' + account + '/verify'
+export function account_exist() {
+    return 'account/verify'
 }
 
 export function wx_pay(body) {

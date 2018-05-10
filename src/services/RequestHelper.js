@@ -14,15 +14,11 @@ let TAG = 'PuKeHttp:';
 // define the api
 const client = create({
     baseURL: Api.production,
-    headers: {
-        'X-DP-APP-KEY': '467109f4b44be6398c17f6c058dfa7ee',
-        'X-DP-CLIENT-IP': '192.168.2.231'
-    },
     timeout: 30000,
 });
 
 export function setDpLang(lang) {
-    client.setHeader('X-DP-LANG', lang)
+    client.setHeader('X-DP-LANG', 'zh')
 }
 
 export function getDpLang() {
@@ -70,17 +66,17 @@ export function setBaseURL(api) {
 }
 
 export function setAccessToken(token) {
-    client.setHeader('X-DP-ACCESS-TOKEN', token)
+    client.setHeader('x-access-token', token)
 }
 
 export function getAccessToken() {
-    let token = client.headers['X-DP-ACCESS-TOKEN'];
+    let token = client.headers['x-access-token'];
 
     return strNotNull(token) ? token : '';
 }
 
 export function removeToken() {
-    delete client.headers['X-DP-ACCESS-TOKEN']
+    delete client.headers['x-access-token']
 }
 
 

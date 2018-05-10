@@ -24,7 +24,7 @@ I18n.translations = {
 
 let languageCode = I18n.locale.substr(0, 2);
 
-global.language = languageCode;
+global.language = 'zh';
 switch (languageCode) {
     case 'zh':
         I18n.translations.zh = require('./zh.json');
