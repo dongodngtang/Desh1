@@ -8,13 +8,13 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {CountDownText} from '../../components/countdown/CountDownText';
 import {checkPhone, showToast, clearLoginUser} from '../../utils/ComonHelper';
-import {Password, SecurityText} from '../../components';
+import {Password, SecurityText, CountDownBtn} from '../../components';
 import {POST_CHANGE_BIND, POST_VERIFY_CODE, POST_V_CODE, POST_CHANGE_PERMISSION} from '../../actions/ActionTypes';
-import {fetchChangBind, fetchPostVCode, fetchPostVerifyCode, fetchChangePermission} from '../../actions/AccountAction';
+import {fetchChangBind, fetchPostVerifyCode} from '../../actions/AccountAction';
 import {fetchGetRecentRaces, _getProfileOk} from '../../actions/RacesAction';
 import {connect} from 'react-redux';
+import {postVCode, postChangeBind, postVerifyCode} from '../../services/AccountDao';
 
 class ModalPrompt extends Component {
 
@@ -24,9 +24,7 @@ class ModalPrompt extends Component {
 
         this.state = {
             popup: 1,
-            codeDisable: false,
             phone: login_user.mobile,
-            codeSend: false,
             old_code: '',
             new_code: ''
         };
@@ -49,53 +47,8 @@ class ModalPrompt extends Component {
     }
 
 
-    componentWillReceiveProps(newProps) {
-
-        const {loading, actionType, hasData} = newProps;
-
-        if (actionType === POST_VERIFY_CODE && hasData) {
-
-            if (this.verifyType === 'change_old_account') {
-                this.setState({
-                    popup: 4,
-                    phone: '',
-                    codeDisable: false
-                })
-            }
-
-        } else if (actionType === POST_CHANGE_BIND && hasData) {
-            this._close();
-            showToast(`${I18n.t('reLogin')}`);
-            clearLoginUser();
-            const recentRaces = {
-                number: 5
-            };
-            this.props._getRecentRaces(recentRaces);
-            this.props._getProfileNull();
-            router.toLoginFirstPage();
-        } else if (actionType === POST_V_CODE
-            && hasData
-        ) {
-
-            if (this.countDownText) {
-                this.setState({
-                    codeDisable: !this.state.codeDisable
-                });
-                this.countDownText.start();
-            }
-
-
-        } else if (actionType === POST_CHANGE_PERMISSION && hasData) {
-            this.setState({
-                popup: 3,
-            });
-        }
-
-    }
-
-
     showPopup = () => {
-        const {codeDisable, popup, phone, codeSend} = this.state;
+        const {popup, phone} = this.state;
         console.log(this.state)
 
         switch (popup) {
@@ -187,25 +140,34 @@ class ModalPrompt extends Component {
                         </SecurityText>
                     </View>
 
-                    <TouchableOpacity
+
+                    <CountDownBtn
                         testID="btn_get_code"
-                        disabled={codeDisable}
-                        activeOpacity={1}
-                        onPress={this._countBtn}
-                        style={styles.btnSend}>
-                        <CountDownText
-                            style={styles.codeText}
-                            countType='seconds' // 计时类型：seconds / date
-                            afterEnd={this._afterEnd} // 结束回调
-                            auto={codeSend} // 自动开始
-                            timeLeft={60} // 正向计时 时间起点为0秒
-                            step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
-                            startText={I18n.t('get_vcode')} // 开始的文本
-                            endText={I18n.t('reSend')} // 结束的文本
-                            ref={ref => this.countDownText = ref}
-                            intervalText={(sec) => sec + 's'} // 定时的文本回调
-                        />
-                    </TouchableOpacity>
+                        frameStyle={{
+                            height: 45,
+                            width: 112,
+                            marginTop: 20,
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 3,
+                            borderWidth: 0.5,
+                            borderColor: '#090909'
+                        }}
+                        beginText='获取验证码'
+                        endText='获取验证码'
+                        count={60}
+                        pressAction={() => {
+                            this._countBtn()
+                        }}
+                        changeWithCount={(count) => count + 's'}
+                        id='btn_get_code'
+                        ref={(e) => {
+                            this.countDownButton = e
+                        }}
+                        end={this._afterEnd}
+                    />
+
 
                     <Password
                         onEnd={this._codeEnd}
@@ -304,25 +266,33 @@ class ModalPrompt extends Component {
                         </SecurityText>
                     </View>
 
-                    <TouchableOpacity
-                        testID="btn_get_code"
-                        disabled={codeDisable}
-                        activeOpacity={1}
-                        onPress={this._countBtn}
-                        style={styles.btnSend}>
-                        <CountDownText
-                            style={styles.codeText}
-                            countType='seconds' // 计时类型：seconds / date
-                            afterEnd={this._afterEnd} // 结束回调
-                            auto={codeSend} // 自动开始
-                            timeLeft={60} // 正向计时 时间起点为0秒
-                            step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
-                            startText={I18n.t('get_vcode')} // 开始的文本
-                            endText={I18n.t('reSend')} // 结束的文本
-                            ref={ref => this.countDownText = ref}
-                            intervalText={(sec) => sec + 's'} // 定时的文本回调
-                        />
-                    </TouchableOpacity>
+                    <CountDownBtn
+                        key={'CountDownBtn5'}
+                        testID="btn_get_code5"
+                        frameStyle={{
+                            height: 45,
+                            width: 112,
+                            marginTop: 20,
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 3,
+                            borderWidth: 0.5,
+                            borderColor: '#090909'
+                        }}
+                        beginText='获取验证码'
+                        endText='获取验证码'
+                        count={60}
+                        pressAction={() => {
+                            this._countBtn()
+                        }}
+                        changeWithCount={(count) => count + 's'}
+                        id='btn_get_code5'
+                        ref={(e) => {
+                            this.countDownButton = e
+                        }}
+                        end={this._afterEnd}
+                    />
 
                     <Password
                         onEnd={this._codeEnd}
@@ -336,14 +306,7 @@ class ModalPrompt extends Component {
     };
 
     _close = () => {
-        this.state = {
-            popup: 1,
-            codeDisable: false,
-            phone: login_user.mobile,
-            codeSend: false,
-            old_code: '',
-            new_code: ''
-        };
+
         this.props.modalShow()
     };
 
@@ -364,9 +327,19 @@ class ModalPrompt extends Component {
                 type: 'mobile',
                 account: this.state.phone,
                 old_code: this.state.old_code,
-                new_code: this.state.new_code
+                new_code: vcode
             };
-            this.props._postChangBind(body);
+            postChangeBind(body, ret => {
+                this._close();
+                showToast(`${I18n.t('reLogin')}`);
+                clearLoginUser();
+
+                this.props._getProfileNull();
+                router.popToTop();
+            }, err => {
+
+            })
+
         } else {
             const body = {
                 option_type: this.verifyType,
@@ -374,7 +347,14 @@ class ModalPrompt extends Component {
                 account: this.state.phone,
                 vcode: vcode
             };
-            this.props._postVerifyCode(body)
+
+            postVerifyCode(body, ret => {
+                this.setState({
+                    popup: 4,
+                    phone: ''
+                })
+            }, err => {
+            })
         }
 
 
@@ -396,20 +376,20 @@ class ModalPrompt extends Component {
             vcode_type: 'mobile',
             mobile: this.state.phone
         };
-        this.props._postVCode(body)
+        postVCode(body, ret => {
+            if (this.countDownButton)
+                this.countDownButton.startCountDown()
+        }, err => {
+            this._close()
+            showToast(err)
+        })
     };
 
     _btnNext = () => {
-        if (checkPhone(this.state.phone)) {
-
-            this.verifyType = 'change_old_account';
-
-            const body = {
-                type: 'mobile'
-            };
-            this.props._changePermission(body)
-
-        }
+        this.verifyType = 'change_old_account';
+        this.setState({
+            popup: 3,
+        });
     };
 
 
@@ -419,14 +399,17 @@ class ModalPrompt extends Component {
             vcode_type: 'mobile',
             mobile: this.state.phone
         };
-        this.props._postVCode(body)
+        postVCode(body, data => {
+            if (this.countDownButton)
+                this.countDownButton.startCountDown()
+        }, err => {
+            this._close()
+            showToast(err)
+        })
     };
 
     _afterEnd = () => {
-        this.setState({
-            codeDisable: false,
-            codeSend: false
-        });
+
     };
     _countBtn = () => {
         if (checkPhone(this.state.phone)) {

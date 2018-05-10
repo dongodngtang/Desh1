@@ -22,10 +22,7 @@ class Personal extends Component {
 
 
     componentWillReceiveProps(newProps) {
-        if (newProps.actionType === GET_PROFILE && newProps.hasData
-            && isEmptyObject(newProps.unread)) {
-            this._unReadMsg()
-        }
+
 
         if (newProps.actionType1 === 'SWITCH_LANGUAGE') {
             this.forceUpdate()

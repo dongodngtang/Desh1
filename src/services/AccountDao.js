@@ -214,7 +214,6 @@ export function playerInfo(body, resolve, reject) {
 
 
 export function postVCode(body, resolve, reject) {
-
     helper.post(Api.v_codes, body, (ret) => {
         resolve(ret.data);
     }, reject);
