@@ -16,6 +16,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
+import {Colors} from "../Themes";
 
 const LCCountDownButtonState = {
     LCCountDownButtonActive: 0,
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
     },
     //可以点击时候的TouchableOpacity样式
     activeButtonStyle: {
-        backgroundColor: '#090909',
+        backgroundColor: Colors._E54,
     },
 
     txtCommonStyle: {
@@ -185,6 +186,6 @@ const styles = StyleSheet.create({
     },
     //可以点击时候的Text样式
     activeTxtStyle: {
-        color: '#E0C675',
+        color: 'white',
     }
 });

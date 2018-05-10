@@ -173,8 +173,8 @@ export default class MessageCenter extends Component {
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
-                title={I18n.t('msg_center')}
-                />
+                title={'消息'}
+            />
 
 
             <FlatList data={this.state.conversations}
@@ -223,7 +223,7 @@ export default class MessageCenter extends Component {
                         <Text style={styles.msgDesc}>{desc}</Text>
                     </View>
 
-                    {time ? null : <Text style={styles.msgTime}>{utcDate(time, 'YYYY/MM/DD')}</Text>}
+                    <Text style={styles.msgTime}>{utcDate(time, 'YYYY/MM/DD')}</Text>
 
 
                 </View>
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     flatItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        height:reallySize(78),
+        height: reallySize(78),
     },
     msgIcon: {
         height: reallySize(54),
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     },
     msgTitle: {
         fontSize: 16,
-        color: Colors._E54
+        color: Colors.txt_444
     },
     msgDesc: {
         fontSize: 14,

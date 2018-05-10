@@ -24,7 +24,7 @@ export default {
         paddingTop: Platform.Version >= 21 ? 20 : 0,
         //barColor: favoriteColor,
         titleColor: 'white',
-        titleSize: 17,
+        titleSize: 18,
         textBtnSize: 15
     }
 }

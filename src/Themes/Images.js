@@ -271,7 +271,7 @@ const images = {
     listLike: require('../../source/comment/listLike.png'),
     black_fire: require('../../source/crowd/black_fire.png'),
     poker_b: require('../../source/navigation/poker_b.png'),
-    poker_P: require('../../source/navigation/poker_P.png'),
+    mall_order: require('../../source/navigation/mall_order.png'),
     crowd: require('../../source/navigation/crowd.png'),
     crowd_banner: require('../../source/crowd/crowd_banner.png'),
     clickImg: require('../../source/crowd/clickImg.png'),
@@ -343,7 +343,8 @@ const images = {
         hotel: require('../../source/macau/hotel.png'),
         rate_exchange: require('../../source/macau/rate_exchange.png'),
         store: require('../../source/macau/store.png'),
-        viewpoint: require('../../source/macau/viewpoint.png')
+        viewpoint: require('../../source/macau/viewpoint.png'),
+        location: require('../../source/macau/location.png')
     }
 
 };

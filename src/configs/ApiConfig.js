@@ -6,7 +6,7 @@ import {strNotNull, isEmptyObject} from '../utils/ComonHelper';
 
 export default {
     //内部测试
-    dev: 'http://deshpro.ngrok.cc/v10/',
+    dev: 'http://192.168.2.10:3000/v1/',
     dev_ci_at: 'http://192.168.2.231:8801/v10/',
 
     //test分支用来发布版本  test_ci_at用来跑自动化测试
@@ -15,7 +15,7 @@ export default {
 
     //production 用来发布正式生产环境
     staging: 'http://106.75.136.9:8801/v10/',
-    production: 'http://192.168.2.10:3000/v1/',
+    production: 'https://api.deshpro.com/v10/',
 
     register: 'account/register',
     login: 'account/login',

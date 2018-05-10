@@ -51,38 +51,38 @@ class Personal extends Component {
 
     renderItem = () => {
         return <ScrollView>
-            <View style={stylesP.orderView}>
-                <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={() => {
-                        umengEvent('more_order');
-                        if (strNotNull(getLoginUser().user_id))
-                            global.router.toOrderListPage();
-                        else
-                            global.router.toLoginFirstPage()
-                    }}
-                    style={stylesP.btnOrder}>
-                    <Image style={stylesP.imgOrder1}
-                           source={Images.ticket_order}/>
-                    <Text style={stylesP.txtProfile1}>{I18n.t('ticket_order')}</Text>
-                </TouchableOpacity>
-                <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
-                <TouchableOpacity style={stylesP.btnOrder}
-                                  activeOpacity={1}
-                                  onPress={() => {
-                                      if (strNotNull(getLoginUser().user_id))
-                                          global.router.toMallOrderPage();
-                                      else
-                                          global.router.toLoginFirstPage();
-                                  }}>
-                    <Image style={stylesP.imgOrder2}
-                           source={Images.mall_order}/>
-                    <Text style={stylesP.txtProfile1}>{I18n.t('mall_order')}</Text>
-                </TouchableOpacity>
+            {/*<View style={stylesP.orderView}>*/}
+            {/*<TouchableOpacity*/}
+            {/*activeOpacity={1}*/}
+            {/*onPress={() => {*/}
+            {/*umengEvent('more_order');*/}
+            {/*if (strNotNull(getLoginUser().user_id))*/}
+            {/*global.router.toOrderListPage();*/}
+            {/*else*/}
+            {/*global.router.toLoginFirstPage()*/}
+            {/*}}*/}
+            {/*style={stylesP.btnOrder}>*/}
+            {/*<Image style={stylesP.imgOrder1}*/}
+            {/*source={Images.ticket_order}/>*/}
+            {/*<Text style={stylesP.txtProfile1}>{I18n.t('ticket_order')}</Text>*/}
+            {/*</TouchableOpacity>*/}
+            {/*<View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>*/}
+            {/*<TouchableOpacity style={stylesP.btnOrder}*/}
+            {/*activeOpacity={1}*/}
+            {/*onPress={() => {*/}
+            {/*if (strNotNull(getLoginUser().user_id))*/}
+            {/*global.router.toMallOrderPage();*/}
+            {/*else*/}
+            {/*global.router.toLoginFirstPage();*/}
+            {/*}}>*/}
+            {/*<Image style={stylesP.imgOrder2}*/}
+            {/*source={Images.mall_order}/>*/}
+            {/*<Text style={stylesP.txtProfile1}>{I18n.t('mall_order')}</Text>*/}
+            {/*</TouchableOpacity>*/}
 
-            </View>
+            {/*</View>*/}
 
-            <View style={{height: 10, backgroundColor: '#ECECEE', flex: 1}}/>
+            <View style={{height: 5, width: '100%'}}/>
             {this._item(stylesP.item_view, Images.social.mine_moment, stylesP.img_dy,
                 I18n.t('person_dynamic'), () => {
                     if (isEmptyObject(login_user)) {
@@ -93,26 +93,25 @@ class Personal extends Component {
 
                 })}
 
-            <View style={{height: 3, width: '100%'}}/>
-            {this._item(stylesP.item_view, Images.crowd, stylesP.img_dy,
-                I18n.t('sponsored'), () => {
-                    if (isEmptyObject(global.login_user))
-                        global.router.toLoginFirstPage()
-                    else
-                        global.router.toRecordList()
+            {/*<View style={{height: 3, width: '100%'}}/>*/}
+            {/*{this._item(stylesP.item_view, Images.crowd, stylesP.img_dy,*/}
+            {/*I18n.t('sponsored'), () => {*/}
+            {/*if (isEmptyObject(global.login_user))*/}
+            {/*global.router.toLoginFirstPage()*/}
+            {/*else*/}
+            {/*global.router.toRecordList()*/}
 
-                })}
+            {/*})}*/}
             <View style={{height: 1, marginLeft: 69}}/>
-            {this._item(stylesP.item_view, Images.poker_P, stylesP.img_dy,
-                I18n.t('my_coins'), () => {
-                    if (isEmptyObject(global.login_user))
-                        global.router.toLoginFirstPage()
-                    else
-                        global.router.toPokerB()
+            {this._item(stylesP.item_view, Images.mall_order, stylesP.img_dy, '商城订单', () => {
+                if (isEmptyObject(global.login_user))
+                    global.router.toLoginFirstPage()
+                else
+                    global.router.toMallOrderPage()
 
-                })}
+            })}
 
-            <View style={{height: 10, width: '100%'}}/>
+            <View style={{height: 5, width: '100%'}}/>
 
             {this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},
                 I18n.t('business_cooperation'), () => {
@@ -187,19 +186,19 @@ class Personal extends Component {
                 flexDirection: 'row-reverse'
             }}>
                 {/*<TouchableOpacity*/}
-                    {/*style={{*/}
-                        {/*justifyContent: 'center',*/}
-                        {/*alignItems: 'center',*/}
-                        {/*height: 44*/}
-                    {/*}}*/}
-                    {/*onPress={this.toMessagePage}>*/}
-                    {/*<Image*/}
-                        {/*source={this._imgNotice()}*/}
-                        {/*style={{*/}
-                            {/*height: 22,*/}
-                            {/*width: 21,*/}
-                            {/*marginRight: 20*/}
-                        {/*}}/>*/}
+                {/*style={{*/}
+                {/*justifyContent: 'center',*/}
+                {/*alignItems: 'center',*/}
+                {/*height: 44*/}
+                {/*}}*/}
+                {/*onPress={this.toMessagePage}>*/}
+                {/*<Image*/}
+                {/*source={this._imgNotice()}*/}
+                {/*style={{*/}
+                {/*height: 22,*/}
+                {/*width: 21,*/}
+                {/*marginRight: 20*/}
+                {/*}}/>*/}
 
                 {/*</TouchableOpacity>*/}
 
@@ -383,7 +382,7 @@ const stylesP = StyleSheet.create({
         width: 74,
         height: 74,
         borderRadius: 37,
-        backgroundColor: '#FFE9AD',
+        backgroundColor: Colors.white,
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 25,

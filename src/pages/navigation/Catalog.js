@@ -24,7 +24,7 @@ export default class Catalog extends PureComponent {
             [
                 {
                     name: '酒店',
-                    size: {height: 34, width: 37},
+                    size: {height: 32, width: 35},
                     icon: Images.macau.hotel,
                     onPress: () => global.router.toSearchKeywordPage()
                 },
@@ -43,7 +43,7 @@ export default class Catalog extends PureComponent {
 
                 {
                     name: '人闻',
-                    size: {height: 30, width: 34},
+                    size: {height: 34, width: 30},
                     icon: Images.macau.book
                 }
             ],

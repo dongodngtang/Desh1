@@ -20,7 +20,8 @@ let topicId = -1;
 export default class Square extends PureComponent {
 
     state = {
-        square_types: ['topics', 'recommends', 'follows']
+        // square_types: ['topics', 'recommends', 'follows']
+        square_types: ['topics']
     };
 
     //举报原因
@@ -105,12 +106,12 @@ class SquareBar extends PureComponent {
                 alignItems: 'center', justifyContent: 'center',
                 width: 90
             }}>
-            <Text style={[{fontSize: 15},
-                activeTab === index ? {color: Colors.white, fontWeight: 'bold'} : {color: Colors.white}]}>{item}</Text>
-            {activeTab === index ? <View style={{
-                height: 2, width: 48, backgroundColor: Colors.white,
-                position: 'absolute', bottom: 0
-            }}/> : null}
+            <Text style={[{fontSize: 18},
+                activeTab === index ? {color: Colors.white} : {color: Colors.white}]}>{item}</Text>
+            {/*{activeTab === index ? <View style={{*/}
+            {/*height: 2, width: 48, backgroundColor: Colors.white,*/}
+            {/*position: 'absolute', bottom: 0*/}
+            {/*}}/> : null}*/}
 
         </TouchableOpacity>);
 
@@ -133,6 +134,19 @@ class SquareBar extends PureComponent {
             {/*source={Images.social.back}/>*/}
             {/*</TouchableOpacity>*/}
             {tabs_views}
+
+            <TouchableOpacity
+                onPress={() => router.toNearFriend()}
+                style={{
+                    height: Metrics.navBarHeight - Metrics.statusBarHeight,
+                    alignItems: 'center',
+                    position: 'absolute',
+                    right: 15,
+                    marginTop: Metrics.statusBarHeight,
+                    justifyContent: 'center'
+                }}>
+                <Text style={{fontSize: 14, color: 'white'}}>附近的人</Text>
+            </TouchableOpacity>
         </View>
     }
 }

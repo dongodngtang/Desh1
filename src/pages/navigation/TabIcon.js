@@ -6,7 +6,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import I18n from 'react-native-i18n';
-import {Images} from '../../Themes';
+import {Images,Colors} from '../../Themes';
 import {connect} from 'react-redux';
 
 
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         color: '#AAAAAA'
     },
     textStyle2: {
-        color: '#161718'
+        color: Colors._E54
     },
     discover: {
         height: 24,

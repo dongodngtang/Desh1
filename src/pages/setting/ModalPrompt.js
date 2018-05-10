@@ -152,7 +152,7 @@ class ModalPrompt extends Component {
                             justifyContent: 'center',
                             borderRadius: 3,
                             borderWidth: 0.5,
-                            borderColor: '#090909'
+                            borderColor: Colors._E54
                         }}
                         beginText='获取验证码'
                         endText='获取验证码'
@@ -278,7 +278,7 @@ class ModalPrompt extends Component {
                             justifyContent: 'center',
                             borderRadius: 3,
                             borderWidth: 0.5,
-                            borderColor: '#090909'
+                            borderColor: Colors._E54
                         }}
                         beginText='获取验证码'
                         endText='获取验证码'
