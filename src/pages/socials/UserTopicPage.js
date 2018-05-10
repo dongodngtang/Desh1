@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     ScrollView,
     Animated,
-    Platform
+    Platform,
+    findNodeHandle
 } from 'react-native';
 import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
@@ -21,6 +22,7 @@ import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
 import PopAction from '../comm/PopAction';
 import ImageLoad from "../../components/ImageLoad";
+import {BlurView} from 'react-native-blur';
 
 const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
 
@@ -81,7 +83,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors._E54,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    blur: {position: 'absolute', height: HeadHeight, width: '100%'}
 })
 
 export default class UserTopicPage extends PureComponent {
@@ -89,7 +92,8 @@ export default class UserTopicPage extends PureComponent {
     state = {
         scrollEnabled: false,
         follow: isFollowed(this.props.params.userInfo.user_id),
-        user: {}
+        user: {},
+        viewRef: null
     };
 
     componentDidMount() {
@@ -146,13 +150,31 @@ export default class UserTopicPage extends PureComponent {
     };
 
 
-    _renderHead = () => {
+    imageLoaded = () => {
+        this.setState({viewRef: findNodeHandle(this.backgroundImage)});
+    }
 
+    _renderHead = () => {
+        let props = Platform.OS === 'ios' ? {
+            blurAmount: 18
+        } : {
+            downsampleFactor: 10,
+            overlayColor: 'rgba(255,255,255,.4)'
+        };
         const {following_count, follower_count, avatar, nick_name, signature, user_id} = this.state.user;
         return <View style={styles.topBar}>
             <Image
-                style={{position: 'absolute', height: HeadHeight, width: '100%'}}
+                ref={(img) => {
+                    this.backgroundImage = img;
+                }}
+                onLoadEnd={this.imageLoaded}
+                style={styles.blur}
                 source={Images.social.user_topic}/>
+            <BlurView
+                style={styles.blur}
+                viewRef={this.state.viewRef}
+                {...props}
+            />
 
             <NavigationBar
                 barStyle={'light-content'}

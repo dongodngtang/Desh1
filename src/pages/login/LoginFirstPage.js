@@ -120,7 +120,7 @@ class LoginFirstPage extends Component {
                     rightBtnText={I18n.t('register')}
                     btnTextStyle={{
                         color: Colors._666,
-                        fontSize: 16, marginRight: 20
+                        fontSize: 15, marginRight: 20
                     }}
                     leftBtnPress={() => router.pop()}
                     rightBtnPress={() => router.toRegisterPage()}/>
