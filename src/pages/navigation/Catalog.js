@@ -4,7 +4,7 @@ import {
     Image, StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import {Images,Colors} from '../../Themes';
+import {Images, Colors} from '../../Themes';
 
 export default class Catalog extends PureComponent {
 
@@ -26,7 +26,7 @@ export default class Catalog extends PureComponent {
                     name: '酒店',
                     size: {height: 32, width: 35},
                     icon: Images.macau.hotel,
-                    onPress: () => global.router.toSearchKeywordPage()
+                    onPress: () => global.router.toHotelSearch()
                 },
                 {
                     name: '景点',

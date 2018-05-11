@@ -163,7 +163,7 @@ class HotelItem extends PureComponent {
                     style={{fontSize: 17, color: Colors._161817, marginTop: 5}}>{title}</Text>
                 <Text
                     numberOfLines={2}
-                    style={{fontSize: 14, color: Colors._999, marginTop: 5}}>{address}</Text>
+                    style={{fontSize: 14, color: Colors._999, marginTop: 5}}>{location}</Text>
 
                 <View style={{flex: 1}}/>
 
@@ -173,7 +173,7 @@ class HotelItem extends PureComponent {
 
                     <Text
                         numberOfLines={1}
-                        style={{fontSize: 12, color: '#4A90E2', marginLeft: 7}}>{location}</Text>
+                        style={{fontSize: 12, color: '#4A90E2', marginLeft: 7}}>{}</Text>
 
                 </View>
 
