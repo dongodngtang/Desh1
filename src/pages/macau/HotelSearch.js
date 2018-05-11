@@ -9,6 +9,34 @@ import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {hotels} from '../../services/MacauDao';
 
+
+let foods = [
+    {
+        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
+        read: '234',
+        like: '446',
+        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
+    },
+    {
+        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
+        read: '234',
+        like: '446',
+        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
+    },
+    {
+        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
+        read: '234',
+        like: '446',
+        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
+    },
+    {
+        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
+        read: '234',
+        like: '446',
+        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
+    },
+]
+
 const styles = StyleSheet.create({
     nav: {
         height: Metrics.navBarHeight,
@@ -46,6 +74,7 @@ export default class HotelSearch extends PureComponent {
 
 
     render() {
+        const {name, type} = this.props.params.item;
         return <View style={ApplicationStyles.bgContainer}>
             <View style={styles.nav}>
                 <TouchableOpacity
@@ -65,7 +94,7 @@ export default class HotelSearch extends PureComponent {
                         this.keywords = keywords;
                         this.listView && this.listView.refresh()
 
-                    }}/> : <Text style={styles.title}>酒店</Text>}
+                    }}/> : <Text style={styles.title}>{name}</Text>}
                 <View style={{flex: 1}}/>
 
 
@@ -108,24 +137,42 @@ export default class HotelSearch extends PureComponent {
     }
 
     separator = () => {
-        return <View style={{height: 5}}/>
+        const {name, type} = this.props.params.item;
+        if (type !== 'exchange_rate')
+            return <View style={{height: 5}}/>
+        else
+            return null
     }
 
     item_view = (item, index, separators) => {
+        const {type} = this.props.params.item;
+        if (type === 'hotel')
+            return <HotelItem
+                key={`${type}${index}`}
+                item={item}/>
+        else if (type === 'exchange_rate')
+            return <RateItem/>
+        else
+            return <FoodItem
+                key={`${type}${index}`}
+                item={item}/>
 
-        return <HotelItem
-            key={`hotel${index}`}
-            item={item}/>
+
     }
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
+            const {type} = this.props.params.item;
+            if (type === 'hotel') {
+                hotels({page, page_size: 20, keywords: this.keywords}, data => {
+                    startFetch(data.items, 18)
+                }, err => {
+                    abortFetch()
+                })
+            } else {
+                startFetch(foods, 18)
+            }
 
-            hotels({page, page_size: 20, keywords: this.keywords}, data => {
-                startFetch(data.items, 18)
-            }, err => {
-                abortFetch()
-            })
 
         } catch (err) {
             console.log(err)
@@ -238,7 +285,29 @@ class RoomItem extends PureComponent {
 
             <ImageLoad
 
-                style={{height:95,width:67}}/>
+                style={{height: 95, width: 67}}/>
+
+
+        </TouchableOpacity>
+    }
+}
+
+class RateItem extends PureComponent {
+    render() {
+        return <TouchableOpacity
+            style={{
+                height: 142, width: '100%', alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+
+
+            <Image
+                source={Images.macau.rate1}
+                style={{height: 142, width: '100%', position: 'absolute'}}/>
+
+            <Text style={{fontSize: 15, color: 'white'}}>实时汇率</Text>
+            <Text style={{fontSize: 20, color: 'white', marginTop: 10}}>1港元=0.8117人民币</Text>
+            <Text style={{fontSize: 20, color: 'white', marginTop: 6}}>1人民币=1.232港元</Text>
 
 
         </TouchableOpacity>

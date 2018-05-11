@@ -56,8 +56,7 @@ export default class Coming extends Component {
                     <View style={{flex: 1}}/>
                     <TouchableOpacity style={[styles.racesTwo, {marginRight: 14}]} onPress={() => {
                         umengEvent('home_more');
-                        // router.toSearchRacesPage()
-                        router.toHotelSearch()
+                        router.toSearchRacesPage()
                     }}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>

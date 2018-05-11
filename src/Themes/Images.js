@@ -345,7 +345,9 @@ const images = {
         store: require('../../source/macau/store.png'),
         viewpoint: require('../../source/macau/viewpoint.png'),
         location: require('../../source/macau/location.png'),
-        call: require('../../source/macau/call.png')
+        call: require('../../source/macau/call.png'),
+        rate1:require('../../source/macau/rate1.png'),
+        rate2:require('../../source/macau/rate2.png')
     }
 
 };

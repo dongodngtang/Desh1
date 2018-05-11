@@ -12,11 +12,13 @@ export default class Catalog extends PureComponent {
         catalogs: [
             [{
                 name: '汇率',
+                type: 'exchange_rate',
                 size: {height: 34, width: 30},
                 icon: Images.macau.rate_exchange
             },
                 {
                     name: '娱乐',
+                    type: 'entertainment',
                     size: {height: 34, width: 36},
                     icon: Images.macau.entertainment
                 }
@@ -24,12 +26,13 @@ export default class Catalog extends PureComponent {
             [
                 {
                     name: '酒店',
+                    type: 'hotel',
                     size: {height: 32, width: 35},
-                    icon: Images.macau.hotel,
-                    onPress: () => global.router.toHotelSearch()
+                    icon: Images.macau.hotel
                 },
                 {
                     name: '景点',
+                    type: 'attractions',
                     size: {height: 34, width: 36},
                     icon: Images.macau.viewpoint
                 }
@@ -37,12 +40,14 @@ export default class Catalog extends PureComponent {
             [
                 {
                     name: '美食',
+                    type: 'food',
                     size: {height: 35, width: 34},
                     icon: Images.macau.food
                 },
 
                 {
                     name: '人闻',
+                    type: 'culture',
                     size: {height: 34, width: 30},
                     icon: Images.macau.book
                 }
@@ -50,14 +55,15 @@ export default class Catalog extends PureComponent {
             [
                 {
                     name: '特产',
+                    type: 'gift',
                     size: {height: 29, width: 31},
                     icon: Images.macau.gift
                 },
                 {
                     name: '商城',
+                    type: 'mall',
                     size: {height: 29, width: 31},
-                    icon: Images.macau.store,
-                    onPress: () => global.router.toMallPage()
+                    icon: Images.macau.store
                 }
             ]
 
@@ -90,7 +96,10 @@ export default class Catalog extends PureComponent {
                 return <TouchableOpacity
                     key={item.name}
                     onPress={() => {
-                        item.onPress && item.onPress();
+                        if (item.type === 'mall')
+                            router.toMallPage()
+                        else
+                            router.toHotelSearch(item)
                     }}
                     style={{
                         alignItems: 'center',

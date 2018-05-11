@@ -56,8 +56,13 @@ export default class Router {
         })
     }
 
-    toHotelSearch() {
-        this.stackPush({name: 'HotelSearch'})
+    toHotelSearch(item) {
+        this.stackPush({
+            name: 'HotelSearch',
+            params: {
+                item
+            }
+        })
     }
 
     toCamera(params) {
