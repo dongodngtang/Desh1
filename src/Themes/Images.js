@@ -344,7 +344,8 @@ const images = {
         rate_exchange: require('../../source/macau/rate_exchange.png'),
         store: require('../../source/macau/store.png'),
         viewpoint: require('../../source/macau/viewpoint.png'),
-        location: require('../../source/macau/location.png')
+        location: require('../../source/macau/location.png'),
+        call: require('../../source/macau/call.png')
     }
 
 };

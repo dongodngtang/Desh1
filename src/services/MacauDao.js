@@ -7,3 +7,9 @@ export function hotels(body, resolve, reject) {
         resolve(ret.data)
     }, reject, body)
 }
+
+export function hotelDetail(body, resolve, reject) {
+    helper.get(Api.hotels + `/${body.id}`, ret => {
+        resolve(ret.data)
+    }, reject)
+}

@@ -74,7 +74,6 @@ export default class WebViewPage extends Component {
                     style={styles.contentContainer}
                     {...this._panResponder.panHandlers}>
                     <WebView
-
                         ref={(ref) => {
                             this.webView = ref
                         }}

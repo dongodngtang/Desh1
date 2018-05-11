@@ -39,15 +39,6 @@ const styles = StyleSheet.create({
 });
 
 
-let foods = [
-    {
-        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
-        read: '234',
-        like: '446',
-        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
-    }
-]
-
 export default class HotelSearch extends PureComponent {
     state = {
         search: false,
@@ -150,13 +141,17 @@ class HotelItem extends PureComponent {
 
     render() {
         const {title, address, location, logo} = this.props.item;
-        return <View style={{
-            height: 128,
-            backgroundColor: Colors.white,
-            width: '100%',
-            flexDirection: 'row',
-            alignItems: 'center'
-        }}>
+        return <TouchableOpacity
+            onPress={() => {
+                router.toHotelDetail(this.props.item)
+            }}
+            style={{
+                height: 128,
+                backgroundColor: Colors.white,
+                width: '100%',
+                flexDirection: 'row',
+                alignItems: 'center'
+            }}>
 
             <ImageLoad
                 source={{uri: logo}}
@@ -185,7 +180,7 @@ class HotelItem extends PureComponent {
             </View>
 
 
-        </View>
+        </TouchableOpacity>
     }
 }
 

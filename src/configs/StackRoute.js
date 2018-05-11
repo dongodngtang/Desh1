@@ -4,6 +4,7 @@ import {
     View, StatusBar
 } from 'react-native';
 //Pages
+import HotelDetail from '../pages/macau/HotelDetail';
 import CameraVideo from '../pages/comm/CameraVideo';
 import UserTopicPage from '../pages/socials/UserTopicPage';
 import MoodRelease from '../pages/socials/MoodRelease';
@@ -110,6 +111,7 @@ import HotelSearch from '../pages/macau/HotelSearch';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="HotelDetail" component={HotelDetail} hideNavBar/>
         <Scene key="HotelSearch" component={HotelSearch} hideNavBar/>
         <Scene key="NearFriend" component={NearFriend} hideNavBar/>
         <Scene key="MallPage" component={MallPage} hideNavBar/>

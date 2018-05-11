@@ -7,6 +7,7 @@ import {NavigationActions} from 'react-navigation';
 import {getDispatchAction} from '../utils/ComonHelper';
 import UserTopicPage from "../pages/socials/UserTopicPage";
 import Crowdfunding from "../pages/crowdfundings/crowds/Crowdfunding";
+import HotelDetail from "../pages/macau/HotelDetail";
 
 
 const customFloatFromRight = '';
@@ -44,6 +45,15 @@ export default class Router {
     popToTop() {
         getDispatchAction()['BACK_TOP']();
         Actions.popTo('tab_home')
+    }
+
+    toHotelDetail(hotel) {
+        this.stackPush({
+            name: 'HotelDetail',
+            params: {
+                hotel
+            }
+        })
     }
 
     toHotelSearch() {
@@ -510,7 +520,7 @@ export default class Router {
     }
 
     toWebViewPage(props, url) {
-        this.push(props, {
+        this.stackPush({
             name: 'WebViewPage',
             params: {
                 url: url
