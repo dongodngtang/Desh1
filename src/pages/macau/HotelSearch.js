@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {
-    StyleSheet, Text, View, Image, FlatList, TouchableOpacity
+    StyleSheet, Text, View, Image, TouchableOpacity
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import SearchBar from "../comm/SearchBar";
@@ -50,7 +50,7 @@ let foods = [
 
 export default class HotelSearch extends PureComponent {
     state = {
-        search: false
+        search: false,
     };
 
 
@@ -69,7 +69,12 @@ export default class HotelSearch extends PureComponent {
 
                 </TouchableOpacity>
                 <View style={{flex: 1}}/>
-                {this.state.search ? <SearchBar/> : <Text style={styles.title}>酒店</Text>}
+                {this.state.search ? <SearchBar
+                    keywords={keywords => {
+                        this.keywords = keywords;
+                        this.listView && this.listView.refresh()
+
+                    }}/> : <Text style={styles.title}>酒店</Text>}
                 <View style={{flex: 1}}/>
 
 
@@ -125,7 +130,7 @@ export default class HotelSearch extends PureComponent {
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
 
-            hotels({page, page_size: 20}, data => {
+            hotels({page, page_size: 20, keywords: this.keywords}, data => {
                 startFetch(data.items, 18)
             }, err => {
                 abortFetch()
@@ -136,6 +141,8 @@ export default class HotelSearch extends PureComponent {
             abortFetch()
         }
     }
+
+
 }
 
 

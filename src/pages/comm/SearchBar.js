@@ -8,7 +8,7 @@ import * as Animatable from 'react-native-animatable';
 const styles = StyleSheet.create({
     contains: {
         height: 30,
-        width: '75%',
+        width: '70%',
         backgroundColor: Colors._CD3,
         borderRadius: 30,
         flexDirection: 'row',
@@ -52,6 +52,7 @@ export default class SearchBar extends PureComponent {
                 selectionColor={Colors.white}
                 onChangeText={text => {
                     this.setState({text})
+                    this.props.keywords(text)
                 }}
                 style={styles.input}/>
             {hide ? null : <Image source={Images.macau.search}
