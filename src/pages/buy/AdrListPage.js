@@ -17,7 +17,7 @@ export default class AdrListPage extends Component {
     constructor(props) {
         super(props);
 
-        let dataList = [1, 2, 3, 4];
+        let dataList = [];
         this._dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataList: dataList,
@@ -103,12 +103,12 @@ export default class AdrListPage extends Component {
     }
 
     _itemListView = (item) => {
-        const {consignee, address, address_detail, mobile} = item;
+        const {consignee, address, province, city, area, mobile} = item;
         const {id} = this.state.selectAdrData;
         return (<TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                if(this.props.params.selectAdr){
+                if (this.props.params.selectAdr) {
                     this.props.params.selectAdr(item);
                     router.pop();
                 }
@@ -144,7 +144,7 @@ export default class AdrListPage extends Component {
 
                 <Text style={styles.txtAdr}
                       numberOfLines={2}
-                >{address} {address_detail}</Text>
+                >{`${province} ${city} ${area} ${address}`}</Text>
 
             </View>
             <TouchableOpacity
@@ -182,14 +182,14 @@ export default class AdrListPage extends Component {
                     Alert.alert(`${I18n.t('buy_del_adr')}`, '', [
                         {
                             text: `${I18n.t('cancel')}`, onPress: () => {
-                            this.swipeList.safeCloseOpenRow();
-                        }
+                                this.swipeList.safeCloseOpenRow();
+                            }
                         },
                         {
                             text: `${I18n.t('confirm')}`, onPress: () => {
-                            this.swipeList.safeCloseOpenRow();
-                            this._delAdr(data.id)
-                        }
+                                this.swipeList.safeCloseOpenRow();
+                                this._delAdr(data.id)
+                            }
                         }
                     ]);
 

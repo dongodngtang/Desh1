@@ -68,7 +68,7 @@ class PersonPage extends Component {
                 testID="page_profile"
                 style={{backgroundColor: '#ECECEE', flex: 1}}>
                 <NavigationBar
-                    toolbarStyle={{backgroundColor: '#161718'}}
+                    toolbarStyle={{backgroundColor: Colors._E54}}
                     title={I18n.t('edit_info')}
                     rightBtnText={I18n.t('save_s')}
                     leftBtnIcon={Images.sign_return}

@@ -51,7 +51,7 @@ export function postPayOrder(body, resolve, reject) {
 }
 
 export function postAdrDelete(adr_id, resolve, reject) {
-    helper.post(Api.adrDelete(adr_id), {}, (ret) => {
+    helper.del(Api.adrDelete(adr_id), {}, (ret) => {
         resolve(ret.data)
     }, err => {
         showToast(err);
@@ -68,7 +68,7 @@ export function postAdrDefault(adr_id, resolve) {
 }
 
 export function getAddressList(resolve) {
-    helper.get(Api.addAddress(), (ret) => {
+    helper.get(Api.addAddress, (ret) => {
         console.log('adrList:', ret.data);
         global.addressList = ret.data.items;
         resolve(ret.data);
@@ -77,10 +77,16 @@ export function getAddressList(resolve) {
     })
 }
 
+
 export function postAddress(body, resolve, reject) {
-    helper.post(Api.addAddress(), body, (ret) => {
-        resolve(ret.data)
-    }, reject)
+    if (body.id) {
+        helper.put(Api.addAddress + `/${body.id}`, body, (ret) => {
+            resolve(ret.data)
+        }, reject)
+    } else
+        helper.post(Api.addAddress, body, (ret) => {
+            resolve(ret.data)
+        }, reject)
 }
 
 export function postOrderTicket(param, body, resolve, reject) {

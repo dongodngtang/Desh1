@@ -9,8 +9,6 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import I18n from 'react-native-i18n';
-import {connect} from 'react-redux';
-import {fetchAddress} from '../../actions/OrderAction';
 import {strNotNull, showToast, checkPhone, isEmptyObject} from '../../utils/ComonHelper';
 import {postAddress} from '../../services/OrderDao';
 import ChinaRegionWheelPicker from '../../components/area-picker';
@@ -30,21 +28,25 @@ export default class NewAddress extends Component {
     componentDidMount() {
         const {address} = this.props.params;
 
+        console.log(address)
+        if (!isEmptyObject(address)) {
+            const {province, city, area} = address;
+            this.receiver = address.consignee;
+            this.receiverAdr1 = `${province} ${city} ${area}`;
+            this.receiverAdr2 = address.address;
+            this.phoneNum = address.mobile;
+            this.zip = address.zip;
+        }
+
         this.setState({
             addressEdit: address,
-            regionTxt: isEmptyObject(address) ? '' : address.address,
+            regionTxt: isEmptyObject(this.receiverAdr1) ? '' : this.receiverAdr1,
             isDefault: isEmptyObject(address) ? false : address.default,
             province: address.province,
             city: address.city,
             area: address.area
         });
-        if (!isEmptyObject(address)) {
-            this.receiver = address.consignee;
-            this.receiverAdr1 = address.address;
-            this.receiverAdr2 = address.address_detail;
-            this.phoneNum = address.mobile;
 
-        }
     }
 
     _getName = () => {
@@ -56,9 +58,14 @@ export default class NewAddress extends Component {
         return mobile;
     };
 
+    _getZip = () => {
+        const {zip} = this.state.addressEdit;
+        return zip;
+    }
+
     _getAdrDetail = () => {
-        const {address_detail} = this.state.addressEdit;
-        return address_detail;
+        const {address} = this.state.addressEdit;
+        return address;
     };
 
     _getTitle = () => {
@@ -82,7 +89,7 @@ export default class NewAddress extends Component {
 
             <View style={styles.view1}>
                 <View style={styles.inputView}>
-                    <Text style={styles.lbAdr}>{I18n.t('buy_person')}</Text>
+                    <Text style={styles.lbAdr}>{I18n.t('buy_person')}:</Text>
                     <TextInput style={styles.input}
                                defaultValue={this._getName()}
                                onChangeText={txt => {
@@ -96,6 +103,15 @@ export default class NewAddress extends Component {
                                defaultValue={this._getPhone()}
                                onChangeText={txt => {
                                    this.phoneNum = txt;
+                               }}/>
+                </View>
+                <View style={styles.line}/>
+                <View style={styles.inputView}>
+                    <Text style={styles.lbAdr}>邮政编码: </Text>
+                    <TextInput style={styles.input}
+                               defaultValue={this._getZip()}
+                               onChangeText={txt => {
+                                   this.zip = txt;
                                }}/>
                 </View>
                 <View style={styles.line}/>
@@ -163,7 +179,7 @@ export default class NewAddress extends Component {
                         regionTxt: this.receiverAdr1,
                         province: province.name,
                         city: city.name,
-                        area: area.name
+                        area: area.name,
                     })
                 }}
                 onCancel={() => {
@@ -185,12 +201,12 @@ export default class NewAddress extends Component {
             const body = {
                 consignee: this.receiver,
                 mobile: this.phoneNum,
-                address: this.receiverAdr1,
-                address_detail: this.receiverAdr2,
+                address: this.receiverAdr2,
                 default: this.state.isDefault,
                 province: this.state.province,
                 city: this.state.city,
-                area: this.state.area
+                area: this.state.area,
+                zip: this.zip
 
             };
 
@@ -199,10 +215,7 @@ export default class NewAddress extends Component {
                 const {id} = this.state.addressEdit;
                 body['id'] = id
             }
-
-
             postAddress(body, data => {
-                console.log(data);
                 showToast(I18n.t('buy_put_success'));
                 this.props.params.getList();
                 router.pop();

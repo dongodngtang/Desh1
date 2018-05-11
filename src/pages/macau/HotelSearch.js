@@ -7,6 +7,7 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
+import {hotels} from '../../services/MacauDao';
 
 const styles = StyleSheet.create({
     nav: {
@@ -37,14 +38,6 @@ const styles = StyleSheet.create({
     }
 });
 
-let hotels = [
-    {
-        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
-        address: '地址：富城路33号(富城路陆家嘴西路)拉开交水电费实力对抗房间里看见',
-        location: '距你800m',
-        image: 'https://www.booking.com/hotel/fr/mercure-paris-17-batignolles.zh-cn.html?aid=1447385;label=baidu-5gytOGdjI0es7svaLOvFsw-19955992632;sid=32e51981373989e1ff2039d5e64162e0;ucfs=1;srpvid=ff424337ae2c000e;srepoch=1525944816;room1=A%2CA;hpos=2;hapos=2;dest_type=city;dest_id=-1456928;srfid=662418b2acd5489bd9fa8bdfd84be2140c1a14ddX2;from=searchresults;from_hc_img=1#hotelTmpl'
-    }
-]
 
 let foods = [
     {
@@ -124,13 +117,24 @@ export default class HotelSearch extends PureComponent {
 
     item_view = (item, index, separators) => {
 
-        return <FoodItem
+        return <HotelItem
             key={`hotel${index}`}
             item={item}/>
     }
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-        startFetch(foods, 10)
+        try {
+
+            hotels({page, page_size: 20}, data => {
+                startFetch(data.items, 18)
+            }, err => {
+                abortFetch()
+            })
+
+        } catch (err) {
+            console.log(err)
+            abortFetch()
+        }
     }
 }
 
@@ -138,7 +142,7 @@ export default class HotelSearch extends PureComponent {
 class HotelItem extends PureComponent {
 
     render() {
-        const {title, address, location, image} = this.props.item;
+        const {title, address, location, logo} = this.props.item;
         return <View style={{
             height: 128,
             backgroundColor: Colors.white,
@@ -148,7 +152,7 @@ class HotelItem extends PureComponent {
         }}>
 
             <ImageLoad
-                source={{uri: image}}
+                source={{uri: logo}}
                 style={{height: 95, width: 67, marginLeft: 12, marginRight: 12}}/>
 
             <View style={{marginRight: 17, height: 95, flex: 1}}>

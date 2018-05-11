@@ -15,10 +15,10 @@ let TAG = 'PuKeHttp:';
 const client = create({
     baseURL: Api.production,
     timeout: 30000,
-    headers: {
-        'X-DP-APP-KEY': '467109f4b44be6398c17f6c058dfa7ee',
-        'X-DP-CLIENT-IP': '192.168.2.231'
-    },
+    // headers: {
+    //     'X-DP-APP-KEY': '467109f4b44be6398c17f6c058dfa7ee',
+    //     'X-DP-CLIENT-IP': '192.168.2.231'
+    // },
 });
 
 export function setDpLang(lang) {

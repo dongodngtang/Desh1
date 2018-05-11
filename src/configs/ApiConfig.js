@@ -6,11 +6,11 @@ import {strNotNull, isEmptyObject} from '../utils/ComonHelper';
 
 export default {
     //内部测试
-    dev: 'http://192.168.2.10:3000/v1/',
+    dev: 'http://192.168.2.231:3000/v1/',
     dev_ci_at: 'http://192.168.2.231:8801/v10/',
 
     //test分支用来发布版本  test_ci_at用来跑自动化测试
-    test: 'http://test.api.deshpro.com/v10/',
+    test: 'http://test.kkapi.deshpro.com/v1/',
     test_ci_at: 'http://106.75.134.18:8801/v10/',
 
     //production 用来发布正式生产环境
@@ -60,7 +60,7 @@ export default {
     selectRaceTicket: selectRaceTicket,
     buyRaceTicket: buyRaceTicket,
     orderTicket: orderTicket,
-    addAddress: addAddress,
+    addAddress: 'account/address',
     setAdrDefault: setAdrDefault,
     adrDelete: adrDelete,
     login_count: login_count,
@@ -163,7 +163,8 @@ export default {
     report_templates: 'report_templates',//获取举报模板
     report_user: report_user,//举报用户
     report_topic: report_topic,//举报长帖说说
-
+    hotels: 'hotels',//获取酒店列表
+    hotel_detail: hotel_detail
 }
 
 function getUserId() {
@@ -175,6 +176,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function hotel_detail(id) {
+    return `hotels/${id}`
+}
 
 function upload_avatar() {
     return `account/users/${getUserId()}/avatar`
@@ -529,11 +534,11 @@ export function login_count() {
 
 
 export function adrDelete(address_id) {
-    return 'account/users/' + getUserId() + '/address/' + address_id + '/delete';
+    return 'account/address/' + address_id;
 }
 
 export function setAdrDefault(address_id) {
-    return 'account/users/' + getUserId() + '/address/' + address_id + '/default';
+    return 'account/address/' + address_id + '/default';
 }
 
 export function addAddress() {
