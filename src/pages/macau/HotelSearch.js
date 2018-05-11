@@ -227,3 +227,20 @@ class FoodItem extends PureComponent {
         </View>
     }
 }
+
+class RoomItem extends PureComponent {
+    render() {
+        return <TouchableOpacity
+            style={{
+                height: 128, width: '100%', backgroundColor: 'white',
+                flexDirection: 'row', alignItems: 'center'
+            }}>
+
+            <ImageLoad
+
+                style={{height:95,width:67}}/>
+
+
+        </TouchableOpacity>
+    }
+}
