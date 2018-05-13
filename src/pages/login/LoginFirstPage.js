@@ -36,6 +36,7 @@ class LoginFirstPage extends Component {
 
     shouldComponentUpdate(newProps) {
 
+
         if (newProps.loading != this.props.loading)
             if ((newProps.actionType === POST_PHONE_LOGIN ||
                     newProps.actionType === POST_EMAIL_LOGIN) && newProps.hasData) {
@@ -67,13 +68,12 @@ class LoginFirstPage extends Component {
 
 
     _success = (user_id) => {
-        const recentRaces = {
-            user_id: user_id,
-            number: 8
-        };
-        this.props._getRecentRaces(recentRaces);
+        const {refresh} = this.props.params;
+        refresh && refresh();
+
         this.props._getProfile(user_id);
         showToast(I18n.t('login_success'));
+
         global.router.pop();
     };
 

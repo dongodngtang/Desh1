@@ -126,6 +126,10 @@ export default class HotelSearch extends PureComponent {
                 item={item}/>
         else if (type === 'exchange_rate')
             return <RateItem
+                refresh={() => {
+                    this.listView.refresh()
+                }
+                }
                 key={`${type}${index}`}
                 item={item}/>
         else
@@ -300,7 +304,7 @@ class RateItem extends PureComponent {
         return <TouchableOpacity
             onPress={() => {
                 if (rate_type === 'local' && isEmptyObject(global.login_user)) {
-                    router.toLoginFirstPage()
+                    router.toLoginFirstPage(this.props.refresh)
                 }
 
             }}

@@ -834,9 +834,12 @@ export default class Router {
         })
     }
 
-    toLoginFirstPage() {
+    toLoginFirstPage(refresh) {
         this.stackPush({
             name: 'LoginFirstPage',
+            params: {
+                refresh
+            }
         })
     }
 
