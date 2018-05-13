@@ -7,7 +7,8 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
-import {hotels, info_types} from '../../services/MacauDao';
+import {hotels, info_types, exchange_rates} from '../../services/MacauDao';
+import {isEmptyObject} from "../../utils/ComonHelper";
 
 
 const styles = StyleSheet.create({
@@ -124,7 +125,9 @@ export default class HotelSearch extends PureComponent {
                 key={`${type}${index}`}
                 item={item}/>
         else if (type === 'exchange_rate')
-            return <RateItem/>
+            return <RateItem
+                key={`${type}${index}`}
+                item={item}/>
         else
             return <FoodItem
                 key={`${type}${index}`}
@@ -143,7 +146,9 @@ export default class HotelSearch extends PureComponent {
                     abortFetch()
                 })
             } else if (type === 'exchange_rate') {
-                startFetch([1, 2], 5)
+                exchange_rates(data => {
+                    startFetch(data.items, 18)
+                })
 
             } else {
                 info_types({page, page_size: 20, keyword: this.keyword, type},
@@ -279,7 +284,27 @@ class RoomItem extends PureComponent {
 
 class RateItem extends PureComponent {
     render() {
+
+        const {rate, rate_type, s_currency, t_currency} = this.props.item;
+        let t_rate = 1 / Number.parseFloat(rate);
+        t_rate = t_rate.toFixed(4);
+        let rate_type_name = rate_type === 'real_time' ? '实时汇率' : '本地汇率';
+        let rate_bg = rate_type === 'real_time' ? Images.macau.rate1 : Images.macau.rate2;
+        let target_source = `1${t_currency}=${t_rate}${s_currency}`;
+        let source_target = `1${s_currency}=${rate}${t_currency}`;
+        let login_or_local = !isEmptyObject(global.login_user) || rate_type === 'real_time';
+        if (rate_type === 'local' && isEmptyObject(global.login_user)) {
+            target_source = '登录查看'
+        }
+
         return <TouchableOpacity
+            onPress={() => {
+                if (rate_type === 'local' && isEmptyObject(global.login_user)) {
+                    router.toLoginFirstPage()
+                }
+
+            }}
+            activeOpacity={1}
             style={{
                 height: 142, width: '100%', alignItems: 'center',
                 justifyContent: 'center'
@@ -287,12 +312,12 @@ class RateItem extends PureComponent {
 
 
             <Image
-                source={Images.macau.rate1}
+                source={rate_bg}
                 style={{height: 142, width: '100%', position: 'absolute'}}/>
+            <Text style={{fontSize: 15, color: 'white'}}>{rate_type_name}</Text>
 
-            <Text style={{fontSize: 15, color: 'white'}}>实时汇率</Text>
-            <Text style={{fontSize: 20, color: 'white', marginTop: 10}}>1港元=0.8117人民币</Text>
-            <Text style={{fontSize: 20, color: 'white', marginTop: 6}}>1人民币=1.232港元</Text>
+            <Text style={{fontSize: 20, color: 'white', marginTop: 10}}>{target_source}</Text>
+            {login_or_local ? <Text style={{fontSize: 20, color: 'white', marginTop: 6}}>{source_target}</Text> : null}
 
 
         </TouchableOpacity>

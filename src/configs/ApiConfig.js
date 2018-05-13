@@ -164,7 +164,8 @@ export default {
     report_topic: report_topic,//举报长帖说说
     hotels: 'hotels',//获取酒店列表
     info_types: info_types,//获取资讯列表
-    infos:'infos'
+    infos: 'infos',//获取资讯详情
+    exchange_rates: 'exchange_rates',//获取汇率列表
 }
 
 function getUserId() {

@@ -834,9 +834,8 @@ export default class Router {
         })
     }
 
-    toLoginFirstPage(props) {
-        this.push(props, {
-
+    toLoginFirstPage() {
+        this.stackPush({
             name: 'LoginFirstPage',
         })
     }
