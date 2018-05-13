@@ -155,7 +155,7 @@ class TabHomePage extends Component {
                     info_page: 2,
                     load_more: 'success'
                 });
-                this.infosView && this.infosView.refresh(data.hot_infos)
+                this.infosView && this.infosView.refresh([{type: 'hotel'}, {type: 'info'}])
             } else {
                 this.setState({
                     load_more: 'load_all'
@@ -177,7 +177,7 @@ class TabHomePage extends Component {
     _onScroll = (event) => {
 
         this.onTopScroll(event);
-        this.scrollLoad(event);
+        // this.scrollLoad(event);
     };
 
     scrollLoad = (e) => {
@@ -271,10 +271,10 @@ class TabHomePage extends Component {
                         ]}/>
                     <Catalog/>
 
-                    <Races
-                        raceTickets={raceTickets}/>
-                    <Coming
-                        listRace={listRace}/>
+                    {/*<Races*/}
+                        {/*raceTickets={raceTickets}/>*/}
+                    {/*<Coming*/}
+                        {/*listRace={listRace}/>*/}
                     <Information
                         ref={ref => this.infosView = ref}
                     />

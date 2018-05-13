@@ -1,12 +1,12 @@
 /**
  * Created by lorne on 2017/4/21.
  */
-import React from 'react';
+import React, {Component} from 'react';
 import {Image, ActivityIndicator, View} from 'react-native';
 import {Images} from '../Themes';
 import {strNotNull} from '../utils/ComonHelper'
 
-class ImageLoad extends React.Component {
+class ImageLoad extends Component {
 
 
     state = {

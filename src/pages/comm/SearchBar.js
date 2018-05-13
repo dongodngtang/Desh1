@@ -52,7 +52,7 @@ export default class SearchBar extends PureComponent {
                 selectionColor={Colors.white}
                 onChangeText={text => {
                     this.setState({text})
-                    this.props.keywords(text)
+                    this.props.keyword(text)
                 }}
                 style={styles.input}/>
             {hide ? null : <Image source={Images.macau.search}

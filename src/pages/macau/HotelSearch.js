@@ -63,8 +63,8 @@ export default class HotelSearch extends PureComponent {
                 </TouchableOpacity>
                 <View style={{flex: 1}}/>
                 {this.state.search ? <SearchBar
-                    keywords={keywords => {
-                        this.keywords = keywords;
+                    keyword={keyword => {
+                        this.keyword = keyword;
                         this.listView && this.listView.refresh()
 
                     }}/> : <Text style={styles.title}>{name}</Text>}
@@ -137,7 +137,7 @@ export default class HotelSearch extends PureComponent {
         try {
             const {type} = this.props.params.item;
             if (type === 'hotel') {
-                hotels({page, page_size: 20, keywords: this.keywords}, data => {
+                hotels({page, page_size: 20, keyword: this.keyword}, data => {
                     startFetch(data.items, 18)
                 }, err => {
                     abortFetch()
@@ -146,7 +146,7 @@ export default class HotelSearch extends PureComponent {
                 startFetch([1, 2], 5)
 
             } else {
-                info_types({page, page_size: 20, keywords: this.keywords, type},
+                info_types({page, page_size: 20, keyword: this.keyword, type},
                     data => {
                         startFetch(data.items, 18)
                     }, err => {

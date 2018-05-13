@@ -1,29 +1,76 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
     View, Text, Button, Alert, DatePickIOS,
     Image, StyleSheet, ActivityIndicator,
     TouchableOpacity, ScrollView, FlatList
 }
     from 'react-native';
-import {Images} from '../../Themes';
-import {styles} from './Styles';
-import {
-    isEmptyObject, util, convertDate,
-} from '../../utils/ComonHelper';
+import {Images, Colors} from '../../Themes';
 import I18n from 'react-native-i18n';
-import ReadLike from '../comment/ReadLike';
-import {getHotInfos} from '../../services/NewsDao';
+import {ImageLoad} from "../../components";
 
-export default class Information extends Component {
+const styles = StyleSheet.create({
+    informationLine: {
+        height: 1,
+        marginLeft: 17,
+        marginRight: 17,
+        backgroundColor: 'red',
+        marginTop: 13
+    },
+    item_hotel: {
+        height: 100,
+        marginLeft: 17,
+        marginRight: 17,
+        flex: 1
+    },
+    row_center: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    hotel_title: {
+        fontSize: 16,
+        color: Colors.txt_444
+    },
+    hotel_location: {
+        fontSize: 12,
+        color: Colors._AAA
+    },
+    hotel: {
+        paddingRight: 5,
+        paddingLeft: 5,
+        paddingTop: 2,
+        paddingBottom: 2,
+        borderColor: '#E54A2E',
+        borderWidth: 1,
+        color: '#E54A2E',
+        fontSize: 12,
+        marginLeft: 8,
+        borderRadius: 2
+    },
+    info_tag: {
+        color: '#F5A623',
+        borderColor: '#F5A623'
+    },
+    hot_info: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: Colors.txt_444,
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 17
+    }
+
+})
+
+export default class Information extends PureComponent {
 
     state = {
-        hot_infos: []
+        hot_infos: [{type: 'hotel'}, {type: 'info'}]
     };
-
 
     refresh = (infos) => {
         console.log('hot_infos', infos);
-        this.setState({hot_infos: infos})
+        // this.setState({hot_infos: infos})
     }
 
     setInfos = (infos) => {
@@ -35,116 +82,33 @@ export default class Information extends Component {
 
 
     _renderItem = ({item}) => {
-        if (item.source_type === 'info') {
-            return (
-                <TouchableOpacity
-                    onPress={() => {
-
-                        const {id} = item.info;
-                        let url = `news/${id}`;
-                        global.router.toWebPage(url, {
-                            bottomNav: 'commentNav',
-                            info: item.info,
-                            topic_type: item.source_type
-                        })
-                    }}
-                    style={styles.information}>
-                    <View style={{flex: 1}}>
-                        <Text numberOfLines={2}
-                              style={[styles.raceText, {marginRight: 20}]}>{item.info.title}</Text>
-                        <View style={{flexDirection: 'row', marginTop: 14}}>
-                            <ReadLike
-                                read={item.info.total_views}
-                                like={item.info.total_likes}/>
-                            <View style={{flex: 1}}/>
-                            <Text
-                                style={[styles.informationText, {
-                                    marginLeft: 15,
-                                    marginRight: 17
-                                }]}>{convertDate(item.info.date, 'MM-DD')}</Text>
-
-                        </View>
-
-                    </View>
-
-                    <Image style={{width: 123, height: 75}} source={{uri: item.info.image_thumb}}/>
-                </TouchableOpacity>
-            )
-        } else if (item.source_type === 'video') {
-            return (
-                <View style={{marginLeft: 17, marginTop: 17, marginRight: 17}}>
-                    <Text
-                        onPress={() => {
-
-                            const {id} = item.video;
-                            let url = `videos/${id}`;
-                            global.router.toWebPage(url, {
-                                bottomNav: 'commentNav',
-                                info: item.video,
-                                topic_type: item.source_type
-                            })
-                        }}
-                        style={{
-                            fontSize: 15,
-                            color: '#333333'
-                        }}>{item.video.name}</Text>
-
-                    <TouchableOpacity
-                        onPress={() => {
-                            const {id} = item.video;
-                            let url = `videos/${id}/${global.language}`;
-                            global.router.toWebPage(url, {
-                                bottomNav: 'commentNav',
-                                info: item.video,
-                                topic_type: item.source_type
-                            })
-                        }}
-                        style={{height: 207, marginTop: 14, marginBottom: 14}}>
-                        <Image style={{height: 207}}
-                               source={{uri: item.video.cover_link.trim()}}/>
-                        <Image style={{
-                            width: 70, height: 70, position: 'absolute',
-                            left: '40%', top: '40%'
-                        }} source={Images.begin}/>
-
-
-                    </TouchableOpacity>
-                </View>
-
-            )
+        switch (item.type) {
+            case 'hotel':
+                return <ItemHotel/>
+            case 'info':
+                return <ItemInfo/>
         }
 
+
     };
-    _separator = () => {
-        return <View style={{height: 0.5, marginLeft: 17, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
-    }
+
 
     render() {
         return (
             <View style={{backgroundColor: '#fff', marginTop: 8}}>
-                <View style={{height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
-                    <View style={[styles.races]}>
-                        <Text style={styles.raceText1}>{I18n.t('hot_infos')}</Text>
-                    </View>
-                    <View style={{flex: 1}}/>
-                    <TouchableOpacity
-                        onPress={() => {
-                            global.router.toTabNews()
-                        }}
-                        style={[styles.racesTwo, {marginRight: 14}]}>
-                        <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
-                        <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
-                    </TouchableOpacity>
-                </View>
-                <View style={styleI.informationLine}/>
+
+                <Text style={styles.hot_info}>热门推荐</Text>
+
+                {_separator()}
+
                 <FlatList
                     showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
+                    ItemSeparatorComponent={_separator}
                     data={this.state.hot_infos}
                     renderItem={this._renderItem}
-                    keyExtractor={(item, index) => index+"item"}
+                    keyExtractor={(item, index) => index + "item"}
                 />
-                <View style={styleI.informationLine}/>
+
 
             </View>
         );
@@ -152,13 +116,71 @@ export default class Information extends Component {
 
 }
 
-const styleI = StyleSheet.create({
-    informationLine: {
+_separator = () => {
+    return <View style={{height: 0.5, marginLeft: 17, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
+}
 
-        height: 1,
-        marginLeft: 17,
-        marginRight: 17,
-        backgroundColor: '#ECECEE',
-        marginTop: 13
+class ItemInfo extends PureComponent {
+
+    render() {
+        return <View style={[styles.item_hotel, {height: 220}]}>
+            <View style={[styles.row_center, {
+                marginTop: 9,
+                marginBottom: 9
+            }]}>
+                <Text
+                    numOfLines={2}
+                    style={styles.hotel_title}>亚苏尔澳门菜 Azores</Text>
+                <Text style={[styles.hotel, styles.info_tag]}>美食</Text>
+            </View>
+
+            <ImageLoad
+                source={{uri: 'http://www.travelweekly-china.com/uploadedImages/News/%E6%97%85%E6%B8%B8%E5%B1%80_Tourism_Bureau/61675.jpg?width=1540&height=866&mode=crop&Anchor=MiddleCenter'}}
+                style={{height: 164, width: '100%', marginBottom: 16}}/>
+
+        </View>
     }
-})
+}
+
+
+class ItemHotel extends PureComponent {
+    render() {
+        return <View style={[styles.item_hotel, styles.row_center,]}>
+
+            <View style={{height: 75, marginRight: 15, flex: 1}}>
+                <View style={styles.row_center}>
+                    <Text
+                        numOfLines={2}
+                        style={styles.hotel_title}>深圳富临大酒店</Text>
+                    <Text style={styles.hotel}>酒店</Text>
+                </View>
+
+                <Text
+                    numOfLines={1}
+                    style={[styles.hotel_location, {
+                        marginTop: 10
+                    }]}>酒店大堂就在三楼非常方便</Text>
+
+                <View style={{flex: 1}}/>
+
+                <View style={[styles.row_center, {justifyContent: 'space-between'}]}>
+
+                    <Text
+                        numOfLines={1}
+                        style={styles.hotel_location}>阅 224</Text>
+
+                    <Text
+                        numOfLines={1}
+                        style={styles.hotel_location}>5-23</Text>
+                </View>
+
+            </View>
+
+
+            <ImageLoad
+                source={{uri: 'http://ww4.sinaimg.cn/large/67e20513gw1f9rr12bsxtj21kw11xe65.jpg'}}
+                style={{height: 75, width: 122}}/>
+        </View>
+    }
+}
+

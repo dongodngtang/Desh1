@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
 
 
     information: {
-        height: 103,
+        height: 100,
         marginLeft: 17,
         marginRight: 17,
         flexDirection: 'row',
