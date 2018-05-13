@@ -49,18 +49,17 @@ export default class ImageMark extends Component {
             <TouchableOpacity
                 activeOpacity={0.5}
                 onPress={() => this.imageClick(src)}
-                style={{backgroundColor: Colors._ECE}}>
+                style={{
+                    backgroundColor: Colors._ECE,
+                    width: this.state.width,
+                    height: this.state.height
+                }}>
                 <Image
                     style={{
                         width: this.state.width,
-                        height: this.state.height,
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                        height: this.state.height
                     }}
-                    source={{uri: src}}>
-
-                </Image>
-
+                    source={{uri: src}}/>
 
             </TouchableOpacity>
 
