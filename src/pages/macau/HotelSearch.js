@@ -7,35 +7,8 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
-import {hotels} from '../../services/MacauDao';
+import {hotels, info_types} from '../../services/MacauDao';
 
-
-let foods = [
-    {
-        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
-        read: '234',
-        like: '446',
-        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
-    },
-    {
-        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
-        read: '234',
-        like: '446',
-        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
-    },
-    {
-        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
-        read: '234',
-        like: '446',
-        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
-    },
-    {
-        title: '上海浦东香格里拉大酒店阿莱克斯砥砺奋进阿实力对抗肌肤收到了空间',
-        read: '234',
-        like: '446',
-        image: 'https://cdn-upyun.deshpro.com/uploads/info/image/834/preview_fff7c90a262f7487ea6f3687a894a364.jpg'
-    },
-]
 
 const styles = StyleSheet.create({
     nav: {
@@ -170,7 +143,12 @@ export default class HotelSearch extends PureComponent {
                     abortFetch()
                 })
             } else {
-                startFetch(foods, 18)
+                info_types({page, page_size: 20, keywords: this.keywords, type},
+                    data => {
+                        startFetch(data.items, 18)
+                    }, err => {
+                        abortFetch()
+                    })
             }
 
 
@@ -234,7 +212,7 @@ class HotelItem extends PureComponent {
 class FoodItem extends PureComponent {
 
     render() {
-        const {title, read, like, image} = this.props.item;
+        const {title, read, like, image, date} = this.props.item;
         return <View style={{
             height: 102, backgroundColor: Colors.white, width: '100%',
             alignItems: 'center', flexDirection: 'row',
@@ -249,7 +227,7 @@ class FoodItem extends PureComponent {
                 <View style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Text
                         numberOfLines={1}
-                        style={{fontSize: 12, color: Colors._AAA}}>{read}阅</Text>
+                        style={{fontSize: 12, color: Colors._AAA}}>{date}</Text>
 
                     <View style={{alignItems: 'center', flexDirection: 'row'}}>
                         <Image

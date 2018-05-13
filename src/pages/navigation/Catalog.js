@@ -18,7 +18,7 @@ export default class Catalog extends PureComponent {
             },
                 {
                     name: '娱乐',
-                    type: 'entertainment',
+                    type: 'recreation',
                     size: {height: 34, width: 36},
                     icon: Images.macau.entertainment
                 }
@@ -32,7 +32,7 @@ export default class Catalog extends PureComponent {
                 },
                 {
                     name: '景点',
-                    type: 'attractions',
+                    type: 'scenic',
                     size: {height: 34, width: 36},
                     icon: Images.macau.viewpoint
                 }
@@ -40,14 +40,14 @@ export default class Catalog extends PureComponent {
             [
                 {
                     name: '美食',
-                    type: 'food',
+                    type: 'cate',
                     size: {height: 35, width: 34},
                     icon: Images.macau.food
                 },
 
                 {
                     name: '人闻',
-                    type: 'culture',
+                    type: 'humanities',
                     size: {height: 34, width: 30},
                     icon: Images.macau.book
                 }
@@ -55,7 +55,7 @@ export default class Catalog extends PureComponent {
             [
                 {
                     name: '特产',
-                    type: 'gift',
+                    type: 'specialty',
                     size: {height: 29, width: 31},
                     icon: Images.macau.gift
                 },

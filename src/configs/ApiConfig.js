@@ -163,7 +163,7 @@ export default {
     report_user: report_user,//举报用户
     report_topic: report_topic,//举报长帖说说
     hotels: 'hotels',//获取酒店列表
-    hotel_detail: hotel_detail
+    info_types: info_types
 }
 
 function getUserId() {
@@ -176,8 +176,8 @@ function getUserId() {
 const page_size = 10;
 
 
-function hotel_detail(id) {
-    return `hotels/${id}`
+function info_types(body) {
+    return `info_types/${body.type}/infos`
 }
 
 function upload_avatar() {
@@ -468,7 +468,6 @@ export function cert_default(body) {
 export function list_certification() {
     return 'account/certification'
 }
-
 
 
 export function unread_remind() {
