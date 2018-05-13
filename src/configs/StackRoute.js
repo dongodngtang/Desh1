@@ -108,9 +108,11 @@ import Square from '../pages/socials/Square';
 import MallPage from '../pages/malls/MallPage';
 import NearFriend from '../pages/socials/NearFriend';
 import HotelSearch from '../pages/macau/HotelSearch';
+import InfoPage from '../pages/macau/InfoPage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="InfoPage" component={InfoPage} hideNavBar/>
         <Scene key="HotelDetail" component={HotelDetail} hideNavBar/>
         <Scene key="HotelSearch" component={HotelSearch} hideNavBar/>
         <Scene key="NearFriend" component={NearFriend} hideNavBar/>

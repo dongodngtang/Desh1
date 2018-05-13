@@ -7,37 +7,7 @@ import {
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
-import {BannerStatus} from '../../configs/Status';
 
-export const _clickBanner = (item) => {
-    switch (item.source_type) {
-        case BannerStatus.INFO:
-
-            let url = `news/${item.source_id}`;
-            global.router.toWebPage(url, {
-                bottomNav: 'commentNav',
-                info: {id: item.source_id},
-                topic_type: item.source_type
-            });
-            break;
-        case BannerStatus.RACE:
-            global.router.toRacesInfoPage(this.props, item.source_id, false);
-            break;
-
-        case BannerStatus.VIDEO:
-            let urlVideo = `videos/${item.source_id}`;
-            global.router.toWebPage(urlVideo, {
-                bottomNav: 'commentNav',
-                info: {id: item.source_id},
-                topic_type: item.source_type
-            });
-            break;
-        case BannerStatus.LINK:
-            global.router.toWebViewPage(this.props, item.link);
-            break;
-
-    }
-}
 
 export default class MainBanner extends Component {
 
@@ -53,7 +23,6 @@ export default class MainBanner extends Component {
                         {this.props.banners.map((item, key) => {
                             return <TouchableOpacity
                                 key={key}
-                                onPress={()=>_clickBanner(item)}
                                 activeOpacity={1}>
                                 <Image style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
                             </TouchableOpacity>

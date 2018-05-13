@@ -47,6 +47,16 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+
+    toInfoPage(info) {
+        this.stackPush({
+            name: "InfoPage",
+            params: {
+                info
+            }
+        })
+    }
+
     toHotelDetail(hotel) {
         this.stackPush({
             name: 'HotelDetail',

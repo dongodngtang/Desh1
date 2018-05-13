@@ -264,8 +264,12 @@ class TabHomePage extends Component {
                     />}
                 >
                     <MainBanner
-                        banners={banners}/>
-                   <Catalog/>
+                        banners={[
+                            {image: 'https://img1.qunarzz.com/travel/poi/201407/29/e10a070bdf07c32dc8d65eac.jpg_r_720x400x95_19806ea7.jpg'},
+                            {image: 'http://hkpic.crntt.com/upload/201307/8/102618618.jpg'},
+                            {image: 'https://i.travelapi.com/hotels/2000000/1700000/1691600/1691530/1691530_58_z.jpg'},
+                        ]}/>
+                    <Catalog/>
 
                     <Races
                         raceTickets={raceTickets}/>

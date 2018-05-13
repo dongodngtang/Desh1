@@ -142,6 +142,9 @@ export default class HotelSearch extends PureComponent {
                 }, err => {
                     abortFetch()
                 })
+            } else if (type === 'exchange_rate') {
+                startFetch([1, 2], 5)
+
             } else {
                 info_types({page, page_size: 20, keywords: this.keywords, type},
                     data => {
@@ -213,11 +216,15 @@ class FoodItem extends PureComponent {
 
     render() {
         const {title, read, like, image, date} = this.props.item;
-        return <View style={{
-            height: 102, backgroundColor: Colors.white, width: '100%',
-            alignItems: 'center', flexDirection: 'row',
-            paddingLeft: 17, paddingRight: 17
-        }}>
+        return <TouchableOpacity
+            onPress={() => {
+                router.toInfoPage(this.props.item)
+            }}
+            style={{
+                height: 102, backgroundColor: Colors.white, width: '100%',
+                alignItems: 'center', flexDirection: 'row',
+                paddingLeft: 17, paddingRight: 17
+            }}>
             <View style={{flex: 1, height: 74}}>
                 <Text
                     numberOfLines={2}
@@ -249,7 +256,7 @@ class FoodItem extends PureComponent {
                 source={{uri: image}}
                 style={{width: 122, height: 74, marginLeft: 16}}/>
 
-        </View>
+        </TouchableOpacity>
     }
 }
 
