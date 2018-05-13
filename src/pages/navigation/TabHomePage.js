@@ -167,9 +167,9 @@ class TabHomePage extends Component {
             this.setState({
                 load_more: 'fail'
             });
-            setTimeout(() => {
-                alertRefresh(this._getData)
-            }, 2000)
+            // setTimeout(() => {
+            //     alertRefresh(this._getData)
+            // }, 2000)
 
         }, {page: 1, page_size: 20})
     };

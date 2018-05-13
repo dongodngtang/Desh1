@@ -83,8 +83,7 @@ export default {
     msg_read: msg_read,
     unread_remind: unread_remind,
     app_versions: 'app_versions',
-    add_certification: add_certification,
-    del_certification: del_certification,
+    add_certification: 'account/certification',//新增用户实名认证
     list_certification: list_certification,
     cert_default: cert_default,
     test_user: 'account/test_user',
@@ -461,22 +460,16 @@ export function preferential(body) {
     return 'races/' + race_id + '/tickets/preferential'
 }
 
-export function cert_default() {
-    return 'account/users/' + getUserId() + '/certification/default'
+export function cert_default(body) {
+    return `account/certification/${body.id}/default`
 }
 
 
 export function list_certification() {
-    return 'account/users/' + getUserId() + '/certification?version=v20'
+    return 'account/certification'
 }
 
-export function del_certification() {
-    return 'account/users/' + getUserId() + '/certification/delete'
-}
 
-export function add_certification() {
-    return 'account/users/' + getUserId() + '/certification'
-}
 
 export function unread_remind() {
     return 'users/' + getUserId() + '/notifications/unread_remind';

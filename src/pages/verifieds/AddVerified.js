@@ -3,7 +3,7 @@ import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity, Alert, Scrol
 import {NavigationBar, ActionSheet, ImagePicker} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {addVerified, delVerified} from '../../services/AccountDao';
+import {addVerified, delVerified, editVerified} from '../../services/AccountDao';
 import {strNotNull, showToast, isEmptyObject, getFileName} from '../../utils/ComonHelper';
 import {idCardStatus, Verified} from '../../configs/Status';
 
@@ -31,7 +31,7 @@ export default class AddVerified extends Component {
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: '#161718'}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={this._title()}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -78,7 +78,7 @@ export default class AddVerified extends Component {
         }, {
             text: `${I18n.t('alert_sure')}`, onPress: () => {
                 if (!isEmptyObject(verified)) {
-                    delVerified({extra_id: verified.id}, data => {
+                    delVerified({id: verified.id}, data => {
                         verified_refresh();
                         router.pop();
                     }, err => {
@@ -162,20 +162,28 @@ export default class AddVerified extends Component {
                 let file = {uri: localImg.path, type: 'multipart/form-data', name: getFileName(localImg.path)};
                 formData.append("image", file);
             }
-            if (!isEmptyObject(verified)) {
-                formData.append('extra_id', verified.id)
-            }
-            formData.append("version", 'v20');
+
+
             formData.append("real_name", name);
             formData.append("cert_no", num);
             formData.append("cert_type", cert_type);
 
-            addVerified(formData, data => {
-                verified_refresh();
-                router.pop();
-            }, err => {
+            if (!isEmptyObject(verified)) {
 
-            })
+                editVerified(verified.id, formData, data => {
+                    verified_refresh();
+                    router.pop();
+                }, err => {
+
+                })
+            } else {
+                addVerified(formData, data => {
+                    verified_refresh();
+                    router.pop();
+                }, err => {
+
+                })
+            }
 
 
         } else {
@@ -324,7 +332,7 @@ const styles = StyleSheet.create({
         height: 128,
         width: 206,
         alignSelf: 'center',
-        resizeMode:'cover'
+        resizeMode: 'cover'
     },
     lbImage3: {
         fontSize: 11,

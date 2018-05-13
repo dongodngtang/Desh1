@@ -40,7 +40,7 @@ export default class VerifiedPage extends Component {
 
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor: '#161718'}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t('verified_list')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}

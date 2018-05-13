@@ -54,7 +54,7 @@ export function listVerified(resolve, reject) {
 }
 
 export function defaultVerified(body, resolve, reject) {
-    helper.post(Api.cert_default(), body, ret => {
+    helper.post(Api.cert_default(body), body, ret => {
         resolve(ret.data)
     }, err => {
         showToast(err);
@@ -63,7 +63,17 @@ export function defaultVerified(body, resolve, reject) {
 }
 
 export function delVerified(body, resolve, reject) {
-    helper.post(Api.del_certification(), body, ret => {
+    helper.del(Api.add_certification + `/${body.id}`, body, ret => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
+
+
+export function editVerified(id, body, resolve, reject) {
+    helper.put(Api.add_certification + `/${id}`, body, ret => {
         resolve(ret.data)
     }, err => {
         showToast(err);
@@ -72,7 +82,7 @@ export function delVerified(body, resolve, reject) {
 }
 
 export function addVerified(body, resolve, reject) {
-    helper.post(Api.add_certification(), body, ret => {
+    helper.post(Api.add_certification, body, ret => {
         resolve(ret.data)
     }, err => {
         showToast(err);
