@@ -6,26 +6,31 @@
 import React, {PureComponent} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity,
-    ScrollView
+    ScrollView, InteractionManager
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import RenderHtml from '../comm/RenderHtml';
 import {getInfos} from '../../services/MacauDao'
+import {isEmptyObject} from "../../utils/ComonHelper";
+import LoadingView from "../../components/load/LoadingView";
 
 export default class InfoPage extends PureComponent {
     state = {
         info: {}
     }
 
-    componentWillMount() {
-        const {id} = this.props.params.info
-        getInfos(id, data => {
-            this.setState({
-                info: data.info
+    componentDidMount() {
+        InteractionManager.runAfterInteractions(() => {
+            const {id} = this.props.params.info
+            getInfos(id, data => {
+                this.setState({
+                    info: data.info
+                })
+            }, err => {
             })
-        }, err => {
         })
+
 
     }
 
@@ -42,7 +47,8 @@ export default class InfoPage extends PureComponent {
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
-            <ScrollView>
+
+            {isEmptyObject(description) ? <LoadingView/> : <ScrollView>
                 <View style={{
                     backgroundColor: 'white',
                     alignItems: 'center',
@@ -65,7 +71,8 @@ export default class InfoPage extends PureComponent {
                     <RenderHtml
                         html={description}/>
                 </View>
-            </ScrollView>
+            </ScrollView>}
+
 
         </View>
     }
