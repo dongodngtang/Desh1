@@ -19,7 +19,6 @@ export default class RenderHtml extends PureComponent {
     render() {
         const {html} = this.props;
         return <Html
-            debug={true}
             onLinkPress={(event, href, attribs) => {
                 console.log('链接', href)
                 router.toWebViewPage(attribs, href)

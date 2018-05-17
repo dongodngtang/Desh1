@@ -4,16 +4,16 @@ import {
     Text, ActivityIndicator, Platform
 }
     from 'react-native';
-import Races from './Races';
-import Headlines from './Headlines';
-import Coming from './Coming';
+// import Races from './Races';
+// import Headlines from './Headlines';
+// import Coming from './Coming';
 import Information from './Information';
 import MainBanner from './MainBanner';
 import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
 import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
 import {connect} from 'react-redux';
-import {SearchPage} from './SearchPage';
+// import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
 import {getDispatchAction, alertRefresh, getCurrentDate, strNotNull} from '../../utils/ComonHelper';
 import ActivityModel from '../message/ActivityModel';
@@ -113,37 +113,13 @@ class TabHomePage extends Component {
         this._getPushActivity();
         getMainBanners(data => {
             this.setState({
-                banners: data.banners
+                banners: data.items
             });
 
         }, err => {
 
         });
 
-        getPukeNews(data => {
-            console.log('headlines', data)
-            this.setState({
-                headlines: data.headlines
-            })
-        }, err => {
-        });
-
-        getRecentRaces({number: 10}, data => {
-            console.log('listRace', data)
-            this.setState({
-                listRace: data.items
-            })
-        }, err => {
-
-        });
-        getRaceTickets({number: 10}, data => {
-            console.log('raceTickets', data)
-            this.setState({
-                raceTickets: data.items
-            })
-        }, err => {
-
-        });
 
         this.setState({
             load_more: 'loading'
@@ -245,7 +221,7 @@ class TabHomePage extends Component {
     };
 
     render() {
-        const {listRace, raceTickets, banners, headlines, load_more} = this.state;
+        const {banners, headlines, load_more} = this.state;
 
         return (
 
@@ -264,17 +240,13 @@ class TabHomePage extends Component {
                     />}
                 >
                     <MainBanner
-                        banners={[
-                            {image: 'https://img1.qunarzz.com/travel/poi/201407/29/e10a070bdf07c32dc8d65eac.jpg_r_720x400x95_19806ea7.jpg'},
-                            {image: 'http://hkpic.crntt.com/upload/201307/8/102618618.jpg'},
-                            {image: 'https://i.travelapi.com/hotels/2000000/1700000/1691600/1691530/1691530_58_z.jpg'},
-                        ]}/>
+                        banners={banners}/>
                     <Catalog/>
 
                     {/*<Races*/}
-                        {/*raceTickets={raceTickets}/>*/}
+                    {/*raceTickets={raceTickets}/>*/}
                     {/*<Coming*/}
-                        {/*listRace={listRace}/>*/}
+                    {/*listRace={listRace}/>*/}
                     <Information
                         ref={ref => this.infosView = ref}
                     />

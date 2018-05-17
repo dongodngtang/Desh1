@@ -166,6 +166,7 @@ export default {
     info_types: info_types,//获取资讯列表
     infos: 'infos',//获取资讯详情
     exchange_rates: 'exchange_rates',//获取汇率列表
+
 }
 
 function getUserId() {

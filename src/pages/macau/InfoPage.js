@@ -35,8 +35,8 @@ export default class InfoPage extends PureComponent {
     }
 
     render() {
-        const {title, date} = this.props.params.info;
-        const {description} = this.state.info;
+
+        const {description,title} = this.state.info;
 
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar

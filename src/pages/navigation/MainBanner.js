@@ -12,7 +12,8 @@ import Swiper from 'react-native-swiper';
 export default class MainBanner extends Component {
 
     render() {
-        if (this.props.banners.length > 0)
+        const {banners} = this.props;
+        if (banners && banners.length > 0)
             return (
                 <View style={{height: 200}}>
                     <Swiper
@@ -22,7 +23,8 @@ export default class MainBanner extends Component {
                         autoplay>
                         {this.props.banners.map((item, key) => {
                             return <TouchableOpacity
-                                key={key}
+                                onPress={() => this.onClickBanner(item)}
+                                key={`banner${item.source_id}`}
                                 activeOpacity={1}>
                                 <Image style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
                             </TouchableOpacity>
@@ -36,6 +38,16 @@ export default class MainBanner extends Component {
             );
         else
             return <View style={{height: 200}}/>
+    }
+
+    onClickBanner = (item) => {
+        const {source_type, source_id} = item;
+        if (source_type === 'hotel') {
+            router.toHotelDetail({id: source_id})
+        } else if (source_type === 'info') {
+            router.toInfoPage({id: source_id})
+        }
+
     }
 
 
