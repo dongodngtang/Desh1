@@ -142,7 +142,7 @@ export default {
     release_topic: release_topic,//发说说/长帖的接口
     upload_image: "topics/image",//长贴上传图片
     topics: 'topics',//获取广场列表
-    topics_recommends: '/topics/recommends', //获取精华列表
+    topics_recommends: '/topics/essence', //获取精华列表
     topics_like: topics_like,//说手长帖点赞
     topics_detail: topics_detail,//查看帖子详情
     topics_comments: topics_comments,//获取说说长帖评论列表
@@ -215,16 +215,16 @@ function jmessage_visit_other(body) {
 
 
 function topics_search(user_id) {
-    return `users/${user_id}/user_topics/search`
+    return `users/${user_id}/topics`
 }
 
 function topics_delete(topic_id) {
-    return `users/${getUserId()}/user_topics/${topic_id}`
+    return `topics/${topic_id}`
 }
 
 function user_topics(body) {
     const {user_id} = body;
-    return `users/${user_id}/user_topics`
+    return `users/${user_id}/topics`
 }
 
 function jmessage_info() {
@@ -232,15 +232,15 @@ function jmessage_info() {
 }
 
 function followships() {
-    return `users/${login_user.user_id}/followships`
+    return `users/${login_user.user_id}/following`
 }
 
 function followings() {
-    return `users/${login_user.user_id}/followships/followings`
+    return `users/${login_user.user_id}/following`
 }
 
 function followers() {
-    return `users/${login_user.user_id}/followships/followers`
+    return `users/${login_user.user_id}/followers`
 }
 
 function topics_image(topic_id) {

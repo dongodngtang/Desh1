@@ -64,7 +64,7 @@ export default class SocialContact extends Component {
                     titleStyle={{fontSize: 17, color: Colors.white}}
                     toolbarStyle={{backgroundColor: Colors._E54}}
                     title={I18n.t('follow_stalwart')}
-                    leftBtnIcon={Images.set_back}
+                    leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
                         router.pop()
@@ -145,14 +145,14 @@ export class FollowList extends Component {
     ///渲染行
     renderItem = (item) => {
         let icon = "";
-        const {avatar, follower_count, following_count, nick_name, is_following, id} = item;
+        const {avatar, followers_count, following_count, nick_name, is_following, user_id} = item;
         if (avatar !== null) {
             icon = avatar;
         }
         return (
             <TouchableOpacity
                 onPress={() => {
-                    global.router.toUserTopicPage({user_id: id})
+                    global.router.toUserTopicPage({user_id})
                 }}
                 style={styles.item}>
                 <View style={styles.subRowItem}>
@@ -163,10 +163,10 @@ export class FollowList extends Component {
                     <View>
                         <Text style={styles.nickname}>{nick_name}</Text>
                         <Text
-                            style={styles.followText}>{`${I18n.t("follow")} ${following_count} | ${I18n.t("stalwart")} ${follower_count}`}</Text>
+                            style={styles.followText}>{`${I18n.t("follow")} ${following_count} | ${I18n.t("stalwart")} ${followers_count}`}</Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => this.followAction(id, is_following, () => {
+                <TouchableOpacity onPress={() => this.followAction(user_id, is_following, () => {
                     item.is_following = !item.is_following;
                     this.listView && this.listView.updateDataSource(this.listView.getRows())
                 })}>
@@ -189,17 +189,17 @@ export class FollowList extends Component {
         let type = this.props.data.type;
         if (type === "followings") {
             followings({page, page_size: 20}, (success) => {
-                success.followings.forEach((item) => {
+                success.items.forEach((item) => {
                     item.is_following = true;
                 });
-                startFetch(success.followings, 15);
+                startFetch(success.items, 15);
             }, (error) => {
                 abortFetch()
             });
         }
         if (type === "followers") {
             followers({page, page_size: 20}, (success) => {
-                startFetch(success.followers, 15)
+                startFetch(success.items, 15)
             }, (error) => {
                 abortFetch()
             });

@@ -128,8 +128,7 @@ export default class Router {
     }
 
     popToAriticle() {
-        Actions.popTo('tab_home');
-        this.toSquare()
+        Actions.tab_news({type: ActionConst.REPLACE})
     }
 
 

@@ -152,6 +152,7 @@ export default class LongArticle extends PureComponent {
             this.setState({
                 article: data
             })
+        }, err => {
         });
         if (isComment) {
             setTimeout(() => {

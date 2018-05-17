@@ -167,7 +167,7 @@ export default class MomentList extends PureComponent {
                 startFetch(data.items, 15)
             }, err => {
                 abortFetch()
-            }, {keyword: type})
+            }, {type})
         }
 
         if (type === 'follows') {

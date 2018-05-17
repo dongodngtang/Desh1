@@ -8,17 +8,17 @@ import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
 
-export function report_topic(topic_id,body, resolve, reject) {
+export function report_topic(topic_id, body, resolve, reject) {
     helper.post(Api.report_topic(topic_id), body, ret => {
         resolve(ret.data)
-    },reject);
+    }, reject);
 }
 
 
 export function report_user(body, resolve, reject) {
     helper.post(Api.report_user(), body, ret => {
         resolve(ret.data)
-    },reject);
+    }, reject);
 }
 
 export function locations(body, resolve, reject) {
@@ -103,7 +103,7 @@ export function user_topics(body, resolve, reject) {
 
 export function follow(followed, body, resolve, reject) {
     if (followed) {
-        helper.del(Api.followships(), body,
+        helper.del(Api.followships() + `/${body.target_id}`, body,
             ret => {
                 getDispatchAction()['GET_PROFILE']();
                 followships();
