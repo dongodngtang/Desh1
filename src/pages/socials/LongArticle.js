@@ -166,7 +166,7 @@ export default class LongArticle extends PureComponent {
     }
 
     render() {
-        const {id, title, user, cover_link, is_like, body, body_type} = this.state.article;
+        const {id, title, user, cover_link, current_user_liked, body, body_type} = this.state.article;
 
         if (isEmptyObject(this.state.article)) {
             return <LoadingView/>
@@ -206,7 +206,7 @@ export default class LongArticle extends PureComponent {
                 <CommentBar
                     placeholder={strNotNull(this.comment_id) ?
                         I18n.t('reply') : I18n.t('write_comment')}
-                    isLike={is_like}
+                    isLike={current_user_liked}
                     ref={ref => this.commentBar = ref}
                     count={this.state.comments_count}
                     send={comment => {
@@ -248,10 +248,14 @@ export default class LongArticle extends PureComponent {
                     }}
                     like={() => {
 
-                        topics_like(id, data => {
+                        topics_like({
+                            target_id: id,
+                            target_type: 'topic',
+                            current_user_liked
+                        }, data => {
                             let article = {...this.state.article};
-                            article.likes = data.total_likes;
-                            article.is_like = !is_like;
+                            article.total_likes = data.total_likes;
+                            article.current_user_liked = !current_user_liked;
                             this.setState({
                                 article
                             })
@@ -311,7 +315,7 @@ export default class LongArticle extends PureComponent {
 
         const {
             user, created_at, likes, comments, id, body_type,
-            body, title, page_views, location, is_like
+            body, title, page_views, location, current_user_liked
         } = this.state.article;
         const {address_title} = location;
         return <View>
@@ -402,7 +406,7 @@ export default class LongArticle extends PureComponent {
                         style={styles.btn_like}>
                         <Image
                             style={styles.like}
-                            source={is_like ? Images.social.like_red : Images.social.like_gray}/>
+                            source={current_user_liked ? Images.social.like_red : Images.social.like_gray}/>
                         <Text style={[styles.time, {marginLeft: 4}]}>{likes}</Text>
                     </View>
                 </View>

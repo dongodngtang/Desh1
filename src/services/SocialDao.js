@@ -61,7 +61,7 @@ export function profile(user_id, resolve, reject) {
 export function followships(resolve, reject) {
     if (_.isEmpty(global.login_user))
         return;
-    helper.get(Api.followships() + '/following_ids', ret => {
+    helper.get(Api.followships() + '/uids', ret => {
         global.followships = ret.data.following_ids;
         resolve && resolve(ret.data)
     }, err => {
@@ -139,7 +139,7 @@ export function topics_comments(params, resolve, reject) {
         resolve(ret.data)
     }, err => {
         reject(err)
-    },params)
+    }, params)
 }
 
 
@@ -151,8 +151,9 @@ export function topics_details(topic_id, resolve, reject) {
     })
 }
 
-export function topics_like(topic_id, resolve, reject) {
-    helper.post(Api.topics_like(topic_id), {}, ret => {
+export function topics_like(body, resolve, reject) {
+    let like_cancel = body.current_user_liked ? '/cancel' : '';
+    helper.post(Api.topics_like() + like_cancel, body, ret => {
         resolve(ret.data)
     }, err => {
         reject(err)

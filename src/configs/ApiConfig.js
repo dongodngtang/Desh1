@@ -158,7 +158,7 @@ export default {
     profile: profile,//获取其他用户信息
     my_focus: my_focus,//获取长帖／说说列表（关注）
     nearbys: nearbys,//更新个人位置
-    locations: 'third_party/locations',//获取附近位置
+    locations: 'locations',//获取附近位置
     report_templates: 'report_templates',//获取举报模板
     report_user: report_user,//举报用户
     report_topic: report_topic,//举报长帖说说
@@ -251,8 +251,8 @@ function topics_image(topic_id) {
 }
 
 
-function topics_like(topic_id) {
-    return `topic/user_topics/${topic_id}/likes`
+function topics_like() {
+    return `users/${getUserId()}/likes`
 }
 
 

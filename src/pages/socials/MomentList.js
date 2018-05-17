@@ -199,7 +199,7 @@ export default class MomentList extends PureComponent {
 
     itemView = (item) => {
         const {
-            user, created_at, likes, comments, id, body_type, location, is_like,
+            user, created_at, total_likes, comments, id, body_type, location, current_user_liked,
             recommended
         } = item;
         const {address_title} = location;
@@ -275,9 +275,13 @@ export default class MomentList extends PureComponent {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        topics_like(id, data => {
-                            item.likes = data.total_likes;
-                            item.is_like = !is_like;
+                        topics_like({
+                            target_id: id,
+                            target_type: 'topic',
+                            current_user_liked
+                        }, data => {
+                            item.total_likes = data.total_likes;
+                            item.current_user_liked = !current_user_liked;
                             this.listView && this.listView.updateDataSource(this.listView.getRows())
 
                         }, err => {
@@ -287,8 +291,8 @@ export default class MomentList extends PureComponent {
                     style={styles.btn_like}>
                     <Image
                         style={styles.like}
-                        source={is_like ? Images.social.like_red : Images.social.like_gray}/>
-                    <Text style={[styles.time, {marginLeft: 4, marginRight: 25}]}>{likes}</Text>
+                        source={current_user_liked ? Images.social.like_red : Images.social.like_gray}/>
+                    <Text style={[styles.time, {marginLeft: 4, marginRight: 25}]}>{total_likes}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
