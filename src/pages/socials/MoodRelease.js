@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
@@ -9,16 +9,16 @@ import {
     Text,
 } from 'react-native';
 import I18n from "react-native-i18n";
-import {Colors, Images} from "../../Themes";
-import {NavigationBar} from '../../components';
-import {reallySize, screenWidth, toolBarHeight} from "./Header";
+import { Colors, Images } from "../../Themes";
+import { NavigationBar } from '../../components';
+import { reallySize, screenWidth, toolBarHeight } from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
 import PopAction from "../comm/PopAction";
 
-import {getFileName,showToast} from "../../utils/ComonHelper";
-import {uploadImage,postTopic} from '../../services/SocialDao';
+import { getFileName, showToast } from "../../utils/ComonHelper";
+import { uploadImage, postTopic } from '../../services/SocialDao';
 import Loading from "../../components/Loading";
-import {checkPermission} from "../comm/Permission";
+import { checkPermission } from "../comm/Permission";
 
 let lastUpload = false;//是否需要上传最后一张
 
@@ -60,23 +60,23 @@ export default class MoodRelease extends Component {
                 }).then(image => {
                     this.popAction.toggle();
                     if (multiple) {
-                        image.forEach((item,index) => {
+                        image.forEach((item, index) => {
                             let path = item.path;
                             let reIndex = index + currentIndex;
-                            if (reIndex === 8){
+                            if (reIndex === 8) {
                                 //需要上传最后一张
                                 lastUpload = true;
-                                newImages.splice(reIndex, 1, {imagePath: path});
+                                newImages.splice(reIndex, 1, { imagePath: path });
                             }
-                            else{
-                                newImages.splice(reIndex, 0, {imagePath: path});
+                            else {
+                                newImages.splice(reIndex, 0, { imagePath: path });
                             }
                         });
                     }
-                    else{
-                        newImages.splice(currentIndex, 1, {imagePath: image.path});
+                    else {
+                        newImages.splice(currentIndex, 1, { imagePath: image.path });
                     }
-                    this.setState({images: newImages});
+                    this.setState({ images: newImages });
                 });
             }
         })
@@ -92,7 +92,7 @@ export default class MoodRelease extends Component {
                 ImagePicker.openCamera({
                     compressImageMaxWidth: 1024,
                     compressImageMaxHeight: 1024,
-                    compressImageQuality: 0.5,
+                    compressImageQuality: 0.7,
                 }).then(image => {
 
                     this.popAction.toggle();
@@ -105,13 +105,13 @@ export default class MoodRelease extends Component {
 
                     ///插入图片
                     if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
-                        newImages.splice(currentIndex, 0, {imagePath: image.path});
+                        newImages.splice(currentIndex, 0, { imagePath: image.path });
                     }
                     ///覆盖图片
                     else {
-                        newImages.splice(currentIndex, 1, {imagePath: image.path});
+                        newImages.splice(currentIndex, 1, { imagePath: image.path });
                     }
-                    this.setState({images: newImages});
+                    this.setState({ images: newImages });
                 });
             }
         });
@@ -128,7 +128,7 @@ export default class MoodRelease extends Component {
             //最后一张不是占位图，删除后添加占位图
             if (lastImage.imagePath !== Images.social.icon_send_mood) {
                 newImages.splice(index, 1);
-                newImages.push({imagePath: Images.social.icon_send_mood});
+                newImages.push({ imagePath: Images.social.icon_send_mood });
                 lastUpload = false;
             }
             else {
@@ -138,7 +138,7 @@ export default class MoodRelease extends Component {
         else {
             newImages.splice(index, 1);
         }
-        this.setState({images: newImages});
+        this.setState({ images: newImages });
     };
 
     ///请求发说说接口
@@ -171,7 +171,10 @@ export default class MoodRelease extends Component {
             //不上传占位图
             if (imagePath !== Images.social.icon_send_mood) {
                 this.uploadImageAction(imagePath, (data) => {
-                    imageIds.push(data.id);
+                    if (index === 0)
+                        imageIds.push(data.image_url);
+                    else
+                        imageIds.push(data.preview_image);
                     ///需要上传最后一张，等待所有图片上传完成
                     if (lastUpload) {
                         console.log("需要上传最后一张");
@@ -193,7 +196,7 @@ export default class MoodRelease extends Component {
     };
     ///发说说
     sendMood = (mood, images) => {
-        const {name, address, latitude, longitude} = this.state.address;
+        const { name, address, latitude, longitude } = this.state.address;
         let lat = '';
         let lng = '';
         let address_title = '';
@@ -235,7 +238,7 @@ export default class MoodRelease extends Component {
         }
 
         let formData = new FormData();
-        let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
+        let file = { uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath) };
         formData.append("image", file);
         uploadImage(formData, data => {
             successCallBack(data);
@@ -249,12 +252,12 @@ export default class MoodRelease extends Component {
         return (
             <View style={styles.item}>
                 <TouchableOpacity onPress={() => {
-                    this.setState({currentIndex: item.index})
+                    this.setState({ currentIndex: item.index })
                     this.popAction && this.popAction.toggle()
                 }}>
                     {item.item.imagePath === Images.social.icon_send_mood ?
-                        <Image style={styles.itemImage} source={item.item.imagePath}/> :
-                        <Image style={styles.itemImage} source={{uri: item.item.imagePath}}/>}
+                        <Image style={styles.itemImage} source={item.item.imagePath} /> :
+                        <Image style={styles.itemImage} source={{ uri: item.item.imagePath }} />}
                 </TouchableOpacity>
 
                 {item.item.imagePath !== Images.social.icon_send_mood ?
@@ -272,7 +275,7 @@ export default class MoodRelease extends Component {
 
     render() {
         let images = this.state.images;
-        const {name, address} = this.state.address;
+        const { name, address } = this.state.address;
         let result = name;
         if (address !== "") {
             result = result + " ● " + address;
@@ -283,48 +286,48 @@ export default class MoodRelease extends Component {
                 <View>
                     {/*导航栏*/}
                     <NavigationBar barStyle={'dark-content'}
-                                   titleStyle={{fontSize: 17, color: Colors._333}}
-                                   toolbarStyle={{backgroundColor: 'white'}}
-                                   title={I18n.t('article_mode')}
-                                   leftBtnText={I18n.t('cancel')}
-                                   btnTextStyle={{fontSize: 14, color: Colors._333}}
-                                   leftBtnPress={() => {
-                                       router.pop()
-                                   }}
+                        titleStyle={{ fontSize: 17, color: Colors._333 }}
+                        toolbarStyle={{ backgroundColor: 'white' }}
+                        title={I18n.t('article_mode')}
+                        leftBtnText={I18n.t('cancel')}
+                        btnTextStyle={{ fontSize: 14, color: Colors._333 }}
+                        leftBtnPress={() => {
+                            router.pop()
+                        }}
                     />
 
                     <TextInput placeholder={I18n.t('social_content')}
-                               style={styles.textInput}
-                               multiline={true}
-                               underlineColorAndroid={'transparent'}
-                               onChangeText={(text) => {
-                                   this.setState({
-                                       mood: text
-                                   })
-                               }}
+                        style={styles.textInput}
+                        multiline={true}
+                        underlineColorAndroid={'transparent'}
+                        onChangeText={(text) => {
+                            this.setState({
+                                mood: text
+                            })
+                        }}
                     />
 
                     <FlatList data={images}
-                              keyExtractor={(item, index) => index + ""}
-                              renderItem={this._renderItem}
-                              numColumns={3}
-                              horizontal={false}
-                              style={[styles.flatList]}
-                              bounces={false}
+                        keyExtractor={(item, index) => index + ""}
+                        renderItem={this._renderItem}
+                        numColumns={3}
+                        horizontal={false}
+                        style={[styles.flatList]}
+                        bounces={false}
                     />
 
                     <TouchableOpacity onPress={() => {
                         global.router.toLocation({
                             address: (addressInfo) => {
-                                this.setState({address: addressInfo});
+                                this.setState({ address: addressInfo });
                             }
                         })
                     }}>
                         <View style={styles.subView}>
                             <Image source={Images.social.address}
-                                   style={[{width: 19}, {height: 22}]}/>
+                                style={[{ width: 19 }, { height: 22 }]} />
                             <Text
-                                style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}, {marginRight: 17}]}>{result}</Text>
+                                style={[{ color: "#AAAAAA" }, { fontSize: 14 }, { marginLeft: 5 }, { marginRight: 17 }]}>{result}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -333,21 +336,21 @@ export default class MoodRelease extends Component {
                 <View style={styles.toolBar}>
                     <TouchableOpacity onPress={() => router.pop()}>
                         <View style={styles.save}>
-                            <Text style={[{color: "#444444"}, {fontSize: 15}]}>{I18n.t("cancel")}</Text>
+                            <Text style={[{ color: "#444444" }, { fontSize: 15 }]}>{I18n.t("cancel")}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={this.fetchData}>
                         <View style={styles.send}>
-                            <Text style={[{color: "#FFFFFF"}, {fontSize: 15}]}>{I18n.t("social_send")}</Text>
+                            <Text style={[{ color: "#FFFFFF" }, { fontSize: 15 }]}>{I18n.t("social_send")}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
 
                 <PopAction
                     ref={ref => this.popAction = ref}
-                    btnArray={this.popActions()}/>
+                    btnArray={this.popActions()} />
 
-                <Loading ref={ref => this.loading = ref} cancelable={true}/>
+                <Loading ref={ref => this.loading = ref} cancelable={true} />
 
             </View>
         )
@@ -356,16 +359,16 @@ export default class MoodRelease extends Component {
     popActions = () => {
         return [
             {
-                name: I18n.t("socials_takephoto"), txtStyle: {color: '#4A90E2'}, onPress: () => {
+                name: I18n.t("socials_takephoto"), txtStyle: { color: '#4A90E2' }, onPress: () => {
                     this.insertTakePhotoAction();
                 }
             },
             {
-                name: I18n.t("socials_picture"), txtStyle: {color: '#4A90E2'}, onPress: () => {
+                name: I18n.t("socials_picture"), txtStyle: { color: '#4A90E2' }, onPress: () => {
                     this.insetrtImageAction();
                 }
             },
-            {name: I18n.t("cancel"), txtStyle: {color: '#F24A4A'}, onPress: () => this.popAction.toggle()}
+            { name: I18n.t("cancel"), txtStyle: { color: '#F24A4A' }, onPress: () => this.popAction.toggle() }
         ];
     };
 }

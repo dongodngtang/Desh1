@@ -420,7 +420,7 @@ export default class LongArticle extends PureComponent {
 
     previewImage = (images, index) => {
         let gallery = images.map(item => {
-            return {url: item.image_url}
+            return {url: item.url}
         })
         global.router.toImageGalleryPage(gallery, index)
     }
@@ -433,7 +433,7 @@ export default class LongArticle extends PureComponent {
                 }}>
                 <ImageLoad
                     style={styles.long_cover}
-                    source={{uri: images[0].image_url}}/>
+                    source={{uri: images[0].url}}/>
             </TouchableOpacity>
 
         }
@@ -446,7 +446,7 @@ export default class LongArticle extends PureComponent {
                 key={'short' + index}>
                 <ImageLoad
                     style={styles.short_image}
-                    source={{uri: item.image_url}}/>
+                    source={{uri: item.url}}/>
             </TouchableOpacity>
 
         });

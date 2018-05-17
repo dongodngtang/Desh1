@@ -77,9 +77,9 @@ export default class ArticleRelease extends PureComponent {
                     ///上传成功
                     ///如果封面图为空 取第一张图做封面图
                     if (cover_link === "") {
-                        cover_link = data.image_path;
+                        cover_link = data.image_url;
                     }
-                    let imageUrl = `<img style="margin-top: 15px" src="${data.image_path}">`;
+                    let imageUrl = `<img style="margin-top: 15px" src="${data.image_url}">`;
                     rowData.imagePath = imageUrl;
 
                     successCount++;

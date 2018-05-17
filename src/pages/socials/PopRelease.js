@@ -8,6 +8,7 @@ import {Images, Colors} from '../../Themes';
 import {createAnimatableComponent} from 'react-native-animatable';
 import I18n from 'react-native-i18n';
 import {postNearBys} from '../../services/SocialDao'
+import { isEmptyObject } from '../../utils/ComonHelper';
 
 const AniTouchableOpacity = createAnimatableComponent(TouchableOpacity);
 
@@ -74,7 +75,7 @@ export default class PopRelease extends PureComponent {
                         onPress={() => {
                             this.toggle();
                             ///未登录先登录
-                            if (login_user.user_id === undefined) {
+                            if (isEmptyObject(global.login_user)) {
                                 router.toLoginFirstPage();
                                 return;
                             }
@@ -91,7 +92,7 @@ export default class PopRelease extends PureComponent {
                         onPress={() => {
                             this.toggle();
                             ///未登录先登录
-                            if (login_user.user_id === undefined) {
+                            if (isEmptyObject(global.login_user)) {
                                 router.toLoginFirstPage();
                                 return;
                             }

@@ -140,7 +140,7 @@ export default {
     releases_show: 'releases',//功能开启或隐藏控制
     poker_coins_discount: 'poker_coins/numbers',//获取用户扑客币数量和以及扑客币对应折扣
     release_topic: release_topic,//发说说/长帖的接口
-    upload_image: "uploaders/tmp_image",//长贴上传图片
+    upload_image: "topics/image",//长贴上传图片
     topics: 'topics',//获取广场列表
     topics_recommends: '/topics/recommends', //获取精华列表
     topics_like: topics_like,//说手长帖点赞
@@ -261,7 +261,7 @@ function topics_detail(topic_id) {
 }
 
 function release_topic() {
-    return `users/${login_user.user_id}/user_topics`
+    return `topics`
 }
 
 function crowd_user_count(body) {

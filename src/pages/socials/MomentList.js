@@ -347,7 +347,7 @@ export default class MomentList extends PureComponent {
 
     previewImage = (images, index) => {
         let gallery = images.map(item => {
-            return {url: item.image_url}
+            return {url: item.url}
         })
         global.router.toImageGalleryPage(gallery, index)
     }
@@ -362,7 +362,7 @@ export default class MomentList extends PureComponent {
             >
                 <LeftAlignedImage
                     height={200}
-                    source={{uri: images[0].image_url}}/>
+                    source={{uri: images[0].url}}/>
             </View>
 
         }
@@ -376,7 +376,7 @@ export default class MomentList extends PureComponent {
             >
                 <ImageLoad
                     style={styles.short_image}
-                    source={{uri: item.image_url}}/>
+                    source={{uri: item.url}}/>
             </TouchableOpacity>
 
         });
