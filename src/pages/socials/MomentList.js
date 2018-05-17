@@ -347,7 +347,7 @@ export default class MomentList extends PureComponent {
 
     previewImage = (images, index) => {
         let gallery = images.map(item => {
-            return {url: item.url}
+            return {url: item.url.replace('!sm', '')}
         })
         global.router.toImageGalleryPage(gallery, index)
     }

@@ -260,7 +260,7 @@ function topics_like(topic_id) {
 
 
 function topics_detail(topic_id) {
-    return `topics/${topic_id}/details`
+    return `topics/${topic_id}`
 }
 
 function release_topic() {
