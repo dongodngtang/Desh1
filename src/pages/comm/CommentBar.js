@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     },
     comment: {
         height: Metrics.reallySize(30),
-        width: Metrics.reallySize(187),
         backgroundColor: Colors._ECE,
         borderRadius: 15,
         alignItems: 'center',
@@ -69,16 +68,16 @@ export default class CommentBar extends PureComponent {
     }
 
     render() {
-        const {isLike, showCount, count,placeholder} = this.props;
+        const {isLike, showCount, count, placeholder, onlyComment} = this.props;
         return <View style={styles.bar}>
 
             <TouchableOpacity
                 onPress={this.showInput}
-                style={styles.comment}>
+                style={[styles.comment, {width: onlyComment ? '90%' : Metrics.reallySize(187)}]}>
                 <Text style={styles.c_input}>{placeholder}</Text>
             </TouchableOpacity>
 
-            <View style={{
+            {onlyComment ? null : <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 flex: 1
@@ -135,7 +134,8 @@ export default class CommentBar extends PureComponent {
                 </TouchableOpacity>
 
 
-            </View>
+            </View>}
+
 
             <InputModal
                 send={(comment) => this.props.send && this.props.send(comment)}

@@ -213,7 +213,11 @@ export default class LongArticle extends PureComponent {
 
                         if (strNotNull(this.comment_id)) {
 
-                            postRelaies({comment_id: this.comment_id, body: comment},
+                            postRelaies({
+                                    target_id: this.comment_id,
+                                    target_type: 'comment',
+                                    body: comment
+                                },
                                 data => {
                                     this.comment_id = '';
                                     showToast(I18n.t('reply_success'));
@@ -224,8 +228,8 @@ export default class LongArticle extends PureComponent {
 
                         } else {
                             let body = {
-                                topic_type: 'user_topic',
-                                topic_id: id,
+                                target_type: 'topic',
+                                target_id: id,
                                 body: comment
                             };
                             postComment(body, data => {
@@ -464,14 +468,14 @@ export default class LongArticle extends PureComponent {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         const {id} = this.props.params.article;
-        topics_comments(id, data => {
+        topics_comments({page, page_size: 20, target_id: id, target_type: 'topic'}, data => {
             startFetch(data.items, 15)
             this.setState({
-                comments_count: data.comments
+                comments_count: data.total_comments
             })
         }, err => {
             abortFetch()
-        }, {page, page_size: 20})
+        })
     };
 
 
@@ -494,19 +498,23 @@ export default class LongArticle extends PureComponent {
 
     itemView = (item) => {
         const {
-            avatar, nick_name, created_at, official,
-            recommended, body, id, total_count, user_id,
-            is_like
+            created_at, official,
+            recommended, body, id, total_count,
+            user
         } = item;
+
+        const {avatar, nick_name, user_id} = user;
         return <View style={{
             width: '100%', paddingLeft: 17, paddingRight: 17,
             paddingTop: 12
         }}>
             <View style={styles.btn_like}>
                 <TouchableOpacity
-                    onPress={() => this.toUserPage(item)}>
-                    <ImageLoad style={styles.c_avatar}
-                               source={{uri: avatar}}/>
+                    onPress={() => this.toUserPage(user)}>
+                    <ImageLoad
+                        emptyBg={Images.home_avatar}
+                        style={styles.c_avatar}
+                        source={{uri: avatar}}/>
                 </TouchableOpacity>
 
 
@@ -514,7 +522,7 @@ export default class LongArticle extends PureComponent {
                     <View style={{flexDirection: 'row'}}>
 
                         <Text
-                            onPress={() => this.toUserPage(item)}
+                            onPress={() => this.toUserPage(user)}
                             style={styles.c_nick}>{nick_name}</Text>
 
                         {official ? <Text style={[styles.c_tag, {
@@ -538,7 +546,7 @@ export default class LongArticle extends PureComponent {
                                 })
 
                             }}
-                            style={{color: Colors._CCC, marginLeft: 8}}>{I18n.t('delete')}</Text> : null}
+                            style={{color: Colors._CCC, marginLeft: 8, fontSize: 12}}>{I18n.t('delete')}</Text> : null}
 
 
                     </View>
@@ -568,7 +576,7 @@ export default class LongArticle extends PureComponent {
                 }}
                 style={styles.c_body}>{body}</Text>
 
-            {total_count > 0 ? <TouchableOpacity
+            {2 > 0 ? <TouchableOpacity
                 onPress={() => {
                     global.router.toCommentInfoPage(item);
                 }}

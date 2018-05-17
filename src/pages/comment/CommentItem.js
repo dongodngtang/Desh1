@@ -35,16 +35,7 @@ export default class CommentItem extends PureComponent {
         this.props.refreshList && this.props.refreshList();
     };
 
-    deleteComment = (id) => {
-        alertOrder(I18n.t('confirm_delete'), () => {
-            delDeleteComment({comment_id: id}, data => {
-                showToast(I18n.t('buy_del_success'));
-                this.refreshCommentInfo()
-            }, err => {
 
-            });
-        });
-    };
     deleteReply = (comment_id, id) => {
         alertOrder(I18n.t('confirm_delete'), () => {
             delDeleteReply({comment_id: comment_id, id: id}, data => {
@@ -74,60 +65,110 @@ export default class CommentItem extends PureComponent {
         if (isEmptyObject(item)) {
             return <View/>
         }
-        const {avatar, body, created_at, nick_name, id, official, recommended, total_count, typological, user_id} = item;
-        return (
-            <View style={styles.content}>
+        const {reply_user, created_at, official, recommended} = item;
 
-                <TouchableOpacity onPress={() => global.router.toPersonDynamic(item)}>
-                    <ImageLoad
-                        emptyBg={Images.home_avatar}
-                        style={styles.img}
-                        source={{uri: avatar}}/>
+        if (isEmptyObject(reply_user)) {
 
-                </TouchableOpacity>
-                <View style={styles.contentRight}>
-                    <View style={styles.commentTop}>
+            const {user, body} = item;
+            const {avatar, nick_name, user_id} = user;
+            return (
+                <View style={styles.content}>
 
-                        {official ? this.official(nick_name) : <Text
-                            onPress={() => global.router.toPersonDynamic(item)}
-                            style={styles.name}>{nick_name}</Text>}
-                        {recommended ? <Text style={styles.featured}>{I18n.t('featured')}</Text> : null}
+                    <TouchableOpacity onPress={() => global.router.toPersonDynamic(reply_user)}>
+                        <ImageLoad
+                            emptyBg={Images.home_avatar}
+                            style={styles.img}
+                            source={{uri: avatar}}/>
 
-                        {this.isMine(user_id) && typological === 'reply' ? <TouchableOpacity style={{marginLeft: 8}}
-                                                                                             onPress={() => this.deleteView(item)}>
-                            <Text style={{fontSize: 12, color: '#666666'}}>{I18n.t('buy_del')}</Text>
-                        </TouchableOpacity> : null}
+                    </TouchableOpacity>
+                    <View style={styles.contentRight}>
+                        <View style={styles.commentTop}>
 
-                        <View style={{flex: 1}}/>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.repliesReFunc && this.props.repliesReFunc(item, CommentBottom.RepliesReplies)
-                            }}
-                            style={styles.commentView}>
-                            <Image style={styles.commentImg} source={Images.comment}/>
-                        </TouchableOpacity>
+                            {official ? this.official(nick_name) : <Text
+                                onPress={() => global.router.toPersonDynamic(reply_user)}
+                                style={styles.name}>{nick_name}</Text>}
+                            {recommended ? <Text style={styles.featured}>{I18n.t('featured')}</Text> : null}
 
+                            {this.isMine(user_id) ?
+                                <TouchableOpacity style={{marginLeft: 8}}
+                                                  onPress={() => this.deleteView(item)}>
+                                    <Text style={{fontSize: 12, color: '#666666'}}>{I18n.t('buy_del')}</Text>
+                                </TouchableOpacity> : null}
+
+                            <View style={{flex: 1}}/>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.repliesReFunc && this.props.repliesReFunc(item, CommentBottom.RepliesReplies)
+                                }}
+                                style={styles.commentView}>
+                                <Image style={styles.commentImg} source={Images.comment}/>
+                            </TouchableOpacity>
+
+                        </View>
+                        <Text style={styles.time}>{getDateDiff(created_at)}</Text>
+
+                        <Text style={styles.messages}>{body}</Text>;
                     </View>
-                    <Text style={styles.time}>{getDateDiff(created_at)}</Text>
 
-                    {this._repliesBody(item)}
-                    {/*{this.moreMessage()}*/}
                 </View>
+            )
+        } else {
+            const {avatar, nick_name, user_id} = reply_user;
+            return (
+                <View style={styles.content}>
 
-            </View>
-        )
+                    <TouchableOpacity onPress={() => global.router.toPersonDynamic(reply_user)}>
+                        <ImageLoad
+                            emptyBg={Images.home_avatar}
+                            style={styles.img}
+                            source={{uri: avatar}}/>
+
+                    </TouchableOpacity>
+                    <View style={styles.contentRight}>
+                        <View style={styles.commentTop}>
+
+                            {official ? this.official(nick_name) : <Text
+                                onPress={() => global.router.toPersonDynamic(reply_user)}
+                                style={styles.name}>{nick_name}</Text>}
+                            {recommended ? <Text style={styles.featured}>{I18n.t('featured')}</Text> : null}
+
+                            {this.isMine(user_id) ?
+                                <TouchableOpacity style={{marginLeft: 8}}
+                                                  onPress={() => this.deleteView(item)}>
+                                    <Text style={{fontSize: 12, color: '#666666'}}>{I18n.t('buy_del')}</Text>
+                                </TouchableOpacity> : null}
+
+                            <View style={{flex: 1}}/>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.repliesReFunc && this.props.repliesReFunc(item, CommentBottom.RepliesReplies)
+                                }}
+                                style={styles.commentView}>
+                                <Image style={styles.commentImg} source={Images.comment}/>
+                            </TouchableOpacity>
+
+                        </View>
+                        <Text style={styles.time}>{getDateDiff(created_at)}</Text>
+
+                        {this._repliesBody(item)}
+                    </View>
+
+                </View>
+            )
+        }
+
     };
 
 
     _repliesBody = (item) => {
-        const {body, parent_reply} = item;
+        const {reply_body, parent_reply} = item;
         if (isEmptyObject(parent_reply)) {
-            return <Text style={styles.messages}>{body}</Text>;
+            return <Text style={styles.messages}>{reply_body}</Text>;
         } else {
             return <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.messages}>{I18n.t('reply')}</Text>
                 <Text style={styles.nameId2}>{parent_reply.parent_reply_user}</Text>
-                <Text>:{body}</Text>
+                <Text>:{reply_body}</Text>
 
             </View>
         }

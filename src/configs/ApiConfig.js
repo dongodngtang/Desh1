@@ -114,7 +114,7 @@ export default {
     mall_refund: mall_refund,
     refund_info: refund_info,
     topic_comments: 'topic/comments',
-    comment_replies: comment_replies,
+    comment_replies: 'replies',
     replies_replies: replies_replies,
     new_likes: new_likes,
     person_dynamics: person_dynamics,
@@ -145,7 +145,7 @@ export default {
     topics_recommends: '/topics/essence', //获取精华列表
     topics_like: topics_like,//说手长帖点赞
     topics_detail: topics_detail,//查看帖子详情
-    topics_comments: topics_comments,//获取说说长帖评论列表
+    comments: 'comments',//获取说说长帖评论列表
     jmessage_info: jmessage_info,//极光IM用户登录
     topics_image: topics_image,//上传话题相关的图片
     followships: followships,//获取关注及粉丝列表
@@ -250,9 +250,6 @@ function topics_image(topic_id) {
     return `topic/user_topics/${topic_id}/image`
 }
 
-function topics_comments(topic_id) {
-    return `topic/user_topics/${topic_id}/comments`
-}
 
 function topics_like(topic_id) {
     return `topic/user_topics/${topic_id}/likes`
@@ -364,11 +361,6 @@ export function replies_replies(body) {
     return `topic/comments/${comment_id}/replies/${reply_id}/replies`
 }
 
-export function comment_replies(body) {
-    const {comment_id} = body;
-
-    return `topic/comments/${comment_id}/replies`;
-}
 
 export function refund_info(body) {
     const {refund_number} = body;

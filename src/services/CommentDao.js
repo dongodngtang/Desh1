@@ -8,19 +8,21 @@ import Api from '../configs/ApiConfig';
 
 /*回复未读数量接口*/
 export function getUnreadComments(body, resolve, reject) {
-    helper.get(Api.unread_comments(body) ,ret => {
+    helper.get(Api.unread_comments(body), ret => {
         resolve(ret.data)
     }, reject)
 }
+
 /*删除回复接口*/
 export function delDeleteReply(body, resolve, reject) {
-    helper.del(Api.delete_reply(body), body,ret => {
+    helper.del(Api.delete_reply(body), body, ret => {
         resolve(ret.data)
     }, reject)
 }
+
 /*删除评论接口*/
 export function delDeleteComment(body, resolve, reject) {
-    helper.del(Api.delete_comment(body), body, ret => {
+    helper.del(Api.comments + `/${body.comment_id}`, {}, ret => {
         resolve(ret.data)
     }, reject)
 }
@@ -41,7 +43,7 @@ export function getPersonDynamics(body, resolve, reject) {
 
 /*资讯点赞和取消点赞的接口*/
 export function postNewLikes(body, resolve, reject) {
-    helper.post(Api.new_likes(body),  body, ret => {
+    helper.post(Api.new_likes(body), body, ret => {
         resolve(ret.data)
     }, reject)
 }
@@ -55,21 +57,21 @@ export function postRepliesReplies(body, resolve, reject) {
 
 /*资讯视频回复列表的接口*/
 export function getReplies(body, resolve, reject) {
-    helper.get(Api.comment_replies(body), ret => {
+    helper.get(Api.comments + `/${body.comment_id}/replies`, ret => {
         resolve(ret.data)
     }, reject)
 }
 
 /*评论下回复的接口*/
 export function postRelaies(body, resolve, reject) {
-    helper.post(Api.comment_replies(body), body, ret => {
+    helper.post(Api.comment_replies, body, ret => {
         resolve(ret.data)
     }, reject)
 }
 
 /*资讯视频评论接口*/
 export function postComment(body, resolve, reject) {
-    helper.post(Api.topic_comments, body, ret => {
+    helper.post(Api.comments, body, ret => {
         resolve(ret.data)
     }, reject)
 }

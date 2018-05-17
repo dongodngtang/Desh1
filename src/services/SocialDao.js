@@ -134,12 +134,12 @@ export function followers(params, resolve, reject) {
     }, params)
 }
 
-export function topics_comments(topic_id, resolve, reject) {
-    helper.get(Api.topics_comments(topic_id), ret => {
+export function topics_comments(params, resolve, reject) {
+    helper.get(Api.comments, ret => {
         resolve(ret.data)
     }, err => {
         reject(err)
-    })
+    },params)
 }
 
 

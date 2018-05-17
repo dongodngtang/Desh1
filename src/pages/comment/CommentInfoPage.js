@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {strNotNull, util} from '../../utils/ComonHelper';
-import CommentBottom from './CommentBottom';
 import CommentItem from './CommentItem';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
-import {getReplies} from '../../services/CommentDao';
+import {getReplies, postRelaies} from '../../services/CommentDao';
+import CommentBar from '../comm/CommentBar'
+import {showToast} from '../../utils/ComonHelper'
 
 export default class CommentInfoPage extends Component {
     state = {
@@ -18,14 +18,10 @@ export default class CommentInfoPage extends Component {
         return <View style={{height: 1, marginLeft: 68, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
     };
 
-
-    refreshList = () => {
-        this.ultimate && this.ultimate.onRefresh();
-    };
-
-    componentDidMount() {
+    componentWillMount() {
         const {item} = this.props.params;
-        this.commentBottom && this.commentBottom.setNewsInfo(item)
+        this.target_type = 'comment';
+        this.target_id = item.id;
     }
 
 
@@ -47,7 +43,9 @@ export default class CommentInfoPage extends Component {
                     <CommentItem
                         refreshList={this.refreshList}
                         repliesReFunc={() => {
-                            this.repliesReFunc(item, CommentBottom.replies)
+                            this.target_type = 'comment';
+                            this.target_id = item.id;
+                            this.commentBar && this.commentBar.showInput()
                         }}
                         item={item}/>
                 </View>
@@ -57,7 +55,7 @@ export default class CommentInfoPage extends Component {
                         return <Text style={styles.allComment}>{I18n.t('all_comment')}（{this.state.totalComment}）</Text>
                     }}
                     arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                    ref={ref => this.ultimate = ref}
+                    ref={ref => this.listView = ref}
                     onFetch={this.onFetch}
                     keyExtractor={(item, index) => `replies${index}`}
                     item={this.renderItem}
@@ -69,28 +67,44 @@ export default class CommentInfoPage extends Component {
                     separator={this._separator}
                     pagination={false}
                 />
-                <View style={{height: 60}}/>
-                <View style={styles.bottom}>
-                    <CommentBottom
-                        onlyComment={true}
-                        refreshList={this.refreshList}
-                        ref={ref => this.commentBottom = ref}
-                        info={item}
-                        topic_type={CommentBottom.replies}/>
+
+                <View style={{height: 48}}/>
+
+                <View style={{position: 'absolute', bottom: 0}}>
+                    <CommentBar
+                        onlyComment
+                        placeholder={'写下回复'}
+                        ref={ref => this.commentBar = ref}
+                        send={comment => {
+                            postRelaies({
+                                    target_id: this.target_id,
+                                    target_type: this.target_type,
+                                    body: comment
+                                },
+                                data => {
+                                    this.listView && this.listView.refresh()
+                                    showToast(I18n.t('reply_success'));
+
+                                }, err => {
+                                })
+                        }}
+
+                    />
                 </View>
+
             </BaseComponent>
         )
     }
 
-    repliesReFunc = (item, repliesType) => {
-        this.commentBottom && this.commentBottom.repliesBtn(item, repliesType)
-    };
 
     renderItem = (item, index) => {
         return (<CommentItem
             refreshList={this.refreshList}
-            repliesReFunc={this.repliesReFunc}
-            commentType={CommentItem.RepliesReplies}
+            repliesReFunc={() => {
+                this.target_type = 'reply';
+                this.target_id = item.reply_id;
+                this.commentBar && this.commentBar.showInput()
+            }}
             item={item}/>)
     };
 
@@ -99,7 +113,7 @@ export default class CommentInfoPage extends Component {
             getReplies({comment_id: this.props.params.item.id}, data => {
                 console.log("replies:", data);
                 this.setState({
-                    totalComment: data.total_count
+                    totalComment: data.replies_count
                 });
                 postRefresh(data.items, 9);
             }, err => {

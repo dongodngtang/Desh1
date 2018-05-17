@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         width: 74,
         height: 74,
         borderRadius: 37,
-        backgroundColor: '#FFE9AD',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -161,7 +161,7 @@ export default class UserTopicPage extends PureComponent {
             downsampleFactor: 10,
             overlayColor: 'rgba(255,255,255,.4)'
         };
-        const {following_count, follower_count, avatar, nick_name, signature, user_id} = this.state.user;
+        const {following_count, followers_count, avatar, nick_name, signature, user_id} = this.state.user;
         return <View style={styles.topBar}>
             <Image
                 ref={(img) => {
@@ -199,7 +199,7 @@ export default class UserTopicPage extends PureComponent {
             <View style={[styles.row, {marginTop: 7}]}>
                 <Text style={styles.follow}>{`${I18n.t('social.follow')} ${following_count}`}</Text>
                 <View style={styles.line}/>
-                <Text style={styles.follow}>{`${I18n.t('stalwart')} ${follower_count}`}</Text>
+                <Text style={styles.follow}>{`${I18n.t('stalwart')} ${followers_count}`}</Text>
             </View>
 
             <Text style={styles.intro}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
@@ -243,9 +243,9 @@ export default class UserTopicPage extends PureComponent {
             onPress={this.scrollTop}
             style={styles.go_top}>
             <Text style={{
-                fontSize: 15,
+                fontSize: 13,
                 fontWeight: 'bold',
-                color: Colors._FFE
+                color: Colors.white
             }}>TOP</Text>
 
         </TouchableOpacity>
