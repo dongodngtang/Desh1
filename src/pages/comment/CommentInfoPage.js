@@ -99,7 +99,10 @@ export default class CommentInfoPage extends Component {
 
     renderItem = (item, index) => {
         return (<CommentItem
-            refreshList={this.refreshList}
+            refreshList={() => {
+                this.listView && this.listView.refresh()
+            }
+            }
             repliesReFunc={() => {
                 this.target_type = 'reply';
                 this.target_id = item.reply_id;

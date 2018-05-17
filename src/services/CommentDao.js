@@ -15,7 +15,7 @@ export function getUnreadComments(body, resolve, reject) {
 
 /*删除回复接口*/
 export function delDeleteReply(body, resolve, reject) {
-    helper.del(Api.delete_reply(body), body, ret => {
+    helper.del(`/${body.target_type}/${body.id}`, {}, ret => {
         resolve(ret.data)
     }, reject)
 }

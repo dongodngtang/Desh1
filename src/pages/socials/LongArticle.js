@@ -499,7 +499,7 @@ export default class LongArticle extends PureComponent {
     itemView = (item) => {
         const {
             created_at, official,
-            recommended, body, id, total_count,
+            recommended, body, id, total_replies,
             user
         } = item;
 
@@ -576,7 +576,7 @@ export default class LongArticle extends PureComponent {
                 }}
                 style={styles.c_body}>{body}</Text>
 
-            {2 > 0 ? <TouchableOpacity
+            {total_replies > 0 ? <TouchableOpacity
                 onPress={() => {
                     global.router.toCommentInfoPage(item);
                 }}
@@ -589,7 +589,7 @@ export default class LongArticle extends PureComponent {
                     marginTop: 8
                 }}>
                 <Text
-                    style={[styles.c_nick, {marginLeft: 6}]}>{`${I18n.t('look_detail')}${total_count}${I18n.t('social.replay')}`}</Text>
+                    style={[styles.c_nick, {marginLeft: 6}]}>{`${I18n.t('look_detail')}${total_replies}${I18n.t('social.replay')}`}</Text>
 
 
             </TouchableOpacity> : null}

@@ -36,9 +36,9 @@ export default class CommentItem extends PureComponent {
     };
 
 
-    deleteReply = (comment_id, id) => {
+    deleteReply = (id, target_type) => {
         alertOrder(I18n.t('confirm_delete'), () => {
-            delDeleteReply({comment_id: comment_id, id: id}, data => {
+            delDeleteReply({id, target_type}, data => {
                 showToast(I18n.t('buy_del_success'));
                 this.refreshCommentInfo()
             }, err => {
@@ -47,13 +47,8 @@ export default class CommentItem extends PureComponent {
         });
     };
     deleteView = (item) => {
-        const {typological, id} = item;
-        if (typological === 'reply') {
-            const {parent_comment} = item;
-            return (
-                this.deleteReply(parent_comment.parent_comment_id, id)
-            )
-        }
+        const {reply_id} = item;
+        this.deleteReply(reply_id, 'replies')
     };
     isMine = (user_id) => {
         return global.login_user.user_id === user_id;
@@ -89,7 +84,7 @@ export default class CommentItem extends PureComponent {
                                 style={styles.name}>{nick_name}</Text>}
                             {recommended ? <Text style={styles.featured}>{I18n.t('featured')}</Text> : null}
 
-                            {this.isMine(user_id) ?
+                            {this.isMine(user_id) && !isEmptyObject(reply_user) ?
                                 <TouchableOpacity style={{marginLeft: 8}}
                                                   onPress={() => this.deleteView(item)}>
                                     <Text style={{fontSize: 12, color: '#666666'}}>{I18n.t('buy_del')}</Text>
