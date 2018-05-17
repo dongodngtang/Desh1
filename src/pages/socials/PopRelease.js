@@ -8,7 +8,7 @@ import {Images, Colors} from '../../Themes';
 import {createAnimatableComponent} from 'react-native-animatable';
 import I18n from 'react-native-i18n';
 import {postNearBys} from '../../services/SocialDao'
-import { isEmptyObject } from '../../utils/ComonHelper';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 const AniTouchableOpacity = createAnimatableComponent(TouchableOpacity);
 
@@ -44,10 +44,12 @@ export default class PopRelease extends PureComponent {
         navigator.geolocation.getCurrentPosition(data => {
             if (Platform.OS === 'ios') {
                 const {coords} = data;
-                postNearBys(coords, data => {
-
-                }, err => {
-                })
+                if (!isEmptyObject(coords)) {
+                    const {longitude, latitude} = coords;
+                    postNearBys({lat: latitude, lng: longitude}, ret => {
+                    }, err => {
+                    })
+                }
             }
 
         }, err => {

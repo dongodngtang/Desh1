@@ -198,53 +198,113 @@ export default class PersonDynamicPage extends Component {
         )
     }
 
-    renderItem = ({item}) => {
-        const {topic, typological_type, topic_type} = item;
-        const {topic_description, topic_id, topic_image, topic_title} = topic;
 
-        if (topic_type === 'usertopic') {
-
-            return this.renderItemTopic(item)
-        } else {
-            return (
-                <TouchableOpacity style={styles.itemPage}
-                                  onPress={() => {
-                                      if (topic_type === "info") {
-                                          let url = `news/${topic_id}`;
-                                          global.router.toWebPage(url, {
-                                              bottomNav: 'commentNav',
-                                              info: {id: topic_id},
-                                              topic_type: topic_type
-                                          })
-                                      } else if (topic_type === "video") {
-                                          let urlVideo = `videos/${topic_id}`;
-                                          global.router.toWebPage(urlVideo, {
-                                              bottomNav: 'commentNav',
-                                              info: {id: topic_id},
-                                              topic_type: topic_type
-                                          })
-                                      } else {
-                                          console.log('足迹', topic)
-                                          global.router.toDeletePage();
-                                      }
-
-                                  }}>
-                    <Text style={[styles.itemTxt1, {marginBottom: 10}]}>{this.txtType(item)}</Text>
-
-                    <View style={styles.itemView}>
-
-                        <ImageLoad style={styles.image} source={{uri: topic_image}}/>
-                        <View style={styles.TxtRight}>
-
-                            {typological_type === "topiclike" ? null :
-                                this.myComment(item)
-                            }
-                            <Text style={styles.TxtRight2} numberOfLines={1}>{topic_title}</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            )
+    option_content = (item) => {
+        const {option_type, target_type} = item;
+        if (target_type === 'topic') {
+            switch (option_type) {
+                case 'like':
+                    return '我点赞了';
+                case 'reply':
+                    return '我回复了';
+                case 'comment':
+                    return '我评论了';
+            }
         }
+
+        if (option_type === 'follow')
+            return '我关注了';
+
+        return '未录入类型'
+
+    }
+
+    option_desc = (item) => {
+        const {option_type, target_type} = item;
+        if (target_type === 'topic') {
+            switch (option_type) {
+                case 'like':
+                    return '';
+                case 'reply':
+                    return item.reply.body;
+                case 'comment':
+                    return item.comment.body;
+            }
+        }
+
+        if (option_type === 'follow')
+            return item.target_user.nick_name
+
+
+        return '未录入类型标题'
+    }
+
+    option_title = (item) => {
+        const {option_type, target_type} = item;
+        if (target_type === 'topic') {
+            switch (option_type) {
+                case 'like':
+                    return item.topic.title;
+                case 'reply':
+                    return item.reply.topic.title;
+                case 'comment':
+                    return item.comment.topic.title;
+            }
+        }
+
+        if (option_type === 'follow')
+            return item.target_user.signature
+
+
+        return '未录入类型标题'
+    };
+
+    option_image = (item) => {
+        const {option_type, target_type} = item;
+        if (target_type === 'topic') {
+            switch (option_type) {
+                case 'like':
+                    return item.topic.cover_link;
+                case 'reply':
+                    return item.reply.topic.cover_link;
+                case 'comment':
+                    return item.comment.topic.cover_link;
+            }
+        }
+
+        if (option_type === 'follow')
+            return item.target_user.avatar
+
+
+        return '未录入类型标题'
+    }
+
+
+    renderItem = ({item}) => {
+
+
+        return (
+            <TouchableOpacity style={styles.itemPage}
+                              onPress={() => {
+
+
+                              }}>
+                <Text style={[styles.itemTxt1, {marginBottom: 10}]}>{this.option_content(item)}</Text>
+
+                <View style={styles.itemView}>
+
+                    <ImageLoad style={styles.image}
+                               source={{uri: this.option_image(item)}}/>
+                    <View style={styles.TxtRight}>
+
+                        <Text style={styles.itemTxt1}
+                              numberOfLines={1}>{this.option_desc(item)}</Text>
+                        <Text style={styles.TxtRight2} numberOfLines={1}>{this.option_title(item)}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+
 
     };
 
@@ -281,7 +341,6 @@ export default class PersonDynamicPage extends Component {
     };
 
     blobData = (items) => {
-
         let objArr = {};
         let dynamics = [];
         util.forEach(items, item => {
@@ -311,7 +370,7 @@ export default class PersonDynamicPage extends Component {
     loadDynamics = (page, postRefresh, endFetch) => {
         let body = {user_id: this.userInfo.user_id, page, page_size: 20};
         getPersonDynamics(body, data => {
-            this.dynamicList = util.unionBy(this.dynamicList, data.items, 'id');
+            this.dynamicList = util.concat(this.dynamicList, data.items);
             if (this.ultimate) {
                 if (data.items.length > 0) {
                     this.page += 1;

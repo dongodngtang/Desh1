@@ -13,7 +13,7 @@ import {Colors, Images, ApplicationStyles, Metrics} from "../../Themes";
 import {NavigationBar, ImageLoad} from '../../components';
 import ErrLocation from '../comm/ErrLocation';
 import {getNearBys, postNearBys} from '../../services/SocialDao'
-import {strNotNull} from '../../utils/ComonHelper'
+import {isEmptyObject, strNotNull} from '../../utils/ComonHelper'
 import {checkPermission} from "../comm/Permission";
 
 const styles = StyleSheet.create({
@@ -59,9 +59,13 @@ export default class NearFriend extends PureComponent {
             if (ret) {
                 navigator.geolocation.getCurrentPosition(data => {
                     const {coords} = data;
-                    postNearBys(coords, ret => {
-                    }, err => {
-                    })
+                    if (!isEmptyObject(coords)) {
+                        const {longitude, latitude} = coords;
+                        postNearBys({lat: latitude, lng: longitude}, ret => {
+                        }, err => {
+                        })
+                    }
+
 
                 }, err => {
                     this.setState({
