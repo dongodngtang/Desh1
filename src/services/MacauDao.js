@@ -2,6 +2,12 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function home_recommends(resolve, reject, params) {
+    helper.get(Api.recommends, ret => {
+        resolve(ret.data)
+    }, reject, params)
+}
+
 export function exchange_rates(resolve, reject) {
     helper.get(Api.exchange_rates, ret => {
         resolve(ret.data)

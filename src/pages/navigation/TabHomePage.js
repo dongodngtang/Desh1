@@ -9,7 +9,7 @@ import {
 // import Coming from './Coming';
 import Information from './Information';
 import MainBanner from './MainBanner';
-import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
+// import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
 import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
 import {connect} from 'react-redux';
@@ -23,6 +23,7 @@ import I18n from 'react-native-i18n';
 import {ApplicationStyles, Images, Colors} from '../../Themes';
 import NavigationBar from "../../components/NavigationBar";
 import Catalog from './Catalog'
+import {home_recommends} from '../../services/MacauDao'
 
 class TabHomePage extends Component {
     state = {
@@ -124,14 +125,14 @@ class TabHomePage extends Component {
         this.setState({
             load_more: 'loading'
         });
-        getHotInfos(data => {
-            if (data.hot_infos.length > 0) {
+        home_recommends(data => {
+            if (data.items.length > 0) {
 
                 this.setState({
                     info_page: 2,
                     load_more: 'success'
                 });
-                this.infosView && this.infosView.refresh([{type: 'hotel'}, {type: 'info'}])
+                this.infosView && this.infosView.setInfos(data.items)
             } else {
                 this.setState({
                     load_more: 'load_all'
@@ -153,7 +154,7 @@ class TabHomePage extends Component {
     _onScroll = (event) => {
 
         this.onTopScroll(event);
-        // this.scrollLoad(event);
+        this.scrollLoad(event);
     };
 
     scrollLoad = (e) => {
@@ -172,14 +173,14 @@ class TabHomePage extends Component {
                 load_more: 'loading'
             });
             setTimeout(() => {
-                getHotInfos(data => {
-                    if (data.hot_infos.length > 0) {
+                home_recommends(data => {
+                    if (data.items.length > 0) {
 
                         this.setState({
                             info_page: ++info_page,
                             load_more: 'success'
                         });
-                        this.infosView && this.infosView.setInfos(data.hot_infos)
+                        this.infosView && this.infosView.setInfos(data.items)
                     } else {
                         this.setState({
                             load_more: 'load_all'

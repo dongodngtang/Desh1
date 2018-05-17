@@ -70,7 +70,7 @@ export default class Information extends PureComponent {
 
     refresh = (infos) => {
         console.log('hot_infos', infos);
-        // this.setState({hot_infos: infos})
+        this.setState({hot_infos: infos})
     }
 
     setInfos = (infos) => {
@@ -82,11 +82,13 @@ export default class Information extends PureComponent {
 
 
     _renderItem = ({item}) => {
-        switch (item.type) {
+        switch (item.source_type) {
             case 'hotel':
-                return <ItemHotel/>
+                return <ItemHotel
+                    hotel={item.hotel}/>
             case 'info':
-                return <ItemInfo/>
+                return <ItemInfo
+                    info={item.info}/>
         }
 
 
@@ -123,35 +125,46 @@ _separator = () => {
 class ItemInfo extends PureComponent {
 
     render() {
-        return <View style={[styles.item_hotel, {height: 220}]}>
+        const {title, id, date, image, type} = this.props.info;
+        return <TouchableOpacity
+            onPress={() => {
+                router.toInfoPage({id})
+            }}
+            style={[styles.item_hotel, {height: 220}]}>
             <View style={[styles.row_center, {
                 marginTop: 9,
                 marginBottom: 9
             }]}>
                 <Text
                     numOfLines={2}
-                    style={styles.hotel_title}>亚苏尔澳门菜 Azores</Text>
-                <Text style={[styles.hotel, styles.info_tag]}>美食</Text>
+                    style={styles.hotel_title}>{title}</Text>
+                <Text style={[styles.hotel, styles.info_tag]}>{type.name}</Text>
             </View>
 
             <ImageLoad
-                source={{uri: 'http://www.travelweekly-china.com/uploadedImages/News/%E6%97%85%E6%B8%B8%E5%B1%80_Tourism_Bureau/61675.jpg?width=1540&height=866&mode=crop&Anchor=MiddleCenter'}}
+                source={{uri: image}}
                 style={{height: 164, width: '100%', marginBottom: 16}}/>
 
-        </View>
+        </TouchableOpacity>
     }
 }
 
 
 class ItemHotel extends PureComponent {
     render() {
-        return <View style={[styles.item_hotel, styles.row_center,]}>
+        const {title, id, location, logo, type} = this.props.hotel;
+
+        return <TouchableOpacity
+            onPress={() => {
+                router.toHotelDetail({id})
+            }}
+            style={[styles.item_hotel, styles.row_center,]}>
 
             <View style={{height: 75, marginRight: 15, flex: 1}}>
                 <View style={styles.row_center}>
                     <Text
                         numOfLines={2}
-                        style={styles.hotel_title}>深圳富临大酒店</Text>
+                        style={styles.hotel_title}>{title}</Text>
                     <Text style={styles.hotel}>酒店</Text>
                 </View>
 
@@ -159,7 +172,7 @@ class ItemHotel extends PureComponent {
                     numOfLines={1}
                     style={[styles.hotel_location, {
                         marginTop: 10
-                    }]}>酒店大堂就在三楼非常方便</Text>
+                    }]}>{location}</Text>
 
                 <View style={{flex: 1}}/>
 
@@ -178,9 +191,9 @@ class ItemHotel extends PureComponent {
 
 
             <ImageLoad
-                source={{uri: 'http://ww4.sinaimg.cn/large/67e20513gw1f9rr12bsxtj21kw11xe65.jpg'}}
+                source={{uri: logo}}
                 style={{height: 75, width: 122}}/>
-        </View>
+        </TouchableOpacity>
     }
 }
 
