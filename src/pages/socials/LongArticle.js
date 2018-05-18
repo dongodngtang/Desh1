@@ -150,6 +150,9 @@ export default class LongArticle extends PureComponent {
 
         topics_details(article.id, data => {
             this.setState({
+                followed: isFollowed(data.user.user_id)
+            })
+            this.setState({
                 article: data
             })
         }, err => {
@@ -160,9 +163,7 @@ export default class LongArticle extends PureComponent {
             }, 500)
 
         }
-        this.setState({
-            followed: isFollowed(article.user.user_id)
-        })
+
     }
 
     render() {

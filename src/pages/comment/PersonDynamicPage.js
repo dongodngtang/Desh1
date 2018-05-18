@@ -224,7 +224,7 @@ export default class PersonDynamicPage extends Component {
         if (target_type === 'topic') {
             switch (option_type) {
                 case 'like':
-                    return '';
+                    return item.topic.body_type === 'short' ? '说说' : '长帖';
                 case 'reply':
                     return item.reply.body;
                 case 'comment':
@@ -244,7 +244,7 @@ export default class PersonDynamicPage extends Component {
         if (target_type === 'topic') {
             switch (option_type) {
                 case 'like':
-                    return item.topic.title;
+                    return item.topic.body_type === 'short' ? item.topic.body : item.topic.title;
                 case 'reply':
                     return item.reply.topic.title;
                 case 'comment':
@@ -279,6 +279,31 @@ export default class PersonDynamicPage extends Component {
         return '未录入类型标题'
     }
 
+    option_click = (item) => {
+        const {option_type, target_type} = item;
+        if (target_type === 'topic') {
+            switch (option_type) {
+                case 'like':
+                    router.toLongArticle(item.topic)
+                    return
+                case 'reply':
+                    router.toLongArticle(item.reply.topic)
+                    return;
+                case 'comment':
+                    router.toLongArticle(item.comment.topic)
+                    return
+            }
+        }
+
+        if (option_type === 'follow') {
+            router.toUserTopicPage(item.target_user)
+            return
+        }
+
+
+        return '未录入类型标题'
+    };
+
 
     renderItem = ({item}) => {
 
@@ -286,8 +311,7 @@ export default class PersonDynamicPage extends Component {
         return (
             <TouchableOpacity style={styles.itemPage}
                               onPress={() => {
-
-
+                                  this.option_click(item)
                               }}>
                 <Text style={[styles.itemTxt1, {marginBottom: 10}]}>{this.option_content(item)}</Text>
 
