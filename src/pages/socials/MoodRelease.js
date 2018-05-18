@@ -243,7 +243,7 @@ export default class MoodRelease extends Component {
         uploadImage(formData, data => {
             successCallBack(data);
         }, err => {
-            this.uploadImageAction(imagePath, successCallBack);
+            // this.uploadImageAction(imagePath, successCallBack);
         });
     };
 

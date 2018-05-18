@@ -133,7 +133,7 @@ export default class ArticleRelease extends PureComponent {
         uploadImage(formData, data => {
             successCallBack(data);
         }, err => {
-            this.uploadImageAction(imagePath, successCallBack);
+            // this.uploadImageAction(imagePath, successCallBack);
         });
     };
 
