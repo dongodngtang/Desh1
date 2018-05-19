@@ -188,9 +188,7 @@ export function get(url, resolve, reject, params = {}) {
 
 /*token过期*/
 function netError(response, reject) {
-    if (response.status === 804 ||
-        response.status === 805 ||
-        response.status === 809) {
+    if (response.status === 401) {
         clearLoginUser();
         router.popToLoginFirstPage();
     }
