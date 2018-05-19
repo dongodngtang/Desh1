@@ -44,7 +44,7 @@ export default class PopRelease extends PureComponent {
         navigator.geolocation.getCurrentPosition(data => {
             if (Platform.OS === 'ios') {
                 const {coords} = data;
-                if (!isEmptyObject(coords)) {
+                if (!isEmptyObject(coords) && !isEmptyObject(global.login_user)) {
                     const {longitude, latitude} = coords;
                     postNearBys({lat: latitude, lng: longitude}, ret => {
                     }, err => {
