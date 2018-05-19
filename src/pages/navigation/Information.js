@@ -161,9 +161,10 @@ class ItemHotel extends PureComponent {
             style={[styles.item_hotel, styles.row_center,]}>
 
             <View style={{height: 75, marginRight: 15, flex: 1}}>
-                <View style={styles.row_center}>
+                <View style={[styles.row_center, {width: '80%'}]}>
                     <Text
-                        numOfLines={2}
+
+                        numOfLines={1}
                         style={styles.hotel_title}>{title}</Text>
                     <Text style={styles.hotel}>酒店</Text>
                 </View>
