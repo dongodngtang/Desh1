@@ -72,7 +72,7 @@ export default class HotelSearch extends PureComponent {
                 <View style={{flex: 1}}/>
 
 
-                <TouchableOpacity
+                {type === 'exchange_rate' ? null : <TouchableOpacity
                     style={styles.btn_search}
                     onPress={() => {
                         this.setState({
@@ -83,7 +83,7 @@ export default class HotelSearch extends PureComponent {
                         style={styles.img_search}
                         source={Images.macau.search}/>}
 
-                </TouchableOpacity>
+                </TouchableOpacity>}
 
 
             </View>

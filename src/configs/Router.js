@@ -4,7 +4,7 @@
 
 import {ActionConst, Actions} from 'react-native-router-flux';
 import {NavigationActions} from 'react-navigation';
-import {getDispatchAction} from '../utils/ComonHelper';
+import {getDispatchAction, isEmptyObject} from '../utils/ComonHelper';
 import UserTopicPage from "../pages/socials/UserTopicPage";
 import Crowdfunding from "../pages/crowdfundings/crowds/Crowdfunding";
 import HotelDetail from "../pages/macau/HotelDetail";
@@ -104,9 +104,12 @@ export default class Router {
 
 
     toNearFriend() {
-        this.stackPush({
-            name: 'NearFriend'
-        })
+        if (isEmptyObject(global.login_user)) {
+            this.toLoginFirstPage()
+        } else
+            this.stackPush({
+                name: 'NearFriend'
+            })
     }
 
     toCrowdfunding() {
