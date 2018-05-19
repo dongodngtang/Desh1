@@ -51,37 +51,44 @@ export default class ReceivedReplyPage extends Component {
                 return I18n.t('reply') + ":"
             case "comment":
                 return I18n.t('comment') + ":"
-            case 'topic_like':
+            case 'like':
                 return I18n.t('liked')
+        }
+    }
+
+    type_topic = (item) => {
+        const {notify_type} = item;
+        switch (notify_type) {
+            case 'reply':
+                return item.reply.topic;
+            case "comment":
+                return item.comment.topic;
+            case 'like':
+                return item.topic;
+        }
+    }
+
+    type_body = (item) => {
+        const {notify_type} = item;
+        switch (notify_type) {
+            case 'reply':
+                return item.reply.body;
+            case "comment":
+                return item.comment.body;
         }
     }
 
 
     renderItem = (item, index) => {
 
-        const {created_at, from_user, content, notify_type} = item;
-        const {avatar, nick_name, official} = from_user;
+        const {created_at, from, notify_type} = item;
+        const {avatar, nick_name, official} = from.target_user;
+
         return (
             <TouchableOpacity
                 onPress={() => {
-                    const {topic_type,topic_id} = content;
-                    if (topic_type === "Info") {
-                        let url = `news/${topic_id}`;
-                        global.router.toWebPage(url, {
-                            bottomNav: 'commentNav',
-                            info: {id:topic_id},
-                            topic_type: "info"
-                        })
-                    } else if (topic_type === "Video") {
-                        let urlVideo = `videos/${topic_id}`;
-                        global.router.toWebPage(urlVideo, {
-                            bottomNav: 'commentNav',
-                            info: {id: topic_id},
-                            topic_type: 'video'
-                        })
-                    } else if (topic_type === 'UserTopic') {
-                        global.router.toLongArticle({id: content.topic_id, user: from_user})
-                    }
+
+                    global.router.toLongArticle(this.type_topic(item))
                 }
                 }
                 style={styles.itemPage}>
@@ -99,9 +106,9 @@ export default class ReceivedReplyPage extends Component {
                             {this.notifyType(notify_type)}
                         </Text>
 
-                        {notify_type !== 'topic_like' ? <Text
+                        {notify_type !== 'like' ? <Text
                             style={styles.replyTxt1}>
-                            {content.comment}
+                            {this.type_body(item)}
                         </Text> : null}
 
                     </View>

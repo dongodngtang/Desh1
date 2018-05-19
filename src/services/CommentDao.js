@@ -29,9 +29,9 @@ export function delDeleteComment(body, resolve, reject) {
 
 /*个人中心我的所有动态*/
 export function getReceivedReply(body, resolve, reject) {
-    helper.get(Api.person_reply(body), ret => {
+    helper.get(Api.person_reply(), ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject, body)
 }
 
 /*个人中心我的所有动态*/

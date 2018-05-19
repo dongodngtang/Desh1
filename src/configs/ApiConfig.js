@@ -325,7 +325,7 @@ function crowd_detail(body) {
 
 function unread_comments(body) {
     const {user_id} = body;
-    return `users/${user_id}/topic_notifications/unread_count`;
+    return `topic_notifications/unread_count`;
 }
 
 function delete_reply(body) {
@@ -339,9 +339,7 @@ function delete_comment(body) {
 }
 
 export function person_reply(body) {
-    const {user_id, page, page_size} = body;
-
-    return `users/${user_id}/topic_notifications?page=${page}&page_size=${page_size}`;
+    return `topic_notifications`;
 }
 
 export function person_dynamics(body) {
