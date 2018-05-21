@@ -175,7 +175,7 @@ class Personal extends Component {
 
     readerMe = () => {
         const {profile} = this.props;
-        const {following_count, follower_count} = profile;
+        const {following_count, followers_count} = profile;
         return <View style={stylesP.meView}>
 
 
@@ -244,7 +244,7 @@ class Personal extends Component {
                                     router.toSocialContact({
                                         type: 0,
                                         following_count: following_count,
-                                        follower_count: follower_count
+                                        follower_count: followers_count
                                     })
                             }}>
                             <Text style={{
@@ -271,13 +271,13 @@ class Personal extends Component {
                                     router.toSocialContact({
                                         type: 1,
                                         following_count: following_count,
-                                        follower_count: follower_count
+                                        follower_count: followers_count
                                     })
                             }}>
                             <Text style={{
                                 color: Colors.white,
                                 fontSize: 14
-                            }}>{`${I18n.t('stalwart')}   ${follower_count ? follower_count : 0}`}</Text>
+                            }}>{`${I18n.t('stalwart')}   ${followers_count ? followers_count : 0}`}</Text>
 
                         </TouchableOpacity>
                     </View>
