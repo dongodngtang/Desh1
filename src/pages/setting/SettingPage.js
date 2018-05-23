@@ -87,20 +87,20 @@ class SettingPage extends Component {
 
 
             <View style={{backgroundColor: Colors.setting, marginTop: 10}}>
-                <SetItemView
-                    onPress={this._switchLanguage}
-                    name={I18n.t('Chinese')}
-                    styles={{marginTop: 10}}/>
-                <View
-                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
-                <SetItemView
-                    onPress={() => {
-                        this.ActionSheet.show();
-                    }}
-                    name={I18n.t('font_set')}/>
+                {/*<SetItemView*/}
+                    {/*onPress={this._switchLanguage}*/}
+                    {/*name={I18n.t('Chinese')}*/}
+                    {/*styles={{marginTop: 10}}/>*/}
+                {/*<View*/}
+                    {/*style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>*/}
+                {/*<SetItemView*/}
+                    {/*onPress={() => {*/}
+                        {/*this.ActionSheet.show();*/}
+                    {/*}}*/}
+                    {/*name={I18n.t('font_set')}/>*/}
 
-                <View
-                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
+                {/*<View*/}
+                    {/*style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>*/}
 
                 <SetItemView
                     onPress={() => {

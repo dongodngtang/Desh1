@@ -7,9 +7,10 @@ import {
     TextInput,
     TouchableOpacity,
     Text,
+    ScrollView
 } from 'react-native';
 import I18n from "react-native-i18n";
-import {Colors, Images} from "../../Themes";
+import {Colors, Images,Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
 import {reallySize, screenWidth, toolBarHeight} from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
@@ -299,40 +300,44 @@ export default class MoodRelease extends Component {
                                    }}
                     />
 
-                    <TextInput placeholder={I18n.t('social_content')}
-                               style={styles.textInput}
-                               multiline={true}
-                               underlineColorAndroid={'transparent'}
-                               onChangeText={(text) => {
-                                   this.setState({
-                                       mood: text
-                                   })
-                               }}
-                    />
+                    <ScrollView style={{height:Metrics.screenHeight-Metrics.navBarHeight-toolBarHeight}}>
+                        <TextInput placeholder={I18n.t('social_content')}
+                                   style={styles.textInput}
+                                   multiline={true}
+                                   underlineColorAndroid={'transparent'}
+                                   onChangeText={(text) => {
+                                       this.setState({
+                                           mood: text
+                                       })
+                                   }}
+                        />
 
-                    <FlatList data={images}
-                              keyExtractor={(item, index) => index + ""}
-                              renderItem={this._renderItem}
-                              numColumns={3}
-                              horizontal={false}
-                              style={[styles.flatList]}
-                              bounces={false}
-                    />
+                        <FlatList data={images}
+                                  keyExtractor={(item, index) => index + ""}
+                                  renderItem={this._renderItem}
+                                  numColumns={3}
+                                  horizontal={false}
+                                  style={[styles.flatList]}
+                                  bounces={false}
+                        />
 
-                    <TouchableOpacity onPress={() => {
-                        global.router.toLocation({
-                            address: (addressInfo) => {
-                                this.setState({address: addressInfo});
-                            }
-                        })
-                    }}>
-                        <View style={styles.subView}>
-                            <Image source={Images.social.address}
-                                   style={[{width: 19}, {height: 22}]}/>
-                            <Text
-                                style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}, {marginRight: 17}]}>{result}</Text>
-                        </View>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            global.router.toLocation({
+                                address: (addressInfo) => {
+                                    this.setState({address: addressInfo});
+                                }
+                            })
+                        }}>
+                            <View style={styles.subView}>
+                                <Image source={Images.social.address}
+                                       style={[{width: 19}, {height: 22}]}/>
+                                <Text
+                                    style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}, {marginRight: 17}]}>{result}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </ScrollView>
+
+
                 </View>
 
                 {/*取消、发布*/}

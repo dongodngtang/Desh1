@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
         height: 96,
         width: 96,
         alignSelf: 'center',
-        marginTop: 94
+        marginTop: 94,
+        borderRadius: 5
     },
     txtCode: {
         fontSize: 24,
