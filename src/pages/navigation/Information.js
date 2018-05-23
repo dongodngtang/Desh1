@@ -137,7 +137,7 @@ class ItemInfo extends PureComponent {
                 width: '90%'
             }]}>
                 <Text
-                    numOfLines={2}
+                    numberOfLines={2}
                     style={styles.hotel_title}>{title}</Text>
                 <Text style={[styles.hotel, styles.info_tag]}>{type.name}</Text>
             </View>
@@ -165,15 +165,15 @@ class ItemHotel extends PureComponent {
                 <View style={[styles.row_center, {width: '80%'}]}>
                     <Text
 
-                        numOfLines={1}
+                        numberOfLines={1}
                         style={styles.hotel_title}>{title}</Text>
                     <Text style={styles.hotel}>酒店</Text>
                 </View>
 
                 <Text
-                    numOfLines={1}
+                    numberOfLines={1}
                     style={[styles.hotel_location, {
-                        marginTop: 10
+                        marginTop: 8
                     }]}>{location}</Text>
 
                 <View style={{flex: 1}}/>
@@ -181,11 +181,11 @@ class ItemHotel extends PureComponent {
                 <View style={[styles.row_center, {justifyContent: 'space-between'}]}>
 
                     <Text
-                        numOfLines={1}
+                        numberOfLines={1}
                         style={styles.hotel_location}>阅 224</Text>
 
                     <Text
-                        numOfLines={1}
+                        numberOfLines={1}
                         style={styles.hotel_location}>5-23</Text>
                 </View>
 

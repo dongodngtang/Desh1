@@ -10,7 +10,7 @@ import {
     ScrollView
 } from 'react-native';
 import I18n from "react-native-i18n";
-import {Colors, Images,Metrics} from "../../Themes";
+import {Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
 import {reallySize, screenWidth, toolBarHeight} from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
@@ -93,7 +93,7 @@ export default class MoodRelease extends Component {
                 ImagePicker.openCamera({
                     compressImageMaxWidth: 1024,
                     compressImageMaxHeight: 1024,
-                    compressImageQuality: 0.7,
+                    compressImageQuality: 0.6,
                 }).then(image => {
 
                     this.popAction.toggle();
@@ -300,7 +300,9 @@ export default class MoodRelease extends Component {
                                    }}
                     />
 
-                    <ScrollView style={{height:Metrics.screenHeight-Metrics.navBarHeight-toolBarHeight}}>
+                    <ScrollView style={{
+                        height: Metrics.screenHeight - Metrics.navBarHeight - toolBarHeight - 20
+                    }}>
                         <TextInput placeholder={I18n.t('social_content')}
                                    style={styles.textInput}
                                    multiline={true}
@@ -383,8 +385,7 @@ export default class MoodRelease extends Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#ECECEE",
-        flex: 1,
-        justifyContent: "space-between",
+        flex: 1
     },
     textInput: {
         width: reallySize(341),
@@ -420,6 +421,8 @@ const styles = StyleSheet.create({
         height: toolBarHeight,
         backgroundColor: "white",
         flexDirection: "row",
+        position: 'absolute',
+        bottom: 0
     },
     save: {
         width: reallySize(160),

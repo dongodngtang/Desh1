@@ -131,6 +131,7 @@ export default class Router {
     }
 
     popToAriticle() {
+        this.pop()
         Actions.tab_news({type: ActionConst.REPLACE})
     }
 
