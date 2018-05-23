@@ -137,7 +137,7 @@ class PassportView extends Component {
 
             if (passImage.indexOf("http") == -1) {
                 let formData = new FormData();
-                let file = {uri: passImage, type: 'multipart/form-data', name: imageName};
+                let file = {uri: passImage, type: 'image/jpeg', name: imageName};
                 formData.append("image", file);
                 this.props._postPasswordImage(formData);
             }

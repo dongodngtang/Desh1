@@ -89,7 +89,7 @@ export default class PersonInfo extends Component {
         let formData = new FormData();
         let file = {
             uri: image.path,
-            type: 'multipart/form-data',
+            type: 'image/jpeg',
             name: this._fileName(image.fileName)
         };
         formData.append("avatar", file);

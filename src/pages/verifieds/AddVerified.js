@@ -159,7 +159,7 @@ export default class AddVerified extends Component {
         if (strNotNull(name) && strNotNull(num)) {
             let formData = new FormData();
             if (!isEmptyObject(localImg)) {
-                let file = {uri: localImg.path, type: 'multipart/form-data', name: getFileName(localImg.path)};
+                let file = {uri: localImg.path, type: 'image/jpeg', name: getFileName(localImg.path)};
                 formData.append("image", file);
             }
 

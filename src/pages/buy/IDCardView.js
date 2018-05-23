@@ -143,7 +143,7 @@ class IDCardView extends Component {
 
             if (image.indexOf("http") == -1) {
                 let formData = new FormData();
-                let file = {uri: image, type: 'multipart/form-data', name: imageName};
+                let file = {uri: image, type: 'image/jpeg', name: imageName};
                 formData.append("image", file);
                 this.props._postCardImage(formData);
             }

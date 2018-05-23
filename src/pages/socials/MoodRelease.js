@@ -239,7 +239,7 @@ export default class MoodRelease extends Component {
         }
 
         let formData = new FormData();
-        let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
+        let file = {uri: imagePath, type: 'image/jpeg', name: getFileName(imagePath)};
         formData.append("image", file);
         uploadImage(formData, data => {
             successCallBack(data);

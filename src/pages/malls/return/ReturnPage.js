@@ -178,7 +178,7 @@ export default class ReturnPage extends Component {
                         setTimeout(() => {
                             let formData = new FormData();
                             let file = {
-                                uri: item.path, type: 'multipart/form-data',
+                                uri: item.path, type: 'image/jpeg',
                                 name: this._fileName(item.path)
                             };
                             formData.append("image", file);

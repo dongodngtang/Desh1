@@ -263,7 +263,7 @@ export default class ChatRoom extends Component {
     ///上传图片
     uploadImageAction = (imagePath, successCallBack) => {
         let formData = new FormData();
-        let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
+        let file = {uri: imagePath, type: "image/jpeg", name: getFileName(imagePath)};
         formData.append("image", file);
         uploadImage(formData, data => {
             successCallBack(data);
