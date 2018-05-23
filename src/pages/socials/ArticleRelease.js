@@ -73,7 +73,7 @@ export default class ArticleRelease extends PureComponent {
             if (type === "image") {
                 imageCount++;
 
-                this.uploadImageAction(rowData.imagePath, ((data) => {
+                this.uploadImageAction(1, rowData.imagePath, ((data) => {
                     ///上传成功
                     ///如果封面图为空 取第一张图做封面图
                     if (cover_link === "") {
@@ -120,7 +120,7 @@ export default class ArticleRelease extends PureComponent {
     };
 
     ///上传图片
-    uploadImageAction = (imagePath, successCallBack) => {
+    uploadImageAction = (count, imagePath, successCallBack) => {
 
         ///未登录先登录
         if (login_user.user_id === undefined) {
@@ -133,7 +133,10 @@ export default class ArticleRelease extends PureComponent {
         uploadImage(formData, data => {
             successCallBack(data);
         }, err => {
-            // this.uploadImageAction(imagePath, successCallBack);
+            if (count < 5)
+                this.uploadImageAction(++count, imagePath, successCallBack);
+            else
+                showToast('图片上传失败：' + imagePath)
         });
     };
 

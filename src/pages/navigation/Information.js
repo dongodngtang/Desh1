@@ -133,7 +133,8 @@ class ItemInfo extends PureComponent {
             style={[styles.item_hotel, {height: 220}]}>
             <View style={[styles.row_center, {
                 marginTop: 9,
-                marginBottom: 9
+                marginBottom: 9,
+                width: '90%'
             }]}>
                 <Text
                     numOfLines={2}
