@@ -134,7 +134,7 @@ class ItemInfo extends PureComponent {
             <View style={[styles.row_center, {
                 marginTop: 9,
                 marginBottom: 9,
-                width: '90%'
+                width: '86%'
             }]}>
                 <Text
                     numberOfLines={2}
