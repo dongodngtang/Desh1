@@ -7,15 +7,16 @@ import {
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
+import {Metrics} from '../../Themes'
 
-
+const Height = Metrics.screenWidth / 2.3;
 export default class MainBanner extends Component {
 
     render() {
         const {banners} = this.props;
         if (banners && banners.length > 0)
             return (
-                <View style={{height: 200}}>
+                <View style={{height: Height}}>
                     <Swiper
                         activeDotStyle={stylesM.activeDot}
                         dotStyle={stylesM.dot}
@@ -26,7 +27,7 @@ export default class MainBanner extends Component {
                                 onPress={() => this.onClickBanner(item)}
                                 key={`banner${item.source_id}`}
                                 activeOpacity={1}>
-                                <Image style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
+                                <Image style={{height: Height, width: '100%'}} source={{uri: item.image}}/>
                             </TouchableOpacity>
 
                         })}
@@ -37,7 +38,7 @@ export default class MainBanner extends Component {
 
             );
         else
-            return <View style={{height: 200}}/>
+            return <View style={{height: Height}}/>
     }
 
     onClickBanner = (item) => {
