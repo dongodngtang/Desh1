@@ -15,7 +15,7 @@ export default {
 
     //production 用来发布正式生产环境
     staging: 'http://106.75.136.9:8801/v10/',
-    production: 'http://test.kkapi.deshpro.com/v1/',
+    production: 'https://kkcms.deshpro.com/v1/',
 
     register: 'account/register',
     login: 'account/login',
@@ -166,7 +166,7 @@ export default {
     info_types: info_types,//获取资讯列表
     infos: 'infos',//获取资讯详情
     exchange_rates: 'exchange_rates',//获取汇率列表
-    recommends:'recommends',//首页推荐
+    recommends: 'recommends',//首页推荐
 
 
 }
