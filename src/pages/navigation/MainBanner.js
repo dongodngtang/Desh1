@@ -9,7 +9,7 @@ import {
 import Swiper from 'react-native-swiper';
 import {Metrics} from '../../Themes'
 
-const Height = Metrics.screenWidth / 2.3;
+const Height = Metrics.reallySize(164)
 export default class MainBanner extends Component {
 
     render() {

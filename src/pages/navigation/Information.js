@@ -5,7 +5,7 @@ import {
     TouchableOpacity, ScrollView, FlatList
 }
     from 'react-native';
-import {Images, Colors} from '../../Themes';
+import {Images, Colors, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {ImageLoad} from "../../components";
 
@@ -144,7 +144,7 @@ class ItemInfo extends PureComponent {
 
             <ImageLoad
                 source={{uri: image}}
-                style={{height: 164, width: '100%', marginBottom: 16}}/>
+                style={{height: Metrics.reallySize(164), width: '100%', marginBottom: 16}}/>
 
         </TouchableOpacity>
     }
