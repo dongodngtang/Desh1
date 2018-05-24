@@ -130,15 +130,19 @@ class ItemInfo extends PureComponent {
             onPress={() => {
                 router.toInfoPage({id})
             }}
-            style={[styles.item_hotel, {height: 220}]}>
+            style={[{
+                marginLeft: 17,
+                marginRight: 17,
+            }]}>
             <View style={[styles.row_center, {
                 marginTop: 9,
                 marginBottom: 9,
-                width: '86%'
+                width: Metrics.screenWidth - 34
             }]}>
                 <Text
                     numberOfLines={2}
-                    style={styles.hotel_title}>{title}</Text>
+                    style={[styles.hotel_title, {maxWidth: Metrics.screenWidth - 85}]}>{title}</Text>
+                <View style={{flex: 1}}/>
                 <Text style={[styles.hotel, styles.info_tag]}>{type.name}</Text>
             </View>
 
