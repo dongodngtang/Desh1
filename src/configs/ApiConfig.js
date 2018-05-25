@@ -15,7 +15,7 @@ export default {
 
     //production 用来发布正式生产环境
     staging: 'http://106.75.136.9:8801/v10/',
-    production: 'https://kkcms.deshpro.com/v1/',
+    production: 'https://kkapi.deshpro.com/v1/',
 
     register: 'account/register',
     login: 'account/login',
