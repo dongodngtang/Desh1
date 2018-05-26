@@ -45,7 +45,7 @@ export default class MallList extends Component {
             dateTitle={I18n.t('last_refresh')}
             allLoadedText={I18n.t('no_more')}
             waitingSpinnerText={I18n.t('loading')}
-            emptyView={()=><SearchEmpty/>}
+            emptyView={() => <SearchEmpty/>}
         />
 
 
@@ -82,7 +82,7 @@ export default class MallList extends Component {
             page_size: 20,
             keyword: this.searchKey
         }, data => {
-            startFetch(data.products, 6)
+            startFetch(data.items, 6)
         }, err => {
             abortFetch()
         })
@@ -96,7 +96,7 @@ export default class MallList extends Component {
             page_size: 20,
             keyword: this.searchKey
         }, data => {
-            startFetch(data.products, 6)
+            startFetch(data.items, 6)
         }, err => {
             abortFetch()
         })
@@ -105,24 +105,26 @@ export default class MallList extends Component {
     refresh = (startFetch, abortFetch) => {
         const {id} = this.props.category;
         catProducts({id}, data => {
-            startFetch(data.products, 6)
+            startFetch(data.items, 6)
         }, err => {
             abortFetch()
         }, {
             page: 1,
-            page_size: 20
+            page_size: 20,
+            category_id: id
         })
     };
 
     loadmore = (page, startFetch, abortFetch) => {
         const {id} = this.props.category;
         catProducts({id}, data => {
-            startFetch(data.products, 6)
+            startFetch(data.items, 6)
         }, err => {
             abortFetch()
         }, {
             page: page,
-            page_size: 20
+            page_size: 20,
+            category_id: id
         })
     };
 

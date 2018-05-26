@@ -108,6 +108,7 @@ export function getProductDetail(body, resolve, reject) {
 
 //获取某个分类下面的商品
 export function catProducts(body, resolve, reject, params) {
+    console.log('获取某个分类下面的商品')
     helper.get(Api.cat_products(body), ret => {
         resolve(ret.data)
     }, reject, params)

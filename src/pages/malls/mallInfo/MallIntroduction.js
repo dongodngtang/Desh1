@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import {MarkdownPlat} from '../../../components';
+import RenderHtml from '../../comm/RenderHtml';
 
 export default class MallIntroduction extends Component {
 
@@ -14,8 +14,8 @@ export default class MallIntroduction extends Component {
     markdownView = () => {
         if (this.props.product.hasOwnProperty('description')) {
             const {description} = this.props.product;
-            return <MarkdownPlat
-                markdownStr={description}/>
+            return <RenderHtml
+                html={description}/>
         }
 
     };

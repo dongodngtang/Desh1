@@ -68,8 +68,9 @@ class LoginFirstPage extends Component {
 
 
     _success = (user_id) => {
-        const {refresh} = this.props.params;
-        refresh && refresh();
+
+        if (this.props.params.refresh)
+            refresh && refresh();
 
         this.props._getProfile(user_id);
         showToast(I18n.t('login_success'));

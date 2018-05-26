@@ -30,7 +30,7 @@ export default class ReturnItem extends PureComponent {
 
     render() {
 
-        const {image, original_price, price, sku_value, product_id, title, number, seven_days_return} = this.props.item;
+        const {image, original_price, price, sku_value, product_id, title, number, returnable} = this.props.item;
 
 
         return (
@@ -48,7 +48,7 @@ export default class ReturnItem extends PureComponent {
                     <Text
                         style={styleR.mallAttributes}>{this.selectType(sku_value)}</Text>
 
-                    {seven_days_return ? <View style={styleR.returned}>
+                    {returnable ? <View style={styleR.returned}>
                         <Text style={styleR.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
                     </View> : null}
 

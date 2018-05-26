@@ -153,7 +153,7 @@ export default class MallSelectPage extends PureComponent {
 
     _renderItem = ({item}) => {
 
-        const {price, original_price, sku_value, title, image, product_id, refund_number, refund_status, number, seven_days_return} = item;
+        const {price, original_price, sku_value, title, image, product_id, refund_number, refund_status, number, returnable} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {
             sku_value.forEach(x => {
@@ -191,7 +191,7 @@ export default class MallSelectPage extends PureComponent {
                             style={styleS.mallAttributes}>{type_value}</Text>
 
                         <View style={styleS.returnedView}>
-                            {seven_days_return ? <View style={styleS.returned}>
+                            {returnable ? <View style={styleS.returned}>
                                 <Text style={styleS.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
                             </View> : null}
                             <View style={{flex: 1}}/>

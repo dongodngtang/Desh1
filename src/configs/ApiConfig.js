@@ -95,10 +95,10 @@ export default {
     video_detail: video_detail,
     sub_videos: sub_videos,
     search_video: search_video,
-    categories: 'categories',
+    categories: 'shop/categories',
     categories_child: categories_child,
     cat_products: cat_products,
-    products: 'products',
+    products: 'shop/products',
     product_detail: product_detail,
     product_orders: product_orders,
     mall_order: 'product_orders',
@@ -407,7 +407,7 @@ export function mall_wxPay(body) {
 }
 
 export function product_detail(body) {
-    return `products/${body.id}`
+    return `shop/products/${body.id}`
 
 }
 
@@ -419,14 +419,14 @@ export function product_orders() {
 export function cat_products(body) {
     const {id} = body;
     if (id === -1)
-        return 'recommended_products';//推荐
+        return 'shop/products/recommended';//推荐
     else
-        return `categories/${id}/products`
+        return `shop/products`
 }
 
 export function categories_child(body) {
     const {id} = body;
-    return `categories/${id}/children`;
+    return `shop/categories/${id}/children`;
 }
 
 export function search_video(body) {

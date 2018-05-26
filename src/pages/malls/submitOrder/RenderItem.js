@@ -23,7 +23,7 @@ export default class RenderItem extends PureComponent {
     };
 
     render() {
-        const {title, seven_days_return, number, variant} = this.props.item;
+        const {title, returnable, number, variant} = this.props.item;
         const {image, original_price, price, text_sku_values, product_id} = variant;
 
         return (
@@ -41,7 +41,7 @@ export default class RenderItem extends PureComponent {
                     <Text
                         style={styleR.mallAttributes}>{this.selectType(text_sku_values)}</Text>
 
-                    {seven_days_return ? <View style={styleR.returned}>
+                    {returnable ? <View style={styleR.returned}>
                         <Text style={styleR.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
                     </View> : null}
 

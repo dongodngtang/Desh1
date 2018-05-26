@@ -33,7 +33,7 @@ export default class ProductItem extends PureComponent {
     };
 
     renderItem = ({item}) => {
-        const {title, original_price, price, number, sku_value, image, seven_days_return, product_id, refund_status} = item;
+        const {title, original_price, price, number, sku_value, image, returnable, product_id, refund_status} = item;
 
         return <TouchableOpacity
             style={styleR.renderItem}
@@ -52,7 +52,7 @@ export default class ProductItem extends PureComponent {
                     style={styleR.mallAttributes}>{this.selectType(sku_value)}</Text>
 
                 <View style={styleR.returnedView}>
-                    {seven_days_return ? <View style={styleR.returned}>
+                    {returnable ? <View style={styleR.returned}>
                         <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
                     </View> : null}
                     <View style={{flex: 1}}/>
