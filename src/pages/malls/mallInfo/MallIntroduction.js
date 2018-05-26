@@ -14,8 +14,16 @@ export default class MallIntroduction extends Component {
     markdownView = () => {
         if (this.props.product.hasOwnProperty('description')) {
             const {description} = this.props.product;
-            return <RenderHtml
-                html={description}/>
+            return <View style={{
+                backgroundColor: 'white',
+                alignItems: 'center',
+                paddingLeft: 17,
+                paddingRight: 17,
+                paddingBottom: 70
+            }}>
+                <RenderHtml
+                    html={description}/>
+            </View>
         }
 
     };
@@ -43,13 +51,13 @@ const styleI = StyleSheet.create({
     productionName: {
         height: 40,
         backgroundColor: '#FFFFFF',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     productionNameTxt: {
         fontSize: 14,
         color: '#333333',
         marginLeft: 17,
 
-        fontWeight:'bold'
+        fontWeight: 'bold'
     }
 })
