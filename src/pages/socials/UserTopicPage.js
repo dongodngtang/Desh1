@@ -274,9 +274,9 @@ export default class UserTopicPage extends PureComponent {
         let reportList = global.reportList;
         let data = reportList[index];
         let body = {
-            "reported_user_id": user_id,
+            "target_id": user_id,
             "body": data.name,
-            "description": ""
+            "target_type": "user"
         };
         report_user(body, (ret) => {
             showToast(I18n.t("report_success"));

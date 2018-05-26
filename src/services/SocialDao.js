@@ -16,7 +16,7 @@ export function report_topic(body, resolve, reject) {
 
 
 export function report_user(body, resolve, reject) {
-    helper.post(Api.report_user(), body, ret => {
+    helper.post(Api.reports, body, ret => {
         resolve(ret.data)
     }, reject);
 }
