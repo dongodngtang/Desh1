@@ -46,9 +46,11 @@ export default class PersonDynamicPage extends Component {
         let reportList = global.reportList;
         let data = reportList[index];
         let body = {
-            "body": data.name,
+            body: data.name,
+            target_id:topicId,
+            target_type:'topic'
         };
-        report_topic(topicId, body, (ret) => {
+        report_topic(body, (ret) => {
             showToast("举报成功");
         }, (err) => {
             console.log(err);

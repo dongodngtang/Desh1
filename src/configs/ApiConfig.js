@@ -161,7 +161,7 @@ export default {
     locations: 'locations',//获取附近位置
     report_templates: 'report_templates',//获取举报模板
     report_user: report_user,//举报用户
-    report_topic: report_topic,//举报长帖说说
+    reports: 'reports',//举报长帖说说
     hotels: 'hotels',//获取酒店列表
     info_types: info_types,//获取资讯列表
     infos: 'infos',//获取资讯详情

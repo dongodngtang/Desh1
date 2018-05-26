@@ -69,7 +69,7 @@ class LoginFirstPage extends Component {
 
     _success = (user_id) => {
 
-        if (this.props.params.refresh)
+        if (this.props.params && this.props.params.refresh)
             refresh && refresh();
 
         this.props._getProfile(user_id);

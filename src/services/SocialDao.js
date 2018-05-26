@@ -8,8 +8,8 @@ import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
 
-export function report_topic(topic_id, body, resolve, reject) {
-    helper.post(Api.report_topic(topic_id), body, ret => {
+export function report_topic(body, resolve, reject) {
+    helper.post(Api.reports, body, ret => {
         resolve(ret.data)
     }, reject);
 }

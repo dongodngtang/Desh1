@@ -283,9 +283,11 @@ export default class LongArticle extends PureComponent {
         let reportList = global.reportList;
         let data = reportList[index];
         let body = {
-            "body": data.name,
+            body: data.name,
+            target_id:id,
+            target_type:'topic'
         };
-        report_topic(id, body, (ret) => {
+        report_topic(body, (ret) => {
             showToast(I18n.t('report_success'));
         }, (err) => {
             console.log(err);
