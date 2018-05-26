@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
         width: 17,
         marginLeft: 14,
         marginRight: 9,
-        opacity:0.8
+        opacity: 0.8
     },
     txtSearch: {
-        color: Colors._E54,
+        color: Colors.txt_444,
         fontSize: 12,
         height: Platform.OS === 'ios' ? 30 : 40,
         width: 210
