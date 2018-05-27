@@ -42,16 +42,22 @@ export default class ShipAddress extends PureComponent {
         </TouchableOpacity>
     };
     _selectAdr = (address) => {
+
         this.setState({
             adrDefault: address
         })
+
+        setTimeout(() => {
+            this.props.refrshOrder && this.props.refrshOrder()
+        }, 300)
     };
 
     render() {
         if (isEmptyObject(this.state.adrDefault)) {
             return this._emptyAdr()
-        };
-        const {address, address_detail, consignee, mobile} = this.state.adrDefault;
+        }
+        const {address, consignee, mobile, province, area, city} = this.state.adrDefault;
+        let address_detail = `${province} ${area} ${city} ${address}`;
         return (
             <View style={styleS.addressView}>
                 <View style={styleS.title}>
@@ -59,19 +65,19 @@ export default class ShipAddress extends PureComponent {
                 </View>
                 <TouchableOpacity style={styleS.shipAddr}
                                   onPress={() => {
-                        if (isEmptyObject(global.login_user))
-                            global.router.toLoginFirstPage();
-                        else
-                            global.router.toAdrListPage(this.props, this._selectAdr, {});
-                    }}>
+                                      if (isEmptyObject(global.login_user))
+                                          global.router.toLoginFirstPage();
+                                      else
+                                          global.router.toAdrListPage(this.props, this._selectAdr, {});
+                                  }}>
                     <View style={{marginTop: 12}}>
-                        <View style={{flexDirection: 'row',marginLeft:17}}>
+                        <View style={{flexDirection: 'row', marginLeft: 17}}>
                             <Text style={styleS.shipAddrTxt1}>{I18n.t('buy_person')}：</Text>
                             <Text style={styleS.shipAddrTxt1}>{consignee.trim()}</Text>
                             <Text style={styleS.mobile}>{mobile}</Text>
                         </View>
-                        <View style={{width:290}}>
-                            <Text style={styleS.shipAddrTxt2} numberOfLines={2}>{`${address} ${address_detail}`}</Text>
+                        <View style={{width: 290}}>
+                            <Text style={styleS.shipAddrTxt2} numberOfLines={2}>{`${address_detail}`}</Text>
                         </View>
 
                     </View>
@@ -95,7 +101,7 @@ const styleS = StyleSheet.create({
     title: {
         height: 40,
         backgroundColor: '#FFFFFF',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     titleName: {
         marginLeft: 17,
@@ -130,7 +136,7 @@ const styleS = StyleSheet.create({
     },
     shipAddrTouch: {
         marginRight: 16,
-        paddingLeft:20,
+        paddingLeft: 20,
         height: 50,
         alignItems: 'center',
         justifyContent: 'center'

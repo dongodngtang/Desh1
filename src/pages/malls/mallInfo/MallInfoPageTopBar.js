@@ -70,8 +70,8 @@ export default class MallInfoPageTopBar extends Component {
                 {returnable ? <View style={styleM.return7}><Text
                     style={styleM.return7Txt}>{I18n.t('returned')}</Text></View> : null}
 
-                {/*<Text*/}
-                    {/*style={styleM.freight}>{`${I18n.t('cost')}：${freight_free ? I18n.t('freight_free') : '¥' + freight_fee}`}</Text>*/}
+                <Text
+                    style={styleM.freight}>{`${I18n.t('cost')}：${freight_free > 0 ? '¥' + freight_fee : I18n.t('freight_free')}`}</Text>
                 <View style={{flex: 1}}/>
                 <Text style={styleM.location}>{origin_point}</Text>
             </View>

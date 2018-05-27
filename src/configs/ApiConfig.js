@@ -101,7 +101,7 @@ export default {
     products: 'shop/products',
     product_detail: product_detail,
     product_orders: product_orders,
-    mall_order: 'product_orders',
+    mall_order: 'shop/orders',
     mall_wxPay: mall_wxPay,
     order_lists: order_lists,
     mall_order_cancel: mall_order_cancel,
@@ -412,7 +412,7 @@ export function product_detail(body) {
 }
 
 export function product_orders() {
-    return `product_orders/new`
+    return `shop/orders/new`
 
 }
 

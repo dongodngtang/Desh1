@@ -48,7 +48,7 @@ export default class OrderSubmitPage extends PureComponent {
 
     componentDidMount() {
         this.pokercion = 0;
-        let body = this.postParam();
+
         isWXAppInstalled(isInstall => {
             this.setState({
                 isInstall: isInstall
@@ -61,6 +61,11 @@ export default class OrderSubmitPage extends PureComponent {
 
         })
 
+        this.order_new()
+    }
+
+    order_new = () => {
+        let body = this.postParam();
         getProductOrders(body, data => {
 
 
@@ -89,7 +94,6 @@ export default class OrderSubmitPage extends PureComponent {
                     }
                 }])
         });
-
     }
 
     postParam = () => {
@@ -114,7 +118,7 @@ export default class OrderSubmitPage extends PureComponent {
                 province: adr.province,
                 city: adr.city,
                 area: adr.area,
-                detail: adr.address_detail
+                detail: adr.address
             }
         }
         let memo = "";
@@ -221,12 +225,15 @@ export default class OrderSubmitPage extends PureComponent {
                     leftBtnIcon={Images.mall_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 17, marginRight: 20}}
                     leftBtnPress={() => router.pop()}
-                    titleStyle={{color: Colors._E54}}
+                    titleStyle={{color: Colors._161817}}
                     title={I18n.t('confirm_order')}/>
                 <ScrollView style={styleO.orderView}>
 
                     <Tips/>
                     <ShipAddress
+                        refrshOrder={() => {
+                            this.order_new()
+                        }}
                         ref={ref => this.shipAddress = ref}/>
                     {util.isEmpty(items) ? null : <MallInfo selectedData={items}/>}
 
