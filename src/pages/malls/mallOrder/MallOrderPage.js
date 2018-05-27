@@ -25,7 +25,7 @@ export default class MallOrderPage extends Component {
 
 
     render() {
-        let menu = ['all', MallStatus.unpaid, MallStatus.undelivered, MallStatus.completed];
+        let menu = ['all', MallStatus.unpaid, MallStatus.paid, MallStatus.completed];
         return (<View style={[ApplicationStyles.bgContainer, {backgroundColor: '#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar
@@ -44,7 +44,7 @@ export default class MallOrderPage extends Component {
                     inactiveTextColor={Colors._AAA}
                     textStyle={{fontSize: 15}}
                     tabStyle={{paddingBottom: 0}}
-                    style={{borderColor: Colors._EEE, marginTop: 1,height:44,alignItems:'center'}}
+                    style={{borderColor: Colors._EEE, marginTop: 1, height: 44, alignItems: 'center'}}
                     underlineStyle={{backgroundColor: '#F34A4A', width: '12%', height: 2, marginLeft: '4.6%'}}/>}>
                 {menu.map((item, index) => {
                     return <OrderListStatus

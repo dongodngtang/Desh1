@@ -59,7 +59,7 @@ export default class PayCountDown extends Component {
         super(props);
         // 初始状态
         this.state = {
-            btnTitle: '默认'
+            btnTitle: props.beginText
         }
     }
 
@@ -78,9 +78,6 @@ export default class PayCountDown extends Component {
 
     componentWillMount() {
         this.shouldSetState = true;
-        this.state = {
-            btnTitle: this.props.beginText,
-        }
     }
 
     componentDidMount() {
