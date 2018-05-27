@@ -25,7 +25,7 @@ export default class MallOrderPage extends Component {
 
 
     render() {
-        let menu = ['all', MallStatus.unpaid, MallStatus.paid, MallStatus.completed];
+        let menu = ['all', MallStatus.unpaid, MallStatus.undelivered, MallStatus.completed];
         return (<View style={[ApplicationStyles.bgContainer, {backgroundColor: '#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar

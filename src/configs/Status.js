@@ -4,7 +4,7 @@
 import I18n from 'react-native-i18n';
 
 //用户赞助状态
-export class CrowdStatus{
+export class CrowdStatus {
     static ALL = 'all';
     static  UNPUBLISHED = 'unpublished';
     static SUCCESS = 'success';
@@ -86,6 +86,7 @@ export class MallStatus {
     static delivered = 'delivered';
     static completed = 'completed';
     static canceled = 'canceled';
+    static undelivered = 'undelivered';
 }
 
 //商城订单状态
@@ -95,6 +96,7 @@ export class LogisticsStatus {
     static have_been_received = 'have_been_received';
     static question_piece = 'question_piece';
 }
+
 //商城订单状态
 export class RefundStatus {
     static none = 'none';

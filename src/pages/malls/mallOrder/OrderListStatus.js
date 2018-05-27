@@ -74,13 +74,15 @@ export default class OrderListStatus extends Component {
         if (page === 1) {
 
             this.load({
-                next_id: '0',
-                status: this.props.status
+                status: this.props.status,
+                page: 1,
+                page_size: 20
             }, postRefresh, endFetch)
         } else {
             this.load({
-                next_id: this.next_id,
-                status: this.props.status
+                status: this.props.status,
+                page: 1,
+                page_size: 20
             }, postRefresh, endFetch)
         }
 
@@ -90,8 +92,7 @@ export default class OrderListStatus extends Component {
     load = (body, postRefresh, endFetch) => {
         getMallOrders(body, data => {
             this.contain && this.contain.close();
-            this.next_id = data.next_id;
-            postRefresh(data.items, 6);
+            postRefresh(data.items, 18);
 
         }, err => {
             this.contain && this.contain.close();

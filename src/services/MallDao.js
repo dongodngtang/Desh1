@@ -73,9 +73,9 @@ export function cancelMallOrder(body, resolve, reject) {
 
 //商品订单页面
 export function getMallOrders(body, resolve, reject) {
-    helper.get(Api.order_lists(body), (ret) => {
+    helper.get(Api.shop_orders, (ret) => {
         resolve(ret.data)
-    }, reject)
+    }, reject, body)
 }
 
 //微信支付
