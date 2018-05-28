@@ -209,9 +209,8 @@ export default class ProductSpecificationInfo extends PureComponent {
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
 
-                    <ScrollView>
+                    <ScrollView style={{height: Metrics.screenHeight}}>
                         {this.optionTypesView(optionTypes)}
-                        <View style={{height: 80}}/>
                     </ScrollView>
 
                 </View>
