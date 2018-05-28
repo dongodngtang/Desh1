@@ -380,7 +380,7 @@ export function logistics_info(body) {
 
 export function product_order_confirm(body) {
     const {order_number} = body;
-    return `product_orders/${order_number}/confirm`
+    return `shop/orders/${order_number}/confirm`
 }
 
 export function product_order_detail(body) {
@@ -395,7 +395,7 @@ export function wx_paid_result(body) {
 
 export function mall_order_cancel(body) {
     const {order_number} = body;
-    return `product_orders/${order_number}/cancel`
+    return `shop/orders/${order_number}/cancel`
 }
 
 export function order_lists(body) {
