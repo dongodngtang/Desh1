@@ -110,6 +110,14 @@ class Personal extends Component {
                     global.router.toMallOrderPage()
 
             })}
+            <View style={{height: 1, marginLeft: 69}}/>
+            {this._item(stylesP.item_view, Images.mall_order, stylesP.img_dy, '我的积分', () => {
+                if (isEmptyObject(global.login_user))
+                    global.router.toLoginFirstPage()
+                else
+                    global.router.toIntegralPage()
+
+            })}
 
             <View style={{height: 5, width: '100%'}}/>
 

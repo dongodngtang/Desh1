@@ -109,9 +109,13 @@ import MallPage from '../pages/malls/MallPage';
 import NearFriend from '../pages/socials/NearFriend';
 import HotelSearch from '../pages/macau/HotelSearch';
 import InfoPage from '../pages/macau/InfoPage';
+import IntegralPage from '../pages/integral/IntegralPage';
+import IntegralRulePage from '../pages/integral/IntegralRulePage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="IntegralPage" component={IntegralPage} hideNavBar/>
+        <Scene key="IntegralRulePage" component={IntegralRulePage} hideNavBar/>
         <Scene key="InfoPage" component={InfoPage} hideNavBar/>
         <Scene key="HotelDetail" component={HotelDetail} hideNavBar/>
         <Scene key="HotelSearch" component={HotelSearch} hideNavBar/>

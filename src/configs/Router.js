@@ -1035,6 +1035,18 @@ export default class Router {
         })
     }
 
+    toIntegralPage() {
+        this.stackPush({
+            name: 'IntegralPage'
+        })
+    }
+
+    toIntegralRulePage() {
+        this.stackPush({
+            name: 'IntegralRulePage'
+        })
+    }
+
     toCommentInfoPage(item) {
         this.stackPush({
             name: 'CommentInfoPage',
