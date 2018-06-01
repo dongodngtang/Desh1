@@ -72,7 +72,7 @@ export default class HotelSearch extends PureComponent {
                 <View style={{flex: 1}}/>
 
 
-                {type === 'exchange_rate' ? null : <TouchableOpacity
+                {type === 'exchange_rate' ? <View style={{width:40}}/> : <TouchableOpacity
                     style={styles.btn_search}
                     onPress={() => {
                         this.setState({

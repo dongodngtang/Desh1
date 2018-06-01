@@ -149,7 +149,7 @@ class ShoppingCart extends Component {
                 <TouchableOpacity
                     style={styleS.settlementView2}
                     onPress={() => {
-                        this._deleteItem()
+                        alertOrder('确认删除',this._deleteItem);
                     }}>
                     <Text style={styleS.settlement2}>{I18n.t('buy_del')}</Text>
                 </TouchableOpacity>
