@@ -38,6 +38,12 @@ export default class IntegralRulePage extends Component {
                         <Text style={styles.txt1}>什么是积分</Text>
                         <Text style={styles.txt2}>{rules}</Text>
                         <Text style={[styles.txt1,{marginTop:23}]}>积分兑换说明</Text>
+                        {exchange.map((item, index) => {
+                            return <Text style={[styles.txt2,{marginTop:8}]}>{item}</Text>
+                        })}
+
+                        <Text style={[styles.txt1,{marginTop:27}]}>如何获取积分</Text>
+                        <Text style={[styles.txt2,{marginTop:10}]}>{obtain}</Text>
                     </View>
                 </ScrollView>
             </View>
