@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>appKey</key>
-	<string>3789f75e5d780c24595607b6</string>
+	<string>75e4574fd92b901821062572</string>
 	<key>channel</key>
 	<string>deshpro-app</string>
 	<key>advertisingId</key>
@@ -11,9 +11,9 @@
 	<key>isProduction</key>
 	<true/>
 	<key>wechatAppId</key>
-	<string>wxe2e371b8eced0fd7</string>
+	<string>kaI7hok5UcxwVaHv</string>
 	<key>wechatAppSecret</key>
-	<string>d6217cd639d4d4e08150505790bef7b1</string>
+	<string>5d2124657bd040d7825ddba568c89d85</string>
 	<key>qqAppId</key>
 	<string>1106155543</string>
 	<key>qqAppKey</key>

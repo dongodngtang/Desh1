@@ -90,9 +90,10 @@ export default class App extends Component {
             appkey: JPUSH_APPKEY,
             isProduction: true,//是否为生产模式
             isOpenMessageRoaming: false,//是否开启消息漫游
+
         });
         //开启Debug模式
-        JMessage.setDebugMode({enable: false});
+        JMessage.setDebugMode({enable: true});
 
 
         WeChat.registerApp(WX_ID).then(ret => {

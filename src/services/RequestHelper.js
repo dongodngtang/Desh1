@@ -86,10 +86,13 @@ export function removeToken() {
 
 if (__DEV__) {
 
-    const naviMonitor = (response) => console.log('HttpResponse', response)
+    const naviMonitor = (response) => {
+        const {config} = response;
+        console.log('RES_URL:' + config.url, response)
+    }
     client.addMonitor(naviMonitor);
     client.addRequestTransform(request => {
-        console.log('HttpRequest', request)
+        console.log('URL:' + client.getBaseURL() + request.url, request)
     })
 }
 

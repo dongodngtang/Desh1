@@ -13,10 +13,10 @@ import {followships} from './SocialDao';
 // let image = require("../../source/home/home_avatar.png")
 
 export function report_templates() {
-    helper.get(Api.report_templates, ret => {
-        global.reportList = ret.data;
-    }, err => {
-    })
+    // helper.get(Api.report_templates, ret => {
+    //     global.reportList = ret.data;
+    // }, err => {
+    // })
 }
 
 export function releases_show(resolve, reject) {
@@ -91,16 +91,16 @@ export function addVerified(body, resolve, reject) {
 }
 
 export function getMsgUnRead(resolve, reject) {
-    helper.get(Api.unread_remind(), ret => {
-        resolve(ret.data)
-    }, reject)
+    // helper.get(Api.unread_remind(), ret => {
+    //     resolve(ret.data)
+    // }, reject)
 }
 
 
 export function getUpdate(resolve, reject) {
-    helper.get(Api.app_versions, ret => {
-        resolve(ret.data)
-    }, reject)
+    // helper.get(Api.app_versions, ret => {
+    //     resolve(ret.data)
+    // }, reject)
 }
 
 
@@ -114,9 +114,9 @@ export function postMsgRead(body, resolve, reject) {
 }
 
 export function getActivityPush(resolve, reject) {
-    helper.get(Api.activityPush, ret => {
-        resolve(ret.data)
-    }, reject)
+    // helper.get(Api.activityPush, ret => {
+    //     resolve(ret.data)
+    // }, reject)
 }
 
 export function getActivityInfo(body, resolve, reject) {
@@ -181,9 +181,9 @@ export function postSuggest(body, resolve, reject) {
 }
 
 export function postLoginCount() {
-    helper.post(Api.login_count(), {}, ret => {
-    }, err => {
-    })
+    // helper.post(Api.login_count(), {}, ret => {
+    // }, err => {
+    // })
 }
 
 export function delNotification(body, resolve, reject) {
@@ -251,11 +251,21 @@ export function postLogin(body, resolve, reject) {
 export var LoginUser = {};
 
 function getJmessageInfo() {
-
     ///获取极光登录信息
     helper.post(Api.jmessage_info(), {}, (ret) => {
         let {username, password} = ret.data;
         ///登录极光
+        JmessageLogin(username, password, 5)
+    }, (err) => {
+        console.log("获取极光IM用户名和密码失败:", err);
+    });
+}
+
+
+function JmessageLogin(username, password, count) {
+
+    if (count > 0) {
+
         JMessage.login({
                 username: username,
                 password: password,
@@ -266,12 +276,13 @@ function getJmessageInfo() {
             },
             //登录失败回调
             (error) => {
-                console.log("极光IM登录失败", error);
+                console.log("极光IM登录失败" + count, error);
+                JmessageLogin(username, password, --count)
+
             }
         );
-    }, (err) => {
-        console.log("获取极光IM用户名和密码失败:", err);
-    });
+    }
+
 }
 
 export function setLoginUser(ret) {

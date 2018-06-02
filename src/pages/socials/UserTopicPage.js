@@ -122,13 +122,15 @@ export default class UserTopicPage extends PureComponent {
             this.loading && this.loading.close();
             JMessage.getUserInfo({username: success.username, appKey: JPUSH_APPKEY},
                 (userInfo) => {
+                    console.log('极光用户:', userInfo)
                     this.loading && this.loading.close();
                     router.toMessageList({
                         username: userInfo.username,
                         nickname: userInfo.nickname,
-                        avatarThumbPath: userInfo.avatarThumbPath,
+                        avatarThumbPath: success.avatar,
                     });
                 }, (error) => {
+                    console.log("error:", error)
                     showToast(I18n.t("error_alert"));
                     this.loading && this.loading.close();
                 });
