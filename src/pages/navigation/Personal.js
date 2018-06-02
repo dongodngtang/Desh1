@@ -84,7 +84,7 @@ class Personal extends Component {
 
             <View style={{height: 5, width: '100%'}}/>
             {this._item(stylesP.item_view, Images.social.mine_moment, stylesP.img_dy,
-                I18n.t('person_dynamic'), () => {
+                '我的朋友圈', () => {
                     if (isEmptyObject(login_user)) {
                         router.toLoginFirstPage()
                     } else {
@@ -92,6 +92,7 @@ class Personal extends Component {
                     }
 
                 })}
+            <View style={{height: 5, width: '100%'}}/>
 
             {/*<View style={{height: 3, width: '100%'}}/>*/}
             {/*{this._item(stylesP.item_view, Images.crowd, stylesP.img_dy,*/}
@@ -103,6 +104,14 @@ class Personal extends Component {
 
             {/*})}*/}
             <View style={{height: 1, marginLeft: 69}}/>
+            {this._item(stylesP.item_view, Images.integral.hotel, stylesP.img_dy, '酒店订单', () => {
+                if (isEmptyObject(global.login_user))
+                    global.router.toLoginFirstPage()
+                // else
+                    // global.router.toIntegralPage()
+
+            })}
+            <View style={{height: 1, marginLeft: 69}}/>
             {this._item(stylesP.item_view, Images.mall_order, stylesP.img_dy, '商城订单', () => {
                 if (isEmptyObject(global.login_user))
                     global.router.toLoginFirstPage()
@@ -110,8 +119,9 @@ class Personal extends Component {
                     global.router.toMallOrderPage()
 
             })}
+
             <View style={{height: 1, marginLeft: 69}}/>
-            {this._item(stylesP.item_view, Images.mall_order, stylesP.img_dy, '我的积分', () => {
+            {this._item(stylesP.item_view, Images.integral.integral, stylesP.img_dy, '我的积分', () => {
                 if (isEmptyObject(global.login_user))
                     global.router.toLoginFirstPage()
                 else

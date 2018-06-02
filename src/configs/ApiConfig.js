@@ -390,7 +390,7 @@ export function product_order_detail(body) {
 
 export function wx_paid_result(body) {
     const {order_number} = body;
-    return `product_orders/${order_number}/wx_paid_result`
+    return `shop/orders/${order_number}/wx_paid_result`
 }
 
 export function mall_order_cancel(body) {
@@ -404,7 +404,7 @@ export function order_lists(body) {
 
 export function mall_wxPay(body) {
     const {order_number} = body;
-    return `product_orders/${order_number}/wx_pay`
+    return `shop/orders/${order_number}/wx_pay`
 }
 
 export function product_detail(body) {

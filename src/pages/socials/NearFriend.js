@@ -79,7 +79,7 @@ export default class NearFriend extends PureComponent {
             getNearBys(ret => {
                 console.log('获取附近', ret)
                 this.setState({
-                    nearby_users: ret.nearby_users,
+                    nearby_users: ret.items,
                     refreshing: false
                 })
             }, err => {
@@ -96,7 +96,7 @@ export default class NearFriend extends PureComponent {
                 barStyle={'dark-content'}
                 titleStyle={{color: Colors._333}}
                 toolbarStyle={{backgroundColor: 'white'}}
-                title={I18n.t("near_friend")}
+                title="附近的人"
                 leftBtnIcon={Images.social.back}
                 leftImageStyle={{height: 19, width: 10, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>

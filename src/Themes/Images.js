@@ -348,6 +348,10 @@ const images = {
         call: require('../../source/macau/call.png'),
         rate1:require('../../source/macau/rate1.png'),
         rate2:require('../../source/macau/rate2.png')
+    },
+    integral:{
+        integral:require('../../source/integral/integral.png'),
+        hotel:require('../../source/integral/hotel.png')
     }
 
 };
