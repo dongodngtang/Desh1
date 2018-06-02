@@ -142,7 +142,7 @@ export default class MallCategories extends Component {
 const styles = StyleSheet.create({
     page: {
         position: 'absolute',
-        top: Platform.OS === 'android' ? 44 : 64,
+        top: Metrics.navBarHeight,
         left: 0,
         right: 0,
         bottom: 0,
