@@ -34,6 +34,7 @@ import CrowdCountDown from './CrowdCountDown';
 import ProgressBar from './ProgressBar';
 import ActionPay from './ActionPay';
 import {LeftAlignedImage} from "./LeftAlignedImage";
+import Button from './Button'
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -64,5 +65,6 @@ export {
     CrowdCountDown,
     ProgressBar,
     ActionPay,
-    LeftAlignedImage
+    LeftAlignedImage,
+    Button
 }

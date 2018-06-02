@@ -7,6 +7,7 @@ import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm, deleteMal
 import {MallStatus} from "../../../configs/Status";
 import {util, payWx, isWXAppInstalled, call, alertOrder, showToast} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
+import {Button} from '../../../components'
 
 
 export default class CompletedBottom extends Component {
@@ -32,8 +33,6 @@ export default class CompletedBottom extends Component {
     switchOrder = (orderItem) => {
         const {status} = orderItem;
         switch (status) {
-            case MallStatus.canceled:
-                return this.cancelOrder(orderItem);
             case MallStatus.unpaid:
                 return this.renderPay(orderItem);
             case MallStatus.paid:
@@ -42,6 +41,9 @@ export default class CompletedBottom extends Component {
                 return this.completedOrder(orderItem);
             case MallStatus.delivered:
                 return this.deliveredOrder(orderItem);
+
+            default:
+                return <View/>;
         }
     };
 
@@ -93,23 +95,15 @@ export default class CompletedBottom extends Component {
         const {order_number} = item;
         return (//${I18n.t('pay')}
             <View style={styleO.bottomView}>
-                <View style={styleO.payView}>
+                <TouchableOpacity style={styleO.payView}
+                                  onPress={() => {
+                                      this.wxPay(order_number);
+                                  }}>
                     <View style={{alignItems: 'flex-end'}}>
                         <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>{I18n.t('pay')}</Text>
                     </View>
-                    <PayCountDown
-                        frameStyle={styleO.payCount}
-                        beginText='倒计时'
-                        count={60 * 30}
-                        pressAction={() => {
-                            this.wxPay(order_number);
-                        }}
-                        changeWithCount={(count) => `${this._formatTime(count)}`}
-                        id={order_number}
-                        ref={(e) => {
-                            this.countDownButton = e
-                        }}/>
-                </View>
+
+                </TouchableOpacity>
 
 
                 <View style={{height: 24, width: 1, backgroundColor: Colors._ECE}}/>
