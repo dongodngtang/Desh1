@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
     },
     male: {
         height: 9,
-        width: 9,
+        width:9,
         marginLeft: 5
     },
     woman: {
         height: 10,
-        width: 8,
+        width:8,
         marginLeft: 5
     }
 })
@@ -139,7 +139,7 @@ export default class NearFriend extends PureComponent {
 
     renderItem = ({item}) => {
         const {nick_name, gender, avatar, signature, distance} = item;
-        let sex = gender === 0 ? Images.social.male : gender === 1 ? Images.social.woman : "";
+        let sex = gender === 0? Images.social.male : gender === 1 ? Images.social.woman : "";
 
         return <TouchableOpacity
             activeOpacity={1}
@@ -158,7 +158,7 @@ export default class NearFriend extends PureComponent {
                 <View>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Text>{nick_name}</Text>
-                        {gender === 2 ? null : <Image
+                        {(gender != 0 && gender != 1)  ? null : <Image
                             source={sex}
                             style={gender === 0 ? styles.male : styles.woman}/>}
 
