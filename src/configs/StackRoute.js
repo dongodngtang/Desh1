@@ -111,9 +111,11 @@ import HotelSearch from '../pages/macau/HotelSearch';
 import InfoPage from '../pages/macau/InfoPage';
 import IntegralPage from '../pages/integral/IntegralPage';
 import IntegralRulePage from '../pages/integral/IntegralRulePage';
+import IntegralDetailsPage from '../pages/integral/IntegralDetailsPage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="IntegralDetailsPage" component={IntegralDetailsPage} hideNavBar/>
         <Scene key="IntegralPage" component={IntegralPage} hideNavBar/>
         <Scene key="IntegralRulePage" component={IntegralRulePage} hideNavBar/>
         <Scene key="InfoPage" component={InfoPage} hideNavBar/>

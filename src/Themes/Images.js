@@ -351,7 +351,14 @@ const images = {
     },
     integral:{
         integral:require('../../source/integral/integral.png'),
-        hotel:require('../../source/integral/hotel.png')
+        hotel:require('../../source/integral/hotel.png'),
+        frends:require('../../source/integral/frends.png'),
+        jine:require('../../source/integral/jine.png'),
+        login:require('../../source/integral/login.png'),
+        monents:require('../../source/integral/monents.png'),
+        renwu:require('../../source/integral/renwu.png'),
+        share:require('../../source/integral/share.png'),
+        tiezi:require('../../source/integral/tiezi.png')
     }
 
 };

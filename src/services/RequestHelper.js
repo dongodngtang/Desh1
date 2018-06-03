@@ -3,7 +3,7 @@
  */
 import {create, SERVER_ERROR, TIMEOUT_ERROR, NETWORK_ERROR} from 'apisauce';
 import Api from '../configs/ApiConfig';
-import {clearLoginUser, showToast, strNotNull,permissionAlert} from '../utils/ComonHelper';
+import {clearLoginUser, showToast, strNotNull, permissionAlert} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import I18n from 'react-native-i18n';
 
@@ -102,7 +102,7 @@ export function post(url, body, resolve, reject) {
     console.log(url, body)
     client.post(url, body)
         .then((response) => {
-            handle(response,resolve, reject)
+            handle(response, resolve, reject)
 
 
         }).catch((error) => {
@@ -117,7 +117,7 @@ export function del(url, body, resolve, reject) {
     console.log(url, body);
     client.delete(url, body)
         .then((response) => {
-            handle(response,resolve, reject)
+            handle(response, resolve, reject)
 
         }).catch((error) => {
         showToast(error);
@@ -131,7 +131,7 @@ export function put(url, body, resolve, reject) {
     console.log(url, body)
     client.put(url, body)
         .then((response) => {
-            handle(response,resolve, reject)
+            handle(response, resolve, reject)
 
         }).catch((error) => {
         console.log(TAG, error);
@@ -143,7 +143,7 @@ export function get(url, resolve, reject, params = {}) {
     console.log(url)
     client.get(url, params)
         .then((response) => {
-            handle(response,resolve, reject)
+            handle(response, resolve, reject)
 
         }).catch((error) => {
         showToast(error);
@@ -151,6 +151,7 @@ export function get(url, resolve, reject, params = {}) {
         reject('Network response was not ok.');
     });
 }
+
 
 
 /*token过期*/
@@ -167,16 +168,20 @@ function netError(response, reject) {
         msgErr = I18n.t('SERVER_ERROR');
     else if (response.problem === TIMEOUT_ERROR)
         msgErr = I18n.t('TIMEOUT_ERROR');
-    else if (response.problem === NETWORK_ERROR)
+    else if (response.problem === NETWORK_ERROR) {
+        permissionAlert('澳门通网络权限已被关闭，是否前往开启')
         msgErr = I18n.t('NETWORK_ERROR');
+    }
+
 
     showToast(msgErr);
     reject(msgErr);
 
 }
 
-function handle(response,resolve,reject){
+function handle(response, resolve, reject) {
     if (response.ok) {
+
         const {code, msg} = response.data;
         if (code === 0) {
             resolve(response.data);
@@ -184,7 +189,7 @@ function handle(response,resolve,reject){
             reject(msg);
         }
     } else {
-        permissionAlert('澳门通网络权限已被关闭，是否前往开启')
+
         netError(response, reject);
     }
 }
