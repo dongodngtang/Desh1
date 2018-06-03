@@ -236,6 +236,7 @@ export default class MomentList extends PureComponent {
                 {body_type === 'long' ? <Text style={styles.txt_long}>长帖</Text> : null}
 
                 <TouchableOpacity
+                    style={{paddingTop:5,paddingBottom:5,paddingRight:5,paddingLeft:5}}
                     onPress={() => {
                         if (this.isDelete()) {
 
