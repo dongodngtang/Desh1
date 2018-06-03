@@ -117,23 +117,14 @@ export default class UserTopicPage extends PureComponent {
 
         const {nick_name, user_id} = this.props.params.userInfo;
         ///获取私信用户的用户名
-        visit_other({userId: user_id}, (success) => {
+        visit_other({userId: user_id}, (user) => {
 
             this.loading && this.loading.close();
-            JMessage.getUserInfo({username: success.username, appKey: JPUSH_APPKEY},
-                (userInfo) => {
-                    console.log('极光用户:', userInfo)
-                    this.loading && this.loading.close();
-                    router.toMessageList({
-                        username: userInfo.username,
-                        nickname: userInfo.nickname,
-                        avatarThumbPath: success.avatar,
-                    });
-                }, (error) => {
-                    console.log("error:", error)
-                    showToast(I18n.t("error_alert"));
-                    this.loading && this.loading.close();
-                });
+            router.toMessageList({
+                username: user.username,
+                nickname: user.nickname,
+                avatarThumbPath: user.avatar,
+            });
         }, (error) => {
             showToast(I18n.t("error_alert"));
             this.loading && this.loading.close();

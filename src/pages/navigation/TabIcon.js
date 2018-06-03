@@ -38,12 +38,12 @@ class TabIcon extends PureComponent {
     _title = (tab) => {
         switch (tab) {
             case 'home':
-                return I18n.t('home');
+                return '首页';
             case 'news':
                 return '本地';
 
             case 'me':
-                return I18n.t('mine');
+                return '我的';
             case 'mall':
                 return '消息';
         }
