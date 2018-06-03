@@ -241,7 +241,7 @@ class Personal extends Component {
                 <View style={{marginLeft: 20}}>
 
                     <Text
-                        style={stylesP.personSignature2}>{profile.nick_name ? profile.nick_name : I18n.t('log_register')}</Text>
+                        style={stylesP.personSignature2}>{isEmptyObject(login_user) ? I18n.t('log_register') : profile.nick_name}</Text>
                     <Text style={stylesP.personSignature}>{this._signature()}</Text>
 
                     <View style={{
