@@ -125,7 +125,7 @@ export default class NearFriend extends PureComponent {
                     getNearBys(ret => {
                         console.log('获取附近', ret)
                         this.setState({
-                            nearby_users: ret.nearby_users,
+                            nearby_users: ret.items,
                             refreshing: false
                         })
                     }, err => {
