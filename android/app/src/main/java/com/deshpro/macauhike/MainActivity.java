@@ -1,4 +1,4 @@
-package com.macauhike;
+package com.deshpro.macauhike;
 
 import com.facebook.react.ReactActivity;
 

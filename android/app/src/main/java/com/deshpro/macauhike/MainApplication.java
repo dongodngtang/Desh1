@@ -1,4 +1,4 @@
-package com.macauhike;
+package com.deshpro.macauhike;
 
 import android.app.Application;
 
