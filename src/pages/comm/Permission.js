@@ -1,5 +1,5 @@
 import Permissions from 'react-native-permissions';
-import {showToast} from "../../utils/ComonHelper";
+import {showToast,permissionAlert} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 
 export function checkPermission(permissionType, callBack) {
@@ -21,8 +21,8 @@ export function checkPermission(permissionType, callBack) {
             if (permissionType === "location") {
                 message = I18n.t("location_root");
             }
-            showToast(message);
-        }else{
+            permissionAlert(message);
+        } else {
             callBack(true);
         }
 

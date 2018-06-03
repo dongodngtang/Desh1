@@ -1020,6 +1020,16 @@ export function alertOrder(str, callback) {
     }])
 }
 
+export function permissionAlert(message) {
+    Alert.alert('权限提示', message, [
+        {text: '取消'},
+        {text: '设置', onPress:()=>{
+                Linking.openURL('app-settings:')
+                    .catch(err => console.log('error', err))
+         }}
+    ])
+}
+
 //微信提示
 export function alertOrderChat(str) {
     Alert.alert(str)

@@ -3,7 +3,7 @@
  */
 import {create, SERVER_ERROR, TIMEOUT_ERROR, NETWORK_ERROR} from 'apisauce';
 import Api from '../configs/ApiConfig';
-import {clearLoginUser, showToast, strNotNull} from '../utils/ComonHelper';
+import {clearLoginUser, showToast, strNotNull,permissionAlert} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import I18n from 'react-native-i18n';
 
@@ -102,16 +102,7 @@ export function post(url, body, resolve, reject) {
     console.log(url, body)
     client.post(url, body)
         .then((response) => {
-            if (response.ok) {
-                const {code, msg} = response.data;
-                if (code === 0) {
-                    resolve(response.data);
-                } else {
-                    reject(msg);
-                }
-            } else {
-                netError(response, reject);
-            }
+            handle(response,resolve, reject)
 
 
         }).catch((error) => {
@@ -126,16 +117,7 @@ export function del(url, body, resolve, reject) {
     console.log(url, body);
     client.delete(url, body)
         .then((response) => {
-            if (response.ok) {
-                const {code, msg} = response.data;
-                if (code === 0) {
-                    resolve(response.data);
-                } else {
-                    reject(msg);
-                }
-            } else {
-                netError(response, reject);
-            }
+            handle(response,resolve, reject)
 
         }).catch((error) => {
         showToast(error);
@@ -149,16 +131,7 @@ export function put(url, body, resolve, reject) {
     console.log(url, body)
     client.put(url, body)
         .then((response) => {
-            if (response.ok) {
-                const {code, msg} = response.data;
-                if (code === 0) {
-                    resolve(response.data);
-                } else {
-                    reject(msg);
-                }
-            } else {
-                netError(response, reject);
-            }
+            handle(response,resolve, reject)
 
         }).catch((error) => {
         console.log(TAG, error);
@@ -170,16 +143,7 @@ export function get(url, resolve, reject, params = {}) {
     console.log(url)
     client.get(url, params)
         .then((response) => {
-            if (response.ok) {
-                const {code, msg} = response.data;
-                if (code === 0) {
-                    resolve(response.data);
-                } else {
-                    reject(msg);
-                }
-            } else {
-                netError(response, reject);
-            }
+            handle(response,resolve, reject)
 
         }).catch((error) => {
         showToast(error);
@@ -209,6 +173,20 @@ function netError(response, reject) {
     showToast(msgErr);
     reject(msgErr);
 
+}
+
+function handle(response,resolve,reject){
+    if (response.ok) {
+        const {code, msg} = response.data;
+        if (code === 0) {
+            resolve(response.data);
+        } else {
+            reject(msg);
+        }
+    } else {
+        permissionAlert('澳门通网络权限已被关闭，是否前往开启')
+        netError(response, reject);
+    }
 }
 
 

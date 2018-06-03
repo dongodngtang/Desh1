@@ -72,6 +72,10 @@ export default class NearFriend extends PureComponent {
                         geolocation: false
                     })
                 })
+            }else{
+                this.setState({
+                    geolocation: false
+                })
             }
         })
 
