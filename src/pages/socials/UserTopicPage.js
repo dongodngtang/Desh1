@@ -17,12 +17,13 @@ import PersonDynamicPage from '../comment/PersonDynamicPage'
 import {visit_other, follow, profile, report_user} from '../../services/SocialDao';
 import _ from 'lodash';
 import Loading from "../../components/Loading";
-import {isFollowed, showToast} from '../../utils/ComonHelper';
+import {isFollowed, showToast, isEmptyObject} from '../../utils/ComonHelper';
 import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
 import PopAction from '../comm/PopAction';
 import ImageLoad from "../../components/ImageLoad";
 import {BlurView} from 'react-native-blur';
+import {getJmessageInfo} from '../../services/AccountDao'
 
 const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
 
@@ -112,7 +113,17 @@ export default class UserTopicPage extends PureComponent {
             router.toLoginFirstPage();
             return;
         }
+        if (isEmptyObject(global.imUser)) {
+            getJmessageInfo(() => {
+                this.getImUser()
+            })
+        } else {
+            this.getImUser()
+        }
 
+    };
+
+    getImUser = () => {
         this.loading && this.loading.open();
 
         const {nick_name, user_id} = this.props.params.userInfo;
@@ -129,7 +140,7 @@ export default class UserTopicPage extends PureComponent {
             showToast(I18n.t("error_alert"));
             this.loading && this.loading.close();
         });
-    };
+    }
 
     _onScroll = (e) => {
         let scrollY = e.nativeEvent.contentOffset.y;

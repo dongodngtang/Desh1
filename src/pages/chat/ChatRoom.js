@@ -48,7 +48,7 @@ export default class ChatRoom extends Component {
         super(props);
         this.state = {
             currentIndex: 0,
-            myUserName: "",
+            myUserName: global.imUser.username,
             messages: [],
             showToolBar: false,//隐藏显示工具栏
             videoPath: "",
@@ -164,12 +164,7 @@ export default class ChatRoom extends Component {
     //获取用户的信息
     getChatUserInfo = () => {
         //获取当前用户自己的信息
-        myJmsgUser(myInfo => {
-            this.myInfo = myInfo;
-            this.setState({myUserName: myInfo.username});
-        }, err => {
-            showToast('获取自己的IM信息失败')
-        })
+        this.myInfo = global.imUser;
 
         ///其他人的信息
         this.otherInfo = this.props.params.userInfo;

@@ -57,7 +57,7 @@ export default class SelfMessage extends Component {
 
     render() {
         const {type, userInfo, serverMessageId} = this.props.message;
-        let avatarThumbPath = localFilePath(userInfo.avatarThumbPath);
+        let avatarThumbPath = localFilePath(userInfo.avatar);
         return (
             <View style={styles.container}>
 

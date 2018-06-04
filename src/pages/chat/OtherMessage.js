@@ -58,7 +58,7 @@ export default class OtherMessage extends Component {
 
     render() {
         const {type, userInfo} = this.props.message;
-        let avatarThumbPath = localFilePath(userInfo.avatarThumbPath);
+        let avatarThumbPath = localFilePath(userInfo.avatar);
         return (
             <View style={styles.container}>
                 <ImageLoad

@@ -250,29 +250,31 @@ export function postLogin(body, resolve, reject) {
 
 export var LoginUser = {};
 
-function getJmessageInfo() {
+export function getJmessageInfo(callback) {
     ///获取极光登录信息
     helper.post(Api.jmessage_info(), {}, (ret) => {
-        let {username, password} = ret.data;
+
         ///登录极光
-        JmessageLogin(username, password, 5)
+        JmessageLogin(ret.data, 5, callback)
     }, (err) => {
         console.log("获取极光IM用户名和密码失败:", err);
     });
 }
 
 
-function JmessageLogin(username, password, count) {
+function JmessageLogin(imUser, count, callback) {
 
     if (count > 0) {
 
         JMessage.login({
-                username: username,
-                password: password,
+                username: imUser.username,
+                password: imUser.password,
             },
             //登录成功回调
             () => {
+                global.imUser = imUser;
                 console.log("极光IM登录成功");
+                callback && callback()
             },
             //登录失败回调
             (error) => {
