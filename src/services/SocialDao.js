@@ -70,6 +70,13 @@ export function followships(resolve, reject) {
 }
 
 
+export function myJmsgUser(resolve, reject) {
+    helper.post(Api.jmessage_info(), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 export function visit_other(body, resolve, reject) {
     helper.get(Api.jmessage_visit_other(body), ret => {
         resolve(ret.data)

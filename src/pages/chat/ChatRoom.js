@@ -26,7 +26,7 @@ import VideoToast from "./VideoToast";
 import ImagePicker from 'react-native-image-crop-picker';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import PopAction from '../comm/PopAction';
-import {report_user, uploadImage} from '../../services/SocialDao';
+import {report_user, uploadImage, myJmsgUser} from '../../services/SocialDao';
 
 import Thumb from 'react-native-thumb';
 import {checkPermission} from "../comm/Permission";
@@ -164,10 +164,13 @@ export default class ChatRoom extends Component {
     //获取用户的信息
     getChatUserInfo = () => {
         //获取当前用户自己的信息
-        JMessage.getMyInfo((myInfo) => {
+        myJmsgUser(myInfo => {
             this.myInfo = myInfo;
             this.setState({myUserName: myInfo.username});
-        });
+        }, err => {
+            showToast('获取自己的IM信息失败')
+        })
+
         ///其他人的信息
         this.otherInfo = this.props.params.userInfo;
     };
