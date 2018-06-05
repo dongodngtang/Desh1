@@ -8,7 +8,7 @@ import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 import {getAddressList} from './OrderDao';
 import JMessage from 'jmessage-react-plugin';
-import {followships} from './SocialDao';
+import {followships, postNearBys} from './SocialDao';
 
 // let image = require("../../source/home/home_avatar.png")
 
@@ -323,6 +323,9 @@ export function setLoginUser(ret) {
             }, err => {
             })
 
+            //上传用户位置
+            postLocation();
+
         }, 100);
 
 
@@ -340,6 +343,22 @@ export function setLoginUser(ret) {
         })
     }
 
+}
+
+
+function postLocation() {
+    navigator.geolocation.getCurrentPosition(data => {
+        const {coords} = data;
+        if (!isEmptyObject(coords) && !isEmptyObject(global.login_user)) {
+            const {longitude, latitude} = coords;
+            postNearBys({lat: latitude, lng: longitude}, ret => {
+            }, err => {
+            })
+        }
+
+    }, err => {
+        console.log(err)
+    })
 }
 
 export function removeToken() {
