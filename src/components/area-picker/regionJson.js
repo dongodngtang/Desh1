@@ -154,21 +154,21 @@ export const PROVINCE_LIST = [
         "name": "新疆维吾尔自治区",
         "province_id": "650000"
     },
-    {
-        "id": 32,
-        "name": "台湾省",
-        "province_id": "710000"
-    },
-    {
-        "id": 33,
-        "name": "香港特别行政区",
-        "province_id": "810000"
-    },
-    {
-        "id": 34,
-        "name": "澳门特别行政区",
-        "province_id": "820000"
-    }
+    // {
+    //     "id": 32,
+    //     "name": "台湾省",
+    //     "province_id": "710000"
+    // },
+    // {
+    //     "id": 33,
+    //     "name": "香港特别行政区",
+    //     "province_id": "810000"
+    // },
+    // {
+    //     "id": 34,
+    //     "name": "澳门特别行政区",
+    //     "province_id": "820000"
+    // }
 ];
 
 export const CITY_LIST = [
