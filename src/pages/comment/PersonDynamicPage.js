@@ -47,8 +47,8 @@ export default class PersonDynamicPage extends Component {
         let data = reportList[index];
         let body = {
             body: data.name,
-            target_id:topicId,
-            target_type:'topic'
+            target_id: topicId,
+            target_type: 'topic'
         };
         report_topic(body, (ret) => {
             showToast("举报成功");
@@ -309,27 +309,29 @@ export default class PersonDynamicPage extends Component {
 
     renderItem = ({item}) => {
 
+        if (item.target_type === "nil_class")
+            return <View/>
+        else
+            return (
+                <TouchableOpacity style={styles.itemPage}
+                                  onPress={() => {
+                                      this.option_click(item)
+                                  }}>
+                    <Text style={[styles.itemTxt1, {marginBottom: 10}]}>{this.option_content(item)}</Text>
 
-        return (
-            <TouchableOpacity style={styles.itemPage}
-                              onPress={() => {
-                                  this.option_click(item)
-                              }}>
-                <Text style={[styles.itemTxt1, {marginBottom: 10}]}>{this.option_content(item)}</Text>
+                    <View style={styles.itemView}>
 
-                <View style={styles.itemView}>
+                        <ImageLoad style={styles.image}
+                                   source={{uri: this.option_image(item)}}/>
+                        <View style={styles.TxtRight}>
 
-                    <ImageLoad style={styles.image}
-                               source={{uri: this.option_image(item)}}/>
-                    <View style={styles.TxtRight}>
-
-                        <Text style={styles.itemTxt1}
-                              numberOfLines={1}>{this.option_desc(item)}</Text>
-                        <Text style={styles.TxtRight2} numberOfLines={1}>{this.option_title(item)}</Text>
+                            <Text style={styles.itemTxt1}
+                                  numberOfLines={1}>{this.option_desc(item)}</Text>
+                            <Text style={styles.TxtRight2} numberOfLines={1}>{this.option_title(item)}</Text>
+                        </View>
                     </View>
-                </View>
-            </TouchableOpacity>
-        )
+                </TouchableOpacity>
+            )
 
 
     };
