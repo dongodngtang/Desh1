@@ -17,6 +17,8 @@ import {JPUSH_APPKEY} from '../../configs/Constants'
 import Loading from "../../components/Loading";
 import ImageLoad from "../../components/ImageLoad";
 import {reallySize} from "../../Themes/Metrics";
+import {visit_other} from "../../services/SocialDao"
+import _ from "lodash"
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -39,6 +41,8 @@ export default class MessageCenter extends Component {
         msgUnRead: 0,
         conversations: [],//会話列表
     };
+
+    rows = [];
 
 
     componentDidMount() {
@@ -87,21 +91,41 @@ export default class MessageCenter extends Component {
     getConversations = () => {
         ///获取会话列表
         JMessage.getConversations((conArr) => { // conArr: 会话数组。
-            this.setState({conversations: conArr});
+            if (_.isEmpty(this.rows)) {
+                this.rows = conArr;
+            } else {
+                this.rows = conArr.map(item => {
+                    _.forEach(this.rows, value => {
+                        if (item.target.username === value.target.username) {
+                            item.target.avatarThumbPath = value.target.avatarThumbPath
+                            return;
+                        }
+                    })
+                    return item;
+                })
+
+            }
+            this.setState({conversations: this.rows});
+
         }, (error) => {
             console.log("获取会话列表失败", error);
         });
     };
 
-    _renderItem = (item) => {
+    isEqual = (arr1, arr2) => {
+        console.log(arr1, arr2)
+    }
 
-        let lastMessage = item.item.latestMessage;//最后一条消息
-        let {nickname, avatarThumbPath, username} = item.item.target;
+    _renderItem = ({item}) => {
+
+
+        let lastMessage = item.latestMessage;//最后一条消息
+        let {nickname, avatarThumbPath, username} = item.target;
 
         let createTime = "";
         let type = "";
         let text = "";
-        let unreadCount = item.item.unreadCount;
+        let unreadCount = item.unreadCount;
         //有最后一条消息
         if (lastMessage !== undefined) {
             createTime = lastMessage.createTime;
@@ -123,7 +147,15 @@ export default class MessageCenter extends Component {
             createTime = this.formatDate(createTime);
         }
 
-        avatarThumbPath = localFilePath(avatarThumbPath);
+        if (!strNotNull(avatarThumbPath) && !strNotNull(item.avatar)) {
+            item.avatar = 'request'
+            visit_other({userId: username}, data => {
+                item.target.avatarThumbPath = data.avatar;
+                this.setState({conversations: this.rows})
+            }, err => {
+            })
+        }
+
 
         return (
             <TouchableOpacity
