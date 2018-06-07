@@ -43,7 +43,7 @@ export default class IntegralDetailsPage extends Component {
             </View>
         )
     }
-    _renderItem = (item,index) => {
+    _renderItem = ({item,index}) => {
         return (
             <View style={styles.item}>
                 <View style={styles.itemLeft}>

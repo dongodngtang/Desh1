@@ -279,7 +279,7 @@ function JmessageLogin(imUser, count, callback) {
             //登录失败回调
             (error) => {
                 console.log("极光IM登录失败" + count, error);
-                JmessageLogin(username, password, --count)
+                JmessageLogin(imUser.username, imUser.password, --count)
 
             }
         );
