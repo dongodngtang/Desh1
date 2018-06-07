@@ -124,8 +124,8 @@ class Personal extends Component {
             {this._item(stylesP.item_view, Images.integral.integral, stylesP.img_dy, '我的积分', () => {
                 if (isEmptyObject(global.login_user))
                     global.router.toLoginFirstPage()
-                // else
-                //     global.router.toIntegralPage()
+                else
+                    global.router.toIntegralPage()
 
             })}
 
@@ -194,6 +194,7 @@ class Personal extends Component {
     readerMe = () => {
         const {profile} = this.props;
         const {following_count, followers_count} = profile;
+        console.log("person:",profile)
         return <View style={stylesP.meView}>
 
 
