@@ -168,6 +168,7 @@ const api = {
     exchange_rates: 'exchange_rates',//获取汇率列表
     recommends: 'recommends',//首页推荐
     integral_task:integral_task,//用户任务列表
+    integral_detail:integral_detail,//用户积分明细
 
 
 }
@@ -183,6 +184,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function integral_detail() {
+    return `account/users/${getUserId()}/integral/details`
+}
 
 function integral_task() {
     return `account/users/${getUserId()}/integral/tasks`
@@ -369,7 +374,7 @@ export function replies_replies(body) {
 
 export function refund_info(body) {
     const {refund_number} = body;
-    return `refund/${refund_number}/refund_record`
+    return `shop/orders/${refund_number}/customer_return`
 }
 
 

@@ -87,8 +87,8 @@ export default class IntegralPage extends Component {
                     />}
                     <View style={{backgroundColor: '#F3F3F3', height: 13, width: '100%'}}/>
                     <View style={{marginRight: 17, marginLeft: 17}}>
-                        {this._header('已完成')}
-                        {this._separator}
+                        {/*{this._header('已完成')}*/}
+                        {/*{this._separator}*/}
 
                     </View>
                 </ScrollView>

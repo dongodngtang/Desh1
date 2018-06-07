@@ -124,7 +124,7 @@ export default class CompletedBottom extends Component {
     };
 
     paidOrder = (orderItem) => {
-
+        console.log("orderItem:",orderItem)
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {

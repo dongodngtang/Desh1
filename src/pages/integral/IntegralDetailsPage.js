@@ -6,15 +6,26 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {convertDate} from "../../utils/ComonHelper";
+import {convertDate, isEmptyObject} from "../../utils/ComonHelper";
 import {NavigationBar} from '../../components';
-
-const dataHosts = [1,2,3,4,5];
+import {postIntegralDetails} from "../../services/IntegralDao";
 
 
 export default class IntegralDetailsPage extends Component {
 
+    state = {
+        details: []
+    };
+
+    componentDidMount() {
+        postIntegralDetails({}, data => {
+            console.log('details', data);
+            this.setState({details: data.data.items})
+        })
+    }
+
     render() {
+        const{details} = this.state;
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -26,14 +37,14 @@ export default class IntegralDetailsPage extends Component {
                     leftBtnPress={() => router.pop()}/>
 
                 <ScrollView style={styles.View}>
-                    <FlatList
+                    {isEmptyObject(details)?<View/>:<FlatList
                         style={{backgroundColor:'white'}}
-                        data={dataHosts}
+                        data={details}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => `commodities${index}`}
-                    />
+                    />}
                 </ScrollView>
             </View>
         )
