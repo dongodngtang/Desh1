@@ -8,7 +8,7 @@ export function postIntegralTask(body, resolve, reject) {
 }
 
 export function postIntegralDetails(body, resolve, reject) {
-    helper.post(Api.integral_detail(body), {}, ret => {
+    helper.get(Api.integral_detail(body), ret => {
         resolve(ret.data)
-    }, reject, body)
+    }, reject)
 }

@@ -20,12 +20,12 @@ export default class IntegralDetailsPage extends Component {
     componentDidMount() {
         postIntegralDetails({}, data => {
             console.log('details', data);
-            this.setState({details: data.data.items})
+            this.setState({details: data})
         })
     }
 
     render() {
-        const{details} = this.state;
+        const {details} = this.state;
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
