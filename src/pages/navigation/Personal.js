@@ -125,7 +125,7 @@ class Personal extends Component {
                 if (isEmptyObject(global.login_user))
                     global.router.toLoginFirstPage()
                 else
-                    global.router.toIntegralPage()
+                    global.router.toIntegralPage(this.props.profile.total_points)
 
             })}
 

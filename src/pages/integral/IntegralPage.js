@@ -6,13 +6,16 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
+import {postIntegralTask} from '../../services/IntegralDao';
 import {isEmptyObject} from "../../utils/ComonHelper";
+
+
 const dataHosts = [
-    {image: Images.integral.login, name: '每日登录',status:'领取'},
-    {image: Images.integral.tiezi, name: '发表长帖',status:'领取'},
-    {image: Images.integral.jine, name: '消费金额满800元人民币',status:'去完成'},
-    {image: Images.integral.share, name: '每日分享',status:'去完成'},
-    {image: Images.integral.frends, name: '好友注册',status:'去完成'}];
+    {image: Images.integral.login},
+    {image: Images.integral.tiezi},
+    {image: Images.integral.jine},
+    {image: Images.integral.share},
+    {image: Images.integral.frends}];
 
 export default class IntegralPage extends Component {
 
@@ -21,11 +24,16 @@ export default class IntegralPage extends Component {
     };
 
     componentDidMount() {
-
+        postIntegralTask({}, data => {
+            console.log('integral_task', data);
+            this.setState({integral: data})
+        })
     }
 
 
     render() {
+        const {integral} = this.state;
+        console.log("total_points:",this.props.params.total_points)
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <View style={styles.nav}>
@@ -52,10 +60,10 @@ export default class IntegralPage extends Component {
                 </View>
 
                 <View style={styles.ruleView}>
-                    <View style={{width:50}}/>
-                    <View style={{flex:1}}/>
-                    <Text style={styles.ruleTxt1}>360452</Text>
-                    <View style={{flex:1}}/>
+                    <View style={{width: 50}}/>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.ruleTxt1}>{isEmptyObject(this.props.params.total_points)?0:this.props.params.total_points}</Text>
+                    <View style={{flex: 1}}/>
                     <TouchableOpacity
                         style={{marginRight: 17}}
                         onPress={() => {
@@ -68,20 +76,20 @@ export default class IntegralPage extends Component {
 
                 <ScrollView style={{backgroundColor: 'white'}}>
                     <View style={{backgroundColor: '#F3F3F3', height: 14, width: '100%'}}/>
-                    <FlatList
+                    {isEmptyObject(integral) ? <View/> : <FlatList
                         ListHeaderComponent={this._header('未完成')}
                         style={{marginRight: 17, marginLeft: 17}}
-                        data={dataHosts}
+                        data={integral.unfinished}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => `commodities${index}`}
-                    />
+                    />}
                     <View style={{backgroundColor: '#F3F3F3', height: 13, width: '100%'}}/>
                     <View style={{marginRight: 17, marginLeft: 17}}>
                         {this._header('已完成')}
                         {this._separator}
-                        {/*{this._renderItem([{image:Images.integral.monents,name:'每日评论'}])}*/}
+
                     </View>
                 </ScrollView>
 
@@ -90,32 +98,48 @@ export default class IntegralPage extends Component {
     }
 
 
-    _header=(status)=>{
-        return(
-            <View style={[styles.head,{borderBottomWidth:1.5,borderColor:'#F3F3F3'}]}>
+    _header = (status) => {
+        return (
+            <View style={[styles.head, {borderBottomWidth: 1.5, borderColor: '#F3F3F3'}]}>
                 <Image style={{height: 24, width: 24}}
                        source={Images.integral.renwu}/>
-                <Text style={{color: '#444444', fontSize: 16,marginLeft:10}}>{status}</Text>
+                <Text style={{color: '#444444', fontSize: 16, marginLeft: 10}}>{status}</Text>
             </View>
         )
     };
 
-    _renderItem = ({item,index}) => {
+    _renderItem = ({item, index}) => {
+        if (isEmptyObject(item)) {
+            return <View/>
+        }
         return (
             <View style={styles.item} key={index}>
                 <Image style={{height: 34, width: 34}}
-                       source={item.image}/>
-                <View style={{marginLeft:14,flexDirection:'column'}}>
-                    <Text style={{color: '#444444', fontSize: 14}}>{item.name}</Text>
+                       source={Images.integral.login}/>
+                <View style={{marginLeft: 14, flexDirection: 'column'}}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={{color: '#444444', fontSize: 14}}>{item.mark}</Text>
+                        <Text style={{color: '#444444', fontSize: 14}}>{this._task(item)}</Text>
+                    </View>
                     <Text style={{color: '#AAAAAA', fontSize: 12}}>积分+5</Text>
                 </View>
-                <View style={{flex:1}}/>
-                <TouchableOpacity style={[styles.statusView,{backgroundColor:item.status === '领取' ? '#6CC7FF' :'#FF6B4C'}]}>
-                    <Text style={{color:'#FFFFFF',fontSize:14}}>领取</Text>
+                <View style={{flex: 1}}/>
+                <TouchableOpacity
+                    style={[styles.statusView, {backgroundColor: item.status === '领取' ? '#6CC7FF' : '#FF6B4C'}]}>
+                    <Text style={{color: '#FFFFFF', fontSize: 14}}>领取</Text>
                 </TouchableOpacity>
             </View>
         )
     };
+
+    _task = (item) => {
+        const {doing_times, total_doing_points, total_done_points, limit_times, done_times} = item;
+        if (doing_times === (limit_times - done_times)) {
+            return null
+        } else {
+            return ` (${doing_times}/${limit_times - done_times})`;
+        }
+    }
     _separator = () => {
         return <View style={{backgroundColor: '#F3F3F3', height: 1.5}}/>
     }
@@ -127,12 +151,12 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: Colors._E54,
         flexDirection: 'row',
-        alignItems:'center',
+        alignItems: 'center',
         paddingTop: Metrics.statusBarHeight
     },
-    View1:{
+    View1: {
         flexDirection: 'row',
-        alignItems:'center'
+        alignItems: 'center'
     },
     cancel: {
         fontSize: 14,
@@ -154,11 +178,11 @@ const styles = StyleSheet.create({
     },
     ruleView: {
         flexDirection: 'row',
-        alignItems:'center',
+        alignItems: 'center',
         backgroundColor: Colors._E54,
-        width:'100%',
-        paddingTop:14,
-        paddingBottom:18
+        width: '100%',
+        paddingTop: 14,
+        paddingBottom: 18
     },
     ruleTxt1: {
         color: '#FFFFFF',
@@ -169,21 +193,21 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     head: {
-        height:47,
-        flexDirection:'row',
+        height: 47,
+        flexDirection: 'row',
         alignItems: 'center'
     },
     item: {
-        marginTop:12,
-        marginBottom:13,
-        flexDirection:'row',
+        marginTop: 12,
+        marginBottom: 13,
+        flexDirection: 'row',
         alignItems: 'center'
     },
-    statusView:{
-        width:68,height:30,
-        borderRadius:15,
-        alignItems:'center',
-        justifyContent:'center'
+    statusView: {
+        width: 68, height: 30,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 
 

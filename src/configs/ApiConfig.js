@@ -167,6 +167,7 @@ const api = {
     infos: 'infos',//获取资讯详情
     exchange_rates: 'exchange_rates',//获取汇率列表
     recommends: 'recommends',//首页推荐
+    integral_task:integral_task,//用户任务列表
 
 
 }
@@ -182,6 +183,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function integral_task() {
+    return `account/users/${getUserId()}/integral/tasks`
+}
 
 function info_types(body) {
     return `info_types/${body.type}/infos`
