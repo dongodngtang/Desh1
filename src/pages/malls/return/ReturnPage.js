@@ -115,8 +115,8 @@ export default class ReturnPage extends Component {
                     <RefundInstruction
                         ref={ref => this.refundMemo = ref}/>
 
-                    <UploadDocument
-                        ref={ref => this.upFiles = ref}/>
+                    {/*<UploadDocument*/}
+                        {/*ref={ref => this.upFiles = ref}/>*/}
 
                     <View style={{height: 80}}/>
                 </ScrollView>

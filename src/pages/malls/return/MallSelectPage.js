@@ -98,8 +98,8 @@ export default class MallSelectPage extends PureComponent {
     };
 
     renderShowEditView = (item) => {
-        if (item.refund_status !== RefundStatus.none && item.refund_status !== RefundStatus.close)
-            return;
+        /*if (item.refund_status !== RefundStatus.none && item.refund_status !== RefundStatus.close)
+            return;*/
         let imageURL = Images.radio;
         if (item.isSelect === true) {
             imageURL = Images.radioSelected
@@ -133,8 +133,9 @@ export default class MallSelectPage extends PureComponent {
         const {order_items} = this.state;
         let array = [...order_items];
         array.map(x => {
-            let canSelect = x.refund_status === RefundStatus.none || x.refund_status === RefundStatus.close;
-            x.isSelect = !this.state.selectAll && canSelect;
+            // let canSelect = x.refund_status === RefundStatus.none || x.refund_status === RefundStatus.close;
+            // x.isSelect = !this.state.selectAll && canSelect;
+            x.isSelect = !this.state.selectAll
         });
 
         this.setState({
@@ -152,7 +153,7 @@ export default class MallSelectPage extends PureComponent {
     };
 
     _renderItem = ({item}) => {
-
+        console.log("itemL:",item)
         const {price, original_price, sku_value, title, image, product_id, refund_number, refund_status, number, returnable} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {
@@ -195,7 +196,8 @@ export default class MallSelectPage extends PureComponent {
                                 <Text style={styleS.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
                             </View> : null}
                             <View style={{flex: 1}}/>
-                            {this.refundTxt(refund_status)}
+                            {/*{this.refundTxt(refund_status)}*/}
+                            <Text>{item.return_status_text}</Text>
                         </View>
 
                         <View style={styleS.PriceView}>
