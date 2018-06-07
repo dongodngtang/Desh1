@@ -253,7 +253,8 @@ export default class ChatRoom extends Component {
             if (Platform.OS === 'android')
                 events = 'file://' + events;
             this.uploadImageAction(events, (data) => {
-                this.createMessage({messageType: "file", path: mediaPath, coverPath: data.image_path});
+                console.log("kk:",data)
+                this.createMessage({messageType: "file", path: mediaPath, coverPath: data.image_url});
             });
         });
     };
