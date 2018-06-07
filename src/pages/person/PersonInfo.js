@@ -21,7 +21,6 @@ import JMessage from "jmessage-react-plugin";
 export default class PersonInfo extends Component {
 
 
-
     _getGender(gender) {
         switch (gender) {
             case 0:
@@ -94,7 +93,7 @@ export default class PersonInfo extends Component {
         };
         formData.append("avatar", file);
         postAvatar(formData);
-        JMessage.updateMyAvatar({ imgPath: image.path },
+        JMessage.updateMyAvatar({imgPath: image.path},
             () => {
                 // success do something.
 
@@ -123,17 +122,19 @@ export default class PersonInfo extends Component {
                         onPress={this.selectPhotoTapped}>
                         <Text style={[styles.text_label, {marginRight: '35%'}]}>{I18n.t('user_edit_avatar')}</Text>
 
-                        <View style={{ height: 86, width: 86,alignItems: 'center', justifyContent: 'center',
-                            marginRight: '10%'}}>
+                        <View style={{
+                            height: 86, width: 86, alignItems: 'center', justifyContent: 'center',
+                            marginRight: '10%'
+                        }}>
 
                             <Image style={{
-                            height: 86, width: 86
+                                height: 86, width: 86
 
-                        }}
+                            }}
                                    source={Images.mask}/>
                             <Image style={{
                                 height: 70, width: 70,
-                                borderRadius: 35,  position:'absolute'
+                                borderRadius: 35, position: 'absolute'
                             }}
                                    source={strNotNull(profile.avatar) ? {uri: profile.avatar} : Images.home_avatar}
                             />
@@ -150,7 +151,7 @@ export default class PersonInfo extends Component {
 
                         <Text style={styles.text_label}>{I18n.t('nick')}</Text>
                         <TextInput style={styles.text_value}
-
+                                   placeholderTextColor={Colors._666}
                                    underlineColorAndroid='transparent'
                                    onChangeText={text => {
                                        const edit = profile;
@@ -160,7 +161,7 @@ export default class PersonInfo extends Component {
                                        })
 
                                    }}
-                                   value={profile.nick_name}
+                                   placeholder={profile.nick_name}
                                    testID="input_nick"/>
                     </View>
 
@@ -191,9 +192,10 @@ export default class PersonInfo extends Component {
 
                             <Text style={[styles.text_label, {marginRight: 20}]}>{I18n.t('signature')}</Text>
                             <TextInput style={[styles.text_value]}
-                                       placeholderTextColor="#CCC"
+                                       placeholderTextColor={Colors._666}
                                        underlineColorAndroid='transparent'
                                        maxLength={20}
+                                       numberOfLines={2}
                                        onChangeText={text => {
                                            const edit = profile;
                                            edit.signature = text;
@@ -202,10 +204,8 @@ export default class PersonInfo extends Component {
                                            })
 
                                        }}
-
-                                       value={profile.signature}
-                                       testID="input_signature"
-                                       placeholder={I18n.t('user_signature')}/>
+                                       placeholder={profile.signature ? profile.signature : I18n.t('user_signature')}
+                                       testID="input_signature"/>
                         </View>
 
                     </KeyboardAvoidingView>
@@ -218,7 +218,6 @@ export default class PersonInfo extends Component {
                     <View style={[styles.line, {marginLeft: 18}]}/>
                     {this.renderVerified()}
                 </View>
-
 
 
                 <ActionSheet
@@ -269,7 +268,7 @@ export default class PersonInfo extends Component {
     };
 
     _addrView = () => {
-        return ( <TouchableOpacity
+        return (<TouchableOpacity
             onPress={() => {
                 router.toAdrListPage()
             }}
