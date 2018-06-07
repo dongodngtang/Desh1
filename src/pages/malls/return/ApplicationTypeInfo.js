@@ -15,8 +15,7 @@ export default class ApplicationTypeInfo extends PureComponent {
 
 
     render() {
-
-        const {refund_mall_amount, change_mall, refund_types} = this.props;
+        const {refundTypes} = this.props;
         return (
             <Animatable.View
                 style={styleP.pageALl}>
@@ -28,7 +27,7 @@ export default class ApplicationTypeInfo extends PureComponent {
                         <View style={styleP.top}>
                             <Text style={styleP.topTxt}>{I18n.t('select_type')}</Text>
                         </View>
-                        {refund_types.map(item => {
+                        {refundTypes.map(item => {
                             return <TouchableOpacity
                                 key={`refund_type${item.id}`}
                                 style={styleP.content}

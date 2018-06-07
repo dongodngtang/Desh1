@@ -12,7 +12,7 @@ import {NavigationBar, BaseComponent} from '../../../components';
 import ReturnItem from './ReturnItem';
 import {postTempImg, postMallRefund, getReturnType} from '../../../services/MallDao';
 import {strNotNull, showToast, getFileName, util, alertOrder} from '../../../utils/ComonHelper';
-
+const types= [{"name":"退货／退款","isSelect":false},{"name":"换货","isSelect":false}];
 
 export default class ReturnPage extends Component {
 
@@ -25,7 +25,7 @@ export default class ReturnPage extends Component {
         product_refund_type: {},
         memo: '',
         order_number: '',
-        refund_types: []
+        refundTypes : []
     };
 
     showTypeInfo = () => {
@@ -34,13 +34,13 @@ export default class ReturnPage extends Component {
         })
     };
     _refund_mall_amount = (item) => {
-        let refund_types = [...this.state.refund_types];
+        console.log(":jnfsf:",item)
+        let refund_types = this.state.refundTypes;
         refund_types.map(x => {
             x.isSelect = x.id === item.id;
         });
 
         this.setState({
-            refund_types,
             product_refund_type: item
         })
     };
@@ -52,15 +52,10 @@ export default class ReturnPage extends Component {
     };
 
     componentDidMount() {
-        getReturnType(data => {
-            data.map(x => {
-                x.isSelect = false;
-            });
-            this.setState({
-                refund_types: data
-            })
-        }, err => {
+        this.setState({
+            refundTypes:types
         });
+
 
         const {order_items, order_number} = this.props.params;
         let price = 0;
@@ -78,7 +73,7 @@ export default class ReturnPage extends Component {
 
     render() {
         const {order_items} = this.props.params;
-
+        const {refundTypes} = this.state;
         return (
             <BaseComponent
                 ref={ref => this.contain = ref}>
@@ -135,7 +130,7 @@ export default class ReturnPage extends Component {
                 </View>
 
                 {this.state.typeShow ? <ApplicationTypeInfo
-                    refund_types={this.state.refund_types}
+                    refundTypes={refundTypes}
                     showTypeInfo={this.showTypeInfo}
                     _refund_mall_amount={this._refund_mall_amount}
                     _change_mall={this._change_mall}
