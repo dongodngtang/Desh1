@@ -6,7 +6,9 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {isEmptyObject} from "../../utils/ComonHelper";
+import {convertDate} from "../../utils/ComonHelper";
+import {NavigationBar} from '../../components';
+
 const dataHosts = [1,2,3,4,5];
 
 
@@ -15,24 +17,17 @@ export default class IntegralDetailsPage extends Component {
     render() {
         return(
             <View style={ApplicationStyles.bgContainer}>
-                <View style={styles.nav}>
-                    <TouchableOpacity
-                        style={styles.btn_search}
-                        onPress={() => {
-                            router.pop()
-                        }}>
-                        <Image
-                            style={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                            source={Images.sign_return}/>
-
-                    </TouchableOpacity>
-                    <View style={{flex: 1}}/>
-                    <Text style={styles.title}>积分明细</Text>
-                    <View style={{flex: 1}}/>
-                </View>
+                <NavigationBar
+                    refreshPage={this.refreshPage}
+                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    title={'积分明细'}
+                    leftBtnIcon={Images.sign_return}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}/>
 
                 <ScrollView style={styles.View}>
                     <FlatList
+                        style={{backgroundColor:'white'}}
                         data={dataHosts}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
@@ -47,15 +42,16 @@ export default class IntegralDetailsPage extends Component {
         return (
             <View style={styles.item}>
                 <View style={styles.itemLeft}>
-
+                    <Text style={{color:'#444444',fontSize:14}}>订单：3766273682368</Text>
+                    <Text style={{color:'#AAAAAA',fontSize:12}}>2018-1-23 23:34</Text>
                 </View>
                 <View style={{flex:1}}/>
-
+                <Text style={{color:'#34BA3C',fontSize:20,marginRight:17}}>-1000</Text>
             </View>
         )
     };
     _separator = () => {
-        return <View style={{backgroundColor: '#F3F3F3', height: 3,width:'100%'}}/>
+        return <View style={{backgroundColor: '#F3F3F3', height: 2,width:'100%'}}/>
     }
 
 };
@@ -87,18 +83,15 @@ const styles = StyleSheet.create({
         width:'100%'
     },
     item:{
-        height:56,
-        backgroundColor:'white',
+        marginTop:16,
+        marginBottom:7,
+        flexDirection:'row',
+
         alignItems: 'center'
     },
     itemLeft:{
         flexDirection:'column',
         marginLeft:17
-    },
-    txt:{
-        color:'#34BA3C',
-        fontSize:20,
-        marginRight:17
     }
 
 });
