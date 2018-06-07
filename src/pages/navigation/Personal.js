@@ -103,14 +103,14 @@ class Personal extends Component {
             {/*global.router.toRecordList()*/}
 
             {/*})}*/}
-            <View style={{height: 1, marginLeft: 69}}/>
-            {this._item(stylesP.item_view, Images.integral.hotel, stylesP.img_dy, '酒店订单', () => {
-                if (isEmptyObject(global.login_user))
-                    global.router.toLoginFirstPage()
-                // else
-                    // global.router.toIntegralPage()
+            {/*<View style={{height: 1, marginLeft: 69}}/>*/}
+            {/*{this._item(stylesP.item_view, Images.integral.hotel, stylesP.img_dy, '酒店订单', () => {*/}
+                {/*if (isEmptyObject(global.login_user))*/}
+                    {/*global.router.toLoginFirstPage()*/}
+                {/*// else*/}
+                    {/*// global.router.toIntegralPage()*/}
 
-            })}
+            {/*})}*/}
             <View style={{height: 1, marginLeft: 69}}/>
             {this._item(stylesP.item_view, Images.mall_order, stylesP.img_dy, '商城订单', () => {
                 if (isEmptyObject(global.login_user))
@@ -120,14 +120,14 @@ class Personal extends Component {
 
             })}
 
-            <View style={{height: 1, marginLeft: 69}}/>
-            {this._item(stylesP.item_view, Images.integral.integral, stylesP.img_dy, '我的积分', () => {
-                if (isEmptyObject(global.login_user))
-                    global.router.toLoginFirstPage()
-                else
-                    global.router.toIntegralPage()
+            {/*<View style={{height: 1, marginLeft: 69}}/>*/}
+            {/*{this._item(stylesP.item_view, Images.integral.integral, stylesP.img_dy, '我的积分', () => {*/}
+                {/*if (isEmptyObject(global.login_user))*/}
+                    {/*global.router.toLoginFirstPage()*/}
+                {/*else*/}
+                    {/*global.router.toIntegralPage()*/}
 
-            })}
+            {/*})}*/}
 
             <View style={{height: 5, width: '100%'}}/>
 
