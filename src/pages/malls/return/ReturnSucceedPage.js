@@ -15,6 +15,7 @@ export default class ReturnSucceedPage extends PureComponent {
 
 
     componentDidMount() {
+        this.contain.close();
         this.contain.open();
         // getRefundInfo({refund_number: refund_number}, data => {
         //     this.contain.close();

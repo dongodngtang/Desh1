@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {
-    FlatList,ScrollView,
-    StyleSheet,Text,
+    FlatList, ScrollView,
+    StyleSheet, Text,
     View, Image,
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {convertDate, isEmptyObject} from "../../utils/ComonHelper";
+import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
 import {NavigationBar} from '../../components';
 import {postIntegralDetails} from "../../services/IntegralDao";
 
@@ -26,7 +26,7 @@ export default class IntegralDetailsPage extends Component {
 
     render() {
         const {details} = this.state;
-        return(
+        return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     refreshPage={this.refreshPage}
@@ -37,9 +37,9 @@ export default class IntegralDetailsPage extends Component {
                     leftBtnPress={() => router.pop()}/>
 
                 <ScrollView style={styles.View}>
-                    {isEmptyObject(details)?<View/>:<FlatList
-                        style={{backgroundColor:'white'}}
-                        data={details}
+                    {isEmptyObject(details) ? <View/> : <FlatList
+                        style={{backgroundColor: 'white'}}
+                        data={details.items}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
@@ -49,20 +49,26 @@ export default class IntegralDetailsPage extends Component {
             </View>
         )
     }
-    _renderItem = ({item,index}) => {
+
+    _renderItem = ({item, index}) => {
+        const {active_at, category, created_at, mark, option_type, points} = item;
         return (
             <View style={styles.item}>
                 <View style={styles.itemLeft}>
-                    <Text style={{color:'#444444',fontSize:14}}>订单：3766273682368</Text>
-                    <Text style={{color:'#AAAAAA',fontSize:12}}>2018-1-23 23:34</Text>
+                    <Text style={{color: '#444444', fontSize: 14}}>{mark}</Text>
+                    <Text style={{color: '#AAAAAA', fontSize: 12,marginTop:3}}>{utcDate(active_at, 'YYYY-MM-DD hh:mm')}</Text>
                 </View>
-                <View style={{flex:1}}/>
-                <Text style={{color:'#34BA3C',fontSize:20,marginRight:17}}>-1000</Text>
+                <View style={{flex: 1}}/>
+                <Text style={{
+                    color: points < 0 ? '#34BA3C' : "#E54A2E",
+                    fontSize: 20,
+                    marginRight: 17
+                }}>{points < 0 ? "-" : "+"}{points}</Text>
             </View>
         )
     };
     _separator = () => {
-        return <View style={{backgroundColor: '#F3F3F3', height: 2,width:'100%'}}/>
+        return <View style={{backgroundColor: '#F3F3F3', height: 2, width: '100%'}}/>
     }
 
 };
@@ -89,20 +95,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    View:{
-        marginTop:7,
-        width:'100%'
+    View: {
+        marginTop: 7,
+        width: '100%'
     },
-    item:{
-        marginTop:16,
-        marginBottom:7,
-        flexDirection:'row',
+    item: {
+        marginTop: 16,
+        marginBottom: 7,
+        flexDirection: 'row',
 
         alignItems: 'center'
     },
-    itemLeft:{
-        flexDirection:'column',
-        marginLeft:17
+    itemLeft: {
+        flexDirection: 'column',
+        marginLeft: 17
     }
 
 });

@@ -6,7 +6,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {postIntegralTask,postAward} from '../../services/IntegralDao';
+import {postIntegralTask, postAward} from '../../services/IntegralDao';
 import {isEmptyObject} from "../../utils/ComonHelper";
 
 
@@ -20,7 +20,8 @@ const dataHosts = [
 export default class IntegralPage extends Component {
 
     state = {
-        integral: []
+        integral: [],
+        action:""
     };
 
     componentDidMount() {
@@ -33,6 +34,7 @@ export default class IntegralPage extends Component {
 
     render() {
         const {integral} = this.state;
+        const {total_points} = this.props.params;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <View style={styles.nav}>
@@ -61,7 +63,8 @@ export default class IntegralPage extends Component {
                 <View style={styles.ruleView}>
                     <View style={{width: 50}}/>
                     <View style={{flex: 1}}/>
-                    <Text style={styles.ruleTxt1}>{isEmptyObject(this.props.params.total_points)?0:this.props.params.total_points}</Text>
+                    <Text
+                        style={styles.ruleTxt1}>{total_points < 0 ? 0 : this.props.params.total_points}</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
                         style={{marginRight: 17}}
@@ -111,11 +114,13 @@ export default class IntegralPage extends Component {
         )
     };
 
-    _doingTime=(item)=>{
-        const{doing_times,option_type} = item;
-        postAward({option_type:option_type}, data => {
-
-        },err=>{
+    _doingTime = (item) => {
+        const {doing_times, option_type} = item;
+        postAward({option_type: option_type}, data => {
+            this.setState({
+                action:"去完成"
+            })
+        }, err => {
 
         })
     }
@@ -124,32 +129,41 @@ export default class IntegralPage extends Component {
         if (isEmptyObject(item)) {
             return <View/>
         }
+        const {doing_times,done_times,total_doing_points,mark,limit_times} = item;
+        if(doing_times ===0 && done_times >doing_times && total_doing_points >0 ){
+            this.setState({
+                action:"领取"
+            })
+        }
         return (
             <View style={styles.item} key={index}>
                 <Image style={{height: 34, width: 34}}
                        source={Images.integral.login}/>
                 <View style={{marginLeft: 14, flexDirection: 'column'}}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={{color: '#444444', fontSize: 14}}>{item.mark}</Text>
+                        <Text style={{color: '#444444', fontSize: 14}}>{mark}</Text>
                         <Text style={{color: '#444444', fontSize: 14}}>{this._task(item)}</Text>
                     </View>
-                    <Text style={{color: '#AAAAAA', fontSize: 12}}>积分+5</Text>
+                    {
+                        total_doing_points <= 0 ? null :
+                            <Text style={{color: '#AAAAAA', fontSize: 12}}>积分+{total_doing_points}</Text>
+                    }
                 </View>
                 <View style={{flex: 1}}/>
-                <TouchableOpacity
-                    style={[styles.statusView, {backgroundColor: item.status === '领取' ? '#6CC7FF' : '#FF6B4C'}]}
-                onPress={()=>{
-                    this._doingTime(item)
-                }}>
-                    <Text style={{color: '#FFFFFF', fontSize: 14}}>领取</Text>
-                </TouchableOpacity>
+                {doing_times === limit_times || isEmptyObject(this.state.action)? <View/> : <TouchableOpacity
+                    style={[styles.statusView, {backgroundColor: this.state.action === '领取' ? '#FF6B4C' : '#6CC7FF'}]}
+                    onPress={() => {
+                        this._doingTime(item)
+                    }}>
+                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{this.state.action}</Text>
+                </TouchableOpacity>}
             </View>
         )
     };
 
     _task = (item) => {
         const {doing_times, total_doing_points, total_done_points, limit_times, done_times} = item;
-        if (doing_times === (limit_times - done_times)) {
+        if (doing_times === (limit_times - done_times) || limit_times <=1) {
             return null
         } else {
             return ` (${doing_times}/${limit_times - done_times})`;

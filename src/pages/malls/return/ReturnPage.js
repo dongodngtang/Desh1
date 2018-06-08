@@ -176,13 +176,13 @@ export default class ReturnPage extends Component {
 
 
     postRefundReq = () => {
+        console.log("kkkklllll:",this.state)
         const {refund_price, product_refund_type, return_items, memo, order_number} = this.state;
         let body = {
             refund_price:refund_price,
             return_type: product_refund_type.name,
             return_items,
             memo: this.refundMemo.getMemo(),
-            // refund_images: uploadeds,
             order_number
         };
 

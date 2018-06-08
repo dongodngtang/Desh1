@@ -2,7 +2,7 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 export function postAward(body, resolve, reject) {
-    helper.post(Api.integral_award(body), {}, ret => {
+    helper.post(Api.integral_award(), body, ret => {
         resolve(ret.data)
     }, reject, body)
 }
