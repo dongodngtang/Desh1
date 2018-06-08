@@ -153,6 +153,7 @@ export default class MallSelectPage extends PureComponent {
     };
 
     _renderItem = ({item}) => {
+        console.log("hdjshd:",item)
         const {price, original_price, sku_value, title, image, product_id, return_status_text, refund_status, number, returnable} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {

@@ -33,7 +33,6 @@ export default class IntegralPage extends Component {
 
     render() {
         const {integral} = this.state;
-        console.log("total_points:",this.props.params.total_points)
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <View style={styles.nav}>
@@ -76,21 +75,25 @@ export default class IntegralPage extends Component {
 
                 <ScrollView style={{backgroundColor: 'white'}}>
                     <View style={{backgroundColor: '#F3F3F3', height: 14, width: '100%'}}/>
-                    {isEmptyObject(integral) ? <View/> : <FlatList
+                    {isEmptyObject(integral.items) ? <View/> : <FlatList
                         ListHeaderComponent={this._header('未完成')}
                         style={{marginRight: 17, marginLeft: 17}}
-                        data={integral.unfinished}
+                        data={integral.items.unfinished}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `commodities${index}`}
+                        keyExtractor={(item, index) => `integral${index}`}
                     />}
                     <View style={{backgroundColor: '#F3F3F3', height: 13, width: '100%'}}/>
-                    <View style={{marginRight: 17, marginLeft: 17}}>
-                        {/*{this._header('已完成')}*/}
-                        {/*{this._separator}*/}
-
-                    </View>
+                    {isEmptyObject(integral.items) ? <View/> : <FlatList
+                        ListHeaderComponent={this._header('已完成')}
+                        style={{marginRight: 17, marginLeft: 17}}
+                        data={integral.items.finished}
+                        showsHorizontalScrollIndicator={false}
+                        ItemSeparatorComponent={this._separator}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => `integral${index}`}
+                    />}
                 </ScrollView>
 
             </View>
@@ -107,6 +110,11 @@ export default class IntegralPage extends Component {
             </View>
         )
     };
+
+    _doingTime=(item)=>{
+        const{doing_times} = item;
+
+    }
 
     _renderItem = ({item, index}) => {
         if (isEmptyObject(item)) {
@@ -125,7 +133,10 @@ export default class IntegralPage extends Component {
                 </View>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
-                    style={[styles.statusView, {backgroundColor: item.status === '领取' ? '#6CC7FF' : '#FF6B4C'}]}>
+                    style={[styles.statusView, {backgroundColor: item.status === '领取' ? '#6CC7FF' : '#FF6B4C'}]}
+                onPress={()=>{
+                    this._doingTime(item)
+                }}>
                     <Text style={{color: '#FFFFFF', fontSize: 14}}>领取</Text>
                 </TouchableOpacity>
             </View>

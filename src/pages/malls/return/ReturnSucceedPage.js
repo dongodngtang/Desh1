@@ -33,11 +33,11 @@ export default class ReturnSucceedPage extends PureComponent {
     content = () => {
         // const {refundInfo} = this.state;
         // const {refund_number, refund_type, refund_price, memo, status, created_at, refund_order_items} = refundInfo;
-        const {return_status_text} = this.props.params;
+        // const {return_status_text} = this.props.params;
         return (
             <ScrollView style={styleC.orderView}>
 
-                <ReturnStatus return_status_text={return_status_text}/>
+                <ReturnStatus />
 
                 {/*<View style={styleC.priceView}>*/}
                     {/*<Text style={styleC.amountTxt}>{I18n.t('refund_amount')}：</Text>*/}
