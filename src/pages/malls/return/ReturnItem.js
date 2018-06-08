@@ -34,34 +34,38 @@ export default class ReturnItem extends PureComponent {
 
 
         return (
-            <TouchableOpacity style={styleR.renderItem}
-                              onPress={() => {
-                                  global.router.toMallInfoPage({id: product_id})
-                              }}>
+            <View style={{flexDirection:'column'}}>
+                <TouchableOpacity style={styleR.renderItem}
+                                  onPress={() => {
+                                      global.router.toMallInfoPage({id: product_id})
+                                  }}>
 
-                <ImageLoad
-                    resizeMode={'cover'}
-                    style={styleR.mallImg}
-                    source={{uri: image}}/>
-                <View style={styleR.TxtView}>
-                    <Text numberOfLines={2} style={styleR.mallTextName}>{title}</Text>
-                    <Text
-                        style={styleR.mallAttributes}>{this.selectType(sku_value)}</Text>
+                    <ImageLoad
+                        resizeMode={'cover'}
+                        style={styleR.mallImg}
+                        source={{uri: image}}/>
+                    <View style={styleR.TxtView}>
+                        <Text numberOfLines={2} style={styleR.mallTextName}>{title}</Text>
+                        <Text
+                            style={styleR.mallAttributes}>{this.selectType(sku_value)}</Text>
 
-                    {returnable ? <View style={styleR.returned}>
-                        <Text style={styleR.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
-                    </View> : null}
+                        {returnable ? <View style={styleR.returned}>
+                            <Text style={styleR.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
+                        </View> : null}
 
-                    <View style={styleR.PriceView}>
-                        <Text style={styleR.Price}>¥</Text><Text
-                        style={[styleR.Price, {marginLeft: 1}]}>{price}</Text>
-                        <Text style={styleR.originPrice}>¥</Text><Text
-                        style={[styleR.originPrice, {marginLeft: 1}]}>{original_price}</Text>
-                        <View style={{flex: 1}}/>
-                        <Text style={styleR.quantitys}>x{number}</Text>
+                        <View style={styleR.PriceView}>
+                            <Text style={styleR.Price}>¥</Text><Text
+                            style={[styleR.Price, {marginLeft: 1}]}>{price}</Text>
+                            <Text style={styleR.originPrice}>¥</Text><Text
+                            style={[styleR.originPrice, {marginLeft: 1}]}>{original_price}</Text>
+                            <View style={{flex: 1}}/>
+                            <Text style={styleR.quantitys}>x{number}</Text>
+                        </View>
                     </View>
-                </View>
-            </TouchableOpacity>
+
+                </TouchableOpacity>
+                <View style={{height:1,backgroundColor:'#ECECEE',width:'100%'}}/>
+            </View>
         )
     }
 }

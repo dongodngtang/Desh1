@@ -10,7 +10,7 @@ import RefundInstruction from './RefundInstruction';
 import UploadDocument from './UploadDocument';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ReturnItem from './ReturnItem';
-import {postTempImg, postMallRefund, getReturnType} from '../../../services/MallDao';
+import {postTempImg, postMallRefund} from '../../../services/MallDao';
 import {strNotNull, showToast, getFileName, util, alertOrder} from '../../../utils/ComonHelper';
 const types= [{"name":"退货／退款","id":0},{"name":"换货","id":1}];
 
@@ -21,7 +21,7 @@ export default class ReturnPage extends Component {
         refund_mall_amount: false,
         change_mall: false,
         refund_price: 0,
-        order_item_ids: [],
+        return_items: [],
         product_refund_type: {},
         memo: '',
         order_number: '',
@@ -36,10 +36,7 @@ export default class ReturnPage extends Component {
     _refund_mall_amount = (item) => {
         let refund_types = [...this.state.refundTypes];
         refund_types.map(x => {
-            console.log("xID:",x.id)
-            console.log("itemID:",item.id)
             x.isSelect = x.id === item.id;
-            console.log("x.isSelect:",x.isSelect)
         });
 
         this.setState({
@@ -67,21 +64,20 @@ export default class ReturnPage extends Component {
 
         const {order_items, order_number} = this.props.params;
         let price = 0;
-        let order_item_ids = [];
+        let return_items = [];
         order_items.forEach(item => {
-            order_item_ids.push(item.id);
+            return_items.push(item.id);
             price += Number.parseFloat(item.price) * Number.parseFloat(item.number)
         });
         this.setState({
             refund_price: price,
-            order_item_ids,
+            return_items,
             order_number
         })
     }
 
     render() {
         const {order_items} = this.props.params;
-        const {refundTypes} = this.state;
         return (
             <BaseComponent
                 ref={ref => this.contain = ref}>
@@ -171,35 +167,7 @@ export default class ReturnPage extends Component {
             }
         }, {
             text: `${I18n.t('confirm')}`, onPress: () => {
-                let locals = this.upFiles.getImages();
-                this.contain.open();
-                let uploadeds = [];
-                if (util.isEmpty(locals)) {
-                    this.postRefundReq(uploadeds)
-                } else
-                    locals.forEach(item => {
-                        setTimeout(() => {
-                            let formData = new FormData();
-                            let file = {
-                                uri: item.path, type: 'image/jpeg',
-                                name: this._fileName(item.path)
-                            };
-                            formData.append("image", file);
-                            postTempImg(formData, data => {
-
-                                uploadeds.push(data);
-                                if (uploadeds.length === locals.length) {
-
-                                    console.log('上传完成：', uploadeds);
-                                    this.postRefundReq(uploadeds)
-
-
-                                }
-                            }, err => {
-                                showToast(I18n.t('img_load_fail'))
-                            })
-                        }, 500)
-                    });
+                this.postRefundReq()
             }
         }])
 
@@ -207,25 +175,20 @@ export default class ReturnPage extends Component {
     };
 
 
-    postRefundReq = (uploadeds) => {
-        const {refund_price, product_refund_type, order_item_ids, memo, order_number} = this.state;
-
-
+    postRefundReq = () => {
+        const {refund_price, product_refund_type, return_items, memo, order_number} = this.state;
         let body = {
-            refund_price: refund_price,
-            product_refund_type_id: product_refund_type.id,
-            order_item_ids,
+            refund_price:refund_price,
+            return_type: product_refund_type.name,
+            return_items,
             memo: this.refundMemo.getMemo(),
-            refund_images: uploadeds,
+            // refund_images: uploadeds,
             order_number
         };
 
-        console.log(body);
-
         postMallRefund(body, data => {
-            console.log(data)
             this.contain.close();
-            global.router.toReturnSucceedPage(data.refund_number);
+            global.router.toReturnSucceedPage();
         }, err => {
             this.contain.close();
             showToast(err)

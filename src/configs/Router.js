@@ -1020,12 +1020,10 @@ export default class Router {
         })
     }
 
-    toReturnSucceedPage(refund_number) {
+    toReturnSucceedPage() {
         this.stackPush({
             name: 'ReturnSucceedPage',
-            params: {
-                refund_number: refund_number
-            }
+
         })
     }
 

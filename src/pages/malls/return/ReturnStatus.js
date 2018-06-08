@@ -11,17 +11,17 @@ export default class ReturnStatus extends Component {
     };
 
     render() {
-        const {admin_memo} = this.props.refundInfo;
+        const {return_status_text} = this.props;
 
         return (
             <View>
                 <View style={styleT.tipsView}>
-                    <Text style={styleT.tipsTxt}>{this._refundStatus()}</Text>
+                    <Text style={styleT.tipsTxt}>退货受理中</Text>
 
                 </View>
-                {strNotNull(admin_memo) ? <View style={styleT.status}>
-                    <Text style={styleT.statusTxt}>{admin_memo}</Text>
-                </View> : null}
+                {/*{strNotNull(memo) ? <View style={styleT.status}>*/}
+                    {/*<Text style={styleT.statusTxt}>{memo}</Text>*/}
+                {/*</View> : null}*/}
 
             </View>
         )

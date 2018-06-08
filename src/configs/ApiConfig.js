@@ -374,13 +374,13 @@ export function replies_replies(body) {
 
 export function refund_info(body) {
     const {refund_number} = body;
-    return `shop/orders/${refund_number}/customer_return`
+    return `refund/${refund_number}/refund_record`
 }
 
 
 export function mall_refund(body) {
     const {order_number} = body;
-    return `product_orders/${order_number}/refund`
+    return `shop/orders/${order_number}/customer_return`
 }
 
 export function logistics_info(body) {

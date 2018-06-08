@@ -49,7 +49,7 @@ export default class MallSelectPage extends PureComponent {
                 title={I18n.t('mall_select')}/>
 
             <FlatList
-                style={{paddingTop: 6}}
+                style={{paddingTop: 6, marginBottom: 80}}
                 data={this.state.order_items}
                 showsHorizontalScrollIndicator={false}
                 ItemSeparatorComponent={() => <View
@@ -153,8 +153,7 @@ export default class MallSelectPage extends PureComponent {
     };
 
     _renderItem = ({item}) => {
-        console.log("itemL:",item)
-        const {price, original_price, sku_value, title, image, product_id, refund_number, refund_status, number, returnable} = item;
+        const {price, original_price, sku_value, title, image, product_id, return_status_text, refund_status, number, returnable} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {
             sku_value.forEach(x => {
@@ -169,50 +168,49 @@ export default class MallSelectPage extends PureComponent {
                 <TouchableOpacity
 
                     style={styleS.renderItem}
-                    onPress={() => {
-                        if (refund_status !== RefundStatus.none) {
-                            global.router.toReturnSucceedPage(refund_number);
+                    onPress={()=>{
+                        if (return_status_text !== "") {
+                            global.router.toReturnSucceedPage()
                         }
+                    }}>
+                {this.renderShowEditView(item)}
+
+                <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => {
+                        global.router.toMallInfoPage({id: product_id})
 
                     }}>
-                    {this.renderShowEditView(item)}
-
-                    <TouchableOpacity
-                        activeOpacity={0.5}
-                        onPress={() => {
-                            {/*global.router.toMallInfoPage({id: product_id})*/
-                            }
-                        }}>
-                        <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
-                    </TouchableOpacity>
-
-                    <View style={styleS.TxtView}>
-                        <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
-                        <Text
-                            style={styleS.mallAttributes}>{type_value}</Text>
-
-                        <View style={styleS.returnedView}>
-                            {returnable ? <View style={styleS.returned}>
-                                <Text style={styleS.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
-                            </View> : null}
-                            <View style={{flex: 1}}/>
-                            {/*{this.refundTxt(refund_status)}*/}
-                            <Text>{item.return_status_text}</Text>
-                        </View>
-
-                        <View style={styleS.PriceView}>
-                            <Text style={styleS.Price}>¥{price}</Text>
-                            <Text style={styleS.originPrice}>¥</Text><Text
-                            style={[styleS.originPrice, {marginLeft: 1}]}>{original_price}</Text>
-                            <View style={{flex: 1}}/>
-                            <Text style={styleS.quantitys}>x{number}</Text>
-                        </View>
-                    </View>
+                    <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
                 </TouchableOpacity>
 
+                <View style={styleS.TxtView}>
+                    <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
+                    <Text
+                        style={styleS.mallAttributes}>{type_value}</Text>
 
-            </Swipeout>
-        )
+                    <View style={styleS.returnedView}>
+                        {returnable ? <View style={styleS.returned}>
+                            <Text style={styleS.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
+                        </View> : null}
+                        <View style={{flex: 1}}/>
+                        {/*{this.refundTxt(refund_status)}*/}
+                        <Text style={{marginRight: 17}}>{item.return_status_text}</Text>
+                    </View>
+
+                    <View style={styleS.PriceView}>
+                        <Text style={styleS.Price}>¥{price}</Text>
+                        <Text style={styleS.originPrice}>¥</Text><Text
+                        style={[styleS.originPrice, {marginLeft: 1}]}>{original_price}</Text>
+                        <View style={{flex: 1}}/>
+                        <Text style={styleS.quantitys}>x{number}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+
+
+    </Swipeout>
+    )
     };
 }
 

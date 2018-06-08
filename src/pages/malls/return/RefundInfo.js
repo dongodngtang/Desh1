@@ -7,20 +7,14 @@ import {utcDate, util} from '../../../utils/ComonHelper';
 export default class RefundInfo extends PureComponent {
 
     render() {
-        const {images, refund_number, refund_type, refund_price, memo, admin_memo, status, created_at} = this.props.refundInfo;
+        const {return_items,return_type,order_number,refund_price,memo}= this.props.refundInfo;
         return (
             <View style={styles.page}>
-                <Text style={styles.txt}>{I18n.t('refund_type')}：{refund_type}</Text>
+                <Text style={styles.txt}>{I18n.t('refund_type')}：{return_type}</Text>
                 <Text style={styles.txt}>{I18n.t('refund_amount')}：¥{refund_price}</Text>
                 <Text style={styles.txt}>{I18n.t('application_time')}：{utcDate(created_at, "YYYY.MM.DD hh:mm")}</Text>
-                <Text style={styles.txt}>{I18n.t('refund_num')}：{refund_number}</Text>
+                {/*<Text style={styles.txt}>{I18n.t('refund_num')}：{refund_number}</Text>*/}
                 <Text style={styles.txt}>{I18n.t('refund_reason')}：{memo}</Text>
-                <View style={styles.imgView}>
-                    {!util.isEmpty(images) && images.map((item, index) => {
-                        return <Image key={`refund_${index}`} style={styles.img} source={{uri: item.image_url}}/>
-                    })}
-
-                </View>
 
             </View>
 

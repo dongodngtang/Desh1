@@ -13,46 +13,42 @@ import {NavigationBar, BaseComponent} from '../../../components'
 
 export default class ReturnSucceedPage extends PureComponent {
 
-    state = {
-        refundInfo: {}
-    };
 
     componentDidMount() {
-        const {refund_number} = this.props.params;
-        console.log("refund_number:", refund_number)
-        if (util.isEmpty(refund_number))
-            return;
         this.contain.open();
-        getRefundInfo({refund_number: refund_number}, data => {
-            this.contain.close();
-            console.log("refundInfo:", data);
-            this.setState({
-                refundInfo: data
-            })
-        }, err => {
+        // getRefundInfo({refund_number: refund_number}, data => {
+        //     this.contain.close();
+        //     console.log("refundInfo:", data);
+        //     this.setState({
+        //         refundInfo: data
+        //     })
+        // }, err => {
+        //
+        // });
 
-        });
+
 
     }
 
     content = () => {
-        const {refundInfo} = this.state;
-        const {refund_number, refund_type, refund_price, memo, status, created_at, refund_order_items} = refundInfo;
+        // const {refundInfo} = this.state;
+        // const {refund_number, refund_type, refund_price, memo, status, created_at, refund_order_items} = refundInfo;
+        const {return_status_text} = this.props.params;
         return (
             <ScrollView style={styleC.orderView}>
 
-                <ReturnStatus refundInfo={refundInfo}/>
+                <ReturnStatus return_status_text={return_status_text}/>
 
-                <View style={styleC.priceView}>
-                    <Text style={styleC.amountTxt}>{I18n.t('refund_amount')}：</Text>
-                    <Text style={styleC.amount}>¥{refund_price}</Text>
-                </View>
+                {/*<View style={styleC.priceView}>*/}
+                    {/*<Text style={styleC.amountTxt}>{I18n.t('refund_amount')}：</Text>*/}
+                    {/*<Text style={styleC.amount}>¥{refund_price}</Text>*/}
+                {/*</View>*/}
 
-                <ProductItem lists={refund_order_items}/>
+                {/*<ProductItem lists={return_items}/>*/}
 
-                <RefundInfo refundInfo={refundInfo}/>
+                {/*<RefundInfo refundInfo={body}/>*/}
 
-                <View style={{height: 80}}/>
+                {/*<View style={{height: 80}}/>*/}
             </ScrollView>
         )
 
@@ -60,7 +56,6 @@ export default class ReturnSucceedPage extends PureComponent {
 
 
     render() {
-        const {refundInfo} = this.state;
 
         return (
             <BaseComponent
@@ -73,7 +68,7 @@ export default class ReturnSucceedPage extends PureComponent {
                     leftBtnPress={() => router.pop()}
                     titleStyle={{color: Colors._E54}}
                     title={I18n.t('apply_returned')}/>
-                {util.isEmpty(refundInfo) ? null : this.content()}
+                {this.content()}
                 <ReturnBottom/>
             </BaseComponent>
 
