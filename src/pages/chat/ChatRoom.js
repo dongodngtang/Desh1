@@ -190,6 +190,9 @@ export default class ChatRoom extends Component {
                     this.setState({moreText: I18n.t("no_more")});
                 }
 
+                if(Platform.OS !== 'ios'){
+                    messageArray.reverse();
+                }
                 console.log('数据库', messageArray)
 
                 let newMsgArray = [];
