@@ -181,9 +181,9 @@ export function postSuggest(body, resolve, reject) {
 }
 
 export function postLoginCount() {
-    // helper.post(Api.login_count(), {}, ret => {
-    // }, err => {
-    // })
+    helper.post(Api.login_count(), {}, ret => {
+    }, err => {
+    })
 }
 
 export function delNotification(body, resolve, reject) {

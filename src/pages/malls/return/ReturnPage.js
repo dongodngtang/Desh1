@@ -12,7 +12,7 @@ import {NavigationBar, BaseComponent} from '../../../components';
 import ReturnItem from './ReturnItem';
 import {postTempImg, postMallRefund, getReturnType} from '../../../services/MallDao';
 import {strNotNull, showToast, getFileName, util, alertOrder} from '../../../utils/ComonHelper';
-const types= [{"name":"退货／退款","isSelect":false},{"name":"换货","isSelect":false}];
+const types= [{"name":"退货／退款","id":0},{"name":"换货","id":1}];
 
 export default class ReturnPage extends Component {
 
@@ -34,14 +34,17 @@ export default class ReturnPage extends Component {
         })
     };
     _refund_mall_amount = (item) => {
-        console.log(":jnfsf:",item)
-        let refund_types = this.state.refundTypes;
+        let refund_types = [...this.state.refundTypes];
         refund_types.map(x => {
+            console.log("xID:",x.id)
+            console.log("itemID:",item.id)
             x.isSelect = x.id === item.id;
+            console.log("x.isSelect:",x.isSelect)
         });
 
         this.setState({
-            product_refund_type: item
+            product_refund_type: item,
+            refundTypes:refund_types
         })
     };
     _change_mall = () => {
@@ -52,8 +55,13 @@ export default class ReturnPage extends Component {
     };
 
     componentDidMount() {
+
+        let data = types;
+        data.map(x => {
+            x.isSelect = false;
+        });
         this.setState({
-            refundTypes:types
+            refundTypes:data
         });
 
 
@@ -130,7 +138,7 @@ export default class ReturnPage extends Component {
                 </View>
 
                 {this.state.typeShow ? <ApplicationTypeInfo
-                    refundTypes={refundTypes}
+                    refundTypes={this.state.refundTypes}
                     showTypeInfo={this.showTypeInfo}
                     _refund_mall_amount={this._refund_mall_amount}
                     _change_mall={this._change_mall}
