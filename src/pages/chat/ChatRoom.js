@@ -200,7 +200,7 @@ export default class ChatRoom extends Component {
                     }
                 });
                 this.setState(previousState => ({
-                    currentIndex: this.state.currentIndex + 20,
+                    currentIndex: this.state.currentIndex + messageArray.length,
                     messages: GiftedChat.prepend(previousState.messages, newMsgArray),
                 }))
 
