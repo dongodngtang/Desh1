@@ -6,7 +6,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {postIntegralTask} from '../../services/IntegralDao';
+import {postIntegralTask,postAward} from '../../services/IntegralDao';
 import {isEmptyObject} from "../../utils/ComonHelper";
 
 
@@ -112,8 +112,12 @@ export default class IntegralPage extends Component {
     };
 
     _doingTime=(item)=>{
-        const{doing_times} = item;
+        const{doing_times,option_type} = item;
+        postAward({option_type:option_type}, data => {
 
+        },err=>{
+
+        })
     }
 
     _renderItem = ({item, index}) => {

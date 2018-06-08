@@ -169,6 +169,7 @@ const api = {
     recommends: 'recommends',//首页推荐
     integral_task:integral_task,//用户任务列表
     integral_detail:integral_detail,//用户积分明细
+    integral_award:integral_award,//用户积分领取
 
 
 }
@@ -184,6 +185,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function integral_award() {
+    return `account/users/${getUserId()}/integral/award`
+}
 
 function integral_detail() {
     return `account/users/${getUserId()}/integral/details`
