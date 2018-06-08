@@ -124,3 +124,5 @@ export const ADD_CART = 'ADD_CART';
 /*分享*/
 export const SHARE_OPEN = 'SHARE_OPEN';
 export const SHARE_CLOSE = 'SHARE_CLOSE';
+
+export const SWITCH_TAB = 'SWITCH_TAB';

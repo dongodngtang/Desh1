@@ -19,6 +19,8 @@ import ImageLoad from "../../components/ImageLoad";
 import {reallySize} from "../../Themes/Metrics";
 import {visit_other} from "../../services/SocialDao"
 import _ from "lodash"
+import {connect} from "react-redux";
+import {SWITCH_TAB} from "../../actions/ActionTypes";
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -32,7 +34,7 @@ const titles = [
     'Poker Pro官方客服'
 ];
 
-export default class MessageCenter extends Component {
+class MessageCenter extends Component {
 
     state = {
         activity: {},
@@ -77,6 +79,12 @@ export default class MessageCenter extends Component {
         JMessage.addReceiveMessageListener(this.receiveMessage);
 
 
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.actionType === SWITCH_TAB && newProps.tab ===2) {
+            this.getConversations();
+        }
     }
 
     receiveMessage = (message) => {
@@ -281,6 +289,17 @@ export default class MessageCenter extends Component {
     }
 
 }
+
+
+const bindAction = dispatch => ({});
+
+const mapStateToProps = state => ({
+
+    actionType: state.AccountState.actionType,
+    tab: state.AccountState.tab,
+});
+
+export default connect(mapStateToProps, bindAction)(MessageCenter);
 
 const styles = StyleSheet.create({
     flatItem: {
