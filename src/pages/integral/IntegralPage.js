@@ -16,12 +16,11 @@ const dataHosts = [
     {image: Images.integral.jine},
     {image: Images.integral.share},
     {image: Images.integral.frends}];
-
+let action = "";
 export default class IntegralPage extends Component {
 
     state = {
-        integral: [],
-        action:""
+        integral: []
     };
 
     componentDidMount() {
@@ -117,23 +116,37 @@ export default class IntegralPage extends Component {
     _doingTime = (item) => {
         const {doing_times, option_type} = item;
         postAward({option_type: option_type}, data => {
-            this.setState({
-                action:"去完成"
-            })
+            action = "去完成";
+            // this.setState({
+            //     action:"去完成"
+            // })
         }, err => {
 
         })
-    }
+    };
+    _background = () => {
+        const {action} = this;
+        if (action === '领取') {
+            return '#FF6B4C'
+        } else if (action === '去完成') {
+            return '#6CC7FF'
+        } else {
+            return "#D9D9D9"
+        }
+    };
 
     _renderItem = ({item, index}) => {
         if (isEmptyObject(item)) {
             return <View/>
         }
-        const {doing_times,done_times,total_doing_points,mark,limit_times} = item;
-        if(doing_times ===0 && done_times >doing_times && total_doing_points >0 ){
-            this.setState({
-                action:"领取"
-            })
+        const {doing_times, done_times, total_doing_points, mark, limit_times} = item;
+        if (doing_times === 0 && done_times > doing_times && total_doing_points > 0) {
+            action= "领取"
+            // this.setState({
+            //     action: "领取"
+            // })
+        } else {
+            action= "已完成"
         }
         return (
             <View style={styles.item} key={index}>
@@ -150,12 +163,12 @@ export default class IntegralPage extends Component {
                     }
                 </View>
                 <View style={{flex: 1}}/>
-                {doing_times === limit_times || isEmptyObject(this.state.action)? <View/> : <TouchableOpacity
-                    style={[styles.statusView, {backgroundColor: this.state.action === '领取' ? '#FF6B4C' : '#6CC7FF'}]}
+                {doing_times === limit_times || isEmptyObject(this.action) ? <View/> : <TouchableOpacity
+                    style={[styles.statusView, {backgroundColor: this._background()}]}
                     onPress={() => {
                         this._doingTime(item)
                     }}>
-                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{this.state.action}</Text>
+                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{this.action}</Text>
                 </TouchableOpacity>}
             </View>
         )
@@ -163,7 +176,7 @@ export default class IntegralPage extends Component {
 
     _task = (item) => {
         const {doing_times, total_doing_points, total_done_points, limit_times, done_times} = item;
-        if (doing_times === (limit_times - done_times) || limit_times <=1) {
+        if (doing_times === (limit_times - done_times) || limit_times <= 1) {
             return null
         } else {
             return ` (${doing_times}/${limit_times - done_times})`;
