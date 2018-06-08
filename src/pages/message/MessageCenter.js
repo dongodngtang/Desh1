@@ -160,22 +160,14 @@ export default class MessageCenter extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.loading && this.loading.open();
-                    JMessage.getUserInfo({username: username, appKey: JPUSH_APPKEY},
-                        (userInfo) => {
-                            this.loading && this.loading.close();
-                            router.toMessageList({
-                                username: userInfo.username,
-                                nickname: userInfo.nickname,
-                                avatarThumbPath: userInfo.avatarThumbPath,
-                                reloadPage: () => {
-                                    this.getConversations();
-                                }
-                            });
-                        }, (error) => {
-                            showToast(I18n.t("error_alert"));
-                            this.loading && this.loading.close();
-                        });
+                    router.toMessageList({
+                        username: username,
+                        nickname: nickname,
+                        avatarThumbPath: avatarThumbPath,
+                        reloadPage: () => {
+                            this.getConversations();
+                        }
+                    });
                 }}
                 keyExtractor={(item, index) => index + ""}
                 style={{backgroundColor: 'white'}}>

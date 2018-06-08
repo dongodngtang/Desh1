@@ -18,7 +18,7 @@ import {Colors, Images, Metrics} from "../../Themes";
 import NavigationBar from "../../components/NavigationBar";
 import JMessage from "jmessage-react-plugin";
 import I18n from "react-native-i18n";
-import {getFileName, localFilePath, showToast, strNotNull} from "../../utils/ComonHelper";
+import {getFileName, localFilePath, showToast, strNotNull, isEmptyObject} from "../../utils/ComonHelper";
 import SelfMessage from "./SelfMessage";
 import OtherMessage from "./OtherMessage";
 import {screenHeight, screenWidth} from "../socials/Header";
@@ -26,7 +26,7 @@ import VideoToast from "./VideoToast";
 import ImagePicker from 'react-native-image-crop-picker';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import PopAction from '../comm/PopAction';
-import {report_user, uploadImage, myJmsgUser} from '../../services/SocialDao';
+import {report_user, uploadImage} from '../../services/SocialDao';
 
 import Thumb from 'react-native-thumb';
 import {checkPermission} from "../comm/Permission";
@@ -165,6 +165,10 @@ export default class ChatRoom extends Component {
     getChatUserInfo = () => {
         //获取当前用户自己的信息
         this.myInfo = global.imUser;
+        if (isEmptyObject(this.myInfo)) {
+            showToast('用户登录异常')
+            router.pop()
+        }
 
         ///其他人的信息
         this.otherInfo = this.props.params.userInfo;
