@@ -23,17 +23,10 @@ export default class ProductItem extends PureComponent {
         }
         return type_value;
     };
-    refundTxt = (status) => {
-        let menu = [RefundStatus.none, RefundStatus.open, RefundStatus.close, RefundStatus.completed];
-        if (status === undefined || status === menu[0]) {
-            return null;
-        } else {
-            return <Text style={[styleR[`txt${status}`]]}>{I18n.t(`mall_${status}`)}</Text>
-        }
-    };
+
 
     renderItem = ({item}) => {
-        const {title, original_price, price, number, sku_value, image, returnable, product_id, refund_status} = item;
+        const {title, original_price, price, number, sku_value, image, returnable, product_id, return_status_text} = item;
 
         return <TouchableOpacity
             style={styleR.renderItem}
@@ -56,7 +49,7 @@ export default class ProductItem extends PureComponent {
                         <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
                     </View> : null}
                     <View style={{flex: 1}}/>
-                    {this.refundTxt(refund_status)}
+                    <Text style={{marginRight: 17}}>{return_status_text}</Text>
                 </View>
 
                 <View style={styleR.PriceView}>

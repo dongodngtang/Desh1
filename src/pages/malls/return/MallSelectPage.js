@@ -9,7 +9,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import {NavigationBar, BaseComponent, ImageLoad} from '../../../components';
 import Swipeout from 'react-native-swipeout';
-import {showToast, util} from '../../../utils/ComonHelper';
+import {showToast, strNotNull, util} from '../../../utils/ComonHelper';
 import {RefundStatus} from '../../../configs/Status';
 
 export default class MallSelectPage extends PureComponent {
@@ -105,18 +105,19 @@ export default class MallSelectPage extends PureComponent {
             imageURL = Images.radioSelected
         }
         return (
-            <TouchableOpacity
-                style={{height: 120, alignItems: 'center', justifyContent: 'center'}}
-                onPress={() => {
-                    this.onPressRadio(item)
-                }}>
-                <Image style={styleS.radioImg}
-                       source={imageURL}/>
-            </TouchableOpacity>
+            <View
+                style={{height: 120,width:38, alignItems: 'center', justifyContent: 'center'}}
+            >
+                {strNotNull(item.return_status_text) ? null : <Image style={styleS.radioImg}
+                                                                source={imageURL}/>}
+
+            </View>
         )
     };
 
     onPressRadio = (item) => {
+        if (strNotNull(item.return_status_text))
+            return;
         const {order_items} = this.state;
         let array = [...order_items];
         array.map(x => {
@@ -133,8 +134,8 @@ export default class MallSelectPage extends PureComponent {
         const {order_items} = this.state;
         let array = [...order_items];
         array.map(x => {
-            // let canSelect = x.refund_status === RefundStatus.none || x.refund_status === RefundStatus.close;
-            // x.isSelect = !this.state.selectAll && canSelect;
+            if (strNotNull(x.return_status_text))
+                return;
             x.isSelect = !this.state.selectAll
         });
 
@@ -153,7 +154,6 @@ export default class MallSelectPage extends PureComponent {
     };
 
     _renderItem = ({item}) => {
-        console.log("hdjshd:",item)
         const {price, original_price, sku_value, title, image, product_id, return_status_text, refund_status, number, returnable} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {
@@ -162,28 +162,18 @@ export default class MallSelectPage extends PureComponent {
             });
         }
 
+        console.log('退货商品', item)
+
         return (
-            <Swipeout
-                disabled={true}
+            <TouchableOpacity
+                onPress={() => {
+                    this.onPressRadio(item)
+                }}
+                style={styleS.renderItem}
             >
-                <TouchableOpacity
+                { this.renderShowEditView(item)}
 
-                    style={styleS.renderItem}
-                    onPress={()=>{
-                        if (return_status_text !== "") {
-                            global.router.toReturnSucceedPage()
-                        }
-                    }}>
-                {this.renderShowEditView(item)}
-
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    onPress={() => {
-                        global.router.toMallInfoPage({id: product_id})
-
-                    }}>
-                    <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
-                </TouchableOpacity>
+                <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
 
                 <View style={styleS.TxtView}>
                     <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
@@ -196,7 +186,7 @@ export default class MallSelectPage extends PureComponent {
                         </View> : null}
                         <View style={{flex: 1}}/>
                         {/*{this.refundTxt(refund_status)}*/}
-                        <Text style={{marginRight: 17}}>{item.return_status_text}</Text>
+                        <Text style={{marginRight: 17}}>{return_status_text}</Text>
                     </View>
 
                     <View style={styleS.PriceView}>
@@ -208,10 +198,7 @@ export default class MallSelectPage extends PureComponent {
                     </View>
                 </View>
             </TouchableOpacity>
-
-
-    </Swipeout>
-    )
+        )
     };
 }
 

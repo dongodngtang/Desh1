@@ -19,6 +19,8 @@ import ImageLoad from "../../components/ImageLoad";
 import {reallySize} from "../../Themes/Metrics";
 import {visit_other} from "../../services/SocialDao"
 import _ from "lodash"
+import {connect} from "react-redux";
+import {SWITCH_TAB} from "../../actions/ActionTypes";
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -32,7 +34,7 @@ const titles = [
     'Poker Pro官方客服'
 ];
 
-export default class MessageCenter extends Component {
+class MessageCenter extends Component {
 
     state = {
         activity: {},
@@ -77,6 +79,12 @@ export default class MessageCenter extends Component {
         JMessage.addReceiveMessageListener(this.receiveMessage);
 
 
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.actionType === SWITCH_TAB && newProps.tab ===2) {
+            this.getConversations();
+        }
     }
 
     receiveMessage = (message) => {
@@ -160,22 +168,14 @@ export default class MessageCenter extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.loading && this.loading.open();
-                    JMessage.getUserInfo({username: username, appKey: JPUSH_APPKEY},
-                        (userInfo) => {
-                            this.loading && this.loading.close();
-                            router.toMessageList({
-                                username: userInfo.username,
-                                nickname: userInfo.nickname,
-                                avatarThumbPath: userInfo.avatarThumbPath,
-                                reloadPage: () => {
-                                    this.getConversations();
-                                }
-                            });
-                        }, (error) => {
-                            showToast(I18n.t("error_alert"));
-                            this.loading && this.loading.close();
-                        });
+                    router.toMessageList({
+                        username: username,
+                        nickname: nickname,
+                        avatarThumbPath: avatarThumbPath,
+                        reloadPage: () => {
+                            this.getConversations();
+                        }
+                    });
                 }}
                 keyExtractor={(item, index) => index + ""}
                 style={{backgroundColor: 'white'}}>
@@ -289,6 +289,17 @@ export default class MessageCenter extends Component {
     }
 
 }
+
+
+const bindAction = dispatch => ({});
+
+const mapStateToProps = state => ({
+
+    actionType: state.AccountState.actionType,
+    tab: state.AccountState.tab,
+});
+
+export default connect(mapStateToProps, bindAction)(MessageCenter);
 
 const styles = StyleSheet.create({
     flatItem: {

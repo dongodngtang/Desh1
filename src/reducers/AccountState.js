@@ -9,6 +9,7 @@ import {
     POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,SWITCH_LANGUAGE,
     GET_UNREAND_MSG, SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP, VIDEO_PAUSE,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL,SHARE_CLOSE,SHARE_OPEN,
+    SWITCH_TAB,
 } from '../actions/ActionTypes';
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
     notices: {},
     unread: {},
     share_param: {},
+    tab:0
 };
 
 export default function accountState(state = initialState, action) {
@@ -96,6 +98,12 @@ export default function accountState(state = initialState, action) {
                 actionType:SHARE_OPEN,
                 share_param:action.share_param,
             };
+        case SWITCH_TAB:
+            return{
+                ...state,
+                actionType:action.type,
+                tab:action.tab,
+            }
         default:
             return state;
     }

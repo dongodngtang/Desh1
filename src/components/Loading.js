@@ -103,9 +103,7 @@ export default class Loading extends Component {
     _renderDefaultContent = () => {
         return (
             <View style={styles.background}>
-                <Image
-                    source={Images.loading}
-                    style={{height: 115, width: 115}}/>
+                <ActivityIndicator/>
             </View>);
     }
 

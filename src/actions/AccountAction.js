@@ -9,7 +9,7 @@ import {
     POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS, GET_UNREAND_MSG,
     SHOW_BACK_TOP, HIDE_BACK_TOP,BACK_TOP,VIDEO_PAUSE,SWITCH_LANGUAGE,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL, FETCH_PASS, FETCH_PASS_SUCCESS, FETCH_PASS_FAIL,
-    SHARE_CLOSE,SHARE_OPEN,
+    SHARE_CLOSE,SHARE_OPEN,SWITCH_TAB,
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
 import I18n from 'react-native-i18n';
@@ -54,6 +54,12 @@ export function videoPause() {
 export function onPressBackTop() {
     return {
         type: BACK_TOP
+    }
+}
+export function swichTab(tab) {
+    return {
+        type: SWITCH_TAB,
+        tab
     }
 }
 
