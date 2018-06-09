@@ -226,6 +226,7 @@ export default class MoodRelease extends Component {
             setTimeout(() => this.loading && this.loading.close(), 500);
             router.popToAriticle();
         }, err => {
+            showToast(err)
             this.loading && this.loading.close();
         })
     };

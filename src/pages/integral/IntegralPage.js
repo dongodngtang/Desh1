@@ -8,32 +8,56 @@ import {
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {postIntegralTask, postAward} from '../../services/IntegralDao';
 import {isEmptyObject} from "../../utils/ComonHelper";
+import {getProfile} from "../../services/AccountDao";
 
 
-const dataHosts = [
-    {image: Images.integral.login},
-    {image: Images.integral.tiezi},
-    {image: Images.integral.jine},
-    {image: Images.integral.share},
-    {image: Images.integral.frends}];
-let action = "";
 export default class IntegralPage extends Component {
 
-    state = {
-        integral: []
-    };
+    constructor(props) {
+        super(props)
+
+
+        this.action = "";
+        this.background = "";
+        this.unfinished = [];
+
+
+        this.state = {
+            unfinished: this.unfinished,
+            finished: [],
+            total_points: 0
+        };
+    }
+
 
     componentDidMount() {
+        this.refresh()
+    }
+
+    refresh = () => {
         postIntegralTask({}, data => {
-            console.log('integral_task', data);
-            this.setState({integral: data})
+            this.setState({
+                unfinished: data.items.unfinished,
+                finished: data.items.finished
+            })
+
+        });
+
+        getProfile('', data => {
+            console.log(data)
+            this.setState({
+                total_points: data.total_points
+            })
+
+        }, err => {
         })
+
     }
 
 
     render() {
-        const {integral} = this.state;
-        const {total_points} = this.props.params;
+        const {unfinished, finished, total_points} = this.state;
+
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <View style={styles.nav}>
@@ -63,7 +87,7 @@ export default class IntegralPage extends Component {
                     <View style={{width: 50}}/>
                     <View style={{flex: 1}}/>
                     <Text
-                        style={styles.ruleTxt1}>{total_points < 0 ? 0 : this.props.params.total_points}</Text>
+                        style={styles.ruleTxt1}>{total_points}</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
                         style={{marginRight: 17}}
@@ -77,23 +101,23 @@ export default class IntegralPage extends Component {
 
                 <ScrollView style={{backgroundColor: 'white'}}>
                     <View style={{backgroundColor: '#F3F3F3', height: 14, width: '100%'}}/>
-                    {isEmptyObject(integral.items) ? <View/> : <FlatList
+                    {isEmptyObject(unfinished) ? null : <FlatList
                         ListHeaderComponent={this._header('未完成')}
                         style={{marginRight: 17, marginLeft: 17}}
-                        data={integral.items.unfinished}
+                        data={unfinished}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
+                        renderItem={item => this._renderItem(item, 'unfinished')}
                         keyExtractor={(item, index) => `integral${index}`}
                     />}
                     <View style={{backgroundColor: '#F3F3F3', height: 13, width: '100%'}}/>
-                    {isEmptyObject(integral.items) ? <View/> : <FlatList
+                    {isEmptyObject(finished) ? null : <FlatList
                         ListHeaderComponent={this._header('已完成')}
                         style={{marginRight: 17, marginLeft: 17}}
-                        data={integral.items.finished}
+                        data={finished}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
+                        renderItem={item => this._renderItem(item, 'finished')}
                         keyExtractor={(item, index) => `integral${index}`}
                     />}
                 </ScrollView>
@@ -116,71 +140,91 @@ export default class IntegralPage extends Component {
     _doingTime = (item) => {
         const {doing_times, option_type} = item;
         postAward({option_type: option_type}, data => {
-            action = "去完成";
-            // this.setState({
-            //     action:"去完成"
-            // })
+            this.refresh()
         }, err => {
 
         })
     };
-    _background = () => {
-        const {action} = this;
+
+    _action = (item) => {
+        let action = '';
+        const {doing_times, done_times, total_doing_points, mark, limit_times} = item;
+        if (done_times === limit_times) {
+            action = '已完成'
+        } else if (doing_times > 0 && done_times < limit_times) {
+            action = "领取"
+        } else if (doing_times === 0 && done_times < limit_times) {
+            action = "未完成"
+        }
+        return action;
+
+    };
+
+    _background = (item) => {
+        let action = this._action(item);
         if (action === '领取') {
-            return '#FF6B4C'
-        } else if (action === '去完成') {
             return '#6CC7FF'
+        } else if (action === '未完成') {
+            return '#FF6B4C'
         } else {
             return "#D9D9D9"
         }
     };
 
-    _renderItem = ({item, index}) => {
+    _renderItem = ({item, index}, type) => {
         if (isEmptyObject(item)) {
             return <View/>
         }
-        const {doing_times, done_times, total_doing_points, mark, limit_times} = item;
-        if (doing_times === 0 && done_times > doing_times && total_doing_points > 0) {
-            action= "领取"
-            // this.setState({
-            //     action: "领取"
-            // })
-        } else {
-            action= "已完成"
-        }
+        const {doing_times, done_times, total_doing_points, mark, limit_times, total_done_points} = item;
+
+        let unfinished = doing_times > 0 && total_doing_points > 0 ?
+            <Text style={{
+                color: '#AAAAAA',
+                fontSize: 12
+            }}>积分+{total_doing_points * doing_times}</Text> : null;
+
+
+        let finished = total_done_points > 0 ? <Text style={{
+            color: '#AAAAAA',
+            fontSize: 12
+        }}>积分+{total_done_points}</Text> : null;
+
+
+        let internal = type === 'finished' ? finished : unfinished;
+
         return (
-            <View style={styles.item} key={index}>
+            <View style={styles.item} key={type + index}>
                 <Image style={{height: 34, width: 34}}
                        source={Images.integral.login}/>
                 <View style={{marginLeft: 14, flexDirection: 'column'}}>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{color: '#444444', fontSize: 14}}>{mark}</Text>
-                        <Text style={{color: '#444444', fontSize: 14}}>{this._task(item)}</Text>
+                        {type === 'unfinished' ?
+                            <Text style={{color: '#444444', fontSize: 14}}>{this._task(item, type)}</Text> : null}
+
                     </View>
-                    {
-                        total_doing_points <= 0 ? null :
-                            <Text style={{color: '#AAAAAA', fontSize: 12}}>积分+{total_doing_points}</Text>
-                    }
+
+                    {internal}
+
                 </View>
                 <View style={{flex: 1}}/>
-                {doing_times === limit_times || isEmptyObject(this.action) ? <View/> : <TouchableOpacity
-                    style={[styles.statusView, {backgroundColor: this._background()}]}
+                <TouchableOpacity
+                    activeOpacity={this.action === "领取" ? 0 : 1}
+                    style={[styles.statusView, {backgroundColor: this._background(item)}]}
                     onPress={() => {
-                        this._doingTime(item)
+                        if (type === 'unfinished')
+                            this._doingTime(item)
                     }}>
-                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{this.action}</Text>
-                </TouchableOpacity>}
+                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{this._action(item)}</Text>
+                </TouchableOpacity>
             </View>
         )
     };
 
-    _task = (item) => {
-        const {doing_times, total_doing_points, total_done_points, limit_times, done_times} = item;
-        if (doing_times === (limit_times - done_times) || limit_times <= 1) {
-            return null
-        } else {
-            return ` (${doing_times}/${limit_times - done_times})`;
-        }
+    _task = (item, type) => {
+        const {limit_times, doing_times, done_times} = item;
+
+        return type === 'unfinished' && done_times === limit_times ? '' : ` (${doing_times + done_times}/${limit_times})`
     }
     _separator = () => {
         return <View style={{backgroundColor: '#F3F3F3', height: 1.5}}/>
