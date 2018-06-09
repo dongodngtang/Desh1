@@ -188,7 +188,8 @@ export default class ReturnPage extends Component {
 
         postMallRefund(body, data => {
             this.contain.close();
-            global.router.toReturnSucceedPage();
+            global.router.pop();
+            global.router.pop();
         }, err => {
             this.contain.close();
             showToast(err)
