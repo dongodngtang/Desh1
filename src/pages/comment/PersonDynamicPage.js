@@ -463,7 +463,7 @@ export default class PersonDynamicPage extends Component {
 
                     {moments}
 
-                    <UltimateListView
+                    {this.isMine() ? <UltimateListView
                         scrollEnabled={scrollEnabled}
                         style={{backgroundColor: 'white'}}
                         tabLabel={I18n.t('footprint')}
@@ -479,7 +479,7 @@ export default class PersonDynamicPage extends Component {
                         waitingSpinnerText={I18n.t('loading')}
                         separator={this._separator1}
                         emptyView={() => <DynamicEmpty/>}
-                    />
+                    /> : null}
 
 
                 </ScrollableTabView>

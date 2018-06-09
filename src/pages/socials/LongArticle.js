@@ -317,8 +317,8 @@ export default class LongArticle extends PureComponent {
 
 
         const {
-            user, created_at, likes, comments, id, body_type,
-            body, title, page_views, location, current_user_liked
+            user, created_at, total_likes, comments, id, body_type,
+            body, title, total_views, location, current_user_liked
         } = this.state.article;
         const {address_title} = location;
         return <View>
@@ -403,14 +403,14 @@ export default class LongArticle extends PureComponent {
 
                     <View style={{flex: 1}}/>
 
-                    <Text style={styles.time}>{I18n.t('social.read')}</Text>
-                    <Text style={[styles.time, {marginLeft: 4, marginRight: 20}]}>{page_views}</Text>
+                    <Text style={styles.time}>阅读</Text>
+                    <Text style={[styles.time, {marginLeft: 4, marginRight: 20}]}>{total_views}</Text>
                     <View
                         style={styles.btn_like}>
                         <Image
                             style={styles.like}
                             source={current_user_liked ? Images.social.like_red : Images.social.like_gray}/>
-                        <Text style={[styles.time, {marginLeft: 4}]}>{likes}</Text>
+                        <Text style={[styles.time, {marginLeft: 4}]}>{total_likes}</Text>
                     </View>
                 </View>
 

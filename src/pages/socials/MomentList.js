@@ -199,7 +199,7 @@ export default class MomentList extends PureComponent {
 
     itemView = (item) => {
         const {
-            user, created_at, total_likes, comments, id, body_type, location, current_user_liked,
+            user, created_at, total_likes, total_comments, id, body_type, location, current_user_liked,
             recommended
         } = item;
         const {address_title} = location;
@@ -304,7 +304,7 @@ export default class MomentList extends PureComponent {
                     <Image
                         style={styles.comment}
                         source={Images.social.comment_gray}/>
-                    <Text style={[styles.time, {marginLeft: 4}]}>{comments}</Text>
+                    <Text style={[styles.time, {marginLeft: 4}]}>{total_comments}</Text>
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>

@@ -236,7 +236,7 @@ export default class ArticleRelease extends PureComponent {
                         showToast("error");
                     });
                 }).catch(err => {
-                    showToast("error");
+                    showToast(err);
                 });
 
             }
