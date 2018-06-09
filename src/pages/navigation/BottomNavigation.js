@@ -3,8 +3,14 @@ import {StyleSheet, View, Text, TouchableOpacity, StatusBar, Image, Platform} fr
 import I18n from 'react-native-i18n';
 import {Images, Colors} from '../../Themes';
 import TabIcon from './TabIcon';
-import {showTabTop, hideTabTop, onPressBackTop, videoPause, shareClose, shareOpen} from '../../actions/AccountAction';
-import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP, SHARE_OPEN, SHARE_CLOSE} from '../../actions/ActionTypes';
+import {
+    showTabTop, hideTabTop, onPressBackTop, videoPause,
+    shareClose, shareOpen, swichTab
+} from '../../actions/AccountAction';
+import {
+    SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP,
+    SHARE_OPEN, SHARE_CLOSE, SWITCH_TAB
+} from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
 import {isEmptyObject, setDispatchAction, getDispatchAction} from '../../utils/ComonHelper';
 import ShareToast from "../comm/ShareToast";
@@ -20,6 +26,7 @@ class BottomNavigation extends Component {
         setDispatchAction(BACK_TOP, this.props._backTop);
         setDispatchAction(SHARE_OPEN, this.props._showShare);
         setDispatchAction(SHARE_CLOSE, this.props._closeShare);
+        setDispatchAction(SWITCH_TAB, this.props._swichTab);
 
     }
 
@@ -29,6 +36,7 @@ class BottomNavigation extends Component {
         const {index} = this.props.navigationState;
         const {jumpToIndex, actionType, share_param} = this.props;
         const {shareLink, shareTitle, shareImage, shareText} = share_param;
+        this.props._swichTab(index)
         return (
             <View style={styleBN.navigation}>
                 <StatusBar barStyle={"light-content"}/>
@@ -175,6 +183,7 @@ const bindAction = dispatch => ({
     _videoPause: () => dispatch(videoPause()),
     _showShare: (share_param) => dispatch(shareOpen(share_param)),
     _closeShare: () => dispatch(shareClose()),
+    _swichTab: (tab) => dispatch(swichTab(tab))
 
 });
 
