@@ -122,7 +122,7 @@ export default class InputPwd extends PureComponent {
         wx['password'] = pwd;
         postWxBind(wx, data => {
             console.log('wx', data);
-
+            const {user_id} = data;
             getDispatchAction()[GET_PROFILE](user_id);
             router.popToTop();
         }, err => {
