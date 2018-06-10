@@ -180,11 +180,11 @@ function netError(response, reject) {
 function handle(response, resolve, reject) {
     if (response.ok) {
 
-        const {code, message} = response.data;
+        const {code, msg} = response.data;
         if (code === 0) {
             resolve(response.data);
         } else {
-            reject(message);
+            reject(msg);
         }
     } else {
 
