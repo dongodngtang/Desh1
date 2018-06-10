@@ -148,16 +148,16 @@ export function fetchGetSearchRaces(body) {
 }
 
 export function fetchGetRecentRaces(body) {
-    return (dispatch) => {
-        dispatch(_getRecentRaces());
-        // getRecentRaces(body, (ret) => {
-        //     const {items} = ret;
-        //     dispatch(_getRecentRacesOk(items))
-        // }, (err) => {
-        //     showToast(err);
-        //     dispatch(_getRecentRacesFail(err))
-        // })
-    }
+    // return (dispatch) => {
+    //     dispatch(_getRecentRaces());
+    //     getRecentRaces(body, (ret) => {
+    //         const {items} = ret;
+    //         dispatch(_getRecentRacesOk(items))
+    //     }, (err) => {
+    //         showToast(err);
+    //         dispatch(_getRecentRacesFail(err))
+    //     })
+    // }
 }
 
 

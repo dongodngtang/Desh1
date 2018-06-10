@@ -410,9 +410,7 @@ export default class Router {
 
     toMessageCenter(props) {
         this.push(props, {
-
-            name: 'MessageCenter',
-            sceneConfig: customFloatFromRight
+            name: 'MessageCenter'
         })
     }
 
@@ -421,7 +419,6 @@ export default class Router {
         console.log('微信：', wx)
         this.stackPush({
             name: 'InputPwd',
-            sceneConfig: customFloatFromRight,
             params: {
                 wx: wx
             }

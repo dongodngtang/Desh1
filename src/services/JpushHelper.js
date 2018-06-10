@@ -40,7 +40,7 @@ export default class JpushHelper {
     static removePushListener() {
         JPushModule.removeReceiveCustomMsgListener();
         JPushModule.removeReceiveNotificationListener();
-        JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent)
+        JPushModule.removeReceiveOpenNotificationListener()
 
     }
 
