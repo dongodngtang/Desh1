@@ -153,18 +153,16 @@ export function get(url, resolve, reject, params = {}) {
 }
 
 
-
 /*token过期*/
 function netError(response, reject) {
+    let msgErr = '';
     if (response.status === 401) {
         clearLoginUser();
         router.popToLoginFirstPage();
+        msgErr = response.data.message;
     }
 
-    let msgErr = '';
-    if (response.status === 809)
-        msgErr = I18n.t('net_809');
-    else if (response.problem === SERVER_ERROR)
+    if (response.problem === SERVER_ERROR)
         msgErr = I18n.t('SERVER_ERROR');
     else if (response.problem === TIMEOUT_ERROR)
         msgErr = I18n.t('TIMEOUT_ERROR');
