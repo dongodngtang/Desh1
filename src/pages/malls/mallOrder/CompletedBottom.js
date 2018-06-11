@@ -186,26 +186,24 @@ export default class CompletedBottom extends Component {
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={() => {
-                        alertOrder("确认删除?", () => {
-                            deleteMall({order_number: order_number}, ret => {
-                                if (this.props.pageOrderInfo) {
-                                    console.log("121212")
-                                    global.router.pop();
+                {/*<TouchableOpacity*/}
+                    {/*onPress={() => {*/}
+                        {/*alertOrder("确认删除?", () => {*/}
+                            {/*deleteMall({order_number: order_number}, ret => {*/}
+                                {/*if (this.props.pageOrderInfo) {*/}
+                                    {/*global.router.pop();*/}
 
-                                } else if (this.props.refresh){
-                                    console.log("jjjsdjsndjsdjshdsjndskjhdks")
-                                    this.props.refresh();
-                                }
-                            }, err => {
-                            })
-                        })
+                                {/*} else if (this.props.refresh){*/}
+                                    {/*this.props.refresh();*/}
+                                {/*}*/}
+                            {/*}, err => {*/}
+                            {/*})*/}
+                        {/*})*/}
 
-                    }}
-                    style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>
-                </TouchableOpacity>
+                    {/*}}*/}
+                    {/*style={styleO.customer}>*/}
+                    {/*<Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>*/}
+                {/*</TouchableOpacity>*/}
 
             </View>)
     };

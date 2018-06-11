@@ -64,7 +64,7 @@ export default class LogisticsPage extends Component {
                     <ImageBackground style={styles.topImg} source={{uri: order_items[0].image}}>
                         <View style={{flex: 1}}/>
                         <View style={styles.topView}>
-                            <Text style={styles.topLeftTxt}>{state}{I18n.t('pieces')}{I18n.t('malls')}</Text>
+                            <Text style={styles.topLeftTxt}>{order_items.length}{I18n.t('pieces')}{I18n.t('malls')}</Text>
                         </View>
                     </ImageBackground>
                     <View style={styles.topRight}>
