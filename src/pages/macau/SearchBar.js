@@ -25,7 +25,7 @@ export default class SearchBar extends PureComponent {
                         alignItems: 'center', justifyContent: 'center',
                     }}>
                     <Image style={{height: 19, width: 10}}
-                           source={Images.social.back}/>
+                           source={Images.sign_return}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -38,6 +38,7 @@ export default class SearchBar extends PureComponent {
                     <Text style={styles.txtSearch}>地名／酒店</Text>
 
                 </TouchableOpacity>
+                <View style={{flex:1}}/>
                 <TouchableOpacity
                     onPress={() => {
                         this.props.showSpecInfo();
@@ -47,7 +48,7 @@ export default class SearchBar extends PureComponent {
                         <Text style={styles.txt}>住07-23</Text>
                         <Text style={styles.txt}>离07-26</Text>
                     </View>
-                    <Image style={{width:5,height:5,marginLeft:10}} source={Images.is}/>
+                    <Image style={{width:5,height:5,marginLeft:5}} source={Images.is}/>
 
                 </TouchableOpacity>
             </View>
@@ -93,9 +94,10 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     btnCat: {
-        flex: 1,
+        flexDirection:'row',
         alignItems: 'center',
-        height: 44
+        height: 44,
+        marginRight:7
     },
     imgCat: {
         height: 20,
@@ -108,7 +110,8 @@ const styles = StyleSheet.create({
     },
     timView:{
         flexDirection:'column',
-        alignItems:'center'
+        alignItems:'center',
+        marginLeft:9
     }
 
 });
