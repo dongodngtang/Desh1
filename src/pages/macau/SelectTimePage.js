@@ -6,9 +6,22 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import LinearGradient from 'react-native-linear-gradient';
+import TimeSpecificationInfo from './TimeSpecificationInfo';
+import {convertDate} from '../../utils/ComonHelper';
 
 export default class SelectTimePage extends PureComponent {
+    state={
+        timeShow:false
+    };
+
+    showSpecInfo = (temp) => {
+        this.setState({
+            timeShow: !this.state.timeShow
+        })
+    };
+
     render() {
+        const{timeShow} = this.state;
         return (
             <LinearGradient colors={['#E54A2E', '#F5F5F5', '#FFFFFF']} style={ApplicationStyles.bgContainer}>
 
@@ -21,18 +34,28 @@ export default class SelectTimePage extends PureComponent {
                 <View style={styles.searchView}>
                     <Text style={styles.location}>位置：澳门</Text>
                     {this._line()}
-                    <TouchableOpacity style={styles.selectTime}>
-                        <Text style={styles.txt1}>6月04日<Text style={styles.txt2}>今日入住</Text></Text>
+                    <TouchableOpacity style={styles.selectTime}
+                    onPress={()=>{
+                        this.showSpecInfo()
+                    }}>
+                        <Text style={styles.txt1}>{convertDate(new Date(),'M月DD日')}<Text style={styles.txt2}>今日入住</Text></Text>
                         <Text style={[styles.txt1, {marginLeft: 15}]}>6月13日<Text style={styles.txt2}>周三离店</Text></Text>
                         <View style={{flex: 1}}/>
                         <Text style={styles.txt2}>共9晚</Text>
                         <Image style={styles.image} source={Images.is}/>
                     </TouchableOpacity>
                     {this._line()}
-                    <TouchableOpacity style={styles.search}>
+                    <TouchableOpacity style={styles.search}
+                    onPress={()=>{
+                        router.toHotelListPage()
+                    }}>
                         <Text style={{color: '#FFFFFF', fontSize: 18, fontWeight: 'bold'}}>开始搜索</Text>
                     </TouchableOpacity>
                 </View>
+
+                {timeShow ? <TimeSpecificationInfo
+                    showSpecInfo={this.showSpecInfo}/> : null}
+
             </LinearGradient>
         );
     }
