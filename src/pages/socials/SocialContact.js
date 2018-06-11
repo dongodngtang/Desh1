@@ -11,7 +11,7 @@ import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar, UltimateListView, ImageLoad} from '../../components';
 import {NoDataView} from '../../../src/components/load';
-import {isEmptyObject, utcDate, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, utcDate, strNotNull, isFollowed} from '../../utils/ComonHelper';
 import {follow, followings, followers} from '../../services/SocialDao';
 import {reallySize} from "./Header";
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
@@ -192,6 +192,7 @@ export class FollowList extends Component {
                 success.items.forEach((item) => {
                     item.is_following = true;
                 });
+
                 startFetch(success.items, 15);
             }, (error) => {
                 abortFetch()
@@ -199,6 +200,9 @@ export class FollowList extends Component {
         }
         if (type === "followers") {
             followers({page, page_size: 20}, (success) => {
+                success.items.forEach((item) => {
+                    item.is_following = isFollowed(item.user_id);
+                });
                 startFetch(success.items, 15)
             }, (error) => {
                 abortFetch()
