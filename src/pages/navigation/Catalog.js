@@ -99,7 +99,8 @@ export default class Catalog extends PureComponent {
                         if (item.type === 'mall')
                             router.toMallPage()
                         else
-                            router.toHotelSearch(item)
+                            // router.toHotelSearch(item)
+                            router.toSelectTimePage()
                     }}
                     style={{
                         alignItems: 'center',
