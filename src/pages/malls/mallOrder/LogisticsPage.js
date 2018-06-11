@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, ImageBackground} from 'react-native';
 import {getLogisticsInfo} from '../../../services/MallDao';
 import {convertDate, util, call} from '../../../utils/ComonHelper';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
@@ -20,9 +20,7 @@ export default class LogisticsPage extends Component {
         const {orderItem} = this.props.params;
         const {shipments, order_number} = orderItem;
         const body = {
-            shipping_number: shipments.shipping_number,
-            express_code: shipments.express_code,
-            order_number: order_number,
+            order_number: order_number
         };
         getLogisticsInfo(body, data => {
             console.log('LogisticsInfo', data);
@@ -56,31 +54,31 @@ export default class LogisticsPage extends Component {
     };
     content = () => {
         const {logisticsInfo} = this.state;
-        const {traces, phone, state, shipping_number} = logisticsInfo;
-        const {order_items, shipments, created_at} = this.props.params.orderItem;
+        const {traces,express_name, state, shipping_number,reason} = logisticsInfo;
+        const {order_items, created_at} = this.props.params.orderItem;
         console.log("logisticsInfo:", this.props.params.orderItem)
         let menu = [LogisticsStatus.no_track, '', LogisticsStatus.on_the_way, LogisticsStatus.have_been_received, LogisticsStatus.question_piece];
         return (
             <ScrollView>
                 <View style={styles.top}>
-                    <Image style={styles.topImg} source={{uri: order_items[0].image}}>
+                    <ImageBackground style={styles.topImg} source={{uri: order_items[0].image}}>
                         <View style={{flex: 1}}/>
                         <View style={styles.topView}>
                             <Text style={styles.topLeftTxt}>{state}{I18n.t('pieces')}{I18n.t('malls')}</Text>
                         </View>
-                    </Image>
+                    </ImageBackground>
                     <View style={styles.topRight}>
                         {this.status(state, menu)}
                         <Text
-                            style={styles.topRightTxt2}>{I18n.t('logistics_company')}：{shipments.shipping_company}</Text>
+                            style={styles.topRightTxt2}>{I18n.t('logistics_company')}：{express_name}</Text>
                         <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
-                        <TouchableOpacity style={styles.topRightView}
-                                          onPress={() => {
-                                              call(phone)
-                                          }}>
-                            <Text style={styles.topRightTxt2}>{I18n.t('official_phone')}：</Text>
-                            <Text style={styles.topRightTxt3}>{phone}</Text>
-                        </TouchableOpacity>
+                        {/*<TouchableOpacity style={styles.topRightView}*/}
+                                          {/*onPress={() => {*/}
+                                              {/*call(phone)*/}
+                                          {/*}}>*/}
+                            {/*<Text style={styles.topRightTxt2}>{I18n.t('official_phone')}：</Text>*/}
+                            {/*<Text style={styles.topRightTxt3}>{phone}</Text>*/}
+                        {/*</TouchableOpacity>*/}
                     </View>
 
 

@@ -213,7 +213,7 @@ export default class CompletedBottom extends Component {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        alertOrder('confirm_receipt', () => {
+                        alertOrder("确认收货？", () => {
                             postOrderConfirm({order_number: order_number}, data => {
                                 if (this.props.refresh)
                                     this.props.refresh();

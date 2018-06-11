@@ -389,8 +389,8 @@ export function mall_refund(body) {
 }
 
 export function logistics_info(body) {
-    const {shipping_number, express_code, order_number} = body;
-    return `shipments/search?shipping_number=${shipping_number}&express_code=${express_code}&order_number=${order_number}`;
+    const {order_number} = body;
+    return `shop/orders/${order_number}/express_tracking`;
 }
 
 export function product_order_confirm(body) {

@@ -20,9 +20,7 @@ export default class Positioning extends PureComponent {
         if (isEmptyObject(shipments))
             return;
         const body = {
-            shipping_number: shipments.shipping_number,
-            express_code: shipments.express_code,
-            order_number: order_number,
+            order_number: order_number
         };
         getLogisticsInfo(body, data => {
             console.log('LogisticsInfo', data);
