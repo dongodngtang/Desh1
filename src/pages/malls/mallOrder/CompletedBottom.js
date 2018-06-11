@@ -110,7 +110,7 @@ export default class CompletedBottom extends Component {
 
                 <Text
                     onPress={() => {//`${I18n.t('confirm_cancel')}`
-                        alertOrder(I18n.t('confirm_cancel'), () => {
+                        alertOrder("确认取消？", () => {
                             cancelMallOrder({order_number: order_number}, ret => {
                                 if (this.props.refresh)
                                     this.props.refresh();
@@ -153,13 +153,14 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        alertOrder(I18n.t('verified_del'), () => {
+                        alertOrder("删除提示", () => {
                             deleteMall({order_number: order_number}, ret => {
                                 if (this.props.pageOrderInfo) {
                                     global.router.pop();
 
-                                } else if (this.props.refresh)
+                                } else if (this.props.refresh){
                                     this.props.refresh();
+                                }
                             }, err => {
                             })
                         })
@@ -187,13 +188,16 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        alertOrder('verified_del', () => {
+                        alertOrder("确认删除?", () => {
                             deleteMall({order_number: order_number}, ret => {
                                 if (this.props.pageOrderInfo) {
+                                    console.log("121212")
                                     global.router.pop();
 
-                                } else if (this.props.refresh)
+                                } else if (this.props.refresh){
+                                    console.log("jjjsdjsndjsdjshdsjndskjhdks")
                                     this.props.refresh();
+                                }
                             }, err => {
                             })
                         })
@@ -221,14 +225,14 @@ export default class CompletedBottom extends Component {
                         });
                     }}
                     style={styleO.returnedBottom2}>
-                    <Text style={styleO.orderSubmitTxt1}>{I18n.t('order_receipt')}</Text>
+                    <Text style={styleO.orderSubmitTxt1}>确认收货</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         global.router.toLogisticsPage(orderItem)
                     }}
                     style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>物流信息</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
 
@@ -236,7 +240,7 @@ export default class CompletedBottom extends Component {
                         global.router.toMallSelectPage(orderItem)
                     }}
                     style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>退货／退款</Text>
                 </TouchableOpacity>
 
             </View>
