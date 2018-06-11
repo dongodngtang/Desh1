@@ -8,6 +8,7 @@ import {getDispatchAction, isEmptyObject} from '../utils/ComonHelper';
 import UserTopicPage from "../pages/socials/UserTopicPage";
 import Crowdfunding from "../pages/crowdfundings/crowds/Crowdfunding";
 import HotelDetail from "../pages/macau/HotelDetail";
+import {SelectTimePage} from "../pages/macau/SelectTimePage";
 
 
 const customFloatFromRight = '';
@@ -45,6 +46,12 @@ export default class Router {
     popToTop() {
         getDispatchAction()['BACK_TOP']();
         Actions.popTo('tab_home')
+    }
+
+    toSelectTimePage() {
+        this.stackPush({
+            name: 'SelectTimePage'
+        })
     }
 
 
