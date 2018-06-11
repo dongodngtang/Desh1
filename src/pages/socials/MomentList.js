@@ -200,7 +200,7 @@ export default class MomentList extends PureComponent {
     itemView = (item) => {
         const {
             user, created_at, total_likes, total_comments, id, body_type, location, current_user_liked,
-            recommended
+            excellent
         } = item;
         const {address_title} = location;
         return <TouchableOpacity
@@ -231,8 +231,8 @@ export default class MomentList extends PureComponent {
                     style={styles.nick_name}>{user.nick_name}</Text>
                 <View style={{flex: 1}}/>
 
-                {recommended ?
-                    <Text style={[styles.txt_long, {color: '#F24A4A', borderColor: '#F24A4A'}]}>精华</Text> : null}
+                {excellent ?
+                    <Text style={[styles.txt_long, {color: '#F24A4A', borderColor: '#F24A4A'}]}>精选</Text> : null}
                 {body_type === 'long' ? <Text style={styles.txt_long}>长帖</Text> : null}
 
                 <TouchableOpacity

@@ -11,10 +11,11 @@ export default class SelectTimePage extends PureComponent {
     render() {
         return (
             <LinearGradient colors={['#E54A2E', '#F5F5F5', '#FFFFFF']} style={ApplicationStyles.bgContainer}>
+
                 <NavigationBar
                     title={"选择入住时间"}
                     toolbarStyle={{
-                        backgroundColor: Colors._E54
+
                     }}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
