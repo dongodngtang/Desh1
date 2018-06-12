@@ -56,7 +56,6 @@ export default class HotelRoomListPage extends PureComponent {
 
         return (<View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: Colors._E54}}
                     title={title}
                     leftBtnIcon={Images.sign_return}

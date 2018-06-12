@@ -21,6 +21,7 @@ import Orientation from 'react-native-orientation';
 import * as WeChat from 'react-native-wechat';
 import JShareModule from 'jshare-react-native';
 import JMessage from "jmessage-react-plugin";
+import JpushHelper from "./services/JpushHelper";
 
 
 console.disableYellowBox = true;
@@ -53,6 +54,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
+        JpushHelper.iosSetBadge(0)
         Orientation.lockToPortrait();
         //SplashScreen.close(SplashScreen.animationType.scale, 850, 500)
         SplashScreen.close({

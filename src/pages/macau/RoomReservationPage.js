@@ -15,14 +15,13 @@ export default class HotelRoomListPage extends PureComponent {
         return(
             <View  style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: Colors._E54}}
                     title="房间预订"
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
                 <View style={styles.barView}>
-                    <View style={style.bar}>
+                    <View style={styles.bar}>
                         <ImageBackground
                             emptyBg={Images.crowd_banner}
                             style={{width: 68, height: 68, marginLeft: 12,justifyContent:'flex-end',alignItems:'flex-end'}}
