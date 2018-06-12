@@ -161,8 +161,7 @@ class ItemHotel extends PureComponent {
 
         return <TouchableOpacity
             onPress={() => {
-                // router.toHotelDetail({id})
-                router.toSelectTimePage()
+                router.toHotelDetail({id})
             }}
             style={[styles.item_hotel, styles.row_center,]}>
 

@@ -53,6 +53,8 @@ export default class ReceivedReplyPage extends Component {
                 return I18n.t('comment') + ":"
             case 'like':
                 return I18n.t('liked')
+            case 'follow':
+                return "关注了你"
         }
     }
 
@@ -77,18 +79,27 @@ export default class ReceivedReplyPage extends Component {
                 return item.comment.body;
         }
     }
+    toUserPage = (user) => {
+        if (!isEmptyObject(login_user) && user.user_id === login_user.user_id) {
+            global.router.toPersonDynamic(user)
+        } else {
+            global.router.toUserTopicPage(user)
+        }
 
+    };
 
     renderItem = (item, index) => {
 
         const {created_at, from, notify_type} = item;
         const {avatar, nick_name, official} = from.target_user;
-
         return (
             <TouchableOpacity
                 onPress={() => {
-
-                    global.router.toLongArticle(this.type_topic(item))
+                    if(notify_type === "follow"){
+                        this.toUserPage(from.target_user)
+                    }else{
+                        global.router.toLongArticle(this.type_topic(item))
+                    }
                 }
                 }
                 style={styles.itemPage}>
