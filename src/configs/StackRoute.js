@@ -115,9 +115,11 @@ import IntegralDetailsPage from '../pages/integral/IntegralDetailsPage';
 import SelectTimePage from '../pages/macau/SelectTimePage';
 import HotelListPage from '../pages/macau/HotelListPage';
 import HotelRoomListPage from '../pages/macau/HotelRoomListPage';
+import RoomReservationPage from '../pages/macau/RoomReservationPage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="RoomReservationPage" component={RoomReservationPage} hideNavBar/>
         <Scene key="HotelRoomListPage" component={HotelRoomListPage} hideNavBar/>
         <Scene key="HotelListPage" component={HotelListPage} hideNavBar/>
         <Scene key="SelectTimePage" component={SelectTimePage} hideNavBar/>
