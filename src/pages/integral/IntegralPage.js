@@ -181,7 +181,7 @@ export default class IntegralPage extends Component {
             <Text style={{
                 color: '#AAAAAA',
                 fontSize: 12
-            }}>积分+{total_doing_points * doing_times}</Text> : null;
+            }}>积分+{total_doing_points}</Text> : null;
 
 
         let finished = total_done_points > 0 ? <Text style={{

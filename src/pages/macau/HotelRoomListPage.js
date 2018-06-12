@@ -16,42 +16,38 @@ export default class HotelRoomListPage extends PureComponent {
         let data = [{
             id:15,
             logo: Images.Group,
-            title: '上海浦东香格里拉大酒店',
-            star: 5,
-            location: '富城路33号(富城路陆家嘴西路)',
-            vouchers: true,
-            recommend: true,
-            price: 580
+            title: '城市观景双人房',
+            message:[{area:'34㎡',size:'两床',wifi:true}],
+            price: 580,
+            breakfast:false,
+            live:"可住2人"
         },
             {
                 id:13,
                 logo: Images.Group,
-                title: '上海浦东香格里拉大酒店',
-                star: 3,
-                location: '富城路33号(富城路陆家嘴西路)',
-                vouchers: false,
-                recommend: false,
-                price: 710
+                title: '贝利双人房',
+                message:[{area:'60㎡',size:'两床',wifi:true}],
+                price: 580,
+                breakfast:false,
+                live:"可住2人"
             },
             {
                 id:25,
                 logo: Images.Group,
-                title: '上海浦东香格里拉大酒店',
-                star: 4,
-                location: '富城路33号(富城路陆家嘴西路)',
-                vouchers: false,
-                recommend: false,
-                price: 780
+                title: '城市观景双人房',
+                message:[{area:'34㎡',size:'大床2m',wifi:true}],
+                price: 680,
+                breakfast:false,
+                live:"可住1人"
             },
             {
                 id:7,
                 logo: Images.Group,
-                title: '上海浦东香格里拉大酒店',
-                star: 5,
-                location: '富城路33号(富城路陆家嘴西路)',
-                vouchers: false,
-                recommend: false,
-                price: 540
+                title: '城市观景客房',
+                message:[{area:'12㎡',size:'两床',wifi:true}],
+                price: 540,
+                breakfast:false,
+                live:"可住2人"
             }];
 
         const {title} = this.props.params.hotel;
@@ -104,7 +100,9 @@ export default class HotelRoomListPage extends PureComponent {
 
     _renderItem = ({item, index}) => {
         return (
+            <View>
 
+            </View>
         )
     };
 
