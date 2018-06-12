@@ -74,6 +74,7 @@ export default class HotelDetail extends PureComponent {
 
     componentWillMount() {
         hotelDetail(this.props.params.hotel, data => {
+            console.log("hotel:",data)
             this.setState({
                 hotel: data.hotel
             })
@@ -125,11 +126,14 @@ export default class HotelDetail extends PureComponent {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            {/*<TouchableOpacity*/}
-                {/*style={styles.btn_book}>*/}
-                {/*<Text style={styles.btn_book_txt}>查看房间</Text>*/}
+            <TouchableOpacity
+                style={styles.btn_book}
+            onPress={()=>{
+                router.toHotelRoomListPage(this.state.hotel);
+            }}>
+                <Text style={styles.btn_book_txt}>查看房间</Text>
 
-            {/*</TouchableOpacity>*/}
+            </TouchableOpacity>
         </View>
     }
 

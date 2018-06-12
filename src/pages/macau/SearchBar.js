@@ -10,8 +10,13 @@ import {Badge} from '../../components';
 
 
 export default class SearchBar extends PureComponent {
-
     render() {
+        let item={
+            name: '酒店',
+            type: 'hotel',
+            size: {height: 32, width: 35},
+            icon: Images.macau.hotel
+        };
         return (<View style={styles.navBar}>
             <StatusBar barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
 
@@ -29,8 +34,9 @@ export default class SearchBar extends PureComponent {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                    activeOpacity={0}
                     onPress={() => {
-
+                        router.toHotelSearch(item)
                     }}
                     style={styles.search}>
                     <Image style={styles.searchImg}

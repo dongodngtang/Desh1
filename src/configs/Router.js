@@ -48,6 +48,15 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toHotelRoomListPage(hotel) {
+        this.stackPush({
+            name: 'HotelRoomListPage',
+            params: {
+                hotel
+            }
+        })
+    }
+
     toHotelListPage() {
         this.stackPush({
             name: 'HotelListPage'
