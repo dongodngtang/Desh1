@@ -1,10 +1,11 @@
 import React, {PureComponent} from 'react';
 import {
-    StyleSheet, Text, View, FlatList, Image,TouchableOpacity
+    StyleSheet, Text, View, FlatList, Image, TouchableOpacity,ImageBackground
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
+import {isEmptyObject} from "../../utils/ComonHelper";
 
 export default class HotelRoomListPage extends PureComponent {
 
@@ -15,40 +16,40 @@ export default class HotelRoomListPage extends PureComponent {
 
     render() {
         let data = [{
-            id:15,
+            id: 15,
             logo: Images.Group,
             title: '城市观景双人房',
-            message:[{area:'34㎡',size:'两床',wifi:true}],
+            message: {area: '34㎡', size: '两床', wifi: true},
             price: 580,
-            breakfast:false,
-            live:"可住2人"
+            breakfast: false,
+            live: "可住2人"
         },
             {
-                id:13,
+                id: 13,
                 logo: Images.Group,
                 title: '贝利双人房',
-                message:[{area:'60㎡',size:'两床',wifi:true}],
+                message: {area: '60㎡', size: '两床', wifi: true},
                 price: 580,
-                breakfast:false,
-                live:"可住2人"
+                breakfast: true,
+                live: ""
             },
             {
-                id:25,
+                id: 25,
                 logo: Images.Group,
                 title: '城市观景双人房',
-                message:[{area:'34㎡',size:'大床2m',wifi:true}],
+                message: {area: '34㎡', size: '大床2m', wifi: true},
                 price: 680,
-                breakfast:false,
-                live:"可住1人"
+                breakfast: false,
+                live: "可住1人"
             },
             {
-                id:7,
+                id: 7,
                 logo: Images.Group,
                 title: '城市观景客房',
-                message:[{area:'12㎡',size:'两床',wifi:true}],
+                message: {},
                 price: 540,
-                breakfast:false,
-                live:"可住2人"
+                breakfast: false,
+                live: ""
             }];
 
         const {title} = this.props.params.hotel;
@@ -74,38 +75,57 @@ export default class HotelRoomListPage extends PureComponent {
             </View>
         )
     }
+    _message = (message) => {
+        return (
+            <View style={styles.message}>
+                <View style={[styles.message1,{marginRight:6}]}>
+                    <Text style={styles.txt}>{message.area}</Text>
+                </View>
+                {message.wifi ? <View style={[styles.message1, {marginRight: 6}]}>
+                    <Text style={styles.txt}>WiFi</Text>
+                </View> : null}
 
-    _star = (star) => {
-        let stars = [];
-        for (let i = 1; i <= star; i++) {
-            stars.push(i);
-        }
-        return stars;
-    };
-    //是否有早餐
-    _vouchers = () => {
-        return (
-            <View style={[styles.view, {borderColor: '#FF3F3F'}]}>
-                <Text style={{color: '#FF3F3F', fontSize: 10}}>代金劵</Text>
+                <View style={styles.message1}>
+                    <Text style={styles.txt}>{message.size}</Text>
+                </View>
+
             </View>
         )
     };
-    //可住人数
-    _recommend = () => {
+    _breakfast = (item) => {
         return (
-            <View style={[styles.view, {borderColor: '#4A90E2', marginLeft: 8}]}>
-                <Text style={{color: '#4A90E2', fontSize: 10}}>小编推荐</Text>
+            <View style={{flexDirection: 'row',marginTop:8}}>
+                {item.breakfast ? <Text style={[styles.txt2,{marginRight: 10}]}>含早餐</Text> : null}
+                {isEmptyObject(item.live) ? null : <Text style={styles.txt2}>{item.live}</Text>}
             </View>
         )
-    };
+    }
 
     _renderItem = ({item, index}) => {
         return (
             <View style={styles.itemView}>
-                <ImageLoad
+                <ImageBackground
                     emptyBg={Images.crowd_banner}
-                    style={{width: 67, height: 95,marginLeft:12}}
-                    source={Images.crowd_banner}/>
+                    style={{width: 68, height: 68, marginLeft: 12,justifyContent:'flex-end',alignItems:'flex-end'}}
+                    source={Images.crowd_banner}>
+                    <View style={styles.counts}>
+                        <Text style={{color:'#FFFFFF',fontSize:9}}>2张</Text>
+                    </View>
+                </ImageBackground>
+                <View style={styles.messageView}>
+                    <Text style={{color: "#161718", fontSize: 18, fontWeight: 'bold'}}>{item.title}</Text>
+                    {!isEmptyObject(item.message) ? this._message(item.message) :
+                        <Text style={{color: '#CCCCCC', fontSize: 12, marginTop: 6}}>暂无房型信息</Text>}
+
+                    {!item.breakfast && isEmptyObject(item.live) ? null : this._breakfast(item)}
+                </View>
+
+                <View style={styles.priceView}>
+                    <Text style={{color:"#FF3F3F",fontSize:20}}><Text style={{color:"#FF3F3F",fontSize:12}}>¥</Text>{item.price}</Text>
+                    <TouchableOpacity style={styles.reservation}>
+                        <Text style={{color:"#FFFFFF",fontSize:14}}>预定</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     };
@@ -119,12 +139,70 @@ export default class HotelRoomListPage extends PureComponent {
 
 }
 const styles = StyleSheet.create({
-    itemView:{
-        flexDirection:'row',
-        alignItems:'flex-start',
-        paddingTop:25,
-        paddingBottom:20,
-        backgroundColor:"#FFFFFF"
+    itemView: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        paddingTop: 25,
+        paddingBottom: 20,
+        backgroundColor: "#FFFFFF"
+    },
+    messageView: {
+        flex:1,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        marginLeft: 17
+    },
+    message: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginTop: 8
+    },
+    message1: {
+        backgroundColor: '#F3F3F3',
+        paddingTop: 3,
+        paddingLeft: 5,
+        paddingRight: 5,
+        paddingBottom: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius:2
+    },
+    txt: {
+        color: '#888888',
+        fontSize: 10
+    },
+    txt2: {
+        color: "#4A90E2",
+        fontSize: 12
+    },
+    priceView:{
+        flexDirection:'column',
+        marginRight:17,
+        alignItems:'flex-end'
+    },
+    reservation:{
+        paddingTop:8,
+        paddingBottom:8,
+        paddingLeft:16,
+        paddingRight:16,
+        backgroundColor:'#FF6448',
+        alignItems:'center',
+        justifyContent:'center',
+        marginTop:18,
+        borderRadius:3,
+        shadowOffset:{width:1,height:1},
+        shadowColor:"#FF4726"
+    },
+    counts:{
+        width:22,
+        height:11,
+        backgroundColor:"#000000",
+        borderRadius:2,
+        opacity:0.6,
+        justifyContent:'center',
+        alignItems:'center',
+        marginRight:2,
+        marginBottom:1
     }
 })
 
