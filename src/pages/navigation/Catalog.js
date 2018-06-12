@@ -104,7 +104,7 @@ export default class Catalog extends PureComponent {
                         }else
                             router.toHotelSearch(item)
                     }}
-                    style={{
+                    style={{　
                         alignItems: 'center',
                         paddingLeft: 15,
                         paddingRight: 15,
