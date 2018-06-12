@@ -33,6 +33,10 @@ export default class HotelRoomListPage extends PureComponent {
                         <Message item={item}/>
                     </View>
                 </View>
+                <View style={styles.confirm}>
+                    <Image style={{marginLeft:8,width:10,height:10}} source={Images.macau.night}/>
+                    <Text style={{color:"#4A90E2",fontSize:7,marginLeft:5}}>订单确认后将为您保留整晚 </Text>
+                </View>
             </View>
         )
     }
@@ -64,5 +68,13 @@ const styles = StyleSheet.create({
         alignItems:'center',
         marginRight:2,
         marginBottom:1
+    },
+    confirm:{
+        flex:1,
+        flexDirection:'row',
+        backgroundColor:'white',
+        alignItems:'center',
+        paddingTop:7,
+        paddingBottom:7
     }
 })

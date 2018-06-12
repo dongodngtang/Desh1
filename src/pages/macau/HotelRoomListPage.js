@@ -31,7 +31,7 @@ export default class HotelRoomListPage extends PureComponent {
                 message: {area: '60㎡', size: '两床', wifi: true},
                 price: 580,
                 breakfast: true,
-                live: ""
+                live: "可住2人"
             },
             {
                 id: 25,
