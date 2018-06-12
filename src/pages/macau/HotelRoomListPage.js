@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
+import ImageLoad from "../../components/ImageLoad";
 
 export default class HotelRoomListPage extends PureComponent {
 
@@ -100,8 +101,11 @@ export default class HotelRoomListPage extends PureComponent {
 
     _renderItem = ({item, index}) => {
         return (
-            <View>
-
+            <View style={styles.itemView}>
+                <ImageLoad
+                    emptyBg={Images.crowd_banner}
+                    style={{width: 67, height: 95,marginLeft:12}}
+                    source={Images.crowd_banner}/>
             </View>
         )
     };
@@ -115,6 +119,12 @@ export default class HotelRoomListPage extends PureComponent {
 
 }
 const styles = StyleSheet.create({
-
+    itemView:{
+        flexDirection:'row',
+        alignItems:'flex-start',
+        paddingTop:25,
+        paddingBottom:20,
+        backgroundColor:"#FFFFFF"
+    }
 })
 
