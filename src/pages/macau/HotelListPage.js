@@ -34,7 +34,7 @@ export default class HotelListPage extends PureComponent {
             location: '富城路33号(富城路陆家嘴西路)',
             vouchers: true,
             recommend: true,
-            price:580
+            price: 580
         },
             {
                 icon: Images.Group,
@@ -43,7 +43,7 @@ export default class HotelListPage extends PureComponent {
                 location: '富城路33号(富城路陆家嘴西路)',
                 vouchers: false,
                 recommend: false,
-                price:710
+                price: 710
             },
             {
                 icon: Images.Group,
@@ -52,7 +52,7 @@ export default class HotelListPage extends PureComponent {
                 location: '富城路33号(富城路陆家嘴西路)',
                 vouchers: false,
                 recommend: false,
-                price:780
+                price: 780
             },
             {
                 icon: Images.Group,
@@ -61,50 +61,46 @@ export default class HotelListPage extends PureComponent {
                 location: '富城路33号(富城路陆家嘴西路)',
                 vouchers: false,
                 recommend: false,
-                price:540
+                price: 540
             }];
 
         const {timeShow} = this.state;
-        return (<View  style={ApplicationStyles.bgContainer}>
-                <SearchBar
-                    showSpecInfo={this.showSpecInfo}/>
-
+        return (<View style={ApplicationStyles.bgContainer}>
+                <SearchBar showSpecInfo={this.showSpecInfo}/>
                 {timeShow ? <TimeSpecificationInfo
                     showSpecInfo={this.showSpecInfo}/> : null}
 
                 <FlatList
                     ListHeaderComponent={this._separator}
-                    style={styles.list}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={this._separator}
                     data={data}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => index + "item"}
                 />
-
-
+                <View style={{backgroundColor: '#ECECEE', height: 80, width: '100%'}}/>
             </View>
         )
     }
 
     _star = (star) => {
-        let stars=[];
+        let stars = [];
         for (let i = 1; i <= star; i++) {
             stars.push(i);
         }
         return stars;
     };
-    _vouchers=()=>{
-       return(
-           <View style={[styles.view,{borderColor:'#FF3F3F'}]}>
-                <Text style={{color:'#FF3F3F',fontSize:10}}>代金劵</Text>
-           </View>
-       )
+    _vouchers = () => {
+        return (
+            <View style={[styles.view, {borderColor: '#FF3F3F'}]}>
+                <Text style={{color: '#FF3F3F', fontSize: 10}}>代金劵</Text>
+            </View>
+        )
     };
-    _recommend=()=>{
-        return(
-            <View style={[styles.view,{borderColor:'#4A90E2',marginLeft:8}]}>
-                <Text style={{color:'#4A90E2',fontSize:10}}>小编推荐</Text>
+    _recommend = () => {
+        return (
+            <View style={[styles.view, {borderColor: '#4A90E2', marginLeft: 8}]}>
+                <Text style={{color: '#4A90E2', fontSize: 10}}>小编推荐</Text>
             </View>
         )
     };
@@ -114,21 +110,23 @@ export default class HotelListPage extends PureComponent {
             <View style={styles.item} key={index}>
                 <ImageLoad
                     emptyBg={Images.crowd_banner}
-                    style={{width: 67, height: 95}}
+                    style={{width: 67, height: 95,marginLeft:12}}
                     source={Images.crowd_banner}/>
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
                     <View style={styles.starView}>
-                        {this._star(item.star).map(()=>{
-                           return <Image style={styles.stars} source={Images.macau.star}/>
+                        {this._star(item.star).map(() => {
+                            return <Image style={styles.stars} source={Images.macau.star}/>
                         })}
                     </View>
                     <Text style={styles.location} numberOfLines={1}>{item.location}</Text>
                     <View style={styles.priceView}>
-                        {item.vouchers ? this._vouchers() :<View/>}
-                        {item.recommend ? this._recommend() :<View/>}
-                        <View style={{flex:1}}/>
-                        <Text style={styles.price}><Text style={{color:'#FF3F3F',fontSize:12}}>¥</Text>{item.price}<Text style={{color:'#AAAAAA',fontSize:12}}>起</Text></Text>
+                        {item.vouchers ? this._vouchers() : <View/>}
+                        {item.recommend ? this._recommend() : <View/>}
+                        <View style={{flex: 1}}/>
+                        <Text style={styles.price}><Text
+                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{item.price}<Text
+                            style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text>
                     </View>
                 </View>
             </View>
@@ -145,22 +143,22 @@ export default class HotelListPage extends PureComponent {
 }
 const styles = StyleSheet.create({
     list: {
-        backgroundColor: "white"
+
     },
     item: {
-        flex:1,
+        flex: 1,
         flexDirection: 'row',
         alignItems: "center",
-        marginLeft: 12,
-        marginRight: 22,
+        backgroundColor: "white",
         paddingTop: 17,
         paddingBottom: 17
     },
     message: {
-        flex:1,
+        flex: 1,
         flexDirection: 'column',
         marginLeft: 12,
-        justifyContent:'flex-end'
+        justifyContent: 'flex-end',
+        marginRight:22
     },
     name: {
         color: '#161718',
@@ -177,27 +175,27 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         marginTop: 9
     },
-    location:{
-        color:'#999999',
-        fontSize:12,
-        marginTop:8
+    location: {
+        color: '#999999',
+        fontSize: 12,
+        marginTop: 8
     },
-    priceView:{
+    priceView: {
         flexDirection: 'row',
         alignItems: 'flex-end',
-        marginTop:3
+        marginTop: 3
     },
-    price:{
-        color:'#FF3F3F',
-        fontSize:20
+    price: {
+        color: '#FF3F3F',
+        fontSize: 20
     },
-    view:{
-        width:48,
-        height:18,
-        borderWidth:1,
-        borderRadius:2,
-        alignItems:'center',
-        justifyContent:'center'
+    view: {
+        width: 48,
+        height: 18,
+        borderWidth: 1,
+        borderRadius: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
