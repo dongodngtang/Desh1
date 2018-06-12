@@ -48,7 +48,7 @@ export default class SearchBar extends PureComponent {
                         <Text style={styles.txt}>住07-23</Text>
                         <Text style={styles.txt}>离07-26</Text>
                     </View>
-                    <Image style={{width:5,height:5,marginLeft:5}} source={Images.is}/>
+                    <Image style={{width:5,height:5,marginLeft:5}} source={Images.macau.down2}/>
 
                 </TouchableOpacity>
             </View>

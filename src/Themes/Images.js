@@ -347,7 +347,14 @@ const images = {
         location: require('../../source/macau/location.png'),
         call: require('../../source/macau/call.png'),
         rate1:require('../../source/macau/rate1.png'),
-        rate2:require('../../source/macau/rate2.png')
+        rate2:require('../../source/macau/rate2.png'),
+        down:require('../../source/macau/down.png'),
+        down2:require('../../source/macau/down2.png'),
+        night:require('../../source/macau/night.png'),
+        right:require('../../source/macau/right.png'),
+        star:require('../../source/macau/star.png'),
+        up:require('../../source/macau/up.png')
+
     },
     integral:{
         integral:require('../../source/integral/integral.png'),
