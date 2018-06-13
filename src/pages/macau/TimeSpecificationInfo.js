@@ -9,6 +9,7 @@ import {isEmptyObject, convertDate} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 import * as Animatable from 'react-native-animatable';
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars';
+import moment from 'moment'
 
 LocaleConfig.locales.en = LocaleConfig.locales[''];
 LocaleConfig.locales.fr = {
@@ -64,35 +65,94 @@ LocaleConfig.defaultLocale = 'fr';
 
 export default class TimeSpecificationInfo extends PureComponent {
 
-    state = {
-        firstDay: "",
-        lastDay: ""
-    };
 
-    componentDidMount() {
-        this.setState({
-            firstDay: convertDate(new Date(), 'YYYY-MM-DD')
-        })
+    constructor(props) {
+        super(props)
+
+        let date = convertDate(new Date(), 'YYYY-MM-DD');
+        this.minDate = date;
+
+        this.markedArr = [];
+
+        this.state = {
+            calendarProps: {}
+        }
+
     }
 
-    _getDay = (num, str) => {
-        let today = new Date();
-        let nowTime = today.getTime();
-        let ms = 24 * 3600 * 1000 * num;
-        today.setTime(parseInt(nowTime + ms));
-        let oYear = today.getFullYear();
-        let oMoth = (today.getMonth() + 1).toString();
-        if (oMoth.length <= 1) oMoth = '0' + oMoth;
-        let oDay = today.getDate().toString();
-        if (oDay.length <= 1) oDay = '0' + oDay;
-        return oYear + str + oMoth + str + oDay;
-    };
+    nDayPress = (day) => {
+
+
+        let dateString = day.dateString;
+
+
+        if (this.markedArr.length < 2) {
+
+            let markedDates = {}
+            let props = {}
+            //第一次选择
+            if (this.markedArr.length === 0) {
+                this.markedArr.push(dateString)
+                markedDates[dateString] = {
+                    selected: true
+                }
+
+                props = {
+                    markedDates
+                }
+
+            } else {//第二次选择
+                this.markedArr.push(dateString)
+                let start = new Date(this.markedArr[0])
+                let end = new Date(this.markedArr[1])
+                let seleactDatas = [];
+                if (start <= end) {
+                    seleactDatas = getDates(start, end)
+                } else {
+                    seleactDatas = getDates(end, start)
+                }
+                seleactDatas.forEach((item, index, arr) => {
+                    if (index === 0) {
+                        markedDates[item] = {startingDay: true, color: '#6EA240'};
+                        return;
+                    }
+                    if (index === arr.length - 1) {
+                        markedDates[item] = {endingDay: true, color: '#6EA240'};
+                        return;
+                    }
+
+                    markedDates[item] = {color: '#6EA240'};
+                })
+
+                props = {
+                    markedDates,
+                    markingType:'period'
+                }
+
+
+            }
+
+            console.log(markedDates)
+
+            this.setState({
+                calendarProps: props
+            })
+
+
+        } else {
+            this.markedDates = {}
+            this.markedArr = [];
+            this.nDayPress(day)
+        }
+
+    }
+
 
     render() {
         let onClickTime = 0;
-        const {firstDay, lastDay} = this.state;
-        const {showSpecInfo, _begin_date, _end_date} = this.props;
-        let date = convertDate(new Date(), 'YYYY-MM-DD');
+
+        const {showSpecInfo, begin_date, end_date} = this.props;
+
         return (
             <Animatable.View
                 duration={300}
@@ -107,38 +167,22 @@ export default class TimeSpecificationInfo extends PureComponent {
                 </TouchableOpacity>
                 <View style={styles.View}>
                     <Calendar
-                        current={date}
-                        minDate={date}
-                        maxDate={this._getDay(3, '-')}
-                        onDayPress={(day) => {
-                            let timestamp = Date.parse(new Date());
-                            timestamp = timestamp / 1000;
-                            if (onClickTime > 2) {
-                                onClickTime = 0
-                            }
-                            ++onClickTime;
-                            if (day.timestamp > timestamp) {
-                                this.setState({
-                                    lastDay: day.dateString
-                                })
-                            } else {
-                                this.setState({
-                                    firstDay: day.dateString
-                                })
-                            }
-                            _begin_date(firstDay);
-                            _end_date(lastDay)
-                        }}
-                        markedDates={
-                            {
-                                firstDay: {startingDay: true, color: 'ren'},
-                                lastDay: {selected: true, endingDay: true, color: 'red', textColor: 'blue'}
-                            }}
-                        markingType={'period'}
-                        theme={{
-                            selectedDayBackgroundColor: '#E94D49',
-                            selectedDayTextColor: '#fff',
-                        }}
+                        displayLoadingIndicator
+                        minDate={this.minDate}
+                        onDayPress={this.nDayPress}
+                        monthFormat={'yyyy MM'}
+                        firstDay={1}
+                        {...this.state.calendarProps}
+                        // markedDates={{
+                        //     '2018-06-19': {startingDay: true, color: 'green'},
+                        //     '2018-06-20': {
+                        //         color: 'green'
+                        //     },
+                        //     '2018-06-21': {
+                        //         color: 'green'
+                        //     },
+                        //     '2018-06-22': {selected: true, endingDay: true, color: 'green', textColor: 'white'},
+                        // }}
                     />
                 </View>
             </Animatable.View>
@@ -147,6 +191,25 @@ export default class TimeSpecificationInfo extends PureComponent {
 
 
 }
+
+
+getDates = (startDate, stopDate) => {
+    console.log(startDate, stopDate)
+    var dateArray = [];
+    var currentDate = startDate;
+    while (currentDate <= stopDate) {
+        dateArray.push(convertDate(currentDate, 'YYYY-MM-DD'));
+        currentDate = moment(currentDate).add(1, 'days')
+    }
+    console.log(dateArray)
+    return dateArray;
+}
+
+addDays = (dat, days) => {
+
+    dat.setDate(dat.getDate() + days);
+    return dat;
+};
 
 const styles = StyleSheet.create({
     page: {
