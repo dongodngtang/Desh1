@@ -10,8 +10,10 @@ import TimeSpecificationInfo from './TimeSpecificationInfo';
 import {convertDate} from '../../utils/ComonHelper';
 
 export default class SelectTimePage extends PureComponent {
-    state={
-        timeShow:false
+    state = {
+        timeShow: false,
+        begin_date: "",
+        end_date: ""
     };
 
     showSpecInfo = (temp) => {
@@ -19,9 +21,20 @@ export default class SelectTimePage extends PureComponent {
             timeShow: !this.state.timeShow
         })
     };
+    _begin_date = (date) => {
+        this.setState({
+            begin_date: date
+        })
+    };
+
+    _end_date = (date) => {
+        this.setState({
+            end_date: date
+        })
+    };
 
     render() {
-        const{timeShow} = this.state;
+        const {timeShow, begin_date, end_date} = this.state;
         return (
             <LinearGradient colors={['#E54A2E', '#F5F5F5', '#FFFFFF']} style={ApplicationStyles.bgContainer}>
 
@@ -35,10 +48,11 @@ export default class SelectTimePage extends PureComponent {
                     <Text style={styles.location}>位置：澳门</Text>
                     {this._line()}
                     <TouchableOpacity style={styles.selectTime}
-                    onPress={()=>{
-                        this.showSpecInfo()
-                    }}>
-                        <Text style={styles.txt1}>{convertDate(new Date(),'M月DD日')}<Text style={styles.txt2}>今日入住</Text></Text>
+                                      onPress={() => {
+                                          this.showSpecInfo()
+                                      }}>
+                        <Text style={styles.txt1}>{convertDate(new Date(), 'M月DD日')}<Text
+                            style={styles.txt2}>今日入住</Text></Text>
                         <Text style={[styles.txt1, {marginLeft: 15}]}>6月13日<Text style={styles.txt2}>周三离店</Text></Text>
                         <View style={{flex: 1}}/>
                         <Text style={styles.txt2}>共9晚</Text>
@@ -46,15 +60,17 @@ export default class SelectTimePage extends PureComponent {
                     </TouchableOpacity>
                     {this._line()}
                     <TouchableOpacity style={styles.search}
-                    onPress={()=>{
-                        router.toHotelListPage()
-                    }}>
+                                      onPress={() => {
+                                          router.toHotelListPage()
+                                      }}>
                         <Text style={{color: '#FFFFFF', fontSize: 18, fontWeight: 'bold'}}>开始搜索</Text>
                     </TouchableOpacity>
                 </View>
 
                 {timeShow ? <TimeSpecificationInfo
-                    showSpecInfo={this.showSpecInfo}/> : null}
+                    showSpecInfo={this.showSpecInfo}
+                    _begin_date={this._begin_date}
+                    _end_date={this._end_date}/> : null}
 
             </LinearGradient>
         );
@@ -62,7 +78,7 @@ export default class SelectTimePage extends PureComponent {
 
     _line = () => {
         return (
-            <View style={{backgroundColor: "#F3F3F3", height: 1, width:'90%'}}/>
+            <View style={{backgroundColor: "#F3F3F3", height: 1, width: '90%'}}/>
         )
     }
 
@@ -91,17 +107,17 @@ const styles = StyleSheet.create({
         marginBottom: 27
     },
     search: {
-        width:'90%',
-        height:42,
+        width: '90%',
+        height: 42,
         marginLeft: 17,
         marginRight: 17,
         backgroundColor: "#F96348",
         alignItems: "center",
         justifyContent: "center",
         marginTop: 43,
-        borderRadius:3,
-        shadowColor:'#F96348',
-        shadowOpacity:0.5,
+        borderRadius: 3,
+        shadowColor: '#F96348',
+        shadowOpacity: 0.5,
         shadowOffset: {width: 2, height: 2}
     },
     selectTime: {
@@ -109,8 +125,8 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginRight: 17,
         alignItems: 'flex-end',
-        paddingTop:30,
-        paddingBottom:30
+        paddingTop: 30,
+        paddingBottom: 30
     },
     image: {
         width: 10,

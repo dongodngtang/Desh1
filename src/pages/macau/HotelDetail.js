@@ -129,7 +129,7 @@ export default class HotelDetail extends PureComponent {
             <TouchableOpacity
                 style={styles.btn_book}
             onPress={()=>{
-                router.toHotelRoomListPage(this.state.hotel);
+                router.toHotelRoomListPage(this.state.hotel,data);
             }}>
                 <Text style={styles.btn_book_txt}>查看房间</Text>
 
