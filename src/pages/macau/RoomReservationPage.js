@@ -105,44 +105,10 @@ export default class RoomReservationPage extends PureComponent {
                             <Message item={item}/>
                         </View>
                     </View>
-                    <View style={styles.confirm}>
-                        <Image style={{marginLeft: 17, width: 20, height: 20}} source={Images.macau.night}/>
-                        <Text style={{color: "#4A90E2", fontSize: 14, marginLeft: 10}}>订单确认后将为您保留整晚 </Text>
-                    </View>
-                    <View style={styles.timeView}>
-                        <Text style={{marginLeft: 14, color: '#444444', fontSize: 14}}>入住时间：6月13日 离店时间：6月20日 <Text
-                            style={{marginLeft: 6, color: '#AAAAAA', fontSize: 14}}>共7天</Text></Text>
-                    </View>
-                    <View style={styles.personMessage}>
-                        <View style={styles.roomView}>
-                            <Text style={styles.rooms}>房间数</Text>
-                            <View style={{flex: 1}}/>
-                            {this.roomQuantity()}
-                        </View>
 
-                        <View style={styles.Roomcounts}>
-                            <Text style={styles.rooms}>入住人数</Text>
-                            <View style={{flex: 1}}/>
-                            <View style={styles.nameView}>
-                                <View style={{width:'100%',flexDirection:'row',paddingBottom: 14,borderBottomWidth:1,borderColor:'#F3F3F3'}}>
-                                    <Text style={styles.txt}>JI</Text>
-                                    <Text style={[styles.txt2, {marginLeft: 73, marginRight: 10}]}>／</Text>
-                                    <Text style={styles.txt}>KUANG</Text>
-                                </View>
-                                {/*<View tyle={{height: 1.5, backgroundColor: '#F3F3F3', width: '100%'}}/>*/}
-                                <Text style={[styles.txt2, {marginTop: 11}]}>姓（例：LI）<Text
-                                    style={{marginRight: 10}}>／</Text> 名（例：XIAOMING）</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.phoneView}>
-                            <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
-                            <TextInput
-                                maxLength={12}
-                                numberOfLines={1}/>
-                        </View>
-
-                    </View>
+                    <Prompt/>
+                    <ReservationTime/>
+                    <RoomMessage/>
 
                     <TouchableOpacity style={styles.offerView}>
                         <View style={{
@@ -174,6 +140,65 @@ export default class RoomReservationPage extends PureComponent {
         )
     }
 }
+export class RoomMessage extends PureComponent{
+    render(){
+        return(
+            <View style={styles.personMessage}>
+                <View style={styles.roomView}>
+                    <Text style={styles.rooms}>房间数</Text>
+                    <View style={{flex: 1}}/>
+                    {this.roomQuantity()}
+                </View>
+
+                <View style={styles.Roomcounts}>
+                    <Text style={styles.rooms}>入住人数</Text>
+                    <View style={{flex: 1}}/>
+                    <View style={styles.nameView}>
+                        <View style={{width:'100%',flexDirection:'row',paddingBottom: 14,borderBottomWidth:1,borderColor:'#F3F3F3'}}>
+                            <Text style={styles.txt}>JI</Text>
+                            <Text style={[styles.txt2, {marginLeft: 73, marginRight: 10}]}>／</Text>
+                            <Text style={styles.txt}>KUANG</Text>
+                        </View>
+                        <Text style={[styles.txt2, {marginTop: 11}]}>姓（例：LI）<Text
+                            style={{marginRight: 10}}>／</Text> 名（例：XIAOMING）</Text>
+                    </View>
+                </View>
+
+                <View style={styles.phoneView}>
+                    <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
+                    <TextInput
+                        maxLength={12}
+                        numberOfLines={1}/>
+                </View>
+
+            </View>
+        )
+    }
+
+}
+
+export class Prompt extends PureComponent{
+    render(){
+        return(
+            <View style={styles.confirm}>
+                <Image style={{marginLeft: 17, width: 20, height: 20}} source={Images.macau.night}/>
+                <Text style={{color: "#4A90E2", fontSize: 14, marginLeft: 10}}>订单确认后将为您保留整晚 </Text>
+            </View>
+        )
+    }
+}
+
+export class ReservationTime extends PureComponent{
+    render(){
+        return(
+            <View style={styles.timeView}>
+                <Text style={{marginLeft: 14, color: '#444444', fontSize: 14}}>入住时间：6月13日 离店时间：6月20日 <Text
+                    style={{marginLeft: 6, color: '#AAAAAA', fontSize: 14}}>共7天</Text></Text>
+            </View>
+        )
+    }
+}
+
 const styles = StyleSheet.create({
     info: {
         color: "#AAAAAA",
