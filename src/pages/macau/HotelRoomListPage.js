@@ -72,7 +72,7 @@ export default class HotelRoomListPage extends PureComponent {
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{price}</Text>
                     <TouchableOpacity style={styles.reservation}
                                       onPress={() => {
-                                          router.toRoomReservationPage(item)
+                                          router.toRoomReservationPage(item,this.props.params.date)
                                       }}>
                         <Text style={{color: "#FFFFFF", fontSize: 14}}>预定</Text>
                     </TouchableOpacity>

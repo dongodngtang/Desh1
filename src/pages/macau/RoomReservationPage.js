@@ -74,6 +74,7 @@ export default class RoomReservationPage extends PureComponent {
 
     render() {
         const {item} = this.props.params;
+        const {id, images, notes, price, tags, title} = item;
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -96,9 +97,9 @@ export default class RoomReservationPage extends PureComponent {
                                     justifyContent: 'flex-end',
                                     alignItems: 'flex-end'
                                 }}
-                                source={Images.crowd_banner}>
+                                source={{url:images[0]}}>
                                 <View style={styles.counts}>
-                                    <Text style={{color: '#FFFFFF', fontSize: 9}}>2张</Text>
+                                    <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
                                 </View>
                             </ImageBackground>
                             <Message item={item}/>

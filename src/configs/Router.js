@@ -48,11 +48,12 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
-    toRoomReservationPage(item) {
+    toRoomReservationPage(item,date) {
         this.stackPush({
             name: 'RoomReservationPage',
             params: {
-                item
+                item,
+                date
             }
         })
     }
