@@ -29,45 +29,7 @@ export default class HotelRoomListPage extends PureComponent {
 
 
     render() {
-        let data = [{
-            id: 15,
-            logo: Images.Group,
-            title: '城市观景双人房',
-            message: {area: '34㎡', size: '两床', wifi: true},
-            price: 580,
-            breakfast: false,
-            live: "可住2人"
-        },
-            {
-                id: 13,
-                logo: Images.Group,
-                title: '贝利双人房',
-                message: {area: '60㎡', size: '两床', wifi: true},
-                price: 580,
-                breakfast: true,
-                live: "可住2人"
-            },
-            {
-                id: 25,
-                logo: Images.Group,
-                title: '城市观景双人房',
-                message: {area: '34㎡', size: '大床2m', wifi: true},
-                price: 680,
-                breakfast: false,
-                live: "可住1人"
-            },
-            {
-                id: 7,
-                logo: Images.Group,
-                title: '城市观景客房',
-                message: {},
-                price: 540,
-                breakfast: false,
-                live: ""
-            }];
-
         const {hotel, date} = this.props.params;
-        const {begin_date, end_date} = date;
 
         return (<View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -82,7 +44,7 @@ export default class HotelRoomListPage extends PureComponent {
                     ListHeaderComponent={this._separator}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={this._separator}
-                    data={data}
+                    data={this.state.roomList}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => index + "item"}
                 />
@@ -91,14 +53,15 @@ export default class HotelRoomListPage extends PureComponent {
     }
 
     _renderItem = ({item, index}) => {
+        const {id, images, notes, price, tags, title} = item;
         return (
             <View style={styles.itemView}>
                 <ImageBackground
                     emptyBg={Images.crowd_banner}
                     style={{width: 68, height: 68, marginLeft: 12, justifyContent: 'flex-end', alignItems: 'flex-end'}}
-                    source={Images.crowd_banner}>
+                    source={{uri: images[0]}}>
                     <View style={styles.counts}>
-                        <Text style={{color: '#FFFFFF', fontSize: 9}}>2张</Text>
+                        <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
                     </View>
                 </ImageBackground>
 
@@ -106,7 +69,7 @@ export default class HotelRoomListPage extends PureComponent {
 
                 <View style={styles.priceView}>
                     <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
-                        style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{item.price}</Text>
+                        style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{price}</Text>
                     <TouchableOpacity style={styles.reservation}
                                       onPress={() => {
                                           router.toRoomReservationPage(item)
@@ -128,27 +91,24 @@ export default class HotelRoomListPage extends PureComponent {
 }
 
 export class Message extends PureComponent {
-    _breakfast = (item) => {
+
+    _breakfast = (notes) => {
         return (
             <View style={{flexDirection: 'row', marginTop: 8}}>
-                {item.breakfast ? <Text style={[styles.txt2, {marginRight: 10}]}>含早餐</Text> : null}
-                {isEmptyObject(item.live) ? null : <Text style={styles.txt2}>{item.live}</Text>}
+                {notes.map((note, index) => {
+                    return <Text key={index} style={[styles.txt2, {marginRight: 10}]}>{note}</Text>
+                })}
             </View>
         )
     };
-    _message = (message) => {
+    _message = (tags) => {
         return (
             <View style={styles.message}>
-                <View style={[styles.message1, {marginRight: 6}]}>
-                    <Text style={styles.txt}>{message.area}</Text>
-                </View>
-                {message.wifi ? <View style={[styles.message1, {marginRight: 6}]}>
-                    <Text style={styles.txt}>WiFi</Text>
-                </View> : null}
-
-                <View style={styles.message1}>
-                    <Text style={styles.txt}>{message.size}</Text>
-                </View>
+                {tags.map((tag, index) => {
+                    return <View key={index} style={[styles.message1, {marginRight: 6}]}>
+                        <Text style={styles.txt}>{tag}</Text>
+                    </View>
+                })}
 
             </View>
         )
@@ -156,13 +116,14 @@ export class Message extends PureComponent {
 
     render() {
         const {item} = this.props;
+        const {notes, title, tags} = item;
         return (
             <View style={styles.messageView}>
-                <Text style={{color: "#161718", fontSize: 18, fontWeight: 'bold'}}>{item.title}</Text>
-                {!isEmptyObject(item.message) ? this._message(item.message) :
+                <Text style={{color: "#161718", fontSize: 18, fontWeight: 'bold'}}>{title}</Text>
+                {!isEmptyObject(item.tags) ? this._message(tags) :
                     <Text style={{color: '#CCCCCC', fontSize: 12, marginTop: 6}}>暂无房型信息</Text>}
 
-                {!item.breakfast && isEmptyObject(item.live) ? null : this._breakfast(item)}
+                {!isEmptyObject(notes) ? this._breakfast(notes) : null}
             </View>
         )
     }
