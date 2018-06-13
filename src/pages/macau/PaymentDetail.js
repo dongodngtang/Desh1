@@ -34,7 +34,7 @@ export default class PaymentDetail extends PureComponent {
                 animation={'fadeInUp'}
                 style={styles.page}>
                 <TouchableOpacity
-                    style={{marginBottom:250,height:100, width: '100%'}}
+                    style={{marginBottom:150,height:200, width: '100%'}}
                     onPress={() => {
                         this.props._detailsShow()
                     }}>
