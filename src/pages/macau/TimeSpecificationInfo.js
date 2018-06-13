@@ -90,6 +90,7 @@ export default class TimeSpecificationInfo extends PureComponent {
 
             let markedDates = {}
             let props = {}
+            let seleactDatas = [];
             //第一次选择
             if (this.markedArr.length === 0) {
                 this.markedArr.push(dateString)
@@ -105,7 +106,7 @@ export default class TimeSpecificationInfo extends PureComponent {
                 this.markedArr.push(dateString)
                 let start = new Date(this.markedArr[0])
                 let end = new Date(this.markedArr[1])
-                let seleactDatas = [];
+
                 if (start <= end) {
                     seleactDatas = getDates(start, end)
                 } else {
@@ -113,17 +114,16 @@ export default class TimeSpecificationInfo extends PureComponent {
                 }
                 seleactDatas.forEach((item, index, arr) => {
                     if (index === 0) {
-                        markedDates[item] = {startingDay: true, color: '#6EA240'};
+                        markedDates[item] = {startingDay: true, color: '#FA6E55'};
                         return;
                     }
                     if (index === arr.length - 1) {
-                        markedDates[item] = {endingDay: true, color: '#6EA240'};
+                        markedDates[item] = {endingDay: true, color: '#FA6E55'};
                         return;
                     }
 
-                    markedDates[item] = {color: '#6EA240'};
+                    markedDates[item] = {color: '#FA6E55'};
                 })
-
                 props = {
                     markedDates,
                     markingType:'period'
@@ -131,12 +131,17 @@ export default class TimeSpecificationInfo extends PureComponent {
 
 
             }
+            if(seleactDatas.length>0){
+                this.props._change(seleactDatas[0],seleactDatas[seleactDatas.length-1],seleactDatas.length-1)
+            }
+
 
             console.log(markedDates)
 
             this.setState({
                 calendarProps: props
             })
+
 
 
         } else {
@@ -173,16 +178,6 @@ export default class TimeSpecificationInfo extends PureComponent {
                         monthFormat={'yyyy MM'}
                         firstDay={1}
                         {...this.state.calendarProps}
-                        // markedDates={{
-                        //     '2018-06-19': {startingDay: true, color: 'green'},
-                        //     '2018-06-20': {
-                        //         color: 'green'
-                        //     },
-                        //     '2018-06-21': {
-                        //         color: 'green'
-                        //     },
-                        //     '2018-06-22': {selected: true, endingDay: true, color: 'green', textColor: 'white'},
-                        // }}
                     />
                 </View>
             </Animatable.View>
@@ -201,7 +196,7 @@ getDates = (startDate, stopDate) => {
         dateArray.push(convertDate(currentDate, 'YYYY-MM-DD'));
         currentDate = moment(currentDate).add(1, 'days')
     }
-    console.log(dateArray)
+    console.log("dateArray",dateArray)
     return dateArray;
 }
 

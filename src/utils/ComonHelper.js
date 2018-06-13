@@ -620,6 +620,25 @@ export function showToast(msg) {
 
 }
 
+export function showWeek(week) {
+    if(week === 'Monday'){
+        return '周一'
+    }else if(week === 'Tu'){
+        return '周二'
+    }else if(week === 'We'){
+        return '周三'
+    }else if(week === 'Th'){
+        return '周四'
+    }else if(week === 'Fr'){
+        return '周五'
+    }else if(week === 'Sa'){
+        return '周六'
+    }else if(week === 'Su'){
+        return '周日'
+    }
+
+}
+
 
 var myreg = /^1(3|4|5|7|8)\d{9}$/;
 
