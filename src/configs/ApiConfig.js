@@ -167,10 +167,10 @@ const api = {
     infos: 'infos',//获取资讯详情
     exchange_rates: 'exchange_rates',//获取汇率列表
     recommends: 'recommends',//首页推荐
-    integral_task:integral_task,//用户任务列表
-    integral_detail:integral_detail,//用户积分明细
-    integral_award:integral_award,//用户积分领取
-
+    integral_task: integral_task,//用户任务列表
+    integral_detail: integral_detail,//用户积分明细
+    integral_award: integral_award,//用户积分领取
+    room_list: room_list,//获取酒店房间列表
 
 }
 
@@ -185,6 +185,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function room_list(body) {
+    const {begin_date, id} = body;
+    return `hotels/${id}/rooms?date=${begin_date}`
+}
 
 function integral_award() {
     return `account/users/${getUserId()}/integral/award`

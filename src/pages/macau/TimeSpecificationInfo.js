@@ -91,7 +91,7 @@ export default class TimeSpecificationInfo extends PureComponent {
     render() {
         let onClickTime = 0;
         const {firstDay, lastDay} = this.state;
-        const {showSpecInfo, begin_date, end_date} = this.props;
+        const {showSpecInfo, _begin_date, _end_date} = this.props;
         let date = convertDate(new Date(), 'YYYY-MM-DD');
         return (
             <Animatable.View
@@ -119,13 +119,15 @@ export default class TimeSpecificationInfo extends PureComponent {
                             ++onClickTime;
                             if (day.timestamp > timestamp) {
                                 this.setState({
-                                    lastDay: day
+                                    lastDay: day.dateString
                                 })
                             } else {
                                 this.setState({
-                                    firstDay: day
+                                    firstDay: day.dateString
                                 })
                             }
+                            _begin_date(firstDay);
+                            _end_date(lastDay)
                         }}
                         markedDates={
                             {

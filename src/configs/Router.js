@@ -57,18 +57,22 @@ export default class Router {
         })
     }
 
-    toHotelRoomListPage(hotel) {
+    toHotelRoomListPage(hotel,date) {
         this.stackPush({
             name: 'HotelRoomListPage',
             params: {
-                hotel
+                hotel,
+                date
             }
         })
     }
 
-    toHotelListPage() {
+    toHotelListPage(date) {
         this.stackPush({
-            name: 'HotelListPage'
+            name: 'HotelListPage',
+            params:{
+                date:date
+            }
         })
     }
 
@@ -88,11 +92,12 @@ export default class Router {
         })
     }
 
-    toHotelDetail(hotel) {
+    toHotelDetail(hotel,date) {
         this.stackPush({
             name: 'HotelDetail',
             params: {
-                hotel
+                hotel,
+                date
             }
         })
     }

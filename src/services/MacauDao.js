@@ -2,6 +2,12 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function getRoomList(body, resolve, reject) {
+    helper.get(Api.room_list(body), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function home_recommends(resolve, reject, params) {
     helper.get(Api.recommends, ret => {
         resolve(ret.data)

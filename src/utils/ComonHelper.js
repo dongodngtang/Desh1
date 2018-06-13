@@ -734,6 +734,20 @@ export function utcDate(utc, formate) {
         return moment.unix(utc).format(formate)
 }
 
+//得到时间的相关信息
+export function dateString(date, formate) {
+    if (strNotNull(date)) {
+        let dateString = convertDate(date, 'YYYY-MM-DD');
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDay();
+        let timestamp = Date.parse(date) / 1000;
+        let dates = {dateString: dateString, day: day, month: month, timestamp: timestamp, year: year};
+        console.log("nnnnnn:",dates)
+        return dates;
+    }
+}
+
 
 /*订单状态*/
 export function orderStatus(status) {
@@ -1023,10 +1037,12 @@ export function alertOrder(str, callback) {
 export function permissionAlert(message) {
     Alert.alert('权限提示', message, [
         {text: '取消'},
-        {text: '设置', onPress:()=>{
+        {
+            text: '设置', onPress: () => {
                 Linking.openURL('app-settings:')
                     .catch(err => console.log('error', err))
-         }}
+            }
+        }
     ])
 }
 

@@ -16,6 +16,12 @@ export default class SelectTimePage extends PureComponent {
         end_date: ""
     };
 
+    componentDidMount(){
+        this.setState({
+            begin_date: convertDate(new Date(), 'YYYY-MM-DD')
+        })
+    }
+
     showSpecInfo = (temp) => {
         this.setState({
             timeShow: !this.state.timeShow
@@ -35,6 +41,10 @@ export default class SelectTimePage extends PureComponent {
 
     render() {
         const {timeShow, begin_date, end_date} = this.state;
+        let date = {
+            begin_date: begin_date,
+            end_date: end_date
+        };
         return (
             <LinearGradient colors={['#E54A2E', '#F5F5F5', '#FFFFFF']} style={ApplicationStyles.bgContainer}>
 
@@ -51,7 +61,7 @@ export default class SelectTimePage extends PureComponent {
                                       onPress={() => {
                                           this.showSpecInfo()
                                       }}>
-                        <Text style={styles.txt1}>{convertDate(new Date(), 'M月DD日')}<Text
+                        <Text style={styles.txt1}>{convertDate(begin_date, 'M月DD日')}<Text
                             style={styles.txt2}>今日入住</Text></Text>
                         <Text style={[styles.txt1, {marginLeft: 15}]}>6月13日<Text style={styles.txt2}>周三离店</Text></Text>
                         <View style={{flex: 1}}/>
@@ -61,7 +71,7 @@ export default class SelectTimePage extends PureComponent {
                     {this._line()}
                     <TouchableOpacity style={styles.search}
                                       onPress={() => {
-                                          router.toHotelListPage()
+                                          router.toHotelListPage(date)
                                       }}>
                         <Text style={{color: '#FFFFFF', fontSize: 18, fontWeight: 'bold'}}>开始搜索</Text>
                     </TouchableOpacity>
