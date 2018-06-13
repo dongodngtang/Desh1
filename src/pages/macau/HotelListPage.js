@@ -1,11 +1,14 @@
 import React, {PureComponent} from 'react';
 import {
-    StyleSheet, Text, View, FlatList, Image,TouchableOpacity
+    StyleSheet, Text, View, FlatList, Image, TouchableOpacity
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import SearchBar from './SearchBar';
 import TimeSpecificationInfo from './TimeSpecificationInfo';
-import ImageLoad from "../../components/ImageLoad";
+import {ImageLoad, UltimateListView} from "../../components";
+import {LoadErrorView, NoDataView} from '../../components/load';
+import {exchange_rates, hotels, info_types} from '../../services/MacauDao';
+import I18n from "react-native-i18n";
 
 export default class HotelListPage extends PureComponent {
 
@@ -25,46 +28,6 @@ export default class HotelListPage extends PureComponent {
 
 
     render() {
-        let data = [{
-            id:15,
-            logo: Images.Group,
-            title: '上海浦东香格里拉大酒店',
-            star: 5,
-            location: '富城路33号(富城路陆家嘴西路)',
-            vouchers: true,
-            recommend: true,
-            price: 580
-        },
-            {
-                id:13,
-                logo: Images.Group,
-                title: '上海浦东香格里拉大酒店',
-                star: 3,
-                location: '富城路33号(富城路陆家嘴西路)',
-                vouchers: false,
-                recommend: false,
-                price: 710
-            },
-            {
-                id:25,
-                logo: Images.Group,
-                title: '上海浦东香格里拉大酒店',
-                star: 4,
-                location: '富城路33号(富城路陆家嘴西路)',
-                vouchers: false,
-                recommend: false,
-                price: 780
-            },
-            {
-                id:7,
-                logo: Images.Group,
-                title: '上海浦东香格里拉大酒店',
-                star: 5,
-                location: '富城路33号(富城路陆家嘴西路)',
-                vouchers: false,
-                recommend: false,
-                price: 540
-            }];
 
         const {timeShow} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
@@ -72,18 +35,42 @@ export default class HotelListPage extends PureComponent {
                 {timeShow ? <TimeSpecificationInfo
                     showSpecInfo={this.showSpecInfo}/> : null}
 
-                <FlatList
+                <UltimateListView
                     ListHeaderComponent={this._separator}
-                    showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
-                    data={data}
-                    renderItem={this._renderItem}
+                    separator={this._separator}
                     keyExtractor={(item, index) => index + "item"}
+                    ref={(ref) => this.listView = ref}
+                    onFetch={this.onFetch}
+                    item={this._renderItem}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    emptyView={() => {
+                        return this.state.error ? <LoadErrorView
+                            onPress={() => {
+                                this.listView.refresh()
+                            }}/> : <NoDataView/>;
+                    }}
                 />
-                <View style={{backgroundColor: '#ECECEE', height: 80, width: '100%'}}/>
             </View>
         )
     }
+
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+            hotels({page, page_size: 20, keyword: this.keyword}, data => {
+                console.log("HotelList:", data)
+                startFetch(data.items, 18)
+            }, err => {
+                abortFetch()
+            })
+        } catch (err) {
+            console.log(err)
+            abortFetch()
+        }
+    };
 
     _star = (star) => {
         let stars = [];
@@ -109,30 +96,30 @@ export default class HotelListPage extends PureComponent {
         )
     };
 
-    _renderItem = ({item, index}) => {
+    _renderItem = (item, index) => {
+        const {title, address, location, logo,price} = item;
         return (
             <TouchableOpacity style={styles.item} key={index}
-            onPress={()=>{
-                router.toHotelDetail(item)
-            }}>
+                              onPress={() => {
+                                  router.toHotelDetail(item)
+                              }}>
                 <ImageLoad
-                    emptyBg={Images.crowd_banner}
-                    style={{width: 67, height: 95,marginLeft:12}}
-                    source={Images.crowd_banner}/>
+                    style={{width: 67, height: 95, marginLeft: 12}}
+                    source={{uri: logo}}/>
                 <View style={styles.message}>
-                    <Text style={styles.name} numberOfLines={1}>{item.title}</Text>
-                    <View style={styles.starView}>
+                    <Text style={styles.name} numberOfLines={1}>{title}</Text>
+                    {item.star ? <View style={styles.starView}>
                         {this._star(item.star).map((index) => {
                             return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                         })}
-                    </View>
-                    <Text style={styles.location} numberOfLines={1}>{item.location}</Text>
+                    </View> : null}
+                    <Text style={styles.location} numberOfLines={1}>{location}</Text>
                     <View style={styles.priceView}>
                         {item.vouchers ? this._vouchers() : <View/>}
                         {item.recommend ? this._recommend() : <View/>}
                         <View style={{flex: 1}}/>
                         <Text style={styles.price}><Text
-                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{item.price}<Text
+                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{price}<Text
                             style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text>
                     </View>
                 </View>
@@ -149,9 +136,7 @@ export default class HotelListPage extends PureComponent {
 
 }
 const styles = StyleSheet.create({
-    list: {
-
-    },
+    list: {},
     item: {
         flex: 1,
         flexDirection: 'row',
@@ -165,7 +150,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginLeft: 12,
         justifyContent: 'flex-end',
-        marginRight:22
+        marginRight: 22
     },
     name: {
         color: '#161718',
