@@ -16,7 +16,10 @@ export default class ReservationBottom extends PureComponent {
                 <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥2182.8</Text></Text>
 
                 <View style={{flex: 1}}/>
-                <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
+                <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}
+                onPress={()=>{
+                    this.props._detailsShow()
+                }}>
                     <Text style={{color: "#AAAAAA",fontSize: 12}} >明细</Text>
                     <Image style={{width:10,height:5,marginLeft:6}} source={Images.macau.down}/>
                 </TouchableOpacity>
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         bottom: 0,
-        zIndex: 99
+        zIndex: 999
     },
     payment: {
         marginLeft: 17,
