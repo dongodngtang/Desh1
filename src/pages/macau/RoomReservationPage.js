@@ -108,7 +108,8 @@ export default class RoomReservationPage extends PureComponent {
 
                     <Prompt/>
                     <ReservationTime/>
-                    <RoomMessage/>
+                    <RoomMessage
+                        roomQuantity={this.roomQuantity}/>
 
                     <TouchableOpacity style={styles.offerView}>
                         <View style={{
@@ -125,7 +126,7 @@ export default class RoomReservationPage extends PureComponent {
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
                         </View>
                         <View style={{flex: 1}}/>
-                        <Image style={{width: 10, height: 20, marginRight: 14}} source={Images.macau.right}/>
+                        <Image style={{width: 10, height: 20, marginRight: 14,alignSelf:'center'}} source={Images.macau.right}/>
                     </TouchableOpacity>
 
                     <View style={{flexDirection: 'column', marginTop: 23, marginLeft: 15, marginRight: 15}}>
@@ -147,7 +148,7 @@ export class RoomMessage extends PureComponent{
                 <View style={styles.roomView}>
                     <Text style={styles.rooms}>房间数</Text>
                     <View style={{flex: 1}}/>
-                    {this.roomQuantity()}
+                    {this.props.roomQuantity}
                 </View>
 
                 <View style={styles.Roomcounts}>
@@ -294,7 +295,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'white',
         paddingTop: 13,
-        paddingBottom: 11
+        paddingBottom: 11,
+        alignItems:'center'
     },
     timeView: {
         marginTop: 4,
