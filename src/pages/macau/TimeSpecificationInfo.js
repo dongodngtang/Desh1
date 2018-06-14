@@ -62,6 +62,7 @@ LocaleConfig.locales.fr = {
 };
 
 LocaleConfig.defaultLocale = 'fr';
+let seleactDatas = [];
 
 export default class TimeSpecificationInfo extends PureComponent {
 
@@ -78,6 +79,7 @@ export default class TimeSpecificationInfo extends PureComponent {
             calendarProps: {}
         }
 
+
     }
 
     nDayPress = (day) => {
@@ -90,7 +92,7 @@ export default class TimeSpecificationInfo extends PureComponent {
 
             let markedDates = {}
             let props = {}
-            let seleactDatas = [];
+
             //第一次选择
             if (this.markedArr.length === 0) {
                 this.markedArr.push(dateString)
@@ -126,23 +128,17 @@ export default class TimeSpecificationInfo extends PureComponent {
                 })
                 props = {
                     markedDates,
-                    markingType:'period'
+                    markingType: 'period'
                 }
 
 
             }
-            if(seleactDatas.length>0){
-
-                this.props._change(seleactDatas[0],seleactDatas[seleactDatas.length-1],seleactDatas.length-1)
-            }
-            console.log("markedDates:",markedDates)
+            console.log("seleactDatas:", seleactDatas)
+            console.log("markedDates:", markedDates)
 
             this.setState({
                 calendarProps: props
             })
-
-
-
         } else {
             this.markedDates = {}
             this.markedArr = [];
@@ -153,10 +149,6 @@ export default class TimeSpecificationInfo extends PureComponent {
 
 
     render() {
-        let onClickTime = 0;
-
-        const {showSpecInfo, begin_date, end_date} = this.props;
-
         return (
             <Animatable.View
                 duration={300}
@@ -165,7 +157,15 @@ export default class TimeSpecificationInfo extends PureComponent {
                 <TouchableOpacity
                     style={{height: 146, width: '100%'}}
                     onPress={() => {
-                        this.props.showSpecInfo()
+                        this.props.showSpecInfo();
+                        if (seleactDatas.length > 0) {
+
+                            this.props._change({
+                                begin_date: seleactDatas[0],
+                                end_date: seleactDatas[seleactDatas.length - 1],
+                                counts: seleactDatas.length - 1
+                            })
+                        }
                     }}>
 
                 </TouchableOpacity>
@@ -195,7 +195,7 @@ getDates = (startDate, stopDate) => {
         dateArray.push(convertDate(currentDate, 'YYYY-MM-DD'));
         currentDate = moment(currentDate).add(1, 'days')
     }
-    console.log("dateArray",dateArray)
+    console.log("dateArray", dateArray)
     return dateArray;
 }
 

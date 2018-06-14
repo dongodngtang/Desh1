@@ -9,11 +9,14 @@ import {ImageLoad, UltimateListView} from "../../components";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {exchange_rates, hotels, info_types} from '../../services/MacauDao';
 import I18n from "react-native-i18n";
+import {isEmptyObject} from "../../utils/ComonHelper";
+import moment from "moment/moment";
 
 export default class HotelListPage extends PureComponent {
 
     state = {
-        timeShow: false
+        timeShow: false,
+        changeTime: this.props.params.date
     };
 
     showSpecInfo = (temp) => {
@@ -24,7 +27,16 @@ export default class HotelListPage extends PureComponent {
 
     componentDidMount() {
 
-    }
+    };
+
+    _change = (date) => {
+        console.log("changeTime:",date)
+        this.setState({
+            changeTime: date
+        });
+
+        console.log("最后选择的时间：", this.state.changeTime)
+    };
 
 
     render() {
@@ -33,7 +45,8 @@ export default class HotelListPage extends PureComponent {
         return (<View style={ApplicationStyles.bgContainer}>
                 <SearchBar showSpecInfo={this.showSpecInfo}/>
                 {timeShow ? <TimeSpecificationInfo
-                    showSpecInfo={this.showSpecInfo}/> : null}
+                    showSpecInfo={this.showSpecInfo}
+                    _change={this._change}/> : null}
 
                 <UltimateListView
                     ListHeaderComponent={this._separator}
@@ -97,11 +110,12 @@ export default class HotelListPage extends PureComponent {
     };
 
     _renderItem = (item, index) => {
-        const {title, address, location, logo,price} = item;
+        const {title, address, location, logo, price} = item;
+        const {changeTime} = this.state;
         return (
             <TouchableOpacity style={styles.item} key={index}
                               onPress={() => {
-                                  router.toHotelDetail(item,this.props.params.date)
+                                  router.toHotelDetail(item, changeTime)
                               }}>
                 <ImageLoad
                     style={{width: 67, height: 95, marginLeft: 12}}

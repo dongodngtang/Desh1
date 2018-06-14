@@ -7,23 +7,17 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import LinearGradient from 'react-native-linear-gradient';
 import TimeSpecificationInfo from './TimeSpecificationInfo';
-import {convertDate,showWeek} from '../../utils/ComonHelper';
+import {convertDate, isEmptyObject, showWeek} from '../../utils/ComonHelper';
 import moment from 'moment';
 
 export default class SelectTimePage extends PureComponent {
     state = {
         timeShow: false,
-        begin_date: "",
-        end_date: "",
-        counts:0
+        date: {begin_date: "", end_date: "", counts: 0}
     };
 
-    componentDidMount(){
-        this.setState({
-            begin_date: moment().format('YYYY-MM-DD'),
-            end_date :moment().add('hours',24).format('YYYY-MM-DD'),
-            counts:1
-    })
+    componentDidMount() {
+        this.init()
     }
 
     showSpecInfo = (temp) => {
@@ -31,25 +25,32 @@ export default class SelectTimePage extends PureComponent {
             timeShow: !this.state.timeShow
         })
     };
-    _live=(dates)=>{
+    _live = (dates) => {
         return showWeek(moment(dates).format('dd'))
 
     };
-
-    _change=(begin_date,end_date,counts)=>{
+    init = () => {
         this.setState({
-            begin_date: begin_date,
-            end_date: end_date,
-            counts: counts
+            date: {
+                begin_date: moment().format('YYYY-MM-DD'),
+                end_date: moment().add('hours', 24).format('YYYY-MM-DD'),
+                counts: 1
+            }
         })
     };
 
+    _change = (date) => {
+        if (!isEmptyObject(date)) {
+            this.setState({
+                date: date
+            })
+        }
+        console.log("第一次的时间：", this.state.date)
+    };
+
     render() {
-        const {timeShow, begin_date, end_date,counts} = this.state;
-        let date = {
-            begin_date: begin_date,
-            end_date: end_date
-        };
+        const {timeShow, date} = this.state;
+
         return (
             <LinearGradient colors={['#E54A2E', '#F5F5F5', '#FFFFFF']} style={ApplicationStyles.bgContainer}>
 
@@ -66,11 +67,12 @@ export default class SelectTimePage extends PureComponent {
                                       onPress={() => {
                                           this.showSpecInfo()
                                       }}>
-                        <Text style={styles.txt1}>{convertDate(begin_date, 'M月DD日')}<Text
-                            style={styles.txt2}>{this._live(begin_date)}入住</Text></Text>
-                        <Text style={[styles.txt1, {marginLeft: 15}]}>{convertDate(end_date, 'M月DD日')}<Text style={styles.txt2}>{this._live(end_date)}离店</Text></Text>
+                        <Text style={styles.txt1}>{convertDate(date.begin_date, 'M月DD日')}<Text
+                            style={styles.txt2}>{this._live(date.begin_date)}入住</Text></Text>
+                        <Text style={[styles.txt1, {marginLeft: 15}]}>{convertDate(date.end_date, 'M月DD日')}<Text
+                            style={styles.txt2}>{this._live(date.end_date)}离店</Text></Text>
                         <View style={{flex: 1}}/>
-                        <Text style={styles.txt2}>共{counts}晚</Text>
+                        <Text style={styles.txt2}>共{date.counts}晚</Text>
                         <Image style={styles.image} source={Images.is}/>
                     </TouchableOpacity>
                     {this._line()}
