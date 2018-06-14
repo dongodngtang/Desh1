@@ -12,7 +12,6 @@ export default class ReservationBottom extends PureComponent {
 
     render() {
         const {total_price,roomReservation,date,persons} = this.props;
-        console.log("dhsjdhsj:",persons)
         return (
             <View style={styles.mallBottom}>
                 <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥{total_price}</Text></Text>

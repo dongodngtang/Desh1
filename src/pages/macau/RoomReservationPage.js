@@ -70,7 +70,9 @@ export default class RoomReservationPage extends PureComponent {
                     style={[styles.buyTouch, room_num === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
                         if (room_num > 1) {
-                            persons = persons.pop();
+                            if (persons.length >1) {
+                                persons = persons.slice(0,persons.length-1);
+                            }
                             this.setState({
                                 room_num: --room_num,
                                 total_price: room_num * price,
