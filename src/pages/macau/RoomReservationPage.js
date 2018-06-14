@@ -86,14 +86,13 @@ export default class RoomReservationPage extends PureComponent {
                 <TouchableOpacity
                     style={styles.buyTouch}
                     onPress={() => {
-                        console.log('房间数', room_num, tempStock)
                         if (room_num < tempStock) {
                             this.setState({
                                 room_num: ++room_num,
                                 total_price: room_num * price
                             })
                         } else {
-                            showToast(I18n.t('max_stock'))
+                            showToast("房间数量不足")
                         }
 
                     }}>
@@ -116,7 +115,6 @@ export default class RoomReservationPage extends PureComponent {
         const {order, room} = roomReservation;
         const {images, notes, tags, title} = room;
 
-        console.log('房间数223', room_num)
         return (
             <View style={ApplicationStyles.bgContainer}>
 
