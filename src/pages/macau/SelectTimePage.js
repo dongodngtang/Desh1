@@ -21,7 +21,7 @@ export default class SelectTimePage extends PureComponent {
     componentDidMount(){
         this.setState({
             begin_date: moment().format('YYYY-MM-DD'),
-            end_date :moment().add('hours',12).format('YYYY-MM-DD'),
+            end_date :moment().add('hours',24).format('YYYY-MM-DD'),
             counts:1
     })
     }
@@ -38,8 +38,8 @@ export default class SelectTimePage extends PureComponent {
 
     _change=(begin_date,end_date,counts)=>{
         this.setState({
-            end_date: begin_date,
-            begin_date: end_date,
+            begin_date: begin_date,
+            end_date: end_date,
             counts: counts
         })
     };

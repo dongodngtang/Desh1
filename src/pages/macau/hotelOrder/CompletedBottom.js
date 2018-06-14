@@ -73,24 +73,6 @@ export default class CompletedBottom extends Component {
     };
 
 
-    _formatTime = (diff) => {
-
-        let min = 0;
-        if (min < 10) {
-            min = '0' + min;
-        }
-        if (diff >= 60) {
-            min = Math.floor(diff / 60);
-            diff -= min * 60;
-        }
-        if (diff < 10) {
-            diff = '0' + diff;
-        }
-
-        return `${min}:${diff}`
-    };
-
-
     renderPay = (item) => {
         const {order_number} = item;
         return (//${I18n.t('pay')}

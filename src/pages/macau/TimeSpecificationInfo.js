@@ -132,11 +132,10 @@ export default class TimeSpecificationInfo extends PureComponent {
 
             }
             if(seleactDatas.length>0){
+
                 this.props._change(seleactDatas[0],seleactDatas[seleactDatas.length-1],seleactDatas.length-1)
             }
-
-
-            console.log(markedDates)
+            console.log("markedDates:",markedDates)
 
             this.setState({
                 calendarProps: props
