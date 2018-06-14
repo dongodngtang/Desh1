@@ -9,25 +9,35 @@ import {isEmptyObject, showToast} from "../../../utils/ComonHelper";
 import {ImageMessage, Message} from '../HotelRoomListPage';
 import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
+const intro="该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 
 export default class OrderStatusPage extends PureComponent {
     state = {};
 
-    _person = (person) => {
+    _intro=()=>{
+        return(
+            <View style={{marginTop:19,marginLeft:16,marginRight:16,paddingBottom:80}}>
+                <Text style={{color:"#AAAAAA",fontSize:12,lineHeight:17}}><Text style={{color:"#666666",fontSize:12}}>扣款说明：</Text>{intro}</Text>
+            </View>
+        )
+    }
+
+    _person = (persons) => {
         return (
-            <View style={{flexDirection: 'column'}}>
-                {person.map((item, i) => {
+            <View style={{flexDirection: 'column', width: '100%', justifyContent: 'center'}}>
+                {persons.map((item, i) => {
                     return (
                         <View key={i} style={{
-                            width: '100%',
                             flexDirection: 'row',
-                            paddingBottom: 15,
+                            paddingTop: i === 0 ? 0 : 14,
+                            paddingBottom: 14,
                             borderBottomColor: '#F3F3F3',
-                            borderBottomWidth: 1
+                            borderBottomWidth: i === persons.length - 1 ? 0 : 1
                         }}>
+                            <TextInput maxLength={10} style={styles.room_num}
+                                       editable={false}>{item.last_name}</TextInput>
+                            <Text style={[styles.txt,{marginLeft: 11,marginRight:11}]}>/</Text>
                             <Text style={styles.room_num}>{item.last_name}</Text>
-                            <Text style={styles.txt}>/</Text>
-                            <Text style={[styles.room_num, {marginLeft: 11}]}>{item.last_name}</Text>
                         </View>
                     )
                 })}
@@ -41,7 +51,7 @@ export default class OrderStatusPage extends PureComponent {
     }
 
     render() {
-        const {order, room, persons} = this.props.params.items;
+        const {order, room} = this.props.params.items;
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -79,7 +89,7 @@ export default class OrderStatusPage extends PureComponent {
                         </View>
                         <View style={styles.personView}>
                             <Text style={[styles.txt, {marginRight: 24}]}>入住人</Text>
-                            {this._person(persons)}
+                            {this._person(this.props.params.persons)}
                         </View>
 
                         <View style={styles.txtView}>
@@ -88,24 +98,30 @@ export default class OrderStatusPage extends PureComponent {
                         </View>
                     </View>
 
-                    <View style={{marginTop: 17, paddingTop: 10,paddingBottom:23, backgroundColor: 'white', flexDirection: 'column'}}>
+                    <View style={{
+                        marginTop: 17,
+                        paddingTop: 10,
+                        paddingBottom: 23,
+                        backgroundColor: 'white',
+                        flexDirection: 'column'
+                    }}>
                         <Text style={[styles.infoTxt, {marginBottom: 10}]}>订单明细</Text>
                         <View style={{width: '100%', height: 1, backgroundColor: '#F3F3F3'}}/>
 
                         <FlatList
-                            style={{marginLeft: 30,marginRight: 22,marginTop:26}}
+                            style={{marginLeft: 30, marginRight: 22, marginTop: 26}}
                             showsHorizontalScrollIndicator={false}
                             data={order.items}
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => index + "item"}
                         />
-                        <View style={{marginLeft: 30,marginRight: 22,marginTop:17}}>
+                        <View style={{marginLeft: 30, marginRight: 22, marginTop: 17,flexDirection:'row',alignItems:'center'}}>
                             <Text style={styles.infoTxt}>应付金额</Text>
-                            <View style={{flex:1}}/>
-                            <Text style={{color:"#E54A2E",fontSize:14}}>¥12433</Text>
+                            <View style={{flex: 1}}/>
+                            <Text style={{color: "#E54A2E", fontSize: 14}}>¥12433</Text>
                         </View>
                     </View>
-
+                    {this._intro()}
                 </ScrollView>
             </View>
         )
@@ -116,12 +132,12 @@ export default class OrderStatusPage extends PureComponent {
 const styles = StyleSheet.create({
     personView: {
         flexDirection: 'row',
-        marginTop: 14,
+        paddingTop: 14,
         marginLeft: 14,
         marginRight: 13,
         paddingBottom: 14,
         backgroundColor: 'white',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: '#F3F3F3'
@@ -129,11 +145,11 @@ const styles = StyleSheet.create({
     },
     room_num: {
         color: '#444444',
-        fontSize: 15,
-        marginLeft: 39
+        fontSize: 15
     },
     txtView: {
         marginLeft: 14,
+        marginBottom: 14,
         flexDirection: 'row',
         marginTop: 14,
         alignItems: 'center'
@@ -144,13 +160,15 @@ const styles = StyleSheet.create({
     },
     reservationInfo: {
         marginTop: 5,
-        paddingTop:10,
-        flexDirection: 'column'
+        paddingTop: 10,
+        flexDirection: 'column',
+        backgroundColor: 'white'
     },
     infoTxt2: {
         color: "#333333",
         fontSize: 14,
-        marginLeft: 17
+        marginLeft: 17,
+        lineHeight: 20
     },
     infoTxt: {
         color: "#333333",

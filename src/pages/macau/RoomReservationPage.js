@@ -113,9 +113,9 @@ export default class RoomReservationPage extends PureComponent {
         }
         const {order, room} = roomReservation;
         const {images, notes, tags, title} = room;
-        let persons=[{last_name:'LI',first_name:'MENG'},
-            {last_name:'LI',first_name:'MENG'},
-            {last_name:'LI',first_name:'MENG'}];
+        let persons = [{last_name: 'LI', first_name: 'MENG'},
+            {last_name: 'LI', first_name: 'MENG'},
+            {last_name: 'LI', first_name: 'MENG'}];
         return (
             <View style={ApplicationStyles.bgContainer}>
 
