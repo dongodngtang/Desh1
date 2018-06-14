@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
     },
     room_num: {
         color: '#444444',
-        fontSize: 15
+        fontSize: 15,
+        marginLeft:39
     },
     txtView: {
         marginLeft: 14,

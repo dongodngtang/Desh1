@@ -87,12 +87,14 @@ export default class RoomReservationPage extends PureComponent {
                 <TouchableOpacity
                     style={styles.buyTouch}
                     onPress={() => {
-                        console.log("lll:",persons)
                         if (room_num < tempStock) {
+                            if(persons.length<7){
+                                persons.push({last_name: '', first_name: ''});
+                            }
                             this.setState({
                                 room_num: ++room_num,
                                 total_price: room_num * price,
-                                persons: persons.push({last_name: '', first_name: ''})
+                                persons: persons
                             })
                         } else {
                             showToast("房间数量不足")
@@ -206,8 +208,7 @@ export class RoomMessage extends PureComponent {
                 })}
                 <View style={{
                     flexDirection: 'row',
-                    paddingTop: 14,
-                    paddingBottom: 14,
+                    paddingTop: 14
 
                 }}>
                     <Text style={[styles.room_num,{color:'#CCCCCC'}]}>姓（例：LI）</Text>

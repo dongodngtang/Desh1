@@ -28,6 +28,12 @@ export default class ReservationBottom extends PureComponent {
                 <TouchableOpacity
                     style={styles.orderView}
                     onPress={() => {
+                        for(let i =0;i<persons.length;i++){
+                            if(persons[i].last_name==='' || persons[i].first_name===''){
+                                showToast('入住人不能为空')
+                                return;
+                            }
+                        }
                         this.props.refresh();
                         router.toOrderStatusPage(roomReservation,date,persons)
                     }}>
