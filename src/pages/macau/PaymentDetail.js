@@ -36,6 +36,7 @@ export default class PaymentDetail extends PureComponent {
                     }}>
 
                 </TouchableOpacity>
+                <View style={{flex:1}}/>
                 <View style={styles.View}>
                     <View style={styles.payment}>
                         <Text style={{color: '#444444', fontSize: 16, fontWeight: 'bold'}}>在线支付</Text>
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginBottom:0
     },
     payment: {
         marginLeft: 30,

@@ -5,11 +5,12 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
-import {isEmptyObject, showToast, convertDate} from "../../utils/ComonHelper";
+import {isEmptyObject, showToast, convertDate, strNotNull} from "../../utils/ComonHelper";
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
 import {postRoomReservation} from "../../services/MacauDao";
+import I18n from "react-native-i18n";
 
 const info = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 const prompt = "2018-06-12至2018-06-12订单一经确认，不可更改或添入住人姓名。 未满18岁的小孩需有成人陪同才可入住。"
@@ -69,10 +70,11 @@ export default class RoomReservationPage extends PureComponent {
                     style={[styles.buyTouch, room_num === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
                         if (room_num > 1) {
+                            persons = persons.pop();
                             this.setState({
                                 room_num: --room_num,
                                 total_price: room_num * price,
-                                persons:persons.pop()
+                                persons: persons
                             })
                         }
 
@@ -88,7 +90,7 @@ export default class RoomReservationPage extends PureComponent {
                     style={styles.buyTouch}
                     onPress={() => {
                         if (room_num < tempStock) {
-                            if(persons.length<7){
+                            if (persons.length < 7) {
                                 persons.push({last_name: '', first_name: ''});
                             }
                             this.setState({
@@ -189,8 +191,15 @@ export default class RoomReservationPage extends PureComponent {
 
 export class RoomMessage extends PureComponent {
     _person = (persons) => {
+
         return (
-            <View style={{flexDirection: 'column', width: '100%', justifyContent: 'center',marginLeft:24,marginRight:13}}>
+            <View style={{
+                flexDirection: 'column',
+                width: '100%',
+                justifyContent: 'center',
+                marginLeft: 24,
+                marginRight: 13
+            }}>
                 {persons.map((item, i) => {
                     return (
                         <View key={i} style={{
@@ -200,9 +209,21 @@ export class RoomMessage extends PureComponent {
                             borderBottomColor: '#F3F3F3',
                             borderBottomWidth: 1
                         }}>
-                            <TextInput maxLength={10} style={styles.room_num}>{item.last_name}</TextInput>
-                            <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11,color:'#CCCCCC'}]}>/</Text>
-                            <TextInput style={styles.room_num}>{item.first_name}</TextInput>
+                            <TextInput maxLength={20} style={styles.room_num}
+                                       placeholder={item.last_name}
+                                       underlineColorAndroid={'transparent'}
+                                       placeholderTextColor={Colors.txt_444}
+                                       onChangeText={txt => {
+                                           item.last_name = txt;
+                                       }}/>
+                            <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC'}]}>/</Text>
+                            <TextInput maxLength={20} style={styles.room_num}
+                                       placeholder={item.first_name}
+                                       underlineColorAndroid={'transparent'}
+                                       placeholderTextColor={Colors.txt_444}
+                                       onChangeText={txt => {
+                                           item.first_name = txt;
+                                       }}/>
                         </View>
                     )
                 })}
@@ -211,12 +232,13 @@ export class RoomMessage extends PureComponent {
                     paddingTop: 14
 
                 }}>
-                    <Text style={[styles.room_num,{color:'#CCCCCC'}]}>姓（例：LI）</Text>
-                    <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11,color:'#CCCCCC'}]}>/</Text>
-                    <Text style={[styles.room_num,{color:'#CCCCCC'}]}>名（例：XIAOMING）</Text>
+                    <Text style={[styles.room_num, {color: '#CCCCCC'}]}>姓（例：LI）</Text>
+                    <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC'}]}>/</Text>
+                    <Text style={[styles.room_num, {color: '#CCCCCC'}]}>名（例：XIAOMING）</Text>
                 </View>
             </View>
         )
+
     };
 
     render() {
@@ -238,7 +260,14 @@ export class RoomMessage extends PureComponent {
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
                         maxLength={12}
-                        numberOfLines={1}/>
+                        numberOfLines={1}
+
+                        testID="input_keyword"
+                        underlineColorAndroid='transparent'
+                        style={styles.inputSearch}
+                        onChangeText={txt => {
+                            this.keyword = txt;
+                        }}/>
                 </View>
 
             </View>
