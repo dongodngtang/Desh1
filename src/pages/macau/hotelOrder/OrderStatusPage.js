@@ -9,15 +9,17 @@ import {isEmptyObject, showToast} from "../../../utils/ComonHelper";
 import {ImageMessage, Message} from '../HotelRoomListPage';
 import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
-const intro="该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
+
+const intro = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 
 export default class OrderStatusPage extends PureComponent {
     state = {};
 
-    _intro=()=>{
-        return(
-            <View style={{marginTop:19,marginLeft:16,marginRight:16,paddingBottom:80}}>
-                <Text style={{color:"#AAAAAA",fontSize:12,lineHeight:17}}><Text style={{color:"#666666",fontSize:12}}>扣款说明：</Text>{intro}</Text>
+    _intro = () => {
+        return (
+            <View style={{marginTop: 19, marginLeft: 16, marginRight: 16, paddingBottom: 80}}>
+                <Text style={{color: "#AAAAAA", fontSize: 12, lineHeight: 17}}><Text
+                    style={{color: "#666666", fontSize: 12}}>扣款说明：</Text>{intro}</Text>
             </View>
         )
     }
@@ -34,10 +36,13 @@ export default class OrderStatusPage extends PureComponent {
                             borderBottomColor: '#F3F3F3',
                             borderBottomWidth: i === persons.length - 1 ? 0 : 1
                         }}>
-                            <TextInput maxLength={10} style={styles.room_num}
-                                       editable={false}>{item.last_name}</TextInput>
-                            <Text style={[styles.txt,{marginLeft: 11,marginRight:11}]}>/</Text>
-                            <Text style={styles.room_num}>{item.first_name}</Text>
+                            <TextInput  style={[styles.room_num,{width:100}]}
+                                       editable={false}
+                                       value={item.last_name}/>
+                            <Text style={[styles.txt]}>/</Text>
+                            <TextInput  style={[styles.room_num,{marginLeft:10,width:100}]}
+                                        editable={false}
+                                        value={item.first_name}/>
                         </View>
                     )
                 })}
@@ -51,6 +56,7 @@ export default class OrderStatusPage extends PureComponent {
     }
 
     render() {
+        const {phone} = this.props.params;
         const {order, room} = this.props.params.items;
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -94,7 +100,7 @@ export default class OrderStatusPage extends PureComponent {
 
                         <View style={styles.txtView}>
                             <Text style={styles.txt}>手机号</Text>
-                            <Text style={styles.room_num}>12343434</Text>
+                            <Text style={styles.room_num}>{phone}</Text>
                         </View>
                     </View>
 
@@ -115,7 +121,13 @@ export default class OrderStatusPage extends PureComponent {
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => index + "item"}
                         />
-                        <View style={{marginLeft: 30, marginRight: 22, marginTop: 17,flexDirection:'row',alignItems:'center'}}>
+                        <View style={{
+                            marginLeft: 30,
+                            marginRight: 22,
+                            marginTop: 17,
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
                             <Text style={styles.infoTxt}>应付金额</Text>
                             <View style={{flex: 1}}/>
                             <Text style={{color: "#E54A2E", fontSize: 14}}>¥12433</Text>
@@ -146,7 +158,7 @@ const styles = StyleSheet.create({
     room_num: {
         color: '#444444',
         fontSize: 15,
-        marginLeft:39
+        marginLeft: 30
     },
     txtView: {
         marginLeft: 14,

@@ -23,7 +23,7 @@ export default class RoomReservationPage extends PureComponent {
         roomReservation: [],
         total_price: 0,
         persons: [{last_name: 'LI', first_name: 'MENG'}],
-        phone:''
+        phone: ''
     };
 
     componentDidMount() {
@@ -71,8 +71,8 @@ export default class RoomReservationPage extends PureComponent {
                     style={[styles.buyTouch, room_num === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
                         if (room_num > 1) {
-                            if (persons.length >1) {
-                                persons = persons.slice(0,persons.length-1);
+                            if (persons.length > 1) {
+                                persons = persons.slice(0, persons.length - 1);
                             }
                             this.setState({
                                 room_num: --room_num,
@@ -116,9 +116,14 @@ export default class RoomReservationPage extends PureComponent {
             <View style={{width: '90%', backgroundColor: '#F3F3F3', height: 1.5}}/>
         )
     };
+    _phone=(phone)=>{
+        this.setState({
+            phone:phone
+        })
+    }
 
     render() {
-        const {detailsShow, roomReservation, room_num, total_price, persons,phone} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
         if (isEmptyObject(roomReservation)) {
             return null;
         }
@@ -149,7 +154,8 @@ export default class RoomReservationPage extends PureComponent {
                         room_num={room_num}
                         roomQuantity={this.roomQuantity}
                         price={order.total_price}
-                        persons={persons}/>
+                        persons={persons}
+                        _phone={this._phone}/>
 
                     <TouchableOpacity style={styles.offerView}>
                         <View style={{
@@ -213,21 +219,23 @@ export class RoomMessage extends PureComponent {
                             borderBottomColor: '#F3F3F3',
                             borderBottomWidth: 1
                         }}>
-                            <TextInput maxLength={20} style={styles.room_num}
+                            <TextInput maxLength={20} style={[styles.room_num,{width:100}]}
                                        placeholder={item.last_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
                                        onChangeText={txt => {
                                            item.last_name = txt;
-                                       }}/>
+                                       }}
+                                       value={item.last_name}/>
                             <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC'}]}>/</Text>
-                            <TextInput maxLength={20} style={styles.room_num}
+                            <TextInput maxLength={20} style={[styles.room_num,{width:100}]}
                                        placeholder={item.first_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
                                        onChangeText={txt => {
                                            item.first_name = txt;
-                                       }}/>
+                                       }}
+                                       value={item.first_name}/>
                         </View>
                     )
                 })}
@@ -246,7 +254,7 @@ export class RoomMessage extends PureComponent {
     };
 
     render() {
-        const {price, room_num, persons} = this.props;
+        const {price, room_num, persons, phone} = this.props;
         return (
             <View style={styles.personMessage}>
                 <View style={styles.roomView}>
@@ -263,14 +271,14 @@ export class RoomMessage extends PureComponent {
                 <View style={styles.phoneView}>
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
+                        style={{width:150,marginLeft:27}}
                         maxLength={12}
                         numberOfLines={1}
                         underlineColorAndroid={'transparent'}
                         onChangeText={txt => {
-                           this.setState({
-                               phone:txt
-                           })
-                        }}/>
+                            this.props._phone(txt)
+                        }}
+                        value={phone}/>
                 </View>
 
             </View>

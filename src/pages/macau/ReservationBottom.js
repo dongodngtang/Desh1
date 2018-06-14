@@ -34,11 +34,12 @@ export default class ReservationBottom extends PureComponent {
                                 return;
                             }
                         }
-                        if(!checkPhone(phone)){
-                            return;
-                        }
+                        // if(!checkPhone(phone)){
+                        //     return;
+                        // }
+                        console.log("phone:",phone)
                         this.props.refresh();
-                        router.toOrderStatusPage(roomReservation,date,persons)
+                        router.toOrderStatusPage(roomReservation,date,persons,phone)
                     }}>
                     <Text style={{color:"#FFFFFF",fontSize:14}}>提交订单</Text>
 
