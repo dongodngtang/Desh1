@@ -28,7 +28,7 @@ export default class RoomReservationPage extends PureComponent {
         this.refresh()
     }
 
-    refresh=()=>{
+    refresh = () => {
         this.container && this.container.open();
         const {item, date} = this.props.params;
         postRoomReservation({
@@ -53,7 +53,7 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
-    roomQuantity = (price) => {
+    roomQuantity = (price, room_num) => {
 
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
@@ -61,7 +61,7 @@ export default class RoomReservationPage extends PureComponent {
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
-        let {room_num, tempStock} = this.state;
+        let {tempStock} = this.state;
 
         return (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -86,7 +86,7 @@ export default class RoomReservationPage extends PureComponent {
                 <TouchableOpacity
                     style={styles.buyTouch}
                     onPress={() => {
-
+                        console.log('房间数', room_num, tempStock)
                         if (room_num < tempStock) {
                             this.setState({
                                 room_num: ++room_num,
@@ -110,11 +110,13 @@ export default class RoomReservationPage extends PureComponent {
 
     render() {
         const {detailsShow, roomReservation, room_num, total_price} = this.state;
-        if(isEmptyObject(roomReservation)){
+        if (isEmptyObject(roomReservation)) {
             return null;
         }
         const {order, room} = roomReservation;
         const {images, notes, tags, title} = room;
+
+        console.log('房间数223', room_num)
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -150,6 +152,7 @@ export default class RoomReservationPage extends PureComponent {
                     <ReservationTime
                         date={this.props.params.date}/>
                     <RoomMessage
+                        room_num={room_num}
                         roomQuantity={this.roomQuantity}
                         price={order.total_price}/>
 
@@ -192,13 +195,13 @@ export default class RoomReservationPage extends PureComponent {
 
 export class RoomMessage extends PureComponent {
     render() {
-        const {price} = this.props;
+        const {price, room_num} = this.props;
         return (
             <View style={styles.personMessage}>
                 <View style={styles.roomView}>
                     <Text style={styles.rooms}>房间数</Text>
                     <View style={{flex: 1}}/>
-                    {this.props.roomQuantity(price)}
+                    {this.props.roomQuantity(price, room_num)}
                 </View>
 
                 <View style={styles.Roomcounts}>
