@@ -5,13 +5,13 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
-import {isEmptyObject, showToast,checkPhone} from "../../utils/ComonHelper";
-import I18n from "react-native-i18n";
+import {isEmptyObject, showToast, checkPhone, isWXAppInstalled, payWx, alertOrder, call} from "../../utils/ComonHelper";
+import {postWxPay, getWxPaidResult} from "../../services/MallDao";
 
 export default class ReservationBottom extends PureComponent {
 
     render() {
-        const {total_price,roomReservation,date,persons,phone} = this.props;
+        const {total_price,persons,phone} = this.props;
         return (
             <View style={styles.mallBottom}>
                 <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥{total_price}</Text></Text>
@@ -37,9 +37,11 @@ export default class ReservationBottom extends PureComponent {
                         // if(!checkPhone(phone)){
                         //     return;
                         // }
-                        console.log("phone:",phone)
                         this.props.refresh();
-                        router.toOrderStatusPage(roomReservation,date,persons,phone)
+                        setTimeout(()=>{
+                            this.props.submitBtn()
+                        },1000)
+
                     }}>
                     <Text style={{color:"#FFFFFF",fontSize:14}}>提交订单</Text>
 

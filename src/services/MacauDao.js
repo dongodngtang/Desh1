@@ -2,6 +2,12 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function postHotelOrder(body, resolve, reject) {
+    helper.post(Api.hotel_order, body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function postRoomReservation(body, resolve, reject) {
     helper.post(Api.room_reservation, body, ret => {
         resolve(ret.data)

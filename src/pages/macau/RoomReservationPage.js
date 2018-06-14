@@ -5,12 +5,17 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
-import {isEmptyObject, showToast, convertDate, strNotNull} from "../../utils/ComonHelper";
+import {
+    isEmptyObject, showToast, convertDate, strNotNull, alertOrderChat, payWx, util,
+    isWXAppInstalled
+} from "../../utils/ComonHelper";
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
-import {postRoomReservation} from "../../services/MacauDao";
+import {postRoomReservation,postHotelOrder} from "../../services/MacauDao";
 import I18n from "react-native-i18n";
+import {addTimeRecode} from "../../components/PayCountDown";
+import {getWxPaidResult, postWxPay} from "../../services/MallDao";
 
 const info = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 const prompt = "2018-06-12至2018-06-12订单一经确认，不可更改或添入住人姓名。 未满18岁的小孩需有成人陪同才可入住。"
@@ -23,12 +28,20 @@ export default class RoomReservationPage extends PureComponent {
         roomReservation: [],
         total_price: 0,
         persons: [{last_name: 'LI', first_name: 'MENG'}],
-        phone: ''
+        phone: '',
+        isInstall: false,
+        order_number:''
     };
 
     componentDidMount() {
+        isWXAppInstalled(isInstall => {
+            this.setState({
+                isInstall: isInstall
+            })
+        });
         this.refresh()
-    }
+    };
+
 
     refresh = () => {
         this.container && this.container.open();
@@ -47,6 +60,64 @@ export default class RoomReservationPage extends PureComponent {
         }, err => {
 
         })
+    };
+    postParam=()=>{
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
+        const {date} = this.props.params;
+        const {order, room} = roomReservation;
+        let body={
+            checkin_date:date.begin_date,
+            checkout_date:date.end_date,
+            hotel_room_id:room.id,
+            room_num:order.room_num,
+            telephone:phone,
+            checkin_infos:persons
+        }
+        return body;
+    };
+
+    submitBtn = () => {
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
+        const {date} = this.props.params;
+        const {order, room} = roomReservation;
+
+        if (!util.isEmpty(this.state.order_number))
+            return;
+        if (true) {
+            let body = this.postParam();
+            postHotelOrder(body, data => {
+                console.log("hotel_order_number",data)
+                this.setState({
+                    order_number: data
+                });
+                addTimeRecode(data.order_number);
+                if (this.state.isInstall) {
+                    postWxPay(data, ret => {
+                        payWx(ret, () => {
+                            getWxPaidResult(data, result => {
+
+                                global.router.toOrderStatusPage(roomReservation,date,persons,phone)
+                            }, err => {
+                                showToast('支付成功，系统正在处理')
+                            }, () => {
+                            })
+
+                        }, () => {
+                            global.router.toOrderStatusPage(roomReservation,date,persons,phone)
+                        })
+                    }, err => {
+
+                    });
+                } else {
+                    alertOrderChat(I18n.t('need_weChat'))
+                }
+            }, err => {
+                showToast(err)
+            });
+
+        }
+
+
     };
 
     _detailsShow = (temp) => {
@@ -193,7 +264,8 @@ export default class RoomReservationPage extends PureComponent {
                     roomReservation={roomReservation}
                     date={this.props.params.date}
                     persons={persons}
-                    phone={phone}/>
+                    phone={phone}
+                    submitBtn={this.submitBtn}/>
             </View>
         )
     }

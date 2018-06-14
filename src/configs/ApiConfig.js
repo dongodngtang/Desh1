@@ -172,6 +172,7 @@ const api = {
     integral_award: integral_award,//用户积分领取
     room_list: room_list,//获取酒店房间列表
     room_reservation: 'hotel_orders/new',//获取酒店下单界面所需的数据
+    hotel_order:'hotel_orders',//创建酒店订单
 
 }
 
