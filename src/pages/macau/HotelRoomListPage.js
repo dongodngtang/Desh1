@@ -56,15 +56,7 @@ export default class HotelRoomListPage extends PureComponent {
         const {id, images, notes, price, tags, title} = item;
         return (
             <View style={styles.itemView}>
-                <ImageBackground
-                    emptyBg={Images.crowd_banner}
-                    style={{width: 68, height: 68, marginLeft: 12, justifyContent: 'flex-end', alignItems: 'flex-end'}}
-                    source={{uri: images[0]}}>
-                    <View style={styles.counts}>
-                        <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
-                    </View>
-                </ImageBackground>
-
+                <ImageMessage images={images}/>
                 <Message item={item}/>
 
                 <View style={styles.priceView}>
@@ -89,9 +81,23 @@ export default class HotelRoomListPage extends PureComponent {
 
 
 }
+export class ImageMessage extends PureComponent{
+    render(){
+        const {images} = this.props;
+        return(
+            <ImageBackground
+                emptyBg={Images.crowd_banner}
+                style={{width: 68, height: 68, marginLeft: 12, justifyContent: 'flex-end', alignItems: 'flex-end'}}
+                source={{uri: images[0]}}>
+                <View style={styles.counts}>
+                    <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
+                </View>
+            </ImageBackground>
+        )
+    }
+}
 
 export class Message extends PureComponent {
-
     _breakfast = (notes) => {
         return (
             <View style={{flexDirection: 'row', marginTop: 8}}>
@@ -125,6 +131,7 @@ export class Message extends PureComponent {
 
                 {!isEmptyObject(notes) ? this._breakfast(notes) : null}
             </View>
+
         )
     }
 }

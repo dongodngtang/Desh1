@@ -6,7 +6,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {isEmptyObject, showToast, convertDate} from "../../utils/ComonHelper";
-import {Message} from './HotelRoomListPage';
+import {ImageMessage, Message} from './HotelRoomListPage';
 import I18n from "react-native-i18n";
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
@@ -128,20 +128,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <View style={styles.barView}>
                         <View style={styles.bar}>
-                            <ImageBackground
-                                emptyBg={Images.crowd_banner}
-                                style={{
-                                    width: 68,
-                                    height: 68,
-                                    marginLeft: 12,
-                                    justifyContent: 'flex-end',
-                                    alignItems: 'flex-end'
-                                }}
-                                source={{url: images[0]}}>
-                                <View style={styles.counts}>
-                                    <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
-                                </View>
-                            </ImageBackground>
+                            <ImageMessage images={images}/>
                             <Message item={room}/>
                         </View>
                     </View>
