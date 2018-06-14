@@ -2,6 +2,12 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function postRoomReservation(body, resolve, reject) {
+    helper.post(Api.room_reservation, body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function getRoomList(body, resolve, reject) {
     helper.get(Api.room_list(body), ret => {
         resolve(ret.data)

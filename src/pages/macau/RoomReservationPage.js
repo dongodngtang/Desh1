@@ -10,17 +10,42 @@ import {Message} from './HotelRoomListPage';
 import I18n from "react-native-i18n";
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
+import {postRoomReservation} from "../../services/MacauDao";
 
 const info = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 const prompt = "2018-06-12至2018-06-12订单一经确认，不可更改或添入住人姓名。 未满18岁的小孩需有成人陪同才可入住。"
 
 export default class RoomReservationPage extends PureComponent {
     state = {
-        number: 1,
+        room_num: 1,
         tempStock: 10,
-        detailsShow: false
+        detailsShow: false,
+        roomReservation: [],
+        total_price: 0
     };
 
+    componentDidMount() {
+        this.refresh()
+    }
+
+    refresh=()=>{
+        this.container && this.container.open();
+        const {item, date} = this.props.params;
+        postRoomReservation({
+            checkin_date: date.begin_date,
+            checkout_date: date.end_date,
+            hotel_room_id: item.id,
+            room_num: this.state.room_num
+        }, data => {
+            console.log("roomReservation:", data)
+            this.setState({
+                roomReservation: data,
+                total_price: this.state.room_num * data.order.total_price
+            })
+        }, err => {
+
+        })
+    };
 
     _detailsShow = (temp) => {
         this.setState({
@@ -28,7 +53,7 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
-    roomQuantity = () => {
+    roomQuantity = (price) => {
 
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
@@ -36,17 +61,18 @@ export default class RoomReservationPage extends PureComponent {
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
-        let {number, tempStock} = this.state;
-
+        let {room_num, tempStock} = this.state;
 
         return (
-
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
-                    style={[styles.buyTouch, number === 1 ? styleCutDisable : styleCut]}
+                    style={[styles.buyTouch, room_num === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        if (number > 1) {
-                            this.setState({number: --number})
+                        if (room_num > 1) {
+                            this.setState({
+                                room_num: --room_num,
+                                total_price: room_num * price
+                            })
                         }
 
                     }}>
@@ -54,16 +80,17 @@ export default class RoomReservationPage extends PureComponent {
                 </TouchableOpacity>
 
                 <View style={styles.buyInput}>
-                    <Text>{number}</Text>
+                    <Text>{room_num}</Text>
                 </View>
 
                 <TouchableOpacity
                     style={styles.buyTouch}
                     onPress={() => {
 
-                        if (number < tempStock) {
+                        if (room_num < tempStock) {
                             this.setState({
-                                number: ++number
+                                room_num: ++room_num,
+                                total_price: room_num * price
                             })
                         } else {
                             showToast(I18n.t('max_stock'))
@@ -82,9 +109,12 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     render() {
-        const {detailsShow} = this.state;
-        const {item} = this.props.params;
-        const {id, images, notes, price, tags, title} = item;
+        const {detailsShow, roomReservation, room_num, total_price} = this.state;
+        if(isEmptyObject(roomReservation)){
+            return null;
+        }
+        const {order, room} = roomReservation;
+        const {images, notes, tags, title} = room;
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -112,7 +142,7 @@ export default class RoomReservationPage extends PureComponent {
                                     <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
                                 </View>
                             </ImageBackground>
-                            <Message item={item}/>
+                            <Message item={room}/>
                         </View>
                     </View>
 
@@ -120,7 +150,8 @@ export default class RoomReservationPage extends PureComponent {
                     <ReservationTime
                         date={this.props.params.date}/>
                     <RoomMessage
-                        roomQuantity={this.roomQuantity}/>
+                        roomQuantity={this.roomQuantity}
+                        price={order.total_price}/>
 
                     <TouchableOpacity style={styles.offerView}>
                         <View style={{
@@ -151,7 +182,9 @@ export default class RoomReservationPage extends PureComponent {
                 {detailsShow ? <PaymentDetail
                     _detailsShow={this._detailsShow}/> : null}
                 <ReservationBottom
-                    _detailsShow={this._detailsShow}/>
+                    _detailsShow={this._detailsShow}
+                    total_price={total_price}
+                    refresh={this.refresh}/>
             </View>
         )
     }
@@ -159,12 +192,13 @@ export default class RoomReservationPage extends PureComponent {
 
 export class RoomMessage extends PureComponent {
     render() {
+        const {price} = this.props;
         return (
             <View style={styles.personMessage}>
                 <View style={styles.roomView}>
                     <Text style={styles.rooms}>房间数</Text>
                     <View style={{flex: 1}}/>
-                    {this.props.roomQuantity()}
+                    {this.props.roomQuantity(price)}
                 </View>
 
                 <View style={styles.Roomcounts}>
@@ -216,8 +250,16 @@ export class ReservationTime extends PureComponent {
         const {begin_date, end_date, counts} = this.props.date;
         return (
             <View style={styles.timeView}>
-                <Text style={{marginLeft: 14,color: '#444444',fontSize: 14}}>入住时间：{convertDate(begin_date, 'M月DD日')} </Text>
-                <Text style={{marginLeft: 10,color: '#444444',fontSize: 14}}>离店时间：{convertDate(end_date, 'M月DD日')} </Text>
+                <Text style={{
+                    marginLeft: 14,
+                    color: '#444444',
+                    fontSize: 14
+                }}>入住时间：{convertDate(begin_date, 'M月DD日')} </Text>
+                <Text style={{
+                    marginLeft: 10,
+                    color: '#444444',
+                    fontSize: 14
+                }}>离店时间：{convertDate(end_date, 'M月DD日')} </Text>
                 <Text style={{marginLeft: 6, color: '#AAAAAA', fontSize: 14}}>共{counts}天</Text>
             </View>
         )
@@ -328,7 +370,7 @@ const styles = StyleSheet.create({
         paddingBottom: 12,
         backgroundColor: 'white',
         flexDirection: 'row',
-        alignItems:'center'
+        alignItems: 'center'
     },
     personMessage: {
         flexDirection: 'column',

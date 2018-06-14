@@ -11,9 +11,10 @@ import I18n from "react-native-i18n";
 export default class ReservationBottom extends PureComponent {
 
     render() {
+        const {total_price} = this.props;
         return (
             <View style={styles.mallBottom}>
-                <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥2182.8</Text></Text>
+                <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥{total_price}</Text></Text>
 
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}
@@ -26,7 +27,7 @@ export default class ReservationBottom extends PureComponent {
                 <TouchableOpacity
                     style={styles.orderView}
                     onPress={() => {
-
+                        this.props.refresh()
                     }}>
                     <Text style={{color:"#FFFFFF",fontSize:14}}>提交订单</Text>
 

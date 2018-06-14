@@ -171,6 +171,7 @@ const api = {
     integral_detail: integral_detail,//用户积分明细
     integral_award: integral_award,//用户积分领取
     room_list: room_list,//获取酒店房间列表
+    room_reservation: 'hotel_orders/new',//获取酒店下单界面所需的数据
 
 }
 
@@ -184,7 +185,6 @@ function getUserId() {
 }
 
 const page_size = 10;
-
 
 function room_list(body) {
     const {begin_date, id} = body;
