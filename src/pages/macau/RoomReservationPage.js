@@ -20,7 +20,8 @@ export default class RoomReservationPage extends PureComponent {
         tempStock: 6,
         detailsShow: false,
         roomReservation: [],
-        total_price: 0
+        total_price: 0,
+        persons: [{last_name: 'LI', first_name: 'MENG'}]
     };
 
     componentDidMount() {
@@ -52,7 +53,7 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
-    roomQuantity = (price, room_num) => {
+    roomQuantity = (price, room_num, persons) => {
 
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
@@ -70,7 +71,8 @@ export default class RoomReservationPage extends PureComponent {
                         if (room_num > 1) {
                             this.setState({
                                 room_num: --room_num,
-                                total_price: room_num * price
+                                total_price: room_num * price,
+                                persons:persons.pop()
                             })
                         }
 
@@ -85,10 +87,12 @@ export default class RoomReservationPage extends PureComponent {
                 <TouchableOpacity
                     style={styles.buyTouch}
                     onPress={() => {
+                        console.log("lll:",persons)
                         if (room_num < tempStock) {
                             this.setState({
                                 room_num: ++room_num,
-                                total_price: room_num * price
+                                total_price: room_num * price,
+                                persons: persons.push({last_name: '', first_name: ''})
                             })
                         } else {
                             showToast("房间数量不足")
@@ -107,15 +111,12 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     render() {
-        const {detailsShow, roomReservation, room_num, total_price} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons} = this.state;
         if (isEmptyObject(roomReservation)) {
             return null;
         }
         const {order, room} = roomReservation;
         const {images, notes, tags, title} = room;
-        let persons = [{last_name: 'LI', first_name: 'MENG'},
-            {last_name: 'LI', first_name: 'MENG'},
-            {last_name: 'LI', first_name: 'MENG'}];
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -140,7 +141,8 @@ export default class RoomReservationPage extends PureComponent {
                     <RoomMessage
                         room_num={room_num}
                         roomQuantity={this.roomQuantity}
-                        price={order.total_price}/>
+                        price={order.total_price}
+                        persons={persons}/>
 
                     <TouchableOpacity style={styles.offerView}>
                         <View style={{
@@ -184,36 +186,53 @@ export default class RoomReservationPage extends PureComponent {
 }
 
 export class RoomMessage extends PureComponent {
+    _person = (persons) => {
+        return (
+            <View style={{flexDirection: 'column', width: '100%', justifyContent: 'center',marginLeft:24,marginRight:13}}>
+                {persons.map((item, i) => {
+                    return (
+                        <View key={i} style={{
+                            flexDirection: 'row',
+                            paddingTop: i === 0 ? 0 : 14,
+                            paddingBottom: 14,
+                            borderBottomColor: '#F3F3F3',
+                            borderBottomWidth: 1
+                        }}>
+                            <TextInput maxLength={10} style={styles.room_num}>{item.last_name}</TextInput>
+                            <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11,color:'#CCCCCC'}]}>/</Text>
+                            <TextInput style={styles.room_num}>{item.first_name}</TextInput>
+                        </View>
+                    )
+                })}
+                <View style={{
+                    flexDirection: 'row',
+                    paddingTop: 14,
+                    paddingBottom: 14,
+
+                }}>
+                    <Text style={[styles.room_num,{color:'#CCCCCC'}]}>姓（例：LI）</Text>
+                    <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11,color:'#CCCCCC'}]}>/</Text>
+                    <Text style={[styles.room_num,{color:'#CCCCCC'}]}>名（例：XIAOMING）</Text>
+                </View>
+            </View>
+        )
+    };
+
     render() {
-        const {price, room_num} = this.props;
+        const {price, room_num, persons} = this.props;
         return (
             <View style={styles.personMessage}>
                 <View style={styles.roomView}>
                     <Text style={styles.rooms}>房间数</Text>
                     <View style={{flex: 1}}/>
-                    {this.props.roomQuantity(price, room_num)}
+                    {this.props.roomQuantity(price, room_num, persons)}
                 </View>
 
                 <View style={styles.Roomcounts}>
                     <Text style={styles.rooms}>入住人</Text>
                     <View style={{flex: 1}}/>
-                    <View style={styles.nameView}>
-                        <View style={{
-                            width: '100%',
-                            flexDirection: 'row',
-                            paddingBottom: 14,
-                            borderBottomWidth: 1,
-                            borderColor: '#F3F3F3'
-                        }}>
-                            <Text style={styles.txt}>JI</Text>
-                            <Text style={[styles.txt2, {marginLeft: 73, marginRight: 10}]}>／</Text>
-                            <Text style={styles.txt}>KUANG</Text>
-                        </View>
-                        <Text style={[styles.txt2, {marginTop: 11}]}>姓（例：LI）<Text
-                            style={{marginRight: 10}}>／</Text> 名（例：XIAOMING）</Text>
-                    </View>
+                    {this._person(persons)}
                 </View>
-
                 <View style={styles.phoneView}>
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
@@ -226,6 +245,7 @@ export class RoomMessage extends PureComponent {
     }
 
 }
+
 
 export class Prompt extends PureComponent {
     render() {
@@ -260,6 +280,27 @@ export class ReservationTime extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+    room_num: {
+        color: '#444444',
+        fontSize: 15
+    },
+    txt7: {
+        color: '#AAAAAA',
+        fontSize: 14
+    },
+    personView: {
+        flexDirection: 'row',
+        paddingTop: 14,
+        marginLeft: 14,
+        marginRight: 13,
+        paddingBottom: 14,
+        backgroundColor: 'white',
+        alignItems: 'flex-start',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: '#F3F3F3'
+
+    },
     info: {
         color: "#AAAAAA",
         fontSize: 12,

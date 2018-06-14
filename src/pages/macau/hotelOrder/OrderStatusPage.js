@@ -37,7 +37,7 @@ export default class OrderStatusPage extends PureComponent {
                             <TextInput maxLength={10} style={styles.room_num}
                                        editable={false}>{item.last_name}</TextInput>
                             <Text style={[styles.txt,{marginLeft: 11,marginRight:11}]}>/</Text>
-                            <Text style={styles.room_num}>{item.last_name}</Text>
+                            <Text style={styles.room_num}>{item.first_name}</Text>
                         </View>
                     )
                 })}
