@@ -28,7 +28,7 @@ export default class RoomReservationPage extends PureComponent {
         this.refresh()
     }
 
-    refresh=()=>{
+    refresh = () => {
         this.container && this.container.open();
         const {item, date} = this.props.params;
         postRoomReservation({
@@ -110,7 +110,7 @@ export default class RoomReservationPage extends PureComponent {
 
     render() {
         const {detailsShow, roomReservation, room_num, total_price} = this.state;
-        if(isEmptyObject(roomReservation)){
+        if (isEmptyObject(roomReservation)) {
             return null;
         }
         const {order, room} = roomReservation;
@@ -180,7 +180,8 @@ export default class RoomReservationPage extends PureComponent {
                     </View>
                 </ScrollView>
                 {detailsShow ? <PaymentDetail
-                    _detailsShow={this._detailsShow}/> : null}
+                    _detailsShow={this._detailsShow}
+                    order={order}/> : null}
                 <ReservationBottom
                     _detailsShow={this._detailsShow}
                     total_price={total_price}

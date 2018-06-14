@@ -17,17 +17,18 @@ export default class PaymentDetail extends PureComponent {
     }
 
     _renderItem = ({item, index}) => {
+        const{date,price} = item;
         return (
             <View style={styles.item}>
-                <Text style={[styles.itemTxt,{marginRight: 10}]} numberOfLines={1}>2018-06-13（2间)</Text>
+                <Text style={[styles.itemTxt,{marginRight: 10}]} numberOfLines={1}>{`${date}（2间)`}</Text>
                 <View style={{marginLeft:10,marginRight:10,flex:1,backgroundColor: '#F3F3F3', height: 1}}/>
-                <Text style={styles.itemTxt}>¥345</Text>
+                <Text style={styles.itemTxt}>¥{price}</Text>
             </View>
         )
     }
 
     render() {
-        let data = [1, 2, 3, 4, 5, 6];
+        const {order} = this.props;
         return (
             <Animatable.View
                 duration={300}
@@ -44,13 +45,13 @@ export default class PaymentDetail extends PureComponent {
                     <View style={styles.payment}>
                         <Text style={{color: '#444444', fontSize: 16, fontWeight: 'bold'}}>在线支付</Text>
                         <View style={{flex: 1}}/>
-                        <Text style={{color: '#E54A2E', fontSize: 16}}>¥2182.8</Text>
+                        <Text style={{color: '#E54A2E', fontSize: 16}}>¥{order.total_price}</Text>
                     </View>
                     <ScrollView>
                         <FlatList
                             style={{marginLeft: 30,marginRight: 22}}
                             showsHorizontalScrollIndicator={false}
-                            data={data}
+                            data={order.items}
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => index + "item"}
                         />
