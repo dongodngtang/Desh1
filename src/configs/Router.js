@@ -48,6 +48,17 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toOrderStatusPage(items,date,persons) {
+        this.stackPush({
+            name: 'OrderStatusPage',
+            params: {
+                items,
+                date,
+                persons
+            }
+        })
+    }
+
     toRoomReservationPage(item,date) {
         this.stackPush({
             name: 'RoomReservationPage',

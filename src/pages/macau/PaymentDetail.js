@@ -17,13 +17,8 @@ export default class PaymentDetail extends PureComponent {
     }
 
     _renderItem = ({item, index}) => {
-        const{date,price} = item;
         return (
-            <View style={styles.item}>
-                <Text style={[styles.itemTxt,{marginRight: 10}]} numberOfLines={1}>{`${date}（2间)`}</Text>
-                <View style={{marginLeft:10,marginRight:10,flex:1,backgroundColor: '#F3F3F3', height: 1}}/>
-                <Text style={styles.itemTxt}>¥{price}</Text>
-            </View>
+            <RenderItem key={index} item={{item}}/>
         )
     }
 
@@ -61,6 +56,19 @@ export default class PaymentDetail extends PureComponent {
         );
     }
 
+}
+
+export class RenderItem extends PureComponent{
+    render(){
+        const{date,price} = this.props.item;
+        return(
+            <View style={styles.item}>
+                <Text style={[styles.itemTxt,{marginRight: 10}]} numberOfLines={1}>{`${date}（2间)`}</Text>
+                <View style={{marginLeft:10,marginRight:10,flex:1,backgroundColor: '#F3F3F3', height: 1}}/>
+                <Text style={styles.itemTxt}>¥{price}</Text>
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({

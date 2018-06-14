@@ -116,9 +116,11 @@ import SelectTimePage from '../pages/macau/SelectTimePage';
 import HotelListPage from '../pages/macau/HotelListPage';
 import HotelRoomListPage from '../pages/macau/HotelRoomListPage';
 import RoomReservationPage from '../pages/macau/RoomReservationPage';
+import OrderStatusPage from '../pages/macau/hotelOrder/OrderStatusPage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="OrderStatusPage" component={OrderStatusPage} hideNavBar/>
         <Scene key="RoomReservationPage" component={RoomReservationPage} hideNavBar/>
         <Scene key="HotelRoomListPage" component={HotelRoomListPage} hideNavBar/>
         <Scene key="HotelListPage" component={HotelListPage} hideNavBar/>

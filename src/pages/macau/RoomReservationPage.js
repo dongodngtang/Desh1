@@ -7,7 +7,6 @@ import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {isEmptyObject, showToast, convertDate} from "../../utils/ComonHelper";
 import {ImageMessage, Message} from './HotelRoomListPage';
-import I18n from "react-native-i18n";
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
 import {postRoomReservation} from "../../services/MacauDao";
@@ -18,7 +17,7 @@ const prompt = "2018-06-12至2018-06-12订单一经确认，不可更改或添�
 export default class RoomReservationPage extends PureComponent {
     state = {
         room_num: 1,
-        tempStock: 10,
+        tempStock: 6,
         detailsShow: false,
         roomReservation: [],
         total_price: 0
@@ -114,7 +113,9 @@ export default class RoomReservationPage extends PureComponent {
         }
         const {order, room} = roomReservation;
         const {images, notes, tags, title} = room;
-
+        let persons=[{last_name:'LI',first_name:'MENG'},
+            {last_name:'LI',first_name:'MENG'},
+            {last_name:'LI',first_name:'MENG'}];
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -173,7 +174,10 @@ export default class RoomReservationPage extends PureComponent {
                 <ReservationBottom
                     _detailsShow={this._detailsShow}
                     total_price={total_price}
-                    refresh={this.refresh}/>
+                    refresh={this.refresh}
+                    roomReservation={roomReservation}
+                    date={this.props.params.date}
+                    persons={persons}/>
             </View>
         )
     }

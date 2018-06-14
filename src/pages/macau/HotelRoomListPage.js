@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
-import ImageLoad from "../../components/ImageLoad";
 import {isEmptyObject} from "../../utils/ComonHelper";
 import {getRoomList} from "../../services/MacauDao";
 
