@@ -38,9 +38,7 @@ export default class ReservationBottom extends PureComponent {
                         //     return;
                         // }
                         this.props.refresh();
-                        setTimeout(()=>{
-                            this.props.submitBtn()
-                        },1000)
+
 
                     }}>
                     <Text style={{color:"#FFFFFF",fontSize:14}}>提交订单</Text>

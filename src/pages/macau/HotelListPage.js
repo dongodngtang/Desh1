@@ -14,6 +14,8 @@ import moment from "moment/moment";
 
 export default class HotelListPage extends PureComponent {
 
+    keyword = '';
+
     state = {
         timeShow: false,
         changeTime: this.props.params.date
@@ -25,9 +27,7 @@ export default class HotelListPage extends PureComponent {
         })
     };
 
-    componentDidMount() {
 
-    };
 
     _change = (date) => {
         console.log("changeTime:",date)
@@ -43,7 +43,12 @@ export default class HotelListPage extends PureComponent {
 
         const {timeShow} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
-                <SearchBar showSpecInfo={this.showSpecInfo}/>
+                <SearchBar
+                    onChangeText={keyword=>{
+                        this.keyword = keyword;
+                        this.listView && this.listView.refresh()
+                    }}
+                    showSpecInfo={this.showSpecInfo}/>
                 {timeShow ? <TimeSpecificationInfo
                     showSpecInfo={this.showSpecInfo}
                     _change={this._change}/> : null}

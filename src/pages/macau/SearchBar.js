@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {
     StyleSheet, Text, View, Image,
     TouchableOpacity, Platform,
-    StatusBar
+    StatusBar, TextInput
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -11,14 +11,13 @@ import {Badge} from '../../components';
 
 export default class SearchBar extends PureComponent {
     render() {
-        let item={
+        let item = {
             name: '酒店',
             type: 'hotel',
             size: {height: 32, width: 35},
             icon: Images.macau.hotel
         };
         return (<View style={styles.navBar}>
-            <StatusBar barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
 
             <View style={styles.navContent}>
                 <TouchableOpacity
@@ -33,18 +32,21 @@ export default class SearchBar extends PureComponent {
                            source={Images.sign_return}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    activeOpacity={0}
-                    onPress={() => {
-                        router.toHotelSearch(item)
-                    }}
+                <View
                     style={styles.search}>
                     <Image style={styles.searchImg}
                            source={Images.search_gray}/>
-                    <Text style={styles.txtSearch}>地名／酒店</Text>
 
-                </TouchableOpacity>
-                <View style={{flex:1}}/>
+                    <TextInput
+                        onChangeText={text => {
+                            this.props.onChangeText && this.props.onChangeText(text)
+                        }}
+                        placeholderTextColor={'white'}
+                        placeholder={'地名／酒店'}
+                        underlineColorAndroid={'transparent'}
+                        style={{height: 40, fontSize: 14, color: 'white', flex: 1}}/>
+                </View>
+                <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
                         this.props.showSpecInfo();
@@ -54,7 +56,7 @@ export default class SearchBar extends PureComponent {
                         <Text style={styles.txt}>住07-23</Text>
                         <Text style={styles.txt}>离07-26</Text>
                     </View>
-                    <Image style={{width:5,height:5,marginLeft:5}} source={Images.macau.down2}/>
+                    <Image style={{width: 5, height: 5, marginLeft: 5}} source={Images.macau.down2}/>
 
                 </TouchableOpacity>
             </View>
@@ -66,9 +68,9 @@ export default class SearchBar extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    txt:{
-        color:'white',
-        fontSize:10
+    txt: {
+        color: 'white',
+        fontSize: 10
     },
     navBar: {
         height: Metrics.navBarHeight,
@@ -100,10 +102,10 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     btnCat: {
-        flexDirection:'row',
+        flexDirection: 'row',
         alignItems: 'center',
         height: 44,
-        marginRight:7
+        marginRight: 7
     },
     imgCat: {
         height: 20,
@@ -114,10 +116,10 @@ const styles = StyleSheet.create({
         top: 5,
         right: '26%'
     },
-    timView:{
-        flexDirection:'column',
-        alignItems:'center',
-        marginLeft:9
+    timView: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginLeft: 9
     }
 
 });

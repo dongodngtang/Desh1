@@ -12,7 +12,7 @@ import {
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
-import {postRoomReservation,postHotelOrder} from "../../services/MacauDao";
+import {postRoomReservation, postHotelOrder} from "../../services/MacauDao";
 import I18n from "react-native-i18n";
 import {addTimeRecode} from "../../components/PayCountDown";
 import {getWxPaidResult, postWxPay} from "../../services/MallDao";
@@ -30,7 +30,7 @@ export default class RoomReservationPage extends PureComponent {
         persons: [{last_name: 'LI', first_name: 'MENG'}],
         phone: '',
         isInstall: false,
-        order_number:''
+        order_number: ''
     };
 
     componentDidMount() {
@@ -39,11 +39,11 @@ export default class RoomReservationPage extends PureComponent {
                 isInstall: isInstall
             })
         });
-        this.refresh()
+        this.refresh(true)
     };
 
 
-    refresh = () => {
+    refresh = (isFirst) => {
         this.container && this.container.open();
         const {item, date} = this.props.params;
         postRoomReservation({
@@ -57,27 +57,38 @@ export default class RoomReservationPage extends PureComponent {
                 roomReservation: data,
                 total_price: this.state.room_num * data.order.total_price
             })
+
+
+            if (!isFirst && !strNotNull(this.state.phone)) {
+                showToast('手机号码不能为空');
+                return
+            }
+
+            if (!isFirst)
+                this.submitBtn(data)
+
+
         }, err => {
 
         })
     };
-    postParam=()=>{
+    postParam = () => {
         const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
         const {date} = this.props.params;
         const {order, room} = roomReservation;
-        let body={
-            checkin_date:date.begin_date,
-            checkout_date:date.end_date,
-            hotel_room_id:room.id,
-            room_num:order.room_num,
-            telephone:phone,
-            checkin_infos:persons
+        let body = {
+            checkin_date: date.begin_date,
+            checkout_date: date.end_date,
+            hotel_room_id: room.id,
+            room_num: order.room_num,
+            telephone: phone,
+            checkin_infos: persons
         }
         return body;
     };
 
-    submitBtn = () => {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
+    submitBtn = (roomReservation) => {
+        const {detailsShow, room_num, total_price, persons, phone} = this.state;
         const {date} = this.props.params;
         const {order, room} = roomReservation;
 
@@ -86,28 +97,13 @@ export default class RoomReservationPage extends PureComponent {
         if (true) {
             let body = this.postParam();
             postHotelOrder(body, data => {
-                console.log("hotel_order_number",data)
+                console.log("hotel_order_number", data)
                 this.setState({
                     order_number: data
                 });
                 addTimeRecode(data.order_number);
                 if (this.state.isInstall) {
-                    postWxPay(data, ret => {
-                        payWx(ret, () => {
-                            getWxPaidResult(data, result => {
 
-                                global.router.toOrderStatusPage(roomReservation,date,persons,phone)
-                            }, err => {
-                                showToast('支付成功，系统正在处理')
-                            }, () => {
-                            })
-
-                        }, () => {
-                            global.router.toOrderStatusPage(roomReservation,date,persons,phone)
-                        })
-                    }, err => {
-
-                    });
                 } else {
                     alertOrderChat(I18n.t('need_weChat'))
                 }
@@ -187,9 +183,9 @@ export default class RoomReservationPage extends PureComponent {
             <View style={{width: '90%', backgroundColor: '#F3F3F3', height: 1.5}}/>
         )
     };
-    _phone=(phone)=>{
+    _phone = (phone) => {
         this.setState({
-            phone:phone
+            phone: phone
         })
     }
 
@@ -291,7 +287,7 @@ export class RoomMessage extends PureComponent {
                             borderBottomColor: '#F3F3F3',
                             borderBottomWidth: 1
                         }}>
-                            <TextInput maxLength={20} style={[styles.room_num,{width:100}]}
+                            <TextInput maxLength={20} style={[styles.room_num, {width: 100}]}
                                        placeholder={item.last_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
@@ -300,7 +296,7 @@ export class RoomMessage extends PureComponent {
                                        }}
                                        value={item.last_name}/>
                             <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC'}]}>/</Text>
-                            <TextInput maxLength={20} style={[styles.room_num,{width:100}]}
+                            <TextInput maxLength={20} style={[styles.room_num, {width: 100}]}
                                        placeholder={item.first_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
@@ -343,7 +339,7 @@ export class RoomMessage extends PureComponent {
                 <View style={styles.phoneView}>
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
-                        style={{width:150,marginLeft:27}}
+                        style={{width: 150, marginLeft: 27}}
                         maxLength={12}
                         numberOfLines={1}
                         underlineColorAndroid={'transparent'}
