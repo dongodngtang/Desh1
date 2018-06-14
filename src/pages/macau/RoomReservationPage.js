@@ -5,7 +5,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
-import {isEmptyObject, showToast} from "../../utils/ComonHelper";
+import {isEmptyObject, showToast, convertDate} from "../../utils/ComonHelper";
 import {Message} from './HotelRoomListPage';
 import I18n from "react-native-i18n";
 import ReservationBottom from "./ReservationBottom";
@@ -18,7 +18,7 @@ export default class RoomReservationPage extends PureComponent {
     state = {
         number: 1,
         tempStock: 10,
-        detailsShow:false
+        detailsShow: false
     };
 
 
@@ -107,7 +107,7 @@ export default class RoomReservationPage extends PureComponent {
                                     justifyContent: 'flex-end',
                                     alignItems: 'flex-end'
                                 }}
-                                source={{url:images[0]}}>
+                                source={{url: images[0]}}>
                                 <View style={styles.counts}>
                                     <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
                                 </View>
@@ -117,7 +117,8 @@ export default class RoomReservationPage extends PureComponent {
                     </View>
 
                     <Prompt/>
-                    <ReservationTime/>
+                    <ReservationTime
+                        date={this.props.params.date}/>
                     <RoomMessage
                         roomQuantity={this.roomQuantity}/>
 
@@ -136,7 +137,8 @@ export default class RoomReservationPage extends PureComponent {
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
                         </View>
                         <View style={{flex: 1}}/>
-                        <Image style={{width: 10, height: 20, marginRight: 14,alignSelf:'center'}} source={Images.macau.right}/>
+                        <Image style={{width: 10, height: 20, marginRight: 14, alignSelf: 'center'}}
+                               source={Images.macau.right}/>
                     </TouchableOpacity>
 
                     <View style={{flexDirection: 'column', marginTop: 23, marginLeft: 15, marginRight: 15}}>
@@ -154,9 +156,10 @@ export default class RoomReservationPage extends PureComponent {
         )
     }
 }
-export class RoomMessage extends PureComponent{
-    render(){
-        return(
+
+export class RoomMessage extends PureComponent {
+    render() {
+        return (
             <View style={styles.personMessage}>
                 <View style={styles.roomView}>
                     <Text style={styles.rooms}>房间数</Text>
@@ -168,7 +171,13 @@ export class RoomMessage extends PureComponent{
                     <Text style={styles.rooms}>入住人</Text>
                     <View style={{flex: 1}}/>
                     <View style={styles.nameView}>
-                        <View style={{width:'100%',flexDirection:'row',paddingBottom: 14,borderBottomWidth:1,borderColor:'#F3F3F3'}}>
+                        <View style={{
+                            width: '100%',
+                            flexDirection: 'row',
+                            paddingBottom: 14,
+                            borderBottomWidth: 1,
+                            borderColor: '#F3F3F3'
+                        }}>
                             <Text style={styles.txt}>JI</Text>
                             <Text style={[styles.txt2, {marginLeft: 73, marginRight: 10}]}>／</Text>
                             <Text style={styles.txt}>KUANG</Text>
@@ -191,9 +200,9 @@ export class RoomMessage extends PureComponent{
 
 }
 
-export class Prompt extends PureComponent{
-    render(){
-        return(
+export class Prompt extends PureComponent {
+    render() {
+        return (
             <View style={styles.confirm}>
                 <Image style={{marginLeft: 17, width: 20, height: 20}} source={Images.macau.night}/>
                 <Text style={{color: "#4A90E2", fontSize: 14, marginLeft: 10}}>订单确认后将为您保留整晚 </Text>
@@ -202,12 +211,14 @@ export class Prompt extends PureComponent{
     }
 }
 
-export class ReservationTime extends PureComponent{
-    render(){
-        return(
+export class ReservationTime extends PureComponent {
+    render() {
+        const {begin_date, end_date, counts} = this.props.date;
+        return (
             <View style={styles.timeView}>
-                <Text style={{marginLeft: 14, color: '#444444', fontSize: 14}}>入住时间：6月13日 离店时间：6月20日 <Text
-                    style={{marginLeft: 6, color: '#AAAAAA', fontSize: 14}}>共7天</Text></Text>
+                <Text style={{marginLeft: 14,color: '#444444',fontSize: 14}}>入住时间：{convertDate(begin_date, 'M月DD日')} </Text>
+                <Text style={{marginLeft: 10,color: '#444444',fontSize: 14}}>离店时间：{convertDate(end_date, 'M月DD日')} </Text>
+                <Text style={{marginLeft: 6, color: '#AAAAAA', fontSize: 14}}>共{counts}天</Text>
             </View>
         )
     }
@@ -309,14 +320,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: 13,
         paddingBottom: 11,
-        alignItems:'center'
+        alignItems: 'center'
     },
     timeView: {
         marginTop: 4,
         paddingTop: 12,
         paddingBottom: 12,
         backgroundColor: 'white',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems:'center'
     },
     personMessage: {
         flexDirection: 'column',
@@ -329,18 +341,18 @@ const styles = StyleSheet.create({
         paddingBottom: 7,
         alignItems: 'center',
         marginLeft: 14,
-        marginRight:14,
-        borderBottomWidth:1,
-        borderColor:"#F3F3F3"
+        marginRight: 14,
+        borderBottomWidth: 1,
+        borderColor: "#F3F3F3"
     },
     Roomcounts: {
         flexDirection: 'row',
         paddingTop: 14,
         paddingBottom: 14,
-        borderBottomWidth:1,
-        borderColor:"#F3F3F3",
-        marginLeft:14,
-        marginRight:14
+        borderBottomWidth: 1,
+        borderColor: "#F3F3F3",
+        marginLeft: 14,
+        marginRight: 14
     },
     rooms: {color: "#AAAAAA", fontSize: 14}
 })
