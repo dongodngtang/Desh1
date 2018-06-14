@@ -5,13 +5,13 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
-import {isEmptyObject, showToast} from "../../utils/ComonHelper";
+import {isEmptyObject, showToast,checkPhone} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 
 export default class ReservationBottom extends PureComponent {
 
     render() {
-        const {total_price,roomReservation,date,persons} = this.props;
+        const {total_price,roomReservation,date,persons,phone} = this.props;
         return (
             <View style={styles.mallBottom}>
                 <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥{total_price}</Text></Text>
@@ -33,6 +33,9 @@ export default class ReservationBottom extends PureComponent {
                                 showToast('入住人不能为空')
                                 return;
                             }
+                        }
+                        if(!checkPhone(phone)){
+                            return;
                         }
                         this.props.refresh();
                         router.toOrderStatusPage(roomReservation,date,persons)

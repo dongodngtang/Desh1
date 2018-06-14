@@ -22,7 +22,8 @@ export default class RoomReservationPage extends PureComponent {
         detailsShow: false,
         roomReservation: [],
         total_price: 0,
-        persons: [{last_name: 'LI', first_name: 'MENG'}]
+        persons: [{last_name: 'LI', first_name: 'MENG'}],
+        phone:''
     };
 
     componentDidMount() {
@@ -117,7 +118,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     render() {
-        const {detailsShow, roomReservation, room_num, total_price, persons} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons,phone} = this.state;
         if (isEmptyObject(roomReservation)) {
             return null;
         }
@@ -185,7 +186,8 @@ export default class RoomReservationPage extends PureComponent {
                     refresh={this.refresh}
                     roomReservation={roomReservation}
                     date={this.props.params.date}
-                    persons={persons}/>
+                    persons={persons}
+                    phone={phone}/>
             </View>
         )
     }
@@ -263,12 +265,11 @@ export class RoomMessage extends PureComponent {
                     <TextInput
                         maxLength={12}
                         numberOfLines={1}
-
-                        testID="input_keyword"
-                        underlineColorAndroid='transparent'
-                        style={styles.inputSearch}
+                        underlineColorAndroid={'transparent'}
                         onChangeText={txt => {
-                            this.keyword = txt;
+                           this.setState({
+                               phone:txt
+                           })
                         }}/>
                 </View>
 
