@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
@@ -44,7 +44,7 @@ export default class CompletedBottom extends Component {
                 return this.paidOrder(orderItem);
 
             default:
-                return this.renderPay(orderItem);
+                return <UnpaidBottom/>;
         }
     };
 
@@ -77,39 +77,13 @@ export default class CompletedBottom extends Component {
     renderPay = (item) => {
         const {order_number} = item;
         return (
-            <View style={styles.bottomView}>
-                <TouchableOpacity
-                    style={styles.cancelView}
-                    onPress={() => {
-                        alertOrder("确认取消？", () => {
-                            cancelMallOrder({order_number: order_number}, ret => {
-                                if (this.props.refresh)
-                                    this.props.refresh();
-                            }, err => {
-                            })
-                        });
-                    }}
-                    >
-                    <Text style={styles.payment}>取消订单</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.payView}
-                                  onPress={() => {
-                                      this.wxPay(order_number);
-                                  }}>
-                    <View style={{alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>付款</Text>
-                    </View>
-
-                </TouchableOpacity>
-
-            </View>
+            <UnpaidBottom/>
         )
     };
 
     paidOrder = () => {
 
-        return <View style={styles.bottomView}>
+        return <View style={styles.UnpaidBottom}>
             <TouchableOpacity
                 onPress={() => {
                     call(DeShangPhone)
@@ -123,6 +97,40 @@ export default class CompletedBottom extends Component {
 
 }
 
+export class UnpaidBottom extends PureComponent{
+
+    render(){
+        return(
+            <View style={styles.UnpaidBottom}>
+                <TouchableOpacity
+                    style={styles.cancelView}
+                    onPress={() => {
+                        alertOrder("确认取消？", () => {
+                            cancelMallOrder({order_number: 12345364}, ret => {
+                                if (this.props.refresh)
+                                    this.props.refresh();
+                            }, err => {
+                            })
+                        });
+                    }}
+                >
+                    <Text style={styles.payment}>取消订单</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.payView}
+                                  onPress={() => {
+                                      this.wxPay(12345364);
+                                  }}>
+                    <View style={{alignItems: 'flex-end'}}>
+                        <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>付款</Text>
+                    </View>
+
+                </TouchableOpacity>
+
+            </View>
+        )
+    }
+}
 
 const styles = StyleSheet.create({
     page:{
@@ -150,7 +158,7 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderColor:'#888888'
     },
-    bottomView: {
+    UnpaidBottom: {
         marginRight:17,
         flexDirection: 'row',
         alignItems: 'center'
