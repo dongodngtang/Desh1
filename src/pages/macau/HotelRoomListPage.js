@@ -30,7 +30,7 @@ export default class HotelRoomListPage extends PureComponent {
     }
 
     rightIcon = () => {
-        const {begin_date,end_date} = this.state.last_change_time;
+        const {begin_date, end_date} = this.state.last_change_time;
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -62,29 +62,23 @@ export default class HotelRoomListPage extends PureComponent {
 
     render() {
         const {hotel, date} = this.props.params;
-        const {timeShow,last_change_time} = this.state;
+        const {timeShow, last_change_time, roomList} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
                 <SearchBar
                     showSpecInfo={this.showSpecInfo}
                     changeTime={last_change_time}
                     _click={hotel.title}/>
-                {/*<NavigationBar*/}
-                    {/*toolbarStyle={{backgroundColor: Colors._E54}}*/}
-                    {/*title={hotel.title}*/}
-                    {/*leftBtnIcon={Images.sign_return}*/}
-                    {/*leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}*/}
-                    {/*leftBtnPress={() => router.pop()}*/}
-                    {/*rightBtnIcon={this.rightIcon}/>*/}
 
-
-                <FlatList
+                {isEmptyObject(roomList) ? <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                    <Text style={{fontSize:18,color:"#888888"}}>该酒店暂无空余房间</Text>
+                </View> : <FlatList
                     ListHeaderComponent={this._separator}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={this._separator}
-                    data={this.state.roomList}
+                    data={roomList}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => index + "item"}
-                />
+                />}
                 {timeShow ? <TimeSpecificationInfo
                     showSpecInfo={this.showSpecInfo}
                     _change={this._change}/> : null}
