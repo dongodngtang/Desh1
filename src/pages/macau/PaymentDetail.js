@@ -44,7 +44,7 @@ export default class PaymentDetail extends PureComponent {
                     </View>
                     <ScrollView>
                         <FlatList
-                            style={{marginLeft: 30,marginRight: 22}}
+                            style={{marginLeft: 30,marginRight: 22,paddingBottom:80}}
                             showsHorizontalScrollIndicator={false}
                             data={order.room_items}
                             renderItem={this._renderItem}
