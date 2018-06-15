@@ -29,23 +29,6 @@ export default class HotelRoomListPage extends PureComponent {
         })
     }
 
-    rightIcon = () => {
-        const {begin_date, end_date} = this.state.last_change_time;
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    this.showSpecInfo();
-                }}
-                style={styles.btnCat}>
-                <View style={styles.timView}>
-                    <Text style={styles.txt}>住{convertDate(begin_date, 'M月DD日')}</Text>
-                    <Text style={styles.txt}>离{convertDate(end_date, 'M月DD日')}</Text>
-                </View>
-                <Image style={{width: 5, height: 5, marginLeft: 5}} source={Images.macau.down2}/>
-
-            </TouchableOpacity>
-        )
-    };
     showSpecInfo = () => {
         this.setState({
             timeShow: !this.state.timeShow
