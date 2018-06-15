@@ -48,14 +48,15 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
-    toOrderStatusPage(items,date,persons,phone) {
+    toOrderStatusPage(items,date,persons,phone,order_number) {
         this.stackPush({
             name: 'OrderStatusPage',
             params: {
                 items,
                 date,
                 persons,
-                phone
+                phone,
+                order_number
             }
         })
     }

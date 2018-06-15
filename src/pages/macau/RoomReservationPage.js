@@ -88,7 +88,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     submitBtn = (roomReservation) => {
-        const {detailsShow, room_num, total_price, persons, phone} = this.state;
+        const {detailsShow, room_num, total_price, persons, phone,order_number} = this.state;
         const {date} = this.props.params;
         const {order, room} = roomReservation;
 
@@ -102,11 +102,12 @@ export default class RoomReservationPage extends PureComponent {
                     order_number: data
                 });
                 addTimeRecode(data.order_number);
-                if (this.state.isInstall) {
-
-                } else {
-                    alertOrderChat(I18n.t('need_weChat'))
-                }
+                global.router.toOrderStatusPage(roomReservation,date,persons, phone,order_number)
+                // if (this.state.isInstall) {
+                //
+                // } else {
+                //     alertOrderChat(I18n.t('need_weChat'))
+                // }
             }, err => {
                 showToast(err)
             });
@@ -243,7 +244,7 @@ export default class RoomReservationPage extends PureComponent {
                                source={Images.macau.right}/>
                     </TouchableOpacity>
 
-                    <View style={{flexDirection: 'column', marginTop: 23, marginLeft: 15, marginRight: 15}}>
+                    <View style={{flexDirection: 'column', marginTop: 23, marginLeft: 15, marginRight: 15,marginBottom:50}}>
                         <Text style={styles.info}><Text style={styles.prompt}>扣款说明：</Text>{info}</Text>
 
                         <Text style={[styles.info, {marginTop: 5}]}><Text style={styles.prompt}>特别提示：：</Text>{prompt}

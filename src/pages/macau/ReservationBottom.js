@@ -20,7 +20,7 @@ export default class ReservationBottom extends PureComponent {
                 <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}
                 onPress={()=>{
                     this.props._detailsShow();
-                    this.props.refresh()
+                    // this.props.refresh()
                 }}>
                     <Text style={{color: "#AAAAAA",fontSize: 12}} >明细</Text>
                     <Image style={{width:10,height:5,marginLeft:6}} source={Images.macau.down}/>

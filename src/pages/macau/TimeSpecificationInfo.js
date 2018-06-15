@@ -177,6 +177,11 @@ export default class TimeSpecificationInfo extends PureComponent {
                         monthFormat={'yyyy MM'}
                         firstDay={1}
                         {...this.state.calendarProps}
+                        theme={{
+                            selectedDayTextColor: '#ffffff',
+                            selectedDayBackgroundColor: '#FA6E55',
+                            textDayHeaderColor: '#FA6E55',
+                        }}
                     />
                 </View>
             </Animatable.View>

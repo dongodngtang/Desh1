@@ -56,7 +56,7 @@ export default class OrderStatusPage extends PureComponent {
     }
 
     render() {
-        const {phone} = this.props.params;
+        const {phone,order_number} = this.props.params;
         const {order, room} = this.props.params.items;
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -81,7 +81,7 @@ export default class OrderStatusPage extends PureComponent {
                         date={this.props.params.date}/>
                     <View style={styles.orderInfo}>
                         <Text style={styles.infoTxt}>订单信息</Text>
-                        <Text style={[styles.infoTxt2, {marginTop: 25}]}>订单编号：</Text>
+                        <Text style={[styles.infoTxt2, {marginTop: 25}]}>订单编号：{order_number}</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：</Text>
                     </View>
@@ -94,7 +94,7 @@ export default class OrderStatusPage extends PureComponent {
                             <Text style={styles.room_num}>{order.room_num}</Text>
                         </View>
                         <View style={styles.personView}>
-                            <Text style={[styles.txt, {marginRight: 24}]}>入住人</Text>
+                            <Text style={[styles.txt]}>入住人</Text>
                             {this._person(this.props.params.persons)}
                         </View>
 
