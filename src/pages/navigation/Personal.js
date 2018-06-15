@@ -108,8 +108,8 @@ class Personal extends Component {
             {this._item(stylesP.item_view, Images.integral.hotel, stylesP.img_dy, '酒店订单', () => {
                 if (isEmptyObject(global.login_user))
                     global.router.toLoginFirstPage()
-                else
-                    global.router.toHotelOrderPage()
+                // else
+                //     global.router.toHotelOrderPage()
 
             })}
             <View style={{height: 1, marginLeft: 69}}/>
