@@ -488,7 +488,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flexDirection: 'row',
         paddingTop: 20,
-        paddingBottom: 20
+        paddingBottom: 20,
+        borderRadius:3
     },
     counts: {
         width: 22,

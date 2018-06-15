@@ -37,7 +37,7 @@ export default class ReservationBottom extends PureComponent {
                         // if(!checkPhone(phone)){
                         //     return;
                         // }
-                        // this.props.refresh();
+                        this.props.refresh();
 
 
                     }}>

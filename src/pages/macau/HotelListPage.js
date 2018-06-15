@@ -41,14 +41,15 @@ export default class HotelListPage extends PureComponent {
 
     render() {
 
-        const {timeShow} = this.state;
+        const {timeShow,changeTime} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
                 <SearchBar
                     onChangeText={keyword=>{
                         this.keyword = keyword;
                         this.listView && this.listView.refresh()
                     }}
-                    showSpecInfo={this.showSpecInfo}/>
+                    showSpecInfo={this.showSpecInfo}
+                    changeTime={changeTime}/>
                 {timeShow ? <TimeSpecificationInfo
                     showSpecInfo={this.showSpecInfo}
                     _change={this._change}/> : null}

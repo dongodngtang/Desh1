@@ -7,16 +7,12 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {Badge} from '../../components';
+import {convertDate} from '../../utils/ComonHelper'
 
 
 export default class SearchBar extends PureComponent {
     render() {
-        let item = {
-            name: '酒店',
-            type: 'hotel',
-            size: {height: 32, width: 35},
-            icon: Images.macau.hotel
-        };
+        const {begin_date,end_date} = this.props.changeTime
         return (<View style={styles.navBar}>
 
             <View style={styles.navContent}>
@@ -53,8 +49,8 @@ export default class SearchBar extends PureComponent {
                     }}
                     style={styles.btnCat}>
                     <View style={styles.timView}>
-                        <Text style={styles.txt}>住07-23</Text>
-                        <Text style={styles.txt}>离07-26</Text>
+                        <Text style={styles.txt}>住{convertDate(begin_date,'M月DD日')}</Text>
+                        <Text style={styles.txt}>离{convertDate(end_date,'M月DD日')}</Text>
                     </View>
                     <Image style={{width: 5, height: 5, marginLeft: 5}} source={Images.macau.down2}/>
 
