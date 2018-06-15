@@ -179,6 +179,7 @@ export default class TimeSpecificationInfo extends PureComponent {
                             selectedDayTextColor: '#ffffff',
                             selectedDayBackgroundColor: '#FA6E55',
                             textDayHeaderColor: '#FA6E55',
+                            todayTextColor:'black'
                         }}
                     />
 
