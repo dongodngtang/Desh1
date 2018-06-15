@@ -109,10 +109,8 @@ export class RefundStatus {
 export class HotelStatus {
     static unpaid = 'unpaid';
     static paid = 'paid';
-    static delivered = 'delivered';
     static completed = 'completed';
     static canceled = 'canceled';
-    static undelivered = 'undelivered';
 }
 
 

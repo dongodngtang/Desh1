@@ -12,7 +12,7 @@ import {
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
-import {postRoomReservation, postHotelOrder} from "../../services/MacauDao";
+import {postRoomReservation, postHotelOrder,postWxPay,getHotelWxPaidResult} from "../../services/MacauDao";
 import I18n from "react-native-i18n";
 import {addTimeRecode} from "../../components/PayCountDown";
 
@@ -89,24 +89,39 @@ export default class RoomReservationPage extends PureComponent {
     submitBtn = (roomReservation) => {
         const {detailsShow, room_num, total_price, persons, phone,order_number} = this.state;
         const {date} = this.props.params;
-        const {order, room} = roomReservation;
 
-        if (!util.isEmpty(this.state.order_number))
+        if (!util.isEmpty(order_number))
             return;
         if (true) {
             let body = this.postParam();
             postHotelOrder(body, data => {
                 console.log("hotel_order_number", data)
                 this.setState({
-                    order_number: data
+                    order_number: data.order_number
                 });
                 addTimeRecode(data.order_number);
-                global.router.toOrderStatusPage(roomReservation,date,persons, phone,order_number)
-                // if (this.state.isInstall) {
-                //
-                // } else {
-                //     alertOrderChat(I18n.t('need_weChat'))
-                // }
+
+                if (this.state.isInstall) {
+                    postWxPay(data, ret => {
+                        payWx(ret, () => {
+                            getHotelWxPaidResult(data, result => {
+
+                                global.router.toOrderStatusPage(date,data.order_number)
+                            }, err => {
+                                showToast('支付成功，系统正在处理')
+                            }, () => {
+                            })
+
+                        }, () => {
+                            global.router.toOrderStatusPage(date,data.order_number)
+                        })
+                    }, err => {
+
+                    });
+
+                } else {
+                    alertOrderChat(I18n.t('need_weChat'))
+                }
             }, err => {
                 showToast(err)
             });

@@ -54,14 +54,11 @@ export default class Router {
         })
     }
 
-    toOrderStatusPage(items,date,persons,phone,order_number) {
+    toOrderStatusPage(date,order_number) {
         this.stackPush({
             name: 'OrderStatusPage',
             params: {
-                items,
                 date,
-                persons,
-                phone,
                 order_number
             }
         })

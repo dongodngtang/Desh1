@@ -172,7 +172,10 @@ const api = {
     integral_award: integral_award,//用户积分领取
     room_list: room_list,//获取酒店房间列表
     room_reservation: 'hotel_orders/new',//获取酒店下单界面所需的数据
-    hotel_order:'hotel_orders',//创建酒店订单
+    hotel_order: 'hotel_orders',//创建酒店订单
+    hotel_order_info: hotel_order_info,//获取酒店订单详情
+    hotel_wxPay:hotel_wxPay,//微信支付 - 酒店订单
+    hotel_wx_paid_result:hotel_wx_paid_result,//获取酒店订单的微信支付结果
 
 }
 
@@ -187,9 +190,26 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function hotel_wx_paid_result(body) {
+    const {order_number} = body;
+    return `hotel_orders/${order_number}/wx_paid_result`
+}
+
+
+export function hotel_wxPay(body) {
+    const {order_number} = body;
+    return `hotel_orders/${order_number}/wx_pay`;
+}
+
 function room_list(body) {
     const {begin_date, id} = body;
     return `hotels/${id}/rooms?date=${begin_date}`
+}
+
+function hotel_order_info(body) {
+    const {order_number} = body;
+    return `hotel_orders/${order_number}`
 }
 
 function integral_award() {

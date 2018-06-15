@@ -16,9 +16,12 @@ export default class PaymentDetail extends PureComponent {
 
     }
 
-    _renderItem = ({item, index}) => {
+    _renderItem = ({item, index}, room_num) => {
         return (
-            <RenderItem key={index} item={item}/>
+            <RenderItem
+                room_num={room_num}
+                key={index}
+                item={item}/>
         )
     }
 
@@ -29,13 +32,13 @@ export default class PaymentDetail extends PureComponent {
                 duration={300}
                 style={styles.page}>
                 <TouchableOpacity
-                    style={{marginBottom:150,height:200, width: '100%'}}
+                    style={{marginBottom: 150, height: 200, width: '100%'}}
                     onPress={() => {
                         this.props._detailsShow()
                     }}>
 
                 </TouchableOpacity>
-                <View style={{flex:1}}/>
+                <View style={{flex: 1}}/>
                 <View style={styles.View}>
                     <View style={styles.payment}>
                         <Text style={{color: '#444444', fontSize: 16, fontWeight: 'bold'}}>在线支付</Text>
@@ -44,10 +47,10 @@ export default class PaymentDetail extends PureComponent {
                     </View>
                     <ScrollView>
                         <FlatList
-                            style={{marginLeft: 30,marginRight: 22,paddingBottom:80}}
+                            style={{marginLeft: 30, marginRight: 22, paddingBottom: 80}}
                             showsHorizontalScrollIndicator={false}
                             data={order.room_items}
-                            renderItem={this._renderItem}
+                            renderItem={(item) => this._renderItem(item, order.room_num)}
                             keyExtractor={(item, index) => index + "item"}
                         />
                     </ScrollView>
@@ -58,13 +61,14 @@ export default class PaymentDetail extends PureComponent {
 
 }
 
-export class RenderItem extends PureComponent{
-    render(){
-        const{date,price} = this.props.item;
-        return(
+export class RenderItem extends PureComponent {
+    render() {
+        const {date, price} = this.props.item;
+        return (
             <View style={styles.item}>
-                <Text style={[styles.itemTxt,{marginRight: 10}]} numberOfLines={1}>{`${date}（2间)`}</Text>
-                <View style={{marginLeft:10,marginRight:10,flex:1,backgroundColor: '#F3F3F3', height: 1}}/>
+                <Text style={[styles.itemTxt, {marginRight: 10}]}
+                      numberOfLines={1}>{`${date}（${this.props.room_num}间)`}</Text>
+                <View style={{marginLeft: 10, marginRight: 10, flex: 1, backgroundColor: '#F3F3F3', height: 1}}/>
                 <Text style={styles.itemTxt}>¥{price}</Text>
             </View>
         )
@@ -89,7 +93,7 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         flexDirection: 'column',
-        marginBottom:0
+        marginBottom: 0
     },
     payment: {
         marginLeft: 30,
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
 
     },
     item: {
-        width:'100%',
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 8

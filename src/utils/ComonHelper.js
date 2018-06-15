@@ -1120,6 +1120,17 @@ export function singleOrdouble(num) {
         return false;
 }
 
+export function checkMobile (mobileStr) {
+    if (!mobileStr) return false
+    let re = /^((13[0-9])|(14[0-9])|(15[^4])|(16[0-9])|(17[0-9])|(18[0-9]))\d{8}$/
+    if (re.test(mobileStr)) {
+        return true
+    } else {
+        showToast('手机号格式不对')
+        return false
+    }
+}
+
 
 
 

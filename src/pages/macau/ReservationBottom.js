@@ -5,7 +5,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
-import {isEmptyObject, showToast, checkPhone, isWXAppInstalled, payWx, alertOrder, call} from "../../utils/ComonHelper";
+import {isEmptyObject, showToast, checkMobile, isWXAppInstalled, payWx, alertOrder, call} from "../../utils/ComonHelper";
 
 export default class ReservationBottom extends PureComponent {
 
@@ -33,9 +33,9 @@ export default class ReservationBottom extends PureComponent {
                                 return;
                             }
                         }
-                        // if(!checkPhone(phone)){
-                        //     return;
-                        // }
+                        if(!checkMobile(phone)){
+                            return;
+                        }
                         this.props.refresh();
 
 

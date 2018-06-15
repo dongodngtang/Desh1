@@ -2,6 +2,26 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+//微信支付结果
+export function getHotelWxPaidResult(body, resolve, reject) {
+    helper.get(Api.hotel_wx_paid_result(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
+//微信支付
+export function postWxPay(body, resolve, reject) {
+    helper.post(Api.hotel_wxPay(body), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getHotelOrderInfo(body, resolve, reject) {
+    helper.get(Api.hotel_order_info(body), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function postHotelOrder(body, resolve, reject) {
     helper.post(Api.hotel_order, body, ret => {
         resolve(ret.data)

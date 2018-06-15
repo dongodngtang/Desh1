@@ -100,13 +100,14 @@ export default class CompletedBottom extends Component {
 export class UnpaidBottom extends PureComponent{
 
     render(){
+        const {order_number} = this.props;
         return(
             <View style={styles.UnpaidBottom}>
                 <TouchableOpacity
                     style={styles.cancelView}
                     onPress={() => {
                         alertOrder("确认取消？", () => {
-                            cancelMallOrder({order_number: 12345364}, ret => {
+                            cancelMallOrder({order_number: order_number}, ret => {
                                 if (this.props.refresh)
                                     this.props.refresh();
                             }, err => {
@@ -119,7 +120,7 @@ export class UnpaidBottom extends PureComponent{
 
                 <TouchableOpacity style={styles.payView}
                                   onPress={() => {
-                                      this.wxPay(12345364);
+                                      this.wxPay(order_number);
                                   }}>
                     <View style={{alignItems: 'flex-end'}}>
                         <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>付款</Text>

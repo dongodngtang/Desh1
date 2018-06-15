@@ -5,17 +5,34 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {NavigationBar} from '../../../components';
 import ImageLoad from "../../../components/ImageLoad";
-import {isEmptyObject, showToast} from "../../../utils/ComonHelper";
+import {isEmptyObject, isWXAppInstalled, showToast, strNotNull, utcDate} from "../../../utils/ComonHelper";
 import {ImageMessage, Message} from '../HotelRoomListPage';
 import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
 import {UnpaidBottom} from "./CompletedBottom";
 import {HotelStatus} from "../../../configs/Status";
+import {getHotelOrderInfo} from "../../../services/MacauDao";
 
 const intro = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 
 export default class OrderStatusPage extends PureComponent {
-    state = {};
+    state = {
+        orderInfo: []
+    };
+
+    componentDidMount() {
+        getHotelOrderInfo({
+            order_number: this.props.params.order_number
+        }, data => {
+            console.log("orderInfo:", data)
+            this.setState({
+                orderInfo: data
+            })
+
+        }, err => {
+
+        })
+    };
 
     _intro = () => {
         return (
@@ -51,9 +68,12 @@ export default class OrderStatusPage extends PureComponent {
             </View>
         )
     };
-    _renderItem = ({item, index}) => {
+    _renderItem = ({item, index},room_num) => {
         return (
-            <RenderItem key={index} item={{item}}/>
+            <RenderItem
+                room_num={room_num}
+                key={index}
+                item={item}/>
         )
     };
 
@@ -66,16 +86,17 @@ export default class OrderStatusPage extends PureComponent {
         )
     }
 
-    statusBottom = () => {
-        let status = HotelStatus.paid;
+    statusBottom = (order) => {
+        const {status, total_price,order_number} = order;
         switch (status) {
             case HotelStatus.unpaid:
                 return (
                     <View style={styles.bottomsView}>
                         <Text style={{color: "#333333", marginLeft: 14, fontSize: 14}}>合计：<Text
-                            style={{color: "#E54A2E", fontSize: 18}}>1184.4</Text></Text>
+                            style={{color: "#E54A2E", fontSize: 18}}>¥{total_price}</Text></Text>
                         <View style={{flex: 1}}/>
-                        <UnpaidBottom/>
+                        <UnpaidBottom
+                            order_number={order_number}/>
                     </View>
                 );
             case HotelStatus.paid:
@@ -87,8 +108,12 @@ export default class OrderStatusPage extends PureComponent {
     }
 
     render() {
-        const {phone, order_number} = this.props.params;
-        const {order, room} = this.props.params.items;
+        const {orderInfo} = this.state;
+        if(isEmptyObject(orderInfo)){
+            return <View/>
+        }
+        const {room, order, checkin_infos} = this.state.orderInfo;
+        const {order_number, created_at, room_num, status, telephone, total_price, room_items} = order;
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -113,8 +138,8 @@ export default class OrderStatusPage extends PureComponent {
                     <View style={styles.orderInfo}>
                         <Text style={styles.infoTxt}>订单信息</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 25}]}>订单编号：{order_number}</Text>
-                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：</Text>
-                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：</Text>
+                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY.MM.DD')}</Text>
+                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：{status}</Text>
                     </View>
 
                     <View style={styles.reservationInfo}>
@@ -122,16 +147,16 @@ export default class OrderStatusPage extends PureComponent {
                         <View style={{width: '100%', height: 1, backgroundColor: '#F3F3F3'}}/>
                         <View style={styles.txtView}>
                             <Text style={styles.txt}>房间数</Text>
-                            <Text style={styles.room_num}>{order.room_num}</Text>
+                            <Text style={styles.room_num}>{room_num}</Text>
                         </View>
                         <View style={styles.personView}>
                             <Text style={[styles.txt]}>入住人</Text>
-                            {this._person(this.props.params.persons)}
+                            {this._person(checkin_infos)}
                         </View>
 
                         <View style={styles.txtView}>
                             <Text style={styles.txt}>手机号</Text>
-                            <Text style={styles.room_num}>{phone}</Text>
+                            <Text style={styles.room_num}>{telephone}</Text>
                         </View>
                     </View>
 
@@ -148,8 +173,8 @@ export default class OrderStatusPage extends PureComponent {
                         <FlatList
                             style={{marginLeft: 30, marginRight: 22, marginTop: 26}}
                             showsHorizontalScrollIndicator={false}
-                            data={order.items}
-                            renderItem={this._renderItem}
+                            data={room_items}
+                            renderItem={(item)=>this._renderItem(item,room_num)}
                             keyExtractor={(item, index) => index + "item"}
                         />
                         <View style={{
@@ -161,13 +186,13 @@ export default class OrderStatusPage extends PureComponent {
                         }}>
                             <Text style={styles.infoTxt}>应付金额</Text>
                             <View style={{flex: 1}}/>
-                            <Text style={{color: "#E54A2E", fontSize: 14}}>¥12433</Text>
+                            <Text style={{color: "#E54A2E", fontSize: 14}}>¥{total_price}</Text>
                         </View>
                     </View>
                     {this._intro()}
 
                 </ScrollView>
-                {this.statusBottom()}
+                {this.statusBottom(order)}
             </View>
         )
     }
