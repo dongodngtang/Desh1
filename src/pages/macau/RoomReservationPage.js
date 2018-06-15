@@ -18,7 +18,7 @@ import {addTimeRecode} from "../../components/PayCountDown";
 import {getWxPaidResult, postWxPay} from "../../services/MallDao";
 
 const info = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
-const prompt = "2018-06-12至2018-06-12订单一经确认，不可更改或添入住人姓名。 未满18岁的小孩需有成人陪同才可入住。"
+const prompt = "订单一经确认，不可更改或添入住人姓名。 未满18岁的小孩需有成人陪同才可入住。"
 
 export default class RoomReservationPage extends PureComponent {
     state = {
