@@ -176,11 +176,11 @@ export default class OrderStatusPage extends PureComponent {
 
 const styles = StyleSheet.create({
     btn_book: {
-        marginTop:33,
+        marginTop: 33,
         marginLeft: 14,
         marginRight: 14,
-        marginBottom:100,
-        width:'90%',
+        marginBottom: 100,
+        width: '90%',
         paddingTop: 12,
         paddingBottom: 12,
         alignItems: 'center',
@@ -276,6 +276,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 20,
         paddingBottom: 20,
-        borderRadius:3
+        borderRadius: 3
     },
 })

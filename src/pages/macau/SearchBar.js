@@ -31,7 +31,7 @@ export default class SearchBar extends PureComponent {
                 <View
                     style={styles.search}>
                     <Image style={styles.searchImg}
-                           source={Images.search_gray}/>
+                           source={Images.search}/>
 
                     <TextInput
                         onChangeText={text => {
