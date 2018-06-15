@@ -169,19 +169,19 @@ export default class TimeSpecificationInfo extends PureComponent {
 
                 </TouchableOpacity>
                 <View style={styles.View}>
-                    <Calendar
-                        displayLoadingIndicator
+                    <CalendarList
                         minDate={this.minDate}
                         onDayPress={this.nDayPress}
-                        monthFormat={'yyyy MM'}
                         firstDay={1}
                         {...this.state.calendarProps}
+                        monthFormat={'yyyy年MM月'}
                         theme={{
                             selectedDayTextColor: '#ffffff',
                             selectedDayBackgroundColor: '#FA6E55',
                             textDayHeaderColor: '#FA6E55',
                         }}
                     />
+
                 </View>
             </Animatable.View>
         );
