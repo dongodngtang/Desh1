@@ -85,7 +85,7 @@ export default class OrderStatusPage extends PureComponent {
         return (
             <TouchableOpacity
                 style={[styles.btn_book, {backgroundColor: Colors._E54}]}>
-                <Text style={[styles.btn_book_txt, {color: "#444444"}]}>删除订单</Text>
+                <Text style={[styles.btn_book_txt, {color: "#FFFFFF"}]}>联系客服</Text>
             </TouchableOpacity>
         )
     }
