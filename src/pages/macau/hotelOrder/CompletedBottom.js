@@ -4,10 +4,9 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
 import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm, deleteMall} from "../../../services/MallDao";
-import {MallStatus} from "../../../configs/Status";
+import {HotelStatus} from "../../../configs/Status";
 import {util, payWx, isWXAppInstalled, call, alertOrder, showToast} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
-import {Button} from '../../../components'
 
 
 export default class CompletedBottom extends Component {
@@ -27,23 +26,25 @@ export default class CompletedBottom extends Component {
 
     render() {
         const {orderItem} = this.props;
-        return this.switchOrder(orderItem);
+        return (
+            <View style={styles.page}>
+                <Text style={{color:"#333333",marginLeft:14,fontSize:14}}>合计：<Text style={{color:"#E54A2E",fontSize:18}}>1184.4</Text></Text>
+                <View style={{flex:1}}/>
+                {this.switchOrder(orderItem)}
+            </View>
+        )
     }
 
     switchOrder = (orderItem) => {
         const {status} = orderItem;
         switch (status) {
-            case MallStatus.unpaid:
+            case HotelStatus.unpaid:
                 return this.renderPay(orderItem);
-            case MallStatus.paid:
+            case HotelStatus.paid:
                 return this.paidOrder(orderItem);
-            case MallStatus.completed:
-                return this.completedOrder(orderItem);
-            case MallStatus.delivered:
-                return this.deliveredOrder(orderItem);
 
             default:
-                return <View/>;
+                return this.renderPay(orderItem);
         }
     };
 
@@ -75,23 +76,11 @@ export default class CompletedBottom extends Component {
 
     renderPay = (item) => {
         const {order_number} = item;
-        return (//${I18n.t('pay')}
-            <View style={styleO.bottomView}>
-                <TouchableOpacity style={styleO.payView}
-                                  onPress={() => {
-                                      this.wxPay(order_number);
-                                  }}>
-                    <View style={{alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>{I18n.t('pay')}</Text>
-                    </View>
-
-                </TouchableOpacity>
-
-
-                <View style={{height: 24, width: 1, backgroundColor: Colors._ECE}}/>
-
-                <Text
-                    onPress={() => {//`${I18n.t('confirm_cancel')}`
+        return (
+            <View style={styles.bottomView}>
+                <TouchableOpacity
+                    style={styles.cancelView}
+                    onPress={() => {
                         alertOrder("确认取消？", () => {
                             cancelMallOrder({order_number: order_number}, ret => {
                                 if (this.props.refresh)
@@ -100,119 +89,71 @@ export default class CompletedBottom extends Component {
                             })
                         });
                     }}
-                    style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
+                    >
+                    <Text style={styles.payment}>取消订单</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.payView}
+                                  onPress={() => {
+                                      this.wxPay(order_number);
+                                  }}>
+                    <View style={{alignItems: 'flex-end'}}>
+                        <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>付款</Text>
+                    </View>
+
+                </TouchableOpacity>
+
             </View>
         )
     };
 
-    paidOrder = (orderItem) => {
+    paidOrder = () => {
 
-        return <View style={styleO.bottomView}>
+        return <View style={styles.bottomView}>
             <TouchableOpacity
                 onPress={() => {
                     call(DeShangPhone)
                 }}
-                style={styleO.returnedBottom}>
-                <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-
-                onPress={() => {
-                    global.router.toMallSelectPage(orderItem, this.props.refresh)
-                }}
-                style={styleO.returnedBottom}>
-                <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
+                style={styles.returnedBottom}>
+                <Text style={styles.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
             </TouchableOpacity>
 
         </View>
     };
 
-
-
-    completedOrder = (orderItem) => {
-        const {order_number} = orderItem;
-        return (
-            <View style={styleO.bottomView}>
-
-                <TouchableOpacity
-                    onPress={() => {
-                        global.router.toLogisticsPage(orderItem)
-                    }}
-                    style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
-                </TouchableOpacity>
-
-                {/*<TouchableOpacity*/}
-                    {/*onPress={() => {*/}
-                        {/*alertOrder("确认删除?", () => {*/}
-                            {/*deleteMall({order_number: order_number}, ret => {*/}
-                                {/*if (this.props.pageOrderInfo) {*/}
-                                    {/*global.router.pop();*/}
-
-                                {/*} else if (this.props.refresh){*/}
-                                    {/*this.props.refresh();*/}
-                                {/*}*/}
-                            {/*}, err => {*/}
-                            {/*})*/}
-                        {/*})*/}
-
-                    {/*}}*/}
-                    {/*style={styleO.customer}>*/}
-                    {/*<Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>*/}
-                {/*</TouchableOpacity>*/}
-
-            </View>)
-    };
-
-
-    deliveredOrder = (orderItem) => {
-        const {shipments, order_number} = orderItem;
-        return (
-            <View style={styleO.bottomView}>
-                <TouchableOpacity
-                    onPress={() => {
-                        alertOrder("确认收货？", () => {
-                            postOrderConfirm({order_number: order_number}, data => {
-                                if (this.props.refresh)
-                                    this.props.refresh();
-                            })
-                        });
-                    }}
-                    style={styleO.returnedBottom2}>
-                    <Text style={styleO.orderSubmitTxt1}>确认收货</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        global.router.toLogisticsPage(orderItem)
-                    }}
-                    style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>物流信息</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-
-                    onPress={() => {
-                        global.router.toMallSelectPage(orderItem)
-                    }}
-                    style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>退货／退款</Text>
-                </TouchableOpacity>
-
-            </View>
-        )
-    };
 }
 
 
-const styleO = StyleSheet.create({
-    bottomView: {
-        height: 50,
-        backgroundColor: "#FFFFFF",
-        marginTop: 0.5,
-        flexDirection: 'row-reverse',
+const styles = StyleSheet.create({
+    page:{
+        flexDirection:'row',backgroundColor:'white',paddingTop:7,paddingBottom:7,alignItems:'center',
+        borderTopWidth:1,
+        borderTopColor:'#F3F3F3'
+    },
+    payView: {
+        height: 36,
+        width: 103,
+        borderRadius: 4,
+        backgroundColor: '#F34A4A',
+        marginLeft: 8,
+        flexDirection: 'row',
         alignItems: 'center',
-        width: '100%',
-        borderWidth: 0.5,
-        borderColor: '#EEEEEE'
+        justifyContent: 'center'
+    },
+    cancelView:{
+        width:103,
+        height:36,
+        backgroundColor:'white',
+        alignItems:'center',
+        justifyContent:'center',
+        borderRadius:4,
+        borderWidth:1,
+        borderColor:'#888888'
+    },
+    bottomView: {
+        marginRight:17,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     returnedBottom: {
         borderWidth: 1,
@@ -244,46 +185,9 @@ const styleO = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    returnedMall: {
-        borderWidth: 1,
-        borderColor: '#333333',
-        borderRadius: 4,
-        width: 90,
-        height: 37,
-        marginRight: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    orderSubmitTxt: {
-        fontSize: 14,
-        color: '#333333'
-    },
-    orderSubmitTxt1: {
-        fontSize: 14,
-        color: '#F34A4A'
-    },
+
     payment: {
         fontSize: 14,
-        color: '#333333',
-        marginLeft: 17
-    },
-    paymentPrice: {
-        fontSize: 18,
-        color: '#F34A4A'
-    },
-    payView: {
-        height: 37,
-        width: 120,
-        borderRadius: 4,
-        backgroundColor: '#F34A4A',
-        marginRight: 17, marginLeft: 14,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    payCount: {
-        height: 37,
-        backgroundColor: '#F34A4A',
-        alignItems: 'flex-start'
+        color: '#333333'
     }
 })

@@ -105,3 +105,14 @@ export class RefundStatus {
     static completed = 'completed';
 }
 
+//酒店订单状态
+export class HotelStatus {
+    static unpaid = 'unpaid';
+    static paid = 'paid';
+    static delivered = 'delivered';
+    static completed = 'completed';
+    static canceled = 'canceled';
+    static undelivered = 'undelivered';
+}
+
+

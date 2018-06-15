@@ -12,6 +12,7 @@ import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
+import HotelOrderPage from "../macau/hotelOrder/HotelOrderPage";
 
 
 class Personal extends Component {
@@ -107,8 +108,8 @@ class Personal extends Component {
             {this._item(stylesP.item_view, Images.integral.hotel, stylesP.img_dy, '酒店订单', () => {
                 if (isEmptyObject(global.login_user))
                     global.router.toLoginFirstPage()
-                // else
-                    // global.router.toIntegralPage()
+                else
+                    global.router.toHotelOrderPage()
 
             })}
             <View style={{height: 1, marginLeft: 69}}/>
