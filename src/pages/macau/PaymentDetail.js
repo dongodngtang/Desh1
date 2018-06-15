@@ -18,7 +18,7 @@ export default class PaymentDetail extends PureComponent {
 
     _renderItem = ({item, index}) => {
         return (
-            <RenderItem key={index} item={{item}}/>
+            <RenderItem key={index} item={item}/>
         )
     }
 
@@ -27,7 +27,6 @@ export default class PaymentDetail extends PureComponent {
         return (
             <Animatable.View
                 duration={300}
-                animation={'fadeInUp'}
                 style={styles.page}>
                 <TouchableOpacity
                     style={{marginBottom:150,height:200, width: '100%'}}
@@ -47,7 +46,7 @@ export default class PaymentDetail extends PureComponent {
                         <FlatList
                             style={{marginLeft: 30,marginRight: 22}}
                             showsHorizontalScrollIndicator={false}
-                            data={order.items}
+                            data={order.room_items}
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => index + "item"}
                         />

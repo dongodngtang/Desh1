@@ -152,7 +152,6 @@ export default class TimeSpecificationInfo extends PureComponent {
         return (
             <Animatable.View
                 duration={300}
-                animation={'fadeInUp'}
                 style={styles.page}>
                 <TouchableOpacity
                     style={{height: 146, width: '100%'}}
