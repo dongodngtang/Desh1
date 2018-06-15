@@ -4,15 +4,17 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
-import {isEmptyObject} from "../../utils/ComonHelper";
+import {convertDate, isEmptyObject} from "../../utils/ComonHelper";
 import {getRoomList} from "../../services/MacauDao";
-import ImageViewer from 'react-native-image-zoom-viewer';
+import TimeSpecificationInfo from './TimeSpecificationInfo';
+import SearchBar from './SearchBar';
 
 export default class HotelRoomListPage extends PureComponent {
 
     state = {
         timeShow: false,
-        roomList: []
+        roomList: [],
+        last_change_time: this.props.params.date
     };
 
     componentDidMount() {
@@ -27,17 +29,52 @@ export default class HotelRoomListPage extends PureComponent {
         })
     }
 
+    rightIcon = () => {
+        const {begin_date,end_date} = this.state.last_change_time;
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    this.showSpecInfo();
+                }}
+                style={styles.btnCat}>
+                <View style={styles.timView}>
+                    <Text style={styles.txt}>住{convertDate(begin_date, 'M月DD日')}</Text>
+                    <Text style={styles.txt}>离{convertDate(end_date, 'M月DD日')}</Text>
+                </View>
+                <Image style={{width: 5, height: 5, marginLeft: 5}} source={Images.macau.down2}/>
+
+            </TouchableOpacity>
+        )
+    };
+    showSpecInfo = () => {
+        this.setState({
+            timeShow: !this.state.timeShow
+        })
+    };
+
+    _change = (date) => {
+        this.setState({
+            last_change_time: date
+        });
+
+        console.log("最后选择的时间：", this.state.last_change_time)
+    };
 
     render() {
         const {hotel, date} = this.props.params;
-
+        const {timeShow,last_change_time} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
-                <NavigationBar
-                    toolbarStyle={{backgroundColor: Colors._E54}}
-                    title={hotel.title}
-                    leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
+                <SearchBar
+                    showSpecInfo={this.showSpecInfo}
+                    changeTime={last_change_time}
+                    _click={hotel.title}/>
+                {/*<NavigationBar*/}
+                    {/*toolbarStyle={{backgroundColor: Colors._E54}}*/}
+                    {/*title={hotel.title}*/}
+                    {/*leftBtnIcon={Images.sign_return}*/}
+                    {/*leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}*/}
+                    {/*leftBtnPress={() => router.pop()}*/}
+                    {/*rightBtnIcon={this.rightIcon}/>*/}
 
 
                 <FlatList
@@ -48,6 +85,9 @@ export default class HotelRoomListPage extends PureComponent {
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => index + "item"}
                 />
+                {timeShow ? <TimeSpecificationInfo
+                    showSpecInfo={this.showSpecInfo}
+                    _change={this._change}/> : null}
             </View>
         )
     }
@@ -64,7 +104,7 @@ export default class HotelRoomListPage extends PureComponent {
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{price}</Text>
                     <TouchableOpacity style={styles.reservation}
                                       onPress={() => {
-                                          router.toRoomReservationPage(item, this.props.params.date)
+                                          router.toRoomReservationPage(item, this.state.last_change_time)
                                       }}>
                         <Text style={{color: "#FFFFFF", fontSize: 14}}>预定</Text>
                     </TouchableOpacity>

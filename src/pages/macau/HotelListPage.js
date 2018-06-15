@@ -28,28 +28,28 @@ export default class HotelListPage extends PureComponent {
     };
 
 
-
     _change = (date) => {
-        console.log("changeTime:",date)
+        console.log("changeTime:", date)
         this.setState({
             changeTime: date
         });
 
-        console.log("最后选择的时间：", this.state.changeTime)
+        console.log("第二次选择的时间：", this.state.changeTime)
     };
 
 
     render() {
 
-        const {timeShow,changeTime} = this.state;
+        const {timeShow, changeTime} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
                 <SearchBar
-                    onChangeText={keyword=>{
+                    onChangeText={keyword => {
                         this.keyword = keyword;
                         this.listView && this.listView.refresh()
                     }}
                     showSpecInfo={this.showSpecInfo}
-                    changeTime={changeTime}/>
+                    changeTime={changeTime}
+                    _click={'HotelListPage'}/>
                 {timeShow ? <TimeSpecificationInfo
                     showSpecInfo={this.showSpecInfo}
                     _change={this._change}/> : null}
@@ -139,8 +139,8 @@ export default class HotelListPage extends PureComponent {
                         {item.recommend ? this._recommend() : <View/>}
                         <View style={{flex: 1}}/>
                         {/*<Text style={styles.price}><Text*/}
-                            {/*style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{price}<Text*/}
-                            {/*style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text>*/}
+                        {/*style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{price}<Text*/}
+                        {/*style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text>*/}
                     </View>
                 </View>
             </TouchableOpacity>
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         marginLeft: 12,
-        marginTop:7,
+        marginTop: 7,
         marginRight: 22
     },
     name: {

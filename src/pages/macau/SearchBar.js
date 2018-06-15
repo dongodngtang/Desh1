@@ -12,7 +12,7 @@ import {convertDate} from '../../utils/ComonHelper'
 
 export default class SearchBar extends PureComponent {
     render() {
-        const {begin_date,end_date} = this.props.changeTime
+        const {begin_date, end_date} = this.props.changeTime
         return (<View style={styles.navBar}>
 
             <View style={styles.navContent}>
@@ -27,8 +27,8 @@ export default class SearchBar extends PureComponent {
                     <Image style={{height: 19, width: 10}}
                            source={Images.sign_return}/>
                 </TouchableOpacity>
-
-                <View
+                <View style={{flex: 1}}/>
+                {this.props._click === 'HotelListPage' ? <View
                     style={styles.search}>
                     <Image style={styles.searchImg}
                            source={Images.search}/>
@@ -41,7 +41,11 @@ export default class SearchBar extends PureComponent {
                         placeholder={'地名／酒店'}
                         underlineColorAndroid={'transparent'}
                         style={{height: 40, fontSize: 14, color: 'white', flex: 1}}/>
-                </View>
+                </View> : <View style={{width:248,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                    <Text style={{color: "#FFFFFF", fontSize: 18}}>
+                        {this.props._click}
+                    </Text>
+                </View>}
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
@@ -49,8 +53,8 @@ export default class SearchBar extends PureComponent {
                     }}
                     style={styles.btnCat}>
                     <View style={styles.timView}>
-                        <Text style={styles.txt}>住{convertDate(begin_date,'M月DD日')}</Text>
-                        <Text style={styles.txt}>离{convertDate(end_date,'M月DD日')}</Text>
+                        <Text style={styles.txt}>住{convertDate(begin_date, 'M月DD日')}</Text>
+                        <Text style={styles.txt}>离{convertDate(end_date, 'M月DD日')}</Text>
                     </View>
                     <Image style={{width: 5, height: 5, marginLeft: 5}} source={Images.macau.down2}/>
 
