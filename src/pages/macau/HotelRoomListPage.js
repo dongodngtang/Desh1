@@ -1,11 +1,12 @@
 import React, {PureComponent} from 'react';
 import {
-    StyleSheet, Text, View, FlatList, Image, TouchableOpacity, ImageBackground
+    StyleSheet, Text, View, FlatList, Image, TouchableOpacity, ImageBackground, Modal
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {isEmptyObject} from "../../utils/ComonHelper";
 import {getRoomList} from "../../services/MacauDao";
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 export default class HotelRoomListPage extends PureComponent {
 
@@ -63,7 +64,7 @@ export default class HotelRoomListPage extends PureComponent {
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{price}</Text>
                     <TouchableOpacity style={styles.reservation}
                                       onPress={() => {
-                                          router.toRoomReservationPage(item,this.props.params.date)
+                                          router.toRoomReservationPage(item, this.props.params.date)
                                       }}>
                         <Text style={{color: "#FFFFFF", fontSize: 14}}>预定</Text>
                     </TouchableOpacity>
@@ -80,18 +81,41 @@ export default class HotelRoomListPage extends PureComponent {
 
 
 }
-export class ImageMessage extends PureComponent{
-    render(){
+
+export class ImageMessage extends PureComponent {
+
+    previewImage = (images) => {
+        let gallery = images.map(item => {
+            return {url: item.replace('!sm', '')}
+        })
+        global.router.toImageGalleryPage(gallery, 0)
+    };
+
+    render() {
         const {images} = this.props;
-        return(
-            <ImageBackground
-                emptyBg={Images.crowd_banner}
-                style={{width: 68, height: 68, marginLeft: 12, justifyContent: 'flex-end', alignItems: 'flex-end'}}
-                source={{uri: images[0]}}>
-                <View style={styles.counts}>
-                    <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
-                </View>
-            </ImageBackground>
+
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    this.previewImage(images)
+                }}
+            >
+                <ImageBackground
+                    emptyBg={Images.crowd_banner}
+                    style={{
+                        width: 68,
+                        height: 68,
+                        marginLeft: 12,
+                        justifyContent: 'flex-end',
+                        alignItems: 'flex-end'
+                    }}
+                    source={{uri: images[0]}}>
+                    <View style={styles.counts}>
+                        <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
+                    </View>
+                </ImageBackground>
+            </TouchableOpacity>
+
         )
     }
 }

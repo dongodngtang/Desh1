@@ -137,9 +137,9 @@ export default class HotelListPage extends PureComponent {
                         {item.vouchers ? this._vouchers() : <View/>}
                         {item.recommend ? this._recommend() : <View/>}
                         <View style={{flex: 1}}/>
-                        <Text style={styles.price}><Text
-                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{price}<Text
-                            style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text>
+                        {/*<Text style={styles.price}><Text*/}
+                            {/*style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{price}<Text*/}
+                            {/*style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text>*/}
                     </View>
                 </View>
             </TouchableOpacity>
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     item: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: "center",
+        alignItems: "flex-start",
         backgroundColor: "white",
         paddingTop: 17,
         paddingBottom: 17
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         marginLeft: 12,
-        justifyContent: 'flex-end',
+        marginTop:7,
         marginRight: 22
     },
     name: {

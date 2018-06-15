@@ -234,7 +234,7 @@ export default class RoomReservationPage extends PureComponent {
                         <View style={{flexDirection: 'column', marginLeft: 6, justifyContent: 'center'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: "#444444", fontSize: 14}}>已减</Text>
-                                <Text style={{color: "#E54A2E", fontSize: 14, marginLeft: 12}}>¥650</Text>
+                                <Text style={{color: "#E54A2E", fontSize: 14, marginLeft: 12}}>¥0</Text>
                             </View>
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
                         </View>
