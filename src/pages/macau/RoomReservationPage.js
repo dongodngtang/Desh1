@@ -7,12 +7,12 @@ import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {
     isEmptyObject, showToast, convertDate, strNotNull, alertOrderChat, payWx, util,
-    isWXAppInstalled
+    isWXAppInstalled,mul
 } from "../../utils/ComonHelper";
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
-import {postRoomReservation, postHotelOrder,postWxPay,getHotelWxPaidResult} from "../../services/MacauDao";
+import {postRoomReservation, postHotelOrder, postHotelWxPay, getHotelWxPaidResult} from "../../services/MacauDao";
 import I18n from "react-native-i18n";
 import {addTimeRecode} from "../../components/PayCountDown";
 
@@ -87,7 +87,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     submitBtn = (roomReservation) => {
-        const {detailsShow, room_num, total_price, persons, phone,order_number} = this.state;
+        const {detailsShow, room_num, total_price, persons, phone, order_number} = this.state;
         const {date} = this.props.params;
 
         if (!util.isEmpty(order_number))
@@ -102,18 +102,18 @@ export default class RoomReservationPage extends PureComponent {
                 addTimeRecode(data.order_number);
 
                 if (this.state.isInstall) {
-                    postWxPay(data, ret => {
+                    postHotelWxPay(data, ret => {
                         payWx(ret, () => {
                             getHotelWxPaidResult(data, result => {
 
-                                global.router.toOrderStatusPage(date,data.order_number)
+                                global.router.toOrderStatusPage(data.order_number)
                             }, err => {
                                 showToast('支付成功，系统正在处理')
                             }, () => {
                             })
 
                         }, () => {
-                            global.router.toOrderStatusPage(date,data.order_number)
+                            global.router.toOrderStatusPage(data.order_number)
                         })
                     }, err => {
 
@@ -158,7 +158,7 @@ export default class RoomReservationPage extends PureComponent {
                             }
                             this.setState({
                                 room_num: --room_num,
-                                total_price: room_num * price,
+                                total_price: mul(room_num ,price),
                                 persons: persons
                             })
                         }
@@ -180,7 +180,7 @@ export default class RoomReservationPage extends PureComponent {
                             }
                             this.setState({
                                 room_num: ++room_num,
-                                total_price: room_num * price,
+                                total_price: mul(room_num ,price),
                                 persons: persons
                             })
                         } else {
@@ -258,7 +258,13 @@ export default class RoomReservationPage extends PureComponent {
                                source={Images.macau.right}/>
                     </TouchableOpacity>
 
-                    <View style={{flexDirection: 'column', marginTop: 23, marginLeft: 15, marginRight: 15,marginBottom:50}}>
+                    <View style={{
+                        flexDirection: 'column',
+                        marginTop: 23,
+                        marginLeft: 15,
+                        marginRight: 15,
+                        marginBottom: 50
+                    }}>
                         <Text style={styles.info}><Text style={styles.prompt}>扣款说明：</Text>{info}</Text>
 
                         <Text style={[styles.info, {marginTop: 5}]}><Text style={styles.prompt}>特别提示：</Text>{prompt}
@@ -354,6 +360,7 @@ export class RoomMessage extends PureComponent {
                 <View style={styles.phoneView}>
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
+                        keyboardType={'numeric'}
                         style={{width: 150, marginLeft: 27}}
                         maxLength={12}
                         numberOfLines={1}
@@ -503,7 +510,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 20,
         paddingBottom: 20,
-        borderRadius:3
+        borderRadius: 3
     },
     counts: {
         width: 22,

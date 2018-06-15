@@ -5,7 +5,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {NavigationBar} from '../../../components';
 import ImageLoad from "../../../components/ImageLoad";
-import {isEmptyObject, isWXAppInstalled, showToast, strNotNull, utcDate} from "../../../utils/ComonHelper";
+import {isEmptyObject, isWXAppInstalled, showToast, hotelOrderStatus, utcDate} from "../../../utils/ComonHelper";
 import {ImageMessage, Message} from '../HotelRoomListPage';
 import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
@@ -21,6 +21,10 @@ export default class OrderStatusPage extends PureComponent {
     };
 
     componentDidMount() {
+        this._refresh()
+    };
+
+    _refresh = () => {
         getHotelOrderInfo({
             order_number: this.props.params.order_number
         }, data => {
@@ -32,7 +36,7 @@ export default class OrderStatusPage extends PureComponent {
         }, err => {
 
         })
-    };
+    }
 
     _intro = () => {
         return (
@@ -68,7 +72,7 @@ export default class OrderStatusPage extends PureComponent {
             </View>
         )
     };
-    _renderItem = ({item, index},room_num) => {
+    _renderItem = ({item, index}, room_num) => {
         return (
             <RenderItem
                 room_num={room_num}
@@ -87,8 +91,8 @@ export default class OrderStatusPage extends PureComponent {
     }
 
     statusBottom = (order) => {
-        const {status, total_price,order_number} = order;
-        switch (status) {
+        const {status, pay_status, total_price, order_number} = order;
+        switch (pay_status) {
             case HotelStatus.unpaid:
                 return (
                     <View style={styles.bottomsView}>
@@ -96,30 +100,29 @@ export default class OrderStatusPage extends PureComponent {
                             style={{color: "#E54A2E", fontSize: 18}}>¥{total_price}</Text></Text>
                         <View style={{flex: 1}}/>
                         <UnpaidBottom
+                            refresh={this._refresh}
                             order_number={order_number}/>
                     </View>
                 );
-            case HotelStatus.paid:
-                return this.paidOrder();
-
             default:
-                return this.paidOrder();
+                return <View/>;
         }
     }
 
     render() {
         const {orderInfo} = this.state;
-        if(isEmptyObject(orderInfo)){
+        if (isEmptyObject(orderInfo)) {
             return <View/>
         }
         const {room, order, checkin_infos} = this.state.orderInfo;
-        const {order_number, created_at, room_num, status, telephone, total_price, room_items} = order;
+        const {order_number, created_at, room_num, pay_status, status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num} = order;
+        let date = {begin_date: checkin_date, end_date: checkout_date, counts: nights_num};
         return (
             <View style={ApplicationStyles.bgContainer}>
 
                 <NavigationBar
                     toolbarStyle={{backgroundColor: Colors._E54}}
-                    title="待入住"
+                    title={hotelOrderStatus(status)}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
@@ -134,12 +137,12 @@ export default class OrderStatusPage extends PureComponent {
 
                     <Prompt/>
                     <ReservationTime
-                        date={this.props.params.date}/>
+                        date={date}/>
                     <View style={styles.orderInfo}>
                         <Text style={styles.infoTxt}>订单信息</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 25}]}>订单编号：{order_number}</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY.MM.DD')}</Text>
-                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：{status}</Text>
+                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：{hotelOrderStatus(pay_status)}</Text>
                     </View>
 
                     <View style={styles.reservationInfo}>
@@ -174,7 +177,7 @@ export default class OrderStatusPage extends PureComponent {
                             style={{marginLeft: 30, marginRight: 22, marginTop: 26}}
                             showsHorizontalScrollIndicator={false}
                             data={room_items}
-                            renderItem={(item)=>this._renderItem(item,room_num)}
+                            renderItem={(item) => this._renderItem(item, room_num)}
                             keyExtractor={(item, index) => index + "item"}
                         />
                         <View style={{
@@ -191,8 +194,9 @@ export default class OrderStatusPage extends PureComponent {
                     </View>
                     {this._intro()}
 
+                    {status !== 'unpaid' ? this.paidOrder() : null}
                 </ScrollView>
-                {this.statusBottom(order)}
+                {status === 'unpaid' ? this.statusBottom(order) : null}
             </View>
         )
     }

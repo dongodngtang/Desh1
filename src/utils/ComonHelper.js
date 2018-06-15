@@ -50,6 +50,19 @@ export const picker = {
     compressImageQuality: 0.5,
 };
 
+/**
+ * 乘法精度问题
+ * @param num1
+ * @param num2
+ * @returns {number}
+ */
+export function mul(num1,num2) {
+    let m = 0,s1 = num1.toString(),s2 = num2.toString();
+    try{m+=s1.split(".")[1].length}catch(e){}
+    try{m+=s2.split(".")[1].length}catch(e){}
+    return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
+}
+
 
 export function localFilePath(path) {
     if (Platform.OS === 'android')
@@ -405,6 +418,20 @@ export function isWXAppInstalled(resolve) {
     }).catch(err => {
         resolve(false);
     });
+}
+
+
+export function hotelOrderStatus(status) {
+    switch (status){
+        case 'unpaid':
+            return '待付款';
+        case 'paid':
+            return '待入住';
+        case 'confirmed':
+            return '已完成';
+        default:
+            return '未知状态'
+    }
 }
 
 
@@ -1121,7 +1148,10 @@ export function singleOrdouble(num) {
 }
 
 export function checkMobile (mobileStr) {
-    if (!mobileStr) return false
+    if (!mobileStr){
+        showToast('手机号格式不对')
+        return false
+    }
     let re = /^((13[0-9])|(14[0-9])|(15[^4])|(16[0-9])|(17[0-9])|(18[0-9]))\d{8}$/
     if (re.test(mobileStr)) {
         return true

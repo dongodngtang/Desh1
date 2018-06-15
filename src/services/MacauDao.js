@@ -10,7 +10,7 @@ export function getHotelWxPaidResult(body, resolve, reject) {
 }
 
 //微信支付
-export function postWxPay(body, resolve, reject) {
+export function postHotelWxPay(body, resolve, reject) {
     helper.post(Api.hotel_wxPay(body), {}, ret => {
         resolve(ret.data)
     }, reject)
