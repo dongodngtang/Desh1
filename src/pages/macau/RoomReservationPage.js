@@ -246,7 +246,7 @@ export default class RoomReservationPage extends PureComponent {
                     <View style={{flexDirection: 'column', marginTop: 23, marginLeft: 15, marginRight: 15,marginBottom:50}}>
                         <Text style={styles.info}><Text style={styles.prompt}>扣款说明：</Text>{info}</Text>
 
-                        <Text style={[styles.info, {marginTop: 5}]}><Text style={styles.prompt}>特别提示：：</Text>{prompt}
+                        <Text style={[styles.info, {marginTop: 5}]}><Text style={styles.prompt}>特别提示：</Text>{prompt}
                         </Text>
                     </View>
                 </ScrollView>

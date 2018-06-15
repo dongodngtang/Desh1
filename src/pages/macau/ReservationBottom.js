@@ -6,7 +6,6 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {isEmptyObject, showToast, checkPhone, isWXAppInstalled, payWx, alertOrder, call} from "../../utils/ComonHelper";
-import {postWxPay, getWxPaidResult} from "../../services/MallDao";
 
 export default class ReservationBottom extends PureComponent {
 
@@ -17,7 +16,7 @@ export default class ReservationBottom extends PureComponent {
                 <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥{total_price}</Text></Text>
 
                 <View style={{flex: 1}}/>
-                <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}
+                <TouchableOpacity style={{flexDirection:'row',alignItems:'center',paddingLeft:5,paddingRight:10,paddingTop:5,paddingBottom:5}}
                 onPress={()=>{
                     this.props._detailsShow();
                     // this.props.refresh()
@@ -59,7 +58,6 @@ const styles = StyleSheet.create({
         paddingTop:7,
         paddingBottom:6,
         marginRight:17,
-        marginLeft:10,
         borderRadius:4
     },
     mallBottom: {
