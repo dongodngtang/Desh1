@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/9.
  */
-import React, {PropTypes}from 'react';
+import React, {PropTypes} from 'react';
 import {
     Modal, ActivityIndicator
 } from 'react-native';
@@ -16,15 +16,16 @@ export default class ImageGallery extends React.Component {
         const {images, index} = this.props.params;
         return (
             <ImageViewer
-                loadingRender={()=>{
+                loadingRender={() => {
                     return <ActivityIndicator
-                     color='#E0C675'
-                     size="large"/>
+                        color='white'/>
                 }}
-                saveToLocalByLongPress={false}
+                onLongPress={(image) => {
+                    console.log(image)
+                }}
                 imageUrls={images}
                 index={index}
-                onClick={()=>router.pop()}/>
+                onClick={() => router.pop()}/>
         )
     }
 }

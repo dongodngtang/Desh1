@@ -23,7 +23,9 @@ export default class Router {
     }
 
     stackPush(route) {
+
         Actions.push(route.name, {params: route.params})
+        console.log('当前界面类名：'+Actions.currentScene)
     }
 
     push(props, route) {
@@ -38,7 +40,6 @@ export default class Router {
 
     pop() {
         Actions.pop();
-        console.log(Actions.currentScene)
 
     }
 
