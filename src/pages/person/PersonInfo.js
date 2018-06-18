@@ -161,8 +161,11 @@ export default class PersonInfo extends Component {
                                        })
 
                                    }}
-                                   placeholder={profile.nick_name}
-                                   testID="input_nick"/>
+                                   placeholder={'请输入个性签名'}
+                                   testID="input_nick">
+                            <Text style={{color: Colors._666}}>{profile.nick_name}</Text>
+
+                        </TextInput>
                     </View>
 
                     <View style={styles.line}/>
