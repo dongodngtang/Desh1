@@ -52,8 +52,8 @@ export default class HotelRoomListPage extends PureComponent {
                     changeTime={last_change_time}
                     _click={hotel.title}/>
 
-                {isEmptyObject(roomList) ? <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                    <Text style={{fontSize:18,color:"#888888"}}>该酒店暂无空余房间</Text>
+                {isEmptyObject(roomList) ? <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontSize: 18, color: "#888888"}}>该酒店暂无空余房间</Text>
                 </View> : <FlatList
                     ListHeaderComponent={this._separator}
                     showsHorizontalScrollIndicator={false}
@@ -81,7 +81,10 @@ export default class HotelRoomListPage extends PureComponent {
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{price}</Text>
                     <TouchableOpacity style={styles.reservation}
                                       onPress={() => {
-                                          router.toRoomReservationPage(item, this.state.last_change_time)
+                                          if (isEmptyObject(global.login_user)) {
+                                              router.toLoginFirstPage()
+                                          } else
+                                              router.toRoomReservationPage(item, this.state.last_change_time)
                                       }}>
                         <Text style={{color: "#FFFFFF", fontSize: 14}}>预定</Text>
                     </TouchableOpacity>
