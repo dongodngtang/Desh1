@@ -12,7 +12,7 @@ import {NavigationBar, BaseComponent} from '../../../components';
 import ReturnItem from './ReturnItem';
 import {postTempImg, postMallRefund} from '../../../services/MallDao';
 import {strNotNull, showToast, getFileName, util, alertOrder} from '../../../utils/ComonHelper';
-const types= [{"name":"退货／退款","id":0},{"name":"换货","id":1}];
+const types= [{"name":"退货／退款","id":0,"type":"refund"},{"name":"换货","id":1,"type":"exchange_goods"}];
 
 export default class ReturnPage extends Component {
 
@@ -176,16 +176,15 @@ export default class ReturnPage extends Component {
 
 
     postRefundReq = () => {
-        console.log("kkkklllll:",this.state)
         const {refund_price, product_refund_type, return_items, memo, order_number} = this.state;
         let body = {
             refund_price:refund_price,
-            return_type: product_refund_type.name,
+            return_type: product_refund_type.type,
             return_items,
             memo: this.refundMemo.getMemo(),
             order_number
         };
-
+        console.log("jdksj",body)
         postMallRefund(body, data => {
             this.contain.close();
             global.router.pop();
