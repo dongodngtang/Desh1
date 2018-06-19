@@ -307,7 +307,6 @@ export class RoomMessage extends PureComponent {
                 width: '100%',
                 justifyContent: 'flex-start',
                 marginLeft: 24,
-                marginRight: 13,
                 marginBottom:14
             }}>
                 {persons.map((item, i) => {
@@ -315,28 +314,28 @@ export class RoomMessage extends PureComponent {
                         <View key={i} style={{
                             flexDirection: 'row',
                             alignItems:'center',
-                            borderBottomColor: '#F3F3F3',
-                            borderBottomWidth: 1,
                             paddingBottom:14,
-                            marginTop:14
+                            marginRight: 13,
+                            marginTop:14,
+                            borderBottomColor: '#F3F3F3',
+                            borderBottomWidth: 1
+
                         }}>
-                            <TextInput maxLength={20} style={[styles.room_num, {width: 100}]}
+                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
                                        placeholder={item.last_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
                                        onChangeText={txt => {
                                            item.last_name = txt;
-                                       }}
-                                       value={item.last_name}/>
+                                       }}/>
                             <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC'}]}>/</Text>
-                            <TextInput maxLength={20} style={[styles.room_num, {width: 100}]}
+                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
                                        placeholder={item.first_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
                                        onChangeText={txt => {
                                            item.first_name = txt;
-                                       }}
-                                       value={item.first_name}/>
+                                       }}/>
                         </View>
                     )
                 })}
