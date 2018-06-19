@@ -79,13 +79,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#E54A2E'
     },
     navContent: {
+        width:'100%',
         flexDirection: 'row',
         alignItems: 'center',
         height: 44
     },
     search: {
         height: 28,
-        width: 248,
+        width: '67%',
         backgroundColor: "#CD3A1F",
         borderRadius: 14,
         flexDirection: 'row',
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         height: 44,
-        marginRight: 7
+        marginRight: 10
     },
     imgCat: {
         height: 20,
