@@ -314,42 +314,35 @@ export class RoomMessage extends PureComponent {
                         <View key={i} style={{
                             flexDirection: 'row',
                             alignItems:'center',
-                            paddingBottom:14,
+                            paddingBottom:i === persons.length-1 ? 0: 14,
                             marginRight: 13,
                             marginTop:14,
                             borderBottomColor: '#F3F3F3',
-                            borderBottomWidth: 1
+                            borderBottomWidth: i === persons.length-1 ? 0: 1
 
                         }}>
                             <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
-                                       placeholderTextColor={Colors.txt_444}
-                                       defaultValue={item.last_name}
+                                       placeholder={'姓（例：LI）'}
+                                       placeholderTextColor={Colors._CCC}
+                                       autoCapitalize={'characters'}
                                        onChangeText={txt => {
                                            item.last_name = txt;
                                        }}/>
                             <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC',paddingTop:0}]}>/</Text>
                             <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
-                                       defaultValue={item.first_name}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
-                                       placeholderTextColor={Colors.txt_444}
+                                       placeholder={'姓（例：LI）'}
+                                       autoCapitalize={'characters'}
+                                       placeholderTextColor={Colors._CCC}
                                        onChangeText={txt => {
                                            item.first_name = txt;
                                        }}/>
                         </View>
                     )
                 })}
-                <View style={{
-                    flexDirection: 'row',
-                    paddingTop: 14
-
-                }}>
-                    <Text style={[styles.room_num, {color: '#CCCCCC'}]}>姓（例：LI）</Text>
-                    <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC'}]}>/</Text>
-                    <Text style={[styles.room_num, {color: '#CCCCCC'}]}>名（例：XIAOMING）</Text>
-                </View>
             </View>
         )
 
