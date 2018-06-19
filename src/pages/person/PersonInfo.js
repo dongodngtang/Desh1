@@ -147,10 +147,13 @@ export default class PersonInfo extends Component {
 
                     </TouchableOpacity>
                     <View style={styles.line}/>
-                    <View style={styles.item_view}>
+                    <View style={[styles.item_view,{marginRight:17}]}>
 
                         <Text style={styles.text_label}>{I18n.t('nick')}</Text>
-                        <TextInput style={styles.text_value}
+                        <TextInput style={[styles.text_value,{marginRight:17}]}
+                                   clearTextOnFocus={true}
+                                   maxLength={20}
+                                   returnKeyType={'done'}
                                    placeholderTextColor={Colors._666}
                                    underlineColorAndroid='transparent'
                                    onChangeText={text => {
@@ -161,7 +164,7 @@ export default class PersonInfo extends Component {
                                        })
 
                                    }}
-                                   placeholder={'请输入个性签名'}
+                                   placeholder={'请输入昵称'}
                                    testID="input_nick">
                             <Text style={{color: Colors._666}}>{profile.nick_name}</Text>
 
@@ -191,14 +194,14 @@ export default class PersonInfo extends Component {
 
                     <KeyboardAvoidingView style={{height: 94}}>
 
-                        <View style={styles.item_view}>
+                        <View style={[styles.item_view,{marginRight:17}]}>
 
                             <Text style={[styles.text_label, {marginRight: 20}]}>{I18n.t('signature')}</Text>
                             <TextInput style={[styles.text_value]}
                                        placeholderTextColor={Colors._666}
                                        underlineColorAndroid='transparent'
-                                       maxLength={20}
-                                       numberOfLines={2}
+                                       maxLength={50}
+                                       multiline={true}
                                        onChangeText={text => {
                                            const edit = profile;
                                            edit.signature = text;
@@ -207,7 +210,8 @@ export default class PersonInfo extends Component {
                                            })
 
                                        }}
-                                       placeholder={profile.signature ? profile.signature : I18n.t('user_signature')}
+                                       defaultValue={profile.signature}
+                                       placeholder={profile.signature ? "" : I18n.t('user_signature')}
                                        testID="input_signature"/>
                         </View>
 

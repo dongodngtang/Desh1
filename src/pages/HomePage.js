@@ -295,7 +295,7 @@ class HomePage extends Component {
                             backgroundColor: 'white',
                             height: 100
                         }}>
-                            < View style={styles.viewNick}>
+                            <View style={[styles.viewNick,{marginRight:30}]}>
                                 {this._showNick(profile.nick_name)}
 
                                 <Text style={styles.txtSign}>{profile.signature ? profile.signature :

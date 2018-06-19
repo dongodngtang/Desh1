@@ -322,15 +322,17 @@ export class RoomMessage extends PureComponent {
 
                         }}>
                             <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
-                                       placeholder={item.last_name}
+                                       clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
+                                       defaultValue={item.last_name}
                                        onChangeText={txt => {
                                            item.last_name = txt;
                                        }}/>
                             <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC',paddingTop:0}]}>/</Text>
                             <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
-                                       placeholder={item.first_name}
+                                       defaultValue={item.first_name}
+                                       clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
                                        onChangeText={txt => {
