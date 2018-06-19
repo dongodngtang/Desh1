@@ -321,15 +321,15 @@ export class RoomMessage extends PureComponent {
                             borderBottomWidth: 1
 
                         }}>
-                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0,marginTop:0}]}
+                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
                                        placeholder={item.last_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
                                        onChangeText={txt => {
                                            item.last_name = txt;
                                        }}/>
-                            <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC',paddingTop:0,marginTop:0}]}>/</Text>
-                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0,marginTop:0}]}
+                            <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC',paddingTop:0}]}>/</Text>
+                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
                                        placeholder={item.first_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
@@ -463,6 +463,7 @@ const styles = StyleSheet.create({
     },
     phoneView: {
         flexDirection: 'row',
+        alignItems:'center',
         paddingTop: 11,
         paddingBottom: 11,
         flex: 1
