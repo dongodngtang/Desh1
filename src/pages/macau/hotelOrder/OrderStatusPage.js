@@ -163,7 +163,7 @@ export default class OrderStatusPage extends PureComponent {
                     <View style={styles.orderInfo}>
                         <Text style={styles.infoTxt}>订单信息</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 25}]}>订单编号：{order_number}</Text>
-                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY/MM/DD  hh:mm')}</Text>
+                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY/MM/DD  HH:MM')}</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：
                             <Text style={{color:this.statusColor(pay_status)}}>{hotelOrderStatus(pay_status)}</Text>
                         </Text>
