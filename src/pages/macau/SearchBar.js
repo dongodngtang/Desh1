@@ -12,7 +12,7 @@ import {convertDate} from '../../utils/ComonHelper'
 
 export default class SearchBar extends PureComponent {
     render() {
-        const {begin_date, end_date} = this.props.changeTime
+        const {begin_date, end_date} = this.props.changeTime;
         return (<View style={styles.navBar}>
 
             <View style={styles.navContent}>
@@ -22,7 +22,7 @@ export default class SearchBar extends PureComponent {
                     }}
                     style={{
                         height: 40, width: 50,
-                        alignItems: 'center', justifyContent: 'center',
+                        alignItems: 'center', justifyContent: 'center'
                     }}>
                     <Image style={{height: 19, width: 10}}
                            source={Images.sign_return}/>
@@ -41,7 +41,7 @@ export default class SearchBar extends PureComponent {
                         placeholder={'地名／酒店'}
                         underlineColorAndroid={'transparent'}
                         style={{height: 40, fontSize: 14, color: 'white', flex: 1}}/>
-                </View> : <View style={{width:248,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                </View> : <View style={{width: '67%',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                     <Text style={{color: "#FFFFFF", fontSize: 18}}>
                         {this.props._click}
                     </Text>
@@ -79,10 +79,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#E54A2E'
     },
     navContent: {
-        width:'100%',
+        flex:1,
         flexDirection: 'row',
         alignItems: 'center',
-        height: 44
+        height: 44,
+        marginRight:12
     },
     search: {
         height: 28,
@@ -105,8 +106,7 @@ const styles = StyleSheet.create({
     btnCat: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: 44,
-        marginRight: 10
+        height: 44
     },
     imgCat: {
         height: 20,

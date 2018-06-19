@@ -50,6 +50,7 @@ export default class CompletedBottom extends Component {
         return <View style={styles.UnpaidBottom}>
             <TouchableOpacity
                 onPress={() => {
+                    console.log("ppppp:",DeShangPhone)
                     call(DeShangPhone)
                 }}
                 style={styles.returnedBottom}>
@@ -62,7 +63,18 @@ export default class CompletedBottom extends Component {
 }
 
 export class UnpaidBottom extends PureComponent {
+    _formatTime = (diff) => {
 
+        let min = 0;
+
+        if (diff >= 60) {
+            min = Math.floor(diff / 60);
+            diff -= min * 60;
+
+        }
+
+        return `${I18n.t('pay')} ${min}:${diff}`
+    };
     render() {
         const {order_number} = this.props;
         return (
@@ -82,15 +94,23 @@ export class UnpaidBottom extends PureComponent {
                     <Text style={styles.payment}>取消订单</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.payView}
-                                  onPress={() => {
-                                      this.wxPay({order_number});
-                                  }}>
-                    <View style={{alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>付款</Text>
-                    </View>
 
-                </TouchableOpacity>
+                <View style={styles.payView}>
+                    <PayCountDown
+                        frameStyle={styles.payCount}
+                        beginText='倒计时'
+                        endText='付款失效'
+                        count={60 * 30}
+                        pressAction={() => {
+                            this.wxPay({order_number});
+                        }}
+                        changeWithCount={(count) => `${this._formatTime(count)}`}
+                        id={order_number}
+                        ref={(e) => {
+                            this.countDownButton = e
+                        }}/>
+
+                </View>
 
             </View>
         )
@@ -127,6 +147,11 @@ export class UnpaidBottom extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+    payCount: {
+        height: 36,
+        backgroundColor: '#F34A4A',
+        alignItems: 'flex-start'
+    },
     page: {
         flexDirection: 'row', backgroundColor: 'white', paddingTop: 7, paddingBottom: 7, alignItems: 'center',
         borderTopWidth: 1,

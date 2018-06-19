@@ -5,13 +5,14 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {NavigationBar} from '../../../components';
 import ImageLoad from "../../../components/ImageLoad";
-import {isEmptyObject, isWXAppInstalled, showToast, hotelOrderStatus, utcDate} from "../../../utils/ComonHelper";
+import {isEmptyObject, isWXAppInstalled, showToast, hotelOrderStatus, utcDate, call} from "../../../utils/ComonHelper";
 import {ImageMessage, Message} from '../HotelRoomListPage';
 import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
 import {UnpaidBottom} from "./CompletedBottom";
 import {HotelStatus} from "../../../configs/Status";
 import {getHotelOrderInfo} from "../../../services/MacauDao";
+import {DeShangPhone} from "../../../configs/Constants";
 
 const intro = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 
@@ -41,7 +42,7 @@ export default class OrderStatusPage extends PureComponent {
     _intro = () => {
         return (
             <View style={{marginTop: 19, marginLeft: 16, marginRight: 16, paddingBottom: 80}}>
-                <Text style={{color: "#AAAAAA", fontSize: 12, lineHeight: 17}}><Text
+                <Text style={{color: "#AAAAAA", fontSize: 12, lineHeight: 20}}><Text
                     style={{color: "#666666", fontSize: 12}}>扣款说明：</Text>{intro}</Text>
             </View>
         )
@@ -85,7 +86,10 @@ export default class OrderStatusPage extends PureComponent {
     paidOrder = () => {
         return (
             <TouchableOpacity
-                style={[styles.btn_book, {backgroundColor: Colors._E54}]}>
+                style={[styles.btn_book, {backgroundColor: Colors._E54}]}
+                onPress={() => {
+                    call(DeShangPhone)
+                }}>
                 <Text style={[styles.btn_book_txt, {color: "#FFFFFF"}]}>联系客服</Text>
             </TouchableOpacity>
         )
@@ -108,12 +112,29 @@ export default class OrderStatusPage extends PureComponent {
             default:
                 return <View/>;
         }
-    }
-
+    };
+    statusColor = (status) => {
+        if (status === 'unpaid') {
+            return "#E54A2E"
+        } else if (status === 'paid') {
+            return "#4A90E2"
+        } else{
+            return "#333333"
+        }
+    };
     render() {
         const {orderInfo} = this.state;
         if (isEmptyObject(orderInfo)) {
-            return <View/>
+            return (
+                <View style={ApplicationStyles.bgContainer}>
+                    <NavigationBar
+                        toolbarStyle={{backgroundColor: Colors._E54}}
+                        title={hotelOrderStatus(status)}
+                        leftBtnIcon={Images.sign_return}
+                        leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                        leftBtnPress={() => router.pop()}/>
+                </View>
+            )
         }
         const {room, order, checkin_infos} = this.state.orderInfo;
         const {order_number, created_at, room_num, pay_status, status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num} = order;
@@ -142,8 +163,10 @@ export default class OrderStatusPage extends PureComponent {
                     <View style={styles.orderInfo}>
                         <Text style={styles.infoTxt}>订单信息</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 25}]}>订单编号：{order_number}</Text>
-                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY.MM.DD')}</Text>
-                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：{hotelOrderStatus(pay_status)}</Text>
+                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY/MM/DD  hh:mm')}</Text>
+                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：
+                            <Text style={{color:this.statusColor(pay_status)}}>{hotelOrderStatus(pay_status)}</Text>
+                        </Text>
                     </View>
 
                     <View style={styles.reservationInfo}>
@@ -188,7 +211,7 @@ export default class OrderStatusPage extends PureComponent {
                             flexDirection: 'row',
                             alignItems: 'center'
                         }}>
-                            <Text style={styles.infoTxt}>应付金额</Text>
+                            <Text style={styles.infoTxt3}>应付金额</Text>
                             <View style={{flex: 1}}/>
                             <Text style={{color: "#E54A2E", fontSize: 14}}>¥{total_price}</Text>
                         </View>
@@ -280,7 +303,13 @@ const styles = StyleSheet.create({
     infoTxt: {
         color: "#333333",
         fontSize: 14,
-        marginLeft: 17,
+        marginTop: 10,
+        fontWeight: 'bold',
+        marginLeft: 17
+    },
+    infoTxt3: {
+        color: "#333333",
+        fontSize: 14,
         marginTop: 10,
         fontWeight: 'bold'
     },
