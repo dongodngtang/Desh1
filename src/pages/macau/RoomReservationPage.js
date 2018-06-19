@@ -307,7 +307,7 @@ export class RoomMessage extends PureComponent {
                 width: '100%',
                 justifyContent: 'flex-start',
                 marginLeft: 24,
-                marginBottom:14
+                paddingTop:0
             }}>
                 {persons.map((item, i) => {
                     return (
@@ -321,15 +321,15 @@ export class RoomMessage extends PureComponent {
                             borderBottomWidth: 1
 
                         }}>
-                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
+                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0,marginTop:0}]}
                                        placeholder={item.last_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
                                        onChangeText={txt => {
                                            item.last_name = txt;
                                        }}/>
-                            <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC'}]}>/</Text>
-                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
+                            <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC',paddingTop:0,marginTop:0}]}>/</Text>
+                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0,marginTop:0}]}
                                        placeholder={item.first_name}
                                        underlineColorAndroid={'transparent'}
                                        placeholderTextColor={Colors.txt_444}
@@ -372,7 +372,7 @@ export class RoomMessage extends PureComponent {
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
                         keyboardType={'numeric'}
-                        style={{width: 150, marginLeft: 27}}
+                        style={{width: 150, marginLeft: 27,paddingTop:0,paddingBottom:0}}
                         maxLength={12}
                         numberOfLines={1}
                         underlineColorAndroid={'transparent'}
@@ -567,7 +567,7 @@ const styles = StyleSheet.create({
     Roomcounts: {
         flexDirection: 'row',
         alignItems:'flex-start',
-        marginBottom: 14,
+        paddingBottom: 14,
         borderBottomWidth: 1,
         borderColor: "#F3F3F3",
         marginLeft: 14,

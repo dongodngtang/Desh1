@@ -54,16 +54,17 @@ export default class OrderStatusPage extends PureComponent {
                     return (
                         <View key={i} style={{
                             flexDirection: 'row',
+                            alignItems:'center',
                             paddingTop: i === 0 ? 0 : 14,
-                            paddingBottom: 14,
+                            paddingBottom: i === persons.length-1 ? 0 : 14,
                             borderBottomColor: '#F3F3F3',
                             borderBottomWidth: i === persons.length - 1 ? 0 : 1
                         }}>
-                            <TextInput style={[styles.room_num, {width: 100}]}
+                            <TextInput style={[styles.room_num, {width: 100,paddingTop:0,paddingBottom:0}]}
                                        editable={false}
                                        value={item.last_name}/>
                             <Text style={[styles.txt]}>/</Text>
-                            <TextInput style={[styles.room_num, {marginLeft: 10, width: 100}]}
+                            <TextInput style={[styles.room_num, {marginLeft: 10, width: 100,paddingTop:0,paddingBottom:0}]}
                                        editable={false}
                                        value={item.first_name}/>
                         </View>
