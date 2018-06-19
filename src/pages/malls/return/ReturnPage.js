@@ -184,7 +184,7 @@ export default class ReturnPage extends Component {
             memo: this.refundMemo.getMemo(),
             order_number
         };
-        console.log("jdksj",body)
+        console.log("returnBody",body)
         postMallRefund(body, data => {
             this.contain.close();
             global.router.pop();
