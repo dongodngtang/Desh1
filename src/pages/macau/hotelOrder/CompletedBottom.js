@@ -14,10 +14,11 @@ export default class CompletedBottom extends Component {
 
     render() {
         const {orderItem} = this.props;
+        const {total_price} = orderItem.order;
         return (
             <View style={styles.page}>
                 <Text style={{color: "#333333", marginLeft: 14, fontSize: 14}}>合计：<Text
-                    style={{color: "#E54A2E", fontSize: 18}}>1184.4</Text></Text>
+                    style={{color: "#E54A2E", fontSize: 18}}>{total_price}</Text></Text>
                 <View style={{flex: 1}}/>
                 {this.switchOrder(orderItem)}
             </View>

@@ -173,7 +173,7 @@ function netError(response, reject) {
 
 
     showToast(msgErr);
-    reject(msgErr);
+    reject && reject(msgErr);
 
 }
 
@@ -184,7 +184,7 @@ function handle(response, resolve, reject) {
         if (code === 0) {
             resolve(response.data);
         } else {
-            reject(msg);
+            reject && reject(msg);
         }
     } else {
 

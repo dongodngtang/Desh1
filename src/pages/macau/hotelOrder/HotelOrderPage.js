@@ -13,16 +13,19 @@ import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view
 import HotelOrderListStatus from './HotelOrderListStatus';
 import {HotelStatus} from "../../../configs/Status";
 
+let menu = [{type: 'all', name: "全部"},
+    {type: HotelStatus.unpaid, name: "待付款"},
+    {type: HotelStatus.paid, name: "待入住"},
+    {type: HotelStatus.completed, name: "已完成"}];
 
 export default class HotelOrderPage extends Component {
 
-    state = {
-    };
+    state = {};
 
 
     render() {
-        let menu = ['all', HotelStatus.unpaid, HotelStatus.paid, HotelStatus.completed];
-        let status=["全部","待付款","待入住","已完成"];
+
+
         return (<View style={[ApplicationStyles.bgContainer, {backgroundColor: '#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar
@@ -46,8 +49,8 @@ export default class HotelOrderPage extends Component {
                 {menu.map((item, index) => {
                     return <HotelOrderListStatus
                         key={`hotelStatus${index}`}
-                        status={status}
-                        tabLabel={item === HotelStatus.paid ? "待入住" : status[index]}/>
+                        status={item.type}
+                        tabLabel={item.name}/>
                 })}
 
             </ScrollableTabView>
