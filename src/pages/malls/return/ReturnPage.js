@@ -102,13 +102,13 @@ export default class ReturnPage extends Component {
                         showTypeInfo={this.showTypeInfo}
                         product_refund_type={this.state.product_refund_type}/>
 
-                    <RefundAmount
+                    {this.state.product_refund_type.name === '换货' ? null :<RefundAmount
                         changeText={(refund_price)=>{
                             this.setState({
                                 refund_price
                             })
                         }}
-                        refund_price={this.state.refund_price}/>
+                        refund_price={this.state.refund_price}/>}
 
 
                     <RefundInstruction

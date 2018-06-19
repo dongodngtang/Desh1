@@ -11,7 +11,6 @@ export default class ApplicationType extends PureComponent {
 
     render() {
         const {product_refund_type} = this.props;
-
         return (
             <TouchableOpacity style={styleS.page}
                               onPress={() => {
