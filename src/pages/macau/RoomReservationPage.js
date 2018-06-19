@@ -208,7 +208,16 @@ export default class RoomReservationPage extends PureComponent {
     render() {
         const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
         if (isEmptyObject(roomReservation)) {
-            return <Loading/>;
+            return (
+                <View style={ApplicationStyles.bgContainer}>
+                    <NavigationBar
+                        toolbarStyle={{backgroundColor: Colors._E54}}
+                        title="房间预订"
+                        leftBtnIcon={Images.sign_return}
+                        leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                        leftBtnPress={() => router.pop()}/>
+                </View>
+            )
         }
         const {order, room} = roomReservation;
         const {images, notes, tags, title} = room;
@@ -296,18 +305,20 @@ export class RoomMessage extends PureComponent {
             <View style={{
                 flexDirection: 'column',
                 width: '100%',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 marginLeft: 24,
-                marginRight: 13
+                marginRight: 13,
+                marginBottom:14
             }}>
                 {persons.map((item, i) => {
                     return (
                         <View key={i} style={{
                             flexDirection: 'row',
-                            paddingTop: i === 0 ? 0 : 14,
-                            paddingBottom: 14,
+                            alignItems:'center',
                             borderBottomColor: '#F3F3F3',
-                            borderBottomWidth: 1
+                            borderBottomWidth: 1,
+                            paddingBottom:14,
+                            marginTop:14
                         }}>
                             <TextInput maxLength={20} style={[styles.room_num, {width: 100}]}
                                        placeholder={item.last_name}
@@ -354,7 +365,7 @@ export class RoomMessage extends PureComponent {
                 </View>
 
                 <View style={styles.Roomcounts}>
-                    <Text style={styles.rooms}>入住人</Text>
+                    <Text style={[styles.rooms,{marginTop: 14}]}>入住人</Text>
                     <View style={{flex: 1}}/>
                     {this._person(persons)}
                 </View>
@@ -556,8 +567,8 @@ const styles = StyleSheet.create({
     },
     Roomcounts: {
         flexDirection: 'row',
-        paddingTop: 14,
-        paddingBottom: 14,
+        alignItems:'flex-start',
+        marginBottom: 14,
         borderBottomWidth: 1,
         borderColor: "#F3F3F3",
         marginLeft: 14,
