@@ -159,9 +159,7 @@ export default class PersonInfo extends Component {
                                    onChangeText={text => {
                                        const edit = profile;
                                        edit.nick_name = text;
-                                       this.setState({
-                                           profile: edit
-                                       })
+
 
                                    }}
                                    placeholder={'请输入昵称'}

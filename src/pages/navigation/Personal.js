@@ -240,7 +240,7 @@ class Personal extends Component {
                     <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>
                 </View>
 
-                <View style={{marginLeft: 20}}>
+                <View style={{marginLeft: 20,marginRight:17,width: Metrics.reallySize(248)}}>
 
                     <Text
                         style={stylesP.personSignature2}>{isEmptyObject(login_user) ? I18n.t('log_register') : profile.nick_name}</Text>
