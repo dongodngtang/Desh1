@@ -147,10 +147,10 @@ export default class PersonInfo extends Component {
 
                     </TouchableOpacity>
                     <View style={styles.line}/>
-                    <View style={[styles.item_view,{marginRight:17}]}>
+                    <View style={[styles.item_view, {marginRight: 17}]}>
 
                         <Text style={styles.text_label}>{I18n.t('nick')}</Text>
-                        <TextInput style={[styles.text_value,{marginRight:17}]}
+                        <TextInput style={[styles.text_value, {marginRight: 17}]}
                                    clearTextOnFocus={true}
                                    maxLength={20}
                                    returnKeyType={'done'}
@@ -162,11 +162,16 @@ export default class PersonInfo extends Component {
 
 
                                    }}
-                                   placeholder={'请输入昵称'}
-                                   testID="input_nick">
-                            <Text style={{color: Colors._666}}>{profile.nick_name}</Text>
+                                   placeholder={profile.nick_name ? '请输入昵称' : ''}
+                                   defaultValue={profile.nick_name}
+                                   testID="input_nick"/>
+                        {/*<TextInput*/}
+                            {/*placeholderTextColor={Colors._666}*/}
+                            {/*underlineColorAndroid='transparent'*/}
+                            {/*defaultValue={profile.nick_name}*/}
+                        {/*/>*/}
+                        {/*<Text style={{color: Colors._666}}>{profile.nick_name}</Text>*/}
 
-                        </TextInput>
                     </View>
 
                     <View style={styles.line}/>
@@ -192,24 +197,24 @@ export default class PersonInfo extends Component {
 
                     <KeyboardAvoidingView style={{height: 94}}>
 
-                        <View style={[styles.item_view,{marginRight:17}]}>
+                        <View style={[styles.item_view, {marginRight: 17}]}>
 
                             <Text style={[styles.text_label, {marginRight: 20}]}>{I18n.t('signature')}</Text>
                             <TextInput style={[styles.text_value]}
-                                       placeholderTextColor={Colors._666}
-                                       underlineColorAndroid='transparent'
                                        maxLength={50}
                                        multiline={true}
+                                       placeholderTextColor={Colors._666}
+                                       underlineColorAndroid='transparent'
                                        onChangeText={text => {
                                            const edit = profile;
                                            edit.signature = text;
-                                           this.setState({
-                                               profile: edit
-                                           })
+                                           // this.setState({
+                                           //     profile: edit
+                                           // })
 
                                        }}
-                                       defaultValue={profile.signature}
                                        placeholder={profile.signature ? "" : I18n.t('user_signature')}
+                                       defaultValue={profile.signature}
                                        testID="input_signature"/>
                         </View>
 
