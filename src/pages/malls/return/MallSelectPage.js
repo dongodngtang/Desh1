@@ -98,7 +98,6 @@ export default class MallSelectPage extends PureComponent {
     };
 
     renderShowEditView = (item) => {
-        console.log("djskdks:",item)
         /*if (item.refund_status !== RefundStatus.none && item.refund_status !== RefundStatus.close)
             return;*/
         let imageURL = Images.radio;
@@ -107,10 +106,10 @@ export default class MallSelectPage extends PureComponent {
         }
         return (
             <View
-                style={{height: 120,width:38, alignItems: 'center', justifyContent: 'center'}}
+                style={{height: 120, width: 38, alignItems: 'center', justifyContent: 'center'}}
             >
                 {strNotNull(item.return_status_text) || !item.returnable ? null : <Image style={styleS.radioImg}
-                                                                source={imageURL}/>}
+                                                                                         source={imageURL}/>}
 
             </View>
         )
@@ -135,7 +134,7 @@ export default class MallSelectPage extends PureComponent {
         const {order_items} = this.state;
         let array = [...order_items];
         array.map(x => {
-            if (strNotNull(x.return_status_text))
+            if (strNotNull(x.return_status_text) || !x.returnable)
                 return;
             x.isSelect = !this.state.selectAll
         });
@@ -172,7 +171,7 @@ export default class MallSelectPage extends PureComponent {
                 }}
                 style={styleS.renderItem}
             >
-                { this.renderShowEditView(item)}
+                {this.renderShowEditView(item)}
 
                 <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
 
