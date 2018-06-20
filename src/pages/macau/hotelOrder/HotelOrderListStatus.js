@@ -4,45 +4,36 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import HotelItem from './HotelItem';
 import CompletedBottom from './CompletedBottom';
-import {getMallOrders} from '../../../services/MallDao';
 import UltimateFlatList from '../../../components/ultimate';
 import {BaseComponent} from '../../../components';
+import {HotelStatus,hotleStatus} from "../../../configs/Status";
+import {getHotelOrderList} from '../../../services/MacauDao';
 
 export default class HotelOrderListStatus extends Component {
     _color = (status) => {
-        if (status === '待付款') {
+        if (status === HotelStatus.unpaid) {
             return "#E54A2E"
-        } else if (status === '已取消') {
-            return "#333333"
-        } else if (status === '待入住') {
+        } else if (status === HotelStatus.unpaid) {
             return "#4A90E2"
-        } else if (status === '已完成') {
+        } else {
             return "#333333"
         }
     };
 
     renderItem = (item, index) => {
-        item = {
-            id: 15,
-            images: ["https://cdn-upyun.deshpro.com/test//uploads/admin_image/79f2c7de5eb69a5f7d8516a73e964ead.jpg"],
-            notes: ["含早餐", "可住两人"],
-            price: 14999,
-            tags: ["WIFI", "双床"],
-            title: "城市景观双人房",
-            status:'待付款'
-        };
-        const {id, images, notes, price, tags, title,status} = item;
+
+        const {status,order_number} = item.order;
         return (
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    // global.router.toOrderStatusPage(item, this.refresh)
+                    global.router.toOrderStatusPage(order_number, this.refresh)
                 }}
                 style={{flex: 1, marginTop: 5}}>
                 <View style={styles.top}>
-                    <Text style={styles.txtLeft}>{`订单编号：1234567899`}</Text>
+                    <Text style={styles.txtLeft}>{`订单编号：${order_number}`}</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={[styles.txtRight,{color: this._color(status)}]}>{status}</Text>
+                    <Text style={[styles.txtRight, {color: this._color(status)}]}>{hotleStatus(status)}</Text>
                 </View>
                 <View style={{height: 1}}/>
                 <HotelItem
@@ -84,33 +75,26 @@ export default class HotelOrderListStatus extends Component {
     }
 
     onFetch = (page, postRefresh, endFetch) => {
-        if (page === 1) {
-
+        try {
             this.load({
                 status: this.props.status,
-                page: 1,
+                page,
                 page_size: 20
             }, postRefresh, endFetch)
-        } else {
-            this.load({
-                status: this.props.status,
-                page: 1,
-                page_size: 20
-            }, postRefresh, endFetch)
+        } catch (e) {
+            endFetch()
         }
 
     };
 
 
     load = (body, postRefresh, endFetch) => {
-        getMallOrders(body, data => {
-            this.contain && this.contain.close();
-            postRefresh(data.items, 18);
-
+        getHotelOrderList(body, data => {
+            console.log(data)
+            postRefresh(data.items,15)
         }, err => {
-            this.contain && this.contain.close();
-            endFetch();
-        });
+            endFetch()
+        })
     }
 }
 const styles = StyleSheet.create({

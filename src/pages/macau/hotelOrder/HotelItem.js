@@ -7,47 +7,44 @@ import {NavigationBar} from '../../../components';
 import ImageLoad from "../../../components/ImageLoad";
 import {isEmptyObject, showToast} from "../../../utils/ComonHelper";
 
-const item = {
-    number: 213218467238,
-    status: '待付款',
-    title: '澳门名苑大酒店',
-    time: '2018-06-13至2018-06-20',
-    notes: ['7晚', '2间', '城市观景双人房 '],
-    price: 2345
-};
-
 export default class HotelItem extends PureComponent {
-    state = {};
+
     _line = () => {
         return (
             <View style={{height: 1, width: '100%', backgroundColor: "#F3F3F3"}}/>
         )
     };
 
-    _notes = (notes) => {
+    _notes = (item) => {
+        const {room_title,order} = item;
+        const {nights_num,room_num} = order;
         return <View style={styles.notes}>
-            {notes.map((item, i) => {
-               return  <Text style={{color:"#AAAAAA",fontSize:12,marginRight:12}} key={i}>{item}</Text>
-            })}
+            <Text style={{color:"#AAAAAA",fontSize:12,marginRight:12}}>{nights_num}晚</Text>
+            <Text style={{color:"#AAAAAA",fontSize:12,marginRight:12}} >{room_num}间</Text>
+            <Text style={{color:"#AAAAAA",fontSize:12,marginRight:12}} >{room_title}</Text>
         </View>
     };
 
     render() {
-        const {number, status, title, time, notes, price} = item;
+        const {hotel_logo, hotel_title,order} = this.props.item;
+
+        const {checkin_date,checkout_date} = order;
+        let time = `${checkin_date}至${checkout_date}`
+
         return (
             <View style={styles.itemView}>
-                {this._line}
+                {this._line()}
                 <View style={styles.item}>
                     <ImageLoad
                         style={{width: 100, height: 96}}
-                        source={Images.APPbanner}/>
+                        source={{uri:hotel_logo}}/>
                     <View style={styles.message}>
-                        <Text style={{color: "#333333", fontSize: 16}}>{title}</Text>
+                        <Text style={{color: "#333333", fontSize: 16}}>{hotel_title}</Text>
                         <Text style={{color: "#666666", fontSize: 12, marginTop: 7}}>{time}</Text>
-                        {!isEmptyObject(notes) ? this._notes(notes) : null}
+                        { this._notes( this.props.item)}
                     </View>
                 </View>
-                {this._line}
+                {this._line()}
 
             </View>
         )

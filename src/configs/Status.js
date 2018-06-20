@@ -105,11 +105,26 @@ export class RefundStatus {
     static completed = 'completed';
 }
 
+export function hotleStatus(status) {
+    switch (status){
+        case HotelStatus.canceled:
+            return "已取消"
+        case HotelStatus.unpaid:
+            return "待付款"
+        case HotelStatus.paid:
+            return "待入住"
+        case HotelStatus.completed:
+            return "已完成"
+        default:
+            return ""
+    }
+}
+
 //酒店订单状态
 export class HotelStatus {
     static unpaid = 'unpaid';
     static paid = 'paid';
-    static completed = 'completed';
+    static completed = 'confirmed';
     static canceled = 'canceled';
 }
 
