@@ -196,8 +196,8 @@ export default class IntegralPage extends Component {
         return (
             <View style={styles.item} key={type + index}>
                 <ImageLoad style={{height: 34, width: 34}}
-                       source={item.icon}
-                           emptyBg={Images.integral.renwu}/>
+                       source={{uri:item.icon}}
+                           emptyBg={Images.integral.tiezi}/>
                 <View style={{marginLeft: 14, flexDirection: 'column'}}>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{color: '#444444', fontSize: 14}}>{mark}</Text>
