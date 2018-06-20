@@ -331,7 +331,7 @@ export class RoomMessage extends PureComponent {
                                            item.last_name = txt;
                                        }}/>
                             <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC',paddingTop:0}]}>/</Text>
-                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
+                            <TextInput maxLength={10} style={[styles.room_num, {paddingTop:0,paddingBottom:0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
                                        placeholder={'名（例：XIAOMING）'}
