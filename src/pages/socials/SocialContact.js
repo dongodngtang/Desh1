@@ -160,7 +160,7 @@ export class FollowList extends Component {
                         emptyBg={Images.home_avatar}
                         source={{uri: icon}}
                         style={styles.iconImage}/>
-                    <View>
+                    <View style={styles.view1}>
                         <Text style={styles.nickname}>{nick_name}</Text>
                         <Text
                             style={styles.followText}>{`${I18n.t("follow")} ${following_count} | ${I18n.t("stalwart")} ${followers_count}`}</Text>
@@ -213,6 +213,10 @@ export class FollowList extends Component {
 }
 
 const styles = StyleSheet.create({
+    view1:{
+        marginLeft: reallySize(22),
+        flexDirection:'column'
+    },
     container: {
         backgroundColor: "#ECECEE",
         flex: 1,
@@ -257,13 +261,11 @@ const styles = StyleSheet.create({
         borderRadius: reallySize(27),
     },
     nickname: {
-        marginLeft: reallySize(22),
         fontSize: 15,
         color: "#333333",
     },
     followText: {
         marginTop: reallySize(6),
-        marginLeft: reallySize(22),
         fontSize: 12,
         color: "#AAAAAA",
     },

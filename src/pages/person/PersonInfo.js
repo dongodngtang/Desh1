@@ -152,7 +152,7 @@ export default class PersonInfo extends Component {
                         <Text style={styles.text_label}>{I18n.t('nick')}</Text>
                         <TextInput style={[styles.text_value, {marginRight: 17}]}
                                    clearTextOnFocus={true}
-                                   maxLength={20}
+                                   maxLength={10}
                                    returnKeyType={'done'}
                                    placeholderTextColor={Colors._666}
                                    underlineColorAndroid='transparent'
