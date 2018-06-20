@@ -9,6 +9,7 @@ import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {postIntegralTask, postAward} from '../../services/IntegralDao';
 import {isEmptyObject} from "../../utils/ComonHelper";
 import {getProfile} from "../../services/AccountDao";
+import {ImageLoad} from '../../components'
 
 
 export default class IntegralPage extends Component {
@@ -194,8 +195,9 @@ export default class IntegralPage extends Component {
 
         return (
             <View style={styles.item} key={type + index}>
-                <Image style={{height: 34, width: 34}}
-                       source={Images.integral.login}/>
+                <ImageLoad style={{height: 34, width: 34}}
+                       source={item.icon}
+                           emptyBg={Images.integral.renwu}/>
                 <View style={{marginLeft: 14, flexDirection: 'column'}}>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{color: '#444444', fontSize: 14}}>{mark}</Text>

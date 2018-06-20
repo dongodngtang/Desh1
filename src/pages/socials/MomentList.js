@@ -34,11 +34,10 @@ export const styles = StyleSheet.create({
     },
     user: {
         height: reallySize(60),
-        width: '100%',
+        marginRight:17,
         alignItems: 'center',
         flexDirection: 'row',
-        paddingRight: reallySize(17),
-        paddingLeft: reallySize(17)
+        marginLeft: reallySize(17)
     },
     item: {
         backgroundColor: 'white'
@@ -223,12 +222,11 @@ export default class MomentList extends PureComponent {
                         source={{uri: user.avatar}}/>
                 </TouchableOpacity>
 
-
                 <Text
                     onPress={() => {
                         this.toUserPage(user)
                     }}
-                    style={styles.nick_name}>{user.nick_name}</Text>
+                    style={[styles.nick_name,{marginRight:17}]}>{user.nick_name}</Text>
                 <View style={{flex: 1}}/>
 
                 {excellent ?
@@ -341,6 +339,7 @@ export default class MomentList extends PureComponent {
         return <View>
             {strNotNull(body) ? <Text
                 numberOfLines={6}
+                ellipsizeMode="tail"
                 style={styles.body}>{body}</Text> : null}
 
 
