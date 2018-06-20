@@ -268,14 +268,13 @@ class ShoppingCart extends Component {
                 }
             }
         ];
-        const {price, original_price, text_sku_values, title, image, product_id} = item.variant;
+        const {price, original_price, text_sku_values, title, image, product_id,returnable} = item.variant;
         let type_value = '';
         if (!util.isEmpty(text_sku_values)) {
             text_sku_values.forEach(x => {
                 type_value += x + ' ';
             });
         }
-
         return (
             <Swipeout
                 autoClose={true}
@@ -297,6 +296,9 @@ class ShoppingCart extends Component {
                         <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
                         <Text
                             style={styleS.mallAttributes}>{type_value}</Text>
+                        {returnable ? <View style={styleS.returned}>
+                            <Text style={styleS.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
+                        </View> : null}
                         <View style={styleS.PriceView}>
                             <Text style={styleS.Price}>¥{price}</Text>
                             <View style={{flex: 1}}/>
@@ -414,6 +416,20 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, bindAction)(ShoppingCart);
 
 const styleS = StyleSheet.create({
+    returned: {
+        backgroundColor: '#F34A4A',
+        borderRadius: 2,
+        width: 65,
+        height: 18,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: 'nowrap',
+        marginTop: 4
+    },
+    returnedTxt: {
+        fontSize: 10,
+        color: '#FFFFFF'
+    },
 
     topBar: {
         height: Metrics.navBarHeight,
@@ -475,7 +491,7 @@ const styleS = StyleSheet.create({
     Price: {
         fontSize: 14,
         color: '#F34A4A',
-        marginTop: 19
+        marginTop: 10
     },
     buyTouch: {
         width: 33,

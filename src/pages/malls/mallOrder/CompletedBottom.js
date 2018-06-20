@@ -158,7 +158,7 @@ export default class CompletedBottom extends Component {
                                 if (this.props.pageOrderInfo) {
                                     global.router.pop();
 
-                                } else if (this.props.refresh){
+                                } else if (this.props.refresh) {
                                     this.props.refresh();
                                 }
                             }, err => {
@@ -174,7 +174,8 @@ export default class CompletedBottom extends Component {
     };
 
     completedOrder = (orderItem) => {
-        const {order_number} = orderItem;
+        let i = 0;
+        const {order_items} = orderItem;
         return (
             <View style={styleO.bottomView}>
 
@@ -185,24 +186,36 @@ export default class CompletedBottom extends Component {
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
                 </TouchableOpacity>
+                {order_items.map((item, index) => {
+                    if (item.returnable) {
+                        i++;
+                    }
+                })}
+                {i > 0 ? <TouchableOpacity
+                    onPress={() => {
+                        global.router.toMallSelectPage(orderItem)
+                    }}
+                    style={styleO.returnedBottom}>
+                    <Text style={styleO.orderSubmitTxt}>退货／退款</Text>
+                </TouchableOpacity> : null}
 
                 {/*<TouchableOpacity*/}
-                    {/*onPress={() => {*/}
-                        {/*alertOrder("确认删除?", () => {*/}
-                            {/*deleteMall({order_number: order_number}, ret => {*/}
-                                {/*if (this.props.pageOrderInfo) {*/}
-                                    {/*global.router.pop();*/}
+                {/*onPress={() => {*/}
+                {/*alertOrder("确认删除?", () => {*/}
+                {/*deleteMall({order_number: order_number}, ret => {*/}
+                {/*if (this.props.pageOrderInfo) {*/}
+                {/*global.router.pop();*/}
 
-                                {/*} else if (this.props.refresh){*/}
-                                    {/*this.props.refresh();*/}
-                                {/*}*/}
-                            {/*}, err => {*/}
-                            {/*})*/}
-                        {/*})*/}
+                {/*} else if (this.props.refresh){*/}
+                {/*this.props.refresh();*/}
+                {/*}*/}
+                {/*}, err => {*/}
+                {/*})*/}
+                {/*})*/}
 
-                    {/*}}*/}
-                    {/*style={styleO.customer}>*/}
-                    {/*<Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>*/}
+                {/*}}*/}
+                {/*style={styleO.customer}>*/}
+                {/*<Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>*/}
                 {/*</TouchableOpacity>*/}
 
             </View>)
