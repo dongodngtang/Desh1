@@ -9,7 +9,7 @@ import {isEmptyObject, isWXAppInstalled, showToast, hotelOrderStatus, utcDate, c
 import {ImageMessage, Message} from '../HotelRoomListPage';
 import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
-import {UnpaidBottom} from "./CompletedBottom";
+import UnpaidBottom from "./UnpaidBottom";
 import {HotelStatus} from "../../../configs/Status";
 import {getHotelOrderInfo} from "../../../services/MacauDao";
 import {DeShangPhone} from "../../../configs/Constants";
@@ -218,7 +218,7 @@ export default class OrderStatusPage extends PureComponent {
                     </View>
                     {this._intro()}
 
-                    {status !== 'unpaid' ? this.paidOrder() : null}
+                    {status === 'paid' ? this.paidOrder() : null}
                 </ScrollView>
                 {status === 'unpaid' ? this.statusBottom(order) : null}
             </View>

@@ -3,7 +3,6 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} f
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import HotelItem from './HotelItem';
-import CompletedBottom from './CompletedBottom';
 import UltimateFlatList from '../../../components/ultimate';
 import {BaseComponent} from '../../../components';
 import {HotelStatus,hotleStatus} from "../../../configs/Status";
@@ -38,11 +37,11 @@ export default class HotelOrderListStatus extends Component {
                 <View style={{height: 1}}/>
                 <HotelItem
                     item={item}/>
-
-                <CompletedBottom
-                    pageOrderInfo={false}
-                    refresh={this.refresh}
-                    orderItem={item}/>
+                {/*{}*/}
+                {/*<CompletedBottom*/}
+                    {/*pageOrderInfo={false}*/}
+                    {/*refresh={this.refresh}*/}
+                    {/*orderItem={item}/>*/}
             </TouchableOpacity>
         )
     };

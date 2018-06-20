@@ -8,62 +8,7 @@ import {util, payWx, isWXAppInstalled, call, alertOrder, showToast, alertOrderCh
 import {DeShangPhone} from '../../../configs/Constants';
 import {getHotelWxPaidResult, postHotelWxPay} from "../../../services/MacauDao";
 
-
-export default class CompletedBottom extends Component {
-
-
-    render() {
-        const {orderItem} = this.props;
-        const {total_price} = orderItem.order;
-        return (
-            <View style={styles.page}>
-                <Text style={{color: "#333333", marginLeft: 14, fontSize: 14}}>合计：<Text
-                    style={{color: "#E54A2E", fontSize: 18}}>{total_price}</Text></Text>
-                <View style={{flex: 1}}/>
-                {this.switchOrder(orderItem)}
-            </View>
-        )
-    }
-
-    switchOrder = (orderItem) => {
-        const {status} = orderItem;
-        switch (status) {
-            case HotelStatus.unpaid:
-                return this.renderPay(orderItem);
-            case HotelStatus.paid:
-                return this.paidOrder(orderItem);
-
-            default:
-                return <UnpaidBottom/>;
-        }
-    };
-
-
-    renderPay = (item) => {
-        const {order_number} = item;
-        return (
-            <UnpaidBottom/>
-        )
-    };
-
-    paidOrder = () => {
-
-        return <View style={styles.UnpaidBottom}>
-            <TouchableOpacity
-                onPress={() => {
-                    console.log("ppppp:",DeShangPhone)
-                    call(DeShangPhone)
-                }}
-                style={styles.returnedBottom}>
-                <Text style={styles.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
-            </TouchableOpacity>
-
-        </View>
-    };
-
-}
-
-export class UnpaidBottom extends PureComponent {
+export default class UnpaidBottom extends PureComponent {
     _formatTime = (diff) => {
 
         let min = 0;
@@ -146,6 +91,9 @@ export class UnpaidBottom extends PureComponent {
         })
     }
 }
+
+
+
 
 const styles = StyleSheet.create({
     payCount: {

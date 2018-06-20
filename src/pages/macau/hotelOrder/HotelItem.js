@@ -6,6 +6,8 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import {NavigationBar} from '../../../components';
 import ImageLoad from "../../../components/ImageLoad";
 import {isEmptyObject, showToast} from "../../../utils/ComonHelper";
+import UnpaidBottom from './UnpaidBottom';
+import {HotelStatus} from "../../../configs/Status";
 
 export default class HotelItem extends PureComponent {
 
@@ -16,20 +18,20 @@ export default class HotelItem extends PureComponent {
     };
 
     _notes = (item) => {
-        const {room_title,order} = item;
-        const {nights_num,room_num} = order;
+        const {room_title, order} = item;
+        const {nights_num, room_num} = order;
         return <View style={styles.notes}>
-            <Text style={{color:"#AAAAAA",fontSize:12,marginRight:12}}>{nights_num}晚</Text>
-            <Text style={{color:"#AAAAAA",fontSize:12,marginRight:12}} >{room_num}间</Text>
-            <Text style={{color:"#AAAAAA",fontSize:12,marginRight:12}} >{room_title}</Text>
+            <Text style={{color: "#AAAAAA", fontSize: 12, marginRight: 12}}>{nights_num}晚</Text>
+            <Text style={{color: "#AAAAAA", fontSize: 12, marginRight: 12}}>{room_num}间</Text>
+            <Text style={{color: "#AAAAAA", fontSize: 12, marginRight: 12}}>{room_title}</Text>
         </View>
     };
 
     render() {
-        const {hotel_logo, hotel_title,order} = this.props.item;
+        const {hotel_logo, hotel_title, order} = this.props.item;
 
-        const {checkin_date,checkout_date} = order;
-        let time = `${checkin_date}至${checkout_date}`
+        const {checkin_date, checkout_date, status, total_price,order_number} = order;
+        let time = `${checkin_date}至${checkout_date}`;
 
         return (
             <View style={styles.itemView}>
@@ -37,15 +39,21 @@ export default class HotelItem extends PureComponent {
                 <View style={styles.item}>
                     <ImageLoad
                         style={{width: 100, height: 96}}
-                        source={{uri:hotel_logo}}/>
+                        source={{uri: hotel_logo}}/>
                     <View style={styles.message}>
                         <Text style={{color: "#333333", fontSize: 16}}>{hotel_title}</Text>
                         <Text style={{color: "#666666", fontSize: 12, marginTop: 7}}>{time}</Text>
-                        { this._notes( this.props.item)}
+                        {this._notes(this.props.item)}
                     </View>
                 </View>
                 {this._line()}
 
+                <View style={styles.page}>
+                    <Text style={{color: "#333333", marginLeft: 14, fontSize: 14}}>合计：<Text
+                        style={{color: "#E54A2E", fontSize: 18}}>¥{total_price}</Text></Text>
+                    <View style={{flex: 1}}/>
+                    {status === HotelStatus.unpaid ? <UnpaidBottom order_number={order_number}/> : <View/>}
+                </View>
             </View>
         )
     }
@@ -53,14 +61,20 @@ export default class HotelItem extends PureComponent {
 
 
 const styles = StyleSheet.create({
-    notes:{
+    page: {
+        flex: 1,
+        height: 50,
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    notes: {
         flexDirection: 'row',
-        marginTop:10
+        marginTop: 10
     },
     message: {
         flexDirection: 'column',
         marginLeft: 14,
-        marginTop:2
+        marginTop: 2
     },
     item: {
         flexDirection: 'row',
