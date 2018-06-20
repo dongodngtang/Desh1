@@ -198,7 +198,7 @@ export default class UserTopicPage extends PureComponent {
                     source={{uri: avatar}}/>
             </View>
 
-            <Text style={styles.name}>{nick_name}</Text>
+            <Text style={[styles.name,{marginLeft:17,marginRight:17}]}>{nick_name}</Text>
 
             <View style={[styles.row, {marginTop: 7,marginLeft:17,marginRight:17}]}>
                 <Text style={styles.follow}>{`${I18n.t('social.follow')} ${following_count}`}</Text>
