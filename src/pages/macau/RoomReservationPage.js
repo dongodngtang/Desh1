@@ -334,7 +334,7 @@ export class RoomMessage extends PureComponent {
                             <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
-                                       placeholder={'姓（例：LI）'}
+                                       placeholder={'名（例：XIAOMING）'}
                                        autoCapitalize={'characters'}
                                        placeholderTextColor={Colors._CCC}
                                        onChangeText={txt => {

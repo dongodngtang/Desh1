@@ -32,7 +32,6 @@ export default class HotelItem extends PureComponent {
 
         const {checkin_date, checkout_date, status, total_price,order_number} = order;
         let time = `${checkin_date}至${checkout_date}`;
-
         return (
             <View style={styles.itemView}>
                 {this._line()}

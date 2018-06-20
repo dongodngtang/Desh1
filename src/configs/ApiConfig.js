@@ -177,7 +177,7 @@ const api = {
     hotel_wxPay:hotel_wxPay,//微信支付 - 酒店订单
     hotel_wx_paid_result:hotel_wx_paid_result,//获取酒店订单的微信支付结果
     hotel_order_cancel:hotel_order_cancel,//取消酒店订单
-    del_order_detail: del_order_detail,//删除酒店订单
+    del_order_hotel: del_order_hotel,//删除酒店订单
 
 }
 
@@ -192,9 +192,9 @@ function getUserId() {
 
 const page_size = 10;
 
-export function del_order_detail(body) {
+export function del_order_hotel(body) {
     const {order_number} = body;
-    return `${api.shop_orders}/${order_number}`
+    return `hotel_orders/${order_number}`
 }
 
 export function hotel_order_cancel(body) {
@@ -437,7 +437,7 @@ export function product_order_confirm(body) {
 
 export function product_order_detail(body) {
     const {order_number} = body;
-    return `hotel_orders/${order_number}`
+    return `${api.shop_orders}/${order_number}`
 }
 
 export function wx_paid_result(body) {

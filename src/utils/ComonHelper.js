@@ -429,6 +429,8 @@ export function hotelOrderStatus(status) {
             return '待入住';
         case 'confirmed':
             return '已完成';
+        case 'canceled':
+            return '已取消';
         default:
             return ''
     }

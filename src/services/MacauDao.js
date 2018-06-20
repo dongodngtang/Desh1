@@ -4,7 +4,7 @@ import Api from '../configs/ApiConfig';
 //删除订单
 
 export function delHotelOrder(body, resolve, reject) {
-    helper.del(Api.del_order_detail(body), {}, (ret) => {
+    helper.del(Api.del_order_hotel(body), {}, (ret) => {
         resolve(ret.data)
     }, reject)
 }

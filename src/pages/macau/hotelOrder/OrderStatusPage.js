@@ -104,10 +104,11 @@ export default class OrderStatusPage extends PureComponent {
                 onPress={() => {
                     alertOrder("确认删除？", () => {
                         delHotelOrder({order_number: order_number}, ret => {
-                            if (this.props.refresh)
-                                this.props.refresh();
+
                         }, err => {
                         })
+                        showToast("删除成功");
+                        global.router.toHotelOrderPage();
                     });
                 }}>
                 <Text style={[styles.btn_book_txt, {color: "#444444"}]}>删除订单</Text>
@@ -153,16 +154,17 @@ export default class OrderStatusPage extends PureComponent {
                 <View style={ApplicationStyles.bgContainer}>
                     <NavigationBar
                         toolbarStyle={{backgroundColor: Colors._E54}}
-                        title={hotelOrderStatus(orderInfo.order.status)}
+                        title={hotelOrderStatus(status)}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                         leftBtnPress={() => router.pop()}/>
                 </View>
             )
         }
-        const {room, order, checkin_infos} = this.state.orderInfo;
+        const {room, order, checkin_infos} =orderInfo;
         const {order_number, created_at, room_num, pay_status, status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num} = order;
         let date = {begin_date: checkin_date, end_date: checkout_date, counts: nights_num};
+
         return (
             <View style={ApplicationStyles.bgContainer}>
 
