@@ -44,7 +44,7 @@ export default class OrderStatusPage extends PureComponent {
 
     _intro = () => {
         return (
-            <View style={{marginTop: 19, marginLeft: 16, marginRight: 16, paddingBottom: 80}}>
+            <View style={{marginTop: 19, marginLeft: 16, marginRight: 16, paddingBottom: 33}}>
                 <Text style={{color: "#AAAAAA", fontSize: 12, lineHeight: 20}}><Text
                     style={{color: "#666666", fontSize: 12}}>扣款说明：</Text>{intro}</Text>
             </View>
@@ -256,7 +256,6 @@ export default class OrderStatusPage extends PureComponent {
 
 const styles = StyleSheet.create({
     btn_book: {
-        marginTop: 33,
         marginLeft: 14,
         marginRight: 14,
         marginBottom: 100,
