@@ -98,6 +98,7 @@ export default class MallSelectPage extends PureComponent {
     };
 
     renderShowEditView = (item) => {
+        console.log("djskdks:",item)
         /*if (item.refund_status !== RefundStatus.none && item.refund_status !== RefundStatus.close)
             return;*/
         let imageURL = Images.radio;
@@ -108,7 +109,7 @@ export default class MallSelectPage extends PureComponent {
             <View
                 style={{height: 120,width:38, alignItems: 'center', justifyContent: 'center'}}
             >
-                {strNotNull(item.return_status_text) ? null : <Image style={styleS.radioImg}
+                {strNotNull(item.return_status_text) || !item.returnable ? null : <Image style={styleS.radioImg}
                                                                 source={imageURL}/>}
 
             </View>
