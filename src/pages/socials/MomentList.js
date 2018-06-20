@@ -222,7 +222,7 @@ export default class MomentList extends PureComponent {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={{marginLeft:14,width:'47%',marginRight:17,backgroundColor:'red'}}
+                    style={{marginLeft:14,width:'47%',marginRight:17}}
                     onPress={() => {
                         this.toUserPage(user)
                     }}>
