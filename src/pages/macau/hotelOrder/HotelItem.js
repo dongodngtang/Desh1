@@ -52,7 +52,8 @@ export default class HotelItem extends PureComponent {
                     <Text style={{color: "#333333", marginLeft: 14, fontSize: 14}}>合计：<Text
                         style={{color: "#E54A2E", fontSize: 18}}>¥{total_price}</Text></Text>
                     <View style={{flex: 1}}/>
-                    {status === HotelStatus.unpaid ? <UnpaidBottom order_number={order_number}/> : <View/>}
+                    {status === HotelStatus.unpaid ? <UnpaidBottom order_number={order_number}
+                                                                   refresh={this.props.refresh}/> : <View/>}
                 </View>
             </View>
         )

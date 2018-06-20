@@ -5,13 +5,16 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {NavigationBar} from '../../../components';
 import ImageLoad from "../../../components/ImageLoad";
-import {isEmptyObject, isWXAppInstalled, showToast, hotelOrderStatus, utcDate, call} from "../../../utils/ComonHelper";
+import {
+    isEmptyObject, isWXAppInstalled, showToast, hotelOrderStatus, utcDate, call,
+    alertOrder
+} from "../../../utils/ComonHelper";
 import {ImageMessage, Message} from '../HotelRoomListPage';
 import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
 import UnpaidBottom from "./UnpaidBottom";
 import {HotelStatus} from "../../../configs/Status";
-import {getHotelOrderInfo} from "../../../services/MacauDao";
+import {delHotelOrder, getHotelOrderInfo} from "../../../services/MacauDao";
 import {DeShangPhone} from "../../../configs/Constants";
 
 const intro = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
@@ -55,19 +58,20 @@ export default class OrderStatusPage extends PureComponent {
                     return (
                         <View key={i} style={{
                             flexDirection: 'row',
-                            alignItems:'center',
+                            alignItems: 'center',
                             paddingTop: i === 0 ? 0 : 14,
-                            paddingBottom: i === persons.length-1 ? 0 : 14,
+                            paddingBottom: i === persons.length - 1 ? 0 : 14,
                             borderBottomColor: '#F3F3F3',
                             borderBottomWidth: i === persons.length - 1 ? 0 : 1
                         }}>
-                            <TextInput style={[styles.room_num, {width: 100,paddingTop:0,paddingBottom:0}]}
+                            <TextInput style={[styles.room_num, {width: 100, paddingTop: 0, paddingBottom: 0}]}
                                        editable={false}
                                        value={item.last_name}/>
                             <Text style={[styles.txt]}>/</Text>
-                            <TextInput style={[styles.room_num, {marginLeft: 10, width: 100,paddingTop:0,paddingBottom:0}]}
-                                       editable={false}
-                                       value={item.first_name}/>
+                            <TextInput
+                                style={[styles.room_num, {marginLeft: 10, width: 100, paddingTop: 0, paddingBottom: 0}]}
+                                editable={false}
+                                value={item.first_name}/>
                         </View>
                     )
                 })}
@@ -83,16 +87,35 @@ export default class OrderStatusPage extends PureComponent {
         )
     };
 
-    paidOrder = () => {
-        return (
-            <TouchableOpacity
-                style={[styles.btn_book, {backgroundColor: Colors._E54}]}
+    paidOrder = (status,order_number) => {
+        if (status === HotelStatus.paid) {
+            return (
+                <TouchableOpacity
+                    style={[styles.btn_book, {backgroundColor: Colors._E54}]}
+                    onPress={() => {
+                        call(DeShangPhone)
+                    }}>
+                    <Text style={[styles.btn_book_txt, {color: "#FFFFFF"}]}>联系客服</Text>
+                </TouchableOpacity>
+            )
+        } else if (status === HotelStatus.canceled || status === HotelStatus.completed) {
+            return (<TouchableOpacity
+                style={[styles.btn_book, {backgroundColor: Colors._FFF}]}
                 onPress={() => {
-                    call(DeShangPhone)
+                    alertOrder("确认删除？", () => {
+                        delHotelOrder({order_number: order_number}, ret => {
+                            if (this.props.refresh)
+                                this.props.refresh();
+                        }, err => {
+                        })
+                    });
                 }}>
-                <Text style={[styles.btn_book_txt, {color: "#FFFFFF"}]}>联系客服</Text>
-            </TouchableOpacity>
-        )
+                <Text style={[styles.btn_book_txt, {color: "#444444"}]}>删除订单</Text>
+            </TouchableOpacity>)
+        } else {
+            return null;
+        }
+
     }
 
     statusBottom = (order) => {
@@ -118,10 +141,11 @@ export default class OrderStatusPage extends PureComponent {
             return "#E54A2E"
         } else if (status === 'paid') {
             return "#4A90E2"
-        } else{
+        } else {
             return "#333333"
         }
     };
+
     render() {
         const {orderInfo} = this.state;
         if (isEmptyObject(orderInfo)) {
@@ -129,7 +153,7 @@ export default class OrderStatusPage extends PureComponent {
                 <View style={ApplicationStyles.bgContainer}>
                     <NavigationBar
                         toolbarStyle={{backgroundColor: Colors._E54}}
-                        title={hotelOrderStatus(status)}
+                        title={hotelOrderStatus(orderInfo.order.status)}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                         leftBtnPress={() => router.pop()}/>
@@ -163,9 +187,10 @@ export default class OrderStatusPage extends PureComponent {
                     <View style={styles.orderInfo}>
                         <Text style={styles.infoTxt}>订单信息</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 25}]}>订单编号：{order_number}</Text>
-                        <Text style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY/MM/DD  HH:MM')}</Text>
+                        <Text
+                            style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY/MM/DD  HH:MM')}</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：
-                            <Text style={{color:this.statusColor(pay_status)}}>{hotelOrderStatus(pay_status)}</Text>
+                            <Text style={{color: this.statusColor(pay_status)}}>{hotelOrderStatus(pay_status)}</Text>
                         </Text>
                     </View>
 
@@ -218,7 +243,7 @@ export default class OrderStatusPage extends PureComponent {
                     </View>
                     {this._intro()}
 
-                    {status === 'paid' ? this.paidOrder() : null}
+                    {this.paidOrder(status,order_number)}
                 </ScrollView>
                 {status === 'unpaid' ? this.statusBottom(order) : null}
             </View>

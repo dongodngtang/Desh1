@@ -430,7 +430,7 @@ export function hotelOrderStatus(status) {
         case 'confirmed':
             return '已完成';
         default:
-            return '未知状态'
+            return ''
     }
 }
 

@@ -36,7 +36,8 @@ export default class HotelOrderListStatus extends Component {
                 </View>
                 <View style={{height: 1}}/>
                 <HotelItem
-                    item={item}/>
+                    item={item}
+                    refresh={this.refresh}/>
                 {/*{}*/}
                 {/*<CompletedBottom*/}
                     {/*pageOrderInfo={false}*/}
