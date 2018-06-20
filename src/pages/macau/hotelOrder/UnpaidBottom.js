@@ -40,23 +40,31 @@ export default class UnpaidBottom extends PureComponent {
                     <Text style={styles.payment}>取消订单</Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity style={styles.payView}
+                                  onPress={() => {
+                                      this.wxPay({order_number});
+                                  }}>
+                    <View style={{alignItems: 'flex-end'}}>
+                        <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>付款</Text>
+                    </View>
 
-                <View style={styles.payView}>
-                    <PayCountDown
-                        frameStyle={styles.payCount}
-                        beginText='倒计时'
-                        endText='付款失效'
-                        count={60 * 30}
-                        pressAction={() => {
-                            this.wxPay({order_number});
-                        }}
-                        changeWithCount={(count) => `${this._formatTime(count)}`}
-                        id={order_number}
-                        ref={(e) => {
-                            this.countDownButton = e
-                        }}/>
+                </TouchableOpacity>
+                {/*<View style={styles.payView}>*/}
+                    {/*<PayCountDown*/}
+                        {/*frameStyle={styles.payCount}*/}
+                        {/*beginText='倒计时'*/}
+                        {/*endText='付款失效'*/}
+                        {/*count={60 * 30}*/}
+                        {/*pressAction={() => {*/}
+                            {/*this.wxPay({order_number});*/}
+                        {/*}}*/}
+                        {/*changeWithCount={(count) => `${this._formatTime(count)}`}*/}
+                        {/*id={order_number}*/}
+                        {/*ref={(e) => {*/}
+                            {/*this.countDownButton = e*/}
+                        {/*}}/>*/}
 
-                </View>
+                {/*</View>*/}
 
             </View>
         )
