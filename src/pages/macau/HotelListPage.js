@@ -116,7 +116,8 @@ export default class HotelListPage extends PureComponent {
     };
 
     _renderItem = (item, index) => {
-        const {title, address, location, logo, price} = item;
+        const {title, address, location, logo, start_price, star_level} = item;
+        console.log("djsdnks", item)
         const {changeTime} = this.state;
         return (
             <TouchableOpacity style={styles.item} key={index}
@@ -128,8 +129,8 @@ export default class HotelListPage extends PureComponent {
                     source={{uri: logo}}/>
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{title}</Text>
-                    {item.star ? <View style={styles.starView}>
-                        {this._star(item.star).map((index) => {
+                    {item.star_level > 0 ? <View style={styles.starView}>
+                        {this._star(item.star_level).map((index) => {
                             return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                         })}
                     </View> : null}
@@ -138,9 +139,9 @@ export default class HotelListPage extends PureComponent {
                         {item.vouchers ? this._vouchers() : <View/>}
                         {item.recommend ? this._recommend() : <View/>}
                         <View style={{flex: 1}}/>
-                        {/*<Text style={styles.price}><Text*/}
-                        {/*style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{price}<Text*/}
-                        {/*style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text>*/}
+                        {item.start_price !== '0.0' ? <Text style={styles.price}><Text
+                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{start_price}<Text
+                            style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text> : null}
                     </View>
                 </View>
             </TouchableOpacity>
