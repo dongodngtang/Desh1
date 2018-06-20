@@ -106,7 +106,7 @@ export default class ReceivedReplyPage extends Component {
                 <Image style={styles.personImg} source={this._avatar(avatar)}/>
                 <View style={styles.pageRight}>
                     <View style={{flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6}}>
-                        <Text style={styles.name}>{nick_name}</Text>
+                        <Text style={[styles.name,{width:'55%'}]}>{nick_name}</Text>
                         {official ? this.official() : null}
                         <View style={{flex: 1}}/>
                         <Text style={styles.time}>{utcDate(created_at, 'YYYY-MM-DD HH:mm')}</Text>
@@ -207,7 +207,8 @@ const styles = StyleSheet.create({
     },
     replyView: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
+        alignItems: 'center',
+        justifyContent:'flex-start',
         flexWrap: 'wrap',
     },
     replyTxt1: {
