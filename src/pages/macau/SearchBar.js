@@ -31,7 +31,7 @@ export default class SearchBar extends PureComponent {
                 {this.props._click === 'HotelListPage' ? <View
                     style={styles.search}>
                     <Image style={styles.searchImg}
-                           source={Images.search}/>
+                           source={Images.macau.search}/>
 
                     <TextInput
                         onChangeText={text => {

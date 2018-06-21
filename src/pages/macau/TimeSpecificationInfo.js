@@ -116,15 +116,15 @@ export default class TimeSpecificationInfo extends PureComponent {
                 }
                 seleactDatas.forEach((item, index, arr) => {
                     if (index === 0) {
-                        markedDates[item] = {startingDay: true, color: '#FA6E55'};
+                        markedDates[item] = {startingDay: true, color: '#FA6E55', textColor: '#FFFFFF'};
                         return;
                     }
                     if (index === arr.length - 1) {
-                        markedDates[item] = {endingDay: true, color: '#FA6E55'};
+                        markedDates[item] = {endingDay: true, color: '#FA6E55', textColor: '#FFFFFF'};
                         return;
                     }
 
-                    markedDates[item] = {color: '#FA6E55'};
+                    markedDates[item] = {color: '#FA6E55',textColor: '#FFFFFF'};
                 })
                 props = {
                     markedDates,
@@ -174,12 +174,12 @@ export default class TimeSpecificationInfo extends PureComponent {
                         onDayPress={this.nDayPress}
                         firstDay={1}
                         {...this.state.calendarProps}
-                        monthFormat={'yyyy年MM月'}
+                        monthFormat={'请选择时间'}
                         theme={{
-                            selectedDayTextColor: '#ffffff',
+                            selectedDayTextColor: 'white',
                             selectedDayBackgroundColor: '#FA6E55',
                             textDayHeaderColor: '#FA6E55',
-                            todayTextColor:'black'
+                            todayTextColor: 'black'
                         }}
                     />
 

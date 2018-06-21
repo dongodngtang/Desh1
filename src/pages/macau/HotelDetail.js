@@ -131,7 +131,7 @@ export default class HotelDetail extends PureComponent {
                 onPress={() => {
                     router.toHotelRoomListPage(this.state.hotel, this.props.params.date);
                 }}>
-                <Text style={styles.btn_book_txt}>查看房间</Text>
+                <Text style={styles.btn_book_txt}>预定房间</Text>
 
             </TouchableOpacity>
         </View>

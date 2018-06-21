@@ -459,12 +459,12 @@ const styles = StyleSheet.create({
     phoneView: {
         flexDirection: 'row',
         alignItems:'center',
-        paddingTop: 11,
-        paddingBottom: 11,
+        paddingTop: 14,
+        paddingBottom: 14,
         flex: 1
     },
     txt2: {
-        color: "#CCCCCC",
+        color: "#AAAAAA",
         fontSize: 15
     },
     txt: {
