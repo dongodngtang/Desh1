@@ -38,11 +38,6 @@ export default class HotelOrderListStatus extends Component {
                 <HotelItem
                     item={item}
                     refresh={this.refresh}/>
-                {/*{}*/}
-                {/*<CompletedBottom*/}
-                    {/*pageOrderInfo={false}*/}
-                    {/*refresh={this.refresh}*/}
-                    {/*orderItem={item}/>*/}
             </TouchableOpacity>
         )
     };
@@ -79,10 +74,11 @@ export default class HotelOrderListStatus extends Component {
         try {
             this.load({
                 status: this.props.status,
-                page,
+                page:1,
                 page_size: 20
             }, postRefresh, endFetch)
         } catch (e) {
+            this.contain && this.contain.close();
             endFetch()
         }
 

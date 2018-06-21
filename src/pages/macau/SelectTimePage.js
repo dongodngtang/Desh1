@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity,
     ScrollView, FlatList
@@ -10,7 +10,7 @@ import TimeSpecificationInfo from './TimeSpecificationInfo';
 import {convertDate, isEmptyObject, showWeek} from '../../utils/ComonHelper';
 import moment from 'moment';
 
-export default class SelectTimePage extends PureComponent {
+export default class SelectTimePage extends Component {
     state = {
         timeShow: false,
         date: {begin_date: "", end_date: "", counts: 0}

@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent,Component} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity
 } from 'react-native';
@@ -174,7 +174,7 @@ export default class HotelSearch extends PureComponent {
 }
 
 
-class HotelItem extends PureComponent {
+class HotelItem extends Component {
 
     render() {
         const {title, address, location, logo} = this.props.item;

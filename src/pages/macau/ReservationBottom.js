@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, FlatList, Image, TouchableOpacity, ImageBackground, TextInput, ScrollView
 } from 'react-native';
@@ -7,7 +7,7 @@ import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {isEmptyObject, showToast, checkMobile, isWXAppInstalled, payWx, alertOrder, call} from "../../utils/ComonHelper";
 
-export default class ReservationBottom extends PureComponent {
+export default class ReservationBottom extends Component {
 
     render() {
         const {total_price,persons,phone} = this.props;

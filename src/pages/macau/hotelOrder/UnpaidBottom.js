@@ -7,7 +7,7 @@ import {util, payWx, isWXAppInstalled, call, alertOrder, showToast, alertOrderCh
 import {DeShangPhone} from '../../../configs/Constants';
 import {getHotelWxPaidResult, postHotelWxPay,cancelHotelOrder} from "../../../services/MacauDao";
 
-export default class UnpaidBottom extends PureComponent {
+export default class UnpaidBottom extends Component {
     _formatTime = (diff) => {
 
         let min = 0;

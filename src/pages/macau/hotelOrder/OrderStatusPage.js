@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, FlatList, Image, TouchableOpacity, ImageBackground, TextInput, ScrollView
 } from 'react-native';
@@ -19,7 +19,7 @@ import {DeShangPhone} from "../../../configs/Constants";
 
 const intro = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 
-export default class OrderStatusPage extends PureComponent {
+export default class OrderStatusPage extends Component {
     state = {
         orderInfo: []
     };
