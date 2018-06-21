@@ -170,6 +170,7 @@ export default class TimeSpecificationInfo extends PureComponent {
                 </TouchableOpacity>
                 <View style={styles.View}>
                     <CalendarList
+                        pastScrollRange={0}
                         minDate={this.minDate}
                         onDayPress={this.nDayPress}
                         firstDay={1}
