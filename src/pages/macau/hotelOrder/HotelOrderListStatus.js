@@ -75,6 +75,7 @@ export default class HotelOrderListStatus extends Component {
     }
 
     onFetch = (page, postRefresh, endFetch) => {
+
         try {
             this.load({
                 status: this.props.status,
@@ -90,7 +91,7 @@ export default class HotelOrderListStatus extends Component {
 
     load = (body, postRefresh, endFetch) => {
         getHotelOrderList(body, data => {
-            console.log(data)
+            console.log("hotelOrderItems",data)
             postRefresh(data.items,15)
         }, err => {
             endFetch()

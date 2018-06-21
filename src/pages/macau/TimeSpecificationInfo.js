@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent,Component} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity,
     ScrollView, FlatList
@@ -175,13 +175,16 @@ export default class TimeSpecificationInfo extends PureComponent {
                         onDayPress={this.nDayPress}
                         firstDay={1}
                         {...this.state.calendarProps}
-                        monthFormat={'请选择时间'}
+                        monthFormat={'yyyy年MM月'}
                         theme={{
                             selectedDayTextColor: 'white',
                             selectedDayBackgroundColor: '#FA6E55',
                             textDayHeaderColor: '#FA6E55',
                             todayTextColor: 'black'
                         }}
+                        hideArrows={false}
+                        renderArrow={(left) => (<Arrow />)}
+                        onPressArrowLeft={()=>{this.props.showSpecInfo()}}
                     />
 
                 </View>
@@ -210,7 +213,13 @@ addDays = (dat, days) => {
     dat.setDate(dat.getDate() + days);
     return dat;
 };
-
+export  class Arrow extends Component {
+    render(){
+        return(
+            <Text>取消</Text>
+        )
+    }
+}
 const styles = StyleSheet.create({
     page: {
         backgroundColor: 'rgba(0,0,0,0.5)',

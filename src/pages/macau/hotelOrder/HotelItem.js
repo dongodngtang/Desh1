@@ -27,6 +27,24 @@ export default class HotelItem extends PureComponent {
         </View>
     };
 
+    bottomShow=(order)=>{
+        if(order.status === HotelStatus.paid){
+            return(
+                <TouchableOpacity
+
+                    onPress={() => {
+                        global.router.toMallSelectPage(order)
+                    }}
+                    style={styles.returnedBottom}>
+                    <Text style={styles.orderSubmitTxt}>退货／退款</Text>
+                </TouchableOpacity>
+            )
+        }else{
+            return <View/>
+        }
+
+    }
+
     render() {
         const {hotel_logo, hotel_title, order} = this.props.item;
 
@@ -51,6 +69,7 @@ export default class HotelItem extends PureComponent {
                     <Text style={{color: "#333333", marginLeft: 14, fontSize: 14}}>合计：<Text
                         style={{color: "#E54A2E", fontSize: 18}}>¥{total_price}</Text></Text>
                     <View style={{flex: 1}}/>
+
                     {status === HotelStatus.unpaid ? <UnpaidBottom order_number={order_number}
                                                                    refresh={this.props.refresh}/> : <View/>}
                 </View>
@@ -61,6 +80,20 @@ export default class HotelItem extends PureComponent {
 
 
 const styles = StyleSheet.create({
+    returnedBottom: {
+        borderWidth: 1,
+        borderColor: '#333333',
+        borderRadius: 4,
+        width: 90,
+        height: 37,
+        marginRight: 17,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    orderSubmitTxt: {
+        fontSize: 14,
+        color: '#333333'
+    },
     page: {
         flex: 1,
         height: 50,
