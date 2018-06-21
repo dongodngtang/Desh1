@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import HotelItem from './HotelItem';
 import UltimateFlatList from '../../../components/ultimate';
 import {BaseComponent} from '../../../components';
-import {HotelStatus,hotleStatus} from "../../../configs/Status";
+import {HotelStatus, hotleStatus} from "../../../configs/Status";
 import {getHotelOrderList} from '../../../services/MacauDao';
 
 export default class HotelOrderListStatus extends Component {
@@ -21,7 +21,7 @@ export default class HotelOrderListStatus extends Component {
 
     renderItem = (item, index) => {
 
-        const {status,order_number} = item.order;
+        const {status, order_number} = item.order;
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -72,11 +72,17 @@ export default class HotelOrderListStatus extends Component {
     onFetch = (page, postRefresh, endFetch) => {
 
         try {
-            this.load({
-                status: this.props.status,
-                page:1,
-                page_size: 20
-            }, postRefresh, endFetch)
+            if (page === 1) {
+                this.load({
+                    status: this.props.status,
+                    page: page,
+                    page_size: 20
+                }, postRefresh, endFetch)
+            } else {
+                postRefresh([], 15)
+            }
+
+
         } catch (e) {
             this.contain && this.contain.close();
             endFetch()
@@ -87,8 +93,8 @@ export default class HotelOrderListStatus extends Component {
 
     load = (body, postRefresh, endFetch) => {
         getHotelOrderList(body, data => {
-            console.log("hotelOrderItems",data)
-            postRefresh(data.items,15)
+            console.log("hotelOrderItems", data)
+            postRefresh(data.items, 15)
         }, err => {
             endFetch()
         })
