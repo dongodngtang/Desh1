@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Scene, Stack, Tabs, ActionConst} from 'react-native-router-flux';
+import {Scene, Stack, Tabs} from 'react-native-router-flux';
 import TabHomePage from './TabHomePage';
 import Personal from './Personal';
 import {
@@ -27,25 +27,35 @@ export const Navigation = () => {
             animationEnabled={false}
             tabBarComponent={CustomTabBar}
         >
-            <Scene
-                key="tab_home"
-                component={TabHomePage}
-                hideNavBar
-            />
-            <Scene key="tab_news"
-                   component={Square}
-                   hideNavBar
+            <Stack
+                key="tab_1"
+            >
+                <Scene
+                    key="tab_home"
+                    component={TabHomePage}
+                    hideNavBar
+                />
+            </Stack>
+            <Stack key="tab_2">
+                <Scene key="tab_news"
+                       component={Square}
+                       hideNavBar
 
-            />
+                />
+            </Stack>
 
-            <Scene key="tab_discover"
-                   component={MessageCenter}
-                   hideNavBar
-            />
-            <Scene key="tab_person"
-                   component={Personal}
-                   hideNavBar
-            />
+            <Stack key="tab_3">
+                <Scene key="tab_discover"
+                       component={MessageCenter}
+                       hideNavBar
+                />
+            </Stack>
+            <Stack key="tab_4">
+                <Scene key="tab_person"
+                       component={Personal}
+                       hideNavBar
+                />
+            </Stack>
         </Tabs>
     );
 };

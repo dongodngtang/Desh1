@@ -39,17 +39,11 @@ class LoginCodeView extends React.Component {
             postLogin(body, data => {
 
                 const {user_id} = data.data;
-                const recentRaces = {
-                    user_id: user_id,
-                    number: 8
-                };
+
                 showToast(I18n.t('login_success'));
-                this.props._getRecentRaces(recentRaces);
                 this.props._getProfile(user_id);
-                global.router.pop();
-                setTimeout(() => {
-                    global.router.pop();
-                }, 200)
+                router.popToTop();
+
 
             }, err => {
                 showToast(err)
