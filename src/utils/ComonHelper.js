@@ -18,6 +18,7 @@ import {getApiType} from '../services/RequestHelper';
 import _ from 'lodash';
 import JShareModule from "jshare-react-native";
 import JMessage from "jmessage-react-plugin";
+import {CLEAR_PROFILE} from "../actions/ActionTypes";
 
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
@@ -855,6 +856,7 @@ export function clearLoginUser() {
     });
     removeToken();
     setLoginUser({});
+    getDispatchAction()['CLEAR_PROFILE']();
     global.user_extra = {};
     global.addressList = [];
     JMessage.logout();

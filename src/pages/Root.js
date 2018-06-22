@@ -17,11 +17,12 @@ import {
     SWITCH_LANGUAGE,
     VIDEO_PAUSE,
     ADD_CART,
-    DELETE_CART
+    DELETE_CART,
+    CLEAR_PROFILE
 } from '../actions/ActionTypes';
 import JpushHelp from '../services/JpushHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
-import {fetchGetRecentRaces} from '../actions/RacesAction';
+import {_getProfileOk, fetchGetRecentRaces} from '../actions/RacesAction';
 import {fetchGetCertification, switchLanguage, videoPause} from '../actions/AccountAction';
 import {connect} from 'react-redux';
 import {fetchUnreadMsg} from '../actions/AccountAction';
@@ -43,6 +44,7 @@ class Root extends Component {
         setDispatchAction(VIDEO_PAUSE, this.props._videoPause);
         setDispatchAction(DELETE_CART, this.props._deleteCart);
         setDispatchAction(ADD_CART, this.props._addCart);
+        setDispatchAction(CLEAR_PROFILE,this.props._getProfileNull)
 
 
         init(() => {
@@ -119,7 +121,8 @@ const bindAction = dispatch => ({
     _switchLanguage: () => dispatch(switchLanguage()),
     _videoPause: () => dispatch(videoPause()),
     _addCart: () => dispatch(addCart()),
-    _deleteCart: () => dispatch(deleteCart())
+    _deleteCart: () => dispatch(deleteCart()),
+    _getProfileNull: () => dispatch(_getProfileOk({}))
 });
 
 const mapStateToProps = state => ({

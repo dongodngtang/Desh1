@@ -120,7 +120,7 @@ export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
 /*商城*/
 export const DELETE_CART = 'DELETE_CART';
 export const ADD_CART = 'ADD_CART';
-
+export const CLEAR_PROFILE = 'CLEAR_PROFILE'
 /*分享*/
 export const SHARE_OPEN = 'SHARE_OPEN';
 export const SHARE_CLOSE = 'SHARE_CLOSE';
