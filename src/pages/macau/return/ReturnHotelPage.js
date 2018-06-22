@@ -6,7 +6,7 @@ import {NavigationBar, BaseComponent} from '../../../components';
 import {postTempImg, postMallRefund} from '../../../services/MallDao';
 import {strNotNull, showToast, getFileName, util, alertOrder} from '../../../utils/ComonHelper';
 
-export default class ReturnPage extends Component {
+export default class ReturnHotelPage extends Component {
 
 
     render(){
