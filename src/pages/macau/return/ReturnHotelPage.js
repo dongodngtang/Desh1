@@ -10,6 +10,7 @@ export default class ReturnHotelPage extends Component {
 
 
     render(){
+        const {} = this.props.params.order;
         return(
             <View>
 
