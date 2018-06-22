@@ -39,7 +39,7 @@ export function shareHost() {
         return THOST;
 }
 
-export const loadApp = HOST + 'race/181/zh/loadAPP';
+export const loadApp = HOST + 'loadAPP';
 export const picker = {
     width: 500,
     height: 500,
@@ -76,7 +76,7 @@ export function uShareMallInfo(title, desc, icon, id) {
         shareTitle: title,
         shareText: I18n.t('ads_poker'),
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "products/" + id + "/" + Lang,
+        shareLink: shareHost() + "products/" + id,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -458,7 +458,7 @@ export function uShareTicket(title, desc, icon, id, ticket_id) {
         shareTitle: title,
         shareText: shareTxt(desc),
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "races/" + id + '/tickets/' + ticket_id + "/" + Lang,
+        shareLink: shareHost() + "races/" + id + '/tickets/' + ticket_id,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -480,7 +480,7 @@ export function uShareActivity(title, desc, icon, id) {
         shareTitle: title,
         shareText: shareTxt(desc),
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "activities/" + id + "/" + Lang,
+        shareLink: shareHost() + "activities/" + id,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -490,7 +490,7 @@ export function uShareRace(title, location, icon, raceId) {
         shareTitle: title,
         shareText: location,
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "race/" + raceId + "/" + Lang,
+        shareLink: shareHost() + "race/" + raceId,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -502,7 +502,7 @@ export function newShare(title, location, icon, newsId) {
         shareTitle: title,
         shareText: location,
         shareImage: thumb,
-        shareLink: shareHost() + "news/" + newsId + "/" + Lang,
+        shareLink: shareHost() + "news/" + newsId,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -512,7 +512,7 @@ export function rankPlayerShare(title, location, icon, playerId) {
         shareTitle: title,
         shareText: location,
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "rankPlayer/" + playerId + "/" + Lang,
+        shareLink: shareHost() + "rankPlayer/" + playerId,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -522,7 +522,7 @@ export function rankGameShare(title, location, icon, gameId) {
         shareTitle: title,
         shareText: location,
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "rankGame/" + gameId + "/" + Lang,
+        shareLink: shareHost() + "rankGame/" + gameId,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -532,7 +532,7 @@ export function uVideoShare(title, desc, icon, videoId) {
         shareTitle: title,
         shareText: shareTxt(desc),
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "videos/" + videoId + "/" + Lang,
+        shareLink: shareHost() + "videos/" + videoId,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
