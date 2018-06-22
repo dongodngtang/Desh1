@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2016/12/29.
  */
-import React from 'react';
+import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, TextInput, StyleSheet, Image} from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, Metrics} from '../Themes';
@@ -17,9 +17,11 @@ import NavigationBar from '../components/NavigationBar';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
 import {closeDrawer} from '../reducers/DrawerRedux';
+import {postRegister, postResetPwdCode} from '../services/AccountDao';
+import {showToast} from "../utils/ComonHelper";
 
 
-class InputPwdPage extends React.Component {
+class InputPwdPage extends Component {
 
     constructor(props) {
         super(props);
@@ -36,39 +38,11 @@ class InputPwdPage extends React.Component {
 
     _toHome = (loginUser) => {
         const {user_id} = loginUser;
-        const recentRaces = {
-            user_id: user_id,
-            number: 5
-        };
-        this.props.closeDrawer();
-        this.props._getRecentRaces(recentRaces);
         this.props._getProfile(user_id);
 
         router.popToTop();
     };
 
-    shouldComponentUpdate(newProps) {
-
-        if (this.props.loading != newProps.loading) {
-            console.log(newProps.actionType, 'loading:' + newProps.loading + ' hasData:' + newProps.hasData)
-            if (newProps.actionType === POST_REGISTER) {
-                if (!newProps.loading && newProps.hasData) {
-                    this._toHome(newProps.loginUser);
-                    return false;
-                }
-
-            } else if (newProps.actionType === POST_RESET_PASSWORD) {
-                if (!newProps.loading && newProps.hasData) {
-                    router.popToLogin();
-                    return false;
-                }
-            }
-        }
-
-        return true;
-
-
-    }
 
     componentDidMount() {
 
@@ -85,24 +59,49 @@ class InputPwdPage extends React.Component {
 
     _request_register = () => {
         const {mobile, code, email, isEmailOrMobile, isRegisterOrForget, password} = this.state;
-
         if (!pwdVaild(password)) {
             return;
         }
         let pwd = md5.hex_md5(password);
 
         if (isRegisterOrForget === 'register') {
+            const body = {
+                vcode: code,
+                password: pwd
+            };
+
             if (isEmailOrMobile === 'email') {
-                this.props._registerByEmail(email, pwd);
+                body.type = 'email';
+                body.email = email;
             } else if (isEmailOrMobile === 'mobile') {
-                this.props._registerByMobile(mobile, code, pwd);
+                body.type = 'mobile';
+                body.mobile = mobile;
             }
+
+            postRegister(body, data => {
+                this._toHome(data);
+            }, err => {
+                showToast(err)
+            })
         } else if (isRegisterOrForget === 'forget') {
+            const body = {
+                vcode: code,
+                password: pwd
+            };
             if (isEmailOrMobile === 'email') {
-                this.props._resetPwdEmail(email, code, pwd);
+                body.type = 'email';
+                body.email = email;
+
+
             } else if (isEmailOrMobile === 'mobile') {
-                this.props._resetPwdMobile(mobile, code, pwd);
+                body.type = 'mobile';
+                body.mobile = mobile;
             }
+            postResetPwdCode(body, data => {
+                router.popToLogin()
+            }, err => {
+                showToast(err)
+            })
         }
 
 
@@ -116,16 +115,16 @@ class InputPwdPage extends React.Component {
 
             <View
                 testID="page_input_password"
-                style={{flex:1,backgroundColor:Colors.bg_f5}}>
+                style={{flex: 1, backgroundColor: Colors.bg_f5}}>
                 <TouchableOpacity
                     testID="btn_home_page"
-                    onPress={()=>router.popToTop()}/>
-                <View style={{backgroundColor:Colors._E54}}>
+                    onPress={() => router.popToTop()}/>
+                <View style={{backgroundColor: Colors._E54}}>
                     <NavigationBar
                         title={I18n.t('input_pwd')}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                        leftBtnPress={()=>router.pop()}/>
+                        leftBtnPress={() => router.pop()}/>
                 </View>
 
                 <View style={styles.input_view}>
@@ -134,49 +133,58 @@ class InputPwdPage extends React.Component {
                         style={styles.input}
                         placeholderTextColor={Colors._BBBB}
                         underlineColorAndroid='transparent'
-                        onChangeText={text=>{
-                                   this.setState({
-                                       password:text,
-                                   })
-                               }}
+                        onChangeText={text => {
+                            this.setState({
+                                password: text,
+                            })
+                        }}
                         secureTextEntry={pwdEye}
                         placeholder={I18n.t('ple_new_pwd')}/>
 
 
                     <TouchableOpacity
-                        onPress={()=>{
+                        onPress={() => {
                             this.setState({
-                                pwdEye:!pwdEye
+                                pwdEye: !pwdEye
                             })
                         }}
-                        style={{alignItems:'center',
-                        justifyContent:'center',
-                        height:50,width:50}}>
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: 50, width: 50
+                        }}>
 
                         <Image
-                            style={{width:18,height:10
-                         }}
-                            source={pwdEye?Images.sign_eye:Images.sign_eye_open}/>
+                            style={{
+                                width: 18, height: 10
+                            }}
+                            source={pwdEye ? Images.sign_eye : Images.sign_eye_open}/>
 
 
                     </TouchableOpacity>
                 </View>
-                <Text style={{marginTop:20,alignSelf:'center',
-                 color:Colors._AAA,fontSize:12}}>{I18n.t('password_format')}</Text>
+                <Text style={{
+                    marginTop: 20, alignSelf: 'center',
+                    color: Colors._AAA, fontSize: 12
+                }}>{I18n.t('password_format')}</Text>
 
                 <TouchableOpacity
                     activeOpacity={1}
                     testID="btn_complete"
-                    style={{marginTop:35, alignSelf: 'center',
-        backgroundColor: Colors._E54,
-        height: 45,
-        justifyContent: 'center',
-        borderRadius: 5,
-        width: 336}}
+                    style={{
+                        marginTop: 35, alignSelf: 'center',
+                        backgroundColor: Colors._E54,
+                        height: 45,
+                        justifyContent: 'center',
+                        borderRadius: 5,
+                        width: 336
+                    }}
                     onPress={this._request_register}>
-                    <Text style={{ alignSelf: 'center',
-        color: Colors.white,
-        fontSize: 19}}>{I18n.t('complete')}</Text>
+                    <Text style={{
+                        alignSelf: 'center',
+                        color: Colors.white,
+                        fontSize: 19
+                    }}>{I18n.t('complete')}</Text>
                 </TouchableOpacity>
             </View>
 
