@@ -167,7 +167,7 @@ function netError(response, reject) {
     else if (response.problem === TIMEOUT_ERROR)
         msgErr = I18n.t('TIMEOUT_ERROR');
     else if (response.problem === NETWORK_ERROR) {
-        permissionAlert('澳门通网络权限已被关闭，是否前往开启')
+        permissionAlert('澳门旅行网络权限已被关闭，是否前往开启')
         msgErr = I18n.t('NETWORK_ERROR');
     }
 

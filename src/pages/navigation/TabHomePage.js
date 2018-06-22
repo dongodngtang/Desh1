@@ -229,7 +229,7 @@ class TabHomePage extends Component {
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     toolbarStyle={{backgroundColor: Colors._E54}}
-                    title={'澳门通'}/>
+                    title={'澳门旅行'}/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
