@@ -8,6 +8,7 @@ import ImageLoad from "../../../components/ImageLoad";
 import {isEmptyObject, showToast} from "../../../utils/ComonHelper";
 import UnpaidBottom from './UnpaidBottom';
 import {HotelStatus} from "../../../configs/Status";
+import {} from '../../../services/MacauDao';
 
 export default class HotelItem extends PureComponent {
 
@@ -33,7 +34,7 @@ export default class HotelItem extends PureComponent {
                 <TouchableOpacity
 
                     onPress={() => {
-                        global.router.toMallSelectPage(order)
+                        global.router.toReturnHotelPage(order)
                     }}
                     style={styles.returnedBottom}>
                     <Text style={styles.orderSubmitTxt}>退货／退款</Text>

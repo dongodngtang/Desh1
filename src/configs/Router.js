@@ -49,6 +49,14 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toReturnHotelPage(order) {
+        this.stackPush({
+            name: 'ReturnHotelPage',
+            params:{
+                order
+            }
+        })
+    }
     toHotelOrderPage() {
         this.stackPush({
             name: 'HotelOrderPage'
