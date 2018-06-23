@@ -103,7 +103,7 @@ export default class IntegralPage extends Component {
                 <ScrollView style={{backgroundColor: 'white'}}>
                     <View style={{backgroundColor: '#F3F3F3', height: 14, width: '100%'}}/>
                     {isEmptyObject(unfinished) ? null : <FlatList
-                        ListHeaderComponent={this._header('未完成')}
+                        ListHeaderComponent={this._header()}
                         style={{marginRight: 17, marginLeft: 17}}
                         data={unfinished}
                         showsHorizontalScrollIndicator={false}
@@ -111,9 +111,8 @@ export default class IntegralPage extends Component {
                         renderItem={item => this._renderItem(item, 'unfinished')}
                         keyExtractor={(item, index) => `integral${index}`}
                     />}
-                    <View style={{backgroundColor: '#F3F3F3', height: 13, width: '100%'}}/>
+                    {this._separator()}
                     {isEmptyObject(finished) ? null : <FlatList
-                        ListHeaderComponent={this._header('已完成')}
                         style={{marginRight: 17, marginLeft: 17}}
                         data={finished}
                         showsHorizontalScrollIndicator={false}
@@ -131,9 +130,7 @@ export default class IntegralPage extends Component {
     _header = (status) => {
         return (
             <View style={[styles.head, {borderBottomWidth: 1.5, borderColor: '#F3F3F3'}]}>
-                <Image style={{height: 24, width: 24}}
-                       source={Images.integral.renwu}/>
-                <Text style={{color: '#444444', fontSize: 16, marginLeft: 10}}>{status}</Text>
+                <Text style={{color: '#444444', fontSize: 18, marginLeft: 10}}>每日任务</Text>
             </View>
         )
     };

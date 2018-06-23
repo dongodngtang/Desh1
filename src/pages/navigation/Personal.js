@@ -121,14 +121,14 @@ class Personal extends Component {
 
             })}
 
-            {/*<View style={{height: 1, marginLeft: 69}}/>*/}
-            {/*{this._item(stylesP.item_view, Images.integral.integral, stylesP.img_dy, '我的积分', () => {*/}
-                {/*if (isEmptyObject(global.login_user))*/}
-                    {/*global.router.toLoginFirstPage()*/}
-                {/*else*/}
-                    {/*global.router.toIntegralPage(this.props.profile.total_points)*/}
+            <View style={{height: 1, marginLeft: 69}}/>
+            {this._item(stylesP.item_view, Images.integral.integral, stylesP.img_dy, '我的积分', () => {
+                if (isEmptyObject(global.login_user))
+                    global.router.toLoginFirstPage()
+                else
+                    global.router.toIntegralPage(this.props.profile.total_points)
 
-            {/*})}*/}
+            })}
 
             <View style={{height: 5, width: '100%'}}/>
 
