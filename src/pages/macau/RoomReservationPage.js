@@ -27,7 +27,7 @@ export default class RoomReservationPage extends PureComponent {
         detailsShow: false,
         roomReservation: [],
         total_price: 0,
-        persons: [{last_name: 'LI', first_name: 'MENG'}],
+        persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
         order_number: ''
