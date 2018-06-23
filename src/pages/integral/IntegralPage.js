@@ -11,6 +11,7 @@ import {isEmptyObject} from "../../utils/ComonHelper";
 import {getProfile} from "../../services/AccountDao";
 import {ImageLoad} from '../../components'
 
+const images = [1,2,3];
 
 export default class IntegralPage extends Component {
 
@@ -100,26 +101,54 @@ export default class IntegralPage extends Component {
 
                 </View>
 
-                <ScrollView style={{backgroundColor: 'white'}}>
-                    <View style={{backgroundColor: '#F3F3F3', height: 14, width: '100%'}}/>
-                    {isEmptyObject(unfinished) ? null : <FlatList
-                        ListHeaderComponent={this._header()}
-                        style={{marginRight: 17, marginLeft: 17}}
-                        data={unfinished}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={item => this._renderItem(item, 'unfinished')}
-                        keyExtractor={(item, index) => `integral${index}`}
-                    />}
-                    {this._separator()}
-                    {isEmptyObject(finished) ? null : <FlatList
-                        style={{marginRight: 17, marginLeft: 17}}
-                        data={finished}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={item => this._renderItem(item, 'finished')}
-                        keyExtractor={(item, index) => `integral${index}`}
-                    />}
+                <ScrollView>
+
+                    <View style={styles.mallView}>
+                        <View style={[styles.mallLeft,{flexDirection:'row',alignItems:'center'}]}>
+                            <Text style={{color:"#444444",fontSize:18,fontWeight:'bold'}}>积分商城</Text>
+                            <View style={{flex:1}}/>
+                            <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
+                                <Text style={{color:"#444444",fontSize:12,marginRight:3}}>更多</Text>
+                                <Image style={{width:8,height:15}} source={Images.rightImg}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={[styles.mallLeft,styles.rowMillide,{marginTop:29}]}>
+                            {images.map((index) => {
+                                return <Image key={index} style={{height:52,width:83}} source={Images.integral.coupon}/>
+                            })}
+                        </View>
+                        <View style={[styles.mallLeft,styles.rowMillide,{marginTop:11}]}>
+                            {images.map((index) => {
+                                return (
+                                    <View key={index} style={[styles.mallBottomView]}>
+                                        <Text style={{color:"#444444",fontSize:14,fontWeight:'bold'}}>酒店优惠券</Text>
+                                        <Text style={{color:"#AAAAAA",fontSize:12}}>可抵扣50元</Text>
+                                        <Text style={{color:"#E54A2E",fontSize:12,marginTop:9}}>100<Text style={{color:"#444444",fontSize:12}}>积分</Text></Text>
+                                    </View>
+                                )
+                            })}
+                        </View>
+                    </View>
+
+                   <View style={{backgroundColor:'white',marginTop:14}}>
+                       {isEmptyObject(unfinished) ? null : <FlatList
+                           ListHeaderComponent={this._header()}
+                           data={unfinished}
+                           showsHorizontalScrollIndicator={false}
+                           ItemSeparatorComponent={this._separator}
+                           renderItem={item => this._renderItem(item, 'unfinished')}
+                           keyExtractor={(item, index) => `integral${index}`}
+                       />}
+                       {this._separator()}
+                       {isEmptyObject(finished) ? null : <FlatList
+                           data={finished}
+                           showsHorizontalScrollIndicator={false}
+                           ItemSeparatorComponent={this._separator}
+                           renderItem={item => this._renderItem(item, 'finished')}
+                           keyExtractor={(item, index) => `integral${index}`}
+                       />}
+                   </View>
+                    <View style={{height:50}}/>
                 </ScrollView>
 
             </View>
@@ -129,8 +158,8 @@ export default class IntegralPage extends Component {
 
     _header = (status) => {
         return (
-            <View style={[styles.head, {borderBottomWidth: 1.5, borderColor: '#F3F3F3'}]}>
-                <Text style={{color: '#444444', fontSize: 18, marginLeft: 10}}>每日任务</Text>
+            <View style={[styles.head, {marginRight: 17, marginLeft: 17,borderBottomWidth: 1.5, borderColor: '#F3F3F3'}]}>
+                <Text style={{color: '#444444', fontSize: 18, marginLeft: 10,fontWeight:'bold'}}>每日任务</Text>
             </View>
         )
     };
@@ -226,11 +255,29 @@ export default class IntegralPage extends Component {
         return type === 'unfinished' && done_times === limit_times ? '' : ` (${doing_times + done_times}/${limit_times})`
     }
     _separator = () => {
-        return <View style={{backgroundColor: '#F3F3F3', height: 1.5}}/>
+        return <View style={{backgroundColor: '#F3F3F3', height: 1.5,marginRight: 17, marginLeft: 17}}/>
     }
 
 };
 const styles = StyleSheet.create({
+    rowMillide:{
+        flexDirection:'row',alignContent: 'flex-end',justifyContent: 'space-between'
+    },
+    mallBottomView:{
+        flexDirection:'column'
+    },
+    mallLeft:{
+        marginLeft:17,marginRight:17
+    },
+
+    mallView:{
+        backgroundColor:'white',
+        flexDirection:'column',
+        marginTop:5,
+        paddingTop:17,
+        paddingBottom:15
+
+    },
     nav: {
         height: Metrics.navBarHeight,
         width: '100%',
@@ -286,7 +333,8 @@ const styles = StyleSheet.create({
         marginTop: 12,
         marginBottom: 13,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginRight: 17, marginLeft: 17
     },
     statusView: {
         width: 68, height: 30,

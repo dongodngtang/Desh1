@@ -365,7 +365,8 @@ const images = {
         monents:require('../../source/integral/monents.png'),
         renwu:require('../../source/integral/renwu.png'),
         share:require('../../source/integral/share.png'),
-        tiezi:require('../../source/integral/tiezi.png')
+        tiezi:require('../../source/integral/tiezi.png'),
+        coupon: require('../../source/integral/coupon.png')
     }
 
 };
