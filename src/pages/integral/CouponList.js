@@ -19,7 +19,7 @@ export default class CouponList extends Component {
                 <Image  style={[styles.marginS,styles.couponImg]} source={Images.integral.coupon}/>
                 <Text style={[styles.TXt,styles.marginS,{marginTop:16}]}>酒店优惠券</Text>
                 <Text style={[styles.TXt2,styles.marginS]}>可抵扣50元</Text>
-                <View style={[styles.marginS,{marginTop:5,flexDirection:'row',alignItems:'space-between'}]}>
+                <View style={[styles.marginS,{marginTop:5,flexDirection:'row'}]}>
                     <Text style={styles.TXt3}>100<Text style={styles.TXt4}>积分</Text></Text>
                     <View style={{flex:1}}/>
                     <Text style={styles.TXt2}>剩余1件</Text>
