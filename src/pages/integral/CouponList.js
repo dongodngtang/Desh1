@@ -14,10 +14,10 @@ export default class CouponList extends Component {
         return(
             <TouchableOpacity key={index} style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
                               onPress={() => {
-                                  // global.router.toMallInfoPage(item)
+                                  global.router.toIntegralInfoPage(item)
                               }}>
                 <Image  style={[styles.marginS,styles.couponImg]} source={Images.integral.coupon}/>
-                <Text style={[styles.TXt,styles.marginS]}>酒店优惠券</Text>
+                <Text style={[styles.TXt,styles.marginS,{marginTop:16}]}>酒店优惠券</Text>
                 <Text style={[styles.TXt2,styles.marginS]}>可抵扣50元</Text>
                 <View style={[styles.marginS,{marginTop:5,flexDirection:'row',alignItems:'space-between'}]}>
                     <Text style={styles.TXt3}>100<Text style={styles.TXt4}>积分</Text></Text>

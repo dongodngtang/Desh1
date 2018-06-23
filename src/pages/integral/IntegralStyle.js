@@ -47,8 +47,7 @@ export default StyleSheet.create({
     },
     TXt:{
         color:"#444444",
-        fontSize:16,
-        marginTop:16
+        fontSize:16
     },
     TXt2:{
         color:"#AAAAAA",
@@ -62,5 +61,23 @@ export default StyleSheet.create({
     TXt4:{
         color:"#444444",
         fontSize:14
+    },
+    infoPage:{
+        backgroundColor:'white',
+        flexDirection:'column'
+    },
+    Txt5:{
+        color:'#666666',
+        fontSize:14,
+        lineHeight:20
+    },
+    infoBottom:{
+        backgroundColor:'#E54A2E',
+        width:'100%',
+        paddingTop:16,
+        paddingBottom:13,
+        alignItems:'center',
+        justifyContent:'center',
+        bottom: 0
     }
 })
