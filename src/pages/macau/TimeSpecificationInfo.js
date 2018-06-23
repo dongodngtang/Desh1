@@ -103,13 +103,18 @@ export default class TimeSpecificationInfo extends PureComponent {
                 props = {
                     markedDates
                 }
+                this.setState({
+                    calendarProps: props
+                })
 
             } else {//第二次选择
                 this.markedArr.push(dateString)
-                let start = new Date(this.markedArr[0])
-                let end = new Date(this.markedArr[1])
-
-                if (start <= end) {
+                let start = new Date(this.markedArr[0]);
+                let end = new Date(this.markedArr[1]);
+                if (this.markedArr[0] === this.markedArr[1]) {
+                    return;
+                }
+                if (start < end) {
                     seleactDatas = getDates(start, end)
                 } else {
                     seleactDatas = getDates(end, start)
@@ -130,15 +135,20 @@ export default class TimeSpecificationInfo extends PureComponent {
                     markedDates,
                     markingType: 'period'
                 }
+                this.setState({
+                    calendarProps: props
+                })
+
+                setTimeout(() => {
+                    this.submit()
+                }, 500)
 
 
             }
             console.log("seleactDatas:", seleactDatas)
             console.log("markedDates:", markedDates)
 
-            this.setState({
-                calendarProps: props
-            })
+
         } else {
             this.markedDates = {}
             this.markedArr = [];
@@ -148,6 +158,17 @@ export default class TimeSpecificationInfo extends PureComponent {
     }
 
 
+    submit = () => {
+        this.props.showSpecInfo();
+        if (seleactDatas.length > 0) {
+            this.props._change({
+                begin_date: seleactDatas[0],
+                end_date: seleactDatas[seleactDatas.length - 1],
+                counts: seleactDatas.length - 1
+            })
+        }
+    }
+
     render() {
         return (
             <Animatable.View
@@ -155,17 +176,7 @@ export default class TimeSpecificationInfo extends PureComponent {
                 style={styles.page}>
                 <TouchableOpacity
                     style={{height: 146, width: '100%'}}
-                    onPress={() => {
-                        this.props.showSpecInfo();
-                        if (seleactDatas.length > 0) {
-
-                            this.props._change({
-                                begin_date: seleactDatas[0],
-                                end_date: seleactDatas[seleactDatas.length - 1],
-                                counts: seleactDatas.length - 1
-                            })
-                        }
-                    }}>
+                    onPress={this.submit}>
 
                 </TouchableOpacity>
                 <View style={styles.View}>
@@ -175,7 +186,7 @@ export default class TimeSpecificationInfo extends PureComponent {
                         borderBottomColor: Colors._ECE, borderBottomWidth: 1
                     }}>
                         <TouchableOpacity
-                            onPress={()=>{
+                            onPress={() => {
                                 this.props.showSpecInfo();
                             }}
                             style={{justifyContent: 'center', alignItems: 'center', height: 55, width: 60}}>
@@ -203,11 +214,7 @@ export default class TimeSpecificationInfo extends PureComponent {
                             textDayHeaderColor: '#FA6E55',
                             todayTextColor: 'black'
                         }}
-                        hideArrows={false}
-                        renderArrow={(left) => (<Arrow/>)}
-                        onPressArrowLeft={() => {
-                            this.props.showSpecInfo()
-                        }}
+
                     />
 
                 </View>

@@ -4542,9 +4542,9 @@ react-native-blur@^3.2.2:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-calendars@^1.19.3:
+"react-native-calendars@git+https://github.com/dongodngtang/react-native-calendars.git":
   version "1.19.3"
-  resolved "http://registry.npm.taobao.org/react-native-calendars/download/react-native-calendars-1.19.3.tgz#4a9a6ec9d695b9f5f6003d80fe6c0930453e89eb"
+  resolved "git+https://github.com/dongodngtang/react-native-calendars.git#e63c87c552296a5c912facd537c688fa9e12ee1e"
   dependencies:
     lodash.get "^4.4.2"
     lodash.isequal "^4.5.0"
