@@ -1091,6 +1091,11 @@ export default class Router {
         })
     }
 
+    toIntegralMallPage() {
+        this.stackPush({
+            name: 'IntegralMallPage'
+        })
+    }
     toIntegralPage(total_points) {
         this.stackPush({
             name: 'IntegralPage',

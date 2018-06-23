@@ -11,6 +11,7 @@ import {isEmptyObject} from "../../utils/ComonHelper";
 import {getProfile} from "../../services/AccountDao";
 import {ImageLoad} from '../../components'
 import IntegralBar from './IntegralBar';
+import IntegralMallPage from "./IntegralMallPage";
 
 const images = [1,2,3];
 
@@ -88,7 +89,10 @@ export default class IntegralPage extends Component {
                         <View style={[styles.mallLeft,{flexDirection:'row',alignItems:'center'}]}>
                             <Text style={{color:"#444444",fontSize:18,fontWeight:'bold'}}>积分商城</Text>
                             <View style={{flex:1}}/>
-                            <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
+                            <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}
+                                              onPress={() => {
+                                                  global.router.toIntegralMallPage();
+                                              }}>
                                 <Text style={{color:"#444444",fontSize:12,marginRight:3}}>更多</Text>
                                 <Image style={{width:8,height:15}} source={Images.rightImg}/>
                             </TouchableOpacity>
