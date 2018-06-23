@@ -1,4 +1,4 @@
-import React, {PureComponent,Component} from 'react';
+import React, {PureComponent, Component} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity,
     ScrollView, FlatList
@@ -124,7 +124,7 @@ export default class TimeSpecificationInfo extends PureComponent {
                         return;
                     }
 
-                    markedDates[item] = {color: '#FA6E55',textColor: '#FFFFFF'};
+                    markedDates[item] = {color: '#FA6E55', textColor: '#FFFFFF'};
                 })
                 props = {
                     markedDates,
@@ -169,6 +169,27 @@ export default class TimeSpecificationInfo extends PureComponent {
 
                 </TouchableOpacity>
                 <View style={styles.View}>
+                    <View style={{
+                        height: 55, width: Metrics.screenWidth, backgroundColor: 'white',
+                        alignItems: 'center', flexDirection: 'row',
+                        borderBottomColor: Colors._ECE, borderBottomWidth: 1
+                    }}>
+                        <TouchableOpacity
+                            onPress={()=>{
+                                this.props.showSpecInfo();
+                            }}
+                            style={{justifyContent: 'center', alignItems: 'center', height: 55, width: 60}}>
+                            <Text style={{color: '#E54A2E', fontSize: 12}}>取消</Text>
+                        </TouchableOpacity>
+
+                        <View style={{flex: 1}}/>
+                        <Text style={{color: '#444444', fontSize: 14}}>请选择入住时间</Text>
+                        <View style={{flex: 1}}/>
+                        <TouchableOpacity
+                            style={{justifyContent: 'center', alignItems: 'center', height: 55, width: 60}}>
+                        </TouchableOpacity>
+
+                    </View>
                     <CalendarList
                         pastScrollRange={0}
                         minDate={this.minDate}
@@ -183,8 +204,10 @@ export default class TimeSpecificationInfo extends PureComponent {
                             todayTextColor: 'black'
                         }}
                         hideArrows={false}
-                        renderArrow={(left) => (<Arrow />)}
-                        onPressArrowLeft={()=>{this.props.showSpecInfo()}}
+                        renderArrow={(left) => (<Arrow/>)}
+                        onPressArrowLeft={() => {
+                            this.props.showSpecInfo()
+                        }}
                     />
 
                 </View>
@@ -213,13 +236,15 @@ addDays = (dat, days) => {
     dat.setDate(dat.getDate() + days);
     return dat;
 };
-export  class Arrow extends Component {
-    render(){
-        return(
+
+export class Arrow extends Component {
+    render() {
+        return (
             <Text>取消</Text>
         )
     }
 }
+
 const styles = StyleSheet.create({
     page: {
         backgroundColor: 'rgba(0,0,0,0.5)',
