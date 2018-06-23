@@ -6,7 +6,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-
+import styles from './IntegralStyle';
 
 
 export default class IntegralBar extends Component {
@@ -39,27 +39,3 @@ export default class IntegralBar extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    btn_search: {
-        width: 50,
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    btn_click: {
-        marginRight: 17,
-        color: '#FFFFFF', fontSize: 14
-    },
-    nav: {
-        height: Metrics.navBarHeight,
-        width: '100%',
-        backgroundColor: Colors._E54,
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingTop: Metrics.statusBarHeight
-    },
-    title: {
-        fontSize: 18,
-        color: Colors.white
-    }
-})
