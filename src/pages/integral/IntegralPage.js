@@ -10,6 +10,7 @@ import {postIntegralTask, postAward} from '../../services/IntegralDao';
 import {isEmptyObject} from "../../utils/ComonHelper";
 import {getProfile} from "../../services/AccountDao";
 import {ImageLoad} from '../../components'
+import IntegralBar from './IntegralBar';
 
 const images = [1,2,3];
 
@@ -62,28 +63,8 @@ export default class IntegralPage extends Component {
 
         return (
             <View style={ApplicationStyles.bgContainer}>
-                <View style={styles.nav}>
-                    <TouchableOpacity
-                        style={styles.btn_search}
-                        onPress={() => {
-                            router.pop()
-                        }}>
+                <IntegralBar text={'我的积分'}/>
 
-                        <Image
-                            style={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                            source={Images.sign_return}/>
-
-                    </TouchableOpacity>
-                    <View style={{flex: 1}}/>
-                    <Text style={styles.title}>我的积分</Text>
-                    <View style={{flex: 1}}/>
-                    <TouchableOpacity
-                        onPress={() => {
-                            global.router.toIntegralDetailsPage();
-                        }}>
-                        <Text style={styles.btn_click}>积分明细</Text>
-                    </TouchableOpacity>
-                </View>
 
                 <View style={styles.ruleView}>
                     <View style={{width: 50}}/>
