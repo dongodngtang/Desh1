@@ -112,6 +112,9 @@ export default class TimeSpecificationInfo extends PureComponent {
                 let start = new Date(this.markedArr[0]);
                 let end = new Date(this.markedArr[1]);
                 if (this.markedArr[0] === this.markedArr[1]) {
+                    this.markedDates = {}
+                    this.markedArr = [];
+                    this.nDayPress(day)
                     return;
                 }
                 if (start < end) {
