@@ -55,8 +55,9 @@ export default class CouponPage extends Component {
                     }}
                 />
 
-                <ScrollView style={{marginTop:15,marginLeft:17,marginRight:17}}>
+                <ScrollView >
                     <FlatList
+                        style={{marginTop:15,marginLeft:17,marginRight:17}}
                         data={data}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
