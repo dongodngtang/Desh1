@@ -58,7 +58,7 @@ export default class IntegralInfoPage extends Component {
                 </ScrollView>
                 <TouchableOpacity style={styles.infoBottom}
                 onPress={()=>{
-                    this.contain.close();
+                    this.contain && this.contain.close();
                     global.router.pop();
                     global.router.pop();
                     global.router.pop();
