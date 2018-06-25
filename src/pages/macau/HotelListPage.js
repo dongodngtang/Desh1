@@ -117,7 +117,6 @@ export default class HotelListPage extends PureComponent {
 
     _renderItem = (item, index) => {
         const {title, address, location, logo, start_price, star_level} = item;
-        console.log("djsdnks", item)
         const {changeTime} = this.state;
         return (
             <TouchableOpacity style={styles.item} key={index}
