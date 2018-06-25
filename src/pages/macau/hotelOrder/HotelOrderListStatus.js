@@ -21,7 +21,7 @@ export default class HotelOrderListStatus extends Component {
 
     renderItem = (item, index) => {
 
-        const {status, order_number} = item.order;
+        const {status, order_number,pay_status,status_text} = item.order;
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -32,7 +32,7 @@ export default class HotelOrderListStatus extends Component {
                 <View style={styles.top}>
                     <Text style={styles.txtLeft}>{`订单编号：${order_number}`}</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={[styles.txtRight, {color: this._color(status)}]}>{hotleStatus(status)}</Text>
+                    <Text style={[styles.txtRight, {color: this._color(pay_status)}]}>{status_text}</Text>
                 </View>
                 <View style={{height: 1}}/>
                 <HotelItem

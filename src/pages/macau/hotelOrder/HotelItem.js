@@ -30,7 +30,7 @@ export default class HotelItem extends PureComponent {
 
     bottomShow=(item)=>{
         const {order} = item;
-        if(order.status === HotelStatus.paid){
+        if(order.status === HotelStatus.paid && order.refundable){
             return(
                 <TouchableOpacity
 

@@ -79,6 +79,7 @@ export default class ReturnHotelPage extends Component {
                                               showToast('申请提交成功');
                                               global.router.toHotelOrderPage();
                                           }, err => {
+                                              showToast(err);
                                           })
                                       });
                                   }}

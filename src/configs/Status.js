@@ -105,7 +105,7 @@ export class RefundStatus {
     static completed = 'completed';
 }
 
-export function hotleStatus(status) {
+export function hotleStatus(status,status_text) {
     switch (status){
         case HotelStatus.canceled:
             return "已取消"
@@ -116,7 +116,7 @@ export function hotleStatus(status) {
         case HotelStatus.completed:
             return "已完成"
         default:
-            return ""
+            return status_text
     }
 }
 
