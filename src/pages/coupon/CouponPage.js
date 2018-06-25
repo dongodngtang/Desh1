@@ -28,8 +28,8 @@ export default class CouponPage extends Component {
                         <Text style={[styles.txt1,{marginTop:10}]}>单笔酒店预订金额满800元可使用</Text>
                         <Text style={[styles.txt1,{marginTop:1}]}>有限期：2018-06-21至06-31</Text>
                     </View>
-
-                    <View  style={styles.itemLeft}>
+                    <View style={{flex:1}}/>
+                    <View  style={[styles.itemLeft,{alignItems:'center'}]}>
                         <Text  style={{color:"#666666",fontSize:16}}>剩30日</Text>
                         <TouchableOpacity style={styles.touchView}>
                             <Text style={{color:"#FFFFFF",fontSize:14}}>去使用</Text>
@@ -63,6 +63,7 @@ export default class CouponPage extends Component {
                         renderItem={this._renderItem}
                         keyExtractor={(index)=>`coupon${index}`}
                     />
+                    <View style={{height:80}}/>
                 </ScrollView>
 
             </View>

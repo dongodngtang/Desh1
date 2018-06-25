@@ -8,6 +8,8 @@ export default StyleSheet.create({
         alignItems:'center'
     },
     itemView:{
+        flexDirection:'row',
+        alignItems:'center',
         marginTop:15,
         marginBottom:13,
         marginLeft:23,
