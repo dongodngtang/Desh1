@@ -30,7 +30,7 @@ export default class IntegralInfoPage extends Component {
                     <View style={[styles.infoPage,{marginTop:1,paddingBottom:15}]}>
                         <Image  style={{alignSelf: 'center',marginTop:28}} source={Images.integral.coupon}/>
                         <Text style={[styles.marginS,styles.TXt,{marginTop:21,fontWeight:'bold'}]}>50元酒店优惠券</Text>
-                        <View style={[styles.marginS,{marginTop:5,flexDirection:'row',alignItems:'space-between'}]}>
+                        <View style={[styles.marginS,{marginTop:5,flexDirection:'row'}]}>
                             <Text style={styles.TXt3}>100<Text style={styles.TXt4}>积分</Text></Text>
                             <View style={{flex:1}}/>
                             <Text style={styles.TXt2}>剩余1件</Text>
