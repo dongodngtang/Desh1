@@ -9,6 +9,11 @@ import {returnHotelOrder} from "../../../services/MacauDao";
 
 
 export default class ReturnHotelPage extends Component {
+
+    state = {
+        memo: ""
+    }
+
     _notes = (item) => {
         const {room_title, order} = item;
         const {nights_num, room_num} = order;
@@ -19,13 +24,13 @@ export default class ReturnHotelPage extends Component {
         </View>
     };
 
-    render(){
+    render() {
         const {item} = this.props.params;
         const {hotel_logo, hotel_title, order} = item;
-        const {checkin_date, checkout_date, status, total_price,order_number} = order;
+        const {checkin_date, checkout_date, status, total_price, order_number} = order;
         let time = `${checkin_date}至${checkout_date}`;
 
-        return(
+        return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     titleStyle={{fontSize: 17, color: '#161718'}}
@@ -40,7 +45,7 @@ export default class ReturnHotelPage extends Component {
 
 
                 <View style={styles.itemView}>
-                    <View style={{height:1,backgroundColor:"#ECECEE",width:'100%'}}/>
+                    <View style={{height: 1, backgroundColor: "#ECECEE", width: '100%'}}/>
                     <View style={styles.item}>
                         <ImageLoad
                             style={{width: 100, height: 96}}
@@ -55,27 +60,36 @@ export default class ReturnHotelPage extends Component {
                 </View>
 
                 <View style={styles.returnPriceView}>
-                    <Text style={{color:'#333333',fontSize:14,marginLeft:17}}>退款金额：</Text>
-                    <Text style={{color:'#F24A4A',fontSize:18}}>¥{total_price}</Text>
+                    <Text style={{color: '#333333', fontSize: 14, marginLeft: 17}}>退款金额：</Text>
+                    <Text style={{color: '#F24A4A', fontSize: 18}}>¥{total_price}</Text>
                 </View>
                 <View style={styles.returnPriceView}>
-                    <Text style={{color:'#333333',fontSize:14,marginLeft:17}}>退款说明：</Text>
+                    <Text style={{color: '#333333', fontSize: 14, marginLeft: 17}}>退款说明：</Text>
                     <TextInput
                         style={styles.inputText}
                         onChangeText={text => {
-                            // this.setState({
-                            //     memo: text
-                            // })
+                            this.setState({
+                                memo: text
+                            })
                         }}
                         underlineColorAndroid='transparent'
                         numberOfLines={1}
                     />
                 </View>
 
-                <TouchableOpacity style={{position: 'absolute',width:'100%',paddingTop:13,paddingBottom:13,alignItems:'center',justifyContent:'center',backgroundColor:"#E54A2E",bottom:0}}
+                <TouchableOpacity style={{
+                    position: 'absolute',
+                    width: '100%',
+                    paddingTop: 13,
+                    paddingBottom: 13,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: "#E54A2E",
+                    bottom: 0
+                }}
                                   onPress={() => {
                                       alertOrder("确认提交？", () => {
-                                          returnHotelOrder({order_number: order_number}, ret => {
+                                          returnHotelOrder({memo: this.state.memo, order_number: order_number}, ret => {
                                               showToast('申请提交成功');
                                               global.router.toHotelOrderPage();
                                           }, err => {
@@ -84,7 +98,7 @@ export default class ReturnHotelPage extends Component {
                                       });
                                   }}
                 >
-                    <Text style={{color:'#FFFFFF',fontSize:18}}>提交</Text>
+                    <Text style={{color: '#FFFFFF', fontSize: 18}}>提交</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -113,8 +127,8 @@ const styles = StyleSheet.create({
     page: {
         flex: 1,
         height: 50,
-        flexDirection:'row',
-        alignItems:'center'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     notes: {
         flexDirection: 'row',
@@ -143,12 +157,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
-    returnPriceView:{
-        marginTop:11,
-        backgroundColor:'white',
-        flexDirection:'row',
-        alignItems:'center',
-        paddingTop:12,
-        paddingBottom:12
+    returnPriceView: {
+        marginTop: 11,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 12,
+        paddingBottom: 12
     }
 })
