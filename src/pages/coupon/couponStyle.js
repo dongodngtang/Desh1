@@ -28,7 +28,9 @@ export default StyleSheet.create({
         backgroundColor:"#FF4C4C",
         justifyContent:'center',
         alignItems:'center',
-        borderRadius:16
+        borderRadius:16,
+        marginTop:7
+
 
     }
 })
