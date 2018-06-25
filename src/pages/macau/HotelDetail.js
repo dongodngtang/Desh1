@@ -8,7 +8,7 @@ import Swiper from 'react-native-swiper';
 import {hotelDetail} from '../../services/MacauDao';
 import RenderHtml from '../comm/RenderHtml';
 import {NavigationBar} from '../../components'
-import I18n from "react-native-i18n";
+import {call} from '../../utils/ComonHelper'
 
 const styles = StyleSheet.create({
     banner: {
@@ -85,7 +85,7 @@ export default class HotelDetail extends PureComponent {
 
     render() {
 
-        const {images, location, title, description} = this.state.hotel;
+        const {images, location, title, description,telephone} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 
@@ -121,6 +121,7 @@ export default class HotelDetail extends PureComponent {
                     backgroundColor: 'rgba(229,74,46,' + this.state.opacity + ')'
                 }}
                 rightBtnIcon={Images.macau.call}
+                rightBtnPress={()=>{call(telephone)}}
                 rightImageStyle={{height: 20, width: 20, marginLeft: 20, marginRight: 20}}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
