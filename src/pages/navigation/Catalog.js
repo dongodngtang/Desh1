@@ -5,7 +5,6 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {Images, Colors} from '../../Themes';
-import SelectTimePage from "../macau/SelectTimePage";
 
 export default class Catalog extends PureComponent {
 

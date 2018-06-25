@@ -31,7 +31,9 @@ export default class ReturnHotelPage extends Component {
         let time = `${checkin_date}至${checkout_date}`;
 
         return (
-            <View style={ApplicationStyles.bgContainer}>
+            <BaseComponent
+                style={ApplicationStyles.bgContainer}
+                ref={ref => this.contain = ref}>
                 <NavigationBar
                     titleStyle={{fontSize: 17, color: '#161718'}}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
@@ -91,7 +93,8 @@ export default class ReturnHotelPage extends Component {
                                       alertOrder("确认提交？", () => {
                                           returnHotelOrder({memo: this.state.memo, order_number: order_number}, ret => {
                                               showToast('申请提交成功');
-                                              global.router.toHotelOrderPage();
+                                              this.contain.close();
+                                              global.router.pop();
                                           }, err => {
                                               showToast(err);
                                           })
@@ -100,7 +103,7 @@ export default class ReturnHotelPage extends Component {
                 >
                     <Text style={{color: '#FFFFFF', fontSize: 18}}>提交</Text>
                 </TouchableOpacity>
-            </View>
+            </BaseComponent>
         )
     }
 }

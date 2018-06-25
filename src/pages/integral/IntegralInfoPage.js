@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
-import {NavigationBar} from '../../components';
+import {NavigationBar,BaseComponent} from '../../components';
 import styles from './IntegralStyle';
 
 
@@ -15,7 +15,8 @@ export default class IntegralInfoPage extends Component {
 
     render(){
         return(
-            <View style={{flex:1,backgroundColor:"#F3F3F3"}}>
+            <BaseComponent style={{flex:1,backgroundColor:"#F3F3F3"}}
+                           ref={ref => this.contain = ref}>
                 <NavigationBar
                     refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
@@ -55,10 +56,17 @@ export default class IntegralInfoPage extends Component {
                     <View style={{height:50}}/>
 
                 </ScrollView>
-                <TouchableOpacity style={styles.infoBottom}>
+                <TouchableOpacity style={styles.infoBottom}
+                onPress={()=>{
+                    this.contain.close();
+                    global.router.pop();
+                    global.router.pop();
+                    global.router.pop();
+                    global.router.toSelectTimePage();
+                }}>
                     <Text style={{color:"#FFFFFF",fontSize:18}}>立即兑换</Text>
                 </TouchableOpacity>
-            </View>
+            </BaseComponent>
         )
     }
 }
