@@ -28,13 +28,14 @@ export default class HotelItem extends PureComponent {
         </View>
     };
 
-    bottomShow=(order)=>{
+    bottomShow=(item)=>{
+        const {order} = item;
         if(order.status === HotelStatus.paid){
             return(
                 <TouchableOpacity
 
                     onPress={() => {
-                        global.router.toReturnHotelPage(order)
+                        global.router.toReturnHotelPage(item)
                     }}
                     style={styles.returnedBottom}>
                     <Text style={styles.orderSubmitTxt}>退货／退款</Text>
@@ -72,7 +73,7 @@ export default class HotelItem extends PureComponent {
                     <View style={{flex: 1}}/>
 
                     {status === HotelStatus.unpaid ? <UnpaidBottom order_number={order_number}
-                                                                   refresh={this.props.refresh}/> : <View/>}
+                                                                   refresh={this.props.refresh}/> : this.bottomShow(this.props.item)}
                 </View>
             </View>
         )
