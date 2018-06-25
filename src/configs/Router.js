@@ -1031,6 +1031,12 @@ export default class Router {
 
     }
 
+    toCouponPage() {
+        this.stackPush({
+            name: 'CouponPage'
+        })
+    }
+
     toWebPage(url, body) {
         this.stackPush({
             name: 'WebPage',

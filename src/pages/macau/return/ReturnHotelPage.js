@@ -28,7 +28,7 @@ export default class ReturnHotelPage extends Component {
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     titleStyle={{fontSize: 17, color: Colors.white}}
-                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    toolbarStyle={{backgroundColor: Colors._FFF}}
                     title={'申请退换货'}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
