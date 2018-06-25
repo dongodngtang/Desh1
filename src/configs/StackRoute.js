@@ -122,9 +122,11 @@ import ReturnHotelPage from '../pages/macau/return/ReturnHotelPage';
 import IntegralMallPage from '../pages/integral/IntegralMallPage';
 import IntegralInfoPage from '../pages/integral/IntegralInfoPage';
 import CouponPage from '../pages/coupon/CouponPage';
+import CouponSelectPage from '../pages/coupon/CouponSelectPage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="CouponSelectPage" component={CouponSelectPage} hideNavBar/>
         <Scene key="CouponPage" component={CouponPage} hideNavBar/>
         <Scene key="IntegralInfoPage" component={IntegralInfoPage} hideNavBar/>
         <Scene key="IntegralMallPage" component={IntegralMallPage} hideNavBar/>
