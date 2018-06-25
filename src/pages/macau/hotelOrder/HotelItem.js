@@ -38,7 +38,7 @@ export default class HotelItem extends PureComponent {
                         global.router.toReturnHotelPage(item)
                     }}
                     style={styles.returnedBottom}>
-                    <Text style={styles.orderSubmitTxt}>退货／退款</Text>
+                    <Text style={styles.orderSubmitTxt}>退款</Text>
                 </TouchableOpacity>
             )
         }else{

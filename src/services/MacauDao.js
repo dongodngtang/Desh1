@@ -9,6 +9,13 @@ export function delHotelOrder(body, resolve, reject) {
     }, reject)
 }
 
+//酒店退款
+export function returnHotelOrder(body, resolve, reject) {
+    helper.post(Api.hotel_return(body), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 //取消订单
 export function cancelHotelOrder(body, resolve, reject) {
     helper.post(Api.hotel_order_cancel(body), {}, ret => {

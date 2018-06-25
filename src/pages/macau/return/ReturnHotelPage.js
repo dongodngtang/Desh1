@@ -4,7 +4,8 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, Alert, List
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ImageLoad from "../../../components/ImageLoad";
-import {showToast} from "../../../utils/ComonHelper";
+import {alertOrder, showToast} from "../../../utils/ComonHelper";
+import {returnHotelOrder} from "../../../services/MacauDao";
 
 
 export default class ReturnHotelPage extends Component {
@@ -27,9 +28,9 @@ export default class ReturnHotelPage extends Component {
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    titleStyle={{fontSize: 17, color: Colors.white}}
+                    titleStyle={{fontSize: 17, color: '#161718'}}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
-                    title={'申请退换货'}
+                    title={'申请退款'}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
@@ -55,7 +56,7 @@ export default class ReturnHotelPage extends Component {
 
                 <View style={styles.returnPriceView}>
                     <Text style={{color:'#333333',fontSize:14,marginLeft:17}}>退款金额：</Text>
-                    <Text style={{color:'#F24A4A',fontSize:18}}>¥1027823</Text>
+                    <Text style={{color:'#F24A4A',fontSize:18}}>¥{total_price}</Text>
                 </View>
                 <View style={styles.returnPriceView}>
                     <Text style={{color:'#333333',fontSize:14,marginLeft:17}}>退款说明：</Text>
@@ -72,10 +73,16 @@ export default class ReturnHotelPage extends Component {
                 </View>
 
                 <TouchableOpacity style={{position: 'absolute',width:'100%',paddingTop:13,paddingBottom:13,alignItems:'center',justifyContent:'center',backgroundColor:"#E54A2E",bottom:0}}
-                onPress={()=>{
-                    showToast('申请提交成功');
-                    global.router.toMallOrderPage();
-                }}>
+                                  onPress={() => {
+                                      alertOrder("确认提交？", () => {
+                                          returnHotelOrder({order_number: order_number}, ret => {
+                                              showToast('申请提交成功');
+                                              global.router.toHotelOrderPage();
+                                          }, err => {
+                                          })
+                                      });
+                                  }}
+                >
                     <Text style={{color:'#FFFFFF',fontSize:18}}>提交</Text>
                 </TouchableOpacity>
             </View>
