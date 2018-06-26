@@ -23,11 +23,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>com.deshpro.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>deshpro-app</string>
+				<string>macauhike</string>
 			</array>
 		</dict>
 		<dict>
