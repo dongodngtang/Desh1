@@ -243,6 +243,7 @@ const images = {
     mall_share: require('../../source/mall/mall_share.png'),
     search_empty: require('../../source/mall/search_empty.png'),
     camera: require('../../source/mall/camera.png'),
+    mall_order_icon: require('../../source/mall/mall_order_icon.png'),
 
     radioSelected: require('../../source/cart/radioSelected.png'),
     radio: require('../../source/cart/radio.png'),
@@ -367,6 +368,14 @@ const images = {
         share:require('../../source/integral/share.png'),
         tiezi:require('../../source/integral/tiezi.png'),
         coupon: require('../../source/integral/coupon.png')
+    },
+    coupon:{
+        background:require('../../source/coupon/background.png'),
+        coupon:require('../../source/coupon/coupon.png'),
+        return_hei:require('../../source/coupon/return_hei.png'),
+        selected:require('../../source/coupon/selected.png'),
+        unSelected:require('../../source/coupon/unSelected.png')
+
     }
 
 };

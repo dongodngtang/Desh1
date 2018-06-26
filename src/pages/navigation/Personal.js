@@ -113,7 +113,7 @@ class Personal extends Component {
 
             })}
             <View style={{height: 1, marginLeft: 69}}/>
-            {this._item(stylesP.item_view, Images.mall_order, stylesP.img_dy, '商城订单', () => {
+            {this._item(stylesP.item_view, Images.mall_order_icon, stylesP.img_dy, '商城订单', () => {
                 if (isEmptyObject(global.login_user))
                     global.router.toLoginFirstPage()
                 else
