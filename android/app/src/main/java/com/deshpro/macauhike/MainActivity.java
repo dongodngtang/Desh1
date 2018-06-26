@@ -11,6 +11,7 @@ import cn.jpush.android.api.JPushInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.widget.ImageView;
+import com.alipay.sdk.app.EnvUtils;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
@@ -31,7 +32,7 @@ public class MainActivity extends ReactActivity {
         RCTSplashScreen.openSplashScreen(this, true, ImageView.ScaleType.FIT_XY);   //open splashscreen fullscreen
         super.onCreate(savedInstanceState);
         JPushInterface.init(this);
-        //EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
     }
 
     @Override
