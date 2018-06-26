@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {isEmptyObject, strNotNull, payWx} from '../../utils/ComonHelper';
+import {isEmptyObject, strNotNull, payWx, alipay, showToast,alertOrderChat} from '../../utils/ComonHelper';
 import {postWxPay, postPayOrder} from '../../services/OrderDao'
+import {getWxPaidResult, postAlipay, postMallOrder} from "../../services/MallDao";
 
-var testUrl = 'http://localhost:4200/pay/success';
 
 export default class PayModal extends Component {
 
@@ -19,6 +19,7 @@ export default class PayModal extends Component {
         visible: false,
         payUrl: {},
         payWay: 1,
+        aliPay:{partnerId: ''},
         wxPay: {partnerId: ''},
         pay_url: 'pay-success'
     };
@@ -53,27 +54,46 @@ export default class PayModal extends Component {
         const body = {
             order_number: order_number
         };
-        postWxPay(body, data => {
+        postAlipay(body, data => {
             this.setState({
-                wxPay: data,
+                aliPay: data,
                 payWay: 1,
             })
+            alipay(data.payment_params)
         }, err => {
             this.setState({
-                wxPay: {},
+                aliPay: {},
                 payWay: 0
             })
         });
 
-        postPayOrder(body, data => {
-            this.setState({
-                pay_url: data.pay_url
-            });
+        postWxPay(body, ret => {
+            payWx(ret, () => {
+                getWxPaidResult(body, result => {
+
+                    global.router.replaceMallOrderInfo(body)
+                }, err => {
+                    showToast('支付成功，系统正在处理')
+                }, () => {
+                })
+
+            }, () => {
+                global.router.replaceMallOrderInfo(body)
+            })
         }, err => {
-            this.setState({
-                pay_url: ''
-            });
-        })
+            alertOrderChat(I18n.t('need_weChat'))
+        });
+        //
+        // postMallOrder(body, data => {
+        //     console.log("dsjdjksdjlsjd:",data)
+        //     this.setState({
+        //         pay_url: data.pay_url
+        //     });
+        // }, err => {
+        //     this.setState({
+        //         pay_url: ''
+        //     });
+        // })
 
     };
 
@@ -94,9 +114,8 @@ export default class PayModal extends Component {
                 <View style={{height: 1}}/>
                 <ScrollView>
                     {this.orderView()}
+                    {this.aliView()}
                     {this.wxView()}
-                    {this.cardView()}
-
                     <View style={{height: 80}}/>
                 </ScrollView>
 
@@ -110,7 +129,6 @@ export default class PayModal extends Component {
         const {order_number, price} = this.state.payUrl;
         return <View style={styles.top}>
             <Text style={styles.title}>{I18n.t('pay_online')}</Text>
-
             <TouchableOpacity
                 onPress={() => {
                     this.toggle();
@@ -123,6 +141,7 @@ export default class PayModal extends Component {
                     style={styles.imgClose}/>
 
             </TouchableOpacity>
+
         </View>;
     };
 
@@ -154,7 +173,7 @@ export default class PayModal extends Component {
             return price;
     }
 
-    cardView = () => {
+    aliView = () => {
         return <TouchableOpacity
             disabled={!strNotNull(this.state.pay_url)}
             onPress={() => {
@@ -168,21 +187,21 @@ export default class PayModal extends Component {
                    source={Images.pay_card}/>
 
             <View>
-                <Text style={styles.txt3}>{I18n.t('pay_card')}  </Text>
-                <Text style={styles.txt31}>{I18n.t('pay_tine')}</Text>
+                <Text style={styles.txt3}>银行卡支付</Text>
+                <Text style={styles.txt31}>信用卡储蓄卡付款，快捷支付</Text>
             </View>
-
-            {strNotNull(this.state.pay_url) ? <View
-                style={styles.btnClose}>
+            <View style={{flex:1}}/>
+            {strNotNull(this.state.aliPay) ? <View
+                style={styles.rightImgs}>
                 <Image
                     source={this.state.payWay === 0 ? Images.pay_selected : Images.pay_select}
                     style={styles.img5}/>
 
             </View> : null}
 
-            {strNotNull(this.state.pay_url) ? null : <View style={styles.support}>
-                <Text style={styles.txt_support}>{I18n.t('un_support')}</Text>
-            </View>}
+            {/*{strNotNull(this.state.pay_url) ? null : <View style={styles.support}>*/}
+                {/*<Text style={styles.txt_support}>{I18n.t('un_support')}</Text>*/}
+            {/*</View>}*/}
         </TouchableOpacity>;
     };
 
@@ -203,9 +222,9 @@ export default class PayModal extends Component {
                 <Text style={styles.txt3}>{I18n.t('pay_weixin')}  </Text>
                 <Text style={styles.txt31}>{I18n.t('pay_weixin_support')}</Text>
             </View>
-
+            <View style={{flex:1}}/>
             {isEmptyObject(this.state.wxPay) ? null : <View
-                style={styles.btnClose}>
+                style={styles.rightImgs}>
                 <Image
                     source={this.state.payWay === 1 ? Images.pay_selected : Images.pay_select}
                     style={styles.img5}/>
@@ -213,9 +232,9 @@ export default class PayModal extends Component {
             </View>}
 
 
-            {isEmptyObject(this.state.wxPay) ? <View style={styles.support}>
-                <Text style={styles.txt_support}>{I18n.t('un_support')}</Text>
-            </View> : null}
+            {/*{isEmptyObject(this.state.wxPay) ? <View style={styles.support}>*/}
+                {/*<Text style={styles.txt_support}>{I18n.t('un_support')}</Text>*/}
+            {/*</View> : null}*/}
 
 
         </TouchableOpacity>;
@@ -267,6 +286,12 @@ export default class PayModal extends Component {
 }
 
 const styles = StyleSheet.create({
+    rightImgs:{
+        height: 56,
+        width: 56,
+        justifyContent:'center',
+        alignItems:'center'
+    },
     page: {
         flex: 1
     },
@@ -283,11 +308,11 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 17,
-        color: '#444444'
+        color: '#444444',
     },
     btnClose: {
         position: 'absolute',
-        right: 0,
+        left: 0,
         height: 56,
         width: 56,
         alignItems: 'center',
@@ -327,14 +352,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        marginTop: 1
+        marginTop: 14
     },
     page5: {
         height: 74,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        marginTop: 14
+        marginTop: 1
     },
     img4: {
         height: 23,

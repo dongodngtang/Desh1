@@ -23,6 +23,7 @@ import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult, postAlipay}
 import {addTimeRecode} from "../../../components/PayCountDown";
 import Discount from '../../comm/Discount';
 import {get_discount} from '../../../services/CrowdDao';
+import PayModal from '../../buy/PayModal'
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
@@ -139,7 +140,6 @@ export default class OrderSubmitPage extends PureComponent {
 
 
     submitBtn = () => {
-
         let adr = this.shipAddress.getAddress();
         const {invalid_items} = this.state.orderData;
 
@@ -153,17 +153,26 @@ export default class OrderSubmitPage extends PureComponent {
         if (this.state.isExpired || util.isEmpty(invalid_items)) {
             let body = this.postParam();
             postMallOrder(body, data => {
+                console.log("sjdksndk:", data.order_number)
                 this.removeCarts();
                 this.setState({
                     order_number: data
                 });
                 addTimeRecode(data.order_number);
-                postAlipay(data.order_number, data => {
-                    console.log("data:",data)
-                  alipay(data.payment_params)
-                }, err => {
-
-                })
+                if (this.payModal) {
+                    const data2 = {
+                        order_number: data.order_number,
+                        price: this.discounted(this.state.orderData)
+                    };
+                    this.payModal.setPayUrl(data2);
+                    this.payModal.toggle();
+                }
+                // postAlipay(data.order_number, data => {
+                //     console.log("data:",data)
+                //   alipay(data.payment_params)
+                // }, err => {
+                //
+                // })
                 // if (this.state.isInstall) {
                 //     postWxPay(data, ret => {
                 //         payWx(ret, () => {
@@ -270,6 +279,10 @@ export default class OrderSubmitPage extends PureComponent {
                     orderData={this.state.orderData}
                     prop={this.props}
                     showExpiredInfo={this.showExpiredInfo}/> : null}
+                <PayModal
+                    invitePrice={this.discounted(orderData)}
+                    toOrder={true}
+                    ref={ref => this.payModal = ref}/>
             </BaseComponent>
 
         );

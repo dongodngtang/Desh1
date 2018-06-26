@@ -189,7 +189,7 @@ const images = {
     pay_select: require('../../source/pay/pay_select.png'),
     pay_selected: require('../../source/pay/pay_selected.png'),
     pay_close: require('../../source/pay/pay_close.png'),
-    pay_card: require('../../source/pay/pay_card.png'),
+    pay_card: require('../../source/pay/aliPay.png'),
     pay_ticket: require('../../source/pay/pay_ticket.png'),
     verified_add: require('../../source/verified/add.png'),
     verified_avatar: require('../../source/verified/avatar.png'),

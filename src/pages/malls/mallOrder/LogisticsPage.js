@@ -201,7 +201,7 @@ const styles = {
     top: {
         marginTop: 1,
         backgroundColor: '#FFFFFF',
-        flexDirection: 'row',
+        flexDirection: 'row-reverse',
         alignItems: 'center',
         paddingBottom: 19,
         paddingTop: 17

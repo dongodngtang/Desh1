@@ -55,6 +55,7 @@
 		483DD02920577C7400E5C97B /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483DD02820577C7400E5C97B /* QBImagePicker.framework */; };
 		483DD02A20577C7400E5C97B /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 483DD02820577C7400E5C97B /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		485E1F791F03B481005615DE /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 485E1F781F03B481005615DE /* splash.png */; };
+		489F3E2A20E25305000805C1 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 489F3DE920E25305000805C1 /* AlipaySDK.framework */; };
 		48AA2DD31F4BC2CD00A6EEFC /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 48AA2DD21F4BC2CD00A6EEFC /* libsqlite3.0.tbd */; };
 		48C8768420E0EB020029BEB8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C8768320E0EB020029BEB8 /* CoreMotion.framework */; };
 		48CB71771F68D5060079E438 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48CB71791F68D5060079E438 /* InfoPlist.strings */; };
@@ -630,6 +631,7 @@
 		483DD02420577C5F00E5C97B /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		483DD02820577C7400E5C97B /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		485E1F781F03B481005615DE /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ../../../../android/app/src/main/res/drawable/splash.png; sourceTree = "<group>"; };
+		489F3DE920E25305000805C1 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlipaySDK.framework; path = "../node_modules/react-native-yunpeng-alipay/ios/AlipaySDK.framework"; sourceTree = "<group>"; };
 		48AA2DD21F4BC2CD00A6EEFC /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		48C8768320E0EB020029BEB8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		48CB71781F68D5060079E438 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -699,6 +701,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				489F3E2A20E25305000805C1 /* AlipaySDK.framework in Frameworks */,
 				48C8768420E0EB020029BEB8 /* CoreMotion.framework in Frameworks */,
 				48AA2DD31F4BC2CD00A6EEFC /* libsqlite3.0.tbd in Frameworks */,
 				4829A10D1F4ABB1B003F2458 /* libRCTWeChat.a in Frameworks */,
@@ -923,6 +926,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				489F3DE920E25305000805C1 /* AlipaySDK.framework */,
 				48C8768320E0EB020029BEB8 /* CoreMotion.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				A7E24F81754F470D809238B3 /* CoreLocation.framework */,
