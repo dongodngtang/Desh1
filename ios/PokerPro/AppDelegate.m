@@ -19,6 +19,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "Orientation.h"
 #import <React/RCTLinkingManager.h>
+#import "AlipayModule.h"
 
 @implementation AppDelegate
 
@@ -116,6 +117,13 @@
     result = other;
   }
   return result;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  [AlipayModule handleCallback:url];
+  return YES;
 }
 
 @end

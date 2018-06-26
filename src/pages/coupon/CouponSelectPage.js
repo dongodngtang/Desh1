@@ -38,12 +38,10 @@ export default class CouponSelectPage extends Component {
     _changeSelect=(item)=>{
         let coupons_copy = [...this.state.coupons];
         coupons_copy.map(x => {
-            x.isSelect = x.id === item.id;
+            if(x.id === item.id){
+                return Images.return_radio_selected
+            }
         });
-
-        this.setState({
-            coupons: coupons_copy
-        })
     };
 
 
@@ -69,9 +67,9 @@ export default class CouponSelectPage extends Component {
                     </View>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity style={[styles.itemLeft, {alignItems: 'center'}]}
-                    onPress={()=>{
-                        this._changeSelect(item)
-                    }}>
+                                      onPress={()=>{
+                                          this._changeSelect(item)
+                                      }}>
                         <Image style={{width: 22, height: 22}}
                                source={item.isSelect ? Images.return_radio_selected : Images.return_radio}/>
                     </TouchableOpacity>
