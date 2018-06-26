@@ -48,6 +48,12 @@ export default class CouponSelectPage extends Component {
             }
         });
     };
+    _selectItem = (item) => {
+        let coupons_copy = [...this.state.coupons];
+        coupons_copy.map(x => {
+
+        });
+    };
 
 
     _separator = () => {
@@ -76,7 +82,7 @@ export default class CouponSelectPage extends Component {
                                           this._changeSelect(item)
                                       }}>
                         <Image style={{width: 22, height: 22}}
-                               source={item.isSelect ? Images.coupon.selected : Images.coupon.unSelected}/>
+                               source={this._selectItem(item)}/>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
