@@ -21,7 +21,9 @@ const data = [1, 2, 3, 4, 5, 6, 7];
 export default class CouponSelectPage extends Component {
 
     state = {
-        coupons: data
+        coupons: data,
+        select_changed: false,
+        selectId:0
     };
 
     componentDidMount() {
@@ -35,11 +37,14 @@ export default class CouponSelectPage extends Component {
         })
     };
 
-    _changeSelect=(item)=>{
+    _changeSelect = (item) => {
         let coupons_copy = [...this.state.coupons];
         coupons_copy.map(x => {
-            if(x.id === item.id){
-                return Images.return_radio_selected
+            if (x.id === item.id) {
+                x.isSelect = true;
+                this.setState({
+                    coupons: coupons_copy
+                })
             }
         });
     };
@@ -50,11 +55,11 @@ export default class CouponSelectPage extends Component {
             <View style={{backgroundColor: "#F3F3F3", height: 5, width: '100%'}}/>
         )
     };
-    _renderItem = ({item,index}) => {
+    _renderItem = ({item, index}) => {
         return (
             <ImageBackground
                 style={styles.sameView}
-                source={Images.crowd_banner}>
+                source={Images.coupon.background}>
                 <View style={styles.itemView}>
                     <View style={styles.itemLeft}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -67,11 +72,11 @@ export default class CouponSelectPage extends Component {
                     </View>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity style={[styles.itemLeft, {alignItems: 'center'}]}
-                                      onPress={()=>{
+                                      onPress={() => {
                                           this._changeSelect(item)
                                       }}>
                         <Image style={{width: 22, height: 22}}
-                               source={item.isSelect ? Images.return_radio_selected : Images.return_radio}/>
+                               source={item.isSelect ? Images.coupon.selected : Images.coupon.unSelected}/>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
@@ -109,34 +114,5 @@ export default class CouponSelectPage extends Component {
     }
 }
 
-export class RenderItem extends Component {
-
-    render() {
-        return (
-            <ImageBackground
-                style={styles.sameView}
-                source={Images.crowd_banner}>
-                <View style={styles.itemView}>
-                    <View style={styles.itemLeft}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={{color: "#F34247", fontSize: 18}}>¥<Text
-                                style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>
-                            <Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>酒店优惠券</Text>
-                        </View>
-                        <Text style={[styles.txt1, {marginTop: 10}]}>单笔酒店预订金额满800元可使用</Text>
-                        <Text style={[styles.txt1, {marginTop: 1}]}>有限期：2018-06-21至06-31</Text>
-                    </View>
-                    <View style={{flex: 1}}/>
-                    <View style={[styles.itemLeft, {alignItems: 'center'}]}>
-                        <Text style={{color: "#666666", fontSize: 16}}>剩30日</Text>
-                        <TouchableOpacity style={styles.touchView}>
-                            <Text style={{color: "#FFFFFF", fontSize: 14}}>去使用</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </ImageBackground>
-        )
-    }
-}
 
 
