@@ -18,7 +18,7 @@ export default class CouponPage extends Component {
         return(
             <ImageBackground
                 style={styles.sameView}
-                source={Images.crowd_banner}>
+                source={Images.coupon.background}>
                 <View style={styles.itemView}>
                     <View  style={styles.itemLeft}>
                         <View style={{flexDirection:'row',alignItems:'center'}}>

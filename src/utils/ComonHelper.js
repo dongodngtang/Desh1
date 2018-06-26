@@ -19,6 +19,7 @@ import _ from 'lodash';
 import JShareModule from "jshare-react-native";
 import JMessage from "jmessage-react-plugin";
 import {CLEAR_PROFILE} from "../actions/ActionTypes";
+import Alipay from 'react-native-yunpeng-alipay';
 
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
@@ -57,11 +58,17 @@ export const picker = {
  * @param num2
  * @returns {number}
  */
-export function mul(num1,num2) {
-    let m = 0,s1 = num1.toString(),s2 = num2.toString();
-    try{m+=s1.split(".")[1].length}catch(e){}
-    try{m+=s2.split(".")[1].length}catch(e){}
-    return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
+export function mul(num1, num2) {
+    let m = 0, s1 = num1.toString(), s2 = num2.toString();
+    try {
+        m += s1.split(".")[1].length
+    } catch (e) {
+    }
+    try {
+        m += s2.split(".")[1].length
+    } catch (e) {
+    }
+    return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
 }
 
 
@@ -69,6 +76,14 @@ export function localFilePath(path) {
     if (Platform.OS === 'android')
         return 'file://' + path;
     return path;
+}
+
+export function alipay(payStr) {
+    Alipay.pay(payStr).then( (data) =>{
+        console.log("data22:",data);
+    },  (err) =>{
+        console.log(err);
+    });
 }
 
 
@@ -423,7 +438,7 @@ export function isWXAppInstalled(resolve) {
 
 
 export function hotelOrderStatus(status) {
-    switch (status){
+    switch (status) {
         case 'unpaid':
             return '待付款';
         case 'paid':
@@ -651,19 +666,19 @@ export function showToast(msg) {
 }
 
 export function showWeek(week) {
-    if(week === 'Monday'){
+    if (week === 'Monday') {
         return '周一'
-    }else if(week === 'Tu'){
+    } else if (week === 'Tu') {
         return '周二'
-    }else if(week === 'We'){
+    } else if (week === 'We') {
         return '周三'
-    }else if(week === 'Th'){
+    } else if (week === 'Th') {
         return '周四'
-    }else if(week === 'Fr'){
+    } else if (week === 'Fr') {
         return '周五'
-    }else if(week === 'Sa'){
+    } else if (week === 'Sa') {
         return '周六'
-    }else if(week === 'Su'){
+    } else if (week === 'Su') {
         return '周日'
     }
 
@@ -792,7 +807,7 @@ export function dateString(date, formate) {
         let day = date.getDay();
         let timestamp = Date.parse(date) / 1000;
         let dates = {dateString: dateString, day: day, month: month, timestamp: timestamp, year: year};
-        console.log("nnnnnn:",dates)
+        console.log("nnnnnn:", dates)
         return dates;
     }
 }
@@ -1151,8 +1166,8 @@ export function singleOrdouble(num) {
         return false;
 }
 
-export function checkMobile (mobileStr) {
-    if (!mobileStr){
+export function checkMobile(mobileStr) {
+    if (!mobileStr) {
         showToast('手机号格式不对')
         return false
     }

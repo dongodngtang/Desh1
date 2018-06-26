@@ -16,9 +16,10 @@ import {
     isWXAppInstalled,
     deleteProductFromCart,
     showToast,
-    alertOrderChat
+    alertOrderChat,
+    alipay
 } from '../../../utils/ComonHelper';
-import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
+import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult, postAlipay} from '../../../services/MallDao';
 import {addTimeRecode} from "../../../components/PayCountDown";
 import Discount from '../../comm/Discount';
 import {get_discount} from '../../../services/CrowdDao';
@@ -157,26 +158,32 @@ export default class OrderSubmitPage extends PureComponent {
                     order_number: data
                 });
                 addTimeRecode(data.order_number);
-                if (this.state.isInstall) {
-                    postWxPay(data, ret => {
-                        payWx(ret, () => {
-                            getWxPaidResult(data, result => {
+                postAlipay(data.order_number, data => {
+                    console.log("data:",data)
+                  alipay(data.payment_params)
+                }, err => {
 
-                                global.router.replaceMallOrderInfo(data)
-                            }, err => {
-                                showToast('支付成功，系统正在处理')
-                            }, () => {
-                            })
-
-                        }, () => {
-                            global.router.replaceMallOrderInfo(data)
-                        })
-                    }, err => {
-
-                    });
-                } else {
-                    alertOrderChat(I18n.t('need_weChat'))
-                }
+                })
+                // if (this.state.isInstall) {
+                //     postWxPay(data, ret => {
+                //         payWx(ret, () => {
+                //             getWxPaidResult(data, result => {
+                //
+                //                 global.router.replaceMallOrderInfo(data)
+                //             }, err => {
+                //                 showToast('支付成功，系统正在处理')
+                //             }, () => {
+                //             })
+                //
+                //         }, () => {
+                //             global.router.replaceMallOrderInfo(data)
+                //         })
+                //     }, err => {
+                //
+                //     });
+                // } else {
+                //     alertOrderChat(I18n.t('need_weChat'))
+                // }
             }, err => {
                 showToast(err)
             });
