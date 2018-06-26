@@ -324,7 +324,7 @@ export class RoomMessage extends PureComponent {
                             borderBottomWidth: i === persons.length-1 ? 0: 1
 
                         }}>
-                            <TextInput maxLength={10} style={[styles.room_num, {width: 95,paddingTop:0,paddingBottom:0}]}
+                            <TextInput maxLength={10} style={[styles.room_num, {paddingTop:0,paddingBottom:0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
                                        placeholder={'姓（例：LI）'}
@@ -370,7 +370,7 @@ export class RoomMessage extends PureComponent {
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
                         keyboardType={'numeric'}
-                        style={{width: 150, marginLeft: 27,paddingTop:0,paddingBottom:0}}
+                        style={{flex:1,marginLeft: 27,paddingTop:0,paddingBottom:0}}
                         maxLength={12}
                         numberOfLines={1}
                         underlineColorAndroid={'transparent'}
