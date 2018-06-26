@@ -51,7 +51,11 @@ export default class CouponSelectPage extends Component {
     _selectItem = (item) => {
         let coupons_copy = [...this.state.coupons];
         coupons_copy.map(x => {
-
+            if (item.isSelect) {
+                return Images.coupon.selected
+            }else{
+                return Images.coupon.unSelected
+            }
         });
     };
 

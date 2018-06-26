@@ -370,7 +370,7 @@ const images = {
         coupon: require('../../source/integral/coupon.png')
     },
     coupon:{
-        background:require('../../source/coupon/background.png'),
+        background:require('../../source/coupon/background2.png'),
         coupon:require('../../source/coupon/coupon.png'),
         return_hei:require('../../source/coupon/return_hei.png'),
         selected:require('../../source/coupon/selected.png'),

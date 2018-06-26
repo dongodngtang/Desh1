@@ -4,7 +4,6 @@ import {Colors, Metrics} from "../../Themes";
 export default StyleSheet.create({
     sameView:{
         flexDirection:'row',
-        backgroundColor:"white",
         alignItems:'center'
     },
     itemView:{
