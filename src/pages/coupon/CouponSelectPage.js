@@ -84,7 +84,6 @@ export default class CouponSelectPage extends Component {
     };
 
     render() {
-        console.log(this.state)
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar

@@ -203,7 +203,10 @@ export default class RoomReservationPage extends PureComponent {
         this.setState({
             phone: phone
         })
-    }
+    };
+    _cutBack=()=>{
+        return 0;
+    };
 
     render() {
         const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
@@ -262,7 +265,7 @@ export default class RoomReservationPage extends PureComponent {
                         <View style={{flexDirection: 'column', marginLeft: 6, justifyContent: 'center'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: "#444444", fontSize: 14}}>已减</Text>
-                                <Text style={{color: "#E54A2E", fontSize: 14, marginLeft: 12}}>¥0</Text>
+                                <Text style={{color: "#E54A2E", fontSize: 14, marginLeft: 12}}>¥{this._cutBack()}</Text>
                             </View>
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
                         </View>
