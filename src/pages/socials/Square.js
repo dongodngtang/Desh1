@@ -14,7 +14,6 @@ import MomentList from './MomentList'
 import PopAction from '../comm/PopAction';
 import {isEmptyObject, showToast} from "../../utils/ComonHelper";
 import {report_topic} from "../../services/SocialDao";
-import Alipay from 'react-native-yunpeng-alipay';
 
 let topicId = -1;
 
@@ -139,14 +138,7 @@ class SquareBar extends PureComponent {
             {tabs_views}
 
             <TouchableOpacity
-                onPress={() =>{
-                    // router.toNearFriend()
-                    Alipay.pay("signed pay info string").then(function(data){
-                        console.log(data);
-                    }, function (err) {
-                        console.log(err);
-                    });
-                }}
+                onPress={() => router.toNearFriend()}
                 style={{
                     height: Metrics.navBarHeight - Metrics.statusBarHeight,
                     alignItems: 'center',
