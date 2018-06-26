@@ -22,7 +22,7 @@ export default class IntegralInfoPage extends Component {
                     toolbarStyle={{backgroundColor: Colors._FFF}}
                     title={'积分详情'}
                     titleStyle={{color: Colors.txt_444,fontSize:18}}
-                    leftBtnIcon={Images.icon_return}
+                    leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
