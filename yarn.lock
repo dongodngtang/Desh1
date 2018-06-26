@@ -4797,9 +4797,9 @@ react-native-wechat@^1.9.9:
   dependencies:
     events "1.0.2"
 
-react-native-yunpeng-alipay@^2.0.0:
+"react-native-yunpeng-alipay@git+https://github.com/dongodngtang/react-native-yunpeng-alipay.git":
   version "2.0.0"
-  resolved "http://registry.npm.taobao.org/react-native-yunpeng-alipay/download/react-native-yunpeng-alipay-2.0.0.tgz#a9d3d68a5eef2e5c75bb66c460384e1288d9aaad"
+  resolved "git+https://github.com/dongodngtang/react-native-yunpeng-alipay.git#1d94d33ace474d00aa14e77f42467346bfb1dc29"
 
 react-native@0.54.2:
   version "0.54.2"
