@@ -1,6 +1,13 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+
+export function postAlipay(order_number, resolve, reject) {
+    helper.post(Api.alipay(order_number), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 //退换货详情
 export function getRefundInfo(body, resolve, reject) {
     helper.get(Api.refund_info(body), ret => {

@@ -179,7 +179,7 @@ const api = {
     hotel_order_cancel:hotel_order_cancel,//取消酒店订单
     del_order_hotel: del_order_hotel,//删除酒店订单
     hotel_return:hotel_return,//酒店订单退款
-
+    alipay:alipay,
 }
 
 export default api;
@@ -189,6 +189,10 @@ function getUserId() {
         return login_user.user_id;
     }
     return '0';
+}
+
+export function alipay(order_number) {
+    return `shop/orders/${order_number}/alipay`
 }
 
 const page_size = 10;
