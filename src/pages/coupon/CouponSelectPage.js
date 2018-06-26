@@ -16,14 +16,13 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle';
 
-const data = [1, 2, 3, 4, 5, 6, 7];
 
 export default class CouponSelectPage extends Component {
 
     state = {
-        coupons: data,
+        coupons: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}],
         select_changed: false,
-        selectId:0
+        selectId: 0
     };
 
     componentDidMount() {
@@ -40,23 +39,14 @@ export default class CouponSelectPage extends Component {
     _changeSelect = (item) => {
         let coupons_copy = [...this.state.coupons];
         coupons_copy.map(x => {
-            if (x.id === item.id) {
-                x.isSelect = true;
-                this.setState({
-                    coupons: coupons_copy
-                })
-            }
+
+            x.isSelect =  x.id === item.id;
+
+
         });
-    };
-    _selectItem = (item) => {
-        let coupons_copy = [...this.state.coupons];
-        coupons_copy.map(x => {
-            if (item.isSelect) {
-                return Images.coupon.selected
-            }else{
-                return Images.coupon.unSelected
-            }
-        });
+        this.setState({
+            coupons: coupons_copy
+        })
     };
 
 
@@ -86,7 +76,7 @@ export default class CouponSelectPage extends Component {
                                           this._changeSelect(item)
                                       }}>
                         <Image style={{width: 22, height: 22}}
-                               source={this._selectItem(item)}/>
+                               source={item.isSelect ? Images.coupon.selected : Images.coupon.unSelected}/>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
@@ -94,6 +84,7 @@ export default class CouponSelectPage extends Component {
     };
 
     render() {
+        console.log(this.state)
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -108,13 +99,22 @@ export default class CouponSelectPage extends Component {
                 />
 
                 <ScrollView>
+                    {/*{data.map((item, index) => {*/}
+                    {/*return (*/}
+                    {/*<View key={index} style={{marginTop: 15, marginLeft: 17, marginRight: 17}}>*/}
+                    {/*{this._renderItem(item)}*/}
+                    {/*{this._separator()}*/}
+                    {/*</View>*/}
+                    {/*)*/}
+
+                    {/*})}*/}
                     <FlatList
                         style={{marginTop: 15, marginLeft: 17, marginRight: 17}}
-                        data={data}
+                        data={this.state.coupons}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
-                        keyExtractor={(index) => `coupon${index}`}
+                        keyExtractor={(item, index) => `coupon${index}`}
                     />
                     <View style={{height: 80}}/>
                 </ScrollView>
