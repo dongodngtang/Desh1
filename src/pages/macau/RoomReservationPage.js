@@ -87,7 +87,7 @@ export default class RoomReservationPage extends PureComponent {
         return body;
     };
 
-    submitBtn = (roomReservation) => {
+    submitBtn = () => {
         const {detailsShow, room_num, total_price, persons, phone, order_number} = this.state;
         const {date} = this.props.params;
 
@@ -101,28 +101,28 @@ export default class RoomReservationPage extends PureComponent {
                     order_number: data.order_number
                 });
                 addTimeRecode(data.order_number);
-
-                if (this.state.isInstall) {
-                    postHotelWxPay(data, ret => {
-                        payWx(ret, () => {
-                            getHotelWxPaidResult(data, result => {
-
-                                global.router.toOrderStatusPage(data.order_number)
-                            }, err => {
-                                showToast('支付成功，系统正在处理')
-                            }, () => {
-                            })
-
-                        }, () => {
-                            global.router.toOrderStatusPage(data.order_number)
-                        })
-                    }, err => {
-
-                    });
-
-                } else {
-                    alertOrderChat(I18n.t('need_weChat'))
-                }
+                global.router.toOrderStatusPage(data.order_number)
+                // if (this.state.isInstall) {
+                //     postHotelWxPay(data, ret => {
+                //         payWx(ret, () => {
+                //             getHotelWxPaidResult(data, result => {
+                //
+                //                 global.router.toOrderStatusPage(data.order_number)
+                //             }, err => {
+                //                 showToast('支付成功，系统正在处理')
+                //             }, () => {
+                //             })
+                //
+                //         }, () => {
+                //             global.router.toOrderStatusPage(data.order_number)
+                //         })
+                //     }, err => {
+                //
+                //     });
+                //
+                // } else {
+                //     alertOrderChat(I18n.t('need_weChat'))
+                // }
             }, err => {
                 showToast(err)
             });
@@ -310,7 +310,7 @@ export class RoomMessage extends PureComponent {
         return (
             <View style={{
                 flexDirection: 'column',
-                width: '100%',
+                alignSelf: 'center',
                 justifyContent: 'flex-start',
                 marginLeft: 24,
                 paddingTop:0
@@ -322,30 +322,30 @@ export class RoomMessage extends PureComponent {
                             alignItems:'center',
                             paddingBottom:i === persons.length-1 ? 0: 14,
                             marginRight: 13,
-                            marginTop:14,
+                            marginTop:i === 0 ? 0: 14,
                             borderBottomColor: '#F3F3F3',
                             borderBottomWidth: i === persons.length-1 ? 0: 1
 
                         }}>
-                            <TextInput maxLength={10} style={[styles.room_num, {paddingTop:0,paddingBottom:0}]}
+                            <TextInput maxLength={6} style={[styles.room_num, {width:100,paddingTop:0,paddingBottom:0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
                                        placeholder={'姓（例：LI）'}
                                        placeholderTextColor={Colors._CCC}
-                                       autoCapitalize={'characters'}
                                        onChangeText={txt => {
                                            item.last_name = txt;
-                                       }}/>
+                                       }}
+                                       autoCapitalize={'characters'}/>
                             <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC',paddingTop:0}]}>/</Text>
-                            <TextInput maxLength={10} style={[styles.room_num, {paddingTop:0,paddingBottom:0}]}
+                            <TextInput maxLength={6} style={[styles.room_num, {width:150,paddingTop:0,paddingBottom:0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
                                        placeholder={'名（例：XIAOMING）'}
-                                       autoCapitalize={'characters'}
                                        placeholderTextColor={Colors._CCC}
                                        onChangeText={txt => {
                                            item.first_name = txt;
-                                       }}/>
+                                       }}
+                                       autoCapitalize={'characters'}/>
                         </View>
                     )
                 })}
@@ -365,15 +365,15 @@ export class RoomMessage extends PureComponent {
                 </View>
 
                 <View style={styles.Roomcounts}>
-                    <Text style={[styles.rooms,{marginTop: 14}]}>入住人</Text>
-                    <View style={{flex: 1}}/>
+                    <Text style={styles.rooms}>入住人</Text>
+
                     {this._person(persons)}
                 </View>
                 <View style={styles.phoneView}>
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
                         keyboardType={'numeric'}
-                        style={{flex:1,marginLeft: 27,paddingTop:0,paddingBottom:0}}
+                        style={{flex:1,marginLeft: 25,paddingTop:0,paddingBottom:0}}
                         maxLength={12}
                         numberOfLines={1}
                         underlineColorAndroid={'transparent'}
@@ -567,13 +567,15 @@ const styles = StyleSheet.create({
         borderColor: "#F3F3F3"
     },
     Roomcounts: {
+        marginLeft: 14,
+        marginRight: 14,
+        paddingTop:14,
         flexDirection: 'row',
-        alignItems:'flex-start',
+
         paddingBottom: 14,
         borderBottomWidth: 1,
-        borderColor: "#F3F3F3",
-        marginLeft: 14,
-        marginRight: 14
+        borderColor: "#F3F3F3"
+
     },
     rooms: {color: "#AAAAAA", fontSize: 14}
 })

@@ -61,7 +61,7 @@ export default class OrderStatusPage extends Component {
                             alignItems: 'center',
                             paddingTop: i === 0 ? 0 : 14,
                             paddingBottom: i === persons.length - 1 ? 0 : 14,
-                            borderBottomColor: '#F3F3F3',
+                            borderBottomColor: i === persons.length - 1 ?'#F3F3F3':'white',
                             borderBottomWidth: i === persons.length - 1 ? 0 : 1
                         }}>
                             <TextInput style={[styles.room_num, {width: 100, paddingTop: 0, paddingBottom: 0}]}
