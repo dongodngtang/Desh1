@@ -143,8 +143,7 @@ export default class OrderSubmitPage extends PureComponent {
         let adr = this.shipAddress.getAddress();
         const {invalid_items} = this.state.orderData;
 
-        if (!util.isEmpty(this.state.order_number))
-            return;
+
         if (util.isEmpty(adr)) {
             showToast(I18n.t('adr_empty'));
             return;
@@ -152,49 +151,36 @@ export default class OrderSubmitPage extends PureComponent {
 
         if (this.state.isExpired || util.isEmpty(invalid_items)) {
             let body = this.postParam();
-            postMallOrder(body, data => {
-                this.removeCarts();
-                this.setState({
-                    order_number: data
-                });
-                addTimeRecode(data.order_number);
-                // if (this.payModal) {
-                //     const data2 = {
-                //         order_number: data.order_number,
-                //         price: this.discounted(this.state.orderData)
-                //     };
-                //     this.payModal.setPayUrl(data2);
-                //     this.payModal.toggle();
-                // }
-                // postAlipay(data.order_number, data => {
-                //     console.log("data:",data)
-                //   alipay(data.payment_params)
-                // }, err => {
-                //
-                // })
-                if (this.state.isInstall) {
-                    postWxPay(data, ret => {
-                        payWx(ret, () => {
-                            getWxPaidResult(data, result => {
-
-                                global.router.replaceMallOrderInfo(data)
-                            }, err => {
-                                showToast('支付成功，系统正在处理')
-                            }, () => {
-                            })
-
-                        }, () => {
-                            global.router.replaceMallOrderInfo(data)
-                        })
-                    }, err => {
-
+            if (util.isEmpty(this.state.order_number)) {
+                postMallOrder(body, data => {
+                    this.removeCarts();
+                    this.setState({
+                        order_number: data
                     });
-                } else {
-                    alertOrderChat(I18n.t('need_weChat'))
-                }
-            }, err => {
-                showToast(err)
-            });
+                    // addTimeRecode(data.order_number);
+                    // if (this.payModal) {
+                    //     const data2 = {
+                    //         order_number: data.order_number,
+                    //         price: this.discounted(this.state.orderData)
+                    //     };
+                    //     this.payModal.setPayUrl(data2);
+                    //     this.payModal.toggle();
+                    // }
+                    // postAlipay(data.order_number, data => {
+                    //     console.log("data:",data)
+                    //   alipay(data.payment_params)
+                    // }, err => {
+                    //
+                    // })
+                    this.mallPay(data)
+
+                }, err => {
+                    showToast(err)
+                });
+            } else {
+                this.mallPay(this.state.order_number)
+            }
+
 
         } else {
             this.setState({
@@ -204,6 +190,29 @@ export default class OrderSubmitPage extends PureComponent {
 
 
     };
+
+    mallPay = (data) => {
+        if (this.state.isInstall) {
+            postWxPay(data, ret => {
+                payWx(ret, () => {
+                    getWxPaidResult(data, result => {
+
+                        global.router.replaceMallOrderInfo(data)
+                    }, err => {
+                        showToast('支付成功，系统正在处理')
+                    }, () => {
+                    })
+
+                }, () => {
+                    global.router.replaceMallOrderInfo(data)
+                })
+            }, err => {
+
+            });
+        } else {
+            alertOrderChat(I18n.t('need_weChat'))
+        }
+    }
 
     removeCarts = () => {
         let carts = global.shoppingCarts.filter(item => !item.isSelect);

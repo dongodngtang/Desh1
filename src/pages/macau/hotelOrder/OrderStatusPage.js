@@ -53,15 +53,15 @@ export default class OrderStatusPage extends Component {
 
     _person = (persons) => {
         return (
-            <View style={{flexDirection: 'column', width: '100%', justifyContent: 'center'}}>
+            <View style={{flexDirection: 'column', width: '100%', justifyContent: 'center',alignSelf:'center'}}>
                 {persons.map((item, i) => {
                     return (
                         <View key={i} style={{
                             flexDirection: 'row',
                             alignItems: 'center',
                             paddingTop: i === 0 ? 0 : 14,
-                            paddingBottom: i === persons.length - 1 ? 0 : 14,
-                            borderBottomColor: i === persons.length - 1 ?'#F3F3F3':'white',
+                            paddingBottom: 14,
+                            borderBottomColor: i === persons.length - 1 ?'white':'#F3F3F3',
                             borderBottomWidth: i === persons.length - 1 ? 0 : 1
                         }}>
                             <TextInput style={[styles.room_num, {width: 100, paddingTop: 0, paddingBottom: 0}]}
@@ -292,7 +292,6 @@ const styles = StyleSheet.create({
         marginRight: 13,
         paddingBottom: 14,
         backgroundColor: 'white',
-        alignItems: 'flex-start',
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: '#F3F3F3'
