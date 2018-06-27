@@ -486,7 +486,7 @@ class OrderInfoPage extends React.Component {
                 price: order_info.final_price
             };
 
-            this.payModal.setPayUrl(data);
+            this.payModal.setPayUrl(data,'mall');
             this.payModal.setRefresh(this._refreshPage);
             this.payModal.toggle();
         }
@@ -503,7 +503,7 @@ class OrderInfoPage extends React.Component {
                 price: price
             };
 
-            this.payModal.setPayUrl(data);
+            this.payModal.setPayUrl(data,'mall');
             this.payModal.setRefresh(this._refreshPage);
             this.payModal.toggle();
         }

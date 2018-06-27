@@ -13,7 +13,7 @@ import {
     isWXAppInstalled
 } from '../../utils/ComonHelper';
 import {getWxPaidResult, postWxPay} from "../../services/MallDao";
-
+import {getHotelWxPaidResult, postHotelWxPay, cancelHotelOrder} from "../../services/MacauDao";
 
 export default class PayModal extends Component {
 
@@ -21,11 +21,12 @@ export default class PayModal extends Component {
         visible: false,
         payUrl: {},
         payWay: 1,
-        aliPay:{partnerId: ''},
+        aliPay: {partnerId: ''},
         wxPay: {partnerId: ''},
         pay_url: 'pay-success',
         isWXInstall: false,
-        isAliInstall: false
+        isAliInstall: false,
+        type: ''
     };
 
     componentDidMount() {
@@ -56,16 +57,17 @@ export default class PayModal extends Component {
         this.orderRefresh = orderRefresh;
     };
 
-    setPayUrl = (data) => {
+    setPayUrl = (data, type) => {
         console.log('payUrl', data);
 
-        this._getPayData(data);
+        this._getPayData(data,type);
         this.setState({
-            payUrl: data
+            payUrl: data,
+            type: type
         })
     };
 
-    _getPayData = (payUrl) => {
+    _getPayData = (payUrl,type) => {
         const {order_number, price} = payUrl;
         const body = {
             order_number: order_number
@@ -82,21 +84,31 @@ export default class PayModal extends Component {
         //         payWay: 0
         //     })
         // });
-
-        postWxPay(body, data => {
-            this.setState({
-                wxPay: data,
-                payWay: 1,
-            })
-        }, err => {
-            alertOrderChat(I18n.t('need_weChat'))
-            this.setState({
-                wxPay: {},
-                payWay: 0
-            })
-        });
-
-
+        if (type === 'hotel') {
+            postHotelWxPay(body, data => {
+                this.setState({
+                    wxPay: data,
+                    payWay: 1,
+                })
+            }, err => {
+                this.setState({
+                    wxPay: {},
+                    payWay: 0
+                })
+            });
+        } else if (type === 'mall') {
+            postWxPay(body, data => {
+                this.setState({
+                    wxPay: data,
+                    payWay: 1,
+                })
+            }, err => {
+                this.setState({
+                    wxPay: {},
+                    payWay: 0
+                })
+            });
+        }
 
     };
 
@@ -193,7 +205,7 @@ export default class PayModal extends Component {
                 <Text style={styles.txt3}>银行卡支付</Text>
                 <Text style={styles.txt31}>信用卡储蓄卡付款，快捷支付</Text>
             </View>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
             {strNotNull(this.state.aliPay) ? <View
                 style={styles.rightImgs}>
                 <Image
@@ -222,7 +234,7 @@ export default class PayModal extends Component {
                 <Text style={styles.txt3}>{I18n.t('pay_weixin')}  </Text>
                 <Text style={styles.txt31}>{I18n.t('pay_weixin_support')}</Text>
             </View>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
             {isEmptyObject(this.state.wxPay) ? null : <View
                 style={styles.rightImgs}>
                 <Image
@@ -235,23 +247,39 @@ export default class PayModal extends Component {
 
 
     _wxPay = () => {
-        const {payUrl, wxPay} = this.state;
+        const {payUrl, wxPay, type} = this.state;
         const {order_number, price} = payUrl;
-
+        console.log("支付类型：", type)
         if (!isEmptyObject(wxPay))
-            payWx(wxPay, () => {
-                getWxPaidResult(payUrl, result => {
+            if (type === 'hotel') {
+                payWx(wxPay, () => {
+                    getHotelWxPaidResult(payUrl, result => {
+                        global.router.toOrderStatusPage(payUrl.order_number)
+
+                    }, err => {
+                        showToast('支付成功，系统正在处理')
+                    }, () => {
+                    })
+
+                }, () => {
+                    global.router.toOrderStatusPage(payUrl.order_number)
+                })
+            } else if (type === 'mall') {
+                payWx(wxPay, () => {
+                    getWxPaidResult(payUrl, result => {
+                        router.pop();
+                        global.router.replaceMallOrderInfo(payUrl)
+                    }, err => {
+                        showToast('支付成功，系统正在处理')
+                    }, () => {
+                    })
+
+                }, () => {
                     router.pop();
                     global.router.replaceMallOrderInfo(payUrl)
-                }, err => {
-                    showToast('支付成功，系统正在处理')
-                }, () => {
                 })
+            }
 
-            }, () => {
-                router.pop();
-                global.router.replaceMallOrderInfo(payUrl)
-            })
     };
 
     _aliPay = () => {
@@ -275,8 +303,6 @@ export default class PayModal extends Component {
                 } else if (payWay === 1) {
                     this._wxPay();
                 }
-
-
             }
             }
             style={styles.btnPay}>
@@ -286,11 +312,11 @@ export default class PayModal extends Component {
 }
 
 const styles = StyleSheet.create({
-    rightImgs:{
+    rightImgs: {
         height: 56,
         width: 56,
-        justifyContent:'center',
-        alignItems:'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     page: {
         flex: 1

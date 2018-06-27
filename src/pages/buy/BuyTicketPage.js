@@ -196,7 +196,7 @@ export default class BuyTicketPage extends Component {
                 order_number: order_number,
                 price: handle_value ? this.discounted(tickets.unformatted_price) : tickets.price
             };
-            this.payModal.setPayUrl(data);
+            this.payModal.setPayUrl(data,'mall');
             this.payModal.toggle();
         }
 

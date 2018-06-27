@@ -176,7 +176,7 @@ export default class OrderSubmitPage extends PureComponent {
                             order_number: data.order_number,
                             price: this.discounted(this.state.orderData)
                         };
-                        this.payModal.setPayUrl(data2);
+                        this.payModal.setPayUrl(data2,'mall');
                         this.payModal.toggle();
                     }
                 }, err => {
@@ -189,7 +189,7 @@ export default class OrderSubmitPage extends PureComponent {
                         order_number: this.state.order_number.order_number,
                         price: this.discounted(this.state.orderData)
                     };
-                    this.payModal.setPayUrl(data2);
+                    this.payModal.setPayUrl(data2,'mall');
                     this.payModal.toggle();
                 }
             }

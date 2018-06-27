@@ -120,7 +120,19 @@ export default class OrderStatusPage extends Component {
             return null;
         }
 
-    }
+    };
+
+    _payModal=()=>{
+        if (this.payModal) {
+            const data2 = {
+                order_number: this.state.orderInfo.order.order_number,
+                // price: this.discounted(this.state.orderData)
+            };
+            this.payModal.setPayUrl(data2,'hotel');
+            this.payModal.toggle();
+        }
+    };
+
 
     statusBottom = (order) => {
         const {status, pay_status, total_price, order_number} = order;
@@ -134,7 +146,7 @@ export default class OrderStatusPage extends Component {
                         <UnpaidBottom
                             refresh={this._refresh}
                             order_number={order_number}
-                            payModal={this.payModal}/>
+                            _payModal={this._payModal}/>
                     </View>
                 );
             default:

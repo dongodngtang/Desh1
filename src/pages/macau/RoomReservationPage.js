@@ -372,6 +372,7 @@ export class RoomMessage extends PureComponent {
                 <View style={styles.phoneView}>
                     <Text style={[styles.txt2, {marginLeft: 14}]}>手机号</Text>
                     <TextInput
+                        ref="inputWR"
                         keyboardType={'numeric'}
                         style={{flex:1,marginLeft: 25,paddingTop:0,paddingBottom:0}}
                         maxLength={12}
