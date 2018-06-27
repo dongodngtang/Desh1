@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    StyleSheet, Text, View,TouchableOpacity,Image
+    StyleSheet, Text, View, TouchableOpacity, Image
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from "react-native-i18n";
@@ -11,25 +11,25 @@ import {catProducts, searchProducts} from "../../services/MallDao";
 export default class CouponList extends Component {
 
     renderItem = (item, index) => {
-        return(
+        return (
             <TouchableOpacity key={index} style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
                               onPress={() => {
                                   global.router.toIntegralInfoPage(item)
                               }}>
-                <Image  style={[styles.marginS,styles.couponImg]} source={Images.integral.coupon}/>
-                <Text style={[styles.TXt,styles.marginS,{marginTop:16}]}>酒店优惠券</Text>
-                <Text style={[styles.TXt2,styles.marginS]}>可抵扣50元</Text>
-                <View style={[styles.marginS,{marginTop:5,flexDirection:'row'}]}>
+                <Image style={[styles.marginS, styles.couponImg]} source={Images.integral.coupon}/>
+                <Text style={[styles.TXt, styles.marginS, {marginTop: 16}]}>酒店优惠券</Text>
+                <Text style={[styles.TXt2, styles.marginS]}>可抵扣50元</Text>
+                <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
                     <Text style={styles.TXt3}>100<Text style={styles.TXt4}>积分</Text></Text>
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     <Text style={styles.TXt2}>剩余1件</Text>
                 </View>
             </TouchableOpacity>
         )
     };
 
-    render(){
-        return(
+    render() {
+        return (
             <UltimateFlatList
                 // firstLoader={!this.props.isSearch}
                 ref={(ref) => this.listView = ref}
@@ -51,37 +51,18 @@ export default class CouponList extends Component {
         try {
 
             if (page === 1) {
-                if (this.props.isSearch)
-                    this.searchRefresh(1,startFetch, abortFetch);
-                else
-                    this.refresh(1,startFetch, abortFetch)
+                this.refresh(1, startFetch, abortFetch)
             } else {
-                if (this.props.isSearch)
-                    this.searchRefresh(page, startFetch, abortFetch);
-                else
-                    this.refresh(page, startFetch, abortFetch);
+                this.refresh(page, startFetch, abortFetch);
             }
         } catch (err) {
             abortFetch();
         }
     };
-
-    searchRefresh = (page,startFetch, abortFetch) => {
-        searchProducts({
-            page: page,
-            page_size: 20,
-            keyword: this.searchKey
-        }, data => {
-            startFetch(data.items, 6)
-        }, err => {
-            abortFetch()
-        })
-
-    };
-    refresh = (page,startFetch, abortFetch) => {
+    refresh = (page, startFetch, abortFetch) => {
         const {id} = this.props.category;
         catProducts({id}, data => {
-            startFetch(data.items, 6)
+            startFetch(this,props.category, 6)
         }, err => {
             abortFetch()
         }, {
@@ -95,8 +76,8 @@ export default class CouponList extends Component {
 
 export class CouponEmpty extends Component {
 
-    render(){
-        return(
+    render() {
+        return (
             <View>
                 <Text>空的</Text>
             </View>

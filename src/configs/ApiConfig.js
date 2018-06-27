@@ -180,6 +180,7 @@ const api = {
     del_order_hotel: del_order_hotel,//删除酒店订单
     hotel_return:hotel_return,//酒店订单退款
     alipay:alipay,
+    integral_mall:'integral_malls/coupons',// 积分商城优惠券列表
 }
 
 export default api;

@@ -1,35 +1,106 @@
 import React, {Component} from 'react';
 import {
-    StyleSheet, Text, View,ScrollView
+    TouchableOpacity, Text, View, ScrollView,Image,ImageBackground
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {} from '../../services/IntegralDao';
+import {getIntrgralMall} from '../../services/IntegralDao';
 import IntegralBar from './IntegralBar';
-import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import CouponList from './CouponList';
 import styles from './IntegralStyle'
-const arrayMenu=[1,2,3,4,5,6];
+import I18n from "react-native-i18n";
+import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 
 export default class IntegralMallPage extends Component {
 
     state = {
-
+        integral_mall: {}
     };
 
-    componentDidMount() {
 
-    }
+    renderItem = (item, index) => {
+        const {coupon_type,name,integrals,short_desc,stock} = item;
+        return (
+            <TouchableOpacity key={index} style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
+                              onPress={() => {
+                                  global.router.toIntegralInfoPage(item)
+                              }}>
+                {/*<ImageBackground style={[styles.marginS, styles.couponImg,{flexDirection:'row',alignItems:'center'}]}>*/}
+                    {/*<View style={styles.itemLeft}>*/}
+                        {/*<View style={{flexDirection: 'row', alignItems: 'center'}}>*/}
+                            {/*<Text style={{color: "#F34247", fontSize: 18}}>¥<Text*/}
+                                {/*style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>*/}
+                            {/*<Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>酒店优惠券</Text>*/}
+                        {/*</View>*/}
+                        {/*<Text style={[styles.txt1, {marginTop: 10}]}>单笔酒店预订金额满800元可使用</Text>*/}
+                        {/*<Text style={[styles.txt1, {marginTop: 1}]}>有限期：2018-06-21至06-31</Text>*/}
+                    {/*</View>*/}
+                {/*</ImageBackground>*/}
+                <Image style={[styles.marginS, styles.couponImg]} source={Images.integral.coupon}/>
+                <Text style={[styles.TXt, styles.marginS, {marginTop: 16}]}>{name}</Text>
+                <Text style={[styles.TXt2, styles.marginS]}>可抵扣50元</Text>
+                <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
+                    <Text style={styles.TXt3}>{integrals}<Text style={styles.TXt4}>积分</Text></Text>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.TXt2}>剩余{stock}件</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    };
 
     render() {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <IntegralBar text={'积分商城'}/>
-                <CouponList
-                    category={arrayMenu}/>
+                <UltimateFlatList
+                    ref={(ref) => this.listView = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `mallList${index}`}
+                    item={this.renderItem}
+                    numColumns={2}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    emptyView={() => <CouponEmpty/>}
+                />
             </View>
         )
     }
 
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
 
+            if (page === 1) {
+                this.refresh(1, startFetch, abortFetch)
+            } else {
+                this.refresh(page, startFetch, abortFetch);
+            }
+        } catch (err) {
+            abortFetch();
+        }
+    };
+    refresh = (page, startFetch, abortFetch) => {
+        getIntrgralMall(data => {
+            startFetch(data.items, 6)
+        }, err => {
+            abortFetch()
+        }, {
+            page: page,
+            page_size: 20
+        })
+    };
+
+
+}
+
+export class CouponEmpty extends Component {
+
+    render() {
+        return (
+            <View>
+                <Text>空的</Text>
+            </View>
+        )
+    }
 }
 
