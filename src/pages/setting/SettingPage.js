@@ -106,7 +106,8 @@ class SettingPage extends Component {
                 <SetItemView
                     onPress={() => {
                         umengEvent('setting_recommend');
-                        uShareLoad();
+                        // share(`${I18n.t('share_friend')}`, loadApp)
+                        uShareLoad(1);
                     }}
                     testID="btn_share"
                     name={I18n.t('recommend_friend')}/>

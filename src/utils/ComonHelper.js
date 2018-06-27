@@ -85,12 +85,12 @@ export function alipay(payStr) {
         console.log(err);
     });
 }
-export function uShareLoad() {
+export function uShareLoad(id) {
     let param = {
         shareTitle: '海量房源优惠券',
         shareText: I18n.t('ads_poker'),
-        shareImage: getShareIcon(Images.default_img),
-        shareLink: shareHost() + "loadApp",
+        shareImage: Images.default_img,
+        shareLink: shareHost() + "products/" + id + "loadApp",
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
