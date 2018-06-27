@@ -112,7 +112,7 @@ export default class CouponSelectPage extends Component {
                     {/*})}*/}
                     <FlatList
                         style={{marginTop: 15, marginLeft: 17, marginRight: 17}}
-                        data={this.state.coupons}
+                        data={this.props.params.person_coupons}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}

@@ -73,14 +73,14 @@ export default class RoomReservationPage extends PureComponent {
 
         })
 //用户已获得优惠券列表
-        postPersonCoupons({}, data => {
-            console.log("personCoupons:", data);
-            this.setState({
-                person_coupons: data
-            })
-        },err => {
-
-        })
+//         postPersonCoupons({}, data => {
+//             console.log("personCoupons:", data);
+//             this.setState({
+//                 person_coupons: data
+//             })
+//         },err => {
+//
+//         })
 
     };
     postParam = () => {
@@ -265,7 +265,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          global.router.toCouponSelectPage(this.state.person_coupons.items)
+                                          // global.router.toCouponSelectPage(this.state.person_coupons.items)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
