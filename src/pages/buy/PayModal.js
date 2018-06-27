@@ -8,9 +8,11 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {isEmptyObject, strNotNull, payWx, alipay, showToast,alertOrderChat} from '../../utils/ComonHelper';
-import {postWxPay, postPayOrder} from '../../services/OrderDao'
-import {getWxPaidResult, postAlipay, postMallOrder} from "../../services/MallDao";
+import {
+    isEmptyObject, strNotNull, payWx, alipay, showToast, alertOrderChat,
+    isWXAppInstalled
+} from '../../utils/ComonHelper';
+import {getWxPaidResult, postWxPay} from "../../services/MallDao";
 
 
 export default class PayModal extends Component {
@@ -21,8 +23,22 @@ export default class PayModal extends Component {
         payWay: 1,
         aliPay:{partnerId: ''},
         wxPay: {partnerId: ''},
-        pay_url: 'pay-success'
+        pay_url: 'pay-success',
+        isWXInstall: false,
+        isAliInstall: false
     };
+
+    componentDidMount() {
+        this.pokercion = 0;
+
+        isWXAppInstalled(isInstall => {
+            this.setState({
+                isWXInstall: isInstall
+            })
+        });
+
+
+    }
 
     toggle = () => {
 
@@ -54,46 +70,33 @@ export default class PayModal extends Component {
         const body = {
             order_number: order_number
         };
-        postAlipay(body, data => {
+        // postAlipay(body, data => {
+        //     this.setState({
+        //         aliPay: data,
+        //         payWay: 1,
+        //     })
+        //     alipay(data.payment_params)
+        // }, err => {
+        //     this.setState({
+        //         aliPay: {},
+        //         payWay: 0
+        //     })
+        // });
+
+        postWxPay(body, data => {
             this.setState({
-                aliPay: data,
+                wxPay: data,
                 payWay: 1,
             })
-            alipay(data.payment_params)
         }, err => {
+            alertOrderChat(I18n.t('need_weChat'))
             this.setState({
-                aliPay: {},
+                wxPay: {},
                 payWay: 0
             })
         });
 
-        postWxPay(body, ret => {
-            payWx(ret, () => {
-                getWxPaidResult(body, result => {
 
-                    global.router.replaceMallOrderInfo(body)
-                }, err => {
-                    showToast('支付成功，系统正在处理')
-                }, () => {
-                })
-
-            }, () => {
-                global.router.replaceMallOrderInfo(body)
-            })
-        }, err => {
-            alertOrderChat(I18n.t('need_weChat'))
-        });
-        //
-        // postMallOrder(body, data => {
-        //     console.log("dsjdjksdjlsjd:",data)
-        //     this.setState({
-        //         pay_url: data.pay_url
-        //     });
-        // }, err => {
-        //     this.setState({
-        //         pay_url: ''
-        //     });
-        // })
 
     };
 
@@ -114,7 +117,7 @@ export default class PayModal extends Component {
                 <View style={{height: 1}}/>
                 <ScrollView>
                     {this.orderView()}
-                    {this.aliView()}
+                    {/*{this.aliView()}*/}
                     {this.wxView()}
                     <View style={{height: 80}}/>
                 </ScrollView>
@@ -128,12 +131,12 @@ export default class PayModal extends Component {
     topView = () => {
         const {order_number, price} = this.state.payUrl;
         return <View style={styles.top}>
-            <Text style={styles.title}>{I18n.t('pay_online')}</Text>
+            <Text style={styles.title}>在线支付</Text>
             <TouchableOpacity
                 onPress={() => {
                     this.toggle();
                     if (strNotNull(order_number) && this.props.toOrder)
-                        router.toOrderInfo(this.props, order_number, price)
+                        this.toggle();
                 }}
                 style={styles.btnClose}>
                 <Image
@@ -199,9 +202,6 @@ export default class PayModal extends Component {
 
             </View> : null}
 
-            {/*{strNotNull(this.state.pay_url) ? null : <View style={styles.support}>*/}
-                {/*<Text style={styles.txt_support}>{I18n.t('un_support')}</Text>*/}
-            {/*</View>}*/}
         </TouchableOpacity>;
     };
 
@@ -230,13 +230,6 @@ export default class PayModal extends Component {
                     style={styles.img5}/>
 
             </View>}
-
-
-            {/*{isEmptyObject(this.state.wxPay) ? <View style={styles.support}>*/}
-                {/*<Text style={styles.txt_support}>{I18n.t('un_support')}</Text>*/}
-            {/*</View> : null}*/}
-
-
         </TouchableOpacity>;
     };
 
@@ -247,14 +240,21 @@ export default class PayModal extends Component {
 
         if (!isEmptyObject(wxPay))
             payWx(wxPay, () => {
-                if (this.orderRefresh)
-                    this.orderRefresh();
-                else
-                    router.replaceOrder(order_number, price)
-            },()=>{})
+                getWxPaidResult(payUrl, result => {
+                    router.pop();
+                    global.router.replaceMallOrderInfo(payUrl)
+                }, err => {
+                    showToast('支付成功，系统正在处理')
+                }, () => {
+                })
+
+            }, () => {
+                router.pop();
+                global.router.replaceMallOrderInfo(payUrl)
+            })
     };
 
-    _webPay = () => {
+    _aliPay = () => {
         const {payUrl, pay_url} = this.state;
 
         if (strNotNull(payUrl)) {
@@ -271,7 +271,7 @@ export default class PayModal extends Component {
             onPress={() => {
                 this.toggle();
                 if (payWay === 0) {
-                    this._webPay();
+                    this._aliPay();
                 } else if (payWay === 1) {
                     this._wxPay();
                 }
@@ -280,7 +280,7 @@ export default class PayModal extends Component {
             }
             }
             style={styles.btnPay}>
-            <Text style={styles.txtPay}>{I18n.t('pay_confirm')}</Text>
+            <Text style={styles.txtPay}>确认支付</Text>
         </TouchableOpacity>
     }
 }

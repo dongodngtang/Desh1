@@ -33,7 +33,8 @@ export default class OrderSubmitPage extends PureComponent {
         invalidProducts: [],
         isInstall: false,
         discount: {},
-        handle_value: false
+        handle_value: false,
+        index: 0
 
     };
     showExpiredInfo = (temp) => {
@@ -51,11 +52,11 @@ export default class OrderSubmitPage extends PureComponent {
     componentDidMount() {
         this.pokercion = 0;
 
-        isWXAppInstalled(isInstall => {
-            this.setState({
-                isInstall: isInstall
-            })
-        });
+        // isWXAppInstalled(isInstall => {
+        //     this.setState({
+        //         isInstall: isInstall
+        //     })
+        // });
 
         get_discount(discount => {
             this.setState({discount})
@@ -138,6 +139,11 @@ export default class OrderSubmitPage extends PureComponent {
 
     };
 
+    addIndex = () => {
+        this.setState({
+            index: ++this.state.index
+        })
+    };
 
     submitBtn = () => {
         let adr = this.shipAddress.getAddress();
@@ -151,34 +157,41 @@ export default class OrderSubmitPage extends PureComponent {
 
         if (this.state.isExpired || util.isEmpty(invalid_items)) {
             let body = this.postParam();
-            if (util.isEmpty(this.state.order_number)) {
+            if (util.isEmpty(this.state.order_number) && this.state.index === 1) {
                 postMallOrder(body, data => {
                     this.removeCarts();
                     this.setState({
                         order_number: data
                     });
                     // addTimeRecode(data.order_number);
-                    // if (this.payModal) {
-                    //     const data2 = {
-                    //         order_number: data.order_number,
-                    //         price: this.discounted(this.state.orderData)
-                    //     };
-                    //     this.payModal.setPayUrl(data2);
-                    //     this.payModal.toggle();
-                    // }
                     // postAlipay(data.order_number, data => {
                     //     console.log("data:",data)
                     //   alipay(data.payment_params)
                     // }, err => {
                     //
                     // })
-                    this.mallPay(data)
-
+                    // this.mallPay(data)
+                    if (this.payModal) {
+                        const data2 = {
+                            order_number: data.order_number,
+                            price: this.discounted(this.state.orderData)
+                        };
+                        this.payModal.setPayUrl(data2);
+                        this.payModal.toggle();
+                    }
                 }, err => {
                     showToast(err)
                 });
             } else {
-                this.mallPay(this.state.order_number)
+                // this.mallPay(this.state.order_number)
+                if (this.payModal) {
+                    const data2 = {
+                        order_number: this.state.order_number.order_number,
+                        price: this.discounted(this.state.orderData)
+                    };
+                    this.payModal.setPayUrl(data2);
+                    this.payModal.toggle();
+                }
             }
 
 
@@ -277,6 +290,7 @@ export default class OrderSubmitPage extends PureComponent {
 
                 </ScrollView>
                 <OrderBottom
+                    addIndex={this.addIndex}
                     submitBtn={this.submitBtn}
                     showExpiredInfo={this.showExpiredInfo}
                     sumMoney={this.discounted(orderData)}/>

@@ -18,6 +18,7 @@ export default class OrderBottom extends PureComponent {
                 <View style={{flex:1}}/>
                 <TouchableOpacity
                     onPress={() => {
+                        this.props.addIndex();
                        this.props.submitBtn();
                     }}
                     style={styleO.orderSubmit}>
