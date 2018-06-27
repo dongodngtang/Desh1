@@ -254,7 +254,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                     onPress={()=>{
-                        global.router.toCouponSelectPage()
+                        // global.router.toCouponSelectPage()
                     }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
