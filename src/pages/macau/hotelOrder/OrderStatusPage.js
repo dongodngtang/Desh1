@@ -66,12 +66,14 @@ export default class OrderStatusPage extends Component {
                         }}>
                             <TextInput style={[styles.room_num, {width: 100, paddingTop: 0, paddingBottom: 0}]}
                                        editable={false}
-                                       value={item.last_name}/>
+                                       value={item.last_name}
+                                       underlineColorAndroid={'transparent'}/>
                             <Text style={[styles.txt]}>/</Text>
                             <TextInput
                                 style={[styles.room_num, {marginLeft: 10, width: 100, paddingTop: 0, paddingBottom: 0}]}
                                 editable={false}
-                                value={item.first_name}/>
+                                value={item.first_name}
+                                underlineColorAndroid={'transparent'}/>
                         </View>
                     )
                 })}

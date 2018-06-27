@@ -4798,8 +4798,8 @@ react-native-wechat@^1.9.9:
     events "1.0.2"
 
 "react-native-yunpeng-alipay@git+https://github.com/dongodngtang/react-native-yunpeng-alipay.git":
-  version "2.0.0"
-  resolved "git+https://github.com/dongodngtang/react-native-yunpeng-alipay.git#1d94d33ace474d00aa14e77f42467346bfb1dc29"
+  version "3.0.0"
+  resolved "git+https://github.com/dongodngtang/react-native-yunpeng-alipay.git#3592ce167264f044e5fface0ca087cd1c3f44c4b"
 
 react-native@0.54.2:
   version "0.54.2"
