@@ -90,7 +90,7 @@ export function uShareLoad(id) {
         shareTitle: '海量房源优惠券',
         shareText: I18n.t('ads_poker'),
         shareImage: Images.default_img,
-        shareLink: shareHost() + "products/" + id + "loadApp",
+        shareLink: shareHost() + "products/" + id + "/loadApp",
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
