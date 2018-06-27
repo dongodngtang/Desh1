@@ -19,6 +19,7 @@ import {umengEvent} from '../../utils/UmengEvent';
 import StorageKey from '../../configs/StorageKey';
 import {_getMsgNumOk} from '../../actions/AccountAction';
 import {setLocalLanguage} from '../../services/ConfigDao';
+import {uShareLoad} from '../../utils/ComonHelper';
 import ƒ from "jmessage-react-plugin";
 
 
@@ -105,7 +106,7 @@ class SettingPage extends Component {
                 <SetItemView
                     onPress={() => {
                         umengEvent('setting_recommend');
-                        share(`${I18n.t('share_friend')}`, loadApp)
+                        uShareLoad();
                     }}
                     testID="btn_share"
                     name={I18n.t('recommend_friend')}/>

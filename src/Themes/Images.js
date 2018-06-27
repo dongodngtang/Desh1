@@ -1,4 +1,5 @@
 const images = {
+    default_img:require('../../source/default_img.png'),
     month: require('../../source/month.png'),
     monthE: require('../../source/monthE.png'),
     nav_close: require('../../source/nav_Close.png'),

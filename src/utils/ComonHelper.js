@@ -85,7 +85,15 @@ export function alipay(payStr) {
         console.log(err);
     });
 }
-
+export function uShareLoad() {
+    let param = {
+        shareTitle: '海量房源优惠券',
+        shareText: I18n.t('ads_poker'),
+        shareImage: getShareIcon(Images.default_img),
+        shareLink: shareHost() + "loadApp",
+    };
+    getDispatchAction()["SHARE_OPEN"](param);
+}
 
 export function uShareMallInfo(title, desc, icon, id) {
     let param = {
@@ -260,7 +268,7 @@ export function strToDate(date) {
 }
 
 
-const shareIcon = 'https://www.deshpro.com/pokerpro.png';
+const shareIcon = Images.default_img;
 export const DayHeadings = [I18n.t('calendar_7'),
     I18n.t('calendar_1'),
     I18n.t('calendar_2'),
