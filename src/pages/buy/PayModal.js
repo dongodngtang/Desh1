@@ -254,6 +254,7 @@ export default class PayModal extends Component {
             if (type === 'hotel') {
                 payWx(wxPay, () => {
                     getHotelWxPaidResult(payUrl, result => {
+                        router.pop();
                         global.router.toOrderStatusPage(payUrl.order_number)
 
                     }, err => {
@@ -262,6 +263,7 @@ export default class PayModal extends Component {
                     })
 
                 }, () => {
+                    router.pop();
                     global.router.toOrderStatusPage(payUrl.order_number)
                 })
             } else if (type === 'mall') {
