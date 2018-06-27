@@ -60,7 +60,7 @@ export default class OrderStatusPage extends Component {
                             flexDirection: 'row',
                             alignItems: 'center',
                             paddingTop: i === 0 ? 0 : 14,
-                            paddingBottom: 14,
+                            paddingBottom: i === persons.length - 1 ? 0 : 14,
                             borderBottomColor: i === persons.length - 1 ?'white':'#F3F3F3',
                             borderBottomWidth: i === persons.length - 1 ? 0 : 1
                         }}>
