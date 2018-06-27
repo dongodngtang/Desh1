@@ -1,8 +1,14 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
-//删除订单
 
+export function postPersonCoupons(body, resolve, reject) {
+    helper.post(Api.person_coupons(body), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+//删除订单
 export function delHotelOrder(body, resolve, reject) {
     helper.del(Api.del_order_hotel(body), {}, (ret) => {
         resolve(ret.data)

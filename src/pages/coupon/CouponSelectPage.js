@@ -20,13 +20,15 @@ import styles from './couponStyle';
 export default class CouponSelectPage extends Component {
 
     state = {
-        coupons: [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}],
+        coupons: [],
         select_changed: false,
         selectId: 0
     };
 
     componentDidMount() {
-        let coupons_copy = [...this.state.coupons];
+        const {person_coupons} = this.props.params;
+
+        let coupons_copy = [...person_coupons];
         coupons_copy.map(x => {
             x.isSelect = false;
         });
@@ -40,7 +42,7 @@ export default class CouponSelectPage extends Component {
         let coupons_copy = [...this.state.coupons];
         coupons_copy.map(x => {
 
-            x.isSelect =  x.id === item.id;
+            x.isSelect = x.id === item.id;
 
 
         });
@@ -56,6 +58,7 @@ export default class CouponSelectPage extends Component {
         )
     };
     _renderItem = ({item, index}) => {
+        const {coupon_type, name, short_desc, begin_date, end_date} = item;
         return (
             <ImageBackground
                 style={styles.sameView}
@@ -65,10 +68,10 @@ export default class CouponSelectPage extends Component {
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={{color: "#F34247", fontSize: 18}}>¥<Text
                                 style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>
-                            <Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>酒店优惠券</Text>
+                            <Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>{name}</Text>
                         </View>
-                        <Text style={[styles.txt1, {marginTop: 10}]}>单笔酒店预订金额满800元可使用</Text>
-                        <Text style={[styles.txt1, {marginTop: 1}]}>有限期：2018-06-21至06-31</Text>
+                        <Text style={[styles.txt1, {marginTop: 10}]}>{short_desc}</Text>
+                        <Text style={[styles.txt1, {marginTop: 1}]}>{`有限期：${begin_date}至${end_date}`}</Text>
                     </View>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity style={[styles.itemLeft, {alignItems: 'center'}]}

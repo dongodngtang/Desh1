@@ -181,6 +181,7 @@ const api = {
     hotel_return:hotel_return,//酒店订单退款
     alipay:alipay,
     integral_mall:'integral_malls/coupons',// 积分商城优惠券列表
+    person_coupons:person_coupons,//用户已获得优惠券列表
 }
 
 export default api;
@@ -197,6 +198,10 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function person_coupons(body) {
+    return `account/users/${getUserId()}/coupons`
+}
 
 export function hotel_return(body) {
     const {order_number} = body;

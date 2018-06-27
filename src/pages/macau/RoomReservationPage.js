@@ -7,12 +7,12 @@ import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {
     isEmptyObject, showToast, convertDate, strNotNull, alertOrderChat, payWx, util,
-    isWXAppInstalled,mul
+    isWXAppInstalled, mul
 } from "../../utils/ComonHelper";
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
-import {postRoomReservation, postHotelOrder, postHotelWxPay, getHotelWxPaidResult} from "../../services/MacauDao";
+import {postRoomReservation, postHotelOrder, postPersonCoupons} from "../../services/MacauDao";
 import I18n from "react-native-i18n";
 import {addTimeRecode} from "../../components/PayCountDown";
 import Loading from "../../components/Loading";
@@ -30,7 +30,8 @@ export default class RoomReservationPage extends PureComponent {
         persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
-        order_number: ''
+        order_number: '',
+        person_coupons: {}
     };
 
     componentDidMount() {
@@ -71,6 +72,16 @@ export default class RoomReservationPage extends PureComponent {
         }, err => {
 
         })
+//用户已获得优惠券列表
+        postPersonCoupons({}, data => {
+            console.log("personCoupons:", data);
+            this.setState({
+                person_coupons: data
+            })
+        },err => {
+
+        })
+
     };
     postParam = () => {
         const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
@@ -159,7 +170,7 @@ export default class RoomReservationPage extends PureComponent {
                             }
                             this.setState({
                                 room_num: --room_num,
-                                total_price: mul(room_num ,price),
+                                total_price: mul(room_num, price),
                                 persons: persons
                             })
                         }
@@ -181,7 +192,7 @@ export default class RoomReservationPage extends PureComponent {
                             }
                             this.setState({
                                 room_num: ++room_num,
-                                total_price: mul(room_num ,price),
+                                total_price: mul(room_num, price),
                                 persons: persons
                             })
                         } else {
@@ -204,7 +215,7 @@ export default class RoomReservationPage extends PureComponent {
             phone: phone
         })
     };
-    _cutBack=()=>{
+    _cutBack = () => {
         return 0;
     };
 
@@ -253,9 +264,9 @@ export default class RoomReservationPage extends PureComponent {
                         _phone={this._phone}/>
 
                     <TouchableOpacity style={styles.offerView}
-                    onPress={()=>{
-                        // global.router.toCouponSelectPage()
-                    }}>
+                                      onPress={() => {
+                                          global.router.toCouponSelectPage(this.state.person_coupons.items)
+                                      }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
                             justifyContent: 'center', backgroundColor: '#E54A2E', marginLeft: 14
@@ -313,21 +324,22 @@ export class RoomMessage extends PureComponent {
                 alignSelf: 'center',
                 justifyContent: 'flex-start',
                 marginLeft: 24,
-                paddingTop:0
+                paddingTop: 0
             }}>
                 {persons.map((item, i) => {
                     return (
                         <View key={i} style={{
                             flexDirection: 'row',
-                            alignItems:'center',
-                            paddingBottom:i === persons.length-1 ? 0: 14,
+                            alignItems: 'center',
+                            paddingBottom: i === persons.length - 1 ? 0 : 14,
                             marginRight: 13,
-                            marginTop:i === 0 ? 0: 14,
+                            marginTop: i === 0 ? 0 : 14,
                             borderBottomColor: '#F3F3F3',
-                            borderBottomWidth: i === persons.length-1 ? 0: 1
+                            borderBottomWidth: i === persons.length - 1 ? 0 : 1
 
                         }}>
-                            <TextInput maxLength={6} style={[styles.room_num, {width:100,paddingTop:0,paddingBottom:0}]}
+                            <TextInput maxLength={6}
+                                       style={[styles.room_num, {width: 100, paddingTop: 0, paddingBottom: 0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
                                        placeholder={'姓（例：LI）'}
@@ -336,8 +348,14 @@ export class RoomMessage extends PureComponent {
                                            item.last_name = txt;
                                        }}
                                        autoCapitalize={'characters'}/>
-                            <Text style={[styles.txt7, {marginLeft: 11, marginRight: 11, color: '#CCCCCC',paddingTop:0}]}>/</Text>
-                            <TextInput maxLength={6} style={[styles.room_num, {width:150,paddingTop:0,paddingBottom:0}]}
+                            <Text style={[styles.txt7, {
+                                marginLeft: 11,
+                                marginRight: 11,
+                                color: '#CCCCCC',
+                                paddingTop: 0
+                            }]}>/</Text>
+                            <TextInput maxLength={6}
+                                       style={[styles.room_num, {width: 150, paddingTop: 0, paddingBottom: 0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
                                        placeholder={'名（例：XIAOMING）'}
@@ -374,7 +392,7 @@ export class RoomMessage extends PureComponent {
                     <TextInput
                         ref="inputWR"
                         keyboardType={'numeric'}
-                        style={{flex:1,marginLeft: 25,paddingTop:0,paddingBottom:0}}
+                        style={{flex: 1, marginLeft: 25, paddingTop: 0, paddingBottom: 0}}
                         maxLength={12}
                         numberOfLines={1}
                         underlineColorAndroid={'transparent'}
@@ -465,7 +483,7 @@ const styles = StyleSheet.create({
     },
     phoneView: {
         flexDirection: 'row',
-        alignItems:'center',
+        alignItems: 'center',
         paddingTop: 14,
         paddingBottom: 14,
         flex: 1
@@ -570,7 +588,7 @@ const styles = StyleSheet.create({
     Roomcounts: {
         marginLeft: 14,
         marginRight: 14,
-        paddingTop:14,
+        paddingTop: 14,
         flexDirection: 'row',
 
         paddingBottom: 14,

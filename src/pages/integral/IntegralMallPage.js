@@ -36,7 +36,7 @@ export default class IntegralMallPage extends Component {
                 {/*</ImageBackground>*/}
                 <Image style={[styles.marginS, styles.couponImg]} source={Images.integral.coupon}/>
                 <Text style={[styles.TXt, styles.marginS, {marginTop: 16}]}>{name}</Text>
-                <Text style={[styles.TXt2, styles.marginS]}>可抵扣50元</Text>
+                {/*<Text style={[styles.TXt2, styles.marginS]}>可抵扣50元</Text>*/}
                 <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
                     <Text style={styles.TXt3}>{integrals}<Text style={styles.TXt4}>积分</Text></Text>
                     <View style={{flex: 1}}/>
