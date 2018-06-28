@@ -7,16 +7,19 @@ import {NavigationBar} from '../../../components';
 import ImageLoad from "../../../components/ImageLoad";
 import {
     isEmptyObject, isWXAppInstalled, showToast, hotelOrderStatus, utcDate, call,
-    alertOrder
+    alertOrder, util, strNotNull
 } from "../../../utils/ComonHelper";
 import {ImageMessage, Message} from '../HotelRoomListPage';
 import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
 import UnpaidBottom from "./UnpaidBottom";
 import {HotelStatus} from "../../../configs/Status";
-import {delHotelOrder, getHotelOrderInfo} from "../../../services/MacauDao";
+import {delHotelOrder, getHotelOrderInfo,postHotelWxPay,postHotelAliPay} from "../../../services/MacauDao";
 import {DeShangPhone} from "../../../configs/Constants";
 import PayModal from "../../buy/PayModal";
+import I18n from "react-native-i18n";
+import {postAlipay, postMallOrder} from "../../../services/MallDao";
+import PayAction from '../../comm/PayAction'
 
 const intro = "该订单确认后不可被取消修改，若未入住将收取您全额房费。我们会根据您的付款方式进行授予权或扣除房费，如订单不确认将解除预授权或全额退款至您的付款账户。附加服务费用将与房费同时扣除货返还。"
 
@@ -122,15 +125,9 @@ export default class OrderStatusPage extends Component {
 
     };
 
-    _payModal=()=>{
-        if (this.payModal) {
-            const data2 = {
-                order_number: this.state.orderInfo.order.order_number,
-                // price: this.discounted(this.state.orderData)
-            };
-            this.payModal.setPayUrl(data2,'hotel');
-            this.payModal.toggle();
-        }
+    _submitBtn = () => {
+        this.payAction && this.payAction.toggle(this.state.orderInfo.order,this.state.orderInfo.order.total_price)
+
     };
 
 
@@ -146,7 +143,7 @@ export default class OrderStatusPage extends Component {
                         <UnpaidBottom
                             refresh={this._refresh}
                             order_number={order_number}
-                            _payModal={this._payModal}/>
+                            _submitBtn={this._submitBtn}/>
                     </View>
                 );
             default:
@@ -162,6 +159,21 @@ export default class OrderStatusPage extends Component {
             return "#333333"
         }
     };
+    wxpay = (callWxPay) => {
+        postHotelWxPay(this.state.orderInfo.order, ret => {
+            callWxPay(ret)
+        }, err => {
+        })
+    }
+
+    alipay = (callAliPay) => {
+        let order_number = this.state.orderInfo.order.order_number;
+        postHotelAliPay(order_number, ret => {
+            callAliPay(ret.payment_params)
+        }, err => {
+
+        })
+    }
 
     render() {
         const {orderInfo} = this.state;
@@ -264,10 +276,10 @@ export default class OrderStatusPage extends Component {
                     {this.paidOrder(status,order_number)}
                 </ScrollView>
                 {status === 'unpaid' ? this.statusBottom(order) : null}
-                <PayModal
-                    invitePrice={total_price}
-                    toOrder={true}
-                    ref={ref => this.payModal = ref}/>
+                <PayAction
+                    wxpay={this.wxpay}
+                    ali_pay={this.alipay}
+                    ref={ref => this.payAction = ref}/>
             </View>
         )
     }

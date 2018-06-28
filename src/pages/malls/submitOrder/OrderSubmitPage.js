@@ -153,13 +153,13 @@ export default class OrderSubmitPage extends PureComponent {
 
                     this.state.order.order_number = data.order_number;
 
-                    this.payAction && this.payAction.toggle(this.state.order)
+                    this.payAction && this.payAction.toggle(this.state.order,this.state.order.total)
 
                 }, err => {
                     showToast(err)
                 });
             } else {
-                this.payAction && this.payAction.toggle(this.state.order)
+                this.payAction && this.payAction.toggle(this.state.order,this.state.order.total)
 
             }
 
@@ -177,9 +177,7 @@ export default class OrderSubmitPage extends PureComponent {
     wxpay = (callWxPay) => {
         postWxPay(this.state.order, ret => {
             callWxPay(ret)
-
         }, err => {
-
         })
     }
 

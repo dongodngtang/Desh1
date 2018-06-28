@@ -44,6 +44,14 @@ export function getHotelWxPaidResult(body, resolve, reject) {
     }, reject)
 }
 
+//支付宝支付
+export function postHotelAliPay(body, resolve, reject) {
+    helper.post(Api.hotel_aliPay(body), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 //微信支付
 export function postHotelWxPay(body, resolve, reject) {
     helper.post(Api.hotel_wxPay(body), {}, ret => {

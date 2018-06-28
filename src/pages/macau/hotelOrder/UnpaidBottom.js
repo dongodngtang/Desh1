@@ -41,7 +41,7 @@ export default class UnpaidBottom extends Component {
 
                 <TouchableOpacity style={styles.payView}
                                   onPress={() => {
-                                      this.props._payModal();
+                                      this.props._submitBtn();
                                       // this.wxPay({order_number});
                                   }}>
                     <View style={{alignItems: 'flex-end'}}>

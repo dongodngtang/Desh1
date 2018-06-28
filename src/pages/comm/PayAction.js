@@ -20,14 +20,16 @@ export default class PayModal extends Component {
     state = {
         visible: false,
         selectTab: 0,
-        order: {}
+        order: {},
+        total:0
     }
 
 
-    toggle = (order) => {
+    toggle = (order,total) => {
         this.setState({
             visible: !this.state.visible,
-            order
+            order,
+            total
         })
     }
 
@@ -35,6 +37,13 @@ export default class PayModal extends Component {
         wxpay: propType.func.isRequired,
         ali_pay: propType.func.isRequired
     };
+    intro=()=>{
+        return(
+            <View style={{width:'100%',height:30,backgroundColor:'#C1D4E1',justifyContent:'center'}}>
+                <Text style={{color:"#FFFFFF",fontSize:12,marginLeft:17,marginRight:17}}>大额消费请查看支付帮助，选择单笔限额高的银行卡支付</Text>
+            </View>
+        )
+    }
 
 
     render() {
@@ -52,6 +61,7 @@ export default class PayModal extends Component {
                 {this.topView()}
                 <View style={{height: 1}}/>
                 <ScrollView>
+                    {this.intro()}
                     {this.orderView()}
                     {this.aliView()}
                     {this.wxView()}
@@ -83,16 +93,16 @@ export default class PayModal extends Component {
     orderView = () => {
 
         if (!isEmptyObject(this.state.order)) {
-            const {total, order_number} = this.state.order;
+            const {order_number} = this.state.order;
             return <View style={styles.page3}>
 
                 <Image style={styles.img3}
                        source={Images.pay_ticket}/>
 
                 <View>
-                    <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.txt3}>需付款</Text>
-                        <Text style={styles.txt32}>{`¥${total}`}</Text>
+                        <Text style={[styles.txt32,{marginLeft:15}]}>{`¥${this.state.total}`}</Text>
                     </View>
                     <Text style={styles.txt31}>{`订单编号: ${order_number}`}</Text>
                 </View>

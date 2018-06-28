@@ -182,6 +182,7 @@ const api = {
     alipay:alipay,//支付宝支付 - 酒店订单
     integral_mall:'integral_malls/coupons',// 积分商城优惠券列表
     person_coupons:person_coupons,//用户已获得优惠券列表
+    hotel_aliPay:hotel_aliPay,//支付宝支付 - 酒店订单
 }
 
 export default api;
@@ -201,6 +202,10 @@ const page_size = 10;
 
 export function person_coupons(body) {
     return `account/users/${getUserId()}/coupons`
+}
+//酒店支付宝
+export function hotel_aliPay(order_number) {
+    return `hotel_orders/${order_number}/alipay`
 }
 
 export function hotel_return(body) {

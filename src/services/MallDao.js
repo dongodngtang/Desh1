@@ -93,10 +93,7 @@ export function postWxPay(body, resolve, reject) {
     helper.post(Api.mall_wxPay(body), {}, ret => {
         resolve(ret.data)
 
-    }, err => {
-        showToast('系统忙，请稍后再试')
-        reject && reject(err)
-    })
+    }, reject)
 }
 
 export function postMallOrder(body, resolve, reject) {
