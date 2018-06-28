@@ -113,27 +113,7 @@ export default class RoomReservationPage extends PureComponent {
                 });
                 addTimeRecode(data.order_number);
                 global.router.toOrderStatusPage(data.order_number)
-                // if (this.state.isInstall) {
-                //     postHotelWxPay(data, ret => {
-                //         payWx(ret, () => {
-                //             getHotelWxPaidResult(data, result => {
-                //
-                //                 global.router.toOrderStatusPage(data.order_number)
-                //             }, err => {
-                //                 showToast('支付成功，系统正在处理')
-                //             }, () => {
-                //             })
-                //
-                //         }, () => {
-                //             global.router.toOrderStatusPage(data.order_number)
-                //         })
-                //     }, err => {
-                //
-                //     });
-                //
-                // } else {
-                //     alertOrderChat(I18n.t('need_weChat'))
-                // }
+
             }, err => {
                 showToast(err)
             });

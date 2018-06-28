@@ -411,11 +411,18 @@ export function sharePage(title, location, icon, url) {
 }
 
 //支付宝
-export function alipay(payStr, resolve, reject) {
-    Alipay.pay(payStr).then((data) => {
-        resolve(data)
+// export function alipay(payStr, resolve, reject) {
+//     Alipay.pay(payStr).then((data) => {
+//         resolve(data)
+//     }, (err) => {
+//         reject(err)
+//     });
+// }
+export function alipay(data, callback, cancelBack) {
+    Alipay.pay(data).then(ret => {
+        callback(ret);
     }, (err) => {
-        reject(err)
+        cancelBack(err);
     });
 }
 

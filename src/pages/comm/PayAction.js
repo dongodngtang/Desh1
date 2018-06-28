@@ -185,6 +185,7 @@ export default class PayModal extends Component {
                             console.log('支付失败', err)
                             if (type === 'hotel') {
                                 router.pop();
+                                router.pop();router.pop();
                                 global.router.toOrderStatusPage(this.state.order.order_number)
                             } else if (type === 'mall') {
                                 router.pop();
@@ -205,6 +206,7 @@ export default class PayModal extends Component {
                                 }, err => {
                                     console.log('支付失败', err)
                                     if (type === 'hotel') {
+                                        router.pop();
                                         router.pop();
                                         global.router.toOrderStatusPage(this.state.order.order_number)
                                     } else if (type === 'mall') {

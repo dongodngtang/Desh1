@@ -5,8 +5,24 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
+import {postPersonCoupons} from "../../services/MacauDao";
 
 export default class CouponPage extends Component {
+
+    state={
+        person_coupons: {}
+    };
+
+    componentDidMount(){
+        postPersonCoupons({}, data => {
+            console.log("person_personCoupons:", data);
+            this.setState({
+                person_coupons: data
+            })
+        },err => {
+
+        })
+    }
 
     _separator=()=>{
         return(
