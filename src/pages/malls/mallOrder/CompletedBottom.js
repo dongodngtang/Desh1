@@ -8,22 +8,11 @@ import {MallStatus} from "../../../configs/Status";
 import {util, payWx, isWXAppInstalled, call, alertOrder, showToast} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 import {Button} from '../../../components'
+import PayAction from "../../comm/PayAction";
 
 
 export default class CompletedBottom extends Component {
 
-
-    state = {
-        isInstall: false
-    };
-
-    componentDidMount() {
-        isWXAppInstalled(isInstall => {
-            this.setState({
-                isInstall: isInstall
-            })
-        });
-    }
 
     render() {
         const {orderItem} = this.props;
@@ -48,28 +37,9 @@ export default class CompletedBottom extends Component {
     };
 
 
-    wxPay = (order_number) => {
-        if (this.state.isInstall) {
-            let data = {order_number: order_number};
-            postWxPay(data, ret => {
-                payWx(ret, () => {
-                    getWxPaidResult(data, result => {
-                        if (this.props.refresh)
-                            this.props.refresh();
-                    }, err => {
-                        showToast('支付成功，系统正在处理')
-                    })
-
-                }, () => {
-
-                })
-            }, err => {
-
-            });
-        }
-        else
-            alertOrder('need_weChat', () => {
-            })
+    wxPay = (item) => {
+        let data = {order_number: item.order_number, total: item.total_product_price};
+        this.payAction && this.payAction.toggle(data)
     };
 
 
@@ -92,12 +62,12 @@ export default class CompletedBottom extends Component {
 
 
     renderPay = (item) => {
-        const {order_number} = item;
+
         return (//${I18n.t('pay')}
             <View style={styleO.bottomView}>
                 <TouchableOpacity style={styleO.payView}
                                   onPress={() => {
-                                      this.wxPay(order_number);
+                                      this.wxPay(item);
                                   }}>
                     <View style={{alignItems: 'flex-end'}}>
                         <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>{I18n.t('pay')}</Text>
@@ -119,6 +89,10 @@ export default class CompletedBottom extends Component {
                         });
                     }}
                     style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
+
+                <PayAction
+                    type={'mall'}
+                    ref={ref => this.payAction = ref}/>
             </View>
         )
     };

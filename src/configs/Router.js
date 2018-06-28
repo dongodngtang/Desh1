@@ -25,7 +25,7 @@ export default class Router {
     stackPush(route) {
 
         Actions.push(route.name, {params: route.params})
-        console.log('当前界面类名：'+Actions.currentScene)
+        console.log('当前界面类名：' + Actions.currentScene)
     }
 
     push(props, route) {
@@ -43,6 +43,13 @@ export default class Router {
 
     }
 
+    popTo(route) {
+        Actions.popTo(
+            route.name,
+            {params: route.params}
+        )
+    }
+
 
     popToTop() {
         getDispatchAction()['BACK_TOP']();
@@ -52,19 +59,21 @@ export default class Router {
     toCouponSelectPage(person_coupons) {
         this.stackPush({
             name: 'CouponSelectPage',
-            params:{
+            params: {
                 person_coupons
             }
         })
     }
+
     toReturnHotelPage(item) {
         this.stackPush({
             name: 'ReturnHotelPage',
-            params:{
+            params: {
                 item
             }
         })
     }
+
     toHotelOrderPage() {
         this.stackPush({
             name: 'HotelOrderPage'
@@ -80,7 +89,7 @@ export default class Router {
         })
     }
 
-    toRoomReservationPage(item,date) {
+    toRoomReservationPage(item, date) {
         this.stackPush({
             name: 'RoomReservationPage',
             params: {
@@ -90,7 +99,7 @@ export default class Router {
         })
     }
 
-    toHotelRoomListPage(hotel,date) {
+    toHotelRoomListPage(hotel, date) {
         this.stackPush({
             name: 'HotelRoomListPage',
             params: {
@@ -103,8 +112,8 @@ export default class Router {
     toHotelListPage(date) {
         this.stackPush({
             name: 'HotelListPage',
-            params:{
-                date:date
+            params: {
+                date: date
             }
         })
     }
@@ -125,7 +134,7 @@ export default class Router {
         })
     }
 
-    toHotelDetail(hotel,date) {
+    toHotelDetail(hotel, date) {
         this.stackPush({
             name: 'HotelDetail',
             params: {
@@ -1108,21 +1117,23 @@ export default class Router {
     toIntegralInfoPage(item) {
         this.stackPush({
             name: 'IntegralInfoPage',
-            params:{
+            params: {
                 item
             }
         })
     }
+
     toIntegralMallPage() {
         this.stackPush({
             name: 'IntegralMallPage'
         })
     }
+
     toIntegralPage(total_points) {
         this.stackPush({
             name: 'IntegralPage',
-            params:{
-                total_points:total_points
+            params: {
+                total_points: total_points
             }
         })
     }

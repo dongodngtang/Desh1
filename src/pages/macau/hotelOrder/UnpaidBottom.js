@@ -6,6 +6,7 @@ import {HotelStatus} from "../../../configs/Status";
 import {util, payWx, isWXAppInstalled, call, alertOrder, showToast, alertOrderChat} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 import {getHotelWxPaidResult, postHotelWxPay,cancelHotelOrder} from "../../../services/MacauDao";
+import PayAction from '../../comm/PayAction'
 
 export default class UnpaidBottom extends Component {
     _formatTime = (diff) => {
@@ -41,8 +42,8 @@ export default class UnpaidBottom extends Component {
 
                 <TouchableOpacity style={styles.payView}
                                   onPress={() => {
-                                      this.props._submitBtn();
-                                      // this.wxPay({order_number});
+                                      const {order_number,total_price} = this.props;
+                                     this.payAction && this.payAction.toggle({order_number,total:total_price})
                                   }}>
                     <View style={{alignItems: 'flex-end'}}>
                         <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>付款</Text>
@@ -66,38 +67,14 @@ export default class UnpaidBottom extends Component {
 
                 {/*</View>*/}
 
+                <PayAction
+                    ref={ref => this.payAction = ref}
+                    type={'hotel'}/>
+
             </View>
         )
     }
 
-
-    wxPay = (data) => {
-
-        isWXAppInstalled(installed => {
-            if (installed) {
-                postHotelWxPay(data, ret => {
-                    payWx(ret, () => {
-                        getHotelWxPaidResult(data, result => {
-
-                            this.props.refresh && this.props.refresh();
-
-                        }, err => {
-                            showToast('支付成功，系统正在处理')
-                        }, () => {
-                        })
-
-                    }, () => {
-                        global.router.toOrderStatusPage(data.order_number)
-                    })
-                }, err => {
-
-                });
-            } else {
-                alertOrderChat("支付需要安装微信")
-            }
-
-        })
-    }
 }
 
 

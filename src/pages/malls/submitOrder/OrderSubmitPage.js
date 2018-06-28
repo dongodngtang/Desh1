@@ -78,8 +78,6 @@ export default class OrderSubmitPage extends PureComponent {
                 });
             });
 
-            this.state.order.total = data.total_product_price;
-
             this.setState({
                 orderData: data,
                 invalidProducts
@@ -152,14 +150,23 @@ export default class OrderSubmitPage extends PureComponent {
                     this.removeCarts();
 
                     this.state.order.order_number = data.order_number;
+                    let param = {
+                        order_number:data.order_number,
+                        total:this.state.orderData.total_product_price
+                    }
 
-                    this.payAction && this.payAction.toggle(this.state.order,this.state.order.total)
+                    this.payAction && this.payAction.toggle(param)
 
                 }, err => {
                     showToast(err)
                 });
             } else {
-                this.payAction && this.payAction.toggle(this.state.order,this.state.order.total)
+
+                let param = {
+                    order_number:this.state.order_number,
+                    total:this.state.orderData.total_product_price
+                }
+                this.payAction && this.payAction.toggle(param)
 
             }
 
@@ -173,22 +180,6 @@ export default class OrderSubmitPage extends PureComponent {
 
     };
 
-
-    wxpay = (callWxPay) => {
-        postWxPay(this.state.order, ret => {
-            callWxPay(ret)
-        }, err => {
-        })
-    }
-
-    alipay = (callAliPay) => {
-        let order_number = this.state.order.order_number
-        postAlipay(order_number, ret => {
-            callAliPay(ret.payment_params)
-        }, err => {
-
-        })
-    }
 
 
     removeCarts = () => {
@@ -265,8 +256,6 @@ export default class OrderSubmitPage extends PureComponent {
                     prop={this.props}
                     showExpiredInfo={this.showExpiredInfo}/> : null}
                 <PayAction
-                    wxpay={this.wxpay}
-                    ali_pay={this.alipay}
                     ref={ref => this.payAction = ref}
                     type={'mall'}/>
             </BaseComponent>

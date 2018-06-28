@@ -72,8 +72,10 @@ export default class HotelItem extends PureComponent {
                         style={{color: "#E54A2E", fontSize: 18}}>¥{total_price}</Text></Text>
                     <View style={{flex: 1}}/>
 
-                    {status === HotelStatus.unpaid ? <UnpaidBottom order_number={order_number}
-                                                                   refresh={this.props.refresh}/> : this.bottomShow(this.props.item)}
+                    {status === HotelStatus.unpaid ? <UnpaidBottom
+                        order_number={order_number}
+                        total_price={total_price}
+                        refresh={this.props.refresh}/> : this.bottomShow(this.props.item)}
                 </View>
             </View>
         )

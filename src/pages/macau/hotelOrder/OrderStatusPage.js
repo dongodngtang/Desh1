@@ -126,7 +126,10 @@ export default class OrderStatusPage extends Component {
     };
 
     _submitBtn = () => {
-        this.payAction && this.payAction.toggle(this.state.orderInfo.order, this.state.orderInfo.order.total_price)
+        const {order_number,total_price} = this.state.orderInfo.order;
+        let param = {order_number,total:total_price}
+
+        this.payAction && this.payAction.toggle(param)
 
     };
 
@@ -159,21 +162,7 @@ export default class OrderStatusPage extends Component {
             return "#333333"
         }
     };
-    wxpay = (callWxPay) => {
-        postHotelWxPay(this.state.orderInfo.order, ret => {
-            callWxPay(ret)
-        }, err => {
-        })
-    }
 
-    alipay = (callAliPay) => {
-        let order_number = this.state.orderInfo.order.order_number;
-        postHotelAliPay(order_number, ret => {
-            callAliPay(ret.payment_params)
-        }, err => {
-
-        })
-    }
 
     render() {
         const {orderInfo} = this.state;
@@ -277,8 +266,6 @@ export default class OrderStatusPage extends Component {
                 </ScrollView>
                 {status === 'unpaid' ? this.statusBottom(order) : null}
                 <PayAction
-                    wxpay={this.wxpay}
-                    ali_pay={this.alipay}
                     ref={ref => this.payAction = ref}
                     type={'hotel'}/>
             </View>

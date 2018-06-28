@@ -12,10 +12,13 @@ import {
     isEmptyObject, strNotNull, payWx, alipay, showToast, alertOrderChat,
     isWXAppInstalled
 } from '../../utils/ComonHelper';
-import propType from 'prop-types'
+import propType from 'prop-types';
+import * as helper from '../../services/RequestHelper';
+import Api from '../../configs/ApiConfig';
 
 
-export default class PayModal extends Component {
+
+export default class PayAction extends Component {
 
     state = {
         visible: false,
@@ -25,18 +28,14 @@ export default class PayModal extends Component {
     }
 
 
-    toggle = (order, total) => {
+    toggle = (order) => {
         this.setState({
             visible: !this.state.visible,
-            order,
-            total
+            order
         })
     }
 
-    static propTypes = {
-        wxpay: propType.func.isRequired,
-        ali_pay: propType.func.isRequired
-    };
+
     intro = () => {
         return (
             <View style={{width: '100%', height: 30, backgroundColor: '#C1D4E1', justifyContent: 'center'}}>
@@ -98,7 +97,7 @@ export default class PayModal extends Component {
     orderView = () => {
 
         if (!isEmptyObject(this.state.order)) {
-            const {order_number} = this.state.order;
+            const {order_number,total} = this.state.order;
             return <View style={styles.page3}>
 
                 <Image style={styles.img3}
@@ -107,7 +106,7 @@ export default class PayModal extends Component {
                 <View>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.txt3}>需付款</Text>
-                        <Text style={[styles.txt32, {marginLeft: 15}]}>{`¥${this.state.total}`}</Text>
+                        <Text style={[styles.txt32, {marginLeft: 15}]}>{`¥${total}`}</Text>
                     </View>
                     <Text style={styles.txt31}>{`订单编号: ${order_number}`}</Text>
                 </View>
@@ -174,59 +173,88 @@ export default class PayModal extends Component {
 
     payView = () => {
 
-        const {wxpay, ali_pay, type} = this.props;
+        const { type} = this.props;
         return <TouchableOpacity
             onPress={() => {
                 if (this.state.selectTab === 0) {
-                    ali_pay && ali_pay((params) => {
-                        alipay(params, ret => {
-                            console.log('支付成功', ret)
-                        }, err => {
-                            console.log('支付失败', err)
-                            if (type === 'hotel') {
-                                router.pop();
-                                router.pop();router.pop();
-                                global.router.toOrderStatusPage(this.state.order.order_number)
-                            } else if (type === 'mall') {
-                                router.pop();
-                                global.router.replaceMallOrderInfo(this.state.order)
-                            }
-                            // showToast('系统忙，请稍后再试')
-
-                        })
-                    })
+                   this.ali_pay()
                 }
 
                 if (this.state.selectTab === 1) {
-                    wxpay && wxpay((params) => {
-                        isWXAppInstalled(install => {
-                            if (install) {
-                                payWx(params, ret => {
-                                    console.log('支付成功', ret)
-                                }, err => {
-                                    console.log('支付失败', err)
-                                    if (type === 'hotel') {
-                                        router.pop();
-                                        router.pop();
-                                        global.router.toOrderStatusPage(this.state.order.order_number)
-                                    } else if (type === 'mall') {
-                                        router.pop();
-                                        global.router.replaceMallOrderInfo(this.state.order)
-                                    }
-                                    // showToast('系统忙，请稍后再试')
-                                })
-                            } else {
-                                showToast('你没有安装微信，不能使用微信支付')
-                            }
-
-                        })
-
-                    })
+                    this.wxpay()
                 }
             }}
             style={styles.btnPay}>
             <Text style={styles.txtPay}>确认支付</Text>
         </TouchableOpacity>
+    }
+
+    wxpay = () => {
+        let url = '';
+        const {type} = this.props;
+        const {order} = this.state;
+
+        if(type === 'hotel'){
+            url = Api.hotel_wxPay(order)
+        }
+        if(type === 'mall'){
+            url = Api.mall_wxPay(order)
+        }
+
+        helper.post(url, {}, params => {
+            isWXAppInstalled(install => {
+
+                if (install) {
+                    payWx(params, ret => {
+                        console.log('支付成功', ret)
+                    }, err => {
+                        console.log('支付失败', err)
+                        if (type === 'hotel') {
+                            router.replace({name: 'OrderStatusPage', params: {order_number:this.state.order.order_number}})
+                        } else if (type === 'mall') {
+                            global.router.replaceMallOrderInfo(this.state.order)
+                        }
+                        // showToast('系统忙，请稍后再试')
+                    })
+                } else {
+                    showToast('你没有安装微信，不能使用微信支付')
+                }
+            })
+        }, err=>{})
+
+    }
+
+    ali_pay = () => {
+        let url = '';
+        const {type} = this.props;
+        const {order} = this.state;
+
+        if(type === 'hotel'){
+            url = Api.hotel_aliPay(order.order_number)
+        }
+
+        if(type === 'mall'){
+            url = Api.alipay(order.order_number)
+        }
+
+        helper.post(url, {}, ret => {
+
+            alipay(ret.payment_params, ret => {
+                console.log('支付成功', ret)
+            }, err => {
+                console.log('支付失败', err)
+                if (type === 'hotel') {
+                    router.replace({name: 'OrderStatusPage', params: {order_number:this.state.order.order_number}})
+
+                } else if (type === 'mall') {
+                    global.router.replaceMallOrderInfo(this.state.order)
+                }
+                // showToast('系统忙，请稍后再试')
+
+            })
+
+        }, err=>{})
+
     }
 }
 
