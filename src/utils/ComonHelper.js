@@ -77,13 +77,7 @@ export function localFilePath(path) {
     return path;
 }
 
-export function alipay(payStr) {
-    Alipay.pay(payStr).then( (data) =>{
-        console.log("data22:",data);
-    },  (err) =>{
-        console.log(err);
-    });
-}
+
 export function uShareLoad() {
     let param = {
         shareTitle: '海量房源优惠券',
@@ -416,6 +410,14 @@ export function sharePage(title, location, icon, url) {
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
+//支付宝
+export function alipay(payStr, resolve, reject) {
+    Alipay.pay(payStr).then((data) => {
+        resolve(data)
+    }, (err) => {
+        reject(err)
+    });
+}
 
 export function payWx(data, callback, cancelBack) {
     const body = {
@@ -429,9 +431,9 @@ export function payWx(data, callback, cancelBack) {
 
     console.log('wxpay', body);
     wechat.pay(body).then(ret => {
-        callback();
+        callback(ret);
     }).catch(err => {
-        cancelBack();
+        cancelBack(err);
     })
 }
 

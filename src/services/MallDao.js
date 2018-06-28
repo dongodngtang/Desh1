@@ -1,11 +1,14 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
-
+import {showToast} from "../utils/ComonHelper";
 
 export function postAlipay(order_number, resolve, reject) {
     helper.post(Api.alipay(order_number), {}, ret => {
         resolve(ret.data)
-    }, reject)
+    }, err => {
+        showToast('系统忙，请稍后再试')
+        reject(err)
+    })
 }
 
 //退换货详情
@@ -89,7 +92,11 @@ export function getMallOrders(body, resolve, reject) {
 export function postWxPay(body, resolve, reject) {
     helper.post(Api.mall_wxPay(body), {}, ret => {
         resolve(ret.data)
-    }, reject)
+
+    }, err => {
+        showToast('系统忙，请稍后再试')
+        reject && reject(err)
+    })
 }
 
 export function postMallOrder(body, resolve, reject) {

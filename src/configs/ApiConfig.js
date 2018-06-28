@@ -179,7 +179,7 @@ const api = {
     hotel_order_cancel:hotel_order_cancel,//取消酒店订单
     del_order_hotel: del_order_hotel,//删除酒店订单
     hotel_return:hotel_return,//酒店订单退款
-    alipay:alipay,
+    alipay:alipay,//支付宝支付 - 酒店订单
     integral_mall:'integral_malls/coupons',// 积分商城优惠券列表
     person_coupons:person_coupons,//用户已获得优惠券列表
 }

@@ -36,6 +36,7 @@ export function getHotelOrderList(body, resolve, reject) {
     }, reject, body)
 }
 
+
 //微信支付结果
 export function getHotelWxPaidResult(body, resolve, reject) {
     helper.get(Api.hotel_wx_paid_result(body), (ret) => {

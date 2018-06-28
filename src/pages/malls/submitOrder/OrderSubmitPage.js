@@ -17,18 +17,18 @@ import {
     deleteProductFromCart,
     showToast,
     alertOrderChat,
-    alipay
+    alipay, isEmptyObject, strNotNull
 } from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult, postAlipay} from '../../../services/MallDao';
 import {addTimeRecode} from "../../../components/PayCountDown";
 import Discount from '../../comm/Discount';
 import {get_discount} from '../../../services/CrowdDao';
-import PayModal from '../../buy/PayModal'
+import PayAction from '../../comm/PayAction'
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
-        order_number: {},
+        order: {},
         orderData: {},
         invalidProducts: [],
         isInstall: false,
@@ -51,12 +51,6 @@ export default class OrderSubmitPage extends PureComponent {
 
     componentDidMount() {
         this.pokercion = 0;
-
-        // isWXAppInstalled(isInstall => {
-        //     this.setState({
-        //         isInstall: isInstall
-        //     })
-        // });
 
         get_discount(discount => {
             this.setState({discount})
@@ -84,6 +78,7 @@ export default class OrderSubmitPage extends PureComponent {
                 });
             });
 
+            this.state.order.total = data.total_product_price;
 
             this.setState({
                 orderData: data,
@@ -139,11 +134,6 @@ export default class OrderSubmitPage extends PureComponent {
 
     };
 
-    addIndex = () => {
-        this.setState({
-            index: ++this.state.index
-        })
-    };
 
     submitBtn = () => {
         let adr = this.shipAddress.getAddress();
@@ -157,41 +147,20 @@ export default class OrderSubmitPage extends PureComponent {
 
         if (this.state.isExpired || util.isEmpty(invalid_items)) {
             let body = this.postParam();
-            if (util.isEmpty(this.state.order_number) && this.state.index === 1) {
+            if (!strNotNull(this.state.order.order_number)) {
                 postMallOrder(body, data => {
                     this.removeCarts();
-                    this.setState({
-                        order_number: data
-                    });
-                    // addTimeRecode(data.order_number);
-                    // postAlipay(data.order_number, data => {
-                    //     console.log("data:",data)
-                    //   alipay(data.payment_params)
-                    // }, err => {
-                    //
-                    // })
-                    // this.mallPay(data)
-                    if (this.payModal) {
-                        const data2 = {
-                            order_number: data.order_number,
-                            price: this.discounted(this.state.orderData)
-                        };
-                        this.payModal.setPayUrl(data2,'mall');
-                        this.payModal.toggle();
-                    }
+
+                    this.state.order.order_number = data.order_number;
+
+                    this.payAction && this.payAction.toggle(this.state.order)
+
                 }, err => {
                     showToast(err)
                 });
             } else {
-                // this.mallPay(this.state.order_number)
-                if (this.payModal) {
-                    const data2 = {
-                        order_number: this.state.order_number.order_number,
-                        price: this.discounted(this.state.orderData)
-                    };
-                    this.payModal.setPayUrl(data2,'mall');
-                    this.payModal.toggle();
-                }
+                this.payAction && this.payAction.toggle(this.state.order)
+
             }
 
 
@@ -204,28 +173,25 @@ export default class OrderSubmitPage extends PureComponent {
 
     };
 
-    mallPay = (data) => {
-        if (this.state.isInstall) {
-            postWxPay(data, ret => {
-                payWx(ret, () => {
-                    getWxPaidResult(data, result => {
 
-                        global.router.replaceMallOrderInfo(data)
-                    }, err => {
-                        showToast('支付成功，系统正在处理')
-                    }, () => {
-                    })
+    wxpay = (callWxPay) => {
+        postWxPay(this.state.order, ret => {
+            callWxPay(ret)
 
-                }, () => {
-                    global.router.replaceMallOrderInfo(data)
-                })
-            }, err => {
+        }, err => {
 
-            });
-        } else {
-            alertOrderChat(I18n.t('need_weChat'))
-        }
+        })
     }
+
+    alipay = (callAliPay) => {
+        let order_number = this.state.order.order_number
+        postAlipay(order_number, ret => {
+            callAliPay(ret.payment_params)
+        }, err => {
+
+        })
+    }
+
 
     removeCarts = () => {
         let carts = global.shoppingCarts.filter(item => !item.isSelect);
@@ -290,7 +256,6 @@ export default class OrderSubmitPage extends PureComponent {
 
                 </ScrollView>
                 <OrderBottom
-                    addIndex={this.addIndex}
                     submitBtn={this.submitBtn}
                     showExpiredInfo={this.showExpiredInfo}
                     sumMoney={this.discounted(orderData)}/>
@@ -301,10 +266,10 @@ export default class OrderSubmitPage extends PureComponent {
                     orderData={this.state.orderData}
                     prop={this.props}
                     showExpiredInfo={this.showExpiredInfo}/> : null}
-                <PayModal
-                    invitePrice={this.discounted(orderData)}
-                    toOrder={true}
-                    ref={ref => this.payModal = ref}/>
+                <PayAction
+                    wxpay={this.wxpay}
+                    ali_pay={this.alipay}
+                    ref={ref => this.payAction = ref}/>
             </BaseComponent>
 
         );
