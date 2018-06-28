@@ -21,7 +21,6 @@ import JMessage from "jmessage-react-plugin";
 import {CLEAR_PROFILE} from "../actions/ActionTypes";
 import Alipay from 'react-native-yunpeng-alipay';
 
-
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD HH:mm:ss';
 export const YYYY_MM = 'YYYY-MM';
@@ -85,12 +84,12 @@ export function alipay(payStr) {
         console.log(err);
     });
 }
-export function uShareLoad(id) {
+export function uShareLoad() {
     let param = {
         shareTitle: '海量房源优惠券',
         shareText: I18n.t('ads_poker'),
-        shareImage: Images.default_img,
-        shareLink: shareHost() + "products/" + id + "/loadApp",
+        shareImage: shareIcon,
+        shareLink: shareHost() + "loadApp",
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -268,7 +267,7 @@ export function strToDate(date) {
 }
 
 
-const shareIcon = Images.default_img;
+const shareIcon = 'http://kkh5.deshpro.com/images/default_img.png';
 export const DayHeadings = [I18n.t('calendar_7'),
     I18n.t('calendar_1'),
     I18n.t('calendar_2'),
