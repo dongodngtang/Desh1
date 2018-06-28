@@ -2,10 +2,10 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
-export function postPersonCoupons(body, resolve, reject) {
-    helper.post(Api.person_coupons(body), {}, ret => {
+export function getPersonCoupons(body, resolve, reject) {
+    helper.get(Api.person_coupons(), ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject, body)
 }
 
 //删除订单

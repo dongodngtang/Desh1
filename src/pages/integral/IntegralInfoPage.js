@@ -6,12 +6,23 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
+import {utcDate, isEmptyObject, showToast} from "../../utils/ComonHelper";
 import {NavigationBar,BaseComponent} from '../../components';
 import styles from './IntegralStyle';
+import {postExchangeCoupon} from "../../services/IntegralDao";
 
 
 export default class IntegralInfoPage extends Component {
+
+    _exchange=()=>{
+        postExchangeCoupon({coupon_id:this.props.params.item.id}, data => {
+            showToast("领取成功");
+            this.contain && this.contain.close();
+            global.router.pop();
+        },err=>{
+            showToast("领取失败")
+        });
+    }
 
     render(){
         const {coupon_type,name,integrals,short_desc,stock} = this.props.params.item;
@@ -59,11 +70,7 @@ export default class IntegralInfoPage extends Component {
                 </ScrollView>
                 <TouchableOpacity style={styles.infoBottom}
                 onPress={()=>{
-                    this.contain && this.contain.close();
-                    global.router.pop();
-                    global.router.pop();
-                    global.router.pop();
-                    global.router.toSelectTimePage();
+                    this._exchange();
                 }}>
                     <Text style={{color:"#FFFFFF",fontSize:18}}>立即兑换</Text>
                 </TouchableOpacity>

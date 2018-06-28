@@ -2,6 +2,13 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function postExchangeCoupon(body, resolve, reject) {
+    helper.post(Api.exchange_coupon(body), {}, ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
+
 export function getIntrgralMall(resolve, reject) {
     helper.get(Api.integral_mall, ret => {
         resolve(ret.data);

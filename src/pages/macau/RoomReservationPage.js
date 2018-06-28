@@ -12,7 +12,7 @@ import {
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
-import {postRoomReservation, postHotelOrder, postPersonCoupons} from "../../services/MacauDao";
+import {postRoomReservation, postHotelOrder, getPersonCoupons} from "../../services/MacauDao";
 import I18n from "react-native-i18n";
 import {addTimeRecode} from "../../components/PayCountDown";
 import Loading from "../../components/Loading";
@@ -72,15 +72,15 @@ export default class RoomReservationPage extends PureComponent {
         }, err => {
 
         })
-//用户已获得优惠券列表
-//         postPersonCoupons({}, data => {
-//             console.log("personCoupons:", data);
-//             this.setState({
-//                 person_coupons: data
-//             })
-//         },err => {
-//
-//         })
+       // 用户已获得优惠券列表
+        getPersonCoupons({}, data => {
+            console.log("personCoupons:", data);
+            this.setState({
+                person_coupons: data
+            })
+        }, err => {
+
+        })
 
     };
     postParam = () => {

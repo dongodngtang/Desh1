@@ -5,19 +5,19 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
-import {postPersonCoupons} from "../../services/MacauDao";
+import {getPersonCoupons} from "../../services/MacauDao";
 
 export default class CouponPage extends Component {
 
     state={
-        person_coupons: {}
+        person_coupons: []
     };
 
     componentDidMount(){
-        postPersonCoupons({}, data => {
+        getPersonCoupons({}, data => {
             console.log("person_personCoupons:", data);
             this.setState({
-                person_coupons: data
+                person_coupons: data.items
             })
         },err => {
 
@@ -30,24 +30,34 @@ export default class CouponPage extends Component {
         )
     };
 
-    _renderItem=()=>{
+    _renderItem=({item,index})=>{
+        const {begin_date,coupon_type,cover_link,end_date,name,short_desc} = item;
         return(
             <ImageBackground
+                key = {index}
                 style={styles.sameView}
                 source={Images.coupon.background}>
                 <View style={styles.itemView}>
-                    <View  style={styles.itemLeft}>
+                    <View  style={[styles.itemLeft]}>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                             <Text style={{color:"#F34247",fontSize:18}}>¥<Text style={{fontSize:50,fontWeight:'bold'}}>50</Text></Text>
-                            <Text style={{color:"#444444",fontSize:20,marginLeft:22}}>酒店优惠券</Text>
+                            <View style={{width:120}}>
+                                <Text style={{color:"#444444",fontSize:20,marginLeft:16}} >{name}</Text>
+                            </View>
+
                         </View>
-                        <Text style={[styles.txt1,{marginTop:10}]}>单笔酒店预订金额满800元可使用</Text>
-                        <Text style={[styles.txt1,{marginTop:1}]}>有限期：2018-06-21至06-31</Text>
+                        <Text style={[styles.txt1,{marginTop:10}]}>{short_desc}</Text>
+                        <Text style={[styles.txt1,{marginTop:1}]}>{`有限期：${begin_date}至${end_date}`}</Text>
+
                     </View>
                     <View style={{flex:1}}/>
                     <View  style={[styles.itemLeft,{alignItems:'center'}]}>
                         <Text  style={{color:"#666666",fontSize:16}}>剩30日</Text>
-                        <TouchableOpacity style={styles.touchView}>
+                        <TouchableOpacity style={styles.touchView}
+                        onPress={()=>{
+                            router.pop();
+                            global.router.toSelectTimePage();
+                        }}>
                             <Text style={{color:"#FFFFFF",fontSize:14}}>去使用</Text>
                         </TouchableOpacity>
                     </View>
@@ -57,7 +67,7 @@ export default class CouponPage extends Component {
     };
 
     render(){
-        let data=[1,2,3,4,5,6,7];
+        const {person_coupons} = this.state;
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -74,7 +84,7 @@ export default class CouponPage extends Component {
                 <ScrollView >
                     <FlatList
                         style={{marginTop:15,marginLeft:17,marginRight:17}}
-                        data={data}
+                        data={person_coupons}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}

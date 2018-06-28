@@ -174,15 +174,16 @@ const api = {
     room_reservation: 'hotel_orders/new',//获取酒店下单界面所需的数据
     hotel_order: 'hotel_orders',//创建酒店订单
     hotel_order_info: hotel_order_info,//获取酒店订单详情
-    hotel_wxPay:hotel_wxPay,//微信支付 - 酒店订单
-    hotel_wx_paid_result:hotel_wx_paid_result,//获取酒店订单的微信支付结果
-    hotel_order_cancel:hotel_order_cancel,//取消酒店订单
+    hotel_wxPay: hotel_wxPay,//微信支付 - 酒店订单
+    hotel_wx_paid_result: hotel_wx_paid_result,//获取酒店订单的微信支付结果
+    hotel_order_cancel: hotel_order_cancel,//取消酒店订单
     del_order_hotel: del_order_hotel,//删除酒店订单
-    hotel_return:hotel_return,//酒店订单退款
-    alipay:alipay,//支付宝支付 - 酒店订单
-    integral_mall:'integral_malls/coupons',// 积分商城优惠券列表
-    person_coupons:person_coupons,//用户已获得优惠券列表
-    hotel_aliPay:hotel_aliPay,//支付宝支付 - 酒店订单
+    hotel_return: hotel_return,//酒店订单退款
+    alipay: alipay,//支付宝支付 - 酒店订单
+    integral_mall: 'integral_malls/coupons',// 积分商城优惠券列表
+    person_coupons: person_coupons,//用户已获得优惠券列表
+    hotel_aliPay: hotel_aliPay,//支付宝支付 - 酒店订单
+    exchange_coupon: exchange_coupon,//积分兑换优惠券
 }
 
 export default api;
@@ -200,9 +201,15 @@ export function alipay(order_number) {
 
 const page_size = 10;
 
+export function exchange_coupon(body) {
+    const {coupon_id} = body;
+    return `integral_malls/coupons/${coupon_id}/exchange`
+}
+
 export function person_coupons(body) {
     return `account/users/${getUserId()}/coupons`
 }
+
 //酒店支付宝
 export function hotel_aliPay(order_number) {
     return `hotel_orders/${order_number}/alipay`
