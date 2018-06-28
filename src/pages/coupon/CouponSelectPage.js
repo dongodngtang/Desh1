@@ -68,13 +68,15 @@ export default class CouponSelectPage extends Component {
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={{color: "#F34247", fontSize: 18}}>¥<Text
                                 style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>
-                            <Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>{name}</Text>
+                            <View style={{width:180}}>
+                                <Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>{name}</Text>
+                            </View>
                         </View>
                         <Text style={[styles.txt1, {marginTop: 10}]}>{short_desc}</Text>
                         <Text style={[styles.txt1, {marginTop: 1}]}>{`有限期：${begin_date}至${end_date}`}</Text>
                     </View>
                     <View style={{flex: 1}}/>
-                    <TouchableOpacity style={[styles.itemLeft, {alignItems: 'center'}]}
+                    <TouchableOpacity style={[styles.itemLeft, {alignItems: 'center',paddingTop:10,paddingBottom:10,paddingLeft:10,paddingRight:10}]}
                                       onPress={() => {
                                           this._changeSelect(item)
                                       }}>

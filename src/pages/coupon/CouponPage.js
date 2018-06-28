@@ -41,7 +41,7 @@ export default class CouponPage extends Component {
                     <View  style={[styles.itemLeft]}>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                             <Text style={{color:"#F34247",fontSize:18}}>¥<Text style={{fontSize:50,fontWeight:'bold'}}>50</Text></Text>
-                            <View style={{width:120}}>
+                            <View style={{width:150}}>
                                 <Text style={{color:"#444444",fontSize:20,marginLeft:16}} >{name}</Text>
                             </View>
 
