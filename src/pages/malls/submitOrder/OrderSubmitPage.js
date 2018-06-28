@@ -267,7 +267,8 @@ export default class OrderSubmitPage extends PureComponent {
                 <PayAction
                     wxpay={this.wxpay}
                     ali_pay={this.alipay}
-                    ref={ref => this.payAction = ref}/>
+                    ref={ref => this.payAction = ref}
+                    type={'mall'}/>
             </BaseComponent>
 
         );

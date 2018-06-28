@@ -14,7 +14,7 @@ import {Prompt, ReservationTime} from '../RoomReservationPage';
 import {RenderItem} from '../PaymentDetail';
 import UnpaidBottom from "./UnpaidBottom";
 import {HotelStatus} from "../../../configs/Status";
-import {delHotelOrder, getHotelOrderInfo,postHotelWxPay,postHotelAliPay} from "../../../services/MacauDao";
+import {delHotelOrder, getHotelOrderInfo, postHotelWxPay, postHotelAliPay} from "../../../services/MacauDao";
 import {DeShangPhone} from "../../../configs/Constants";
 import PayModal from "../../buy/PayModal";
 import I18n from "react-native-i18n";
@@ -57,7 +57,7 @@ export default class OrderStatusPage extends Component {
 
     _person = (persons) => {
         return (
-            <View style={{flexDirection: 'column', width: '100%', justifyContent: 'center',alignSelf:'center'}}>
+            <View style={{flexDirection: 'column', width: '100%', justifyContent: 'center', alignSelf: 'center'}}>
                 {persons.map((item, i) => {
                     return (
                         <View key={i} style={{
@@ -65,7 +65,7 @@ export default class OrderStatusPage extends Component {
                             alignItems: 'center',
                             paddingTop: i === 0 ? 0 : 14,
                             paddingBottom: i === persons.length - 1 ? 0 : 14,
-                            borderBottomColor: i === persons.length - 1 ?'white':'#F3F3F3',
+                            borderBottomColor: i === persons.length - 1 ? 'white' : '#F3F3F3',
                             borderBottomWidth: i === persons.length - 1 ? 0 : 1
                         }}>
                             <TextInput style={[styles.room_num, {width: 100, paddingTop: 0, paddingBottom: 0}]}
@@ -93,7 +93,7 @@ export default class OrderStatusPage extends Component {
         )
     };
 
-    paidOrder = (status,order_number) => {
+    paidOrder = (status, order_number) => {
         if (status === HotelStatus.paid) {
             return (
                 <TouchableOpacity
@@ -126,7 +126,7 @@ export default class OrderStatusPage extends Component {
     };
 
     _submitBtn = () => {
-        this.payAction && this.payAction.toggle(this.state.orderInfo.order,this.state.orderInfo.order.total_price)
+        this.payAction && this.payAction.toggle(this.state.orderInfo.order, this.state.orderInfo.order.total_price)
 
     };
 
@@ -189,7 +189,7 @@ export default class OrderStatusPage extends Component {
                 </View>
             )
         }
-        const {room, order, checkin_infos} =orderInfo;
+        const {room, order, checkin_infos} = orderInfo;
         const {order_number, created_at, room_num, pay_status, status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num} = order;
         let date = {begin_date: checkin_date, end_date: checkout_date, counts: nights_num};
 
@@ -273,13 +273,14 @@ export default class OrderStatusPage extends Component {
                     </View>
                     {this._intro()}
 
-                    {this.paidOrder(status,order_number)}
+                    {this.paidOrder(status, order_number)}
                 </ScrollView>
                 {status === 'unpaid' ? this.statusBottom(order) : null}
                 <PayAction
                     wxpay={this.wxpay}
                     ali_pay={this.alipay}
-                    ref={ref => this.payAction = ref}/>
+                    ref={ref => this.payAction = ref}
+                    type={'hotel'}/>
             </View>
         )
     }

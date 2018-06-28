@@ -6,7 +6,7 @@ export function postAlipay(order_number, resolve, reject) {
     helper.post(Api.alipay(order_number), {}, ret => {
         resolve(ret.data)
     }, err => {
-        showToast('系统忙，请稍后再试')
+        // showToast('系统忙，请稍后再试')
         reject(err)
     })
 }

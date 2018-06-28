@@ -21,11 +21,11 @@ export default class PayModal extends Component {
         visible: false,
         selectTab: 0,
         order: {},
-        total:0
+        total: 0
     }
 
 
-    toggle = (order,total) => {
+    toggle = (order, total) => {
         this.setState({
             visible: !this.state.visible,
             order,
@@ -37,10 +37,15 @@ export default class PayModal extends Component {
         wxpay: propType.func.isRequired,
         ali_pay: propType.func.isRequired
     };
-    intro=()=>{
-        return(
-            <View style={{width:'100%',height:30,backgroundColor:'#C1D4E1',justifyContent:'center'}}>
-                <Text style={{color:"#FFFFFF",fontSize:12,marginLeft:17,marginRight:17}}>大额消费请查看支付帮助，选择单笔限额高的银行卡支付</Text>
+    intro = () => {
+        return (
+            <View style={{width: '100%', height: 30, backgroundColor: '#C1D4E1', justifyContent: 'center'}}>
+                <Text style={{
+                    color: "#FFFFFF",
+                    fontSize: 12,
+                    marginLeft: 17,
+                    marginRight: 17
+                }}>大额消费请查看支付帮助，选择单笔限额高的银行卡支付</Text>
             </View>
         )
     }
@@ -61,7 +66,7 @@ export default class PayModal extends Component {
                 {this.topView()}
                 <View style={{height: 1}}/>
                 <ScrollView>
-                    {this.intro()}
+                    {/*{this.intro()}*/}
                     {this.orderView()}
                     {this.aliView()}
                     {this.wxView()}
@@ -102,7 +107,7 @@ export default class PayModal extends Component {
                 <View>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.txt3}>需付款</Text>
-                        <Text style={[styles.txt32,{marginLeft:15}]}>{`¥${this.state.total}`}</Text>
+                        <Text style={[styles.txt32, {marginLeft: 15}]}>{`¥${this.state.total}`}</Text>
                     </View>
                     <Text style={styles.txt31}>{`订单编号: ${order_number}`}</Text>
                 </View>
@@ -169,7 +174,7 @@ export default class PayModal extends Component {
 
     payView = () => {
 
-        const {wxpay, ali_pay} = this.props;
+        const {wxpay, ali_pay, type} = this.props;
         return <TouchableOpacity
             onPress={() => {
                 if (this.state.selectTab === 0) {
@@ -178,7 +183,14 @@ export default class PayModal extends Component {
                             console.log('支付成功', ret)
                         }, err => {
                             console.log('支付失败', err)
-                            showToast('系统忙，请稍后再试')
+                            if (type === 'hotel') {
+                                router.pop();
+                                global.router.toOrderStatusPage(this.state.order.order_number)
+                            } else if (type === 'mall') {
+                                router.pop();
+                                global.router.replaceMallOrderInfo(this.state.order)
+                            }
+                            // showToast('系统忙，请稍后再试')
 
                         })
                     })
@@ -192,7 +204,14 @@ export default class PayModal extends Component {
                                     console.log('支付成功', ret)
                                 }, err => {
                                     console.log('支付失败', err)
-                                    showToast('系统忙，请稍后再试')
+                                    if (type === 'hotel') {
+                                        router.pop();
+                                        global.router.toOrderStatusPage(this.state.order.order_number)
+                                    } else if (type === 'mall') {
+                                        router.pop();
+                                        global.router.replaceMallOrderInfo(this.state.order)
+                                    }
+                                    // showToast('系统忙，请稍后再试')
                                 })
                             } else {
                                 showToast('你没有安装微信，不能使用微信支付')
