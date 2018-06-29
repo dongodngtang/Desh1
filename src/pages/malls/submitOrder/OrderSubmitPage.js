@@ -131,8 +131,6 @@ export default class OrderSubmitPage extends PureComponent {
         };
 
     };
-
-
     submitBtn = () => {
         let adr = this.shipAddress.getAddress();
         const {invalid_items} = this.state.orderData;
@@ -151,8 +149,8 @@ export default class OrderSubmitPage extends PureComponent {
 
                     this.state.order.order_number = data.order_number;
                     let param = {
-                        order_number:data.order_number,
-                        total:this.state.orderData.total_product_price
+                        order_number: data.order_number,
+                        total: this.state.orderData.total_product_price
                     }
 
                     this.payAction && this.payAction.toggle(param)
@@ -163,8 +161,8 @@ export default class OrderSubmitPage extends PureComponent {
             } else {
 
                 let param = {
-                    order_number:this.state.order_number,
-                    total:this.state.orderData.total_product_price
+                    order_number: this.state.order.order_number,
+                    total: this.state.orderData.total_product_price
                 }
                 this.payAction && this.payAction.toggle(param)
 
@@ -179,7 +177,6 @@ export default class OrderSubmitPage extends PureComponent {
 
 
     };
-
 
 
     removeCarts = () => {

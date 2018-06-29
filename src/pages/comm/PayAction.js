@@ -253,7 +253,9 @@ export default class PayAction extends Component {
 
             })
 
-        }, err=>{})
+        }, err=>{
+            showToast('系统忙，请稍后再试')
+        })
 
     }
 }
