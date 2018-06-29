@@ -54,7 +54,7 @@ export default class PayAction extends Component {
             onRequestClose={() => {
 
             }}
-            animationType={"slide"}
+            animationType={"none"}
             transparent={true}
             visible={this.state.visible}
             style={styles.page}>
