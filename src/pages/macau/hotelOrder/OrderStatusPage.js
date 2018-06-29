@@ -165,6 +165,17 @@ export default class OrderStatusPage extends Component {
             return "#333333"
         }
     };
+    _changedBar = (status_text, pay_status) => {
+        if (pay_status === 'paid') {
+            return '待入住';
+        } else if (pay_status === 'unpaid') {
+            return '待付款';
+        } else if (pay_status === 'compeleted') {
+            return '已完成';
+        } else {
+            return status_text
+        }
+    };
 
 
     render() {
@@ -190,10 +201,13 @@ export default class OrderStatusPage extends Component {
 
                 <NavigationBar
                     toolbarStyle={{backgroundColor: Colors._E54}}
-                    title={status_text}
+                    title={this._changedBar(status_text, pay_status)}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
+                    leftBtnPress={() => {
+                        router.pop();router.pop()
+                        global.router.toHotelOrderPage()
+                    }}/>
                 <ScrollView style={{flexDirection: 'column', paddingBottom: 90}}>
 
                     <View style={styles.barView}>
@@ -213,7 +227,7 @@ export default class OrderStatusPage extends Component {
                             style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY/MM/DD  HH:MM')}</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：
                             <Text
-                                style={{color: this.statusColor(pay_status, status_text)}}>{pay_status === 'paid' ? '待入住' : status_text}</Text>
+                                style={{color: this.statusColor(pay_status, status_text)}}>{this._changedBar(status_text, pay_status)}</Text>
                         </Text>
                     </View>
 
