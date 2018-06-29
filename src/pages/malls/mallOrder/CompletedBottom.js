@@ -99,7 +99,7 @@ export default class CompletedBottom extends Component {
     };
 
     paidOrder = (orderItem) => {
-
+        const {return_status_text} = orderItem;
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
@@ -108,14 +108,15 @@ export default class CompletedBottom extends Component {
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {return_status_text === "" ? <TouchableOpacity
 
                 onPress={() => {
                     global.router.toMallSelectPage(orderItem, this.props.refresh)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> : null}
+
 
         </View>
     };
@@ -168,7 +169,7 @@ export default class CompletedBottom extends Component {
                 })}
                 {i > 0 ? <TouchableOpacity
                     onPress={() => {
-                        global.router.toMallSelectPage(orderItem,this.props.refresh)
+                        global.router.toMallSelectPage(orderItem, this.props.refresh)
                     }}
                     style={styleO.returnedBottom}>
                     <Text style={styleO.orderSubmitTxt}>退货／退款</Text>

@@ -189,7 +189,7 @@ export default class ReturnPage extends Component {
             this.contain.close();
             global.router.pop();
             global.router.pop();
-            this.props.params.refresh();
+            this.props.params.mallRefresh();
         }, err => {
             this.contain.close();
             showToast(err)
