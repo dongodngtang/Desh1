@@ -17,7 +17,6 @@ import * as helper from '../../services/RequestHelper';
 import Api from '../../configs/ApiConfig';
 
 
-
 export default class PayAction extends Component {
 
     state = {
@@ -97,7 +96,7 @@ export default class PayAction extends Component {
     orderView = () => {
 
         if (!isEmptyObject(this.state.order)) {
-            const {order_number,total} = this.state.order;
+            const {order_number, total} = this.state.order;
             return <View style={styles.page3}>
 
                 <Image style={styles.img3}
@@ -173,11 +172,11 @@ export default class PayAction extends Component {
 
     payView = () => {
 
-        const { type} = this.props;
+        const {type} = this.props;
         return <TouchableOpacity
             onPress={() => {
                 if (this.state.selectTab === 0) {
-                   this.ali_pay()
+                    this.ali_pay()
                 }
 
                 if (this.state.selectTab === 1) {
@@ -194,10 +193,10 @@ export default class PayAction extends Component {
         const {type} = this.props;
         const {order} = this.state;
 
-        if(type === 'hotel'){
+        if (type === 'hotel') {
             url = Api.hotel_wxPay(order)
         }
-        if(type === 'mall'){
+        if (type === 'mall') {
             url = Api.mall_wxPay(order)
         }
 
@@ -207,10 +206,15 @@ export default class PayAction extends Component {
                 if (install) {
                     payWx(ret.data, ret => {
                         console.log('支付成功', ret)
+                        this.toggle();
+                        this.props.refresh()
                     }, err => {
                         console.log('支付失败', err)
                         if (type === 'hotel') {
-                            router.replace({name: 'OrderStatusPage', params: {order_number:this.state.order.order_number}})
+                            router.replace({
+                                name: 'OrderStatusPage',
+                                params: {order_number: this.state.order.order_number}
+                            })
                         } else if (type === 'mall') {
                             global.router.replaceMallOrderInfo(this.state.order)
                         }
@@ -220,7 +224,8 @@ export default class PayAction extends Component {
                     showToast('你没有安装微信，不能使用微信支付')
                 }
             })
-        }, err=>{})
+        }, err => {
+        })
 
     }
 
@@ -229,11 +234,11 @@ export default class PayAction extends Component {
         const {type} = this.props;
         const {order} = this.state;
 
-        if(type === 'hotel'){
+        if (type === 'hotel') {
             url = Api.hotel_aliPay(order.order_number)
         }
 
-        if(type === 'mall'){
+        if (type === 'mall') {
             url = Api.alipay(order.order_number)
         }
 
@@ -241,10 +246,12 @@ export default class PayAction extends Component {
 
             alipay(ret.data.payment_params, ret => {
                 console.log('支付成功', ret)
+                this.toggle();
+                this.props.refresh()
             }, err => {
                 console.log('支付失败', err)
                 if (type === 'hotel') {
-                    router.replace({name: 'OrderStatusPage', params: {order_number:this.state.order.order_number}})
+                    router.replace({name: 'OrderStatusPage', params: {order_number: this.state.order.order_number}})
 
                 } else if (type === 'mall') {
                     global.router.replaceMallOrderInfo(this.state.order)
@@ -253,7 +260,7 @@ export default class PayAction extends Component {
 
             })
 
-        }, err=>{
+        }, err => {
             showToast('系统忙，请稍后再试')
         })
 

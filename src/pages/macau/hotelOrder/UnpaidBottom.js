@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import {HotelStatus} from "../../../configs/Status";
 import {util, payWx, isWXAppInstalled, call, alertOrder, showToast, alertOrderChat} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
-import {getHotelWxPaidResult, postHotelWxPay,cancelHotelOrder} from "../../../services/MacauDao";
+import {getHotelWxPaidResult, postHotelWxPay, cancelHotelOrder} from "../../../services/MacauDao";
 import PayAction from '../../comm/PayAction'
 
 export default class UnpaidBottom extends Component {
@@ -21,6 +21,7 @@ export default class UnpaidBottom extends Component {
 
         return `${I18n.t('pay')} ${min}:${diff}`
     };
+
     render() {
         const {order_number} = this.props;
         return (
@@ -42,8 +43,12 @@ export default class UnpaidBottom extends Component {
 
                 <TouchableOpacity style={styles.payView}
                                   onPress={() => {
-                                      const {order_number,total_price} = this.props;
-                                     this.payAction && this.payAction.toggle({order_number,total:total_price})
+                                      const {order_number, total_price} = this.props;
+                                      this.payAction && this.payAction.toggle({
+                                          order_number,
+                                          total: total_price
+                                      })
+
                                   }}>
                     <View style={{alignItems: 'flex-end'}}>
                         <Text style={{fontSize: 14, color: '#FFFFFF', zIndex: 999}}>付款</Text>
@@ -51,33 +56,32 @@ export default class UnpaidBottom extends Component {
 
                 </TouchableOpacity>
                 {/*<View style={styles.payView}>*/}
-                    {/*<PayCountDown*/}
-                        {/*frameStyle={styles.payCount}*/}
-                        {/*beginText='倒计时'*/}
-                        {/*endText='付款失效'*/}
-                        {/*count={60 * 30}*/}
-                        {/*pressAction={() => {*/}
-                            {/*this.wxPay({order_number});*/}
-                        {/*}}*/}
-                        {/*changeWithCount={(count) => `${this._formatTime(count)}`}*/}
-                        {/*id={order_number}*/}
-                        {/*ref={(e) => {*/}
-                            {/*this.countDownButton = e*/}
-                        {/*}}/>*/}
+                {/*<PayCountDown*/}
+                {/*frameStyle={styles.payCount}*/}
+                {/*beginText='倒计时'*/}
+                {/*endText='付款失效'*/}
+                {/*count={60 * 30}*/}
+                {/*pressAction={() => {*/}
+                {/*this.wxPay({order_number});*/}
+                {/*}}*/}
+                {/*changeWithCount={(count) => `${this._formatTime(count)}`}*/}
+                {/*id={order_number}*/}
+                {/*ref={(e) => {*/}
+                {/*this.countDownButton = e*/}
+                {/*}}/>*/}
 
                 {/*</View>*/}
 
                 <PayAction
                     ref={ref => this.payAction = ref}
-                    type={'hotel'}/>
+                    type={'hotel'}
+                    refresh={this.props.refresh}/>
 
             </View>
         )
     }
 
 }
-
-
 
 
 const styles = StyleSheet.create({

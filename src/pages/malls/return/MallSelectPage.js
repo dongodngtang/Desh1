@@ -42,8 +42,8 @@ export default class MallSelectPage extends PureComponent {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => {
                     router.pop();
-                    this.props.params.mallRefresh &&
-                    this.props.params.mallRefresh()
+                    // this.props.params.mallRefresh &&
+                    // this.props.params.mallRefresh()
                 }}
                 titleStyle={{color: Colors._E54}}
                 title={I18n.t('mall_select')}/>
@@ -88,7 +88,7 @@ export default class MallSelectPage extends PureComponent {
                                           showToast(I18n.t('please_select_malls'))
                                           return;
                                       }
-                                      global.router.toReturnPage(items, order_number)
+                                      global.router.toReturnPage(items, order_number,this.props.params.mallRefresh)
                                   }}>
                     <Text style={styleS.settlement}>{I18n.t('confirm')}</Text>
 

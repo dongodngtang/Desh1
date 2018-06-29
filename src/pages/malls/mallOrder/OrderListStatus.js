@@ -12,7 +12,6 @@ export default class OrderListStatus extends Component {
 
 
     renderItem = (item, index) => {
-
         const {order_number, status, total_price, order_items, final_price, deduction_result} = item;
         return (
             <TouchableOpacity
@@ -81,7 +80,7 @@ export default class OrderListStatus extends Component {
         } else {
             this.load({
                 status: this.props.status,
-                page: 1,
+                page: page,
                 page_size: 20
             }, postRefresh, endFetch)
         }

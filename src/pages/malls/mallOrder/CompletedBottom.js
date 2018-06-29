@@ -62,7 +62,7 @@ export default class CompletedBottom extends Component {
 
 
     renderPay = (item) => {
-
+        const {shipments, order_number} = item;
         return (//${I18n.t('pay')}
             <View style={styleO.bottomView}>
                 <TouchableOpacity style={styleO.payView}
@@ -167,7 +167,7 @@ export default class CompletedBottom extends Component {
                 })}
                 {i > 0 ? <TouchableOpacity
                     onPress={() => {
-                        global.router.toMallSelectPage(orderItem)
+                        global.router.toMallSelectPage(orderItem,this.props.refresh)
                     }}
                     style={styleO.returnedBottom}>
                     <Text style={styleO.orderSubmitTxt}>退货／退款</Text>

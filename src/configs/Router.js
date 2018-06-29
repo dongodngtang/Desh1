@@ -1092,12 +1092,13 @@ export default class Router {
         })
     }
 
-    toReturnPage(orderItems, order_number) {
+    toReturnPage(orderItems, order_number,refresh) {
         this.stackPush({
             name: 'ReturnPage',
             params: {
                 order_items: orderItems,
-                order_number: order_number
+                order_number: order_number,
+                refresh:refresh
             }
         })
     }
