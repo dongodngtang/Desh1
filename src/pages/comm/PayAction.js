@@ -207,7 +207,20 @@ export default class PayAction extends Component {
                     payWx(ret.data, ret => {
                         console.log('支付成功', ret)
                         this.toggle();
-                        this.props.refresh()
+                        //酒店订单和商城订单有刷新字段
+                        if(this.props.refresh){
+                            this.props.refresh()
+                        }else{
+                            //酒店预定和商品购买状态页面
+                            if (type === 'hotel') {
+                                router.replace({
+                                    name: 'OrderStatusPage',
+                                    params: {order_number: this.state.order.order_number}
+                                })
+                            } else if (type === 'mall') {
+                                global.router.replaceMallOrderInfo(this.state.order)
+                            }
+                        }
                     }, err => {
                         console.log('支付失败', err)
                         if (type === 'hotel') {

@@ -92,7 +92,8 @@ export default class CompletedBottom extends Component {
 
                 <PayAction
                     type={'mall'}
-                    ref={ref => this.payAction = ref}/>
+                    ref={ref => this.payAction = ref}
+                    refresh={this.props.refresh}/>
             </View>
         )
     };

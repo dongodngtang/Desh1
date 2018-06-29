@@ -126,8 +126,8 @@ export default class OrderStatusPage extends Component {
     };
 
     _submitBtn = () => {
-        const {order_number,total_price} = this.state.orderInfo.order;
-        let param = {order_number,total:total_price}
+        const {order_number, total_price} = this.state.orderInfo.order;
+        let param = {order_number, total: total_price}
 
         this.payAction && this.payAction.toggle(param)
 
@@ -154,10 +154,10 @@ export default class OrderStatusPage extends Component {
                 return <View/>;
         }
     };
-    statusColor = (status,status_text) => {
-        if(status_text === '退款申请中'){
+    statusColor = (status, status_text) => {
+        if (status_text === '退款申请中') {
             return "#333333"
-        }else if (status === 'unpaid') {
+        } else if (status === 'unpaid') {
             return "#E54A2E"
         } else if (status === 'paid') {
             return "#4A90E2"
@@ -182,7 +182,7 @@ export default class OrderStatusPage extends Component {
             )
         }
         const {room, order, checkin_infos} = orderInfo;
-        const {order_number, created_at, room_num, pay_status, status_text,status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num} = order;
+        const {order_number, created_at, room_num, pay_status, status_text, status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num} = order;
         let date = {begin_date: checkin_date, end_date: checkout_date, counts: nights_num};
 
         return (
@@ -212,7 +212,8 @@ export default class OrderStatusPage extends Component {
                         <Text
                             style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY/MM/DD  HH:MM')}</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：
-                            <Text style={{color: this.statusColor(pay_status,status_text)}}>{status_text}</Text>
+                            <Text
+                                style={{color: this.statusColor(pay_status, status_text)}}>{pay_status === 'paid' ? '待入住' : status_text}</Text>
                         </Text>
                     </View>
 
