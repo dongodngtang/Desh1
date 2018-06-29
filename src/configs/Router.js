@@ -65,11 +65,12 @@ export default class Router {
         })
     }
 
-    toReturnHotelPage(item) {
+    toReturnHotelPage(item,refresh) {
         this.stackPush({
             name: 'ReturnHotelPage',
             params: {
-                item
+                item,
+                refresh
             }
         })
     }

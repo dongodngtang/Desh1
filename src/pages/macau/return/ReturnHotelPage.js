@@ -38,7 +38,7 @@ export default class ReturnHotelPage extends Component {
                     titleStyle={{fontSize: 17, color: '#161718'}}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
                     title={'申请退款'}
-                    leftBtnIcon={Images.sign_return}
+                    leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
                         router.pop()
@@ -95,6 +95,7 @@ export default class ReturnHotelPage extends Component {
                                               showToast('申请提交成功');
                                               this.contain && this.contain.close();
                                               global.router.pop();
+                                              this.props.params.refresh();
                                           }, err => {
                                               showToast(err);
                                           })

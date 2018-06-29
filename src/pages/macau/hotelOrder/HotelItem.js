@@ -35,7 +35,7 @@ export default class HotelItem extends PureComponent {
                 <TouchableOpacity
 
                     onPress={() => {
-                        global.router.toReturnHotelPage(item)
+                        global.router.toReturnHotelPage(item,this.props.refresh)
                     }}
                     style={styles.returnedBottom}>
                     <Text style={styles.orderSubmitTxt}>退款</Text>

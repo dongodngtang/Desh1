@@ -128,7 +128,7 @@ export default class PayAction extends Component {
                    source={Images.pay_card}/>
 
             <View>
-                <Text style={styles.txt3}>银行卡支付</Text>
+                <Text style={styles.txt3}>支付宝支付</Text>
                 <Text style={styles.txt31}>信用卡储蓄卡付款，快捷支付</Text>
             </View>
             <View style={{flex: 1}}/>
