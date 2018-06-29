@@ -34,6 +34,12 @@ export default class PayAction extends Component {
         })
     }
 
+    close = () => {
+        this.setState({
+            visible: false
+        })
+    }
+
 
     intro = () => {
         return (
@@ -82,7 +88,7 @@ export default class PayAction extends Component {
         return <View style={styles.top}>
             <Text style={styles.title}>在线支付</Text>
             <TouchableOpacity
-                onPress={this.toggle}
+                onPress={this.close}
                 style={styles.btnClose}>
                 <Image
                     source={Images.pay_close}
@@ -169,12 +175,21 @@ export default class PayAction extends Component {
         </TouchableOpacity>;
     };
 
+    componentWillUnmount() {
+        this.close()
+    }
+
 
     payView = () => {
 
         const {type} = this.props;
         return <TouchableOpacity
             onPress={() => {
+                if (!strNotNull(this.state.order.order_number)) {
+                    showToast('支付失败')
+                    this.close()
+                    return;
+                }
                 if (this.state.selectTab === 0) {
                     this.ali_pay()
                 }
@@ -209,7 +224,6 @@ export default class PayAction extends Component {
                         this.pay_handle()
                     }, err => {
                         console.log('支付失败', err)
-
                         // 酒店预定和商品购买状态页面
                         this.pay_handle()
                     })
@@ -223,7 +237,9 @@ export default class PayAction extends Component {
 
 
     pay_handle = () => {
-        this.toggle();
+        const {type} = this.props;
+        console.log('支付结果处理')
+        this.close();
         if (this.props.refresh) {
             this.props.refresh();
         } else {
