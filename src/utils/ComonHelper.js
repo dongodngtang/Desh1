@@ -419,6 +419,7 @@ export function sharePage(title, location, icon, url) {
 //     });
 // }
 export function alipay(data, callback, cancelBack) {
+    console.log('alipay')
     Alipay.pay(data).then(ret => {
         callback(ret);
     }, (err) => {

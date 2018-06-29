@@ -72,7 +72,6 @@ export default StyleSheet.create({
         lineHeight:20
     },
     infoBottom:{
-        backgroundColor:'#E54A2E',
         width:'100%',
         paddingTop:16,
         paddingBottom:13,

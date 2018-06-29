@@ -124,7 +124,7 @@ export default class PayAction extends Component {
             }}
             style={styles.page4}>
 
-            <Image style={styles.img4}
+            <Image style={styles.img7}
                    source={Images.pay_card}/>
 
             <View>
@@ -201,11 +201,11 @@ export default class PayAction extends Component {
             url = Api.mall_wxPay(order)
         }
 
-        helper.post(url, {}, params => {
+        helper.post(url, {}, ret => {
             isWXAppInstalled(install => {
 
                 if (install) {
-                    payWx(params, ret => {
+                    payWx(ret.data, ret => {
                         console.log('支付成功', ret)
                     }, err => {
                         console.log('支付失败', err)
@@ -239,7 +239,7 @@ export default class PayAction extends Component {
 
         helper.post(url, {}, ret => {
 
-            alipay(ret.payment_params, ret => {
+            alipay(ret.data.payment_params, ret => {
                 console.log('支付成功', ret)
             }, err => {
                 console.log('支付失败', err)
@@ -339,6 +339,12 @@ const styles = StyleSheet.create({
         width: 29,
         marginLeft: 17,
         marginRight: 22
+    },
+    img7: {
+        height: 26,
+        width: 26,
+        marginLeft: 17,
+        marginRight: 25
     },
     btnPay: {
         height: 50,

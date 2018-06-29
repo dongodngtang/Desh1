@@ -146,6 +146,7 @@ export default class OrderStatusPage extends Component {
                         <UnpaidBottom
                             refresh={this._refresh}
                             order_number={order_number}
+                            total_price={total_price}
                             _submitBtn={this._submitBtn}/>
                     </View>
                 );

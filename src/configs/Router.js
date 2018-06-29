@@ -1114,18 +1114,22 @@ export default class Router {
         })
     }
 
-    toIntegralInfoPage(item) {
+    toIntegralInfoPage(item,total_points) {
         this.stackPush({
             name: 'IntegralInfoPage',
             params: {
-                item
+                item,
+                total_points
             }
         })
     }
 
-    toIntegralMallPage() {
+    toIntegralMallPage(total_points) {
         this.stackPush({
-            name: 'IntegralMallPage'
+            name: 'IntegralMallPage',
+            params: {
+                total_points
+            }
         })
     }
 

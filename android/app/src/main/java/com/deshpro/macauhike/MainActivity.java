@@ -32,7 +32,7 @@ public class MainActivity extends ReactActivity {
         RCTSplashScreen.openSplashScreen(this, true, ImageView.ScaleType.FIT_XY);   //open splashscreen fullscreen
         super.onCreate(savedInstanceState);
         JPushInterface.init(this);
-        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+       // EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
     }
 
     @Override

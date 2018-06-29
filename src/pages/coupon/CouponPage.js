@@ -34,7 +34,6 @@ export default class CouponPage extends Component {
         const {begin_date,coupon_type,cover_link,end_date,name,short_desc} = item;
         return(
             <ImageBackground
-                key = {index}
                 style={styles.sameView}
                 source={Images.coupon.background}>
                 <View style={styles.itemView}>

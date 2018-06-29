@@ -91,7 +91,7 @@ export default class IntegralPage extends Component {
                             <View style={{flex:1}}/>
                             <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}
                                               onPress={() => {
-                                                  global.router.toIntegralMallPage();
+                                                  global.router.toIntegralMallPage(total_points);
                                               }}>
                                 <Text style={{color:"#444444",fontSize:12,marginRight:3}}>更多</Text>
                                 <Image style={{width:8,height:15}} source={Images.rightImg}/>

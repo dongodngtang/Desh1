@@ -21,7 +21,7 @@ export default class IntegralMallPage extends Component {
         return (
             <TouchableOpacity key={index} style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
                               onPress={() => {
-                                  global.router.toIntegralInfoPage(item)
+                                  global.router.toIntegralInfoPage(item,this.props.params.total_points)
                               }}>
                 {/*<ImageBackground style={[styles.marginS, styles.couponImg,{flexDirection:'row',alignItems:'center'}]}>*/}
                     {/*<View style={styles.itemLeft}>*/}
