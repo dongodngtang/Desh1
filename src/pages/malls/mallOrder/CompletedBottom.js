@@ -99,7 +99,6 @@ export default class CompletedBottom extends Component {
     };
 
     paidOrder = (orderItem) => {
-        const {return_status_text} = orderItem;
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
@@ -108,16 +107,14 @@ export default class CompletedBottom extends Component {
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
             </TouchableOpacity>
-            {return_status_text === "" ? <TouchableOpacity
+            <TouchableOpacity
 
                 onPress={() => {
                     global.router.toMallSelectPage(orderItem, this.props.refresh)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
-            </TouchableOpacity> : null}
-
-
+            </TouchableOpacity>
         </View>
     };
 

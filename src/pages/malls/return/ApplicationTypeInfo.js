@@ -16,7 +16,6 @@ export default class ApplicationTypeInfo extends PureComponent {
 
     render() {
         const {refundTypes} = this.props;
-        console.log("kl:",refundTypes)
         return (
             <Animatable.View
                 style={styleP.pageALl}>
