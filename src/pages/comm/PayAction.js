@@ -206,23 +206,12 @@ export default class PayAction extends Component {
                 if (install) {
                     payWx(ret.data, ret => {
                         console.log('支付成功', ret)
-
+                        this.pay_handle()
                     }, err => {
                         console.log('支付失败', err)
-                        this.toggle();
+
                         // 酒店预定和商品购买状态页面
-                        if(this.props.refresh){
-                            this.props.refresh();
-                        }else{
-                            if (type === 'hotel') {
-                                router.replace({
-                                    name: 'OrderStatusPage',
-                                    params: {order_number: this.state.order.order_number}
-                                })
-                            } else if (type === 'mall') {
-                                global.router.replaceMallOrderInfo(this.state.order)
-                            }
-                        }
+                        this.pay_handle()
                     })
                 } else {
                     showToast('你没有安装微信，不能使用微信支付')
@@ -230,9 +219,23 @@ export default class PayAction extends Component {
             })
         }, err => {
         })
+    }
 
 
-
+    pay_handle = () => {
+        this.toggle();
+        if (this.props.refresh) {
+            this.props.refresh();
+        } else {
+            if (type === 'hotel') {
+                router.replace({
+                    name: 'OrderStatusPage',
+                    params: {order_number: this.state.order.order_number}
+                })
+            } else if (type === 'mall') {
+                global.router.replaceMallOrderInfo(this.state.order)
+            }
+        }
     }
 
     ali_pay = () => {
@@ -252,30 +255,17 @@ export default class PayAction extends Component {
 
             alipay(ret.data.payment_params, ret => {
                 console.log('支付成功', ret)
-                // this.toggle();
-                // this.props.refresh()
+                this.pay_handle()
             }, err => {
                 console.log('支付失败', err)
-                // if (type === 'hotel') {
-                //     router.replace({name: 'OrderStatusPage', params: {order_number: this.state.order.order_number}})
-                //
-                // } else if (type === 'mall') {
-                //     global.router.replaceMallOrderInfo(this.state.order)
-                // }
-                // showToast('系统忙，请稍后再试')
+                this.pay_handle()
 
             })
 
         }, err => {
             showToast('系统忙，请稍后再试')
         })
-        this.toggle();
-        if (type === 'hotel') {
-            router.replace({name: 'OrderStatusPage', params: {order_number: order.order_number}})
 
-        } else if (type === 'mall') {
-            global.router.replaceMallOrderInfo(order)
-        }
     }
 }
 
