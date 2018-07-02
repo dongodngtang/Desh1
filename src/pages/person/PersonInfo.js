@@ -226,7 +226,7 @@ export default class PersonInfo extends Component {
                 <View style={{backgroundColor: 'white'}}>
                     {this._addrView()}
                     <View style={[styles.line, {marginLeft: 18}]}/>
-                    {this.renderVerified()}
+                    {/*{this.renderVerified()}*/}
                 </View>
 
 
