@@ -217,14 +217,14 @@ class RegisterPage extends React.Component {
                 </TouchableOpacity>
 
                 {/*使用邮箱注册*/}
-                <BtnLong
-                    style={{marginTop: 35}}
-                    testID="btn_switch_email_register"
-                    onPress={() => {
-                        this.countDownText.end();
-                        router.toEmailRegisterPage()
-                    }}
-                    name={I18n.t('email_register')}/>
+                {/*<BtnLong*/}
+                    {/*style={{marginTop: 35}}*/}
+                    {/*testID="btn_switch_email_register"*/}
+                    {/*onPress={() => {*/}
+                        {/*this.countDownText.end();*/}
+                        {/*router.toEmailRegisterPage()*/}
+                    {/*}}*/}
+                    {/*name={I18n.t('email_register')}/>*/}
 
 
                 <View style={{flex: 1}}/>
