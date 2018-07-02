@@ -20,6 +20,7 @@ import JShareModule from "jshare-react-native";
 import JMessage from "jmessage-react-plugin";
 import {CLEAR_PROFILE} from "../actions/ActionTypes";
 import Alipay from 'react-native-yunpeng-alipay';
+import {postRoomReservation} from "../services/MacauDao";
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD HH:mm:ss';

@@ -184,6 +184,7 @@ const api = {
     person_coupons: person_coupons,//用户已获得优惠券列表
     hotel_aliPay: hotel_aliPay,//支付宝支付 - 酒店订单
     exchange_coupon: exchange_coupon,//积分兑换优惠券
+    share_count: share_count,//用户分享统计(会产生积分)
 }
 
 export default api;
@@ -200,6 +201,10 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function share_count(body) {
+    return `users/${getUserId()}/share_count`
+}
 
 export function exchange_coupon(body) {
     const {coupon_id} = body;

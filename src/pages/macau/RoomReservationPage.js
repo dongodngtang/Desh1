@@ -27,6 +27,7 @@ export default class RoomReservationPage extends PureComponent {
         detailsShow: false,
         roomReservation: [],
         total_price: 0,
+        discount_amount:0,
         persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
@@ -72,7 +73,7 @@ export default class RoomReservationPage extends PureComponent {
         }, err => {
 
         })
-       // 用户已获得优惠券列表
+        // 用户已获得优惠券列表
         getPersonCoupons({}, data => {
             console.log("personCoupons:", data);
             this.setState({
@@ -195,12 +196,9 @@ export default class RoomReservationPage extends PureComponent {
             phone: phone
         })
     };
-    _cutBack = () => {
-        return 0;
-    };
 
     render() {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone,discount_amount} = this.state;
         if (isEmptyObject(roomReservation)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
@@ -245,7 +243,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          // global.router.toCouponSelectPage(this.state.person_coupons.items)
+                                          global.router.toCouponSelectPage(this.state.person_coupons.items)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
@@ -256,7 +254,7 @@ export default class RoomReservationPage extends PureComponent {
                         <View style={{flexDirection: 'column', marginLeft: 6, justifyContent: 'center'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: "#444444", fontSize: 14}}>已减</Text>
-                                <Text style={{color: "#E54A2E", fontSize: 14, marginLeft: 12}}>¥{this._cutBack()}</Text>
+                                <Text style={{color: "#E54A2E", fontSize: 14, marginLeft: 12}}>¥{this.state.discount_amount}</Text>
                             </View>
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
                         </View>
@@ -283,7 +281,7 @@ export default class RoomReservationPage extends PureComponent {
                     order={order}/> : null}
                 <ReservationBottom
                     _detailsShow={this._detailsShow}
-                    total_price={total_price}
+                    total_price={total_price - discount_amount}
                     refresh={this.refresh}
                     roomReservation={roomReservation}
                     date={this.props.params.date}

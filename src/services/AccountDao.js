@@ -12,6 +12,17 @@ import {followships, postNearBys} from './SocialDao';
 
 // let image = require("../../source/home/home_avatar.png")
 
+
+
+export function postShareCount(body, resolve, reject) {
+    helper.post(Api.share_count(body), body, ret => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
+
 export function report_templates() {
     // helper.get(Api.report_templates, ret => {
     //     global.reportList = ret.data;
