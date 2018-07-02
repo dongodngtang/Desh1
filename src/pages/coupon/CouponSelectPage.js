@@ -94,11 +94,11 @@ export default class CouponSelectPage extends Component {
     };
     _onClickCoupon = () => {
         const {coupons} = this.state;
-        coupons.map = ((x) => {
+
+        coupons.forEach((x) => {
             if (x.isSelect) {
-                this.setState({
-                    selected_coupon: x
-                })
+               this.props.params._selectedCoupon(x)
+                return;
             }
         })
     };

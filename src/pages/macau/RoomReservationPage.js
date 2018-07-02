@@ -197,6 +197,11 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
+    _selectedCoupon=(selected_coupon)=>{
+        console.log('uikkjhhkjh',selected_coupon);
+        return selected_coupon
+    }
+
     render() {
         const {detailsShow, roomReservation, room_num, total_price, persons, phone,discount_amount} = this.state;
         if (isEmptyObject(roomReservation)) {
@@ -243,7 +248,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          global.router.toCouponSelectPage(this.state.person_coupons.items)
+                                          global.router.toCouponSelectPage(this.state.person_coupons.items,this._selectedCoupon)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',

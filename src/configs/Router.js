@@ -56,11 +56,12 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
-    toCouponSelectPage(person_coupons) {
+    toCouponSelectPage(person_coupons,_selectedCoupon) {
         this.stackPush({
             name: 'CouponSelectPage',
             params: {
-                person_coupons
+                person_coupons,
+                _selectedCoupon
             }
         })
     }
