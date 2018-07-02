@@ -21,7 +21,8 @@ export default class CouponSelectPage extends Component {
     state = {
         coupons: [],
         select_changed: false,
-        selectId: 0
+        selectId: 0,
+        selected_coupon: {}
     };
 
     componentDidMount() {
@@ -91,6 +92,16 @@ export default class CouponSelectPage extends Component {
             </ImageBackground>
         )
     };
+    _onClickCoupon = () => {
+        const {coupons} = this.state;
+        coupons.map = ((x) => {
+            if (x.isSelect) {
+                this.setState({
+                    selected_coupon: x
+                })
+            }
+        })
+    };
 
     render() {
         return (
@@ -102,7 +113,8 @@ export default class CouponSelectPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
-                        router.pop()
+                        router.pop();
+                        this._onClickCoupon();
                     }}
                 />
 

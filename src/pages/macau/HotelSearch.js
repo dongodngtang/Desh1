@@ -304,7 +304,7 @@ class RateItem extends PureComponent {
         return <TouchableOpacity
             onPress={() => {
                 if (rate_type === 'local' && isEmptyObject(global.login_user)) {
-                    router.toLoginFirstPage(this.props.refresh)
+                    router.toLoginFirstPage()
                 }
 
             }}
