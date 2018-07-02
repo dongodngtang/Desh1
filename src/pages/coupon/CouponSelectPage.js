@@ -15,10 +15,9 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle';
-
+import PropTypes from 'prop-types';
 
 export default class CouponSelectPage extends Component {
-
     state = {
         coupons: [],
         select_changed: false,
@@ -42,7 +41,7 @@ export default class CouponSelectPage extends Component {
         let coupons_copy = [...this.state.coupons];
         coupons_copy.map(x => {
 
-            x.isSelect = x.id === item.id;
+            x.isSelect = x.coupon_number === item.coupon_number;
 
         });
         this.setState({
