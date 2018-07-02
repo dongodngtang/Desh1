@@ -155,7 +155,7 @@ export class FollowList extends Component {
                     global.router.toUserTopicPage({user_id})
                 }}
                 style={styles.item}>
-                <View style={styles.subRowItem}>
+                <View style={[styles.subRowItem,{width:'45%'}]}>
                     <ImageLoad
                         emptyBg={Images.home_avatar}
                         source={{uri: icon}}

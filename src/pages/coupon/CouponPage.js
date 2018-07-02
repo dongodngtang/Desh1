@@ -30,7 +30,7 @@ export default class CouponPage extends Component {
         )
     };
 
-    _renderItem=({item,index})=>{
+    _renderItem=(item)=>{
         const {begin_date,coupon_type,cover_link,end_date,name,short_desc} = item;
         return(
             <ImageBackground
@@ -87,7 +87,7 @@ export default class CouponPage extends Component {
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
-                        keyExtractor={(index)=>`coupon${index}`}
+                        keyExtractor={(item,index)=>`coupon${index}`}
                     />
                     <View style={{height:80}}/>
                 </ScrollView>
