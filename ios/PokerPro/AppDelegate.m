@@ -114,16 +114,12 @@
               annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
   if (!result) {
     // 其他如支付等SDK的回调
+    [AlipayModule handleCallback:url];
     result = other;
   }
+  [AlipayModule handleCallback:url];
   return result;
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-  [AlipayModule handleCallback:url];
-  return YES;
-}
 
 @end

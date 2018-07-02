@@ -28,7 +28,6 @@ export default class MallOrderInfo extends PureComponent {
         this.container && this.container.open();
         const {orderDetail} = this.props.params;
         getMallDetail({order_number: orderDetail.order_number}, data => {
-            console.log("dhsjdhjs:",data)
             this.setState({
                 detail: data
             })

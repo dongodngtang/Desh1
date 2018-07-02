@@ -422,6 +422,7 @@ export function alipay(data, callback, cancelBack) {
     console.log('alipay',data)
     Alipay.pay(data).then(ret => {
         callback(ret);
+        console.log("dsbjdhskhdskdkdj",ret)
     }, (err) => {
         cancelBack(err);
     });
