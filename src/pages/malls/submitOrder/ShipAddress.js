@@ -60,9 +60,9 @@ export default class ShipAddress extends PureComponent {
         let address_detail = `${province} ${area} ${city} ${address}`;
         return (
             <View style={styleS.addressView}>
-                <View style={styleS.title}>
-                    <Text style={styleS.titleName}>{I18n.t('shopping_addr')}</Text>
-                </View>
+                {/*<View style={styleS.title}>*/}
+                    {/*<Text style={styleS.titleName}>{I18n.t('shopping_addr')}</Text>*/}
+                {/*</View>*/}
                 <TouchableOpacity style={styleS.shipAddr}
                                   onPress={() => {
                                       if (isEmptyObject(global.login_user))
