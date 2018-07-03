@@ -759,7 +759,7 @@ export function showWeek(week) {
 }
 
 
-var myreg = /^1(3|4|5|7|8)\d{9}$/;
+var  = /^1(3|4|5|7|8)\d{9}$/;
 
 export function checkPhone(phone) {
     if (phone != null && phone != undefined) {
@@ -1245,7 +1245,8 @@ export function checkMobile(mobileStr) {
         showToast('手机号格式不对')
         return false
     }
-    let re = /^((13[0-9])|(14[0-9])|(15[^4])|(16[0-9])|(17[0-9])|(18[0-9]))\d{8}$/
+    // let re = /^((13[0-9])|(14[0-9])|(15[^4])|(16[0-9])|(17[0-9])|(18[0-9]))\d{8}$/
+    let re = /^\d{16}$/
     if (re.test(mobileStr)) {
         return true
     } else {
@@ -1254,6 +1255,20 @@ export function checkMobile(mobileStr) {
     }
 }
 
+
+export function checkZip(zip) {
+    if (!zip) {
+        showToast('邮编格式不对')
+        return false
+    }
+    let re = /^\d{6}$/
+    if (re.test(zip)) {
+        return true
+    } else {
+        showToast('邮编格式不对')
+        return false
+    }
+}
 
 
 
