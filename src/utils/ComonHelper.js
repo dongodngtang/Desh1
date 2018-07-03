@@ -53,41 +53,42 @@ export const picker = {
 };
 
 /**
- *
- * @param lon
- * @param lat
+ * 地图标注
+ * @param lon 经度
+ * @param lat 纬度
  * @param targetAppName
  * @param name
  */
-export function turn2MapApp(lon = 0, lat = 0, targetAppName = 'baidu', name = '目标地址'){
+export function turn2MapMark(lon = 0, lat = 0, targetAppName = 'gaode', name = '目标地址'){
     if (0 == lat && 0 == lon) {
         console.warn('暂时不能导航');
         return;
     }
 
+    console.log(lon,lat,name)
+
     let url = '';
-    let webUrl = `http://uri.amap.com/navigation?to=${lon},${lat},${name}&mode=bus&coordinate=gaode`;
-    let webUrlGaode = `http://uri.amap.com/navigation?to=${lon},${lat},${name}&mode=bus&coordinate=gaode`;
-    let webUrlBaidu = `http://api.map.baidu.com/direction?destination=latlng:${lat},${lon}|name=${name}&mode=transit&coord_type=gcj02&output=html&src=mybaoxiu|wxy`;
+    let webUrl = `http://uri.amap.com/marker?position=${lon},${lat}&name=${name}&src=mypage&coordinate=gaode&callnative=0`;
+    let webUrlGaode = `http://uri.amap.com/marker?position=${lon},${lat}&name=${name}&src=mypage&coordinate=gaode&callnative=0`;
+    let webUrlBaidu = `http://api.map.baidu.com/marker?location=${lat},${lon}&title=${name}&content=${name}&output=html`;
 
     url = webUrl;
     if (Platform.OS == 'android') {//android
 
         if (targetAppName == 'gaode') {
-            // webUrl = 'androidamap://navi?sourceApplication=appname&poiname=fangheng&lat=36.547901&lon=104.258354&dev=1&style=2';
-            url = `androidamap://route?sourceApplication=appname&dev=0&m=0&t=1&dlon=${lon}&dlat=${lat}&dname=${name}`;
+            url = `androidamap://viewMap?sourceApplication=appname&poiname=${name}&lat=${lat}&lon=${lon}&dev=0`;
             webUrl = webUrlGaode;
         } else if (targetAppName == 'baidu') {
-            url = `baidumap://map/direction?destination=name:${name}|latlng:${lat},${lon}&mode=transit&coord_type=gcj02&src=thirdapp.navi.mybaoxiu.wxy#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end`;
+            url = `baidumap://map/marker?location=${lat},${lon}&title=${name}&content=${name}&traffic=on`;
             webUrl = webUrlBaidu;
         }
     } else if (Platform.OS == 'ios') {//ios
 
         if (targetAppName == 'gaode') {
-            url = `iosamap://path?sourceApplication=appname&dev=0&m=0&t=1&dlon=${lon}&dlat=${lat}&dname=${name}`;
+            url = `iosamap://viewMap?sourceApplication=applicationName&poiname=${name}&lat=${lat}&lon=${lon}&dev=1`;
             webUrl = webUrlGaode;
         } else if (targetAppName == 'baidu') {
-            url = `baidumap://map/direction?destination=name:${name}|latlng:${lat},${lon}&mode=transit&coord_type=gcj02&src=thirdapp.navi.mybaoxiu.wxy#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end`;
+            url = `baidumap://map/marker?location=${lat},${lon}&title=${name}&content=${name}&src=webapp.marker.desh.macuahike`;
             webUrl = webUrlBaidu;
         }
 
@@ -96,12 +97,15 @@ export function turn2MapApp(lon = 0, lat = 0, targetAppName = 'baidu', name = '�
     Linking.canOpenURL(url).then(supported => {
         if (!supported) {
             console.log('Can\'t handle url: ' + url);
+            console.log('webUrl open :',webUrl)
             return Linking.openURL(webUrl).catch(e => console.warn(e));
         } else {
             return Linking.openURL(url).catch(e => console.warn(e));
         }
     }).catch(err => console.error('An error occurred', err));
 }
+
+
 
 /**
  * 乘法精度问题
