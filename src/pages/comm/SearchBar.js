@@ -45,10 +45,11 @@ export default class SearchBar extends PureComponent {
         const {text} = this.state;
         let hide = text.length > 0;
         return <Animatable.View
-            animation={'lightSpeedIn'}
+            // animation={'lightSpeedIn'}
             style={styles.contains}>
 
             <TextInput
+                underlineColorAndroid={'transparent'}
                 selectionColor={Colors.white}
                 onChangeText={text => {
                     this.setState({text})
