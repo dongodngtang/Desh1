@@ -43,7 +43,7 @@ export default class ErrLocation extends PureComponent {
                         fontSize: 14, color: Colors.txt_444, marginLeft: 40, marginRight: 40,
                         marginTop: 36, textAlign: 'center', lineHeight: 20
                     }}
-                >请到手机系统的<Text style={{color: 'blue'}}>【设置】</Text>-【定位服务】中打开定位服务，并允许扑客使用定位服务</Text>
+                >请到手机系统的<Text style={{color: 'blue'}}>【设置】</Text>-【定位服务】中打开定位服务，并允许澳门旅行使用定位服务</Text>
             </TouchableOpacity>
 
 
