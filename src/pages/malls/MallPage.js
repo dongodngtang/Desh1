@@ -50,10 +50,10 @@ class MallPage extends PureComponent {
                 cartNum={cartNum}/>
             <MallTypeView
                 categories={categories}
-                showCatePage={this.toggle}/>
-            {this.state.showCategories ? <MallCategories
-                showCatePage={this.toggle}
-                categories={categories}/> : null}
+               />
+            {/*{this.state.showCategories ? <MallCategories*/}
+                {/*showCatePage={this.toggle}*/}
+                {/*categories={categories}/> : null}*/}
 
 
         </View>)

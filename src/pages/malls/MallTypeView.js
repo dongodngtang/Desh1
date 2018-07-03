@@ -13,7 +13,7 @@ import propTypes from 'prop-types';
 export default class MallTypeView extends PureComponent {
     static propTypes = {
         categories: propTypes.array.isRequired,
-        showCatePage: propTypes.func.isRequired
+        // showCatePage: propTypes.func.isRequired
     };
 
 
@@ -27,7 +27,7 @@ export default class MallTypeView extends PureComponent {
 
                 <ScrollableTabView
                     renderTabBar={() => <ScrollableTabBar
-                        showCatePage={this.props.showCatePage}
+                        // showCatePage={this.props.showCatePage}
                         backgroundColor={Colors.white}
                         activeTextColor="#F34A4A"
                         inactiveTextColor={Colors.txt_444}
