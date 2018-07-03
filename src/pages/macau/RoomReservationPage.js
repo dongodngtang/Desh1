@@ -27,7 +27,7 @@ export default class RoomReservationPage extends PureComponent {
         detailsShow: false,
         roomReservation: [],
         total_price: 0,
-        discount_amount:0,
+        discount_amount: 0,
         persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
@@ -197,13 +197,14 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
-    _selectedCoupon=(selected_coupon)=>{
-        console.log('uikkjhhkjh',selected_coupon);
-        return selected_coupon
-    }
+    _selectedCoupon = (selected_coupon) => {
+        this.setState({
+            discount_amount: selected_coupon.discount_amount
+        })
+    };
 
     render() {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone,discount_amount} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone, discount_amount} = this.state;
         if (isEmptyObject(roomReservation)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
@@ -248,7 +249,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          global.router.toCouponSelectPage(this.state.person_coupons.items,this._selectedCoupon)
+                                          global.router.toCouponSelectPage(this.state.person_coupons.items, this._selectedCoupon)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
@@ -259,7 +260,11 @@ export default class RoomReservationPage extends PureComponent {
                         <View style={{flexDirection: 'column', marginLeft: 6, justifyContent: 'center'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: "#444444", fontSize: 14}}>已减</Text>
-                                <Text style={{color: "#E54A2E", fontSize: 14, marginLeft: 12}}>¥{this.state.discount_amount}</Text>
+                                <Text style={{
+                                    color: "#E54A2E",
+                                    fontSize: 14,
+                                    marginLeft: 12
+                                }}>¥{this.state.discount_amount}</Text>
                             </View>
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
                         </View>
