@@ -232,7 +232,6 @@ export default class RoomReservationPage extends PureComponent {
 
     render() {
         const {detailsShow, roomReservation, room_num, total_price, persons, phone, selected_coupon} = this.state;
-        console.log("lllll:", this.state)
         if (isEmptyObject(roomReservation)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
