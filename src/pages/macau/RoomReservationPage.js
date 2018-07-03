@@ -23,7 +23,7 @@ const prompt = "订单一经确认，不可更改或添入住人姓名。 未满
 export default class RoomReservationPage extends PureComponent {
     state = {
         room_num: 1,
-        tempStock: 6,
+        tempStock: 10,
         detailsShow: false,
         roomReservation: [],
         total_price: 0,
@@ -178,7 +178,7 @@ export default class RoomReservationPage extends PureComponent {
                                 persons: persons
                             })
                         } else {
-                            showToast("房间数量不足")
+                            // showToast("房间数量不足")
                         }
 
                     }}>
@@ -315,7 +315,8 @@ export default class RoomReservationPage extends PureComponent {
                 </ScrollView>
                 {detailsShow ? <PaymentDetail
                     _detailsShow={this._detailsShow}
-                    order={order}/> : null}
+                    order={order}
+                    room_num={room_num}/> : null}
                 <ReservationBottom
                     _detailsShow={this._detailsShow}
                     total_price={this._total_price(total_price, this.state.selected_coupon)}
