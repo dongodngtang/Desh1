@@ -1,15 +1,18 @@
-import React, {PureComponent,Component} from 'react';
+import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity
+    StyleSheet, Text, View, Image, TouchableOpacity, TextInput
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
-import {hotels, info_types, exchange_rates} from '../../services/MacauDao';
+import {hotels, info_types, exchange_rates, getRoomList} from '../../services/MacauDao';
 import {isEmptyObject} from "../../utils/ComonHelper";
 
+const groups = [{id: 1, img: Images.cny, abb: 'CNY', name: '人民币¥'},
+    {id: 2, img: Images.hkd, abb: 'HKD', name: '港币$'},
+    {id: 3, img: Images.mop, abb: 'MOP', name: '澳门币$'}];
 
 const styles = StyleSheet.create({
     nav: {
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
 
 export default class HotelSearch extends PureComponent {
     state = {
-        search: false,
+        search: false
     };
 
 
@@ -68,11 +71,11 @@ export default class HotelSearch extends PureComponent {
                         this.keyword = keyword;
                         this.listView && this.listView.refresh()
 
-                    }}/> : <Text style={styles.title}>{name}</Text>}
+                    }}/> : <Text style={styles.title}>{name === '汇率' ? '实时汇率' : name}</Text>}
                 <View style={{flex: 1}}/>
 
 
-                {type === 'exchange_rate' ? <View style={{width:40}}/> : <TouchableOpacity
+                {type === 'exchange_rate' ? <View style={{width: 40}}/> : <TouchableOpacity
                     style={styles.btn_search}
                     onPress={() => {
                         this.setState({
@@ -88,7 +91,7 @@ export default class HotelSearch extends PureComponent {
 
             </View>
             {this.separator()}
-            <UltimateListView
+            {type === 'exchange_rate' ? <RateItem/> : <UltimateListView
                 separator={() => this.separator()}
                 keyExtractor={(item, index) => index + "item"}
                 ref={(ref) => this.listView = ref}
@@ -105,7 +108,8 @@ export default class HotelSearch extends PureComponent {
                             this.listView.refresh()
                         }}/> : <NoDataView/>;
                 }}
-            />
+            />}
+
 
         </View>
     }
@@ -124,14 +128,14 @@ export default class HotelSearch extends PureComponent {
             return <HotelItem
                 key={`${type}${index}`}
                 item={item}/>
-        else if (type === 'exchange_rate')
-            return <RateItem
-                refresh={() => {
-                    this.listView.refresh()
-                }
-                }
-                key={`${type}${index}`}
-                item={item}/>
+        // else if (type === 'exchange_rate')
+        //     return <RateItem
+        //         refresh={() => {
+        //             this.listView.refresh()
+        //         }
+        //         }
+        //         key={`${type}${index}`}
+        //         item={item}/>
         else
             return <FoodItem
                 key={`${type}${index}`}
@@ -149,11 +153,14 @@ export default class HotelSearch extends PureComponent {
                 }, err => {
                     abortFetch()
                 })
-            } else if (type === 'exchange_rate') {
-                exchange_rates(data => {
-                    startFetch(data.items, 18)
-                })
-
+                // } else if (type === 'exchange_rate') {
+                //     exchange_rates(data => {
+                //         startFetch(data.items, 18)
+                //     }, err => {
+                //         abortFetch()
+                //     })
+                //
+                // } else {
             } else {
                 info_types({page, page_size: 20, keyword: this.keyword, type},
                     data => {
@@ -287,43 +294,98 @@ class RoomItem extends PureComponent {
 }
 
 class RateItem extends PureComponent {
-    render() {
 
-        const {rate, rate_type, s_currency, t_currency} = this.props.item;
-        let t_rate = 1 / Number.parseFloat(rate);
-        t_rate = t_rate.toFixed(4);
-        let rate_type_name = rate_type === 'real_time' ? '实时汇率' : '本地汇率';
-        let rate_bg = rate_type === 'real_time' ? Images.macau.rate1 : Images.macau.rate2;
-        let target_source = `1${t_currency}=${t_rate}${s_currency}`;
-        let source_target = `1${s_currency}=${rate}${t_currency}`;
-        let login_or_local = !isEmptyObject(global.login_user) || rate_type === 'real_time';
-        if (rate_type === 'local' && isEmptyObject(global.login_user)) {
-            target_source = '登录查看'
+    state = {
+        ratesItem: {}
+    }
+
+    componentDidMount() {
+        getRoomList({}, data => {
+            console.log("ratesItem:", data)
+            this.setState({
+                ratesItem: data.items
+            })
+        }, err => {
+
+        })
+    }
+
+    render() {
+        // const {rate, rate_type, s_currency, t_currency} = this.state.ratesItem;
+        const {cny_to_hkd_rate, cny_to_mop_rate} = this.state.ratesItem;
+        // let t_rate = 1 / Number.parseFloat(rate);
+        // t_rate = t_rate.toFixed(4);
+        // let rate_type_name = rate_type === 'real_time' ? '实时汇率' : '本地汇率';
+        // let rate_bg = rate_type === 'real_time' ? Images.macau.rate1 : Images.macau.rate2;
+        // let target_source = `1${t_currency}=${t_rate}${s_currency}`;
+        // let source_target = `1${s_currency}=${rate}${t_currency}`;
+        // let login_or_local = !isEmptyObject(global.login_user) || rate_type === 'real_time';
+        // if (rate_type === 'local' && isEmptyObject(global.login_user)) {
+        //     target_source = '登录查看'
+        // }
+        if(isEmptyObject(cny_to_hkd_rate) && isEmptyObject(cny_to_mop_rate)){
+            return <NoDataView/>
         }
 
-        return <TouchableOpacity
-            onPress={() => {
-                if (rate_type === 'local' && isEmptyObject(global.login_user)) {
-                    router.toLoginFirstPage()
-                }
+        return (
+            <View style={[ApplicationStyles.bgContainer, {backgroundColor: "white"}]}>
+                <View style={styleR.page}>
+                    <Text style={styleR.txt}>今日汇率：</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>{`1人名币=1.2101港币，1港币=${cny_to_hkd_rate.rate}人名币`}</Text>
+                        <Text>{`1人名币=1.2101澳门币，1澳门币=${cny_to_mop_rate.rate}人名币`}</Text>
+                    </View>
+                </View>
 
-            }}
-            activeOpacity={1}
-            style={{
-                height: 142, width: '100%', alignItems: 'center',
-                justifyContent: 'center'
-            }}>
+                <View style={{flexDirection: 'row'}}>
+                    {groups.map((item) => {
+                        return (
+                            <View style={styles.itemPage}>
+                                <Image style={{width: 44, height: 44}} source={item.img}/>
+                                <Text style={{color: "#444444", fontSize: 18, marginLeft: 18}}>{item.abb}</Text>
+                                <View style={{flex: 1}}/>
+                                <View style={{flexDirection: 'column', alignItems: 'flex-end'}}>
+                                    <TextInput
+                                        keyboardType={'numeric'}
+                                        style={{paddingTop: 0, paddingBottom: 0}}
+                                        maxLength={12}
+                                        numberOfLines={1}
+                                        underlineColorAndroid={'transparent'}
+                                        onChangeText={txt => {
 
+                                        }}
+                                        value={phone}/>
+                                    <Text style={{color: "#8C8C8C", fontSize: 14, marginTop: 6}}>{item.name}</Text>
+                                </View>
+                            </View>
+                        )
+                    })}
 
-            <Image
-                source={rate_bg}
-                style={{height: 142, width: '100%', position: 'absolute'}}/>
-            <Text style={{fontSize: 15, color: 'white'}}>{rate_type_name}</Text>
-
-            <Text style={{fontSize: 20, color: 'white', marginTop: 10}}>{target_source}</Text>
-            {login_or_local ? <Text style={{fontSize: 20, color: 'white', marginTop: 6}}>{source_target}</Text> : null}
-
-
-        </TouchableOpacity>
+                </View>
+            </View>
+        )
     }
 }
+
+const styleR = StyleSheet.create({
+    itemPage: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 23,
+        paddingBottom: 21,
+        marginLeft: 17,
+        marginRight: 17
+    },
+    page: {
+        paddingTop: 12,
+        paddingBottom: 9,
+        marginLeft: 17,
+        marginRight: 17,
+        flexDirection: 'row',
+        backgroundColor: "#F3F3F3"
+    },
+    txt: {
+        color: "#8C8C8C",
+        fontSize: 12
+    }
+})

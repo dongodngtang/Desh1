@@ -1,4 +1,7 @@
 const images = {
+    cny:require('../../source/cny.png'),
+    hkd:require('../../source/hkd.png'),
+    mop:require('../../source/mop.png'),
     default_img:require('../../source/default_img.png'),
     month: require('../../source/month.png'),
     monthE: require('../../source/monthE.png'),
