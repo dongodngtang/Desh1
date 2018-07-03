@@ -27,7 +27,7 @@ export default class RoomReservationPage extends PureComponent {
         detailsShow: false,
         roomReservation: [],
         total_price: 0,
-        discount_amount: 0,
+        selected_coupon: {},
         persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
@@ -85,10 +85,11 @@ export default class RoomReservationPage extends PureComponent {
 
     };
     postParam = () => {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone, person_coupons, selected_coupon} = this.state;
         const {date} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
+            coupon_id: selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
             hotel_room_id: room.id,
@@ -198,13 +199,40 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     _selectedCoupon = (selected_coupon) => {
+        console.log("被选择的优惠券：", selected_coupon)
         this.setState({
-            discount_amount: selected_coupon.discount_amount
+            selected_coupon: selected_coupon
         })
     };
 
+    _coupon = (selected_coupon) => {
+        if (!isEmptyObject(selected_coupon)) {
+            return selected_coupon.discount
+        } else {
+            return 0;
+        }
+    };
+
+    _total_price = (total_price, selected_coupon) => {
+        if (!isEmptyObject(selected_coupon)) {
+            if (selected_coupon.discount > 0) {
+                if (selected_coupon.discount_type === 'rebate') {
+                    return total_price * selected_coupon.discount
+                } else {
+                    return total_price - selected_coupon.discount;
+                }
+            } else {
+                return total_price
+            }
+        } else {
+            return total_price
+        }
+
+    };
+
     render() {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone, discount_amount} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone, selected_coupon} = this.state;
+        console.log("lllll:", this.state)
         if (isEmptyObject(roomReservation)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
@@ -264,7 +292,7 @@ export default class RoomReservationPage extends PureComponent {
                                     color: "#E54A2E",
                                     fontSize: 14,
                                     marginLeft: 12
-                                }}>¥{this.state.discount_amount}</Text>
+                                }}>¥{this._coupon(selected_coupon)}</Text>
                             </View>
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
                         </View>
@@ -291,7 +319,7 @@ export default class RoomReservationPage extends PureComponent {
                     order={order}/> : null}
                 <ReservationBottom
                     _detailsShow={this._detailsShow}
-                    total_price={total_price - discount_amount}
+                    total_price={this._total_price(total_price, this.state.selected_coupon)}
                     refresh={this.refresh}
                     roomReservation={roomReservation}
                     date={this.props.params.date}
