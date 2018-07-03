@@ -25,7 +25,7 @@ export default class MallOrderPage extends Component {
 
 
     render() {
-        let menu = ['all', MallStatus.unpaid, MallStatus.paid, MallStatus.completed];
+        let menu = ['all', MallStatus.unpaid, MallStatus.undelivered, MallStatus.completed];
         return (<View style={[ApplicationStyles.bgContainer, {backgroundColor: '#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar
@@ -50,7 +50,7 @@ export default class MallOrderPage extends Component {
                     return <OrderListStatus
                         key={`mallStatus${index}`}
                         status={item}
-                        tabLabel={item === MallStatus.paid ? I18n.t('unshipped') : I18n.t(`${item}`)}/>
+                        tabLabel={I18n.t(`${item}`)}/>
                 })}
 
             </ScrollableTabView>

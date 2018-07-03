@@ -23,11 +23,11 @@ const prompt = "订单一经确认，不可更改或添入住人姓名。 未满
 export default class RoomReservationPage extends PureComponent {
     state = {
         room_num: 1,
-        tempStock: 6,
+        tempStock: 10,
         detailsShow: false,
         roomReservation: [],
         total_price: 0,
-        discount_amount:0,
+        selected_coupon: {},
         persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
@@ -85,10 +85,11 @@ export default class RoomReservationPage extends PureComponent {
 
     };
     postParam = () => {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone, person_coupons, selected_coupon} = this.state;
         const {date} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
+            coupon_id: selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
             hotel_room_id: room.id,
@@ -177,7 +178,7 @@ export default class RoomReservationPage extends PureComponent {
                                 persons: persons
                             })
                         } else {
-                            showToast("房间数量不足")
+                            // showToast("房间数量不足")
                         }
 
                     }}>
@@ -197,13 +198,40 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
-    _selectedCoupon=(selected_coupon)=>{
-        console.log('uikkjhhkjh',selected_coupon);
-        return selected_coupon
-    }
+    _selectedCoupon = (selected_coupon) => {
+        console.log("被选择的优惠券：", selected_coupon)
+        this.setState({
+            selected_coupon: selected_coupon
+        })
+    };
+
+    _coupon = (selected_coupon) => {
+        if (!isEmptyObject(selected_coupon)) {
+            return selected_coupon.discount
+        } else {
+            return 0;
+        }
+    };
+
+    _total_price = (total_price, selected_coupon) => {
+        if (!isEmptyObject(selected_coupon)) {
+            if (selected_coupon.discount > 0) {
+                if (selected_coupon.discount_type === 'rebate') {
+                    return total_price * selected_coupon.discount
+                } else {
+                    return total_price - selected_coupon.discount;
+                }
+            } else {
+                return total_price
+            }
+        } else {
+            return total_price
+        }
+
+    };
 
     render() {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone,discount_amount} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone, selected_coupon} = this.state;
         if (isEmptyObject(roomReservation)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
@@ -248,7 +276,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          global.router.toCouponSelectPage(this.state.person_coupons.items,this._selectedCoupon)
+                                          global.router.toCouponSelectPage(this.state.person_coupons.items, this._selectedCoupon)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
@@ -259,7 +287,11 @@ export default class RoomReservationPage extends PureComponent {
                         <View style={{flexDirection: 'column', marginLeft: 6, justifyContent: 'center'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: "#444444", fontSize: 14}}>已减</Text>
-                                <Text style={{color: "#E54A2E", fontSize: 14, marginLeft: 12}}>¥{this.state.discount_amount}</Text>
+                                <Text style={{
+                                    color: "#E54A2E",
+                                    fontSize: 14,
+                                    marginLeft: 12
+                                }}>¥{this._coupon(selected_coupon)}</Text>
                             </View>
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
                         </View>
@@ -283,10 +315,11 @@ export default class RoomReservationPage extends PureComponent {
                 </ScrollView>
                 {detailsShow ? <PaymentDetail
                     _detailsShow={this._detailsShow}
-                    order={order}/> : null}
+                    order={order}
+                    room_num={room_num}/> : null}
                 <ReservationBottom
                     _detailsShow={this._detailsShow}
-                    total_price={total_price - discount_amount}
+                    total_price={this._total_price(total_price, this.state.selected_coupon)}
                     refresh={this.refresh}
                     roomReservation={roomReservation}
                     date={this.props.params.date}

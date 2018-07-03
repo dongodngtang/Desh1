@@ -201,15 +201,15 @@ const ScrollableTabBar = createReactClass({
                 </View>
             </ScrollView>
 
-            <TouchableOpacity
-                onPress={() => {
-                    this.props.showCatePage()
-                }}
-                style={styles.btnFilter}>
-                <Image style={styles.imgFilter}
-                       source={Images.mall_filter}/>
+            {/*<TouchableOpacity*/}
+                {/*onPress={() => {*/}
+                    {/*this.props.showCatePage()*/}
+                {/*}}*/}
+                {/*style={styles.btnFilter}>*/}
+                {/*<Image style={styles.imgFilter}*/}
+                       {/*source={Images.mall_filter}/>*/}
 
-            </TouchableOpacity>
+            {/*</TouchableOpacity>*/}
         </View>;
     },
 

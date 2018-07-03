@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
-    StyleSheet, Image, Text, ListView, Platform
+    StyleSheet, Image, Text, ListView, ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SwipeListView, SecurityText} from '../../components';
@@ -79,15 +79,18 @@ export default class AdrListPage extends Component {
                 }}/>
 
             <View style={{height: 7}}/>
-            <SwipeListView
-                ref={ref => this.swipeList = ref}
-                enableEmptySections={true}
-                dataSource={dataSource}
-                renderHiddenRow={this.hiddenRow}
-                renderRow={this._itemListView}
-                disableRightSwipe={true}
-                rightOpenValue={-140}
-            />
+            <ScrollView style={{flexDirection:'column'}}>
+                <SwipeListView
+                    ref={ref => this.swipeList = ref}
+                    enableEmptySections={true}
+                    dataSource={dataSource}
+                    renderHiddenRow={this.hiddenRow}
+                    renderRow={this._itemListView}
+                    disableRightSwipe={true}
+                    rightOpenValue={-140}
+                />
+                <View style={{height:120}}/>
+            </ScrollView>
 
 
             <TouchableOpacity

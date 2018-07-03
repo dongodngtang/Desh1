@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
-import {isEmptyObject, convertDate} from "../../utils/ComonHelper";
+import {isEmptyObject, convertDate, mul} from "../../utils/ComonHelper";
 import * as Animatable from 'react-native-animatable';
 
 export default class PaymentDetail extends PureComponent {
@@ -19,7 +19,7 @@ export default class PaymentDetail extends PureComponent {
     _renderItem = ({item, index}, room_num) => {
         return (
             <RenderItem
-                room_num={room_num}
+                room_num={this.props.room_num}
                 key={index}
                 item={item}/>
         )
@@ -43,7 +43,7 @@ export default class PaymentDetail extends PureComponent {
                     <View style={styles.payment}>
                         <Text style={{color: '#444444', fontSize: 16, fontWeight: 'bold'}}>在线支付</Text>
                         <View style={{flex: 1}}/>
-                        <Text style={{color: '#E54A2E', fontSize: 16}}>¥{order.total_price}</Text>
+                        <Text style={{color: '#E54A2E', fontSize: 16}}>¥{mul(order.total_price,this.props.room_num)}</Text>
                     </View>
                     <ScrollView>
                         <FlatList
@@ -69,7 +69,7 @@ export class RenderItem extends PureComponent {
                 <Text style={[styles.itemTxt, {marginRight: 10}]}
                       numberOfLines={1}>{`${date}（${this.props.room_num}间)`}</Text>
                 <View style={{marginLeft: 10, marginRight: 10, flex: 1, backgroundColor: '#F3F3F3', height: 1}}/>
-                <Text style={styles.itemTxt}>¥{price}</Text>
+                <Text style={styles.itemTxt}>¥{price*this.props.room_num}</Text>
             </View>
         )
     }

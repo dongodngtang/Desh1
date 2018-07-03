@@ -219,6 +219,9 @@ export default class OrderSubmitPage extends PureComponent {
                 <ScrollView style={styleO.orderView}>
 
                     <Tips/>
+                    <View style={styleO.title5}>
+                        <Text style={styleO.titleName}>{I18n.t('shopping_addr')}</Text>
+                    </View>
                     <ShipAddress
                         refrshOrder={() => {
                             this.order_new()
@@ -261,6 +264,19 @@ export default class OrderSubmitPage extends PureComponent {
     }
 }
 const styleO = StyleSheet.create({
+    title5: {
+        height: 40,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center'
+    },
+    titleName: {
+        marginLeft: 17,
+        marginTop: 11,
+        marginBottom: 9,
+        fontSize: 14,
+        color: '#333333',
+        fontWeight: 'bold'
+    },
     orderView: {
         backgroundColor: '#ECECEE'
     },

@@ -9,7 +9,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import I18n from 'react-native-i18n';
-import {strNotNull, showToast, checkPhone, isEmptyObject} from '../../utils/ComonHelper';
+import {strNotNull, showToast, checkPhone, isEmptyObject,checkZip} from '../../utils/ComonHelper';
 import {postAddress} from '../../services/OrderDao';
 import ChinaRegionWheelPicker from '../../components/area-picker';
 
@@ -194,6 +194,9 @@ export default class NewAddress extends Component {
 
     _postAdr = () => {
         if (!checkPhone(this.phoneNum)) {
+            return;
+        }
+        if(!checkZip(this.zip)){
             return;
         }
         if (this.receiver &&
