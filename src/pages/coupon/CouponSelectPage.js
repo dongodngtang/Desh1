@@ -83,7 +83,9 @@ export default class CouponSelectPage extends Component {
                         paddingRight: 10
                     }]}
                                       onPress={() => {
-                                          this._changeSelect(item)
+                                          this._changeSelect(item);
+                                          router.pop();
+                                          this._onClickCoupon();
                                       }}>
                         <Image style={{width: 22, height: 22}}
                                source={item.isSelect ? Images.coupon.selected : Images.coupon.unSelected}/>

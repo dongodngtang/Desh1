@@ -74,14 +74,14 @@ export default class RoomReservationPage extends PureComponent {
 
         })
         // 用户已获得优惠券列表
-        getPersonCoupons({}, data => {
-            console.log("personCoupons:", data);
-            this.setState({
-                person_coupons: data
-            })
-        }, err => {
-
-        })
+        // getUsingCoupons({amount:this._total_price(total_price,{})}, data => {
+        //     console.log("usingCoupons:", data);
+        //     this.setState({
+        //         person_coupons: data
+        //     })
+        // }, err => {
+        //
+        // })
 
     };
     postParam = () => {
@@ -169,7 +169,7 @@ export default class RoomReservationPage extends PureComponent {
                     style={styles.buyTouch}
                     onPress={() => {
                         if (room_num < tempStock) {
-                            if (persons.length < 7) {
+                            if (persons.length <= tempStock) {
                                 persons.push({last_name: '', first_name: ''});
                             }
                             this.setState({
@@ -207,19 +207,23 @@ export default class RoomReservationPage extends PureComponent {
 
     _coupon = (selected_coupon) => {
         if (!isEmptyObject(selected_coupon)) {
-            return selected_coupon.discount
+            if (selected_coupon.discount_type === 'rebate') {
+                return selected_coupon.discount
+            } else {
+                return selected_coupon.reduce_price;
+            }
         } else {
-            return 0;
+            return 0.0;
         }
     };
 
     _total_price = (total_price, selected_coupon) => {
         if (!isEmptyObject(selected_coupon)) {
-            if (selected_coupon.discount > 0) {
+            if (selected_coupon.discount >= 0) {
                 if (selected_coupon.discount_type === 'rebate') {
                     return total_price * selected_coupon.discount
                 } else {
-                    return total_price - selected_coupon.discount;
+                    return total_price - selected_coupon.reduce_price;
                 }
             } else {
                 return total_price
