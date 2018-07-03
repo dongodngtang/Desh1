@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         marginLeft: 19
     },
     imgDel: {
-        height: 20,
+        height: 22,
         width: 22
     },
     btnDel: {
