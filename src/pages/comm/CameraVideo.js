@@ -191,6 +191,8 @@ class CameraVideo extends Component {
 
 export default CameraVideo;
 
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -215,7 +217,7 @@ const styles = StyleSheet.create({
         width: Metrics.screenWidth,
         height: Metrics.screenHeight,
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "space-between"
     },
     topView: {
         height: Metrics.navBarHeight,
@@ -223,6 +225,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-end",
         justifyContent: "space-between",
+        marginTop:Platform.OS === 'ios'?0:20
     },
     closeBtn: {
         marginLeft: 20,

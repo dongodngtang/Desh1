@@ -159,6 +159,7 @@ class MessageCenter extends Component {
             item.avatar = 'request'
             visit_other({userId: username}, data => {
                 item.target.avatarThumbPath = data.avatar;
+                item.target.nickname = data.nickname;
                 this.setState({conversations: this.rows})
             }, err => {
             })
