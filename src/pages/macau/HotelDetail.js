@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
     nav_view: {
         paddingTop: 10,
         paddingBottom: 14,
-        paddingLeft: 17,
-        paddingRight: 17,
         backgroundColor: Colors.white,
         width: '100%',
-        marginBottom: 5
+        marginBottom: 5,
+        flexDirection:'row',
+        alignItems:'center'
     },
     title: {
         fontSize: 18,
@@ -45,8 +45,7 @@ const styles = StyleSheet.create({
     },
     location: {
         fontSize: 12,
-        color: Colors._AAA,
-        marginTop: 5
+        color: Colors._AAA
     },
     btn_book: {
         height: 44,
@@ -85,7 +84,7 @@ export default class HotelDetail extends PureComponent {
 
     render() {
 
-        const {images, location, title, description,telephone} = this.state.hotel;
+        const {images, location, title, description, telephone} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 
@@ -96,8 +95,26 @@ export default class HotelDetail extends PureComponent {
                 <Banner banners={images}/>
 
                 <View style={styles.nav_view}>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.location}>{location}</Text>
+                    <View style={{flexDirection: 'column', marginLeft: 17,width:'60%'}}>
+                        <Text style={styles.title}>{title}</Text>
+                        <View style={{flexDirection: 'row', alignItems:'center',marginTop:5}}>
+                            <Text style={styles.location}>{location}</Text>
+                            {/*<Image style={{height: 14, width: 10, marginLeft: 19}}*/}
+                                   {/*source={Images.macau.location}/>*/}
+                            {/*<Text style={{color:"#4A90E2",fontSize:12, marginLeft: 4}}>地图</Text>*/}
+                        </View>
+                    </View>
+
+                    {/*<View style={{flex:1}}/>*/}
+
+                    {/*<TouchableOpacity*/}
+                        {/*style={{marginRight: 17}}*/}
+                        {/*onPress={() => {*/}
+                            {/*call(telephone)*/}
+                        {/*}}>*/}
+                        {/*<Image style={{height: 20, width: 20, marginLeft: 20, marginRight: 20}}*/}
+                               {/*source={Images.macau.viewpoint}/>*/}
+                    {/*</TouchableOpacity>*/}
                 </View>
 
                 <View style={{
