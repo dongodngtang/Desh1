@@ -27,7 +27,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import PopAction from '../comm/PopAction';
 import {report_user, uploadImage} from '../../services/SocialDao';
-
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 import Thumb from 'react-native-thumb';
 import {checkPermission} from "../comm/Permission";
 
@@ -767,6 +767,7 @@ export default class ChatRoom extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => {
+                        dismissKeyboard()
                         checkPermission("camera", (result) => {
                             if (result) {
                                 router.toCamera({
@@ -893,6 +894,10 @@ export default class ChatRoom extends Component {
 
             </View>
         );
+    }
+
+    componentWillUnmount(){
+        dismissKeyboard()
     }
 
 
