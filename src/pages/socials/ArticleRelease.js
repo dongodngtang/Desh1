@@ -142,7 +142,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
-        this.contentView.blur()
+        this.contentView&& this.contentView.blur()
         ///判断是否输入内容
         let resultData = this.state.data;
         let titleIsNull = true;
@@ -254,7 +254,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///保存草稿
     saveDraft = () => {
-        this.contentView.blur()
+        this.contentView&& this.contentView.blur()
         this.closeAction();
         let resultData = this.state.data;
         let title = "";
