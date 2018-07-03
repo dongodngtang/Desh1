@@ -9,6 +9,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import StorageKey from '../../configs/StorageKey';
 import MallList from './MallList';
+import {showToast, strNotNull} from "../../utils/ComonHelper";
 
 
 const styles = StyleSheet.create({
@@ -187,17 +188,22 @@ export default class SearchMallPage extends PureComponent {
     };
 
     submitSearch = () => {
-        this.setwords.add(this.keywords);
-        console.log('submit', this.setwords)
-        storage.save({
-            key: StorageKey.MallSearchRecord,
-            rawData: Array.from(this.setwords)
-        });
-        this.setState({
-            submit: true
-        });
-        if (this.mallList)
-            this.mallList.search(this.keywords)
+        if(strNotNull(this.keywords)){
+            this.setwords.add(this.keywords);
+            storage.save({
+                key: StorageKey.MallSearchRecord,
+                rawData: Array.from(this.setwords)
+            });
+            this.setState({
+                submit: true
+            });
+            if (this.mallList)
+                this.mallList.search(this.keywords)
+        }else{
+            showToast('关键字不能为空')
+        }
+
+
 
     };
 
