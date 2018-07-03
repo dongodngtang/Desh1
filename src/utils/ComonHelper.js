@@ -759,7 +759,7 @@ export function showWeek(week) {
 }
 
 
-var  = /^1(3|4|5|7|8)\d{9}$/;
+var myreg = /^1(3|4|5|7|8)\d{9}$/;
 
 export function checkPhone(phone) {
     if (phone != null && phone != undefined) {
