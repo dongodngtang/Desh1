@@ -6,6 +6,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {isEmptyObject} from "../../utils/ComonHelper";
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 
 
 export default class InputModal extends Component {
@@ -71,6 +72,7 @@ export default class InputModal extends Component {
 
                     <TouchableOpacity
                         onPress={() => {
+                            dismissKeyboard()
                             this.props.send(this.state.comment);
                             this.toggle()
                         }}
