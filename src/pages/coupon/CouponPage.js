@@ -73,8 +73,13 @@ export default class CouponPage extends Component {
                     <View style={[styles.itemLeft]}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             {discount_type === 'rebate' ?
-                                <Text style={{color: "#F34247", fontSize: 40, marginRight: 16,fontWeight:'bold'}}>{mul(discount,10)}<Text
-                                    style={{color:"#F34247",fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
+                                <Text style={{
+                                    color: "#F34247",
+                                    fontSize: 40,
+                                    marginRight: 16,
+                                    fontWeight: 'bold'
+                                }}>{mul(discount, 10)}<Text
+                                    style={{color: "#F34247", fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
 
                                 <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
                                     style={{fontSize: 40, fontWeight: 'bold'}}>{reduce_price}</Text></Text>}

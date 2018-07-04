@@ -26,7 +26,7 @@ export default class PaymentDetail extends PureComponent {
     }
 
     render() {
-        const {order} = this.props;
+        const {order, sub_price,total_price} = this.props;
         return (
             <Animatable.View
                 duration={300}
@@ -43,16 +43,31 @@ export default class PaymentDetail extends PureComponent {
                     <View style={styles.payment}>
                         <Text style={{color: '#444444', fontSize: 16, fontWeight: 'bold'}}>在线支付</Text>
                         <View style={{flex: 1}}/>
-                        <Text style={{color: '#E54A2E', fontSize: 16}}>¥{mul(order.total_price,this.props.room_num)}</Text>
+                        <Text style={{
+                            color: '#E54A2E',
+                            fontSize: 16
+                        }}>¥{total_price}</Text>
                     </View>
                     <ScrollView>
                         <FlatList
-                            style={{marginLeft: 30, marginRight: 22, paddingBottom: 80}}
+                            style={{marginLeft: 30, marginRight: 22}}
                             showsHorizontalScrollIndicator={false}
                             data={order.room_items}
                             renderItem={(item) => this._renderItem(item, order.room_num)}
                             keyExtractor={(item, index) => index + "item"}
                         />
+                        {sub_price > 0 ? <View style={{flexDirection:'row',alignItems:'center',marginLeft: 30, marginRight: 22,paddingBottom: 80}}>
+                            <Text style={[styles.itemTxt, {marginRight: 10}]}>折扣</Text>
+                            <View style={{
+                                marginLeft: 10,
+                                marginRight: 10,
+                                flex: 1,
+                                backgroundColor: '#F3F3F3',
+                                height: 1
+                            }}/>
+                            <Text style={styles.itemTxt}>¥{sub_price}</Text>
+                        </View> : null}
+
                     </ScrollView>
                 </View>
             </Animatable.View>
@@ -69,7 +84,7 @@ export class RenderItem extends PureComponent {
                 <Text style={[styles.itemTxt, {marginRight: 10}]}
                       numberOfLines={1}>{`${date}（${this.props.room_num}间)`}</Text>
                 <View style={{marginLeft: 10, marginRight: 10, flex: 1, backgroundColor: '#F3F3F3', height: 1}}/>
-                <Text style={styles.itemTxt}>¥{price*this.props.room_num}</Text>
+                <Text style={styles.itemTxt}>¥{price * this.props.room_num}</Text>
             </View>
         )
     }

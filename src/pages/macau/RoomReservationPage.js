@@ -231,15 +231,15 @@ export default class RoomReservationPage extends PureComponent {
         if (!isEmptyObject(selected_coupon)) {
             if (selected_coupon.discount >= 0) {
                 if (selected_coupon.discount_type === 'rebate') {
-                    return mul(total_price, selected_coupon.discount)
+                    return mul(total_price, selected_coupon.discount).toFixed(2);
                 } else {
-                    return sub(total_price, selected_coupon.reduce_price);
+                    return sub(total_price, selected_coupon.reduce_price).toFixed(2);
                 }
             } else {
-                return total_price
+                return Number(total_price).toFixed(2);
             }
         } else {
-            return total_price
+            return Number(total_price).toFixed(2);
         }
 
     };
@@ -330,7 +330,9 @@ export default class RoomReservationPage extends PureComponent {
                 {detailsShow ? <PaymentDetail
                     _detailsShow={this._detailsShow}
                     order={order}
-                    room_num={room_num}/> : null}
+                    room_num={room_num}
+                    sub_price={changed_price}
+                    total_price={this._total_price(total_price, this.state.selected_coupon)}/> : null}
                 <ReservationBottom
                     _detailsShow={this._detailsShow}
                     total_price={this._total_price(total_price, this.state.selected_coupon)}
