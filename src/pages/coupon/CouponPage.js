@@ -16,7 +16,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
 import {getPersonCoupons} from "../../services/MacauDao";
-import I18n from "react-native-i18n";
+import {mul} from '../../utils/ComonHelper'
 
 export default class CouponPage extends Component {
 
@@ -63,7 +63,7 @@ export default class CouponPage extends Component {
     };
 
     _renderItem = (item) => {
-        const {begin_date, coupon_type, cover_link, end_date, name, short_desc,reduce_price,limit_price} = item.item;
+        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price} = item.item;
         const {selectId} = this.state;
         return (
             <ImageBackground
@@ -72,10 +72,15 @@ export default class CouponPage extends Component {
                 <View style={styles.itemView}>
                     <View style={[styles.itemLeft]}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={{color: "#F34247", fontSize: 18}}>¥<Text
-                                style={{fontSize: 40, fontWeight: 'bold'}}>{reduce_price}</Text></Text>
-                            <View style={{width: 120,flexDirection:'column'}}>
-                                <Text style={{color: "#444444", fontSize: 20, marginLeft: 16}}>{name}</Text>
+                            {discount_type === 'rebate' ?
+                                <Text style={{color: "#F34247", fontSize: 40, marginRight: 16,fontWeight:'bold'}}>{mul(discount,10)}<Text
+                                    style={{color:"#F34247",fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
+
+                                <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
+                                    style={{fontSize: 40, fontWeight: 'bold'}}>{reduce_price}</Text></Text>}
+
+                            <View style={{width: 120, flexDirection: 'column'}}>
+                                <Text style={{color: "#444444", fontSize: 20}}>{name}</Text>
                             </View>
 
                         </View>

@@ -16,6 +16,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle';
 import {getUsingCoupons} from "../../services/MacauDao";
+import {isEmptyObject} from "../../utils/ComonHelper";
 
 export default class CouponSelectPage extends Component {
     state = {
@@ -119,6 +120,7 @@ export default class CouponSelectPage extends Component {
     };
 
     render() {
+        const {using_coupons} = this.state;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -145,7 +147,7 @@ export default class CouponSelectPage extends Component {
                     {/*})}*/}
                     <FlatList
                         style={{marginTop: 15, marginLeft: 17, marginRight: 17}}
-                        data={this.props.params.person_coupons}
+                        data={using_coupons}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}

@@ -282,7 +282,7 @@ export default class IntegralPage extends Component {
 };
 const styles = StyleSheet.create({
     rowMillide: {
-        flexDirection: 'row', alignItems: 'center'
+        flexDirection: 'row'
     },
     mallBottomView: {
         flexDirection: 'column',

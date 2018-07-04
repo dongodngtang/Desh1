@@ -117,13 +117,13 @@ export default class RatePage extends Component {
                                         style={{
                                             paddingTop: 0,
                                             paddingBottom: 0,
-                                            width: 100,
+                                            width: 130,
                                             fontSize: 24,
                                             fontWeight: 'bold',
                                             alignItems:'flex-end',
                                             color:show ? '#444444' : '#F3F3F3'
                                         }}
-                                        maxLength={20}
+                                        maxLength={11}
                                         numberOfLines={1}
                                         placeholderTextColor={show ? '#444444' : '#F3F3F3'}
                                         placeholder={item.price + ''}
