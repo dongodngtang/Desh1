@@ -147,18 +147,20 @@ export default class ArticleRelease extends PureComponent {
         let resultData = this.state.data;
         let titleIsNull = true;
         let bodyIsNull = true;
+
         for (i = 0; i < resultData.length; i++) {
             let rowData = resultData[i];
             let type = rowData.type;
+
             if (type === "image") {
                 bodyIsNull = false;
                 break;
             }
-            if (type === "content" && strNotNull(rowData.text)) {
+            if (type === "content" && strNotNull(rowData.text.trim())) {
                 bodyIsNull = false;
                 break;
             }
-            if (type === "title" && rowData.text !== "") {
+            if (type === "title" && strNotNull(rowData.text.trim())) {
                 titleIsNull = false;
             }
         }
@@ -179,6 +181,7 @@ export default class ArticleRelease extends PureComponent {
     };
 
     ///请求发长贴接口
+
     fetchData = (title, content, cover_link) => {
         let lastObj = this.state.data[this.state.data.length - 1];
         const {name, address, latitude, longitude} = lastObj.address;
@@ -272,7 +275,7 @@ export default class ArticleRelease extends PureComponent {
                 content = rowData.text;
             }
         });
-        if (title === "" && !image && content === "") {
+        if (!strNotNull(title) && !image && !strNotNull(content)) {
             showToast(I18n.t('article_null'));
             return;
         }

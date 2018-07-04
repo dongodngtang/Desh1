@@ -31,8 +31,8 @@ export default class TitleView extends Component {
             <View style={styles.container}>
                 <TextInput placeholder={I18n.t('social_title')}
                            style={styles.textInput}
-                           onEndEditing={(event) => {
-                               this.updateText(event.nativeEvent.text)
+                           onChangeText={(text) => {
+                               this.updateText(text)
                            }}
                            defaultValue={this.props.defaultValue}
                            onFocus={() => this.beginEditing()}

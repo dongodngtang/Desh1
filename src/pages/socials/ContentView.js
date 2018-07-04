@@ -38,8 +38,8 @@ export default class ContentView extends Component {
                     multiline={true}
                     underlineColorAndroid="transparent"
                     defaultValue={this.props.defaultValue}
-                    onEndEditing={(event) => {
-                        this.updateText(event.nativeEvent.text)
+                    onChangeText={(text) => {
+                        this.updateText(text)
                     }}
                     onFocus={() => this.beginEditing()}
                 />
