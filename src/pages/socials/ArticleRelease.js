@@ -15,7 +15,7 @@ import AddModule from "./AddModule";
 import Swipeout from "react-native-swipeout";
 import ImagePicker from 'react-native-image-crop-picker';
 import {uploadImage, postTopic} from '../../services/SocialDao'
-import {getFileName, showToast} from "../../utils/ComonHelper";
+import {getFileName, showToast, strNotNull} from "../../utils/ComonHelper";
 import moment from 'moment';
 import Loading from "../../components/Loading";
 import {checkPermission} from "../comm/Permission";
@@ -154,7 +154,7 @@ export default class ArticleRelease extends PureComponent {
                 bodyIsNull = false;
                 break;
             }
-            if (type === "content" && rowData.text !== "") {
+            if (type === "content" && strNotNull(rowData.text)) {
                 bodyIsNull = false;
                 break;
             }
