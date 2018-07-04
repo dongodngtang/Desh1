@@ -22,7 +22,7 @@ export default class RatePage extends Component {
         getExchange_rates(data => {
             console.log("ratesItem:", data)
             this.setState({
-                ratesItem: data
+                ratesItem: data.data
             })
         }, err => {
 

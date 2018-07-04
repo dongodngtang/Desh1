@@ -6,11 +6,12 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {utcDate, isEmptyObject, showToast} from "../../utils/ComonHelper";
+import {utcDate, isEmptyObject, showToast, alertOrder} from "../../utils/ComonHelper";
 import {NavigationBar, BaseComponent,ImageLoad} from '../../components';
 import styles from './IntegralStyle';
 import {postExchangeCoupon, getIntegralInfo} from "../../services/IntegralDao";
 import RenderHtml from '../comm/RenderHtml';
+import {cancelHotelOrder} from "../../services/MacauDao";
 
 export const tagStyles = {
     p: {color:"#666666",
@@ -35,18 +36,21 @@ export default class IntegralInfoPage extends Component {
     }
 
     _exchange = (item, total_points) => {
-        postExchangeCoupon({coupon_id: this.props.params.item.id}, data => {
-            showToast("领取成功");
-            this.contain && this.contain.close();
-            global.router.pop();
-        }, err => {
-            if (total_points < item.integrals) {
-                showToast("积分不足,领取失败")
-            } else if (item.stock === 0) {
-                showToast("该优惠券被领完啦")
-            }
+        alertOrder("确认领取？", () => {
+            postExchangeCoupon({coupon_id: this.props.params.id}, data => {
+                showToast("领取成功");
+                // this.contain && this.contain.close();
+                // global.router.pop();
+            }, err => {
+                if (total_points < item.integrals) {
+                    showToast("积分不足,领取失败")
+                } else if (item.stock === 0) {
+                    showToast("该优惠券被领完啦")
+                }
 
+            });
         });
+
     };
     _text = (stock, integrals, total_points) => {
         if (stock <= 0) {
@@ -77,7 +81,7 @@ export default class IntegralInfoPage extends Component {
                 <ScrollView style={{flexDirection: 'column'}}>
 
                     <View style={[styles.infoPage, {marginTop: 1, paddingBottom: 15}]}>
-                        <ImageLoad style={{alignSelf: 'center', marginTop: 28,height:102,width:256}} source={{uri:integral_info.cover_link}}/>
+                        <ImageLoad style={{alignSelf: 'center', marginTop: 28,height:102,width:265}} source={{uri:integral_info.cover_link}}/>
                         <Text style={[styles.marginS, styles.TXt, {marginTop: 21, fontWeight: 'bold'}]}>{name}</Text>
                         <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
                             <Text style={styles.TXt3}>{integrals}<Text style={styles.TXt4}>积分</Text></Text>

@@ -108,23 +108,18 @@ export default class IntegralPage extends Component {
                         </View>
                         <View style={[styles.mallLeft, styles.rowMillide, {marginTop: 29}]}>
                             {coupons.map((item,index) => {
-                                return <ImageLoad key={index} style={{height: 52, width: 83}}
+                               return <TouchableOpacity key={index} style={[styles.mallBottomView]}
+                                                  onPress={() => {
+                                                      global.router.toIntegralInfoPage(item.id, total_points)
+                                                  }}>
+                                   <ImageLoad key={index} style={{height: 52, width: 83}}
                                               source={{uri:item.cover_link}}/>
-                            })}
-                        </View>
-                        <View style={[styles.mallLeft, styles.rowMillide, {marginTop: 11}]}>
-                            {coupons.map((item,index) => {
-                                return (
-                                    <TouchableOpacity key={index} style={[styles.mallBottomView]}
-                                                      onPress={() => {
-                                                          global.router.toIntegralInfoPage(item.id, total_points)
-                                                      }}>
-                                        <Text style={{color: "#444444", fontSize: 14, fontWeight: 'bold'}}>{item.name}</Text>
-                                        {/*<Text style={{color: "#AAAAAA", fontSize: 12}}>可抵扣50元</Text>*/}
-                                        <Text style={{color: "#E54A2E", fontSize: 12, marginTop: 9}}>{item.integrals}<Text
-                                            style={{color: "#444444", fontSize: 12}}>积分</Text></Text>
-                                    </TouchableOpacity>
-                                )
+                                   <Text style={{color: "#444444", fontSize: 14, fontWeight: 'bold',marginTop:11,width:80}}>
+                                       {item.name}</Text>
+                                    {/*<Text style={{color: "#AAAAAA", fontSize: 12}}>可抵扣50元</Text>*/}
+                                    <Text style={{color: "#E54A2E", fontSize: 12, marginTop: 9}}>{item.integrals}<Text
+                                        style={{color: "#444444", fontSize: 12}}>积分</Text></Text>
+                                </TouchableOpacity>
                             })}
                         </View>
                     </View>
@@ -265,10 +260,11 @@ export default class IntegralPage extends Component {
 };
 const styles = StyleSheet.create({
     rowMillide: {
-        flexDirection: 'row', alignContent: 'flex-end', justifyContent: 'space-between'
+        flexDirection: 'row',alignItems:'center'
     },
     mallBottomView: {
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width:'38%'
     },
     mallLeft: {
         marginLeft: 17, marginRight: 17
