@@ -371,7 +371,9 @@ const images = {
         renwu:require('../../source/integral/renwu.png'),
         share:require('../../source/integral/share.png'),
         tiezi:require('../../source/integral/tiezi.png'),
-        coupon: require('../../source/integral/coupon.png')
+        coupon: require('../../source/integral/coupon.png'),
+        couponTop:require('../../source/integral/couponTop.png'),
+        couponBootom:require('../../source/integral/couponBootom.png')
     },
     coupon:{
         background:require('../../source/coupon/background2.png'),

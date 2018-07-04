@@ -3,7 +3,7 @@ import {
     ScrollView, Text, FlatList,
     StyleSheet,
     View, Image,
-    TouchableOpacity
+    TouchableOpacity, ImageBackground
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {postIntegralTask, postAward, getIntrgralCoupon} from '../../services/IntegralDao';
@@ -11,8 +11,6 @@ import {isEmptyObject} from "../../utils/ComonHelper";
 import {getProfile} from "../../services/AccountDao";
 import {ImageLoad} from '../../components'
 import IntegralBar from './IntegralBar';
-
-const images = [1, 2, 3];
 
 export default class IntegralPage extends Component {
 
@@ -29,7 +27,7 @@ export default class IntegralPage extends Component {
             unfinished: this.unfinished,
             finished: [],
             total_points: 0,
-            coupons:[]
+            coupons: []
         };
     }
 
@@ -57,9 +55,9 @@ export default class IntegralPage extends Component {
         })
 
         getIntrgralCoupon({page_size: 3}, data => {
-            console.log("积分商城三条数据：",data)
+            console.log("积分商城三条数据：", data)
             this.setState({
-                coupons:data.items
+                coupons: data.items
             })
         }, err => {
 
@@ -69,7 +67,7 @@ export default class IntegralPage extends Component {
 
 
     render() {
-        const {unfinished, finished, total_points,coupons} = this.state;
+        const {unfinished, finished, total_points, coupons} = this.state;
 
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -107,15 +105,39 @@ export default class IntegralPage extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.mallLeft, styles.rowMillide, {marginTop: 29}]}>
-                            {coupons.map((item,index) => {
-                               return <TouchableOpacity key={index} style={[styles.mallBottomView]}
-                                                  onPress={() => {
-                                                      global.router.toIntegralInfoPage(item.id, total_points)
-                                                  }}>
-                                   <ImageLoad key={index} style={{height: 52, width: 83}}
-                                              source={{uri:item.cover_link}}/>
-                                   <Text style={{color: "#444444", fontSize: 14, fontWeight: 'bold',marginTop:11,width:80}}>
-                                       {item.name}</Text>
+                            {coupons.map((item, index) => {
+                                return <TouchableOpacity key={index} style={[styles.mallBottomView]}
+                                                         onPress={() => {
+                                                             global.router.toIntegralInfoPage(item.id, total_points)
+                                                         }}>
+                                    <ImageLoad style={{height: 52,width: 83}} source={{uri:item.cover_link}}/>
+                                    {/*<ImageBackground key={index} style={{*/}
+                                        {/*height: 32,*/}
+                                        {/*width: 83,*/}
+                                        {/*flexDirection: 'row',*/}
+                                        {/*alignItems: 'center'*/}
+                                    {/*}}*/}
+                                                     {/*source={Images.integral.couponTop}>*/}
+                                        {/*<Text style={{color: "#F34247", fontSize: 12, marginLeft: 7}}>¥<Text*/}
+                                            {/*style={{fontSize: 20, fontWeight: 'bold'}}>{item.reduce_price}</Text></Text>*/}
+                                        {/*<View style={{width: 120, flexDirection: 'column'}}>*/}
+                                            {/*<Text style={{color: "#444444", fontSize: 7, marginLeft: 5}}>{item.name}</Text>*/}
+                                            {/*<Text style={{*/}
+                                                {/*color: "#444444",*/}
+                                                {/*fontSize: 7,*/}
+                                                {/*marginTop: 3*/}
+                                            {/*}}>{item.short_desc}</Text>*/}
+                                        {/*</View>*/}
+                                    {/*</ImageBackground>*/}
+                                    {/*<ImageLoad style={{height: 21,width: 83}} source={Images.integral.couponBootom}/>*/}
+                                    <Text style={{
+                                        color: "#444444",
+                                        fontSize: 14,
+                                        fontWeight: 'bold',
+                                        marginTop: 11,
+                                        width: 80
+                                    }}>
+                                        {item.name}</Text>
                                     {/*<Text style={{color: "#AAAAAA", fontSize: 12}}>可抵扣50元</Text>*/}
                                     <Text style={{color: "#E54A2E", fontSize: 12, marginTop: 9}}>{item.integrals}<Text
                                         style={{color: "#444444", fontSize: 12}}>积分</Text></Text>
@@ -260,11 +282,11 @@ export default class IntegralPage extends Component {
 };
 const styles = StyleSheet.create({
     rowMillide: {
-        flexDirection: 'row',alignItems:'center'
+        flexDirection: 'row', alignItems: 'center'
     },
     mallBottomView: {
         flexDirection: 'column',
-        width:'38%'
+        width: '38%'
     },
     mallLeft: {
         marginLeft: 17, marginRight: 17

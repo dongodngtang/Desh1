@@ -2,7 +2,7 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
-export function getExchange_rates(body, resolve, reject) {
+export function getExchange_rates(resolve, reject) {
     helper.get(Api.exchange_rates, ret => {
         resolve(ret.data)
     }, reject)

@@ -59,37 +59,27 @@ export const picker = {
  * @param targetAppName
  * @param name
  */
-export function turn2MapMark(lon = 0, lat = 0, targetAppName = 'gaode', name = '目标地址'){
-    if (0 == lat && 0 == lon) {
-        console.warn('暂时不能导航');
-        return;
-    }
+export function turn2MapMark(poiid = 'B000AAFAC5'){
 
-    console.log(lon,lat,name)
 
+    let targetAppName = 'gaode'
     let url = '';
-    let webUrl = `http://uri.amap.com/marker?position=${lon},${lat}&name=${name}&src=mypage&coordinate=gaode&callnative=0`;
-    let webUrlGaode = `http://uri.amap.com/marker?position=${lon},${lat}&name=${name}&src=mypage&coordinate=gaode&callnative=0`;
-    let webUrlBaidu = `http://api.map.baidu.com/marker?location=${lat},${lon}&title=${name}&content=${name}&output=html`;
+    let webUrl = `http://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=0`;
+    let webUrlGaode = `http://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=0`;
+
 
     url = webUrl;
-    if (Platform.OS == 'android') {//android
+    if (Platform.OS === 'android') {//android
 
-        if (targetAppName == 'gaode') {
-            url = `androidamap://viewMap?sourceApplication=appname&poiname=${name}&lat=${lat}&lon=${lon}&dev=0`;
+        if (targetAppName === 'gaode') {
+            url = `androidamap://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=1`;
             webUrl = webUrlGaode;
-        } else if (targetAppName == 'baidu') {
-            url = `baidumap://map/marker?location=${lat},${lon}&title=${name}&content=${name}&traffic=on`;
-            webUrl = webUrlBaidu;
         }
-    } else if (Platform.OS == 'ios') {//ios
+    } else if (Platform.OS === 'ios') {//ios
 
-        if (targetAppName == 'gaode') {
-            url = `iosamap://viewMap?sourceApplication=applicationName&poiname=${name}&lat=${lat}&lon=${lon}&dev=1`;
+        if (targetAppName === 'gaode') {
+            url = `iosamap://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=1`;
             webUrl = webUrlGaode;
-        } else if (targetAppName == 'baidu') {
-            url = `baidumap://map/marker?location=${lat},${lon}&title=${name}&content=${name}&src=webapp.marker.desh.macuahike`;
-            webUrl = webUrlBaidu;
         }
 
     }

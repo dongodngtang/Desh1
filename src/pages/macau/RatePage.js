@@ -22,7 +22,7 @@ export default class RatePage extends Component {
         getExchange_rates(data => {
             console.log("ratesItem:", data)
             this.setState({
-                ratesItem: data.data
+                ratesItem: data
             })
         }, err => {
 
@@ -54,8 +54,8 @@ export default class RatePage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <View style={styleR.page}>
-                    <Text style={styleR.txt}>今日汇率：</Text>
+                <View style={styles.page}>
+                    <Text style={styles.txt}>今日汇率：</Text>
                     <View style={{flexDirection: 'row'}}>
                         <Text>{`1人名币=1.2101港币，1港币=${cny_to_hkd_rate.rate}人名币`}</Text>
                         <Text>{`1人名币=1.2101澳门币，1澳门币=${cny_to_mop_rate.rate}人名币`}</Text>
@@ -92,7 +92,7 @@ export default class RatePage extends Component {
     }
 }
 
-const styleR = StyleSheet.create({
+const styles = StyleSheet.create({
     itemPage: {
         flexDirection: 'row',
         alignItems: 'center',

@@ -37,9 +37,9 @@ export default class CouponPage extends Component {
             let using_coupons = [];
             let expired_coupons = [];
             data.items.forEach((item) => {
-                if (item.status === 'used') {
+                if (item.status === 'unused' || item.status === 'refund') {
                     using_coupons.push(item)
-                } else if (item.status === 'expired') {
+                } else if (item.status === 'expired' || item.status === 'used') {
                     expired_coupons.push(item)
                 }
             });
@@ -63,7 +63,7 @@ export default class CouponPage extends Component {
     };
 
     _renderItem = (item) => {
-        const {begin_date, coupon_type, cover_link, end_date, name, short_desc} = item.item;
+        const {begin_date, coupon_type, cover_link, end_date, name, short_desc,reduce_price,limit_price} = item.item;
         const {selectId} = this.state;
         return (
             <ImageBackground
@@ -73,8 +73,8 @@ export default class CouponPage extends Component {
                     <View style={[styles.itemLeft]}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={{color: "#F34247", fontSize: 18}}>¥<Text
-                                style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>
-                            <View style={{width: 150}}>
+                                style={{fontSize: 40, fontWeight: 'bold'}}>{reduce_price}</Text></Text>
+                            <View style={{width: 120,flexDirection:'column'}}>
                                 <Text style={{color: "#444444", fontSize: 20, marginLeft: 16}}>{name}</Text>
                             </View>
 
@@ -85,7 +85,7 @@ export default class CouponPage extends Component {
                     </View>
                     <View style={{flex: 1}}/>
                     <View style={[styles.itemLeft, {alignItems: 'center'}]}>
-                        <Text style={{color: "#666666", fontSize: 16}}>剩30日</Text>
+                        {/*<Text style={{color: "#666666", fontSize: 16}}>剩30日</Text>*/}
                         <TouchableOpacity
                             style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
                             onPress={() => {
