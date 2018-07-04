@@ -6,14 +6,13 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {postIntegralTask, postAward} from '../../services/IntegralDao';
+import {postIntegralTask, postAward, getIntrgralCoupon} from '../../services/IntegralDao';
 import {isEmptyObject} from "../../utils/ComonHelper";
 import {getProfile} from "../../services/AccountDao";
 import {ImageLoad} from '../../components'
 import IntegralBar from './IntegralBar';
-import IntegralMallPage from "./IntegralMallPage";
 
-const images = [1,2,3];
+const images = [1, 2, 3];
 
 export default class IntegralPage extends Component {
 
@@ -29,7 +28,8 @@ export default class IntegralPage extends Component {
         this.state = {
             unfinished: this.unfinished,
             finished: [],
-            total_points: 0
+            total_points: 0,
+            coupons:[]
         };
     }
 
@@ -56,11 +56,20 @@ export default class IntegralPage extends Component {
         }, err => {
         })
 
+        getIntrgralCoupon({page_size: 3}, data => {
+            console.log("积分商城三条数据：",data)
+            this.setState({
+                coupons:data.items
+            })
+        }, err => {
+
+        })
+
     }
 
 
     render() {
-        const {unfinished, finished, total_points} = this.state;
+        const {unfinished, finished, total_points,coupons} = this.state;
 
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -86,54 +95,54 @@ export default class IntegralPage extends Component {
                 <ScrollView>
 
                     <View style={styles.mallView}>
-                        <View style={[styles.mallLeft,{flexDirection:'row',alignItems:'center'}]}>
-                            <Text style={{color:"#444444",fontSize:18,fontWeight:'bold'}}>积分商城</Text>
-                            <View style={{flex:1}}/>
-                            <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}
+                        <View style={[styles.mallLeft, {flexDirection: 'row', alignItems: 'center'}]}>
+                            <Text style={{color: "#444444", fontSize: 18, fontWeight: 'bold'}}>积分商城</Text>
+                            <View style={{flex: 1}}/>
+                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
                                               onPress={() => {
                                                   global.router.toIntegralMallPage(total_points);
                                               }}>
-                                <Text style={{color:"#444444",fontSize:12,marginRight:3}}>更多</Text>
-                                <Image style={{width:8,height:15}} source={Images.rightImg}/>
+                                <Text style={{color: "#444444", fontSize: 12, marginRight: 3}}>更多</Text>
+                                <Image style={{width: 8, height: 15}} source={Images.rightImg}/>
                             </TouchableOpacity>
                         </View>
-                        <View style={[styles.mallLeft,styles.rowMillide,{marginTop:29}]}>
-                            {images.map((index) => {
-                                return <Image key={index} style={{height:52,width:83}} source={Images.integral.coupon}/>
-                            })}
-                        </View>
-                        <View style={[styles.mallLeft,styles.rowMillide,{marginTop:11}]}>
-                            {images.map((index) => {
-                                return (
-                                    <View key={index} style={[styles.mallBottomView]}>
-                                        <Text style={{color:"#444444",fontSize:14,fontWeight:'bold'}}>酒店优惠券</Text>
-                                        <Text style={{color:"#AAAAAA",fontSize:12}}>可抵扣50元</Text>
-                                        <Text style={{color:"#E54A2E",fontSize:12,marginTop:9}}>100<Text style={{color:"#444444",fontSize:12}}>积分</Text></Text>
-                                    </View>
-                                )
+                        <View style={[styles.mallLeft, styles.rowMillide, {marginTop: 29}]}>
+                            {coupons.map((item,index) => {
+                               return <TouchableOpacity key={index} style={[styles.mallBottomView]}
+                                                  onPress={() => {
+                                                      global.router.toIntegralInfoPage(item.id, total_points)
+                                                  }}>
+                                   <ImageLoad key={index} style={{height: 52, width: 83}}
+                                              source={{uri:item.cover_link}}/>
+                                   <Text style={{color: "#444444", fontSize: 14, fontWeight: 'bold',marginTop:11,width:80}}>
+                                       {item.name}</Text>
+                                    {/*<Text style={{color: "#AAAAAA", fontSize: 12}}>可抵扣50元</Text>*/}
+                                    <Text style={{color: "#E54A2E", fontSize: 12, marginTop: 9}}>{item.integrals}<Text
+                                        style={{color: "#444444", fontSize: 12}}>积分</Text></Text>
+                                </TouchableOpacity>
                             })}
                         </View>
                     </View>
 
-                   <View style={{backgroundColor:'white',marginTop:14}}>
-                       {isEmptyObject(unfinished) ? null : <FlatList
-                           ListHeaderComponent={this._header()}
-                           data={unfinished}
-                           showsHorizontalScrollIndicator={false}
-                           ItemSeparatorComponent={this._separator}
-                           renderItem={item => this._renderItem(item, 'unfinished')}
-                           keyExtractor={(item, index) => `integral${index}`}
-                       />}
-                       {this._separator()}
-                       {isEmptyObject(finished) ? null : <FlatList
-                           data={finished}
-                           showsHorizontalScrollIndicator={false}
-                           ItemSeparatorComponent={this._separator}
-                           renderItem={item => this._renderItem(item, 'finished')}
-                           keyExtractor={(item, index) => `integral${index}`}
-                       />}
-                   </View>
-                    <View style={{height:50}}/>
+                    <View style={{backgroundColor: 'white', marginTop: 14}}>
+                        {isEmptyObject(unfinished) ? null : <FlatList
+                            ListHeaderComponent={this._header()}
+                            data={unfinished}
+                            showsHorizontalScrollIndicator={false}
+                            ItemSeparatorComponent={this._separator}
+                            renderItem={item => this._renderItem(item, 'unfinished')}
+                            keyExtractor={(item, index) => `integral${index}`}
+                        />}
+                        {this._separator()}
+                        {isEmptyObject(finished) ? null : <FlatList
+                            data={finished}
+                            showsHorizontalScrollIndicator={false}
+                            ItemSeparatorComponent={this._separator}
+                            renderItem={item => this._renderItem(item, 'finished')}
+                            keyExtractor={(item, index) => `integral${index}`}
+                        />}
+                    </View>
+                    <View style={{height: 50}}/>
                 </ScrollView>
 
             </View>
@@ -143,8 +152,13 @@ export default class IntegralPage extends Component {
 
     _header = (status) => {
         return (
-            <View style={[styles.head, {marginRight: 17, marginLeft: 17,borderBottomWidth: 1.5, borderColor: '#F3F3F3'}]}>
-                <Text style={{color: '#444444', fontSize: 18, marginLeft: 10,fontWeight:'bold'}}>每日任务</Text>
+            <View style={[styles.head, {
+                marginRight: 17,
+                marginLeft: 17,
+                borderBottomWidth: 1.5,
+                borderColor: '#F3F3F3'
+            }]}>
+                <Text style={{color: '#444444', fontSize: 18, marginLeft: 10, fontWeight: 'bold'}}>每日任务</Text>
             </View>
         )
     };
@@ -207,7 +221,7 @@ export default class IntegralPage extends Component {
         return (
             <View style={styles.item} key={type + index}>
                 <ImageLoad style={{height: 34, width: 34}}
-                       source={{uri:item.icon}}
+                           source={{uri: item.icon}}
                            emptyBg={Images.integral.tiezi}/>
                 <View style={{marginLeft: 14, flexDirection: 'column'}}>
                     <View style={{flexDirection: 'row'}}>
@@ -240,27 +254,28 @@ export default class IntegralPage extends Component {
         return type === 'unfinished' && done_times === limit_times ? '' : ` (${doing_times + done_times}/${limit_times})`
     }
     _separator = () => {
-        return <View style={{backgroundColor: '#F3F3F3', height: 1.5,marginRight: 17, marginLeft: 17}}/>
+        return <View style={{backgroundColor: '#F3F3F3', height: 1.5, marginRight: 17, marginLeft: 17}}/>
     }
 
 };
 const styles = StyleSheet.create({
-    rowMillide:{
-        flexDirection:'row',alignContent: 'flex-end',justifyContent: 'space-between'
+    rowMillide: {
+        flexDirection: 'row',alignItems:'center'
     },
-    mallBottomView:{
-        flexDirection:'column'
+    mallBottomView: {
+        flexDirection: 'column',
+        width:'38%'
     },
-    mallLeft:{
-        marginLeft:17,marginRight:17
+    mallLeft: {
+        marginLeft: 17, marginRight: 17
     },
 
-    mallView:{
-        backgroundColor:'white',
-        flexDirection:'column',
-        marginTop:5,
-        paddingTop:17,
-        paddingBottom:15
+    mallView: {
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        marginTop: 5,
+        paddingTop: 17,
+        paddingBottom: 15
 
     },
     nav: {

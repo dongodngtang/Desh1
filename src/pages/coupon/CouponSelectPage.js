@@ -15,20 +15,33 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle';
-import PropTypes from 'prop-types';
+import {getUsingCoupons} from "../../services/MacauDao";
 
 export default class CouponSelectPage extends Component {
     state = {
         coupons: [],
         select_changed: false,
         selectId: 0,
-        selected_coupon: {}
+        selected_coupon: {},
+        using_coupons: []
     };
 
     componentDidMount() {
-        const {person_coupons} = this.props.params;
+        let coupons_copy = [];
+        const {total_price} = this.props.params;
+        // 用户订单可用优惠券
+        getUsingCoupons({amount: total_price}, data => {
+            console.log("using_coupons:", data);
+            this.setState({
+                using_coupons: data.items
+            })
 
-        let coupons_copy = [...person_coupons];
+            coupons_copy = [...data.items]
+        }, err => {
+
+        })
+
+
         coupons_copy.map(x => {
             x.isSelect = false;
         });
@@ -99,7 +112,7 @@ export default class CouponSelectPage extends Component {
 
         coupons.forEach((x) => {
             if (x.isSelect) {
-               this.props.params._selectedCoupon(x)
+                this.props.params._selectedCoupon(x)
                 return;
             }
         })

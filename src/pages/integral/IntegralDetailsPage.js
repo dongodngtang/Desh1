@@ -63,7 +63,7 @@ export default class IntegralDetailsPage extends Component {
                     color: points < 0 ? '#34BA3C' : "#E54A2E",
                     fontSize: 20,
                     marginRight: 17
-                }}>{points < 0 ? "-" : "+"}{points}</Text>
+                }}>{points < 0 ? "" : "+"}{points}</Text>
             </View>
         )
     };

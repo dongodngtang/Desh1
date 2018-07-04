@@ -12,7 +12,7 @@ import {
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
-import {postRoomReservation, postHotelOrder, getPersonCoupons} from "../../services/MacauDao";
+import {postRoomReservation, postHotelOrder} from "../../services/MacauDao";
 import I18n from "react-native-i18n";
 import {addTimeRecode} from "../../components/PayCountDown";
 import Loading from "../../components/Loading";
@@ -31,8 +31,7 @@ export default class RoomReservationPage extends PureComponent {
         persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
-        order_number: '',
-        person_coupons: {}
+        order_number: ''
     };
 
     componentDidMount() {
@@ -73,19 +72,12 @@ export default class RoomReservationPage extends PureComponent {
         }, err => {
 
         })
-        // 用户已获得优惠券列表
-        // getUsingCoupons({amount:this._total_price(total_price,{})}, data => {
-        //     console.log("usingCoupons:", data);
-        //     this.setState({
-        //         person_coupons: data
-        //     })
-        // }, err => {
-        //
-        // })
 
     };
+
+
     postParam = () => {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone, person_coupons, selected_coupon} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone, selected_coupon} = this.state;
         const {date} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
@@ -206,6 +198,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     _coupon = (selected_coupon) => {
+        console.log("已减：",selected_coupon)
         if (!isEmptyObject(selected_coupon)) {
             if (selected_coupon.discount_type === 'rebate') {
                 return selected_coupon.discount
@@ -280,7 +273,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          global.router.toCouponSelectPage(this.state.person_coupons.items, this._selectedCoupon)
+                                          global.router.toCouponSelectPage(total_price, this._selectedCoupon)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',

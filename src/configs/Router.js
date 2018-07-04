@@ -56,11 +56,11 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
-    toCouponSelectPage(person_coupons,_selectedCoupon) {
+    toCouponSelectPage(total_price,_selectedCoupon) {
         this.stackPush({
             name: 'CouponSelectPage',
             params: {
-                person_coupons,
+                total_price,
                 _selectedCoupon
             }
         })
@@ -120,6 +120,11 @@ export default class Router {
         })
     }
 
+    toRatePage() {
+        this.stackPush({
+            name: 'RatePage'
+        })
+    }
     toSelectTimePage() {
         this.stackPush({
             name: 'SelectTimePage'
@@ -1117,11 +1122,11 @@ export default class Router {
         })
     }
 
-    toIntegralInfoPage(item,total_points) {
+    toIntegralInfoPage(id,total_points) {
         this.stackPush({
             name: 'IntegralInfoPage',
             params: {
-                item,
+                id,
                 total_points
             }
         })

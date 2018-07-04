@@ -123,9 +123,11 @@ import IntegralMallPage from '../pages/integral/IntegralMallPage';
 import IntegralInfoPage from '../pages/integral/IntegralInfoPage';
 import CouponPage from '../pages/coupon/CouponPage';
 import CouponSelectPage from '../pages/coupon/CouponSelectPage';
+import RatePage from '../pages/macau/RatePage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="RatePage" component={RatePage} hideNavBar/>
         <Scene key="CouponSelectPage" component={CouponSelectPage} hideNavBar/>
         <Scene key="CouponPage" component={CouponPage} hideNavBar/>
         <Scene key="IntegralInfoPage" component={IntegralInfoPage} hideNavBar/>

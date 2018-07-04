@@ -201,7 +201,7 @@ export default class OrderStatusPage extends Component {
 
                 <NavigationBar
                     toolbarStyle={{backgroundColor: Colors._E54}}
-                    title={this._changedBar(status_text, pay_status)}
+                    title={status_text}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
@@ -227,7 +227,7 @@ export default class OrderStatusPage extends Component {
                             style={[styles.infoTxt2, {marginTop: 6}]}>下单时间：{utcDate(created_at, 'YYYY/MM/DD  HH:MM')}</Text>
                         <Text style={[styles.infoTxt2, {marginTop: 6}]}>订单状态：
                             <Text
-                                style={{color: this.statusColor(pay_status, status_text)}}>{this._changedBar(status_text, pay_status)}</Text>
+                                style={{color: this.statusColor(pay_status, status_text)}}>{status_text}</Text>
                         </Text>
                     </View>
 
