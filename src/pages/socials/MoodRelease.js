@@ -144,7 +144,7 @@ export default class MoodRelease extends Component {
 
     ///请求发说说接口
     fetchData = () => {
-        let mood = this.state.mood;
+        let mood = this.state.mood.trim();
         let images = [...this.state.images];
         let imageIds = [];
 
@@ -167,20 +167,20 @@ export default class MoodRelease extends Component {
         this.loading && this.loading.open();
 
 
-        images.forEach((image, index,arr) => {
+        images.forEach((image, index, arr) => {
             let imagePath = image.imagePath;
             //不上传占位图
             if (imagePath !== Images.social.icon_send_mood) {
                 this.uploadImageAction(1, imagePath, (data) => {
-                    if (index === 0){
-                        image.imges_id =data.image_url;
-                            imageIds.push(data.image_url);
+                    if (index === 0) {
+                        image.imges_id = data.image_url;
+                        imageIds.push(data.image_url);
                     }
-                    else{
-                        image.imges_id =data.preview_image;
+                    else {
+                        image.imges_id = data.preview_image;
                         imageIds.push(data.preview_image);
                     }
-                    let upload_images = arr.map(item=>item.imges_id)
+                    let upload_images = arr.map(item => item.imges_id)
                     ///需要上传最后一张，等待所有图片上传完成
                     if (lastUpload) {
                         if (images.length === imageIds.length) {

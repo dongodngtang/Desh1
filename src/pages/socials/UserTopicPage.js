@@ -206,7 +206,9 @@ export default class UserTopicPage extends PureComponent {
                 <Text style={styles.follow}>{`${I18n.t('stalwart')} ${followers_count}`}</Text>
             </View>
 
-            <Text style={[styles.intro,{marginLeft:17,marginRight:17}]}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
+            <Text
+                numberOfLines={1}
+                style={[styles.intro,{marginLeft:17,marginRight:17}]}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
 
 
             <View style={[styles.row, {marginTop: 17, marginBottom: 17}]}>
