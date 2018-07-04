@@ -208,11 +208,15 @@ export default class PayAction extends Component {
         const {type} = this.props;
         const {order} = this.state;
 
+        let pay_result = '';
+
         if (type === 'hotel') {
             url = Api.hotel_wxPay(order)
+            pay_result = Api.hotel_wx_paid_result(order)
         }
         if (type === 'mall') {
             url = Api.mall_wxPay(order)
+            pay_result = Api.wx_paid_result(order)
         }
 
         helper.post(url, {}, ret => {
@@ -221,7 +225,13 @@ export default class PayAction extends Component {
                 if (install) {
                     payWx(ret.data, ret => {
                         console.log('支付成功', ret)
-                        this.pay_handle()
+
+                        helper.get(pay_result,data=>{
+                            this.pay_handle()
+                        },err=>{
+                            this.pay_handle()
+                        })
+
                     }, err => {
                         console.log('支付失败', err)
                         // 酒店预定和商品购买状态页面

@@ -8,7 +8,7 @@ import Swiper from 'react-native-swiper';
 import {hotelDetail} from '../../services/MacauDao';
 import RenderHtml from '../comm/RenderHtml';
 import {NavigationBar} from '../../components'
-import {call} from '../../utils/ComonHelper'
+import {call,turn2MapMark} from '../../utils/ComonHelper'
 
 const styles = StyleSheet.create({
     banner: {
@@ -84,7 +84,7 @@ export default class HotelDetail extends PureComponent {
 
     render() {
 
-        const {images, location, title, description, telephone} = this.state.hotel;
+        const {images, location, title, description, telephone,amap_poiid} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 
@@ -95,15 +95,18 @@ export default class HotelDetail extends PureComponent {
                 <Banner banners={images}/>
 
                 <View style={styles.nav_view}>
-                    <View style={{flexDirection: 'column', marginLeft: 17,width:'60%'}}>
+                    <TouchableOpacity style={{flexDirection: 'column', marginLeft: 17,width:'60%'}}
+                    onPress={()=>{
+                        turn2MapMark(amap_poiid)
+                    }}>
                         <Text style={styles.title}>{title}</Text>
                         <View style={{flexDirection: 'row', alignItems:'center',marginTop:5}}>
                             <Text style={styles.location}>{location}</Text>
-                            {/*<Image style={{height: 14, width: 10, marginLeft: 19}}*/}
-                                   {/*source={Images.macau.location}/>*/}
-                            {/*<Text style={{color:"#4A90E2",fontSize:12, marginLeft: 4}}>地图</Text>*/}
+                            <Image style={{height: 14, width: 10, marginLeft: 19}}
+                                   source={Images.macau.location}/>
+                            <Text style={{color:"#4A90E2",fontSize:12, marginLeft: 4}}>地图</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
                     {/*<View style={{flex:1}}/>*/}
 
