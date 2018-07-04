@@ -2,6 +2,12 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function getExchange_rates(body, resolve, reject) {
+    helper.get(Api.exchange_rates, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function getUsingCoupons(body, resolve, reject) {
     helper.get(Api.using_coupon(body), ret => {
         resolve(ret.data)

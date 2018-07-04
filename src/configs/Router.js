@@ -120,6 +120,11 @@ export default class Router {
         })
     }
 
+    toRatePage() {
+        this.stackPush({
+            name: 'RatePage'
+        })
+    }
     toSelectTimePage() {
         this.stackPush({
             name: 'SelectTimePage'

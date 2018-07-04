@@ -100,6 +100,8 @@ export default class Catalog extends PureComponent {
                             router.toMallPage()
                         else if　(item.type === 'hotel'){
                             router.toSelectTimePage();
+                        }else if　(item.type === 'exchange_rate'){
+                            router.toRatePage();
                         }else
                             router.toHotelSearch(item)
                     }}
