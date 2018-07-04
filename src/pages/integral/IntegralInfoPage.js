@@ -71,7 +71,7 @@ export default class IntegralInfoPage extends Component {
                 <ScrollView style={{flexDirection: 'column'}}>
 
                     <View style={[styles.infoPage, {marginTop: 1, paddingBottom: 15}]}>
-                        <Image style={{alignSelf: 'center', marginTop: 28}} source={cover_link}/>
+                        <Image style={{alignSelf: 'center', marginTop: 28}} source={{uri:cover_link}}/>
                         <Text style={[styles.marginS, styles.TXt, {marginTop: 21, fontWeight: 'bold'}]}>{name}</Text>
                         <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
                             <Text style={styles.TXt3}>{integrals}<Text style={styles.TXt4}>积分</Text></Text>

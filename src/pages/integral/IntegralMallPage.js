@@ -34,7 +34,7 @@ export default class IntegralMallPage extends Component {
                         {/*<Text style={[styles.txt1, {marginTop: 1}]}>有限期：2018-06-21至06-31</Text>*/}
                     {/*</View>*/}
                 {/*</ImageBackground>*/}
-                <Image style={[styles.marginS, styles.couponImg]} source={item.cover_link}/>
+                <Image style={[styles.marginS, styles.couponImg]} source={{uri:item.cover_link}}/>
                 <Text style={[styles.TXt, styles.marginS, {marginTop: 16}]}>{name}</Text>
                 {/*<Text style={[styles.TXt2, styles.marginS]}>可抵扣50元</Text>*/}
                 <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>

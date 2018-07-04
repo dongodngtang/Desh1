@@ -109,7 +109,7 @@ export default class IntegralPage extends Component {
                         <View style={[styles.mallLeft, styles.rowMillide, {marginTop: 29}]}>
                             {coupons.map((item,index) => {
                                 return <Image key={index} style={{height: 52, width: 83}}
-                                              source={item.cover_link}/>
+                                              source={{uri:item.cover_link}}/>
                             })}
                         </View>
                         <View style={[styles.mallLeft, styles.rowMillide, {marginTop: 11}]}>
