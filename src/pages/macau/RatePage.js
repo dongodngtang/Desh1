@@ -59,7 +59,6 @@ export default class RatePage extends Component {
             rate[0] = div(rate[2],cny_to_mop_rate.rate).toFixed(2);
             rate[1] = mul(rate[0], cny_to_hkd_rate.rate).toFixed(2);
         }
-        console.log("ppp:",group2)
         group2.map((x, index) => {
             x.price = rate[index]
         });
