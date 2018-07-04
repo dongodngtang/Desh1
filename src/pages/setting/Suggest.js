@@ -27,6 +27,7 @@ export default class Suggest extends Component {
 
             <View style={styles.inputView}>
                 <TextInput
+                    underlineColorAndroid={'transparent'}
                     onChangeText={ret => this.content = ret}
                     multiline={true}
                     style={styles.input}
@@ -35,6 +36,7 @@ export default class Suggest extends Component {
             </View>
 
             <TextInput
+                underlineColorAndroid={'transparent'}
                 onChangeText={ret => this.contact = ret}
                 style={styles.inputPhone}
                 placeholderTextColor={Colors._AAA}
