@@ -22,8 +22,8 @@ export default class CouponPage extends Component {
 
     state = {
         person_coupons: [],
-        used_coupons: [],
-        unUsed_coupons: [],
+        using_coupons: [],
+        expired_coupons: [],
         selectId: 0
     };
 
@@ -34,19 +34,19 @@ export default class CouponPage extends Component {
     refresh = () => {
         getPersonCoupons({}, data => {
             console.log("person_personCoupons:", data);
-            let used_coupons = [];
-            let unUsed_coupons = [];
+            let using_coupons = [];
+            let expired_coupons = [];
             data.items.forEach((item) => {
                 if (item.status === 'used') {
-                    used_coupons.push(item)
-                } else if (item.status === 'unused') {
-                    unUsed_coupons.push(item)
+                    using_coupons.push(item)
+                } else if (item.status === 'expired') {
+                    expired_coupons.push(item)
                 }
             });
             this.setState({
                 person_coupons: data.items,
-                used_coupons: used_coupons,
-                unUsed_coupons: unUsed_coupons
+                using_coupons: using_coupons,
+                expired_coupons: expired_coupons
             });
         }, err => {
 
@@ -64,6 +64,7 @@ export default class CouponPage extends Component {
 
     _renderItem = (item) => {
         const {begin_date, coupon_type, cover_link, end_date, name, short_desc} = item.item;
+        const {selectId} = this.state;
         return (
             <ImageBackground
                 style={styles.sameView}
@@ -85,11 +86,14 @@ export default class CouponPage extends Component {
                     <View style={{flex: 1}}/>
                     <View style={[styles.itemLeft, {alignItems: 'center'}]}>
                         <Text style={{color: "#666666", fontSize: 16}}>剩30日</Text>
-                        <TouchableOpacity style={styles.touchView}
-                                          onPress={() => {
-                                              router.pop();
-                                              global.router.toSelectTimePage();
-                                          }}>
+                        <TouchableOpacity
+                            style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
+                            onPress={() => {
+                                if (selectId === 0) {
+                                    router.pop();
+                                    global.router.toSelectTimePage();
+                                }
+                            }}>
                             <Text style={{color: "#FFFFFF", fontSize: 14}}>去使用</Text>
                         </TouchableOpacity>
                     </View>
@@ -99,7 +103,7 @@ export default class CouponPage extends Component {
     };
 
     render() {
-        const {person_coupons, used_coupons, unUsed_coupons, selectId} = this.state;
+        const {person_coupons, using_coupons, expired_coupons, selectId} = this.state;
 
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -142,7 +146,7 @@ export default class CouponPage extends Component {
                 <ScrollView>
                     <FlatList
                         style={{marginTop: 15, marginLeft: 17, marginRight: 17}}
-                        data={selectId === 0 ? unUsed_coupons : used_coupons}
+                        data={selectId === 0 ? using_coupons : expired_coupons}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}

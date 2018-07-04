@@ -2,6 +2,13 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function getUsingCoupons(body, resolve, reject) {
+    helper.get(Api.using_coupon(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 export function getPersonCoupons(body, resolve, reject) {
     helper.get(Api.person_coupons(), ret => {
         resolve(ret.data)

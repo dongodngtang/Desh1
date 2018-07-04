@@ -24,7 +24,6 @@ export default StyleSheet.create({
     touchView:{
         width:81,
         height:32,
-        backgroundColor:"#FF4C4C",
         justifyContent:'center',
         alignItems:'center',
         borderRadius:16,
