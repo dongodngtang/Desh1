@@ -78,6 +78,6 @@ export default StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         bottom: 0
-    },
+    }
 
 })

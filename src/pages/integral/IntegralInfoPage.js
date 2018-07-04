@@ -7,10 +7,16 @@ import {
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject, showToast} from "../../utils/ComonHelper";
-import {NavigationBar, BaseComponent} from '../../components';
+import {NavigationBar, BaseComponent,ImageLoad} from '../../components';
 import styles from './IntegralStyle';
 import {postExchangeCoupon, getIntegralInfo} from "../../services/IntegralDao";
 import RenderHtml from '../comm/RenderHtml';
+
+export const tagStyles = {
+    p: {color:"#666666",
+        fontSize:14,
+        lineHeight:20}
+};
 
 export default class IntegralInfoPage extends Component {
 
@@ -71,7 +77,7 @@ export default class IntegralInfoPage extends Component {
                 <ScrollView style={{flexDirection: 'column'}}>
 
                     <View style={[styles.infoPage, {marginTop: 1, paddingBottom: 15}]}>
-                        <Image style={{alignSelf: 'center', marginTop: 28}} source={{uri:cover_link}}/>
+                        <ImageLoad style={{alignSelf: 'center', marginTop: 28,height:102,width:256}} source={{uri:integral_info.cover_link}}/>
                         <Text style={[styles.marginS, styles.TXt, {marginTop: 21, fontWeight: 'bold'}]}>{name}</Text>
                         <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
                             <Text style={styles.TXt3}>{integrals}<Text style={styles.TXt4}>积分</Text></Text>
@@ -83,6 +89,7 @@ export default class IntegralInfoPage extends Component {
                         {description === "" ? null :
                             <Text style={{color: '#444444', fontSize: 18, fontWeight: 'bold'}}>商品详情</Text>}
                         <RenderHtml
+                            tagsStyles={tagStyles}
                             html={description}/>
                         {/*<Text style={[styles.Txt5, {marginTop: 9}]}>优惠面值：100元</Text>*/}
                         {/*<Text style={styles.Txt5}>可使用于酒店预订付费减免</Text>*/}
