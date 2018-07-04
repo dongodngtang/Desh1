@@ -115,12 +115,15 @@ export default class IntegralPage extends Component {
                         <View style={[styles.mallLeft, styles.rowMillide, {marginTop: 11}]}>
                             {coupons.map((item,index) => {
                                 return (
-                                    <View key={index} style={[styles.mallBottomView]}>
+                                    <TouchableOpacity key={index} style={[styles.mallBottomView]}
+                                                      onPress={() => {
+                                                          global.router.toIntegralInfoPage(item.id, total_points)
+                                                      }}>
                                         <Text style={{color: "#444444", fontSize: 14, fontWeight: 'bold'}}>{item.name}</Text>
                                         {/*<Text style={{color: "#AAAAAA", fontSize: 12}}>可抵扣50元</Text>*/}
                                         <Text style={{color: "#E54A2E", fontSize: 12, marginTop: 9}}>{item.integrals}<Text
                                             style={{color: "#444444", fontSize: 12}}>积分</Text></Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 )
                             })}
                         </View>
