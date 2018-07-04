@@ -167,27 +167,33 @@ export default class MoodRelease extends Component {
         this.loading && this.loading.open();
 
 
-        images.forEach((image, index) => {
+        images.forEach((image, index,arr) => {
             let imagePath = image.imagePath;
             //不上传占位图
             if (imagePath !== Images.social.icon_send_mood) {
                 this.uploadImageAction(1, imagePath, (data) => {
-                    if (index === 0)
-                        imageIds.push(data.image_url);
-                    else
+                    if (index === 0){
+                        image.imges_id =data.image_url;
+                            imageIds.push(data.image_url);
+                    }
+                    else{
+                        image.imges_id =data.preview_image;
                         imageIds.push(data.preview_image);
+                    }
+                    let upload_images = arr.map(item=>item.imges_id)
                     ///需要上传最后一张，等待所有图片上传完成
                     if (lastUpload) {
                         if (images.length === imageIds.length) {
                             console.log("需要上传最后一张");
-                            this.sendMood(mood, imageIds);
+
+                            this.sendMood(mood, upload_images);
                         }
                     }
                     ///不需要上传最后一张，等待除占位图外所有图片上传完成
                     else {
                         if (images.length - 1 === imageIds.length) {
                             console.log("不需要上传最后一张");
-                            this.sendMood(mood, imageIds);
+                            this.sendMood(mood, upload_images);
                         }
                     }
                 })
