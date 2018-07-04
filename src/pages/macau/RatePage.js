@@ -42,25 +42,24 @@ export default class RatePage extends Component {
     }
 
     changing_price = (item, index, txt) => {
-        console.log("shjdjfs",index)
-        console.log("shjdjfs",item)
         const {price_changed} = this.state;
         const {cny_to_hkd_rate, cny_to_mop_rate} = this.state.ratesItem;
         let group2 = price_changed;
         let rate = [0, 0, 0];
         if (index === 0) {
-            rate[0] = txt;
-            rate[1] = mul(rate[0], cny_to_hkd_rate.rate);
-            rate[2] = mul(rate[0], cny_to_mop_rate.rate);
+            rate[0] =  txt;
+            rate[1] = mul(rate[0], cny_to_hkd_rate.rate).toFixed(2);
+            rate[2] = mul(rate[0], cny_to_mop_rate.rate).toFixed(2);
         } else if (index === 1) {
             rate[1] = txt;
-            rate[0] = div(rate[1],cny_to_hkd_rate.rate);
-            rate[2] = mul(rate[0], cny_to_mop_rate.rate);
+            rate[0] = div(rate[1],cny_to_hkd_rate.rate).toFixed(2);
+            rate[2] = mul(rate[0], cny_to_mop_rate.rate).toFixed(2);
         } else if (index === 2) {
             rate[2] = txt;
-            rate[0] = div(rate[2],cny_to_mop_rate.rate);
-            rate[1] = mul(rate[0], cny_to_hkd_rate.rate);
+            rate[0] = div(rate[2],cny_to_mop_rate.rate).toFixed(2);
+            rate[1] = mul(rate[0], cny_to_hkd_rate.rate).toFixed(2);
         }
+        console.log("ppp:",group2)
         group2.map((x, index) => {
             x.price = rate[index]
         });
@@ -122,12 +121,15 @@ export default class RatePage extends Component {
                                             width: 100,
                                             fontSize: 24,
                                             fontWeight: 'bold',
-                                            alignItems:'flex-end'
+                                            alignItems:'flex-end',
+                                            color:show ? '#444444' : '#F3F3F3'
                                         }}
                                         maxLength={20}
                                         numberOfLines={1}
                                         placeholderTextColor={show ? '#444444' : '#F3F3F3'}
                                         placeholder={item.price + ''}
+                                        value={item.price + ''}
+                                        clearTextOnFocus={true}
                                         underlineColorAndroid={'transparent'}
                                         onChangeText={txt => {
                                             this.setState({
