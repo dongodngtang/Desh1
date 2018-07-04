@@ -9,6 +9,22 @@ export function postExchangeCoupon(body, resolve, reject) {
 }
 
 
+export function getIntegralInfo(body,resolve, reject) {
+    helper.get(Api.integral_info(body), ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
+
+export function getIntrgralCoupon(body,resolve, reject) {
+    helper.get(Api.integral_coupon(body), ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
+
 export function getIntrgralMall(resolve, reject) {
     helper.get(Api.integral_mall, ret => {
         resolve(ret.data);

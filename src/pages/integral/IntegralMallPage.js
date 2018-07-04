@@ -21,7 +21,7 @@ export default class IntegralMallPage extends Component {
         return (
             <TouchableOpacity key={index} style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
                               onPress={() => {
-                                  global.router.toIntegralInfoPage(item,this.props.params.total_points)
+                                  global.router.toIntegralInfoPage(item.id,this.props.params.total_points)
                               }}>
                 {/*<ImageBackground style={[styles.marginS, styles.couponImg,{flexDirection:'row',alignItems:'center'}]}>*/}
                     {/*<View style={styles.itemLeft}>*/}
@@ -34,7 +34,7 @@ export default class IntegralMallPage extends Component {
                         {/*<Text style={[styles.txt1, {marginTop: 1}]}>有限期：2018-06-21至06-31</Text>*/}
                     {/*</View>*/}
                 {/*</ImageBackground>*/}
-                <Image style={[styles.marginS, styles.couponImg]} source={Images.integral.coupon}/>
+                <Image style={[styles.marginS, styles.couponImg]} source={item.cover_link}/>
                 <Text style={[styles.TXt, styles.marginS, {marginTop: 16}]}>{name}</Text>
                 {/*<Text style={[styles.TXt2, styles.marginS]}>可抵扣50元</Text>*/}
                 <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>

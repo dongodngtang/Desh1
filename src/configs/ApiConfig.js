@@ -181,11 +181,13 @@ const api = {
     hotel_return: hotel_return,//酒店订单退款
     alipay: alipay,//支付宝支付 - 酒店订单
     integral_mall: 'integral_malls/coupons',// 积分商城优惠券列表
+    integral_coupon: integral_coupon,// 积分商城优惠券列表返回三条数据
     person_coupons: person_coupons,//用户已获得优惠券列表
     hotel_aliPay: hotel_aliPay,//支付宝支付 - 酒店订单
     exchange_coupon: exchange_coupon,//积分兑换优惠券
     share_count: share_count,//用户分享统计(会产生积分)
     using_coupon: using_coupon,//用户订单可用优惠券
+    integral_info: integral_info,//优惠券详情
 }
 
 export default api;
@@ -202,6 +204,16 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function integral_info(body) {
+    const {id} = body;
+    return `integral_malls/coupons/${id}`
+}
+
+export function integral_coupon(body) {
+    const {page_size} = body;
+    return `integral_malls/coupons?page_size=${page_size}`
+}
 
 export function using_coupon(body) {
     const {amount} = body;

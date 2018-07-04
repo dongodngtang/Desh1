@@ -9,10 +9,24 @@ import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject, showToast} from "../../utils/ComonHelper";
 import {NavigationBar, BaseComponent} from '../../components';
 import styles from './IntegralStyle';
-import {postExchangeCoupon} from "../../services/IntegralDao";
-
+import {postExchangeCoupon, getIntegralInfo} from "../../services/IntegralDao";
+import RenderHtml from '../comm/RenderHtml';
 
 export default class IntegralInfoPage extends Component {
+
+    state = {
+        integral_info: {}
+    }
+
+    componentDidMount() {
+        const {id} = this.props.params;
+        getIntegralInfo({id: id}, data => {
+            console.log("integral_info:", data)
+            this.setState({
+                integral_info: data
+            })
+        })
+    }
 
     _exchange = (item, total_points) => {
         postExchangeCoupon({coupon_id: this.props.params.item.id}, data => {
@@ -39,8 +53,9 @@ export default class IntegralInfoPage extends Component {
     };
 
     render() {
-        const {item, total_points} = this.props.params;
-        const {coupon_type, name, integrals, short_desc, stock} = item;
+        const {total_points} = this.props.params;
+        const {integral_info} = this.state;
+        const {coupon_type, name, integrals, cover_link, stock, description} = integral_info;
         return (
             <BaseComponent style={{flex: 1, backgroundColor: "#F3F3F3"}}
                            ref={ref => this.contain = ref}>
@@ -56,7 +71,7 @@ export default class IntegralInfoPage extends Component {
                 <ScrollView style={{flexDirection: 'column'}}>
 
                     <View style={[styles.infoPage, {marginTop: 1, paddingBottom: 15}]}>
-                        <Image style={{alignSelf: 'center', marginTop: 28}} source={Images.integral.coupon}/>
+                        <Image style={{alignSelf: 'center', marginTop: 28}} source={cover_link}/>
                         <Text style={[styles.marginS, styles.TXt, {marginTop: 21, fontWeight: 'bold'}]}>{name}</Text>
                         <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
                             <Text style={styles.TXt3}>{integrals}<Text style={styles.TXt4}>积分</Text></Text>
@@ -65,17 +80,20 @@ export default class IntegralInfoPage extends Component {
                         </View>
                     </View>
                     <View style={{marginTop: 18, marginLeft: 17, marginRight: 17, flexDirection: 'column'}}>
-                        <Text style={{color: '#444444', fontSize: 18, fontWeight: 'bold'}}>商品详情</Text>
-                        <Text style={[styles.Txt5, {marginTop: 9}]}>优惠面值：100元</Text>
-                        <Text style={styles.Txt5}>可使用于酒店预订付费减免</Text>
-                        <Text style={styles.Txt5}>使用条件：单笔酒店预订金额满900元</Text>
-                        <Text style={styles.Txt5}>有效期：30天</Text>
+                        {description === "" ? null :
+                            <Text style={{color: '#444444', fontSize: 18, fontWeight: 'bold'}}>商品详情</Text>}
+                        <RenderHtml
+                            html={description}/>
+                        {/*<Text style={[styles.Txt5, {marginTop: 9}]}>优惠面值：100元</Text>*/}
+                        {/*<Text style={styles.Txt5}>可使用于酒店预订付费减免</Text>*/}
+                        {/*<Text style={styles.Txt5}>使用条件：单笔酒店预订金额满900元</Text>*/}
+                        {/*<Text style={styles.Txt5}>有效期：30天</Text>*/}
 
                         <Text style={[styles.TXt4, {marginTop: 13, fontWeight: 'bold'}]}>兑换流程</Text>
                         <Text style={[styles.Txt5, {marginTop: 8}]}>1、点击「立即兑换」，抵扣券即时发放至兑换用户</Text>
                         <Text style={styles.Txt5}> 2、优惠券信息可在「个人中心」-我的优惠中查看</Text>
 
-                        <Text style={[styles.TXt4, {marginTop: 14, fontWeight: 'bold'}]}>兑换流程</Text>
+                        <Text style={[styles.TXt4, {marginTop: 14, fontWeight: 'bold'}]}>注意事项</Text>
                         <Text style={[styles.Txt5, {marginTop: 9}]}>1、此优惠券仅限兑换用户使用，兑换后积分不予退还 </Text>
                         <Text style={styles.Txt5}>2、如有疑问请联系客服0755-23919844</Text>
 
@@ -88,7 +106,7 @@ export default class IntegralInfoPage extends Component {
                     activeOpacity={0}
                     onPress={() => {
                         if (stock > 0 && total_points >= integrals) {
-                            this._exchange(item, total_points);
+                            this._exchange(integral_info, total_points);
                         }
                     }}>
                     <Text style={{color: "#FFFFFF", fontSize: 18}}>{this._text(stock, integrals, total_points)}</Text>
