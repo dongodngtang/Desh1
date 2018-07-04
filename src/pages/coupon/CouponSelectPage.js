@@ -16,52 +16,43 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle';
 import {getUsingCoupons} from "../../services/MacauDao";
-import {isEmptyObject} from "../../utils/ComonHelper";
+import {isEmptyObject, mul} from "../../utils/ComonHelper";
 
 export default class CouponSelectPage extends Component {
     state = {
-        coupons: [],
         select_changed: false,
         selectId: 0,
         selected_coupon: {},
         using_coupons: []
     };
 
+
+
     componentDidMount() {
-        let coupons_copy = [];
+
         const {total_price} = this.props.params;
         // 用户订单可用优惠券
         getUsingCoupons({amount: total_price}, data => {
-            console.log("using_coupons:", data);
+
+            let using_coupons = data.items;
+            using_coupons.map(item=>{
+                item.isSelect = false;
+            })
             this.setState({
-                using_coupons: data.items
+                using_coupons
             })
 
-            coupons_copy = [...data.items]
+
         }, err => {
 
         })
 
 
-        coupons_copy.map(x => {
-            x.isSelect = false;
-        });
 
-        this.setState({
-            coupons: coupons_copy
-        })
     };
 
     _changeSelect = (item) => {
-        let coupons_copy = [...this.state.coupons];
-        coupons_copy.map(x => {
-
-            x.isSelect = x.coupon_number === item.coupon_number;
-
-        });
-        this.setState({
-            coupons: coupons_copy
-        })
+       item.isSelect = !item.isSelect;
     };
 
 
@@ -71,7 +62,7 @@ export default class CouponSelectPage extends Component {
         )
     };
     _renderItem = ({item, index}) => {
-        const {coupon_type, name, short_desc, begin_date, end_date} = item;
+        const {discount_type, name, short_desc, begin_date, end_date, reduce_price, discount} = item;
         return (
             <ImageBackground
                 style={styles.sameView}
@@ -79,10 +70,30 @@ export default class CouponSelectPage extends Component {
                 <View style={styles.itemView}>
                     <View style={styles.itemLeft}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={{color: "#F34247", fontSize: 18}}>¥<Text
-                                style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>
-                            <View style={{width: 180}}>
-                                <Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>{name}</Text>
+                            {discount_type === 'rebate' ?
+                                <Text style={{
+                                    color: "#F34247",
+                                    fontSize: 40,
+                                    marginRight: 16,
+                                    fontWeight: 'bold'
+                                }}>{mul(discount, 10)}<Text
+                                    style={{color: "#F34247", fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
+
+                                <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
+                                    style={{
+                                        fontSize: reduce_price.length > 3 ? 30 : 40,
+                                        fontWeight: 'bold',
+                                        letterSpacing: 1
+                                    }}>{reduce_price}</Text></Text>}
+                            {/*<Text style={{color: "#F34247", fontSize: 18}}>¥<Text*/}
+                            {/*style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>*/}
+                            <View style={{width: 140}}>
+                                <Text style={{
+                                    color: "#444444",
+                                    fontSize: name.length > 13 ? 12 : 20,
+                                    marginLeft: 22
+                                }}
+                                numberOfLines={2}>{name}</Text>
                             </View>
                         </View>
                         <Text style={[styles.txt1, {marginTop: 10}]}>{short_desc}</Text>
@@ -98,8 +109,8 @@ export default class CouponSelectPage extends Component {
                     }]}
                                       onPress={() => {
                                           this._changeSelect(item);
-                                          router.pop();
                                           this._onClickCoupon();
+                                          router.pop();
                                       }}>
                         <Image style={{width: 22, height: 22}}
                                source={item.isSelect ? Images.coupon.selected : Images.coupon.unSelected}/>
@@ -109,11 +120,12 @@ export default class CouponSelectPage extends Component {
         )
     };
     _onClickCoupon = () => {
-        const {coupons} = this.state;
+        const {using_coupons} = this.state;
 
-        coupons.forEach((x) => {
+        console.log('拉卡接受的',using_coupons)
+        using_coupons.forEach((x) => {
             if (x.isSelect) {
-                this.props.params._selectedCoupon(x)
+                this.props.params._selectedCoupon(x);
                 return;
             }
         })
@@ -121,6 +133,8 @@ export default class CouponSelectPage extends Component {
 
     render() {
         const {using_coupons} = this.state;
+
+        console.log("using_coupons:", using_coupons);
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -130,8 +144,8 @@ export default class CouponSelectPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
-                        router.pop();
                         this._onClickCoupon();
+                        router.pop();
                     }}
                 />
 

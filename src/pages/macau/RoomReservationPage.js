@@ -7,7 +7,7 @@ import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {
     isEmptyObject, showToast, convertDate, strNotNull, alertOrderChat, payWx, util,
-    isWXAppInstalled, mul
+    isWXAppInstalled, mul, sub
 } from "../../utils/ComonHelper";
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
@@ -31,7 +31,8 @@ export default class RoomReservationPage extends PureComponent {
         persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
-        order_number: ''
+        order_number: '',
+        changed_price: 0
     };
 
     componentDidMount() {
@@ -56,7 +57,7 @@ export default class RoomReservationPage extends PureComponent {
             console.log("roomReservation:", data)
             this.setState({
                 roomReservation: data,
-                total_price: this.state.room_num * data.order.total_price
+                total_price: mul(this.state.room_num ,data.order.total_price)
             })
 
 
@@ -192,31 +193,47 @@ export default class RoomReservationPage extends PureComponent {
 
     _selectedCoupon = (selected_coupon) => {
         console.log("被选择的优惠券：", selected_coupon)
+        let changed_price = 0;
+        console.log("已减：", selected_coupon)
+        if (!isEmptyObject(selected_coupon)) {
+            if (selected_coupon.discount_type === 'rebate') {
+                changed_price = selected_coupon.discount
+            } else {
+                changed_price = selected_coupon.reduce_price;
+            }
+        } else {
+            changed_price = 0.0;
+        }
         this.setState({
+            changed_price: changed_price,
             selected_coupon: selected_coupon
         })
     };
 
     _coupon = (selected_coupon) => {
-        console.log("已减：",selected_coupon)
+        let changed_price = 0;
+        console.log("已减：", selected_coupon)
         if (!isEmptyObject(selected_coupon)) {
             if (selected_coupon.discount_type === 'rebate') {
-                return selected_coupon.discount
+                changed_price = selected_coupon.discount
             } else {
-                return selected_coupon.reduce_price;
+                changed_price = selected_coupon.reduce_price;
             }
         } else {
-            return 0.0;
+            changed_price = 0.0;
         }
+        this.setState({
+            changed_price: changed_price
+        })
     };
 
     _total_price = (total_price, selected_coupon) => {
         if (!isEmptyObject(selected_coupon)) {
             if (selected_coupon.discount >= 0) {
                 if (selected_coupon.discount_type === 'rebate') {
-                    return total_price * selected_coupon.discount
+                    return mul(total_price, selected_coupon.discount)
                 } else {
-                    return total_price - selected_coupon.reduce_price;
+                    return sub(total_price, selected_coupon.reduce_price);
                 }
             } else {
                 return total_price
@@ -228,7 +245,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     render() {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone, selected_coupon} = this.state;
+        const {detailsShow, roomReservation, room_num, total_price, persons, phone, selected_coupon,changed_price} = this.state;
         if (isEmptyObject(roomReservation)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
@@ -288,9 +305,9 @@ export default class RoomReservationPage extends PureComponent {
                                     color: "#E54A2E",
                                     fontSize: 14,
                                     marginLeft: 12
-                                }}>¥{this._coupon(selected_coupon)}</Text>
+                                }}>¥{changed_price}</Text>
                             </View>
-                            <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>立减金额已从房费中等额扣减</Text>
+                            <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>点击选择优惠券更划算</Text>
                         </View>
                         <View style={{flex: 1}}/>
                         <Image style={{width: 10, height: 20, marginRight: 14, alignSelf: 'center'}}
