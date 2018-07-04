@@ -93,9 +93,11 @@ export default class HotelOrderListStatus extends Component {
 
     load = (body, postRefresh, endFetch) => {
         getHotelOrderList(body, data => {
+            this.contain && this.contain.close();
             console.log("hotelOrderItems", data)
             postRefresh(data.items, 15)
         }, err => {
+            this.contain && this.contain.close();
             endFetch()
         })
     }
