@@ -201,7 +201,7 @@ export default class PersonInfo extends Component {
 
                             <Text style={[styles.text_label, {marginRight: 20}]}>{I18n.t('signature')}</Text>
                             <TextInput style={[styles.text_value]}
-                                       maxLength={30}
+                                       maxLength={20}
                                        placeholderTextColor={Colors._666}
                                        underlineColorAndroid='transparent'
                                        onChangeText={text => {
