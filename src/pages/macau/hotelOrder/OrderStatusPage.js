@@ -114,6 +114,7 @@ export default class OrderStatusPage extends Component {
                         }, err => {
                         })
                         showToast("删除成功");
+                        router.pop();
                         global.router.toHotelOrderPage();
                     });
                 }}>
