@@ -198,8 +198,8 @@ export function getFileMine(filePath) {
 
 //计算日期之间的天数
 export function DateDiff(sDate1, sDate2) { //sDate1和sDate2是2017-9-25格式
-    sDate1 = convertDate(sDate1,'YYYY-M-DD');
-    sDate2 = convertDate(sDate2,'YYYY-M-DD');
+    sDate1 = convertDate(sDate1,'D-MM-YYYY');
+    sDate2 = convertDate(sDate2,'D-MM-YYYY');
     var aDate, oDate1, oDate2, iDays
     aDate = sDate1.split("-")
     oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]) //转换为9-25-2017格式
@@ -538,7 +538,6 @@ export function alipay(data, callback, cancelBack) {
     console.log('alipay',data)
     Alipay.pay(data).then(ret => {
         callback(ret);
-        console.log("dsbjdhskhdskdkdj",ret)
     }, (err) => {
         cancelBack(err);
     });
