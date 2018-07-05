@@ -103,7 +103,7 @@ export default class HotelDetail extends PureComponent {
                     }}>
                         <Text style={styles.title}>{title}</Text>
                         <View style={{flexDirection: 'row', alignItems:'center',marginTop:5}}>
-                            <Text style={styles.location}>{location}</Text>
+                            <Text style={styles.location}>地址：{location}</Text>
                             <Image style={{height: 14, width: 10, marginLeft: 19}}
                                    source={Images.macau.location}/>
                             <Text style={{color:"#4A90E2",fontSize:12, marginLeft: 4}}>地图</Text>

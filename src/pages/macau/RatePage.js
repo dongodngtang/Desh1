@@ -6,11 +6,11 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {LoadingView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
-import {isEmptyObject, mul, div, formatCurrency} from "../../utils/ComonHelper";
+import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/ComonHelper";
 
-const groups = [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥'},
-    {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$'},
-    {id: 2, img: Images.mop, abb: 'MOP', name: '澳门币$'}];
+const groups = [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥', price2: 0, price: ''},
+    {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$', price2: 0, price: ''},
+    {id: 2, img: Images.mop, abb: 'MOP', name: '澳门币$', price2: 0, price: ''}];
 
 export default class RatePage extends Component {
 
@@ -29,16 +29,18 @@ export default class RatePage extends Component {
             rate[2] = mul(data.cny_to_mop_rate.rate, rate[0]);
             let group2 = price_changed;
             group2.map((item, index) => {
-                item.price = rate[index]
+                item.price2 = rate[index]
             });
 
             this.setState({
                 ratesItem: data,
                 price_changed: group2
             })
+            console.log("price_changed:", group2)
         }, err => {
 
         })
+
     }
 
     changing_price = (item, index, txt) => {
@@ -71,15 +73,16 @@ export default class RatePage extends Component {
         this.setState({
             price_changed: group2
         })
+        console.log("price_changeddssds:", group2)
     }
     ;
 
 
     render() {
-        const {show} = this.state;
-        const {cny_to_hkd_rate, cny_to_mop_rate} = this.state.ratesItem;
+        const {show, ratesItem, price_changed} = this.state;
+        const {cny_to_hkd_rate, cny_to_mop_rate} = ratesItem;
 
-        if (isEmptyObject(cny_to_hkd_rate) && isEmptyObject(cny_to_mop_rate)) {
+        if (isEmptyObject(ratesItem)) {
             return <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     toolbarStyle={{backgroundColor: Colors._E54}}
@@ -105,13 +108,14 @@ export default class RatePage extends Component {
                 <View style={styles.page}>
                     <Text style={styles.txt}>今日汇率：</Text>
                     <View style={{flexDirection: 'column', alignSelf: 'center'}}>
-                        <Text style={styles.txt}>{`1人名币=${cny_to_hkd_rate.rate}港币，1港币=${div(1,cny_to_hkd_rate.rate).toFixed(4)}人名币`}</Text>
                         <Text
-                            style={[styles.txt, {marginTop: 5}]}>{`1人名币=${cny_to_mop_rate.rate}澳门币，1澳门币=${div(1,cny_to_mop_rate.rate).toFixed(4)}人名币`}</Text>
+                            style={styles.txt}>{`1人名币=${cny_to_hkd_rate.rate}港币，1港币=${div(1, cny_to_hkd_rate.rate).toFixed(4)}人名币`}</Text>
+                        <Text
+                            style={[styles.txt, {marginTop: 5}]}>{`1人名币=${cny_to_mop_rate.rate}澳门币，1澳门币=${div(1, cny_to_mop_rate.rate).toFixed(4)}人名币`}</Text>
                     </View>
                 </View>
 
-                {groups.map((item, index) => {
+                {price_changed.map((item, index) => {
                     return (
                         <View style={{flexDirection: 'column', marginLeft: 17, marginRight: 17}} key={index}>
                             <View style={styles.itemPage} key={index}>
@@ -129,10 +133,12 @@ export default class RatePage extends Component {
                                             fontSize: 24,
                                             fontWeight: 'bold',
                                             color: show ? '#444444' : '#F3F3F3',
-                                            textAlign:'right'
+                                            textAlign: 'right'
                                         }}
                                         maxLength={11}
                                         numberOfLines={1}
+                                        placeholderTextColor={'#F3F3F3'}
+                                        placeholder={strNotNull(item.price) ? '' : item.price2 + ''}
                                         value={item.price + ''}
                                         clearTextOnFocus={true}
                                         underlineColorAndroid={'transparent'}
