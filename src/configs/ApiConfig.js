@@ -165,7 +165,7 @@ const api = {
     hotels: 'hotels',//获取酒店列表
     info_types: info_types,//获取资讯列表
     infos: 'infos',//获取资讯详情
-    exchange_rates: 'exchange_rates',//获取汇率列表
+    exchange_rates: exchange_rates,//获取汇率列表
     recommends: 'recommends',//首页推荐
     integral_task: integral_task,//用户任务列表
     integral_detail: integral_detail,//用户积分明细
@@ -204,6 +204,10 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function exchange_rates(body) {
+    return `exchange_rates`
+}
 
 export function integral_info(body) {
     const {id} = body;

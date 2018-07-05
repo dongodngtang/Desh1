@@ -1055,6 +1055,12 @@ export default class Router {
 
     }
 
+    toLocalRatePage() {
+        this.stackPush({
+            name: 'LocalRatePage'
+        })
+    }
+
     toCouponPage() {
         this.stackPush({
             name: 'CouponPage'

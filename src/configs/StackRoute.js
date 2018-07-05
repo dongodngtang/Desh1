@@ -124,9 +124,11 @@ import IntegralInfoPage from '../pages/integral/IntegralInfoPage';
 import CouponPage from '../pages/coupon/CouponPage';
 import CouponSelectPage from '../pages/coupon/CouponSelectPage';
 import RatePage from '../pages/macau/RatePage';
+import LocalRatePage from '../pages/macau/LocalRatePage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="LocalRatePage" component={LocalRatePage} hideNavBar/>
         <Scene key="RatePage" component={RatePage} hideNavBar/>
         <Scene key="CouponSelectPage" component={CouponSelectPage} hideNavBar/>
         <Scene key="CouponPage" component={CouponPage} hideNavBar/>

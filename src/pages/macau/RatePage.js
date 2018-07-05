@@ -20,14 +20,15 @@ export default class RatePage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <RateTop/>
+                <RateTop
+                    type={'real_time'}/>
 
                 <TouchableOpacity
                     onPress={() => {
                         if (isEmptyObject(global.login_user)) {
                             router.toLoginFirstPage()
                         } else {
-                            global.router.toLocalRate()
+                            global.router.toLocalRatePage()
                         }
 
                     }}
@@ -63,7 +64,9 @@ export class RateTop extends Component {
     componentDidMount() {
         let rate = [100, 0, 0];
         const {price_changed} = this.state;
-        getExchange_rates(data => {
+        const {type} = this.props;
+        getExchange_rates({exchange_type: type}, data => {
+            console.log("type",type)
             console.log("ratesItem:", data)
             rate[1] = mul(data.cny_to_hkd_rate.rate, rate[0]);
             rate[2] = mul(data.cny_to_mop_rate.rate, rate[0]);
@@ -121,7 +124,7 @@ export class RateTop extends Component {
         const {cny_to_hkd_rate, cny_to_mop_rate} = ratesItem;
 
         if (isEmptyObject(ratesItem)) {
-            return <NoDataView/>;
+            return <LoadingView/>
         }
         return (
             <View>
