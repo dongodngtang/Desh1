@@ -6,7 +6,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
-import {isEmptyObject, mul,div} from "../../utils/ComonHelper";
+import {isEmptyObject, mul,div,formatCurrency} from "../../utils/ComonHelper";
 
 const groups = [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥'},
     {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$'},
@@ -48,16 +48,16 @@ export default class RatePage extends Component {
         let rate = [0, 0, 0];
         if (index === 0) {
             rate[0] =  txt;
-            rate[1] = mul(rate[0], cny_to_hkd_rate.rate).toFixed(2);
-            rate[2] = mul(rate[0], cny_to_mop_rate.rate).toFixed(2);
+            rate[1] = formatCurrency(mul(rate[0], cny_to_hkd_rate.rate));
+            rate[2] = formatCurrency(mul(rate[0], cny_to_mop_rate.rate));
         } else if (index === 1) {
             rate[1] = txt;
-            rate[0] = div(rate[1],cny_to_hkd_rate.rate).toFixed(2);
-            rate[2] = mul(rate[0], cny_to_mop_rate.rate).toFixed(2);
+            rate[0] = formatCurrency(div(rate[1],cny_to_hkd_rate.rate));
+            rate[2] = formatCurrency(mul(rate[0], cny_to_mop_rate.rate));
         } else if (index === 2) {
             rate[2] = txt;
-            rate[0] = div(rate[2],cny_to_mop_rate.rate).toFixed(2);
-            rate[1] = mul(rate[0], cny_to_hkd_rate.rate).toFixed(2);
+            rate[0] = formatCurrency(div(rate[2],cny_to_mop_rate.rate));
+            rate[1] = formatCurrency(mul(rate[0], cny_to_hkd_rate.rate));
         }
         group2.map((x, index) => {
             x.price = rate[index]
