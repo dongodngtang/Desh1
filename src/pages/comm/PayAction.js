@@ -290,7 +290,15 @@ export default class PayAction extends Component {
 
         }, err => {
             showToast(err)
-            this.pay_handle()
+            this.props.refresh();
+            if (type === 'hotel') {
+                router.replace({
+                    name: 'OrderStatusPage',
+                    params: {order_number: this.state.order.order_number}
+                })
+            } else if (type === 'mall') {
+                global.router.replaceMallOrderInfo(this.state.order)
+            }
 
         })
 
