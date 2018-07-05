@@ -6,7 +6,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
-import {isEmptyObject, mul,div,formatCurrency} from "../../utils/ComonHelper";
+import {isEmptyObject, mul, div, formatCurrency} from "../../utils/ComonHelper";
 
 const groups = [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥'},
     {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$'},
@@ -17,7 +17,8 @@ export default class RatePage extends Component {
     state = {
         ratesItem: {},
         price_changed: groups,
-        show: false
+        show: false,
+        width:0
     }
 
     componentDidMount() {
@@ -34,7 +35,8 @@ export default class RatePage extends Component {
 
             this.setState({
                 ratesItem: data,
-                price_changed: group2
+                price_changed: group2,
+                width:rate[2].length
             })
         }, err => {
 
@@ -47,16 +49,16 @@ export default class RatePage extends Component {
         let group2 = price_changed;
         let rate = [0, 0, 0];
         if (index === 0) {
-            rate[0] =  txt;
+            rate[0] = txt;
             rate[1] = formatCurrency(mul(rate[0], cny_to_hkd_rate.rate));
             rate[2] = formatCurrency(mul(rate[0], cny_to_mop_rate.rate));
         } else if (index === 1) {
             rate[1] = txt;
-            rate[0] = formatCurrency(div(rate[1],cny_to_hkd_rate.rate));
+            rate[0] = formatCurrency(div(rate[1], cny_to_hkd_rate.rate));
             rate[2] = formatCurrency(mul(rate[0], cny_to_mop_rate.rate));
         } else if (index === 2) {
             rate[2] = txt;
-            rate[0] = formatCurrency(div(rate[2],cny_to_mop_rate.rate));
+            rate[0] = formatCurrency(div(rate[2], cny_to_mop_rate.rate));
             rate[1] = formatCurrency(mul(rate[0], cny_to_hkd_rate.rate));
         }
         group2.map((x, index) => {
@@ -113,15 +115,18 @@ export default class RatePage extends Component {
                                 <View style={{flex: 1}}/>
                                 <View style={{flexDirection: 'column', alignItems: 'flex-end'}}>
                                     <TextInput
+                                        dir={'rtl'}
                                         keyboardType={'numeric'}
                                         style={{
                                             paddingTop: 0,
                                             paddingBottom: 0,
-                                            width: 130,
+                                            width: this.state.width,
                                             fontSize: 24,
                                             fontWeight: 'bold',
-                                            alignItems:'flex-end',
-                                            color:show ? '#444444' : '#F3F3F3'
+                                            flexDirection: 'row-reverse',
+                                            justifyContent: 'flex-end',
+                                            alignItems: 'flex-end',
+                                            color: show ? '#444444' : '#F3F3F3'
                                         }}
                                         maxLength={11}
                                         numberOfLines={1}
@@ -135,6 +140,12 @@ export default class RatePage extends Component {
                                                 show: true
                                             })
                                             this.changing_price(item, index, txt)
+                                        }}
+                                        onContentSizeChange={() => {
+                                            this.setState({
+                                                width: item.price.length
+                                            })
+                                            console.log("ll:",item.price.length)
                                         }}
                                     />
                                     <Text style={{color: "#8C8C8C", fontSize: 14, marginTop: 6}}>{item.name}</Text>
