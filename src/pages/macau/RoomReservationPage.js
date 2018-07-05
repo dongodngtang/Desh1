@@ -43,15 +43,13 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     refreshParam = () => {
-        const {detailsShow, roomReservation} = this.state;
         const {item, date} = this.props.params;
-        const {order, room} = roomReservation;
         let body = {
             coupon_id: this.state.selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
-            hotel_room_id: !isEmptyObject(roomReservation) && strNotNull(room.id) ? room.id : item.id,
-            room_num: !isEmptyObject(roomReservation) && strNotNull(order.room_num) ? order.room_num : this.state.room_num
+            hotel_room_id: item.id,
+            room_num: this.state.room_num
         }
         return body;
     };
@@ -99,7 +97,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     submitBtn = () => {
-        const {detailsShow, room_num, persons, phone, order_number} = this.state;
+        const {order_number} = this.state;
         if (!util.isEmpty(order_number))
             return;
         if (true) {
@@ -127,6 +125,34 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
+    onclick_changed = (room_num,persons) => {
+        console.log("改变入住人的页面信息重新获取")
+        this.setState({
+            room_num: room_num,
+            persons: persons
+        })
+        const {roomReservation, phone, selected_coupon} = this.state;
+        const {date} = this.props.params;
+        const {order, room} = roomReservation;
+        let body = {
+            coupon_id: selected_coupon.coupon_number,
+            checkin_date: date.begin_date,
+            checkout_date: date.end_date,
+            hotel_room_id: room.id,
+            room_num: room_num,
+            telephone: phone,
+            checkin_infos: persons
+        }
+        postRoomReservation(body, data => {
+            console.log("改变入住人的页面信息重新获取roomReservation:", data)
+            this.setState({
+                roomReservation: data
+            })
+        }, err => {
+
+        })
+    }
+
     roomQuantity = (room_num, persons) => {
 
         const styleCutDisable = {
@@ -146,11 +172,11 @@ export default class RoomReservationPage extends PureComponent {
                             if (persons.length > 1) {
                                 persons = persons.slice(0, persons.length - 1);
                             }
-                            this.setState({
-                                room_num: --room_num,
-                                persons: persons
-                            })
-                            this.refresh(true)
+                            // this.setState({
+                            //     room_num: --room_num,
+                            //     persons: persons
+                            // })
+                            this.onclick_changed(--room_num, persons)
                         }
 
                     }}>
@@ -168,11 +194,11 @@ export default class RoomReservationPage extends PureComponent {
                             if (persons.length <= tempStock) {
                                 persons.push({last_name: '', first_name: ''});
                             }
-                            this.setState({
-                                room_num: ++room_num,
-                                persons: persons
-                            })
-                            this.refresh(true)
+                            // this.setState({
+                            //     room_num: ++room_num,
+                            //     persons: persons
+                            // })
+                            this.onclick_changed(++room_num, persons)
                         } else {
                             // showToast("房间数量不足")
                         }
@@ -195,11 +221,30 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     _selectedCoupon = (selected_coupon) => {
-        console.log("用户选择的优惠券折扣信息：",selected_coupon)
+        console.log("改变入住人的页面信息重新获取：", selected_coupon)
         this.setState({
             selected_coupon: selected_coupon
         })
-        this.refresh(true)
+        const {roomReservation, phone, persons} = this.state;
+        const {date} = this.props.params;
+        const {order, room} = roomReservation;
+        let body = {
+            coupon_id: selected_coupon.coupon_number,
+            checkin_date: date.begin_date,
+            checkout_date: date.end_date,
+            hotel_room_id: room.id,
+            room_num: order.room_num,
+            telephone: phone,
+            checkin_infos: persons
+        }
+        postRoomReservation(body, data => {
+            console.log("改变入住人的页面信息重新获取roomReservation:", data)
+            this.setState({
+                roomReservation: data
+            })
+        }, err => {
+
+        })
 
     };
 
