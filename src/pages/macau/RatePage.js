@@ -3,7 +3,7 @@ import {
     StyleSheet, Text, View, Image, TouchableOpacity, TextInput
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar} from '../../components';
+import {NavigationBar,BaseComponent} from '../../components';
 import {LoadingView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
 import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/ComonHelper";

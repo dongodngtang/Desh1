@@ -201,13 +201,12 @@ export default class PersonInfo extends Component {
 
                             <Text style={[styles.text_label, {marginRight: 20}]}>{I18n.t('signature')}</Text>
                             <TextInput style={[styles.text_value]}
-                                       maxLength={50}
-                                       multiline={true}
+                                       maxLength={30}
                                        placeholderTextColor={Colors._666}
                                        underlineColorAndroid='transparent'
                                        onChangeText={text => {
                                            const edit = profile;
-                                           edit.signature = text;
+                                           edit.signature = text.trim();
                                            // this.setState({
                                            //     profile: edit
                                            // })
