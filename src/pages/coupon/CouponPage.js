@@ -16,7 +16,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
 import {getPersonCoupons} from "../../services/MacauDao";
-import {mul,DateDiff} from '../../utils/ComonHelper'
+import {mul, DateDiff} from '../../utils/ComonHelper'
 
 export default class CouponPage extends Component {
 
@@ -76,16 +76,25 @@ export default class CouponPage extends Component {
                                 <Text style={{
                                     color: "#F34247",
                                     fontSize: 40,
-                                    marginRight: 16,
-                                    fontWeight: 'bold'
+                                    fontWeight: 'bold',
+                                    width:100
                                 }}>{mul(discount, 10)}<Text
-                                    style={{color: "#F34247", fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
+                                    style={{
+                                        color: selectId === 0 ? "#F34247" : "#AAAAAA",
+                                        fontSize: 18,
+                                        fontWeight: 'bold'
+                                    }}>折</Text></Text> :
 
-                                <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
+                                <Text style={{
+                                    color: selectId === 0 ? "#F34247" : "#AAAAAA",
+                                    fontSize: 18,
+                                    width:100
+                                }}>¥<Text
                                     style={{fontSize: 40, fontWeight: 'bold'}}>{reduce_price}</Text></Text>}
 
-                            <View style={{width: 120, flexDirection: 'column'}}>
-                                <Text style={{color: "#444444", fontSize: 20}}>{name}</Text>
+                            <View style={{width: 125, flexDirection: 'column'}}>
+                                <Text
+                                    style={{color: selectId === 0 ? "#444444" : "#AAAAAA", fontSize: 20}}>{name}</Text>
                             </View>
 
                         </View>
@@ -94,18 +103,20 @@ export default class CouponPage extends Component {
 
                     </View>
                     <View style={{flex: 1}}/>
+
                     <View style={[styles.itemLeft, {alignItems: 'center'}]}>
                         {/*<Text style={{color: "#666666", fontSize: 16}}>剩{DateDiff(begin_date,end_date)}日</Text>*/}
-                        <TouchableOpacity
-                            style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
-                            onPress={() => {
-                                if (selectId === 0) {
+                        {selectId === 0 ? <TouchableOpacity
+                                style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
+                                onPress={() => {
                                     router.pop();
                                     global.router.toSelectTimePage();
-                                }
-                            }}>
-                            <Text style={{color: "#FFFFFF", fontSize: 14}}>去使用</Text>
-                        </TouchableOpacity>
+                                }}>
+                                <Text style={{color: "#FFFFFF", fontSize: 14}}>去使用</Text>
+                            </TouchableOpacity> :
+                            <Image style={{height: 37, width: 45}} source={Images.coupon.coupon_used}/>}
+
+
                     </View>
                 </View>
             </ImageBackground>

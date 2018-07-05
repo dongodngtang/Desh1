@@ -380,7 +380,8 @@ const images = {
         coupon:require('../../source/coupon/coupon.png'),
         return_hei:require('../../source/coupon/return_hei.png'),
         selected:require('../../source/coupon/selected.png'),
-        unSelected:require('../../source/coupon/unSelected.png')
+        unSelected:require('../../source/coupon/unSelected.png'),
+        coupon_used:require('../../source/coupon/coupon_used.png')
 
     }
 

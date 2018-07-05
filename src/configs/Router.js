@@ -1122,12 +1122,13 @@ export default class Router {
         })
     }
 
-    toIntegralInfoPage(id,total_points) {
+    toIntegralInfoPage(id,total_points,refresh) {
         this.stackPush({
             name: 'IntegralInfoPage',
             params: {
                 id,
-                total_points
+                total_points,
+                refresh
             }
         })
     }

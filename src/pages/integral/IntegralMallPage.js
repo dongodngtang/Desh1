@@ -8,7 +8,7 @@ import IntegralBar from './IntegralBar';
 import styles from './IntegralStyle'
 import I18n from "react-native-i18n";
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
-import {ImageLoad} from '../../components'
+import {ImageLoad,BaseComponent} from '../../components'
 
 export default class IntegralMallPage extends Component {
 
@@ -22,7 +22,7 @@ export default class IntegralMallPage extends Component {
         return (
             <TouchableOpacity key={index} style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
                               onPress={() => {
-                                  global.router.toIntegralInfoPage(item.id, this.props.params.total_points)
+                                  global.router.toIntegralInfoPage(item.id, this.props.params.total_points,this.refresh)
                               }}>
                 {/*<ImageBackground style={[styles.marginS, styles.couponImg,{flexDirection:'row',alignItems:'center'}]}>*/}
                 {/*<View style={styles.itemLeft}>*/}
@@ -49,7 +49,8 @@ export default class IntegralMallPage extends Component {
 
     render() {
         return (
-            <View style={ApplicationStyles.bgContainer}>
+            <BaseComponent style={ApplicationStyles.bgContainer}
+                            ref={ref => this.contain = ref}>
                 <IntegralBar text={'积分商城'}/>
                 <UltimateFlatList
                     ref={(ref) => this.listView = ref}
@@ -64,7 +65,7 @@ export default class IntegralMallPage extends Component {
                     waitingSpinnerText={I18n.t('loading')}
                     emptyView={() => <CouponEmpty/>}
                 />
-            </View>
+            </BaseComponent>
         )
     }
 
@@ -72,16 +73,24 @@ export default class IntegralMallPage extends Component {
         try {
 
             if (page === 1) {
-                this.refresh(1, startFetch, abortFetch)
+                this.load(1, startFetch, abortFetch)
             } else {
-                this.refresh(page, startFetch, abortFetch);
+                this.load(page, startFetch, abortFetch);
             }
         } catch (err) {
             abortFetch();
         }
     };
-    refresh = (page, startFetch, abortFetch) => {
+
+    refresh = () => {
+        this.contain && this.contain.open();
+        this.listView && this.listView.refresh();
+    };
+
+    load = (page, startFetch, abortFetch) => {
+
         getIntrgralMall(data => {
+            this.contain && this.contain.close();
             startFetch(data.items, 18)
         }, err => {
             abortFetch()

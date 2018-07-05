@@ -6,7 +6,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {utcDate, isEmptyObject, showToast, alertOrder,mul} from "../../utils/ComonHelper";
+import {utcDate, isEmptyObject, showToast, alertOrder, mul} from "../../utils/ComonHelper";
 import {NavigationBar, BaseComponent, ImageLoad} from '../../components';
 import styles from './IntegralStyle';
 import {postExchangeCoupon, getIntegralInfo} from "../../services/IntegralDao";
@@ -28,6 +28,10 @@ export default class IntegralInfoPage extends Component {
     }
 
     componentDidMount() {
+        this.refresh()
+    }
+
+    refresh = () => {
         const {id} = this.props.params;
         getIntegralInfo({id: id}, data => {
             console.log("integral_info:", data)
@@ -43,6 +47,7 @@ export default class IntegralInfoPage extends Component {
                 showToast("领取成功");
                 // this.contain && this.contain.close();
                 // global.router.pop();
+                this.refresh();
             }, err => {
                 if (total_points < item.integrals) {
                     showToast("积分不足,领取失败")
@@ -52,6 +57,7 @@ export default class IntegralInfoPage extends Component {
 
             });
         });
+        this.props.params.refresh()
 
     };
     _text = (stock, integrals, total_points) => {
@@ -67,7 +73,7 @@ export default class IntegralInfoPage extends Component {
     render() {
         const {total_points} = this.props.params;
         const {integral_info} = this.state;
-        const {coupon_type, discount, name, integrals, expire_day, stock, description,reduce_price} = integral_info;
+        const {coupon_type, discount, name, integrals, expire_day, stock, description, reduce_price} = integral_info;
         return (
             <BaseComponent style={{flex: 1, backgroundColor: "#F3F3F3"}}
                            ref={ref => this.contain = ref}>
@@ -95,9 +101,9 @@ export default class IntegralInfoPage extends Component {
                     <View style={{marginTop: 18, marginLeft: 17, marginRight: 17, flexDirection: 'column'}}>
                         <Text style={{color: '#444444', fontSize: 18, fontWeight: 'bold'}}>商品详情</Text>
                         {/*<RenderHtml*/}
-                            {/*t˚agsStyles={tagStyles}*/}
-                            {/*html={description}/>*/}
-                        {discount > 0 ? <Text style={[styles.Txt5, {marginTop: 9}]}>优惠折扣：{mul(discount,10)}折</Text> :
+                        {/*t˚agsStyles={tagStyles}*/}
+                        {/*html={description}/>*/}
+                        {discount > 0 ? <Text style={[styles.Txt5, {marginTop: 9}]}>优惠折扣：{mul(discount, 10)}折</Text> :
                             <Text style={[styles.Txt5, {marginTop: 9}]}>优惠面值：{reduce_price}元</Text>}
 
                         <Text style={styles.Txt5}>可使用于酒店预订付费减免</Text>
