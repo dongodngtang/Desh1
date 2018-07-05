@@ -324,8 +324,11 @@ export default class LongArticle extends PureComponent {
         return <View>
             <View style={{backgroundColor: 'white'}}>
                 <View style={styles.info}>
-                    {strNotNull(title) ? <View style={{height: 46, flexDirection: 'row', alignItems: 'center'}}>
-                        <Text style={styles.title}>{title}</Text>
+                    {strNotNull(title) ? <View style={{flexDirection: 'row', alignItems: 'center',
+                    marginTop:10,marginBottom:10}}>
+                        <Text
+                            numberOfLines={2}
+                            style={styles.title}>{title}</Text>
                     </View> : <View style={{height: 15}}/>}
 
 
