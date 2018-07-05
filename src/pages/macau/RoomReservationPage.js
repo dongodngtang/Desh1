@@ -124,7 +124,7 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
-    onclick_changed = (room_num,persons) => {
+    onclick_changed = (room_num, persons) => {
         console.log("改变入住人的页面信息重新获取")
         this.setState({
             room_num: room_num,
@@ -293,7 +293,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          global.router.toCouponSelectPage(order.final_price, this._selectedCoupon)
+                                          global.router.toCouponSelectPage(order.total_price, this._selectedCoupon)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
@@ -310,7 +310,11 @@ export default class RoomReservationPage extends PureComponent {
                                     marginLeft: 12
                                 }}>¥{order.discount_amount}</Text>
                             </View>
-                            <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>点击选择优惠券更划算</Text>
+                            <Text style={{
+                                marginTop: 8,
+                                color: '#AAAAAA',
+                                fontSize: 12
+                            }}>{!strNotNull(selected_coupon.name) ? '点击选择优惠券更划算' : selected_coupon.name}</Text>
                         </View>
                         <View style={{flex: 1}}/>
                         <Image style={{width: 10, height: 20, marginRight: 14, alignSelf: 'center'}}
@@ -406,7 +410,7 @@ export class RoomMessage extends PureComponent {
     };
 
     render() {
-        const {persons,phone,room_num} = this.props;
+        const {persons, phone, room_num} = this.props;
         return (
             <View style={styles.personMessage}>
                 <View style={styles.roomView}>
