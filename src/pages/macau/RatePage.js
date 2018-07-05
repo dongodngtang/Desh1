@@ -124,12 +124,9 @@ export default class RatePage extends Component {
                                         style={{
                                             paddingTop: 0,
                                             paddingBottom: 0,
-                                            width: 250,
+                                            width: 230,
                                             fontSize: 24,
                                             fontWeight: 'bold',
-                                            flexDirection: 'row-reverse',
-                                            justifyContent: 'flex-end',
-                                            alignItems: 'flex-end',
                                             color: show ? '#444444' : '#F3F3F3',
                                             textAlign:'right'
                                         }}
