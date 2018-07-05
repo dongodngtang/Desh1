@@ -144,7 +144,7 @@ export default class RatePage extends Component {
                                             this.changing_price(item, index, txt)
                                         }}
                                     />
-                                    <Text style={{color: "#8C8C8C", fontSize: 14, marginTop: 6}}>{item.name}</Text>
+                                    <Text style={{color: "#8C8C8C", fontSize: 14, marginTop: 3}}>{item.name}</Text>
                                 </View>
                             </View>
                             <View style={{height: 1.5, width: '100%', backgroundColor: "#F3F3F3"}}/>
