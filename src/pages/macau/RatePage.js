@@ -132,8 +132,6 @@ export default class RatePage extends Component {
                                         }}
                                         maxLength={11}
                                         numberOfLines={1}
-                                        placeholderTextColor={show ? '#444444' : '#F3F3F3'}
-                                        placeholder={item.price + ''}
                                         value={item.price + ''}
                                         clearTextOnFocus={true}
                                         underlineColorAndroid={'transparent'}
