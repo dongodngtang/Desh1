@@ -20,7 +20,13 @@ export default class IntegralDetailsPage extends Component {
     componentDidMount() {
         postIntegralDetails({}, data => {
             console.log('details', data);
-            this.setState({details: data})
+            let details2 = [];
+            data.items.forEach((item) => {
+                if (item.points !== 0) {
+                    details2.push(item)
+                }
+            })
+            this.setState({details: details2})
         })
     }
 
@@ -39,7 +45,7 @@ export default class IntegralDetailsPage extends Component {
                 <ScrollView style={styles.View}>
                     {isEmptyObject(details) ? <View/> : <FlatList
                         style={{backgroundColor: 'white'}}
-                        data={details.items}
+                        data={details}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
@@ -52,11 +58,16 @@ export default class IntegralDetailsPage extends Component {
 
     _renderItem = ({item, index}) => {
         const {active_at, category, created_at, mark, option_type, points} = item;
+
         return (
             <View style={styles.item}>
                 <View style={styles.itemLeft}>
                     <Text style={{color: '#444444', fontSize: 14}}>{mark}</Text>
-                    <Text style={{color: '#AAAAAA', fontSize: 12,marginTop:3}}>{utcDate(active_at, 'YYYY-MM-DD hh:mm')}</Text>
+                    <Text style={{
+                        color: '#AAAAAA',
+                        fontSize: 12,
+                        marginTop: 3
+                    }}>{utcDate(active_at, 'YYYY-MM-DD hh:mm')}</Text>
                 </View>
                 <View style={{flex: 1}}/>
                 <Text style={{
