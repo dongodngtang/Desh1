@@ -16,7 +16,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
 import {getPersonCoupons} from "../../services/MacauDao";
-import {mul} from '../../utils/ComonHelper'
+import {mul,DateDiff} from '../../utils/ComonHelper'
 
 export default class CouponPage extends Component {
 
@@ -95,7 +95,7 @@ export default class CouponPage extends Component {
                     </View>
                     <View style={{flex: 1}}/>
                     <View style={[styles.itemLeft, {alignItems: 'center'}]}>
-                        {/*<Text style={{color: "#666666", fontSize: 16}}>剩30日</Text>*/}
+                        <Text style={{color: "#666666", fontSize: 16}}>剩{DateDiff(begin_date,end_date)}日</Text>
                         <TouchableOpacity
                             style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
                             onPress={() => {

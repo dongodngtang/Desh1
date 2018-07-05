@@ -6,17 +6,19 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {utcDate, isEmptyObject, showToast, alertOrder} from "../../utils/ComonHelper";
-import {NavigationBar, BaseComponent,ImageLoad} from '../../components';
+import {utcDate, isEmptyObject, showToast, alertOrder,mul} from "../../utils/ComonHelper";
+import {NavigationBar, BaseComponent, ImageLoad} from '../../components';
 import styles from './IntegralStyle';
 import {postExchangeCoupon, getIntegralInfo} from "../../services/IntegralDao";
 import RenderHtml from '../comm/RenderHtml';
 import {cancelHotelOrder} from "../../services/MacauDao";
 
 export const tagStyles = {
-    p: {color:"#666666",
-        fontSize:14,
-        lineHeight:20}
+    p: {
+        color: "#666666",
+        fontSize: 14,
+        lineHeight: 20
+    }
 };
 
 export default class IntegralInfoPage extends Component {
@@ -65,7 +67,7 @@ export default class IntegralInfoPage extends Component {
     render() {
         const {total_points} = this.props.params;
         const {integral_info} = this.state;
-        const {coupon_type, name, integrals, cover_link, stock, description} = integral_info;
+        const {coupon_type, discount, name, integrals, expire_day, stock, description,reduce_price} = integral_info;
         return (
             <BaseComponent style={{flex: 1, backgroundColor: "#F3F3F3"}}
                            ref={ref => this.contain = ref}>
@@ -81,7 +83,8 @@ export default class IntegralInfoPage extends Component {
                 <ScrollView style={{flexDirection: 'column'}}>
 
                     <View style={[styles.infoPage, {marginTop: 1, paddingBottom: 15}]}>
-                        <ImageLoad style={{alignSelf: 'center', marginTop: 28,height:102,width:265}} source={{uri:integral_info.cover_link}}/>
+                        <ImageLoad style={{alignSelf: 'center', marginTop: 28, height: 102, width: 265}}
+                                   source={{uri: integral_info.cover_link}}/>
                         <Text style={[styles.marginS, styles.TXt, {marginTop: 21, fontWeight: 'bold'}]}>{name}</Text>
                         <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
                             <Text style={styles.TXt3}>{integrals}<Text style={styles.TXt4}>积分</Text></Text>
@@ -90,15 +93,16 @@ export default class IntegralInfoPage extends Component {
                         </View>
                     </View>
                     <View style={{marginTop: 18, marginLeft: 17, marginRight: 17, flexDirection: 'column'}}>
-                        {description === "" ? null :
-                            <Text style={{color: '#444444', fontSize: 18, fontWeight: 'bold'}}>商品详情</Text>}
-                        <RenderHtml
-                            tagsStyles={tagStyles}
-                            html={description}/>
-                        {/*<Text style={[styles.Txt5, {marginTop: 9}]}>优惠面值：100元</Text>*/}
-                        {/*<Text style={styles.Txt5}>可使用于酒店预订付费减免</Text>*/}
+                        <Text style={{color: '#444444', fontSize: 18, fontWeight: 'bold'}}>商品详情</Text>
+                        {/*<RenderHtml*/}
+                            {/*t˚agsStyles={tagStyles}*/}
+                            {/*html={description}/>*/}
+                        {discount > 0 ? <Text style={[styles.Txt5, {marginTop: 9}]}>优惠折扣：{mul(discount,10)}折</Text> :
+                            <Text style={[styles.Txt5, {marginTop: 9}]}>优惠面值：{reduce_price}元</Text>}
+
+                        <Text style={styles.Txt5}>可使用于酒店预订付费减免</Text>
                         {/*<Text style={styles.Txt5}>使用条件：单笔酒店预订金额满900元</Text>*/}
-                        {/*<Text style={styles.Txt5}>有效期：30天</Text>*/}
+                        <Text style={styles.Txt5}>有效期：{expire_day}天</Text>
 
                         <Text style={[styles.TXt4, {marginTop: 13, fontWeight: 'bold'}]}>兑换流程</Text>
                         <Text style={[styles.Txt5, {marginTop: 8}]}>1、点击「立即兑换」，抵扣券即时发放至兑换用户</Text>
