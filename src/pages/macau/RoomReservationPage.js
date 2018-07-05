@@ -13,7 +13,6 @@ import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
 import {postRoomReservation, postHotelOrder} from "../../services/MacauDao";
-import I18n from "react-native-i18n";
 import {addTimeRecode} from "../../components/PayCountDown";
 import Loading from "../../components/Loading";
 
@@ -407,8 +406,7 @@ export class RoomMessage extends PureComponent {
     };
 
     render() {
-        const {persons, phone} = this.state;
-        const {room_num} = this.props;
+        const {persons,phone,room_num} = this.props;
         return (
             <View style={styles.personMessage}>
                 <View style={styles.roomView}>
