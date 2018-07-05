@@ -57,7 +57,6 @@ export default class IntegralInfoPage extends Component {
 
             });
         });
-        this.props.params.refresh()
 
     };
     _text = (stock, integrals, total_points) => {
@@ -84,7 +83,10 @@ export default class IntegralInfoPage extends Component {
                     titleStyle={{color: Colors.txt_444, fontSize: 18}}
                     leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
+                    leftBtnPress={() => {
+                        router.pop();
+                        this.props.params.refresh()
+                    }}/>
 
                 <ScrollView style={{flexDirection: 'column'}}>
 
