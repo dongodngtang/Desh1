@@ -10,13 +10,55 @@ import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/C
 
 export default class RatePage extends Component {
 
+    render() {
+        return (
+            <View style={[ApplicationStyles.bgContainer, {backgroundColor: "white"}]}>
+                <NavigationBar
+                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    title="实时汇率"
+                    leftBtnIcon={Images.sign_return}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}/>
+
+                <RateTop/>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        if (isEmptyObject(global.login_user)) {
+                            router.toLoginFirstPage()
+                        } else {
+                            global.router.toLocalRate()
+                        }
+
+                    }}
+                    activeOpacity={1}
+                    style={{
+                        height: 142, width: '100%', alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+
+
+                    <Image
+                        source={Images.macau.rate2}
+                        style={{height: 142, width: '100%', position: 'absolute'}}/>
+                    <Text style={{fontSize: 15, color: 'white'}}>本地汇率</Text>
+
+
+                </TouchableOpacity>
+            </View>
+        )
+    }
+}
+
+export class RateTop extends Component {
+
     state = {
         ratesItem: {},
         price_changed: [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥', price2: 0, price: ''},
             {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$', price2: 0, price: ''},
             {id: 2, img: Images.mop, abb: 'MOP', name: '澳门币$', price2: 0, price: ''}],
         show: false
-    }
+    };
 
     componentDidMount() {
         let rate = [100, 0, 0];
@@ -72,37 +114,17 @@ export default class RatePage extends Component {
             price_changed: group2
         })
         console.log("price_changeddssds:", group2)
-    }
-    ;
-
+    };
 
     render() {
-        const {show, ratesItem, price_changed} = this.state;
+        const {ratesItem, price_changed, show} = this.state;
         const {cny_to_hkd_rate, cny_to_mop_rate} = ratesItem;
 
         if (isEmptyObject(ratesItem)) {
-            return <View style={ApplicationStyles.bgContainer}>
-                <NavigationBar
-                    toolbarStyle={{backgroundColor: Colors._E54}}
-                    title="实时汇率"
-                    leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
-                <LoadingView/>
-
-            </View>
-
+            return <NoDataView/>;
         }
-
         return (
-            <View style={[ApplicationStyles.bgContainer, {backgroundColor: "white"}]}>
-                <NavigationBar
-                    toolbarStyle={{backgroundColor: Colors._E54}}
-                    title="实时汇率"
-                    leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
-
+            <View>
                 <View style={styles.page}>
                     <Text style={styles.txt}>今日汇率：</Text>
                     <View style={{flexDirection: 'column', alignSelf: 'center'}}>
@@ -143,7 +165,7 @@ export default class RatePage extends Component {
                                         onChangeText={txt => {
                                             this.setState({
                                                 show: true
-                                            })
+                                            });
                                             this.changing_price(item, index, txt)
                                         }}
                                     />
