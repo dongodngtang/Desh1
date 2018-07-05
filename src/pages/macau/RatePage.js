@@ -8,15 +8,13 @@ import {LoadingView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
 import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/ComonHelper";
 
-const groups = [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥', price2: 0, price: ''},
-    {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$', price2: 0, price: ''},
-    {id: 2, img: Images.mop, abb: 'MOP', name: '澳门币$', price2: 0, price: ''}];
-
 export default class RatePage extends Component {
 
     state = {
         ratesItem: {},
-        price_changed: groups,
+        price_changed: [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥', price2: 0, price: ''},
+            {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$', price2: 0, price: ''},
+            {id: 2, img: Images.mop, abb: 'MOP', name: '澳门币$', price2: 0, price: ''}],
         show: false
     }
 
