@@ -14,6 +14,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 import {Lang, strNotNull, showToast} from '../../utils/ComonHelper';
 import fs from 'react-native-fs';
 import ImageResizer from 'react-native-image-resizer';
+import {postShareCount} from "../../services/AccountDao";
 
 export default class ShareItem extends Component {
 
@@ -101,10 +102,16 @@ export default class ShareItem extends Component {
             text: this.props.shareText,
             imagePath: imagePath,
         };
-        console.log(message);
+        console.log('分享参数',message);
         JShareModule.share(message, (map) => {
-            console.log(map);
+            console.log('分享成功',map);
+            postShareCount({}, data => {
+                console.log("用户推荐好友分享成功:")
+            }, err => {
+
+            })
         }, (map) => {
+            console.log('分享失败',map);
         });
 
         if (this.props.itemClick === null) return;

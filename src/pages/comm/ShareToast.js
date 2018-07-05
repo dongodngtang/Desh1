@@ -29,11 +29,11 @@ let shareList = [
         icon: Images.icon_share_wxcircle,
         name: "朋友圈",
     },
-    {
-        platform: "qq",
-        icon: Images.icon_share_qq,
-        name: "QQ",
-    },
+    // {
+    //     platform: "qq",
+    //     icon: Images.icon_share_qq,
+    //     name: "QQ",
+    // },
     {
         platform: "sina_weibo",
         icon: Images.icon_share_sina,
