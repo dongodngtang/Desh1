@@ -17,8 +17,7 @@ export default class RatePage extends Component {
     state = {
         ratesItem: {},
         price_changed: groups,
-        show: false,
-        width:0
+        show: false
     }
 
     componentDidMount() {
@@ -35,8 +34,7 @@ export default class RatePage extends Component {
 
             this.setState({
                 ratesItem: data,
-                price_changed: group2,
-                width:rate[2].length
+                price_changed: group2
             })
         }, err => {
 
@@ -50,17 +48,24 @@ export default class RatePage extends Component {
         let rate = [0, 0, 0];
         if (index === 0) {
             rate[0] = txt;
-            rate[1] = formatCurrency(mul(rate[0], cny_to_hkd_rate.rate));
-            rate[2] = formatCurrency(mul(rate[0], cny_to_mop_rate.rate));
+            rate[1] = mul(rate[0], cny_to_hkd_rate.rate);
+            rate[2] = mul(rate[0], cny_to_mop_rate.rate);
+            rate[1] = formatCurrency(rate[1]);
+            rate[2] = formatCurrency(rate[2]);
         } else if (index === 1) {
             rate[1] = txt;
-            rate[0] = formatCurrency(div(rate[1], cny_to_hkd_rate.rate));
-            rate[2] = formatCurrency(mul(rate[0], cny_to_mop_rate.rate));
+            rate[0] = div(rate[1], cny_to_hkd_rate.rate);
+            rate[2] = mul(rate[0], cny_to_mop_rate.rate);
+            rate[0] = formatCurrency(rate[0]);
+            rate[2] = formatCurrency(rate[2]);
         } else if (index === 2) {
             rate[2] = txt;
-            rate[0] = formatCurrency(div(rate[2], cny_to_mop_rate.rate));
-            rate[1] = formatCurrency(mul(rate[0], cny_to_hkd_rate.rate));
+            rate[0] = div(rate[2], cny_to_mop_rate.rate);
+            rate[1] = mul(rate[0], cny_to_hkd_rate.rate);
+            rate[0] = formatCurrency(rate[0]);
+            rate[1] = formatCurrency(rate[1]);
         }
+        console.log("ooooo:",rate)
         group2.map((x, index) => {
             x.price = rate[index]
         });
@@ -100,9 +105,9 @@ export default class RatePage extends Component {
                 <View style={styles.page}>
                     <Text style={styles.txt}>今日汇率：</Text>
                     <View style={{flexDirection: 'column', alignSelf: 'center'}}>
-                        <Text style={styles.txt}>{`1人名币=1.2101港币，1港币=${cny_to_hkd_rate.rate}人名币`}</Text>
+                        <Text style={styles.txt}>{`1人名币=${cny_to_hkd_rate.rate}港币，1港币=${div(1,cny_to_hkd_rate.rate).toFixed(4)}人名币`}</Text>
                         <Text
-                            style={[styles.txt, {marginTop: 5}]}>{`1人名币=1.2101澳门币，1澳门币=${cny_to_mop_rate.rate}人名币`}</Text>
+                            style={[styles.txt, {marginTop: 5}]}>{`1人名币=${cny_to_mop_rate.rate}澳门币，1澳门币=${div(1,cny_to_mop_rate.rate).toFixed(4)}人名币`}</Text>
                     </View>
                 </View>
 
@@ -120,13 +125,14 @@ export default class RatePage extends Component {
                                         style={{
                                             paddingTop: 0,
                                             paddingBottom: 0,
-                                            width: this.state.width,
+                                            width: 250,
                                             fontSize: 24,
                                             fontWeight: 'bold',
                                             flexDirection: 'row-reverse',
                                             justifyContent: 'flex-end',
                                             alignItems: 'flex-end',
-                                            color: show ? '#444444' : '#F3F3F3'
+                                            color: show ? '#444444' : '#F3F3F3',
+                                            textAlign:'right'
                                         }}
                                         maxLength={11}
                                         numberOfLines={1}
@@ -140,12 +146,6 @@ export default class RatePage extends Component {
                                                 show: true
                                             })
                                             this.changing_price(item, index, txt)
-                                        }}
-                                        onContentSizeChange={() => {
-                                            this.setState({
-                                                width: item.price.length
-                                            })
-                                            console.log("ll:",item.price.length)
                                         }}
                                     />
                                     <Text style={{color: "#8C8C8C", fontSize: 14, marginTop: 6}}>{item.name}</Text>
