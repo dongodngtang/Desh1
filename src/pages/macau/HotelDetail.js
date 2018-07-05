@@ -42,10 +42,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         color: Colors.txt_444,
+        width:'70%'
     },
     location: {
         fontSize: 12,
-        color: Colors._AAA
+        color: Colors._AAA,
+        width:'70%'
     },
     btn_book: {
         height: 44,
@@ -95,7 +97,7 @@ export default class HotelDetail extends PureComponent {
                 <Banner banners={images}/>
 
                 <View style={styles.nav_view}>
-                    <TouchableOpacity style={{flexDirection: 'column', marginLeft: 17,width:'60%'}}
+                    <TouchableOpacity style={{flexDirection: 'column', marginLeft: 17}}
                     onPress={()=>{
                         turn2MapMark(amap_poiid)
                     }}>

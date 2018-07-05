@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
-import {LoadErrorView, NoDataView} from '../../components/load';
+import {LoadingView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
 import {isEmptyObject, mul, div, formatCurrency} from "../../utils/ComonHelper";
 
@@ -87,7 +87,8 @@ export default class RatePage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
-                <NoDataView/>
+                <LoadingView/>
+
             </View>
 
         }
