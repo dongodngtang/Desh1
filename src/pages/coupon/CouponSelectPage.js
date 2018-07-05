@@ -121,8 +121,6 @@ export default class CouponSelectPage extends Component {
     };
     _onClickCoupon = () => {
         const {using_coupons} = this.state;
-
-        console.log('拉卡接受的',using_coupons)
         using_coupons.forEach((x) => {
             if (x.isSelect) {
                 this.props.params._selectedCoupon(x);

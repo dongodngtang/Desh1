@@ -10,10 +10,10 @@ import {isEmptyObject, showToast, checkMobile, isWXAppInstalled, payWx, alertOrd
 export default class ReservationBottom extends Component {
 
     render() {
-        const {total_price,persons,phone} = this.props;
+        const {order,persons,phone} = this.props;
         return (
             <View style={styles.mallBottom}>
-                <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥{total_price}</Text></Text>
+                <Text style={styles.payment}>在线支付：<Text style={{color: "#F24A4A",fontSize: 18}}>¥{order.final_price}</Text></Text>
 
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={{flexDirection:'row',alignItems:'center',paddingLeft:5,paddingRight:10,paddingTop:5,paddingBottom:5}}

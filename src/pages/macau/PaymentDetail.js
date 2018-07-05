@@ -26,7 +26,7 @@ export default class PaymentDetail extends PureComponent {
     }
 
     render() {
-        const {order, sub_price,total_price} = this.props;
+        const {order} = this.props;
         return (
             <Animatable.View
                 duration={300}
@@ -46,7 +46,7 @@ export default class PaymentDetail extends PureComponent {
                         <Text style={{
                             color: '#E54A2E',
                             fontSize: 16
-                        }}>¥{total_price}</Text>
+                        }}>¥{order.final_price}</Text>
                     </View>
                     <ScrollView>
                         <FlatList
@@ -56,7 +56,7 @@ export default class PaymentDetail extends PureComponent {
                             renderItem={(item) => this._renderItem(item, order.room_num)}
                             keyExtractor={(item, index) => index + "item"}
                         />
-                        {sub_price > 0 ? <View style={{flexDirection:'row',alignItems:'center',marginLeft: 30, marginRight: 22,paddingBottom: 80}}>
+                        {order.discount_amount > 0 ? <View style={{flexDirection:'row',alignItems:'center',marginLeft: 30, marginRight: 22,paddingBottom: 80}}>
                             <Text style={[styles.itemTxt, {marginRight: 10}]}>折扣</Text>
                             <View style={{
                                 marginLeft: 10,
@@ -65,7 +65,7 @@ export default class PaymentDetail extends PureComponent {
                                 backgroundColor: '#F3F3F3',
                                 height: 1
                             }}/>
-                            <Text style={styles.itemTxt}>¥{sub_price}</Text>
+                            <Text style={styles.itemTxt}>¥{order.discount_amount}</Text>
                         </View> : null}
 
                     </ScrollView>
