@@ -25,12 +25,12 @@ export function getIntrgralCoupon(body,resolve, reject) {
     })
 }
 
-export function getIntrgralMall(resolve, reject) {
+export function getIntrgralMall(resolve, reject,params) {
     helper.get(Api.integral_mall, ret => {
         resolve(ret.data);
     }, err => {
         reject(err)
-    })
+    },params)
 }
 
 export function postAward(body, resolve, reject) {

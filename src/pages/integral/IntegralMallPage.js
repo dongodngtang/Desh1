@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    TouchableOpacity, Text, View, ScrollView,Image,ImageBackground
+    TouchableOpacity, Text, View, ScrollView, Image, ImageBackground
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {getIntrgralMall} from '../../services/IntegralDao';
@@ -18,24 +18,24 @@ export default class IntegralMallPage extends Component {
 
 
     renderItem = (item, index) => {
-        const {coupon_type,name,integrals,short_desc,stock} = item;
+        const {coupon_type, name, integrals, short_desc, stock} = item;
         return (
             <TouchableOpacity key={index} style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
                               onPress={() => {
-                                  global.router.toIntegralInfoPage(item.id,this.props.params.total_points)
+                                  global.router.toIntegralInfoPage(item.id, this.props.params.total_points)
                               }}>
                 {/*<ImageBackground style={[styles.marginS, styles.couponImg,{flexDirection:'row',alignItems:'center'}]}>*/}
-                    {/*<View style={styles.itemLeft}>*/}
-                        {/*<View style={{flexDirection: 'row', alignItems: 'center'}}>*/}
-                            {/*<Text style={{color: "#F34247", fontSize: 18}}>¥<Text*/}
-                                {/*style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>*/}
-                            {/*<Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>酒店优惠券</Text>*/}
-                        {/*</View>*/}
-                        {/*<Text style={[styles.txt1, {marginTop: 10}]}>单笔酒店预订金额满800元可使用</Text>*/}
-                        {/*<Text style={[styles.txt1, {marginTop: 1}]}>有限期：2018-06-21至06-31</Text>*/}
-                    {/*</View>*/}
+                {/*<View style={styles.itemLeft}>*/}
+                {/*<View style={{flexDirection: 'row', alignItems: 'center'}}>*/}
+                {/*<Text style={{color: "#F34247", fontSize: 18}}>¥<Text*/}
+                {/*style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>*/}
+                {/*<Text style={{color: "#444444", fontSize: 20, marginLeft: 22}}>酒店优惠券</Text>*/}
+                {/*</View>*/}
+                {/*<Text style={[styles.txt1, {marginTop: 10}]}>单笔酒店预订金额满800元可使用</Text>*/}
+                {/*<Text style={[styles.txt1, {marginTop: 1}]}>有限期：2018-06-21至06-31</Text>*/}
+                {/*</View>*/}
                 {/*</ImageBackground>*/}
-                <ImageLoad style={[styles.marginS, styles.couponImg]} source={{uri:item.cover_link}}/>
+                <ImageLoad style={[styles.marginS, styles.couponImg]} source={{uri: item.cover_link}}/>
                 <Text style={[styles.TXt, styles.marginS, {marginTop: 16}]}>{name}</Text>
                 {/*<Text style={[styles.TXt2, styles.marginS]}>可抵扣50元</Text>*/}
                 <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
@@ -82,7 +82,7 @@ export default class IntegralMallPage extends Component {
     };
     refresh = (page, startFetch, abortFetch) => {
         getIntrgralMall(data => {
-            startFetch(data.items, 6)
+            startFetch(data.items, 18)
         }, err => {
             abortFetch()
         }, {
