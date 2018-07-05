@@ -8,6 +8,7 @@ import {
 import {Images, Colors, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {ImageLoad} from "../../components";
+import moment from "moment/moment";
 
 const styles = StyleSheet.create({
     informationLine: {
@@ -156,12 +157,15 @@ class ItemInfo extends PureComponent {
 
 
 class ItemHotel extends PureComponent {
+
+
     render() {
         const {title, id, location, logo, type} = this.props.hotel;
 
         return <TouchableOpacity
             onPress={() => {
-                router.toHotelDetail({id})
+                // router.toHotelDetail({id})
+                router.toHotelRoomListPage(this.props.hotel, {begin_date: moment().format('YYYY-MM-DD'), end_date: moment().add('hours', 24).format('YYYY-MM-DD'), counts: 1})
             }}
             style={[styles.item_hotel, styles.row_center,]}>
 
@@ -182,16 +186,16 @@ class ItemHotel extends PureComponent {
 
                 <View style={{flex: 1}}/>
 
-                <View style={[styles.row_center, {justifyContent: 'space-between'}]}>
+                {/*<View style={[styles.row_center, {justifyContent: 'space-between'}]}>*/}
 
-                    <Text
-                        numberOfLines={1}
-                        style={styles.hotel_location}>阅 224</Text>
+                    {/*<Text*/}
+                        {/*numberOfLines={1}*/}
+                        {/*style={styles.hotel_location}>阅 224</Text>*/}
 
-                    <Text
-                        numberOfLines={1}
-                        style={styles.hotel_location}>5-23</Text>
-                </View>
+                    {/*<Text*/}
+                        {/*numberOfLines={1}*/}
+                        {/*style={styles.hotel_location}>5-23</Text>*/}
+                {/*</View>*/}
 
             </View>
 
