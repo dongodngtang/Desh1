@@ -26,13 +26,11 @@ export default class RoomReservationPage extends PureComponent {
         tempStock: 10,
         detailsShow: false,
         roomReservation: [],
-        total_price: 0,
         selected_coupon: {},
         persons: [{last_name: '', first_name: ''}],
         phone: '',
         isInstall: false,
-        order_number: '',
-        changed_price: 0
+        order_number: ''
     };
 
     componentDidMount() {
@@ -44,20 +42,27 @@ export default class RoomReservationPage extends PureComponent {
         this.refresh(true)
     };
 
+    refreshParam = () => {
+        const {detailsShow, roomReservation} = this.state;
+        const {item, date} = this.props.params;
+        const {order, room} = roomReservation;
+        let body = {
+            coupon_id: this.state.selected_coupon.coupon_number,
+            checkin_date: date.begin_date,
+            checkout_date: date.end_date,
+            hotel_room_id: !isEmptyObject(roomReservation) && strNotNull(room.id) ? room.id : item.id,
+            room_num: !isEmptyObject(roomReservation) && strNotNull(order.room_num) ? order.room_num : this.state.room_num
+        }
+        return body;
+    };
 
     refresh = (isFirst) => {
         this.container && this.container.open();
-        const {item, date} = this.props.params;
-        postRoomReservation({
-            checkin_date: date.begin_date,
-            checkout_date: date.end_date,
-            hotel_room_id: item.id,
-            room_num: this.state.room_num
-        }, data => {
+        let body = this.refreshParam()
+        postRoomReservation(body, data => {
             console.log("roomReservation:", data)
             this.setState({
-                roomReservation: data,
-                total_price: mul(this.state.room_num ,data.order.total_price)
+                roomReservation: data
             })
 
 
@@ -78,7 +83,7 @@ export default class RoomReservationPage extends PureComponent {
 
 
     postParam = () => {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone, selected_coupon} = this.state;
+        const {detailsShow, roomReservation, room_num, persons, phone, selected_coupon} = this.state;
         const {date} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
@@ -94,9 +99,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     submitBtn = () => {
-        const {detailsShow, room_num, total_price, persons, phone, order_number} = this.state;
-        const {date} = this.props.params;
-
+        const {detailsShow, room_num, persons, phone, order_number} = this.state;
         if (!util.isEmpty(order_number))
             return;
         if (true) {
@@ -124,7 +127,7 @@ export default class RoomReservationPage extends PureComponent {
         })
     };
 
-    roomQuantity = (price, room_num, persons) => {
+    roomQuantity = (room_num, persons) => {
 
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
@@ -145,9 +148,9 @@ export default class RoomReservationPage extends PureComponent {
                             }
                             this.setState({
                                 room_num: --room_num,
-                                total_price: mul(room_num, price),
                                 persons: persons
                             })
+                            this.refresh(true)
                         }
 
                     }}>
@@ -167,9 +170,9 @@ export default class RoomReservationPage extends PureComponent {
                             }
                             this.setState({
                                 room_num: ++room_num,
-                                total_price: mul(room_num, price),
                                 persons: persons
                             })
+                            this.refresh(true)
                         } else {
                             // showToast("房间数量不足")
                         }
@@ -192,60 +195,16 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     _selectedCoupon = (selected_coupon) => {
-        console.log("被选择的优惠券：", selected_coupon)
-        let changed_price = 0;
-        console.log("已减：", selected_coupon)
-        if (!isEmptyObject(selected_coupon)) {
-            if (selected_coupon.discount_type === 'rebate') {
-                changed_price = selected_coupon.discount
-            } else {
-                changed_price = selected_coupon.reduce_price;
-            }
-        } else {
-            changed_price = 0.0;
-        }
+        console.log("用户选择的优惠券折扣信息：",selected_coupon)
         this.setState({
-            changed_price: changed_price,
             selected_coupon: selected_coupon
         })
-    };
-
-    _coupon = (selected_coupon) => {
-        let changed_price = 0;
-        console.log("已减：", selected_coupon)
-        if (!isEmptyObject(selected_coupon)) {
-            if (selected_coupon.discount_type === 'rebate') {
-                changed_price = selected_coupon.discount
-            } else {
-                changed_price = selected_coupon.reduce_price;
-            }
-        } else {
-            changed_price = 0.0;
-        }
-        this.setState({
-            changed_price: changed_price
-        })
-    };
-
-    _total_price = (total_price, selected_coupon) => {
-        if (!isEmptyObject(selected_coupon)) {
-            if (selected_coupon.discount >= 0) {
-                if (selected_coupon.discount_type === 'rebate') {
-                    return mul(total_price, selected_coupon.discount).toFixed(2);
-                } else {
-                    return sub(total_price, selected_coupon.reduce_price).toFixed(2);
-                }
-            } else {
-                return Number(total_price).toFixed(2);
-            }
-        } else {
-            return Number(total_price).toFixed(2);
-        }
+        this.refresh(true)
 
     };
 
     render() {
-        const {detailsShow, roomReservation, room_num, total_price, persons, phone, selected_coupon,changed_price} = this.state;
+        const {detailsShow, roomReservation, persons, phone, selected_coupon} = this.state;
         if (isEmptyObject(roomReservation)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
@@ -282,15 +241,15 @@ export default class RoomReservationPage extends PureComponent {
                     <ReservationTime
                         date={this.props.params.date}/>
                     <RoomMessage
-                        room_num={room_num}
+                        room_num={order.room_num}
                         roomQuantity={this.roomQuantity}
-                        price={order.total_price}
+                        price={order.final_price}
                         persons={persons}
                         _phone={this._phone}/>
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          global.router.toCouponSelectPage(total_price, this._selectedCoupon)
+                                          global.router.toCouponSelectPage(order.final_price, this._selectedCoupon)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
@@ -305,7 +264,7 @@ export default class RoomReservationPage extends PureComponent {
                                     color: "#E54A2E",
                                     fontSize: 14,
                                     marginLeft: 12
-                                }}>¥{changed_price}</Text>
+                                }}>¥{order.discount_amount}</Text>
                             </View>
                             <Text style={{marginTop: 8, color: '#AAAAAA', fontSize: 12}}>点击选择优惠券更划算</Text>
                         </View>
@@ -330,14 +289,12 @@ export default class RoomReservationPage extends PureComponent {
                 {detailsShow ? <PaymentDetail
                     _detailsShow={this._detailsShow}
                     order={order}
-                    room_num={room_num}
-                    sub_price={changed_price}
-                    total_price={this._total_price(total_price, this.state.selected_coupon)}/> : null}
+                    room_num={order.room_num}
+                /> : null}
                 <ReservationBottom
                     _detailsShow={this._detailsShow}
-                    total_price={this._total_price(total_price, this.state.selected_coupon)}
                     refresh={this.refresh}
-                    roomReservation={roomReservation}
+                    order={order}
                     date={this.props.params.date}
                     persons={persons}
                     phone={phone}
@@ -405,13 +362,14 @@ export class RoomMessage extends PureComponent {
     };
 
     render() {
-        const {price, room_num, persons, phone} = this.props;
+        const {persons, phone} = this.state;
+        const {room_num} = this.props;
         return (
             <View style={styles.personMessage}>
                 <View style={styles.roomView}>
                     <Text style={styles.rooms}>房间数</Text>
                     <View style={{flex: 1}}/>
-                    {this.props.roomQuantity(price, room_num, persons)}
+                    {this.props.roomQuantity(room_num, persons)}
                 </View>
 
                 <View style={styles.Roomcounts}>
