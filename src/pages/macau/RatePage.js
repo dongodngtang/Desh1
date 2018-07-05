@@ -65,7 +65,6 @@ export default class RatePage extends Component {
             rate[0] = formatCurrency(rate[0]);
             rate[1] = formatCurrency(rate[1]);
         }
-        console.log("ooooo:",rate)
         group2.map((x, index) => {
             x.price = rate[index]
         });
