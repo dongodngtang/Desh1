@@ -108,7 +108,7 @@ export default class IntegralPage extends Component {
                             {coupons.map((item, index) => {
                                 return <TouchableOpacity key={index} style={[styles.mallBottomView]}
                                                          onPress={() => {
-                                                             global.router.toIntegralInfoPage(item.id, total_points)
+                                                             global.router.toIntegralInfoPage(item.id, total_points,this.refresh)
                                                          }}>
                                     <ImageLoad style={{height: 52,width: 83}} source={{uri:item.cover_link}}/>
                                     {/*<ImageBackground key={index} style={{*/}
