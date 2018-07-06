@@ -106,6 +106,7 @@ class MessageCenter extends Component {
                     _.forEach(this.rows, value => {
                         if (item.target.username === value.target.username) {
                             item.target.avatarThumbPath = value.target.avatarThumbPath
+                            item.target.nickname = value.target.nickname
                             return;
                         }
                     })
