@@ -54,8 +54,8 @@ export default class Catalog extends PureComponent {
             ],
             [
                 {
-                    name: '特产',
-                    type: 'specialty',
+                    name: '出入境',
+                    type: 'entry_exit',
                     size: {height: 29, width: 31},
                     icon: Images.macau.gift
                 },
@@ -98,14 +98,16 @@ export default class Catalog extends PureComponent {
                     onPress={() => {
                         if (item.type === 'mall')
                             router.toMallPage()
-                        else if　(item.type === 'hotel'){
+                        else if (item.type === 'hotel') {
                             router.toSelectTimePage();
-                        }else if　(item.type === 'exchange_rate'){
+                        } else if (item.type === 'exchange_rate') {
                             router.toRatePage();
-                        }else
+                        } else if (item.type === 'entry_exit') {
+                            router.toWebView('出入境','http://www.fsm.gov.mo/psp/pspmonitor/mobile/PortasdoCerco.aspx')
+                        } else
                             router.toHotelSearch(item)
                     }}
-                    style={{　
+                    style={{
                         alignItems: 'center',
                         paddingLeft: 15,
                         paddingRight: 15,

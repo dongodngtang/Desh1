@@ -629,6 +629,17 @@ export default class Router {
         })
     }
 
+    toWebView(name,url) {
+        this.stackPush({
+            name: 'WebViewPage',
+            params: {
+                url: url,
+                name:name
+            }
+
+        })
+    }
+
 
     toTicketInfoPage(props, race_id, ticket_id, isBuy) {
         this.push(props, {

@@ -179,7 +179,7 @@ export default class WebViewPage extends Component {
         return (
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors._E54}}
-                title={I18n.t('app_name')}
+                title={this.props.params.name}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}
