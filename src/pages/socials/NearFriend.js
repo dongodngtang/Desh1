@@ -68,6 +68,7 @@ export default class NearFriend extends PureComponent {
 
 
                 }, err => {
+                    console.log(err)
                     this.setState({
                         geolocation: false
                     })

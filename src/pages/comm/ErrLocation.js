@@ -44,6 +44,12 @@ export default class ErrLocation extends PureComponent {
                         marginTop: 36, textAlign: 'center', lineHeight: 20
                     }}
                 >请到手机系统的<Text style={{color: 'blue'}}>【设置】</Text>-【定位服务】中打开定位服务，并允许澳门旅行使用定位服务</Text>
+                <Text
+                    style={{
+                        fontSize: 14, color: Colors.txt_444, marginLeft: 40, marginRight: 40,
+                        marginTop: 36, textAlign: 'center', lineHeight: 20
+                    }}
+                >如您已经打开定位服务，请<Text style={{color:'blue'}}>不要默认谷歌地图</Text>，否则系统无法获取位置信息</Text>
             </TouchableOpacity>
 
 
