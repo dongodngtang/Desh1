@@ -6,7 +6,7 @@ import {
     Image,
     ActivityIndicator,
     TouchableOpacity,
-    Text,
+    Text, Platform,
 } from 'react-native';
 import I18n from "react-native-i18n";
 import {Colors, Images, ApplicationStyles, Metrics} from "../../Themes";
@@ -72,7 +72,7 @@ export default class NearFriend extends PureComponent {
                     this.setState({
                         geolocation: false
                     })
-                })
+                },{enableHighAccuracy: Platform.OS !== 'android', timeout: 25000})
             }else{
                 this.setState({
                     geolocation: false

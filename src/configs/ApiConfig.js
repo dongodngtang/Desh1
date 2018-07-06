@@ -116,6 +116,7 @@ const api = {
     topic_comments: 'topic/comments',
     comment_replies: 'replies',
     replies_replies: replies_replies,
+    replies_comments:replies_comments,//查看回复
     new_likes: new_likes,
     person_dynamics: person_dynamics,
     person_reply: person_reply,
@@ -205,6 +206,12 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function replies_comments(body) {
+
+    const {comment_id} = body;
+    return `comments/${comment_id}/replies`;
+}
 
 export function exchange_rates(body) {
     return `exchange_rates`

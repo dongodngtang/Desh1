@@ -112,8 +112,10 @@ export default class CommentInfoPage extends Component {
     };
 
     onFetch = (page, postRefresh, endFetch) => {
+        const {id} = this.props.params.item;
+        let body = {comment_id: id};
         if (page === 1) {
-            getReplies({comment_id: this.props.params.item.id}, data => {
+            getReplies(body, data => {
                 console.log("replies:", data);
                 this.setState({
                     totalComment: data.replies_count

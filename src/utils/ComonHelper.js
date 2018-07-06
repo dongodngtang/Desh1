@@ -64,35 +64,36 @@ export function turn2MapMark(poiid = 'B000AAFAC5'){
 
     let targetAppName = 'gaode'
     let url = '';
-    let webUrl = `http://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=0`;
-    let webUrlGaode = `http://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=0`;
+    let webUrl = `http://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=1`;
+    let webUrlGaode = `http://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=1`;
 
 
-    url = webUrl;
-    if (Platform.OS === 'android') {//android
+    return Linking.openURL(webUrl).catch(e => console.warn(e));
+    // url = webUrl;
+    // if (Platform.OS === 'android') {//android
+    //
+    //     if (targetAppName === 'gaode') {
+    //         url = `androidamap://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=1`;
+    //         webUrl = webUrlGaode;
+    //     }
+    // } else if (Platform.OS === 'ios') {//ios
+    //
+    //     if (targetAppName === 'gaode') {
+    //         url = `iosamap://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=1`;
+    //         webUrl = webUrlGaode;
+    //     }
+    //
+    // }
 
-        if (targetAppName === 'gaode') {
-            url = `androidamap://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=1`;
-            webUrl = webUrlGaode;
-        }
-    } else if (Platform.OS === 'ios') {//ios
-
-        if (targetAppName === 'gaode') {
-            url = `iosamap://uri.amap.com/poidetail?poiid=${poiid}&src=macuahike&callnative=1`;
-            webUrl = webUrlGaode;
-        }
-
-    }
-
-    Linking.canOpenURL(url).then(supported => {
-        if (!supported) {
-            console.log('Can\'t handle url: ' + url);
-            console.log('webUrl open :',webUrl)
-            return Linking.openURL(webUrl).catch(e => console.warn(e));
-        } else {
-            return Linking.openURL(url).catch(e => console.warn(e));
-        }
-    }).catch(err => console.error('An error occurred', err));
+    // Linking.canOpenURL(url).then(supported => {
+    //     if (!supported) {
+    //         console.log('Can\'t handle url: ' + url);
+    //         console.log('webUrl open :',webUrl)
+    //         return Linking.openURL(webUrl).catch(e => console.warn(e));
+    //     } else {
+    //         return Linking.openURL(url).catch(e => console.warn(e));
+    //     }
+    // }).catch(err => console.error('An error occurred', err));
 }
 
 
