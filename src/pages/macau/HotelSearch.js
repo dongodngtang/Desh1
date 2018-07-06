@@ -1,4 +1,4 @@
-import React, {PureComponent,Component} from 'react';
+import React, {PureComponent, Component} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity
 } from 'react-native';
@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
 export default class HotelSearch extends PureComponent {
     state = {
         search: false,
+        show_content: true
     };
-
 
     render() {
         const {name, type} = this.props.params.item;
@@ -72,12 +72,14 @@ export default class HotelSearch extends PureComponent {
                 <View style={{flex: 1}}/>
 
 
-                {type === 'exchange_rate' ? <View style={{width:40}}/> : <TouchableOpacity
+                {type === 'exchange_rate' ? <View style={{width: 40}}/> : <TouchableOpacity
                     style={styles.btn_search}
                     onPress={() => {
                         this.setState({
                             search: !this.state.search
                         })
+                        this.keyword = undefined;
+                        this.listView && this.listView.refresh()
                     }}>
                     {this.state.search ? <Text style={styles.cancel}>取消</Text> : <Image
                         style={styles.img_search}
@@ -246,9 +248,9 @@ class FoodItem extends PureComponent {
                         style={{fontSize: 12, color: Colors._AAA}}>{date}</Text>
 
                     <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                        <Image
-                            style={{height: 13, width: 13}}
-                            source={Images.social.like_gray}/>
+                        {/*<Image*/}
+                        {/*style={{height: 13, width: 13}}*/}
+                        {/*source={Images.social.like_gray}/>*/}
                         <Text
                             numberOfLines={1}
                             style={{

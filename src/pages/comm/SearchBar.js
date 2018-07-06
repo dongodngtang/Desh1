@@ -27,10 +27,11 @@ const styles = StyleSheet.create({
     input: {
         position: 'absolute',
         flex: 1,
-        height: 30,
+        paddingTop:4,
+        paddingBottom:4,
         width: '90%',
-        color: Colors.white
-
+        color: Colors.white,
+        fontSize:16
     }
 })
 
