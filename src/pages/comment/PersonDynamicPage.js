@@ -415,10 +415,7 @@ export default class PersonDynamicPage extends Component {
 
     isMine = () => {
         const {userInfo} = this.props.params;
-        if (userInfo !== undefined) {
-            return userInfo.user_id === global.login_user.user_id;
-        } else
-            return true;
+        return userInfo.user_id === global.login_user.user_id;
     };
 
     tabLabel = (type) => {

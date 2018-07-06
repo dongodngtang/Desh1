@@ -69,7 +69,7 @@ export default class CommentItem extends PureComponent {
             return (
                 <View style={styles.content}>
 
-                    <TouchableOpacity onPress={() => global.router.toPersonDynamic(reply_user)}>
+                    <TouchableOpacity onPress={() => global.router.toUserTopicPage(user)}>
                         <ImageLoad
                             emptyBg={Images.home_avatar}
                             style={styles.img}
@@ -80,11 +80,11 @@ export default class CommentItem extends PureComponent {
                         <View style={styles.commentTop}>
 
                             {official ? this.official(nick_name) : <Text
-                                onPress={() => global.router.toPersonDynamic(reply_user)}
+                                onPress={() => global.router.toUserTopicPage(user)}
                                 style={styles.name}>{nick_name}</Text>}
                             {recommended ? <Text style={styles.featured}>{I18n.t('featured')}</Text> : null}
 
-                            {this.isMine(user_id) && !isEmptyObject(reply_user) ?
+                            {this.isMine(user_id)?
                                 <TouchableOpacity style={{marginLeft: 8}}
                                                   onPress={() => this.deleteView(item)}>
                                     <Text style={{fontSize: 12, color: '#666666'}}>{I18n.t('buy_del')}</Text>
@@ -102,7 +102,7 @@ export default class CommentItem extends PureComponent {
                         </View>
                         <Text style={styles.time}>{getDateDiff(created_at)}</Text>
 
-                        <Text style={styles.messages}>{body}</Text>;
+                        <Text style={styles.messages}>{body}</Text>
                     </View>
 
                 </View>
