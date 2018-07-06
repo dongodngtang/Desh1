@@ -23,7 +23,8 @@ export default class InputModal extends Component {
             global.router.toLoginFirstPage()
         } else
             this.setState({
-                visible: !this.state.visible
+                visible: !this.state.visible,
+                comment:''
             })
     }
 
@@ -72,7 +73,7 @@ export default class InputModal extends Component {
 
                     <TouchableOpacity
                         onPress={() => {
-                            if(strNotNull(this.state.comment)){
+                            if(strNotNull(this.state.comment.trim())){
                                 dismissKeyboard()
                                 this.props.send(this.state.comment);
                                 this.toggle()
