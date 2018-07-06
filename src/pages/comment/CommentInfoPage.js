@@ -10,6 +10,14 @@ import CommentBar from '../comm/CommentBar'
 import {showToast} from '../../utils/ComonHelper'
 
 export default class CommentInfoPage extends Component {
+
+    constructor(props) {
+        super(props)
+        const {item} = props.params;
+        this.target_type = 'comment';
+        this.target_id = item.id;
+    }
+
     state = {
         totalComment: 0
     };
@@ -17,12 +25,6 @@ export default class CommentInfoPage extends Component {
     _separator = () => {
         return <View style={{height: 1, marginLeft: 68, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
     };
-
-    componentWillMount() {
-        const {item} = this.props.params;
-        this.target_type = 'comment';
-        this.target_id = item.id;
-    }
 
 
     render() {
@@ -122,6 +124,7 @@ export default class CommentInfoPage extends Component {
                 });
                 postRefresh(data.items, 9);
             }, err => {
+                console.log('coming.....')
                 endFetch()
             });
 

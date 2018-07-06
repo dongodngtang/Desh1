@@ -58,6 +58,7 @@ export function postRepliesReplies(body, resolve, reject) {
 /*资讯视频回复列表的接口*/
 export function getReplies(body, resolve, reject) {
     helper.get(Api.replies_comments(body), ret => {
+        console.log(ret.data);
         resolve(ret.data)
     }, reject)
 }
