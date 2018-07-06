@@ -89,7 +89,7 @@ class Personal extends Component {
                     if (isEmptyObject(login_user)) {
                         router.toLoginFirstPage()
                     } else {
-                        router.toPersonDynamic()
+                        router.toPersonDynamic(login_user)
                     }
 
                 })}
