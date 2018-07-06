@@ -3,7 +3,7 @@ import {
     StyleSheet, Text, View, Image, TouchableOpacity, TextInput
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar,BaseComponent} from '../../components';
+import {NavigationBar, BaseComponent} from '../../components';
 import {LoadingView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
 import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/ComonHelper";
@@ -66,7 +66,7 @@ export class RateTop extends Component {
         const {price_changed} = this.state;
         const {type} = this.props;
         getExchange_rates({exchange_type: type}, data => {
-            console.log("type",type)
+            console.log("type", type)
             console.log("ratesItem:", data)
             rate[1] = mul(data.cny_to_hkd_rate.rate, rate[0]);
             rate[2] = mul(data.cny_to_mop_rate.rate, rate[0]);
@@ -91,24 +91,46 @@ export class RateTop extends Component {
         const {cny_to_hkd_rate, cny_to_mop_rate} = this.state.ratesItem;
         let group2 = price_changed;
         let rate = [0, 0, 0];
+
         if (index === 0) {
-            rate[0] = txt;
-            rate[1] = mul(rate[0], cny_to_hkd_rate.rate);
-            rate[2] = mul(rate[0], cny_to_mop_rate.rate);
-            rate[1] = formatCurrency(rate[1]);
-            rate[2] = formatCurrency(rate[2]);
+            if (this.isZero(txt)) {
+                rate[0] = 0.00;
+                rate[1] = 0.00;
+                rate[2] = 0.00
+            } else {
+                rate[0] = txt;
+                rate[1] = mul(rate[0], cny_to_hkd_rate.rate);
+                rate[2] = mul(rate[0], cny_to_mop_rate.rate);
+                rate[1] = formatCurrency(rate[1]);
+                rate[2] = formatCurrency(rate[2]);
+            }
+
         } else if (index === 1) {
-            rate[1] = txt;
-            rate[0] = div(rate[1], cny_to_hkd_rate.rate);
-            rate[2] = mul(rate[0], cny_to_mop_rate.rate);
-            rate[0] = formatCurrency(rate[0]);
-            rate[2] = formatCurrency(rate[2]);
+            if (this.isZero(txt)) {
+                rate[0] = 0.00;
+                rate[1] = 0.00;
+                rate[2] = 0.00
+            } else {
+                rate[1] = txt;
+                rate[0] = div(rate[1], cny_to_hkd_rate.rate);
+                rate[2] = mul(rate[0], cny_to_mop_rate.rate);
+                rate[0] = formatCurrency(rate[0]);
+                rate[2] = formatCurrency(rate[2]);
+            }
+
         } else if (index === 2) {
-            rate[2] = txt;
-            rate[0] = div(rate[2], cny_to_mop_rate.rate);
-            rate[1] = mul(rate[0], cny_to_hkd_rate.rate);
-            rate[0] = formatCurrency(rate[0]);
-            rate[1] = formatCurrency(rate[1]);
+            if (this.isZero(txt)) {
+                rate[0] = 0.00;
+                rate[1] = 0.00;
+                rate[2] = 0.00
+            } else {
+                rate[2] = txt;
+                rate[0] = div(rate[2], cny_to_mop_rate.rate);
+                rate[1] = mul(rate[0], cny_to_hkd_rate.rate);
+                rate[0] = formatCurrency(rate[0]);
+                rate[1] = formatCurrency(rate[1]);
+            }
+
         }
         group2.map((x, index) => {
             x.price = rate[index]
@@ -118,6 +140,14 @@ export class RateTop extends Component {
         })
         console.log("price_changeddssds:", group2)
     };
+
+    isZero = (price) => {
+        if (price === 0.00 || price === 0.0 || price === 0 || price === '0.00' || price === '0.0' || price === '0') {
+            return true
+        } else {
+            return false
+        }
+    }
 
     render() {
         const {ratesItem, price_changed, show} = this.state;
