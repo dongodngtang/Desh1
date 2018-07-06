@@ -129,7 +129,7 @@ export default class HotelListPage extends PureComponent {
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{title}</Text>
                     {item.star_level > 0 ? <View style={styles.starView}>
-                        <Text>酒店星级：</Text>
+                        <Text style={{color:'#444444'}}>酒店星级：</Text>
                         {this._star(item.star_level).map((index) => {
                             return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                         })}
