@@ -42,6 +42,7 @@ class MessageCenter extends Component {
         activities: [],
         msgUnRead: 0,
         conversations: [],//会話列表
+        refreshing: false
     };
 
     rows = [];
@@ -82,7 +83,7 @@ class MessageCenter extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.actionType === SWITCH_TAB && newProps.tab ===2) {
+        if (newProps.actionType === SWITCH_TAB && newProps.tab === 2) {
             this.getConversations();
         }
     }
@@ -97,6 +98,7 @@ class MessageCenter extends Component {
     }
 
     getConversations = () => {
+        this.setState({refreshing: true})
         ///获取会话列表
         JMessage.getConversations((conArr) => { // conArr: 会话数组。
             if (_.isEmpty(this.rows)) {
@@ -107,16 +109,17 @@ class MessageCenter extends Component {
                         if (item.target.username === value.target.username) {
                             item.target.avatarThumbPath = value.target.avatarThumbPath
                             item.target.nickname = value.target.nickname
-                            return;
                         }
                     })
                     return item;
                 })
 
             }
-            this.setState({conversations: this.rows});
+
+            this.setState({conversations: this.rows, refreshing: false});
 
         }, (error) => {
+            this.setState({refreshing: false})
             console.log("获取会话列表失败", error);
         });
     };
@@ -151,12 +154,19 @@ class MessageCenter extends Component {
             }
         }
 
-
         if (strNotNull(createTime)) {
             createTime = this.formatDate(createTime);
         }
 
         if (!strNotNull(avatarThumbPath) && !strNotNull(item.avatar)) {
+            item.avatar = 'request'
+            visit_other({userId: username}, data => {
+                item.target.avatarThumbPath = data.avatar;
+                item.target.nickname = data.nickname;
+                this.setState({conversations: this.rows})
+            }, err => {
+            })
+        }else if(!avatarThumbPath.includes('http')){
             item.avatar = 'request'
             visit_other({userId: username}, data => {
                 item.target.avatarThumbPath = data.avatar;
@@ -213,6 +223,10 @@ class MessageCenter extends Component {
 
             <FlatList data={this.state.conversations}
                       renderItem={this._renderItem}
+                      refreshing={this.state.refreshing}
+                      onRefresh={() => {
+                          this.getConversations();
+                      }}
                       ListHeaderComponent={
                           <View>
                               {/*{this.readerItem(0, I18n.t('order_notice'), notice.title, notice.created_at, msgUnRead)}*/}
