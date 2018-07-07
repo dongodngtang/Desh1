@@ -841,7 +841,7 @@ export default class ChatRoom extends Component {
         if (this.state.inputVoice)
             voiceView = {renderComposer: this.createTextInput};
         return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+            <View style={styles.container} behavior="padding" enabled>
                 {/*导航栏*/}
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
@@ -893,7 +893,7 @@ export default class ChatRoom extends Component {
                     btnArray={this.popActions()}/>
 
 
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 
