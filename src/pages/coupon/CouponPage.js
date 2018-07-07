@@ -74,7 +74,7 @@ export default class CouponPage extends Component {
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             {discount_type === 'rebate' ?
                                 <Text style={{
-                                    color: "#F34247",
+                                    color: selectId === 0 ? "#F34247" : "#AAAAAA",
                                     fontSize: 40,
                                     fontWeight: 'bold',
                                     width:100
