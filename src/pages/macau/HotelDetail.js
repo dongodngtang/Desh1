@@ -134,7 +134,7 @@ export default class HotelDetail extends PureComponent {
                                 return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                             })}
                         </View>
-                        <Text style={styles.location2} numberOfLines={2}>地址：{location}</Text>
+                        <Text selectable={true} style={styles.location2} numberOfLines={2}>地址：{location}</Text>
                     </View>
                     <View style={{flex: 1}}/>
 
