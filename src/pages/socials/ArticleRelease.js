@@ -486,7 +486,7 @@ export default class ArticleRelease extends PureComponent {
                                let newData = [...this.state.data];
                                let titleData = newData[item.index];
                                titleData.text = text;
-                               this.setState({data: newData});
+                               this.state.data = newData;
                            }}/>
             );
         }
@@ -535,7 +535,7 @@ export default class ArticleRelease extends PureComponent {
                                                            let newData = [...this.state.data];
                                                            let titleData = newData[item.index];
                                                            titleData.text = text;
-                                                           this.setState({data: newData});
+                                                           this.state.data = newData;
                                                        }}/> : null}
                     {/*图片*/}
                     {type === "image" ? <ImageView imageInfo={item.item}/> : null}

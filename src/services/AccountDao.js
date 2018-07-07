@@ -13,7 +13,6 @@ import {followships, postNearBys} from './SocialDao';
 // let image = require("../../source/home/home_avatar.png")
 
 
-
 export function postShareCount(body, resolve, reject) {
     helper.post(Api.share_count(body), body, ret => {
         resolve(ret.data)
@@ -289,9 +288,9 @@ function JmessageLogin(imUser, count, callback) {
             },
             //登录失败回调
             (error) => {
+                showToast('IM正在加载')
                 console.log("极光IM登录失败" + count, error);
                 JmessageLogin(imUser.username, imUser.password, --count)
-
             }
         );
     }
