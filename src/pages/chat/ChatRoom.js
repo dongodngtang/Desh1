@@ -10,7 +10,8 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Image,
-    PermissionsAndroid, NativeModules
+    PermissionsAndroid, NativeModules,
+    KeyboardAvoidingView
 } from 'react-native';
 
 import {GiftedChat, Avatar} from 'react-native-gifted-chat';
@@ -840,7 +841,7 @@ export default class ChatRoom extends Component {
         if (this.state.inputVoice)
             voiceView = {renderComposer: this.createTextInput};
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 {/*导航栏*/}
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
@@ -892,7 +893,7 @@ export default class ChatRoom extends Component {
                     btnArray={this.popActions()}/>
 
 
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 

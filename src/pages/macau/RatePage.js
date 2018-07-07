@@ -147,6 +147,17 @@ export class RateTop extends Component {
         } else {
             return false
         }
+    };
+
+    clean_txt=()=>{
+        const {price_changed} = this.state;
+        let group2 = price_changed;
+        group2.map((x, index) => {
+            x.price =''
+        });
+        this.setState({
+            price_changed: group2
+        })
     }
 
     render() {
@@ -196,11 +207,13 @@ export class RateTop extends Component {
                                         clearTextOnFocus={true}
                                         underlineColorAndroid={'transparent'}
                                         onChangeText={txt => {
-                                            this.setState({
-                                                show: true
-                                            });
+                                            this.state.show=true
                                             this.changing_price(item, index, txt)
                                         }}
+                                        onFocus={()=>{
+                                            this.clean_txt()
+                                        }}
+
                                     />
                                     <Text style={{color: "#8C8C8C", fontSize: 14, marginTop: 3}}>{item.name}</Text>
                                 </View>
