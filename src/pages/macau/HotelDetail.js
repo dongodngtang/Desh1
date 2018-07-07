@@ -80,6 +80,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginTop: 8
     },
+    price3: {
+        color: '#FF3F3F',
+        fontSize: 20
+    }
 })
 
 export default class HotelDetail extends PureComponent {
@@ -134,8 +138,8 @@ export default class HotelDetail extends PureComponent {
                     </View>
                     <View style={{flex: 1}}/>
 
-                    <View style={{marginRight: 22}}>
-                        {hotel.start_price !== '0.0' ? <Text style={styles.price}><Text
+                    <View style={{marginRight: 22,flexDirection:'column',alignItems:'flex-end'}}>
+                        {hotel.start_price !== '0.0' ? <Text style={styles.price3}><Text
                             style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{hotel.start_price}<Text
                             style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text> : null}
                         <View style={{flex: 1}}/>
