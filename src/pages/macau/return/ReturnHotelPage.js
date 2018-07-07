@@ -93,9 +93,10 @@ export default class ReturnHotelPage extends Component {
                                       alertOrder("确认提交？", () => {
                                           returnHotelOrder({memo: this.state.memo, order_number: order_number}, ret => {
                                               showToast('申请提交成功');
+                                              this.props.params.refresh && this.props.params.refresh();
                                               this.contain && this.contain.close();
                                               global.router.pop();
-                                              this.props.params.refresh();
+
                                           }, err => {
                                               showToast(err);
                                           })

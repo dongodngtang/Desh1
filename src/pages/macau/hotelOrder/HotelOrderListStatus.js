@@ -26,7 +26,7 @@ export default class HotelOrderListStatus extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    global.router.toOrderStatusPage(order_number)
+                    global.router.toOrderStatusPage(order_number,this.refresh)
                 }}
                 style={{flex: 1, marginTop: 5}}>
                 <View style={styles.top}>
