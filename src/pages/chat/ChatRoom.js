@@ -191,7 +191,7 @@ export default class ChatRoom extends Component {
                     this.setState({moreText: I18n.t("no_more")});
                 }
 
-                if(Platform.OS !== 'ios'){
+                if (Platform.OS !== 'ios') {
                     messageArray.reverse();
                 }
                 console.log('数据库', messageArray)
@@ -261,7 +261,7 @@ export default class ChatRoom extends Component {
             if (Platform.OS === 'android')
                 events = 'file://' + events;
             this.uploadImageAction(events, (data) => {
-                console.log("kk:",data)
+                console.log("kk:", data)
                 this.createMessage({messageType: "file", path: mediaPath, coverPath: data.image_url});
             });
         });
@@ -841,7 +841,7 @@ export default class ChatRoom extends Component {
         if (this.state.inputVoice)
             voiceView = {renderComposer: this.createTextInput};
         return (
-            <View style={styles.container} behavior="padding" enabled>
+            <View style={styles.container}>
                 {/*导航栏*/}
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
@@ -897,7 +897,7 @@ export default class ChatRoom extends Component {
         );
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         dismissKeyboard()
     }
 
