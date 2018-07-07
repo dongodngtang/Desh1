@@ -362,7 +362,8 @@ const images = {
         price1: require('../../source/macau/price1.png'),
         price2: require('../../source/macau/price2.png'),
         price1_red: require('../../source/macau/price1_red.png'),
-        price2_red: require('../../source/macau/price2_red.png')
+        price2_red: require('../../source/macau/price2_red.png'),
+        callPhone: require('../../source/macau/callPhone.png')
 
     },
     integral: {

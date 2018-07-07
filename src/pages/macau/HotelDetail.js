@@ -8,7 +8,7 @@ import Swiper from 'react-native-swiper';
 import {hotelDetail} from '../../services/MacauDao';
 import RenderHtml from '../comm/RenderHtml';
 import {NavigationBar} from '../../components'
-import {call,turn2MapMark} from '../../utils/ComonHelper'
+import {call, turn2MapMark} from '../../utils/ComonHelper'
 
 const styles = StyleSheet.create({
     banner: {
@@ -34,36 +34,52 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 14,
         backgroundColor: Colors.white,
-        width: '100%',
         marginBottom: 5,
-        flexDirection:'row',
-        alignItems:'center'
+        flexDirection: 'row',
+        // alignItems:'center',
+        paddingLeft: 18,
+        width: Metrics.screenWidth
     },
     title: {
         fontSize: 18,
         color: Colors.txt_444,
-        width:'70%'
+        width: '70%'
     },
     location: {
         fontSize: 12,
         color: Colors._AAA,
-        width:'70%'
+        width: '70%'
     },
     btn_book: {
-        height: 44,
-        width: '90%',
-        backgroundColor: Colors._E54,
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: 60,
+        width:Metrics.screenWidth,
+        backgroundColor: 'white',
+        flexDirection:'row',
+        alignItems:'center',
         position: 'absolute',
-        bottom: 10,
-        alignSelf: 'center',
-        borderRadius: 3
+        bottom:0,
+        borderTopWidth:1,
+        borderTopColor:'#F3F3F3'
     },
     btn_book_txt: {
         fontSize: 18,
         color: Colors.white
-    }
+    },
+    stars: {
+        width: 14,
+        height: 14,
+        marginRight: 4
+    },
+    starView: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        marginTop: 9
+    },
+    location2: {
+        color: '#999999',
+        fontSize: 12,
+        marginTop: 8
+    },
 })
 
 export default class HotelDetail extends PureComponent {
@@ -82,11 +98,19 @@ export default class HotelDetail extends PureComponent {
         }, err => {
 
         })
-    }
+    };
+
+    _star = (star) => {
+        let stars = [];
+        for (let i = 1; i <= star; i++) {
+            stars.push(i);
+        }
+        return stars;
+    };
 
     render() {
-
-        const {images, location, title, description, telephone,amap_poiid} = this.state.hotel;
+        const {hotel} = this.props.params;
+        const {images, location, title, description, telephone, amap_poiid} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 
@@ -97,28 +121,44 @@ export default class HotelDetail extends PureComponent {
                 <Banner banners={images}/>
 
                 <View style={styles.nav_view}>
-                    <TouchableOpacity style={{flexDirection: 'column', marginLeft: 17}}
-                    onPress={()=>{
-                        turn2MapMark(amap_poiid)
-                    }}>
+
+                    <View style={{width:'70%'}}>
                         <Text style={styles.title}>{title}</Text>
-                        <View style={{flexDirection: 'row', alignItems:'center',marginTop:5}}>
-                            <Text style={styles.location}>地址：{location}</Text>
-                            <Image style={{height: 14, width: 10, marginLeft: 19}}
-                                   source={Images.macau.location}/>
-                            <Text style={{color:"#4A90E2",fontSize:12, marginLeft: 4}}>地图</Text>
+                        <View style={{flexDirection: 'row', marginTop: 5,alignItems:'center'}}>
+                            <Text style={{color: '#999999', fontSize: 12}}>酒店星级：</Text>
+                            {this._star(hotel.star_level).map((index) => {
+                                return <Image key={index} style={styles.stars} source={Images.macau.star}/>
+                            })}
                         </View>
-                    </TouchableOpacity>
+                        <Text style={styles.location2} numberOfLines={2}>地址：{location}</Text>
+                    </View>
+                    <View style={{flex: 1}}/>
+
+                    <View style={{marginRight: 22}}>
+                        {hotel.start_price !== '0.0' ? <Text style={styles.price}><Text
+                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{hotel.start_price}<Text
+                            style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text> : null}
+                        <View style={{flex: 1}}/>
+                        <TouchableOpacity style={{flexDirection: 'row'}}
+                                          onPress={() => {
+                                              turn2MapMark(amap_poiid)
+                                          }}>
+                            <Image style={{height: 14, width: 10}}
+                                   source={Images.macau.location}/>
+                            <Text style={{color: "#4A90E2", fontSize: 12, marginLeft: 4}}>地图</Text>
+                        </TouchableOpacity>
+                    </View>
+
 
                     {/*<View style={{flex:1}}/>*/}
 
                     {/*<TouchableOpacity*/}
-                        {/*style={{marginRight: 17}}*/}
-                        {/*onPress={() => {*/}
-                            {/*call(telephone)*/}
-                        {/*}}>*/}
-                        {/*<Image style={{height: 20, width: 20, marginLeft: 20, marginRight: 20}}*/}
-                               {/*source={Images.macau.viewpoint}/>*/}
+                    {/*style={{marginRight: 17}}*/}
+                    {/*onPress={() => {*/}
+                    {/*call(telephone)*/}
+                    {/*}}>*/}
+                    {/*<Image style={{height: 20, width: 20, marginLeft: 20, marginRight: 20}}*/}
+                    {/*source={Images.macau.viewpoint}/>*/}
                     {/*</TouchableOpacity>*/}
                 </View>
 
@@ -142,21 +182,35 @@ export default class HotelDetail extends PureComponent {
                     top: 0,
                     backgroundColor: 'rgba(229,74,46,' + this.state.opacity + ')'
                 }}
-                rightBtnIcon={Images.macau.call}
-                rightBtnPress={()=>{call(telephone)}}
-                rightImageStyle={{height: 20, width: 20, marginLeft: 20, marginRight: 20}}
+                // rightBtnIcon={Images.macau.call}
+                // rightBtnPress={()=>{call(telephone)}}
+                // rightImageStyle={{height: 20, width: 20, marginLeft: 20, marginRight: 20}}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            <TouchableOpacity
-                style={styles.btn_book}
-                onPress={() => {
+
+
+            <View
+                style={styles.btn_book}>
+                <TouchableOpacity
+                    style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center',backgroundColor:'white',height:60}}
+                    onPress={() => {
+                        call(telephone)
+                }}>
+                    <Image style={{width:27,height:23}} source={Images.macau.callPhone}/>
+                    <Text style={{color:"#666666",fontSize:14,marginLeft:11}}>联系客服</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={{flex:1,backgroundColor:'#E54A2E',alignItems:'center',height:60,
+                    justifyContent:'center'}}
+                    onPress={() => {
                     router.toHotelRoomListPage(this.state.hotel, this.props.params.date);
                 }}>
-                <Text style={styles.btn_book_txt}>预定房间</Text>
-
-            </TouchableOpacity>
+                    <Text style={styles.btn_book_txt}>预定房间</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     }
 
