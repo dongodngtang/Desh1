@@ -861,23 +861,25 @@ export default class ChatRoom extends Component {
                     }}
                 />
 
-                {this.state.myUserName !== "" ?
-                    <GiftedChat
-                        {...voiceView}
-                        messages={this.state.messages}              //消息
-                        showUserAvatar={true}                       //显示自己的头像
-                        loadEarlier={true}
-                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
-                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                        user={{
-                            _id: this.state.myUserName,
-                        }}
-                        label={I18n.t("send")}
-                        onSend={(event) => this.onSendMessage(event)}
-                        placeholder={I18n.t("new_message")}
-                        renderAccessory={this.renderAccessoryAction}
-                        renderActions={this.createToolButton}       //自定义左侧按钮
-                    /> : null}
+                <KeyboardAvoidingView behavior='padding' enabled style={{flex: 1}}>
+                    {this.state.myUserName !== "" ?
+                        <GiftedChat
+                            {...voiceView}
+                            messages={this.state.messages}              //消息
+                            showUserAvatar={true}                       //显示自己的头像
+                            loadEarlier={true}
+                            renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                            renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                            user={{
+                                _id: this.state.myUserName,
+                            }}
+                            label={I18n.t("send")}
+                            onSend={(event) => this.onSendMessage(event)}
+                            placeholder={I18n.t("new_message")}
+                            renderAccessory={this.renderAccessoryAction}
+                            renderActions={this.createToolButton}       //自定义左侧按钮
+                        /> : null}
+                </KeyboardAvoidingView>
 
                 {this.state.recording ? <View style={styles.voiceAlert}><Text
                     style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
