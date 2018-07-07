@@ -173,9 +173,9 @@ export class RateTop extends Component {
                     <Text style={styles.txt}>今日汇率：</Text>
                     <View style={{flexDirection: 'column', alignSelf: 'center'}}>
                         <Text
-                            style={styles.txt}>{`1人名币=${cny_to_hkd_rate.rate}港币，1港币=${div(1, cny_to_hkd_rate.rate).toFixed(4)}人名币`}</Text>
+                            style={styles.txt}>{`1人民币=${cny_to_hkd_rate.rate}港币，1港币=${div(1, cny_to_hkd_rate.rate).toFixed(4)}人民币`}</Text>
                         <Text
-                            style={[styles.txt, {marginTop: 5}]}>{`1人名币=${cny_to_mop_rate.rate}澳门币，1澳门币=${div(1, cny_to_mop_rate.rate).toFixed(4)}人名币`}</Text>
+                            style={[styles.txt, {marginTop: 5}]}>{`1人民币=${cny_to_mop_rate.rate}澳门币，1澳门币=${div(1, cny_to_mop_rate.rate).toFixed(4)}人民币`}</Text>
                     </View>
                 </View>
 
