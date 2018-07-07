@@ -1,8 +1,8 @@
 const images = {
-    cny:require('../../source/cny.png'),
-    hkd:require('../../source/hkd.png'),
-    mop:require('../../source/mop.png'),
-    default_img:require('../../source/default_img.png'),
+    cny: require('../../source/cny.png'),
+    hkd: require('../../source/hkd.png'),
+    mop: require('../../source/mop.png'),
+    default_img: require('../../source/default_img.png'),
     month: require('../../source/month.png'),
     monthE: require('../../source/monthE.png'),
     nav_close: require('../../source/nav_Close.png'),
@@ -351,37 +351,41 @@ const images = {
         viewpoint: require('../../source/macau/viewpoint.png'),
         location: require('../../source/macau/location.png'),
         call: require('../../source/macau/call.png'),
-        rate1:require('../../source/macau/rate1.png'),
-        rate2:require('../../source/macau/rate2.png'),
-        down:require('../../source/macau/down.png'),
-        down2:require('../../source/macau/down2.png'),
-        night:require('../../source/macau/night.png'),
-        right:require('../../source/macau/right.png'),
-        star:require('../../source/macau/star.png'),
-        up:require('../../source/macau/up.png')
+        rate1: require('../../source/macau/rate1.png'),
+        rate2: require('../../source/macau/rate2.png'),
+        down: require('../../source/macau/down.png'),
+        down2: require('../../source/macau/down2.png'),
+        night: require('../../source/macau/night.png'),
+        right: require('../../source/macau/right.png'),
+        star: require('../../source/macau/star.png'),
+        up: require('../../source/macau/up.png'),
+        price1: require('../../source/macau/price1.png'),
+        price2: require('../../source/macau/price2.png'),
+        price1_red: require('../../source/macau/price1_red.png'),
+        price2_red: require('../../source/macau/price2_red.png')
 
     },
-    integral:{
-        integral:require('../../source/integral/integral.png'),
-        hotel:require('../../source/integral/hotel.png'),
-        frends:require('../../source/integral/frends.png'),
-        jine:require('../../source/integral/jine.png'),
-        login:require('../../source/integral/login.png'),
-        monents:require('../../source/integral/monents.png'),
-        renwu:require('../../source/integral/renwu.png'),
-        share:require('../../source/integral/share.png'),
-        tiezi:require('../../source/integral/tiezi.png'),
+    integral: {
+        integral: require('../../source/integral/integral.png'),
+        hotel: require('../../source/integral/hotel.png'),
+        frends: require('../../source/integral/frends.png'),
+        jine: require('../../source/integral/jine.png'),
+        login: require('../../source/integral/login.png'),
+        monents: require('../../source/integral/monents.png'),
+        renwu: require('../../source/integral/renwu.png'),
+        share: require('../../source/integral/share.png'),
+        tiezi: require('../../source/integral/tiezi.png'),
         coupon: require('../../source/integral/coupon.png'),
-        couponTop:require('../../source/integral/couponTop.png'),
-        couponBootom:require('../../source/integral/couponBootom.png')
+        couponTop: require('../../source/integral/couponTop.png'),
+        couponBootom: require('../../source/integral/couponBootom.png')
     },
-    coupon:{
-        background:require('../../source/coupon/background2.png'),
-        coupon:require('../../source/coupon/coupon.png'),
-        return_hei:require('../../source/coupon/return_hei.png'),
-        selected:require('../../source/coupon/selected.png'),
-        unSelected:require('../../source/coupon/unSelected.png'),
-        coupon_used:require('../../source/coupon/coupon_used.png')
+    coupon: {
+        background: require('../../source/coupon/background2.png'),
+        coupon: require('../../source/coupon/coupon.png'),
+        return_hei: require('../../source/coupon/return_hei.png'),
+        selected: require('../../source/coupon/selected.png'),
+        unSelected: require('../../source/coupon/unSelected.png'),
+        coupon_used: require('../../source/coupon/coupon_used.png')
 
     }
 

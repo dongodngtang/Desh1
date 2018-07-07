@@ -12,13 +12,34 @@ import I18n from "react-native-i18n";
 import {isEmptyObject} from "../../utils/ComonHelper";
 import moment from "moment/moment";
 
+const categorie1 = [{id: 0, name: '全部', type: '', isSelect: true},
+    {id: 1, name: '氹仔区', type: 'dangzai', isSelect: false}, {
+        id: 2,
+        name: '澳门半岛',
+        type: 'aomenbandao',
+        isSelect: false
+    }];
+const categorie2 = [{id: 0, name: 'price_asc', img: Images.macau.price1, img2:Images.macau.price1_red,isSelect: false}, {
+    id: 1,
+    name: 'price_desc',
+    img: Images.macau.price2,
+    img2:Images.macau.price2_red,
+    isSelect: false
+}];
+
 export default class HotelListPage extends PureComponent {
 
     keyword = '';
 
     state = {
         timeShow: false,
-        changeTime: this.props.params.date
+        changeTime: this.props.params.date,
+        select1: false,
+        select2: false,
+        region_keyword: '',
+        order_keyword: '',
+        categorie_area: categorie1,
+        categorie_price: categorie2
     };
 
     showSpecInfo = (temp) => {
@@ -40,7 +61,7 @@ export default class HotelListPage extends PureComponent {
 
     render() {
 
-        const {timeShow, changeTime} = this.state;
+        const {timeShow, changeTime, categorie_area, categorie_price, region_keyword, select2_keyword} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
                 <SearchBar
                     onChangeText={keyword => {
@@ -53,6 +74,54 @@ export default class HotelListPage extends PureComponent {
                 {timeShow ? <TimeSpecificationInfo
                     showSpecInfo={this.showSpecInfo}
                     _change={this._change}/> : null}
+
+                <View style={styles.selectView}>
+                    {categorie_area.map((item, index, arr) => {
+                        return <TouchableOpacity
+                            key={'categorie_area' + index}
+                            style={{paddingTop: 14, paddingBottom: 14, paddingRight: 26}}
+                            onPress={() => {
+                                arr.forEach(x => {
+                                    x.isSelect = x.id === item.id;
+                                    this.state.region_keyword = item.type
+
+                                    this.setState({
+                                        categorie_area: [...arr]
+                                    })
+
+                                    this.listView && this.listView.refresh()
+                                })
+                            }}>
+                            <Text
+                                style={{color: item.isSelect ? '#E54A2E' : '#888888', fontSize: 12}}>{item.name}</Text>
+                        </TouchableOpacity>
+                    })}
+                    {categorie_price.map((item, index, arr) => {
+                        return <TouchableOpacity
+                            key={'categorie_price' + index}
+                            style={{
+                                paddingTop: 14,
+                                paddingBottom: 14,
+                                paddingRight: 26,
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}
+                            onPress={() => {
+                                arr.forEach(x => {
+                                    x.isSelect = x.id === item.id;
+                                    this.state.order_keyword = item.name
+                                    this.setState({
+                                        categorie_price: [...arr]
+                                    })
+                                    this.listView && this.listView.refresh()
+                                })
+
+                            }}>
+                            <Text style={{color: item.isSelect ? '#E54A2E' : '#888888', fontSize: 12}}>价格</Text>
+                            <Image style={{width: 12, height: 8}} source={item.isSelect ? item.img2 : item.img}/>
+                        </TouchableOpacity>
+                    })}
+                </View>
 
                 <UltimateListView
                     ListHeaderComponent={this._separator}
@@ -79,7 +148,13 @@ export default class HotelListPage extends PureComponent {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
-            hotels({page, page_size: 20, keyword: this.keyword}, data => {
+            hotels({
+                page,
+                page_size: 20,
+                keyword: this.keyword,
+                region: this.state.region_keyword,
+                order: this.state.order_keyword
+            }, data => {
                 console.log("HotelList:", data)
                 startFetch(data.items, 18)
             }, err => {
@@ -129,7 +204,7 @@ export default class HotelListPage extends PureComponent {
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{title}</Text>
                     {item.star_level > 0 ? <View style={styles.starView}>
-                        <Text style={{color:'#444444'}}>酒店星级：</Text>
+                        <Text style={{color: '#444444'}}>酒店星级：</Text>
                         {this._star(item.star_level).map((index) => {
                             return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                         })}
@@ -157,6 +232,13 @@ export default class HotelListPage extends PureComponent {
 
 }
 const styles = StyleSheet.create({
+    selectView: {
+        backgroundColor: 'white',
+        paddingLeft: 18,
+        paddingRight: 18,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     list: {},
     item: {
         flex: 1,
