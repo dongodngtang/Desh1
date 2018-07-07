@@ -32,7 +32,10 @@ export default class LocalRatePage extends Component {
     _renderItem = ({item,index}) => {
         const {avatar,mobile,nick_name,signature,user_id} = item
         return (
-            <View style={styles.pageItem}>
+            <TouchableOpacity style={styles.pageItem}
+            onPress={()=>{
+                global.router.toUserTopicPage(item)
+            }}>
 
                 <Text style={styles.txt_num}>{index+1}</Text>
 
@@ -51,7 +54,7 @@ export default class LocalRatePage extends Component {
                 <Image style={styles.img_left}
                        source={Images.adr_right}/>
 
-            </View>
+            </TouchableOpacity>
         )
     };
 
