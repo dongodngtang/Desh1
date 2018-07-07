@@ -124,6 +124,7 @@ export default class HotelListPage extends PureComponent {
                 </View>
 
                 <UltimateListView
+                    style={{paddingTop:6}}
                     ListHeaderComponent={this._separator}
                     separator={this._separator}
                     keyExtractor={(item, index) => index + "item"}
