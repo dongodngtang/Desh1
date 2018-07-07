@@ -27,7 +27,7 @@ export default class ReturnHotelPage extends Component {
     render() {
         const {item} = this.props.params;
         const {hotel_logo, hotel_title, order} = item;
-        const {checkin_date, checkout_date, status, total_price, order_number} = order;
+        const {checkin_date, checkout_date, status, total_price, order_number,final_price} = order;
         let time = `${checkin_date}至${checkout_date}`;
 
         return (
@@ -63,7 +63,7 @@ export default class ReturnHotelPage extends Component {
 
                 <View style={styles.returnPriceView}>
                     <Text style={{color: '#333333', fontSize: 14, marginLeft: 17}}>退款金额：</Text>
-                    <Text style={{color: '#F24A4A', fontSize: 18}}>¥{total_price}</Text>
+                    <Text style={{color: '#F24A4A', fontSize: 18}}>¥{final_price}</Text>
                 </View>
                 <View style={styles.returnPriceView}>
                     <Text style={{color: '#333333', fontSize: 14, marginLeft: 17}}>退款说明：</Text>
