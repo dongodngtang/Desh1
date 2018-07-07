@@ -758,8 +758,9 @@ export default class ChatRoom extends Component {
 
     ///第二排按钮
     renderAccessoryAction = () => {
+
         return (
-            <View style={{flex: 1}}>
+            <KeyboardAvoidingView style={{flex: 1}}>
                 <View style={[{height: 0.5}, {backgroundColor: "#E5E5E5"}]}/>
                 <View style={[{flex: 1}, {flexDirection: "row"}, {alignItems: "center"}]}>
                     <TouchableOpacity onPress={this.selectedImage}>
@@ -789,7 +790,7 @@ export default class ChatRoom extends Component {
                                style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         );
     };
 
@@ -861,7 +862,7 @@ export default class ChatRoom extends Component {
                     }}
                 />
 
-                <KeyboardAvoidingView behavior='padding' enabled style={{flex: 1}}>
+
                     {this.state.myUserName !== "" ?
                         <GiftedChat
                             {...voiceView}
@@ -879,7 +880,6 @@ export default class ChatRoom extends Component {
                             renderAccessory={this.renderAccessoryAction}
                             renderActions={this.createToolButton}       //自定义左侧按钮
                         /> : null}
-                </KeyboardAvoidingView>
 
                 {this.state.recording ? <View style={styles.voiceAlert}><Text
                     style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
