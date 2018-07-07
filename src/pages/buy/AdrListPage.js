@@ -120,8 +120,9 @@ export default class AdrListPage extends Component {
             style={styles.itemView}>
             <View style={styles.rowView}>
                 <Text
+
                     style={[styles.txtName,
-                        {color: item.id === id ? Colors._DF1 : Colors._666}]}>{consignee}    </Text>
+                        {color: item.id === id ? Colors._DF1 : Colors._666}]}>{consignee}</Text>
                 <SecurityText
                     testID="txt_phone_security"
                     securityOptions={{
@@ -252,7 +253,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         marginTop: 14,
-        marginLeft: 17
+        marginLeft: 17,
+        width:'60%'
     },
     tabView: {
         borderRadius: 2,
@@ -310,7 +312,7 @@ const styles = StyleSheet.create({
     },
     imgSelect: {
         height: 12,
-        width: 12,
+        width: 15,
         marginRight: 10
     },
     txtDel: {

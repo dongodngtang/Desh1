@@ -91,6 +91,8 @@ export default class NewAddress extends Component {
                 <View style={styles.inputView}>
                     <Text style={styles.lbAdr}>{I18n.t('buy_person')}:</Text>
                     <TextInput style={styles.input}
+                               maxLength={10}
+                               underlineColorAndroid={'transparent'}
                                defaultValue={this._getName()}
                                onChangeText={txt => {
                                    this.receiver = txt;
@@ -100,6 +102,7 @@ export default class NewAddress extends Component {
                 <View style={styles.inputView}>
                     <Text style={styles.lbAdr}>{I18n.t('line')}: </Text>
                     <TextInput style={styles.input}
+                               underlineColorAndroid={'transparent'}
                                defaultValue={this._getPhone()}
                                onChangeText={txt => {
                                    this.phoneNum = txt;
@@ -109,6 +112,7 @@ export default class NewAddress extends Component {
                 <View style={styles.inputView}>
                     <Text style={styles.lbAdr}>邮政编码: </Text>
                     <TextInput style={styles.input}
+                               underlineColorAndroid={'transparent'}
                                defaultValue={this._getZip()}
                                onChangeText={txt => {
                                    this.zip = txt;
@@ -134,8 +138,9 @@ export default class NewAddress extends Component {
                 <View style={styles.line}/>
                 <View style={styles.inputAdrView}>
                     <TextInput
+                        underlineColorAndroid={'transparent'}
                         numberOfLines={2}
-                        multiline={true}
+                        maxLength={45}
                         style={styles.inputAdr}
                         defaultValue={this._getAdrDetail()}
                         placeholder={I18n.t('buy_adr_name')}
