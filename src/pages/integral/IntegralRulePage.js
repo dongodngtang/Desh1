@@ -70,8 +70,9 @@ const styles = StyleSheet.create({
         backgroundColor:'#F2F2F2'
     },
     rules:{
-        marginRight:15,
-        marginLeft:17,
+        flex:1,
+        paddingRight:15,
+        paddingLeft:17,
         marginTop:21
     },
     txt1:{
