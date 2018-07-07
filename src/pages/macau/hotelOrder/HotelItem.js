@@ -50,7 +50,7 @@ export default class HotelItem extends PureComponent {
     render() {
         const {hotel_logo, hotel_title, order} = this.props.item;
 
-        const {checkin_date, checkout_date, status, total_price,order_number} = order;
+        const {checkin_date, checkout_date, status, total_price,order_number,final_price} = order;
         let time = `${checkin_date}至${checkout_date}`;
         return (
             <View style={styles.itemView}>
@@ -69,12 +69,12 @@ export default class HotelItem extends PureComponent {
 
                 <View style={styles.page}>
                     <Text style={{color: "#333333", marginLeft: 14, fontSize: 14}}>合计：<Text
-                        style={{color: "#E54A2E", fontSize: 18}}>¥{total_price}</Text></Text>
+                        style={{color: "#E54A2E", fontSize: 18}}>¥{final_price}</Text></Text>
                     <View style={{flex: 1}}/>
 
                     {status === HotelStatus.unpaid ? <UnpaidBottom
                         order_number={order_number}
-                        total_price={total_price}
+                        total_price={final_price}
                         refresh={this.props.refresh}/> : this.bottomShow(this.props.item)}
                 </View>
             </View>
