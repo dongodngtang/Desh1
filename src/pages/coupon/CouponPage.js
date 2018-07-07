@@ -63,7 +63,7 @@ export default class CouponPage extends Component {
     };
 
     _renderItem = (item) => {
-        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price} = item.item;
+        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price,coupon_type} = item.item;
         const {selectId} = this.state;
         return (
             <ImageBackground
@@ -109,8 +109,11 @@ export default class CouponPage extends Component {
                         {selectId === 0 ? <TouchableOpacity
                                 style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
                                 onPress={() => {
-                                    router.pop();
-                                    global.router.toSelectTimePage();
+                                    if(coupon_type === 'hotel'){
+                                        router.pop();
+                                        global.router.toSelectTimePage();
+                                    }
+
                                 }}>
                                 <Text style={{color: "#FFFFFF", fontSize: 14}}>去使用</Text>
                             </TouchableOpacity> :
