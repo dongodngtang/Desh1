@@ -1,4 +1,5 @@
 const images = {
+    out_exit: require('../../source/out_exit.png'),
     cny: require('../../source/cny.png'),
     hkd: require('../../source/hkd.png'),
     mop: require('../../source/mop.png'),

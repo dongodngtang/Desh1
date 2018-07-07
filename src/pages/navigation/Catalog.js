@@ -57,7 +57,7 @@ export default class Catalog extends PureComponent {
                     name: '出入境',
                     type: 'entry_exit',
                     size: {height: 29, width: 31},
-                    icon: Images.macau.gift
+                    icon: Images.out_exit
                 },
                 {
                     name: '商城',
