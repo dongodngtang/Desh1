@@ -127,8 +127,8 @@ export default class OrderStatusPage extends Component {
     };
 
     _submitBtn = () => {
-        const {order_number, total_price} = this.state.orderInfo.order;
-        let param = {order_number, total: total_price}
+        const {order_number, total_price,final_price} = this.state.orderInfo.order;
+        let param = {order_number, total: final_price}
 
         this.payAction && this.payAction.toggle(param)
 
@@ -136,18 +136,18 @@ export default class OrderStatusPage extends Component {
 
 
     statusBottom = (order) => {
-        const {status, pay_status, total_price, order_number} = order;
+        const {status, pay_status, total_price, order_number,final_price} = order;
         switch (pay_status) {
             case HotelStatus.unpaid:
                 return (
                     <View style={styles.bottomsView}>
                         <Text style={{color: "#333333", marginLeft: 14, fontSize: 14}}>合计：<Text
-                            style={{color: "#E54A2E", fontSize: 18}}>¥{total_price}</Text></Text>
+                            style={{color: "#E54A2E", fontSize: 18}}>¥{final_price}</Text></Text>
                         <View style={{flex: 1}}/>
                         <UnpaidBottom
                             refresh={this._refresh}
                             order_number={order_number}
-                            total_price={total_price}
+                            total_price={final_price}
                             _submitBtn={this._submitBtn}/>
                     </View>
                 );
@@ -194,7 +194,7 @@ export default class OrderStatusPage extends Component {
             )
         }
         const {room, order, checkin_infos} = orderInfo;
-        const {order_number, created_at, room_num, pay_status, status_text, status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num} = order;
+        const {order_number, created_at, room_num, pay_status, status_text, status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num,final_price} = order;
         let date = {begin_date: checkin_date, end_date: checkout_date, counts: nights_num};
 
         return (
@@ -276,7 +276,7 @@ export default class OrderStatusPage extends Component {
                         }}>
                             <Text style={styles.infoTxt3}>应付金额</Text>
                             <View style={{flex: 1}}/>
-                            <Text style={{color: "#E54A2E", fontSize: 14}}>¥{total_price}</Text>
+                            <Text style={{color: "#E54A2E", fontSize: 14}}>¥{final_price}</Text>
                         </View>
                     </View>
                     {this._intro()}
