@@ -192,10 +192,12 @@ export default class PayAction extends Component {
                 }
                 if (this.state.selectTab === 0) {
                     this.ali_pay()
+                    this.toggle(this.state.order.order_number)
                 }
 
                 if (this.state.selectTab === 1) {
                     this.wxpay()
+                    this.toggle(this.state.order.order_number)
                 }
             }}
             style={styles.btnPay}>
