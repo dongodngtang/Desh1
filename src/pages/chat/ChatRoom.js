@@ -855,61 +855,120 @@ export default class ChatRoom extends Component {
         let voiceView = {};
         if (this.state.inputVoice)
             voiceView = {renderComposer: this.createTextInput};
-        return (
-            <KeyboardAvoidingView style={styles.container}>
-                {/*导航栏*/}
-                <NavigationBar
-                    barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-                    toolbarStyle={{backgroundColor: "white"}}
-                    title={userInfo.nickname}
-                    titleStyle={{color: Colors._333}}
-                    leftBtnIcon={Images.set_back}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => {
-                        router.pop()
-                    }}
-                    rightBtnIcon={Images.social.more_3}
-                    rightImageStyle={{height: 4, width: 19, marginLeft: 20, marginRight: 20}}
-                    rightBtnPress={() => {
-                        this.setState({windowType: 1});
-                        this.popAction && this.popAction.toggle()
-                    }}
-                />
-
-                {this.state.myUserName !== "" ?
-                    <GiftedChat
-                        {...voiceView}
-                        messages={this.state.messages}              //消息
-                        showUserAvatar={true}                       //显示自己的头像
-                        loadEarlier={true}
-                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
-                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                        user={{
-                            _id: this.state.myUserName,
+        if(Platform.OS === 'ios'){
+            return (
+                <KeyboardAvoidingView style={styles.container}>
+                    {/*导航栏*/}
+                    <NavigationBar
+                        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
+                        toolbarStyle={{backgroundColor: "white"}}
+                        title={userInfo.nickname}
+                        titleStyle={{color: Colors._333}}
+                        leftBtnIcon={Images.set_back}
+                        leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                        leftBtnPress={() => {
+                            router.pop()
                         }}
-                        label={I18n.t("send")}
-                        onSend={(event) => this.onSendMessage(event)}
-                        placeholder={I18n.t("new_message")}
-                        renderAccessory={this.renderAccessoryAction}
-                        renderActions={this.createToolButton}       //自定义左侧按钮
-                    /> : null}
+                        rightBtnIcon={Images.social.more_3}
+                        rightImageStyle={{height: 4, width: 19, marginLeft: 20, marginRight: 20}}
+                        rightBtnPress={() => {
+                            this.setState({windowType: 1});
+                            this.popAction && this.popAction.toggle()
+                        }}
+                    />
+
+                    {this.state.myUserName !== "" ?
+                        <GiftedChat
+                            {...voiceView}
+                            messages={this.state.messages}              //消息
+                            showUserAvatar={true}                       //显示自己的头像
+                            loadEarlier={true}
+                            renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                            renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                            user={{
+                                _id: this.state.myUserName,
+                            }}
+                            label={I18n.t("send")}
+                            onSend={(event) => this.onSendMessage(event)}
+                            placeholder={I18n.t("new_message")}
+                            renderAccessory={this.renderAccessoryAction}
+                            renderActions={this.createToolButton}       //自定义左侧按钮
+                        /> : null}
 
 
-                {this.state.recording ? <View style={styles.voiceAlert}><Text
-                    style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
+                    {this.state.recording ? <View style={styles.voiceAlert}><Text
+                        style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
 
-                {this.state.videoPath !== "" ? <VideoToast videoUrl={localFilePath(this.state.videoPath)}
-                                                           hiddenVideoAction={() => {
-                                                               this.setState({videoPath: ""})
-                                                           }}/> : null}
+                    {this.state.videoPath !== "" ? <VideoToast videoUrl={localFilePath(this.state.videoPath)}
+                                                               hiddenVideoAction={() => {
+                                                                   this.setState({videoPath: ""})
+                                                               }}/> : null}
 
-                <PopAction
-                    ref={ref => this.popAction = ref}
-                    btnArray={this.popActions()}/>
+                    <PopAction
+                        ref={ref => this.popAction = ref}
+                        btnArray={this.popActions()}/>
 
 
-            </KeyboardAvoidingView>
-        );
+                </KeyboardAvoidingView>
+            );
+        }else{
+            return (
+                <View style={styles.container}>
+                    {/*导航栏*/}
+                    <NavigationBar
+                        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
+                        toolbarStyle={{backgroundColor: "white"}}
+                        title={userInfo.nickname}
+                        titleStyle={{color: Colors._333}}
+                        leftBtnIcon={Images.set_back}
+                        leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                        leftBtnPress={() => {
+                            router.pop()
+                        }}
+                        rightBtnIcon={Images.social.more_3}
+                        rightImageStyle={{height: 4, width: 19, marginLeft: 20, marginRight: 20}}
+                        rightBtnPress={() => {
+                            this.setState({windowType: 1});
+                            this.popAction && this.popAction.toggle()
+                        }}
+                    />
+
+                    {this.state.myUserName !== "" ?
+                        <GiftedChat
+                            {...voiceView}
+                            messages={this.state.messages}              //消息
+                            showUserAvatar={true}                       //显示自己的头像
+                            loadEarlier={true}
+                            renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                            renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                            user={{
+                                _id: this.state.myUserName,
+                            }}
+                            label={I18n.t("send")}
+                            onSend={(event) => this.onSendMessage(event)}
+                            placeholder={I18n.t("new_message")}
+                            renderAccessory={this.renderAccessoryAction}
+                            renderActions={this.createToolButton}       //自定义左侧按钮
+                        /> : null}
+
+
+                    {this.state.recording ? <View style={styles.voiceAlert}><Text
+                        style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
+
+                    {this.state.videoPath !== "" ? <VideoToast videoUrl={localFilePath(this.state.videoPath)}
+                                                               hiddenVideoAction={() => {
+                                                                   this.setState({videoPath: ""})
+                                                               }}/> : null}
+
+                    <PopAction
+                        ref={ref => this.popAction = ref}
+                        btnArray={this.popActions()}/>
+
+
+                </View>
+            );
+        }
+
     }
 
     componentWillUnmount() {
