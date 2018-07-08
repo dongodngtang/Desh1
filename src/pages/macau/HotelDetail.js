@@ -1,14 +1,14 @@
 import React, {PureComponent} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity,
-    ScrollView, Platform
+    ScrollView, Platform, Linking
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swiper from 'react-native-swiper';
 import {hotelDetail} from '../../services/MacauDao';
 import RenderHtml from '../comm/RenderHtml';
 import {NavigationBar} from '../../components'
-import {call, turn2MapMark} from '../../utils/ComonHelper'
+import {call, strNotNull, turn2MapMark} from '../../utils/ComonHelper'
 
 const styles = StyleSheet.create({
     banner: {
@@ -114,7 +114,7 @@ export default class HotelDetail extends PureComponent {
 
     render() {
         const {hotel} = this.props.params;
-        const {images, location, title, description, telephone, amap_poiid} = this.state.hotel;
+        const {images, location, title, description, telephone, amap_poiid, amap_navigation_url} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 
@@ -143,14 +143,16 @@ export default class HotelDetail extends PureComponent {
                             style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{hotel.start_price}<Text
                             style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text> : null}
                         <View style={{flex: 1}}/>
-                        {Platform.OS === 'ios' ? <TouchableOpacity style={{flexDirection: 'row'}}
-                                                                   onPress={() => {
-                                                                       turn2MapMark(amap_poiid)
-                                                                   }}>
+                        <TouchableOpacity style={{flexDirection: 'row'}}
+                                          onPress={() => {
+                                              if (strNotNull(amap_navigation_url))
+                                                  Linking.openURL(amap_navigation_url).catch(e => console.warn(e));
+
+                                          }}>
                             <Image style={{height: 14, width: 10}}
                                    source={Images.macau.location}/>
                             <Text style={{color: "#4A90E2", fontSize: 12, marginLeft: 4}}>地图</Text>
-                        </TouchableOpacity> : <View/>}
+                        </TouchableOpacity>
 
                     </View>
 
