@@ -32,7 +32,6 @@ import {report_user, uploadImage} from '../../services/SocialDao';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 import Thumb from 'react-native-thumb';
 import {checkPermission} from "../comm/Permission";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 let Sound = require('react-native-sound');
 Sound.setCategory('Playback');
