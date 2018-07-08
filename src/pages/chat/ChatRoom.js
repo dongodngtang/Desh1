@@ -69,21 +69,6 @@ export default class ChatRoom extends Component {
     componentWillMount() {
         //获取用户的信息
         this.getChatUserInfo();
-        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
-        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
-    }
-
-    _keyboardDidShow(e) {
-        this.setState({
-            keyboardHeight: e.startCoordinates.height
-        })
-
-    }
-
-    _keyboardDidHide(e) {
-        this.setState({
-            keyboardHeight: 0
-        })
     }
 
     componentDidMount() {
@@ -126,6 +111,7 @@ export default class ChatRoom extends Component {
     }
 
     componentWillUnmount() {
+        dismissKeyboard()
         //继续接收推送
         JMessage.exitConversation();
 
@@ -970,11 +956,6 @@ export default class ChatRoom extends Component {
 
     }
 
-    componentWillUnmount() {
-        dismissKeyboard()
-        this.keyboardDidShowListener.remove();
-        this.keyboardDidHideListener.remove();
-    }
 
 
     ///计时格式
