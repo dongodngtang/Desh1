@@ -11,7 +11,7 @@ export function getExchange_traders(resolve, reject) {
 export function getExchange_rates(body,resolve, reject) {
     helper.get(Api.exchange_rates(body), ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject,body)
 }
 
 export function getUsingCoupons(body, resolve, reject) {

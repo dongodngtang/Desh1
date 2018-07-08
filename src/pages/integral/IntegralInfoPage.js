@@ -84,8 +84,9 @@ export default class IntegralInfoPage extends Component {
                     leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
+                        this.props.params.refresh && this.props.params.refresh()
                         router.pop();
-                        this.props.params.refresh()
+
                     }}/>
 
                 <ScrollView style={{flexDirection: 'column'}}>
