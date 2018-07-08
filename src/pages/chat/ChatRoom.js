@@ -32,7 +32,7 @@ import {report_user, uploadImage} from '../../services/SocialDao';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 import Thumb from 'react-native-thumb';
 import {checkPermission} from "../comm/Permission";
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 let Sound = require('react-native-sound');
 Sound.setCategory('Playback');
@@ -775,77 +775,37 @@ export default class ChatRoom extends Component {
 
     ///第二排按钮
     renderAccessoryAction = () => {
+        return (<View style={{flex: 1}}>
+            <View style={[{height: 0.5}, {backgroundColor: "#E5E5E5"}]}/>
+            <View style={[{flex: 1}, {flexDirection: "row"}, {alignItems: "center"}]}>
+                <TouchableOpacity onPress={this.selectedImage}>
+                    <Image source={Images.social.chat_picture}
+                           style={[{width: Metrics.reallySize(25)}, {marginLeft: 17}, {height: Metrics.reallySize(25)}]}/>
+                </TouchableOpacity>
 
-        if (Platform.OS === 'ios')
-            return (
-                <View style={{width: Metrics.screenWidth, marginBottom: this.state.keyboardHeight}}>
-                    <View style={[{height: 0.5}, {backgroundColor: "#E5E5E5"}]}/>
-                    <View
-                        style={[{flexDirection: "row"}, {
-                            alignItems: "center",
-                            width: Metrics.screenWidth,
-                            height: 40
-                        }]}>
-                        <TouchableOpacity onPress={this.selectedImage}>
-                            <Image source={Images.social.chat_picture}
-                                   style={[{width: Metrics.reallySize(25)}, {marginLeft: 17}, {height: Metrics.reallySize(25)}]}/>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => {
-                            dismissKeyboard()
-                            checkPermission("camera", (result) => {
-                                if (result) {
-                                    router.toCamera({
-                                        fileInfo: (file) => {
-                                            let type = file.type;
-                                            if (type === "image") {
-                                                this.onSendImage(file.path);
-                                            }
-                                            else {
-                                                this.onSendVideo(file.path);
-                                            }
-                                        }
-                                    })
-                                }
-                            });
-                        }}>
-                            <Image source={Images.social.chat_takephoto}
-                                   style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            )
-        else
-            return (<View style={{flex: 1}}>
-                <View style={[{height: 0.5}, {backgroundColor: "#E5E5E5"}]}/>
-                <View style={[{flex: 1}, {flexDirection: "row"}, {alignItems: "center"}]}>
-                    <TouchableOpacity onPress={this.selectedImage}>
-                        <Image source={Images.social.chat_picture}
-                               style={[{width: Metrics.reallySize(25)}, {marginLeft: 17}, {height: Metrics.reallySize(25)}]}/>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => {
-                        checkPermission("camera", (result) => {
-                            if (result) {
-                                router.toCamera({
-                                    fileInfo: (file) => {
-                                        let type = file.type;
-                                        if (type === "image") {
-                                            this.onSendImage(file.path);
-                                        }
-                                        else {
-                                            this.onSendVideo(file.path);
-                                        }
+                <TouchableOpacity onPress={() => {
+                    checkPermission("camera", (result) => {
+                        if (result) {
+                            router.toCamera({
+                                fileInfo: (file) => {
+                                    let type = file.type;
+                                    if (type === "image") {
+                                        this.onSendImage(file.path);
                                     }
-                                })
-                            }
-                        });
-                    }}>
-                        <Image source={Images.social.chat_takephoto}
-                               style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>
-                    </TouchableOpacity>
-                </View>
-            </View>)
+                                    else {
+                                        this.onSendVideo(file.path);
+                                    }
+                                }
+                            })
+                        }
+                    });
+                }}>
+                    <Image source={Images.social.chat_takephoto}
+                           style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>
+                </TouchableOpacity>
+            </View>
+        </View>)
+
     };
 
     // //自定义底部工具栏组件
@@ -896,7 +856,7 @@ export default class ChatRoom extends Component {
         if (this.state.inputVoice)
             voiceView = {renderComposer: this.createTextInput};
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container}>
                 {/*导航栏*/}
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
@@ -915,7 +875,6 @@ export default class ChatRoom extends Component {
                         this.popAction && this.popAction.toggle()
                     }}
                 />
-
 
                 {this.state.myUserName !== "" ?
                     <GiftedChat
@@ -949,7 +908,7 @@ export default class ChatRoom extends Component {
                     btnArray={this.popActions()}/>
 
 
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 
