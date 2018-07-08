@@ -10,7 +10,8 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Image,
-    PermissionsAndroid, NativeModules,
+    PermissionsAndroid,
+    Keyboard,
     KeyboardAvoidingView
 } from 'react-native';
 
@@ -31,7 +32,7 @@ import {report_user, uploadImage} from '../../services/SocialDao';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 import Thumb from 'react-native-thumb';
 import {checkPermission} from "../comm/Permission";
-
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 let Sound = require('react-native-sound');
 Sound.setCategory('Playback');
@@ -62,12 +63,28 @@ export default class ChatRoom extends Component {
             audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac', //路径下的文件名
             hasPermission: undefined, //是否获取权限
             windowType: 1,//弹窗类型 1-举报、拉黑 2-举报原因
+            keyboardHeight: 0//键盘高度
         };
     }
 
     componentWillMount() {
         //获取用户的信息
         this.getChatUserInfo();
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
+    }
+
+    _keyboardDidShow(e) {
+        this.setState({
+            keyboardHeight: e.startCoordinates.height
+        })
+
+    }
+
+    _keyboardDidHide(e) {
+        this.setState({
+            keyboardHeight: 0
+        })
     }
 
     componentDidMount() {
@@ -759,8 +776,47 @@ export default class ChatRoom extends Component {
     ///第二排按钮
     renderAccessoryAction = () => {
 
-        return (
-            <KeyboardAvoidingView style={{flex: 1}}>
+        if (Platform.OS === 'ios')
+            return (
+                <View style={{width: Metrics.screenWidth, marginBottom: this.state.keyboardHeight}}>
+                    <View style={[{height: 0.5}, {backgroundColor: "#E5E5E5"}]}/>
+                    <View
+                        style={[{flexDirection: "row"}, {
+                            alignItems: "center",
+                            width: Metrics.screenWidth,
+                            height: 40
+                        }]}>
+                        <TouchableOpacity onPress={this.selectedImage}>
+                            <Image source={Images.social.chat_picture}
+                                   style={[{width: Metrics.reallySize(25)}, {marginLeft: 17}, {height: Metrics.reallySize(25)}]}/>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => {
+                            dismissKeyboard()
+                            checkPermission("camera", (result) => {
+                                if (result) {
+                                    router.toCamera({
+                                        fileInfo: (file) => {
+                                            let type = file.type;
+                                            if (type === "image") {
+                                                this.onSendImage(file.path);
+                                            }
+                                            else {
+                                                this.onSendVideo(file.path);
+                                            }
+                                        }
+                                    })
+                                }
+                            });
+                        }}>
+                            <Image source={Images.social.chat_takephoto}
+                                   style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        else
+            return (<View style={{flex: 1}}>
                 <View style={[{height: 0.5}, {backgroundColor: "#E5E5E5"}]}/>
                 <View style={[{flex: 1}, {flexDirection: "row"}, {alignItems: "center"}]}>
                     <TouchableOpacity onPress={this.selectedImage}>
@@ -769,7 +825,6 @@ export default class ChatRoom extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => {
-                        dismissKeyboard()
                         checkPermission("camera", (result) => {
                             if (result) {
                                 router.toCamera({
@@ -790,8 +845,7 @@ export default class ChatRoom extends Component {
                                style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>
                     </TouchableOpacity>
                 </View>
-            </KeyboardAvoidingView>
-        );
+            </View>)
     };
 
     // //自定义底部工具栏组件
@@ -863,27 +917,27 @@ export default class ChatRoom extends Component {
                 />
 
 
-                    {this.state.myUserName !== "" ?
-                        <GiftedChat
-                            {...voiceView}
-                            messages={this.state.messages}              //消息
-                            showUserAvatar={true}                       //显示自己的头像
-                            loadEarlier={true}
-                            renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
-                            renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                            user={{
-                                _id: this.state.myUserName,
-                            }}
-                            label={I18n.t("send")}
-                            onSend={(event) => this.onSendMessage(event)}
-                            placeholder={I18n.t("new_message")}
-                            renderAccessory={this.renderAccessoryAction}
-                            renderActions={this.createToolButton}       //自定义左侧按钮
-                        /> : null}
+                {this.state.myUserName !== "" ?
+                    <GiftedChat
+                        {...voiceView}
+                        messages={this.state.messages}              //消息
+                        showUserAvatar={true}                       //显示自己的头像
+                        loadEarlier={true}
+                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                        user={{
+                            _id: this.state.myUserName,
+                        }}
+                        label={I18n.t("send")}
+                        onSend={(event) => this.onSendMessage(event)}
+                        placeholder={I18n.t("new_message")}
+                        renderAccessory={this.renderAccessoryAction}
+                        renderActions={this.createToolButton}       //自定义左侧按钮
+                    /> : null}
+
 
                 {this.state.recording ? <View style={styles.voiceAlert}><Text
                     style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
-
 
                 {this.state.videoPath !== "" ? <VideoToast videoUrl={localFilePath(this.state.videoPath)}
                                                            hiddenVideoAction={() => {
@@ -901,6 +955,8 @@ export default class ChatRoom extends Component {
 
     componentWillUnmount() {
         dismissKeyboard()
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
     }
 
 

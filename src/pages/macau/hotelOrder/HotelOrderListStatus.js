@@ -43,7 +43,7 @@ export default class HotelOrderListStatus extends Component {
     };
 
     refresh = () => {
-        this.contain && this.contain.open();
+        // this.contain && this.contain.open();
         this.ultimate && this.ultimate.refresh();
     };
 
