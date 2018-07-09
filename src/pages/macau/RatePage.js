@@ -42,7 +42,7 @@ export default class RatePage extends Component {
                     <Image
                         source={Images.macau.rate2}
                         style={{height: 142, width: '100%', position: 'absolute'}}/>
-                    <Text style={{fontSize: 15, color: 'white'}}>本地汇率</Text>
+                    <Text style={{fontSize: 15, color: 'white'}}>澳门本地汇率参考</Text>
 
 
                 </TouchableOpacity>
@@ -149,11 +149,12 @@ export class RateTop extends Component {
         }
     };
 
-    clean_txt=()=>{
+    clean_txt = () => {
         const {price_changed} = this.state;
         let group2 = price_changed;
         group2.map((x, index) => {
-            x.price =''
+            x.price = '';
+            x.price2 = ''
         });
         this.setState({
             price_changed: group2
@@ -194,6 +195,7 @@ export class RateTop extends Component {
                                             paddingTop: 0,
                                             paddingBottom: 0,
                                             width: 230,
+                                            height:40,
                                             fontSize: 24,
                                             fontWeight: 'bold',
                                             color: show ? '#444444' : '#F3F3F3',
@@ -201,16 +203,16 @@ export class RateTop extends Component {
                                         }}
                                         maxLength={11}
                                         numberOfLines={1}
-                                        placeholderTextColor={'#F3F3F3'}
+                                        placeholderTextColor={'#444444'}
                                         placeholder={strNotNull(item.price) ? '' : item.price2 + ''}
                                         value={item.price + ''}
                                         clearTextOnFocus={true}
                                         underlineColorAndroid={'transparent'}
                                         onChangeText={txt => {
-                                            this.state.show=true
+                                            this.state.show = true
                                             this.changing_price(item, index, txt)
                                         }}
-                                        onFocus={()=>{
+                                        onFocus={() => {
                                             this.clean_txt()
                                         }}
 

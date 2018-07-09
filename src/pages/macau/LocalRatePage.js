@@ -27,6 +27,18 @@ export default class LocalRatePage extends Component {
         }, err => {
 
         })
+    };
+
+    show_index=(index)=>{
+        if(index === 0){
+            return '🏆'
+        }else if(index === 1){
+            return '🥈'
+        }else if(index === 2){
+            return '🥉'
+        }else{
+            return ` ${index+1}`
+        }
     }
 
     _renderItem = ({item,index}) => {
@@ -37,12 +49,12 @@ export default class LocalRatePage extends Component {
                 global.router.toUserTopicPage(item)
             }}>
 
-                <Text style={styles.txt_num}>{index+1}</Text>
+                <Text style={[styles.txt_num,{width:25}]}>{this.show_index(index)}</Text>
 
                 <ImageLoad style={styles.avatar}
                            source={{uri: avatar}}/>
 
-                <View>
+                <View style={{width:'50%'}}>
                     <Text style={styles.txt_name}>{nick_name}</Text>
                     <Text style={[styles.txt_decs, {marginTop: 2}]}>{signature}</Text>
                 </View>
@@ -64,7 +76,7 @@ export default class LocalRatePage extends Component {
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     toolbarStyle={{backgroundColor: Colors._E54}}
-                    title="本地汇率"
+                    title="澳门本地汇率参考"
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
@@ -75,11 +87,11 @@ export default class LocalRatePage extends Component {
                 </View>
 
                 <Text style={{color: "#000000", fontSize: 14, marginTop: 17, marginLeft: 17, marginBottom: 6}}>
-                    换汇推荐
+                    汇率咨询达人排行榜
                 </Text>
 
                 <FlatList
-                    style={{flex: 1, backgroundColor: '#FFFFFF'}}
+                    style={{flex: 1, backgroundColor: '#FFFFFF',paddingBottom:50}}
                     data={this.state.exchange_traders}
                     showsHorizontalScrollIndicator={false}
                     renderItem={this._renderItem}
