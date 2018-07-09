@@ -203,7 +203,7 @@ export class RateTop extends Component {
                                         }}
                                         maxLength={11}
                                         numberOfLines={1}
-                                        placeholderTextColor={'#444444'}
+                                        placeholderTextColor={'blue'}
                                         placeholder={strNotNull(item.price) ? '' : item.price2 + ''}
                                         value={item.price + ''}
                                         clearTextOnFocus={true}
