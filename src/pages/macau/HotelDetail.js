@@ -260,40 +260,6 @@ export default class HotelDetail extends PureComponent {
                 </TouchableOpacity>
             </View>
 
-            {/*{this.state.showSelect?<Animatable.View*/}
-            {/*duration={300}*/}
-            {/*style={styles.page2}>*/}
-            {/*<TouchableOpacity*/}
-            {/*style={{flex:1,marginBottom:200, width: '100%'}}*/}
-            {/*onPress={()=>{*/}
-            {/*this.setState({*/}
-            {/*showSelect:!this.state.showSelect*/}
-            {/*})*/}
-            {/*}}>*/}
-
-            {/*</TouchableOpacity>*/}
-            {/*<View style={{height:240,width:'100%',flexDirection:'column',alignItems:'center'}}>*/}
-            {/*<TouchableOpacity style={styles.View_page} onPress={()=>{*/}
-            {/*if (strNotNull(amap_navigation_url))*/}
-            {/*turn2MapMark(amap_location,amap_navigation_url,amap_poiid,location,title,'gaode')*/}
-            {/*}}>*/}
-            {/*<Text style={styles.text_1}>高德</Text>*/}
-            {/*</TouchableOpacity>*/}
-            {/*<TouchableOpacity  style={styles.View_page} onPress={()=>{*/}
-                // if (strNotNull(amap_navigation_url))
-                //     turn2MapMark(amap_location,amap_navigation_url,amap_poiid,location,title,'pingguo')
-            {/*}}>*/}
-            {/*<Text style={styles.text_1}>苹果</Text>*/}
-            {/*</TouchableOpacity>*/}
-            {/*<TouchableOpacity  style={[styles.View_page,{marginTop:10}]} onPress={()=>{*/}
-            {/*this.setState({*/}
-            {/*showSelect:!this.state.showSelect*/}
-            {/*})*/}
-            {/*}}>*/}
-            {/*<Text style={styles.text_1}>取消</Text>*/}
-            {/*</TouchableOpacity>*/}
-            {/*</View>*/}
-            {/*</Animatable.View>:null}*/}
             <PopAction
                 ref={ref => this.popAction = ref}
                 btnArray={this.popActions()}/>

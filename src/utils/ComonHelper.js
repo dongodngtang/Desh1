@@ -78,11 +78,9 @@ export function turn2MapMark(amap_location, amap_navigation_url, amap_poiid, loc
             appUri = `http://maps.apple.com/?daddr=${lon},${lat},${title}`
         }
     } else {
-        // act=android.intent.action.VIEW
-        // cat=android.intent.category.DEFAULT
-        // dat=amapuri://route/plan/?sid=BGVIS1&slat=39.92848272&slon=116.39560823&sname=A&did=BGVIS2&dlat=39.98848272&dlon=116.47560823&dname=B&dev=0&t=0
-        // pkg=com.autonavi.minimap
-        appUri = `amapuri://route/plan/?&slat=&slon=&sname=&dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&m=0&t=0`
+        appUri = `amapuri://route/plan/?sid=&slat=&slon=&sname=&did=&dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&m=0&t=0`
+        // appUri = `uri.amap.com/navigation?to=${amap_location},endpoint&via=midwaypoint&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0`
+        console.log("sjkdjs",appUri)
     }
 
     if (strNotNull(lon) && strNotNull(lat))
