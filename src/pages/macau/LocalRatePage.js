@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, FlatList
+    StyleSheet, Text, View, Image, TouchableOpacity, FlatList,ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
@@ -81,22 +81,24 @@ export default class LocalRatePage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <View style={{backgroundColor: 'white'}}>
-                    <RateTop
-                        type={'local'}/>
-                </View>
+                <ScrollView>
+                    <View style={{backgroundColor: 'white'}}>
+                        <RateTop
+                            type={'local'}/>
+                    </View>
 
-                <Text style={{color: "#000000", fontSize: 14, marginTop: 17, marginLeft: 17, marginBottom: 6}}>
-                    汇率咨询达人排行榜
-                </Text>
+                    <Text style={{color: "#000000", fontSize: 14, marginTop: 17, marginLeft: 17, marginBottom: 6}}>
+                        汇率咨询达人排行榜
+                    </Text>
 
-                <FlatList
-                    style={{flex: 1, backgroundColor: '#FFFFFF',paddingBottom:50}}
-                    data={this.state.exchange_traders}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => `comment${index}`}
-                />
+                    <FlatList
+                        style={{flex: 1, backgroundColor: '#FFFFFF',paddingBottom:50}}
+                        data={this.state.exchange_traders}
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => `comment${index}`}
+                    />
+                </ScrollView>
 
             </View>
         )

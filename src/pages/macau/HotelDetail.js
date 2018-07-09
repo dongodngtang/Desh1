@@ -114,7 +114,7 @@ export default class HotelDetail extends PureComponent {
 
     render() {
         const {hotel} = this.props.params;
-        const {images, location, title, description, telephone, amap_poiid, amap_navigation_url} = this.state.hotel;
+        const {images, location, title, description, telephone, amap_poiid, amap_navigation_url,amap_location} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 
@@ -146,7 +146,9 @@ export default class HotelDetail extends PureComponent {
                         <TouchableOpacity style={{flexDirection: 'row'}}
                                           onPress={() => {
                                               if (strNotNull(amap_navigation_url))
-                                                  Linking.openURL(amap_navigation_url).catch(e => console.warn(e));
+                                                  // router.toWebPage(amap_navigation_url)
+                                                  // Linking.openURL(amap_navigation_url).catch(e => console.warn(e));
+                                                  turn2MapMark(amap_navigation_url,amap_poiid,amap_location)
 
                                           }}>
                             <Image style={{height: 14, width: 10}}
