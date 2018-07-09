@@ -1,4 +1,7 @@
 const images = {
+    one1: require('../../source/one1.png'),
+    two: require('../../source/two.png'),
+    three: require('../../source/three.png'),
     out_exit: require('../../source/out_exit.png'),
     cny: require('../../source/cny.png'),
     hkd: require('../../source/hkd.png'),

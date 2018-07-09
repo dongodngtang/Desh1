@@ -44,8 +44,11 @@ export default class RatePage extends Component {
                         style={{height: 142, width: '100%', position: 'absolute'}}/>
                     <Text style={{fontSize: 15, color: 'white'}}>澳门本地汇率参考</Text>
 
-
                 </TouchableOpacity>
+
+                <Text style={{color:"#333333",fontSize:14,marginTop:10,alignSelf:'center'}}>
+                    数据仅供参考，每小时刷新一次
+                </Text>
             </View>
         )
     }

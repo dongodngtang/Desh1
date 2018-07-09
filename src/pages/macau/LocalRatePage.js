@@ -31,13 +31,13 @@ export default class LocalRatePage extends Component {
 
     show_index=(index)=>{
         if(index === 0){
-            return '🏆'
+            return <Image style={{width:18,height:25}} source={Images.one1}/>
         }else if(index === 1){
-            return '🥈'
+            return <Image style={{width:18,height:25}} source={Images.two}/>
         }else if(index === 2){
-            return '🥉'
+            return <Image style={{width:18,height:25}} source={Images.three}/>
         }else{
-            return ` ${index+1}`
+            return <Text style={[styles.txt_num,{width:25}]}>{index+1}</Text>
         }
     }
 
@@ -88,7 +88,7 @@ export default class LocalRatePage extends Component {
                     </View>
 
                     <Text style={{color: "#000000", fontSize: 14, marginTop: 17, marginLeft: 17, marginBottom: 6}}>
-                        汇率咨询达人排行榜
+                        汇率资讯达人排行榜
                     </Text>
 
                     <FlatList

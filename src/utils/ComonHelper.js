@@ -78,7 +78,7 @@ export function turn2MapMark(amap_location, amap_navigation_url, amap_poiid, loc
             appUri = `http://maps.apple.com/?daddr=${lon},${lat},${title}`
         }
     } else {
-        appUri = `amapuri://route/plan/?sid=&slat=&slon=&sname=&did=&dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&m=0&t=0`
+        appUri = `amapuri://route/plan/?dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&t=0`
         // appUri = `uri.amap.com/navigation?to=${amap_location},endpoint&via=midwaypoint&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0`
         console.log("sjkdjs",appUri)
     }
