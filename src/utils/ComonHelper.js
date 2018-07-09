@@ -80,19 +80,25 @@ export function turn2MapMark(amap_location, amap_navigation_url, amap_poiid, loc
     } else {
         appUri = `amapuri://route/plan/?dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&t=0`
         // appUri = `uri.amap.com/navigation?to=${amap_location},endpoint&via=midwaypoint&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0`
-        console.log("sjkdjs",appUri)
+        console.log("sjkdjs", appUri)
     }
 
     if (strNotNull(lon) && strNotNull(lat))
         Linking.openURL(appUri).catch(e => {
             console.warn(e)
             if (strNotNull(amap_navigation_url)) {
-                router.toWebViewPage('', amap_navigation_url)
+                if (Platform.OS === 'ios')
+                    router.toWebViewPage('', amap_navigation_url)
+                else
+                    Linking.openURL(amap_navigation_url)
             }
 
         });
     else if (strNotNull(amap_navigation_url))
-        router.toWebViewPage('', amap_navigation_url)
+        if (Platform.OS === 'ios')
+            router.toWebViewPage('', amap_navigation_url)
+        else
+            Linking.openURL(amap_navigation_url)
 
 }
 

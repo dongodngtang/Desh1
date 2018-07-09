@@ -180,6 +180,7 @@ export default class HotelDetail extends PureComponent {
                                               } else {
                                                   if (strNotNull(amap_navigation_url))
                                                       turn2MapMark(amap_location, amap_navigation_url, amap_poiid, location, title, '')
+
                                               }
                                           }}>
                             <Image style={{height: 14, width: 10}}
