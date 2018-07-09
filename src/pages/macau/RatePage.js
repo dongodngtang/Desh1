@@ -189,7 +189,6 @@ export class RateTop extends Component {
                                 <View style={{flex: 1}}/>
                                 <View style={{flexDirection: 'column', alignItems: 'flex-end'}}>
                                     <TextInput
-                                        dir={'rtl'}
                                         keyboardType={'numeric'}
                                         style={{
                                             paddingTop: 0,
@@ -203,7 +202,7 @@ export class RateTop extends Component {
                                         }}
                                         maxLength={11}
                                         numberOfLines={1}
-                                        placeholderTextColor={'blue'}
+                                        placeholderTextColor={'#CCCCCC'}
                                         placeholder={strNotNull(item.price) ? '' : item.price2 + ''}
                                         value={item.price + ''}
                                         clearTextOnFocus={true}

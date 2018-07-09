@@ -52,6 +52,52 @@ export const picker = {
     compressImageQuality: 0.5,
 };
 
+
+/**
+ *
+ * @param amap_location
+ * @param amap_navigation_url
+ * @param amap_poiid
+ * @param location
+ */
+export function turn2MapMark(amap_location, amap_navigation_url, amap_poiid, location, title, targetAppName) {
+
+    let lat = '', lon = '', appUri = ''
+    if (strNotNull(amap_location)) {
+        let arr = amap_location.split(',')
+        if (arr.length === 2) {
+            lon = arr[0]
+            lat = arr[1]
+        }
+    }
+
+    if (Platform.OS === 'ios') {
+        if (targetAppName === 'gaode') {
+            appUri = `iosamap://path?sourceApplication=macuahike&slat=&slon=&sname=&dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&m=0&t=0`
+        } else if (targetAppName === 'pingguo') {
+            appUri = `http://maps.apple.com/?daddr=${lon},${lat},${title}`
+        }
+    } else {
+        // act=android.intent.action.VIEW
+        // cat=android.intent.category.DEFAULT
+        // dat=amapuri://route/plan/?sid=BGVIS1&slat=39.92848272&slon=116.39560823&sname=A&did=BGVIS2&dlat=39.98848272&dlon=116.47560823&dname=B&dev=0&t=0
+        // pkg=com.autonavi.minimap
+        appUri = `amapuri://route/plan/?&slat=&slon=&sname=&dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&m=0&t=0`
+    }
+
+    if (strNotNull(lon) && strNotNull(lat))
+        Linking.openURL(appUri).catch(e => {
+            console.warn(e)
+            if (strNotNull(amap_navigation_url)) {
+                router.toWebViewPage('', amap_navigation_url)
+            }
+
+        });
+    else if (strNotNull(amap_navigation_url))
+        router.toWebViewPage('', amap_navigation_url)
+
+}
+
 /**
  * 地图标注
  * @param lon 经度
@@ -59,7 +105,7 @@ export const picker = {
  * @param targetAppName
  * @param name
  */
-export function turn2MapMark(amap_navigation_url,poiid = 'B000AAFAC5',amap_location){
+export function turn2MapMark2(amap_navigation_url, poiid = 'B000AAFAC5', amap_location) {
 
 
     let targetAppName = 'gaode'
@@ -88,14 +134,13 @@ export function turn2MapMark(amap_navigation_url,poiid = 'B000AAFAC5',amap_locat
     Linking.canOpenURL(url).then(supported => {
         if (!supported) {
             console.log('Can\'t handle url: ' + url);
-            console.log('webUrl open :',webUrl)
+            console.log('webUrl open :', webUrl)
             return Linking.openURL(webUrl).catch(e => console.warn(e));
         } else {
             return Linking.openURL(url).catch(e => console.warn(e));
         }
     }).catch(err => console.error('An error occurred', err));
 }
-
 
 
 /**
@@ -122,12 +167,15 @@ export function div(a, b) {
         f = 0;
     try {
         e = a.toString().split(".")[1].length;
-    } catch (g) {}
+    } catch (g) {
+    }
     try {
         f = b.toString().split(".")[1].length;
-    } catch (g) {}
+    } catch (g) {
+    }
     return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), mul(c / d, Math.pow(10, f - e));
 }
+
 export function add(a, b) {
     var c, d, e;
     try {
@@ -157,7 +205,6 @@ export function sub(a, b) {
     }
     return e = Math.pow(10, Math.max(c, d)), (mul(a, e) - mul(b, e)) / e;
 }
-
 
 
 export function localFilePath(path) {
@@ -199,8 +246,8 @@ export function getFileMine(filePath) {
 
 //计算日期之间的天数
 export function DateDiff(sDate1, sDate2) { //sDate1和sDate2是2017-9-25格式
-    sDate1 = convertDate(sDate1,'D-MM-YYYY');
-    sDate2 = convertDate(sDate2,'D-MM-YYYY');
+    sDate1 = convertDate(sDate1, 'D-MM-YYYY');
+    sDate2 = convertDate(sDate2, 'D-MM-YYYY');
     var aDate, oDate1, oDate2, iDays
     aDate = sDate1.split("-")
     oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]) //转换为9-25-2017格式
@@ -421,19 +468,19 @@ export function getDayDiff(dateTimeStamp) {
 }
 
 export function formatCurrency(num) {
-    num = num.toString().replace(/\$|\,/g,'');
-    if(isNaN(num))
+    num = num.toString().replace(/\$|\,/g, '');
+    if (isNaN(num))
         num = "0";
     sign = (num == (num = Math.abs(num)));
-    num = Math.floor(num*100+0.50000000001);
-    cents = num%100;
-    num = Math.floor(num/100).toString();
-    if(cents<10)
+    num = Math.floor(num * 100 + 0.50000000001);
+    cents = num % 100;
+    num = Math.floor(num / 100).toString();
+    if (cents < 10)
         cents = "0" + cents;
-    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
-        num = num.substring(0,num.length-(4*i+3))+','+
-            num.substring(num.length-(4*i+3));
-    return (((sign)?'':'-') + num + '.' + cents);
+    for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+        num = num.substring(0, num.length - (4 * i + 3)) + ',' +
+            num.substring(num.length - (4 * i + 3));
+    return (((sign) ? '' : '-') + num + '.' + cents);
 }
 
 export function agoDynamicDate(dateTimeStamp) {
@@ -536,7 +583,7 @@ export function sharePage(title, location, icon, url) {
 //     });
 // }
 export function alipay(data, callback, cancelBack) {
-    console.log('alipay',data)
+    console.log('alipay', data)
     Alipay.pay(data).then(ret => {
         callback(ret);
     }, (err) => {

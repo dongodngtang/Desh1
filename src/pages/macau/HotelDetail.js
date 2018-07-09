@@ -8,7 +8,12 @@ import Swiper from 'react-native-swiper';
 import {hotelDetail} from '../../services/MacauDao';
 import RenderHtml from '../comm/RenderHtml';
 import {NavigationBar} from '../../components'
-import {call, strNotNull, turn2MapMark} from '../../utils/ComonHelper'
+import {call, strNotNull, turn2MapMark} from '../../utils/ComonHelper';
+import * as Animatable from 'react-native-animatable';
+import PopAction from '../comm/PopAction';
+import I18n from "react-native-i18n";
+
+const list = [{id: 0, name: '高德', type: 'gaode'}, {id: 1, name: '苹果', type: 'pingguo'}];
 
 const styles = StyleSheet.create({
     banner: {
@@ -83,6 +88,29 @@ const styles = StyleSheet.create({
     price3: {
         color: '#FF3F3F',
         fontSize: 20
+    },
+    page2: {
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999
+    },
+    View_page: {
+        height: 60,
+        width: '90%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#F3F3F3',
+        borderRadius: 2
+    },
+    text_1: {
+        color: "#E54A2E",
+        fontSize: 14
     }
 })
 
@@ -90,7 +118,9 @@ export default class HotelDetail extends PureComponent {
 
     state = {
         hotel: {},
-        opacity: 0
+        opacity: 0,
+        targetAppName: 'gaode',
+        showSelect: false
     }
 
     componentWillMount() {
@@ -114,7 +144,7 @@ export default class HotelDetail extends PureComponent {
 
     render() {
         const {hotel} = this.props.params;
-        const {images, location, title, description, telephone, amap_poiid, amap_navigation_url,amap_location} = this.state.hotel;
+        const {images, location, title, description, telephone, amap_poiid, amap_navigation_url, amap_location} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 
@@ -145,11 +175,12 @@ export default class HotelDetail extends PureComponent {
                         <View style={{flex: 1}}/>
                         <TouchableOpacity style={{flexDirection: 'row'}}
                                           onPress={() => {
-                                              if (strNotNull(amap_navigation_url))
-                                                  // router.toWebPage(amap_navigation_url)
-                                                  // Linking.openURL(amap_navigation_url).catch(e => console.warn(e));
-                                                  turn2MapMark(amap_navigation_url,amap_poiid,amap_location)
-
+                                              if (Platform.OS === 'ios') {
+                                                  this.popAction && this.popAction.toggle();
+                                              } else {
+                                                  if (strNotNull(amap_navigation_url))
+                                                      turn2MapMark(amap_location, amap_navigation_url, amap_poiid, location, title, '')
+                                              }
                                           }}>
                             <Image style={{height: 14, width: 10}}
                                    source={Images.macau.location}/>
@@ -228,8 +259,68 @@ export default class HotelDetail extends PureComponent {
                     <Text style={styles.btn_book_txt}>预定房间</Text>
                 </TouchableOpacity>
             </View>
+
+            {/*{this.state.showSelect?<Animatable.View*/}
+            {/*duration={300}*/}
+            {/*style={styles.page2}>*/}
+            {/*<TouchableOpacity*/}
+            {/*style={{flex:1,marginBottom:200, width: '100%'}}*/}
+            {/*onPress={()=>{*/}
+            {/*this.setState({*/}
+            {/*showSelect:!this.state.showSelect*/}
+            {/*})*/}
+            {/*}}>*/}
+
+            {/*</TouchableOpacity>*/}
+            {/*<View style={{height:240,width:'100%',flexDirection:'column',alignItems:'center'}}>*/}
+            {/*<TouchableOpacity style={styles.View_page} onPress={()=>{*/}
+            {/*if (strNotNull(amap_navigation_url))*/}
+            {/*turn2MapMark(amap_location,amap_navigation_url,amap_poiid,location,title,'gaode')*/}
+            {/*}}>*/}
+            {/*<Text style={styles.text_1}>高德</Text>*/}
+            {/*</TouchableOpacity>*/}
+            {/*<TouchableOpacity  style={styles.View_page} onPress={()=>{*/}
+                // if (strNotNull(amap_navigation_url))
+                //     turn2MapMark(amap_location,amap_navigation_url,amap_poiid,location,title,'pingguo')
+            {/*}}>*/}
+            {/*<Text style={styles.text_1}>苹果</Text>*/}
+            {/*</TouchableOpacity>*/}
+            {/*<TouchableOpacity  style={[styles.View_page,{marginTop:10}]} onPress={()=>{*/}
+            {/*this.setState({*/}
+            {/*showSelect:!this.state.showSelect*/}
+            {/*})*/}
+            {/*}}>*/}
+            {/*<Text style={styles.text_1}>取消</Text>*/}
+            {/*</TouchableOpacity>*/}
+            {/*</View>*/}
+            {/*</Animatable.View>:null}*/}
+            <PopAction
+                ref={ref => this.popAction = ref}
+                btnArray={this.popActions()}/>
         </View>
     }
+
+    popActions = () => {
+        const {title, location, amap_poiid, amap_navigation_url, amap_location} = this.state.hotel;
+        let reportList = list;
+        let resultArray = [];
+        reportList.forEach((data, index) => {
+            let item = {
+                name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => {
+                    if (strNotNull(amap_navigation_url))
+                        turn2MapMark(amap_location, amap_navigation_url, amap_poiid, location, title, data.type)
+                }
+            };
+            resultArray.push(item);
+        });
+        resultArray.push({
+            name: '取消',
+            txtStyle: {color: Colors._AAA},
+            onPress: () => this.popAction.toggle()
+        });
+
+        return resultArray;
+    };
 
     _onScroll = (event) => {
         let offsetY = event.nativeEvent.contentOffset.y;
