@@ -223,13 +223,16 @@ export default class IntegralPage extends Component {
         if (isEmptyObject(item)) {
             return <View/>
         }
-        const {doing_times, done_times, total_doing_points, mark, limit_times, total_done_points} = item;
+        const {doing_times, done_times, total_doing_points, mark, limit_times, total_done_points,point} = item;
 
         let unfinished = doing_times > 0 && total_doing_points > 0 ?
             <Text style={{
                 color: '#AAAAAA',
                 fontSize: 12
-            }}>积分+{total_doing_points}</Text> : null;
+            }}>积分+{total_doing_points}</Text> : <Text style={{
+                color: '#AAAAAA',
+                fontSize: 12
+            }}>积分+{point}</Text>;
 
 
         let finished = total_done_points > 0 ? <Text style={{
