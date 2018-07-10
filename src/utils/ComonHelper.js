@@ -75,7 +75,8 @@ export function turn2MapMark(amap_location, amap_navigation_url, amap_poiid, loc
         if (targetAppName === 'gaode') {
             appUri = `iosamap://path?sourceApplication=macuahike&slat=&slon=&sname=&dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&m=0&t=0`
         } else if (targetAppName === 'pingguo') {
-            appUri = `http://maps.apple.com/?daddr=${lon},${lat},${title}`
+            // http:maps.apple.com/?daddr=${lon},${lat},${title}
+            appUri = `http://maps.apple.com/?daddr=${title}&ll=${amap_location}`
         }
     } else {
         appUri = `amapuri://route/plan/?dlat=${lat}&dlon=${lon}&dname=${title}&dev=0&t=0`

@@ -128,7 +128,7 @@ export default class OrderStatusPage extends Component {
     };
 
     _submitBtn = () => {
-        const {order_number, total_price,final_price} = this.state.orderInfo.order;
+        const {order_number, total_price, final_price} = this.state.orderInfo.order;
         let param = {order_number, total: final_price}
 
         this.payAction && this.payAction.toggle(param)
@@ -137,7 +137,7 @@ export default class OrderStatusPage extends Component {
 
 
     statusBottom = (order) => {
-        const {status, pay_status, total_price, order_number,final_price} = order;
+        const {status, pay_status, total_price, order_number, final_price} = order;
         switch (pay_status) {
             case HotelStatus.unpaid:
                 return (
@@ -179,6 +179,21 @@ export default class OrderStatusPage extends Component {
         }
     };
 
+    _discount = (discount_amount, refund_price) => {
+        if (discount_amount > 0) {
+            return <View style={[styles.txtView,{borderTopWidth:1,borderTopColor:"#F3F3F3"}]}>
+                <Text style={styles.txt}>折扣</Text>
+                <Text style={[styles.room_num,{marginLeft:38}]}>{discount_amount}</Text>
+            </View>
+        }else if (refund_price > 0) {
+            return <View style={[styles.txtView,{borderTopWidth:1,borderTopColor:"#F3F3F3"}]}>
+                <Text style={styles.txt}>折扣</Text>
+                <Text style={[styles.room_num,{marginLeft:38}]}>{refund_price}</Text>
+            </View>
+        }
+
+    }
+
 
     render() {
         const {orderInfo} = this.state;
@@ -195,7 +210,10 @@ export default class OrderStatusPage extends Component {
             )
         }
         const {room, order, checkin_infos} = orderInfo;
-        const {order_number, created_at, room_num, pay_status, status_text, status, telephone, total_price, room_items, checkin_date, checkout_date, nights_num,final_price} = order;
+        const {
+            order_number, created_at, room_num, pay_status, status_text, status, telephone, total_price, room_items, checkin_date,
+            discount_amount, refund_price, checkout_date, nights_num, final_price
+        } = order;
         let date = {begin_date: checkin_date, end_date: checkout_date, counts: nights_num};
 
         return (
@@ -207,7 +225,8 @@ export default class OrderStatusPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
-                        router.pop();router.pop()
+                        router.pop();
+                        router.pop()
                         global.router.toHotelOrderPage()
                     }}/>
                 <ScrollView style={{flexDirection: 'column', paddingBottom: 90}}>
@@ -249,6 +268,8 @@ export default class OrderStatusPage extends Component {
                             <Text style={styles.txt}>手机号</Text>
                             <Text style={styles.room_num}>{telephone}</Text>
                         </View>
+                        {this._discount(discount_amount, refund_price)}
+
                     </View>
 
                     <View style={{
@@ -344,9 +365,9 @@ const styles = StyleSheet.create({
     },
     txtView: {
         marginLeft: 14,
-        marginBottom: 14,
+        paddingBottom: 14,
         flexDirection: 'row',
-        marginTop: 14,
+        paddingTop: 14,
         alignItems: 'center'
     },
     txt: {
