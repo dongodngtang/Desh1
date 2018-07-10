@@ -27,16 +27,17 @@ export default class CouponSelectPage extends Component {
     };
 
 
-
     componentDidMount() {
 
-        const {total_price} = this.props.params;
+        const {total_price, coupon} = this.props.params;
         // 用户订单可用优惠券
+
         getUsingCoupons({amount: total_price}, data => {
 
             let using_coupons = data.items;
-            using_coupons.map(item=>{
-                item.isSelect = false;
+            using_coupons.map(item => {
+                let isSelect = !isEmptyObject(coupon) && item.coupon_number === coupon.coupon_number
+                item.isSelect = isSelect
             })
             this.setState({
                 using_coupons
@@ -48,11 +49,6 @@ export default class CouponSelectPage extends Component {
         })
 
 
-
-    };
-
-    _changeSelect = (item) => {
-       item.isSelect = !item.isSelect;
     };
 
 
@@ -93,7 +89,7 @@ export default class CouponSelectPage extends Component {
                                     fontSize: name.length > 13 ? 12 : 20,
                                     marginLeft: 22
                                 }}
-                                numberOfLines={2}>{name}</Text>
+                                      numberOfLines={2}>{name}</Text>
                             </View>
                         </View>
                         <Text style={[styles.txt1, {marginTop: 10}]}>{short_desc}</Text>
@@ -108,9 +104,9 @@ export default class CouponSelectPage extends Component {
                         paddingRight: 10
                     }]}
                                       onPress={() => {
-                                          this._changeSelect(item);
-                                          this._onClickCoupon();
-                                          router.pop();
+
+                                          this._onClickCoupon(item);
+
                                       }}>
                         <Image style={{width: 22, height: 22}}
                                source={item.isSelect ? Images.coupon.selected : Images.coupon.unSelected}/>
@@ -119,13 +115,20 @@ export default class CouponSelectPage extends Component {
             </ImageBackground>
         )
     };
-    _onClickCoupon = () => {
+    _onClickCoupon = (item) => {
         const {using_coupons} = this.state;
+
+
         using_coupons.forEach((x) => {
-            if (x.isSelect) {
-                this.props.params._selectedCoupon(x);
-                return;
-            }
+            if (x.coupon_number === item.coupon_number) {
+                x.isSelect = !x.isSelect
+                this.props.params._selectedCoupon(x.isSelect ? x : {});
+            } else
+                x.isSelect = false
+        })
+
+        this.setState({
+            using_coupons: using_coupons
         })
     };
 
@@ -142,7 +145,6 @@ export default class CouponSelectPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
-                        this._onClickCoupon();
                         router.pop();
                     }}
                 />

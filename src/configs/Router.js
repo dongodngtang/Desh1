@@ -56,12 +56,13 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
-    toCouponSelectPage(total_price,_selectedCoupon) {
+    toCouponSelectPage(total_price,_selectedCoupon,coupon) {
         this.stackPush({
             name: 'CouponSelectPage',
             params: {
                 total_price,
-                _selectedCoupon
+                _selectedCoupon,
+                coupon
             }
         })
     }
