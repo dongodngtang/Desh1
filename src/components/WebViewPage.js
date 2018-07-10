@@ -55,7 +55,7 @@ export default class WebViewPage extends Component {
                     Animated.timing(this.state.bottomInfoBarBottomValue, {
                         toValue: -50,
                         duration: 300
-                    }).start(() => this.animationFlag = true);
+                    }).start(() => this.anilag = true);
                     // Animated.timing(this.state.toolbarTopValue, {
                     //     toValue: -theme.toolbar.height,
                     //     duration: 300
@@ -83,6 +83,14 @@ export default class WebViewPage extends Component {
                         renderLoading={this._renderLoading}
                         renderError={this._renderError}
                         startInLoadingState={true}
+                        nativeConfig={
+                            {
+                                props: {
+                                    backgroundColor: '#ffffff',
+                                    flex: 1,
+                                }
+                            }
+                        }
                     />
                 </View>
 
@@ -120,7 +128,11 @@ export default class WebViewPage extends Component {
         );
     }
 
-    _renderError  =()=>{
+    _renderError  =(e)=>{
+        console.log(e)
+        if (e === 'WebKitErrorDomain') {
+            return
+        }
         return (
             <TouchableOpacity
                 onPress={() => {
