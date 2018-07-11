@@ -154,7 +154,8 @@ export default class HotelListPage extends PureComponent {
                 page_size: 20,
                 keyword: this.keyword,
                 region: this.state.region_keyword,
-                order: this.state.order_keyword
+                order: this.state.order_keyword,
+                date: this.state.changeTime.begin_date
             }, data => {
                 console.log("HotelList:", data)
                 startFetch(data.items, 18)
