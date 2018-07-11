@@ -117,6 +117,7 @@ class RegisterPage extends React.Component {
 
                 }}
                 visible={this.state.show_area}
+                style={{flex:1}}
             >
                 <View style={{marginTop: 110}}>
                     <FlatList
@@ -142,7 +143,7 @@ class RegisterPage extends React.Component {
 
 
     _inputMobileCodeView = () => {
-        const {getCodeDisable, ext} = this.state;
+        const {getCodeDisable, ext,show_area} = this.state;
         return (
             <View>
 
@@ -220,6 +221,9 @@ class RegisterPage extends React.Component {
                     </TouchableOpacity>
 
                 </View>
+
+                {show_area ? this.showArea() : null}
+
             </View>
         )
     }
@@ -266,8 +270,6 @@ class RegisterPage extends React.Component {
                 </View>
 
                 {this._inputMobileCodeView()}
-
-                {show_area ? this.showArea() : null}
 
                 <Text style={{
                     color: Colors._AAA, fontSize: 12,
