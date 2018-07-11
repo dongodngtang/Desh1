@@ -15,7 +15,7 @@ import {checkPhone, strNotNull, showToast, putLoginUser} from '../../utils/Comon
 import {POST_BIND_ACCOUNT, POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {fetchBindAccount, fetchPostVCode, fetchPostVerifyCode} from '../../actions/AccountAction';
 import StorageKey from '../../configs/StorageKey';
-
+import ExtArea from '../comm/ExtArea';
 
 class BindingPhonePage extends Component {
 
@@ -58,11 +58,16 @@ class BindingPhonePage extends Component {
             });
             this.countDownText.start();
         }
+    };
+    changed_ext = (code) => {
+        this.setState({
+            ext: code
+        })
     }
 
     render() {
 
-
+        const {ext} = this.state;
         return (<View
             testID="page_bind"
             style={ApplicationStyles.bg_black}>
@@ -74,6 +79,23 @@ class BindingPhonePage extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
+            {/*区号选择*/}
+            <TouchableOpacity style={styles.areaView} onPress={() => {
+                this.areaAction && this.areaAction.toggle();
+            }}>
+                <TextInput
+                    autoFocus={false}
+                    editable={false}
+                    placeholderTextColor={Colors._BBBB}
+                    underlineColorAndroid='transparent'
+                    testID="ext"
+                    placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                    value={ext}/>
+                <View style={{flex: 1}}/>
+
+                <Image style={{width: 16, height: 12}} source={Images.bottomarea}/>
+            </TouchableOpacity>
+
             {this._inputPhoneCode()}
 
             <Text style={styles.txtPrompt}>{I18n.t('reset')}</Text>
@@ -84,7 +106,9 @@ class BindingPhonePage extends Component {
                 testID="btn_bind"
                 textStyle={styles.txtBind}
                 style={styles.btnBind}/>
-
+            <ExtArea
+                ref={ref => this.areaAction = ref}
+                changed_ext={this.changed_ext}/>
 
         </View>)
     }
@@ -198,6 +222,15 @@ export default connect(mapStateToProps, bindAction)(BindingPhonePage);
 
 
 const styles = StyleSheet.create({
+    areaView: {
+        marginTop: 7,
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: 'white',
+        flexDirection: 'row', alignItems: 'center'
+    },
     line: {
         height: 1,
         marginLeft: 17,
