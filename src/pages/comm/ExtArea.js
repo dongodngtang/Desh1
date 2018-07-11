@@ -61,9 +61,8 @@ export default class ExtArea extends Component {
 
                 }}
                 visible={this.state.visible}
-                style={{flex: 1}}
             >
-                <TouchableOpacity style={{marginTop: 110}}>
+                <TouchableOpacity style={{marginTop: 110,backgroundColor: 'rgba(0,0,0,0.6)'}}>
                     <FlatList
                         style={{}}
                         data={codes}
