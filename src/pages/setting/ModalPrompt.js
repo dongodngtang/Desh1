@@ -28,7 +28,7 @@ class ModalPrompt extends Component {
             phone: login_user.mobile,
             old_code: '',
             new_code: '',
-            ext: ''
+            ext: login_user.ext
         };
 
         this.verifyType = '';
