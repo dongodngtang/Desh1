@@ -1,4 +1,4 @@
-import React ,{Component} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, KeyboardAvoidingView, FlatList, Modal
@@ -23,6 +23,16 @@ const codes = [{id: 0, name: '大陆', code: '86'}, {id: 1, name: '香港', code
 
 export default class ExtArea extends Component {
 
+    state = {
+        visible: false
+    };
+
+    toggle = () => {
+        this.setState({
+            visible: !this.state.visible
+        })
+    }
+
     _separator = () => {
         return <View style={{width: '100%', height: 1, backgroundColor: '#F3F3F3'}}/>
     };
@@ -33,7 +43,7 @@ export default class ExtArea extends Component {
             <TouchableOpacity style={{backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', height: 50}}
                               onPress={() => {
                                   this.props.changed_ext(code);
-                                  this.props.changed_area()
+                                  this.toggle();
                               }}>
                 <Text style={{color: "#666666", fontSize: 14, marginLeft: 17}}>{name}</Text>
                 <View style={{flex: 1}}/>
@@ -42,7 +52,7 @@ export default class ExtArea extends Component {
         )
     }
 
-    render(){
+    render() {
         return (
             <Modal
                 animationType={"none"}
@@ -50,10 +60,10 @@ export default class ExtArea extends Component {
                 onRequestClose={() => {
 
                 }}
-                visible={this.props.show_area}
-                style={{flex:1}}
+                visible={this.state.visible}
+                style={{flex: 1}}
             >
-                <View style={{marginTop: 110}}>
+                <TouchableOpacity style={{marginTop: 110}}>
                     <FlatList
                         style={{}}
                         data={codes}
@@ -62,7 +72,7 @@ export default class ExtArea extends Component {
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => `coupon${index}`}
                     />
-                </View>
+                </TouchableOpacity>
                 {/*<TouchableOpacity style={{height:Metrics.screenHeight - 180}}*/}
                 {/*onPress={()=>{*/}
                 {/*this.setState({*/}

@@ -28,8 +28,7 @@ class RegisterPage extends React.Component {
         checkAgree: true,
         canNextDisable: true,
         phoneClear: false,
-        ext: '',
-        show_area: false
+        ext: ''
     }
 
     componentWillReceiveProps(newProps) {
@@ -88,21 +87,14 @@ class RegisterPage extends React.Component {
         })
     }
 
-    changed_area = () => {
-        this.setState({
-            show_area: !this.state.show_area
-        })
-    }
-
-
     _inputMobileCodeView = () => {
-        const {getCodeDisable, ext, show_area} = this.state;
+        const {getCodeDisable, ext} = this.state;
         return (
             <View>
 
                 {/*区号选择*/}
                 <TouchableOpacity style={styles.areaView} onPress={() => {
-                    this.changed_area()
+                    this.areaAction && this.areaAction.toggle();
                 }}>
                     <TextInput
                         autoFocus={false}
@@ -173,10 +165,9 @@ class RegisterPage extends React.Component {
 
                 </View>
 
-                {show_area ? <ExtArea
-                    show_area={this.state.show_area}
-                    changed_ext={this.changed_ext}
-                    changed_area={this.changed_area}/> : null}
+                <ExtArea
+                    ref={ref => this.areaAction = ref}
+                    changed_ext={this.changed_ext}/>
 
             </View>
         )
@@ -207,7 +198,7 @@ class RegisterPage extends React.Component {
     };
 
     render() {
-        const {canNextDisable, checkAgree, show_area, ext} = this.state;
+        const {canNextDisable, checkAgree, ext} = this.state;
         return (
             <View
                 testID="page_phone_register"
