@@ -375,7 +375,7 @@ export class RoomMessage extends PureComponent {
                             borderBottomWidth: i === persons.length - 1 ? 0 : 1
 
                         }}>
-                            <TextInput maxLength={6}
+                            <TextInput maxLength={18}
                                        style={[styles.room_num, {width: 100, paddingTop: 0, paddingBottom: 0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}
@@ -391,7 +391,7 @@ export class RoomMessage extends PureComponent {
                                 color: '#CCCCCC',
                                 paddingTop: 0
                             }]}>/</Text>
-                            <TextInput maxLength={6}
+                            <TextInput maxLength={18}
                                        style={[styles.room_num, {width: 150, paddingTop: 0, paddingBottom: 0}]}
                                        clearTextOnFocus={true}
                                        underlineColorAndroid={'transparent'}

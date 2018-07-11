@@ -4,7 +4,7 @@
 import React from 'react';
 import {
     TouchableOpacity, View, TextInput,
-    StyleSheet, Image, Text, KeyboardAvoidingView
+    StyleSheet, Image, Text, KeyboardAvoidingView, FlatList, Modal
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -16,6 +16,13 @@ import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHel
 import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {BtnLong, BtnSoild, InputView} from '../../components';
 import {postVCode} from '../../services/AccountDao';
+import * as Animatable from 'react-native-animatable';
+
+const codes = [{id: 0, name: '大陆', code: '86'}, {id: 1, name: '香港', code: '852'}, {id: 2, name: '澳门', code: '853'}, {
+    id: 3,
+    name: '台湾',
+    code: '886'
+}];
 
 class RegisterPage extends React.Component {
 
@@ -25,29 +32,31 @@ class RegisterPage extends React.Component {
         getCodeDisable: false,
         checkAgree: true,
         canNextDisable: true,
-        phoneClear: false
+        phoneClear: false,
+        ext: '',
+        show_area: false
     }
 
     componentWillReceiveProps(newProps) {
-        const {useEmailRegister, mobile, vcode} = this.state;
+        const {useEmailRegister, mobile, vcode, ext} = this.state;
         if (this.props.loading != newProps.loading)
             if (newProps.actionType === POST_VERIFY_CODE
                 && !newProps.loading && newProps.hasData) {
                 if (!useEmailRegister) {
-                    router.toInputPwdPage(this.props, mobile, vcode)
+                    router.toInputPwdPage(this.props, mobile, vcode, ext)
                 }
             }
 
     }
 
     _sendCode = () => {
-
-        const {mobile} = this.state;
+        const {mobile, ext} = this.state;
         if (checkPhone(mobile)) {
             const body = {
                 option_type: 'register',
                 vcode_type: 'mobile',
-                mobile: mobile
+                mobile: mobile,
+                ext: ext
             };
 
             postVCode(body, ret => {
@@ -76,22 +85,96 @@ class RegisterPage extends React.Component {
         });
     };
 
+    _separator = () => {
+        return <View style={{width: '100%', height: 1, backgroundColor: '#F3F3F3'}}/>
+    };
+
+    _renderItem = ({item}) => {
+        const {id, name, code} = item;
+        return (
+            <TouchableOpacity style={{backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', height: 50}}
+                              onPress={() => {
+                                  this.setState({
+                                      ext: code,
+                                      show_area: !this.state.show_area
+                                  })
+                              }}>
+                <Text style={{color: "#666666", fontSize: 14, marginLeft: 17}}>{name}</Text>
+                <View style={{flex: 1}}/>
+                <Text style={{color: "#666666", fontSize: 14, marginRight: 17}}>{code}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    showArea = () => {
+        return (
+            <Modal
+                animationType={"none"}
+                transparent={true}
+                onRequestClose={() => {
+
+                }}
+                visible={this.state.show_area}
+            >
+                <View style={{marginTop: 110}}>
+                    <FlatList
+                        style={{}}
+                        data={codes}
+                        showsHorizontalScrollIndicator={false}
+                        ItemSeparatorComponent={this._separator}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => `coupon${index}`}
+                    />
+                </View>
+                {/*<TouchableOpacity style={{height:Metrics.screenHeight - 180}}*/}
+                {/*onPress={()=>{*/}
+                {/*this.setState({*/}
+                {/*show_area:!this.state.show_area*/}
+                {/*})*/}
+                {/*}}>*/}
+
+                {/*</TouchableOpacity>*/}
+            </Modal>
+        )
+    };
+
 
     _inputMobileCodeView = () => {
-        const {getCodeDisable} = this.state;
+        const {getCodeDisable, ext} = this.state;
         return (
             <View>
+
+                {/*区号选择*/}
+                <TouchableOpacity style={styles.areaView} onPress={() => {
+                    this.setState({
+                        show_area: !this.state.show_area
+                    })
+                }}>
+                    <TextInput
+                        autoFocus={false}
+                        editable={false}
+                        placeholderTextColor={Colors._BBBB}
+                        underlineColorAndroid='transparent'
+                        testID="ext"
+                        placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                        value={ext}/>
+                    <View style={{flex: 1}}/>
+
+                    <Image style={{width: 16, height: 12}} source={Images.integral.frends}/>
+                </TouchableOpacity>
                 {/*手机号*/}
-                <InputView
-                    testID="input_phone"
-                    placeholder={I18n.t('please_input_phone')}
-                    stateText={(text) => {
-                        this.setState({
-                            mobile: text,
-                            canNextDisable: !(text.length > 0 && this.state.vcode.length > 0)
-                        })
-                    }}
-                />
+                <View style={{width: Metrics.screenWidth, backgroundColor: 'white', marginTop: 8}}>
+                    <InputView
+                        testID="input_phone"
+                        placeholder={I18n.t('please_input_phone')}
+                        stateText={(text) => {
+                            this.setState({
+                                mobile: text,
+                                canNextDisable: !(text.length > 0 && this.state.vcode.length > 0)
+                            })
+                        }}
+                    />
+                </View>
                 {/*验证码*/}
                 <View style={styles.input_view}>
                     <TextInput style={styles.input}
@@ -104,7 +187,7 @@ class RegisterPage extends React.Component {
                                    })
                                }}
                                testID="input_code"
-                               placeholder={I18n.t('vcode')}/>
+                               placeholder={'请输入验证码'}/>
 
                     <TouchableOpacity
                         style={{
@@ -140,15 +223,16 @@ class RegisterPage extends React.Component {
     }
 
     _next = () => {
-        const {checkAgree, mobile, vcode} = this.state;
+        const {checkAgree, mobile, vcode, ext} = this.state;
         if (checkAgree) {
-            if (mobile.length > 1 && vcode.length > 1) {
+            if (mobile.length > 1 && vcode.length > 1 && strNotNull(ext)) {
                 if (checkPhone(mobile)) {
                     let body = {
                         option_type: 'register',
                         vcode_type: 'mobile',
                         account: mobile,
-                        vcode: vcode
+                        vcode: vcode,
+                        ext:ext
                     };
 
                     this.props.fetchVerifyCode(body);
@@ -163,8 +247,7 @@ class RegisterPage extends React.Component {
     };
 
     render() {
-        const {canNextDisable, checkAgree} = this.state;
-
+        const {canNextDisable, checkAgree, show_area, ext} = this.state;
         return (
             <View
                 testID="page_phone_register"
@@ -172,7 +255,7 @@ class RegisterPage extends React.Component {
                 <TouchableOpacity
                     testID="btn_home_page"
                     onPress={() => router.popToTop()}/>
-                <View style={{backgroundColor: Colors._E54}}>
+                <View style={{backgroundColor: Colors._E54, zIndex: 9999}}>
                     <NavigationBar
                         title={I18n.t('register_with_phone')}
                         leftBtnIcon={Images.sign_return}
@@ -181,6 +264,8 @@ class RegisterPage extends React.Component {
                 </View>
 
                 {this._inputMobileCodeView()}
+
+                {show_area ? this.showArea() : null}
 
                 <Text style={{
                     color: Colors._AAA, fontSize: 12,
@@ -218,13 +303,13 @@ class RegisterPage extends React.Component {
 
                 {/*使用邮箱注册*/}
                 {/*<BtnLong*/}
-                    {/*style={{marginTop: 35}}*/}
-                    {/*testID="btn_switch_email_register"*/}
-                    {/*onPress={() => {*/}
-                        {/*this.countDownText.end();*/}
-                        {/*router.toEmailRegisterPage()*/}
-                    {/*}}*/}
-                    {/*name={I18n.t('email_register')}/>*/}
+                {/*style={{marginTop: 35}}*/}
+                {/*testID="btn_switch_email_register"*/}
+                {/*onPress={() => {*/}
+                {/*this.countDownText.end();*/}
+                {/*router.toEmailRegisterPage()*/}
+                {/*}}*/}
+                {/*name={I18n.t('email_register')}/>*/}
 
 
                 <View style={{flex: 1}}/>
@@ -256,13 +341,34 @@ class RegisterPage extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    page3: {
+        width: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        position: 'absolute',
+        top: 80,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 999
+    },
+    areaView: {
+        marginTop: 7,
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: 'white',
+        flexDirection: 'row', alignItems: 'center',
+        zIndex: 9999
+    },
     input_view: {
         borderBottomColor: Colors._E5E5,
         borderBottomWidth: 1,
         height: 60,
         flexDirection: 'row',
         alignItems: 'center',
-        width: Metrics.screenWidth
+        width: Metrics.screenWidth,
+        backgroundColor: 'white'
     },
     input: {
         height: 50,
