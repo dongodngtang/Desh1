@@ -311,12 +311,13 @@ export function fetchPostEmailResetPwd(email, vcode, password) {
     }
 }
 
-export function fetchPostMobileResetPwd(mobile, vcode, password) {
+export function fetchPostMobileResetPwd(mobile, vcode, password,ext) {
     const body = {
         type: 'mobile',
         mobile: mobile,
         vcode: vcode,
-        password: password
+        password: password,
+        ext:ext
     };
     return (dispatch) => {
         dispatch(_postResetPassword());

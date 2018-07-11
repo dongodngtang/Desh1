@@ -24,6 +24,7 @@ class BindingPhonePage extends Component {
         super(props);
         this.phone = '';
         this.code = '';
+        this.ext=''
     }
 
 
@@ -47,7 +48,8 @@ class BindingPhonePage extends Component {
             const body = {
                 type: 'mobile',
                 account: this.phone,
-                code: this.code
+                code: this.code,
+                ext:this.ext
             };
             this.props._postBindAccount(body);
         } else if (actionType === POST_V_CODE && hasData) {
@@ -144,27 +146,31 @@ class BindingPhonePage extends Component {
         });
     };
     _countBtn = () => {
-        if (checkPhone(this.phone)) {
+        if (checkPhone(this.phone) && strNotNull(this.ext)) {
 
 
             const body = {
                 option_type: 'bind_account',
                 vcode_type: 'mobile',
-                mobile: this.phone
+                mobile: this.phone,
+                ext:this.ext
             };
 
             this.props._postVCode(body);
+        }else{
+            showToast("请填写完整信息")
         }
     };
 
     _btnBind = () => {
-        if (checkPhone(this.phone) && strNotNull(this.code)) {
+        if (checkPhone(this.phone) && strNotNull(this.code) && strNotNull(this.ext)) {
 
             const body = {
                 option_type: 'bind_account',
                 vcode_type: 'mobile',
                 account: this.phone,
-                vcode: this.code
+                vcode: this.code,
+                ext:this.ext
             };
             this.props._postVerifyCode(body);
 
