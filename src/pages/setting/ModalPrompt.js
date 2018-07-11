@@ -8,13 +8,14 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {checkPhone, showToast, clearLoginUser} from '../../utils/ComonHelper';
+import {checkPhone, showToast, clearLoginUser, strNotNull} from '../../utils/ComonHelper';
 import {Password, SecurityText, CountDownBtn} from '../../components';
 import {POST_CHANGE_BIND, POST_VERIFY_CODE, POST_V_CODE, POST_CHANGE_PERMISSION} from '../../actions/ActionTypes';
 import {fetchChangBind, fetchPostVerifyCode} from '../../actions/AccountAction';
 import {fetchGetRecentRaces, _getProfileOk} from '../../actions/RacesAction';
 import {connect} from 'react-redux';
 import {postVCode, postChangeBind, postVerifyCode} from '../../services/AccountDao';
+import ExtArea from '../comm/ExtArea';
 
 class ModalPrompt extends Component {
 
@@ -26,11 +27,18 @@ class ModalPrompt extends Component {
             popup: 1,
             phone: login_user.mobile,
             old_code: '',
-            new_code: ''
+            new_code: '',
+            ext: ''
         };
 
         this.verifyType = '';
-    }
+    };
+
+    changed_ext = (code) => {
+        this.setState({
+            ext: code
+        })
+    };
 
 
     render() {
@@ -42,13 +50,16 @@ class ModalPrompt extends Component {
             transparent={true}
             visible={this.props.modalVisible}>
             {this.showPopup()}
-
+            <ExtArea
+                ref={ref => this.areaAction = ref}
+                changed_ext={this.changed_ext}
+                type={'ModalPrompt'}/>
         </Modal>)
     }
 
 
     showPopup = () => {
-        const {popup, phone} = this.state;
+        const {popup, phone, ext} = this.state;
         console.log(this.state)
 
         switch (popup) {
@@ -196,6 +207,23 @@ class ModalPrompt extends Component {
 
                     <Text style={styles.txtPhone}>{I18n.t('changePhone')}</Text>
 
+                    {/*区号选择*/}
+                    <TouchableOpacity style={styles.areaView} onPress={() => {
+                        this.areaAction && this.areaAction.toggle();
+                    }}>
+                        <TextInput
+                            autoFocus={false}
+                            editable={false}
+                            placeholderTextColor={Colors._BBBB}
+                            underlineColorAndroid='transparent'
+                            testID="ext"
+                            placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                            value={ext}/>
+                        <View style={{flex: 1}}/>
+
+                        <Image style={{width: 16, height: 12}} source={Images.bottomarea}/>
+                    </TouchableOpacity>
+
                     <View style={styles.inputView}>
                         <TextInput
                             testID="input_bind_phone"
@@ -327,7 +355,8 @@ class ModalPrompt extends Component {
                 type: 'mobile',
                 account: this.state.phone,
                 old_code: this.state.old_code,
-                new_code: vcode
+                new_code: vcode,
+                ext: this.state.ext
             };
             postChangeBind(body, ret => {
                 this._close();
@@ -345,7 +374,8 @@ class ModalPrompt extends Component {
                 option_type: this.verifyType,
                 vcode_type: 'mobile',
                 account: this.state.phone,
-                vcode: vcode
+                vcode: vcode,
+                ext: this.state.ext
             };
 
             postVerifyCode(body, ret => {
@@ -374,7 +404,8 @@ class ModalPrompt extends Component {
         const body = {
             option_type: 'bind_new_account',
             vcode_type: 'mobile',
-            mobile: this.state.phone
+            mobile: this.state.phone,
+            ext: this.state.ext
         };
         postVCode(body, ret => {
             if (this.countDownButton)
@@ -397,7 +428,8 @@ class ModalPrompt extends Component {
         const body = {
             option_type: 'change_old_account',
             vcode_type: 'mobile',
-            mobile: this.state.phone
+            mobile: this.state.phone,
+            ext: this.state.ext
         };
         postVCode(body, data => {
             if (this.countDownButton)
@@ -445,6 +477,15 @@ export default connect(mapStateToProps, bindAction)(ModalPrompt);
 
 
 const styles = StyleSheet.create({
+    areaView: {
+        marginTop: 7,
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: 'white',
+        flexDirection: 'row', alignItems: 'center'
+    },
     page: {
         top: 0,
         right: 0,

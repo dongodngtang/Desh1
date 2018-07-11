@@ -3,17 +3,6 @@ import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, KeyboardAvoidingView, FlatList, Modal
 } from 'react-native';
-import {connect} from 'react-redux';
-import I18n from 'react-native-i18n';
-import NavigationBar from '../../components/NavigationBar';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {CountDownText} from '../../components/countdown/CountDownText';
-import {fetchPostVerifyCode, fetchPostVCode} from '../../actions/AccountAction';
-import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
-import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
-import {BtnLong, BtnSoild, InputView} from '../../components';
-import {postVCode} from '../../services/AccountDao';
-import * as Animatable from 'react-native-animatable';
 
 const codes = [{id: 0, name: '大陆', code: '86'}, {id: 1, name: '香港', code: '852'}, {id: 2, name: '澳门', code: '853'}, {
     id: 3,
@@ -61,11 +50,13 @@ export default class ExtArea extends Component {
 
                 }}
                 visible={this.state.visible}
+                style={{alignItems:'center'}}
             >
-                <View style={{flex:1}}>
+                <View style={this.props.type && this.props.type === 'ModalPrompt' ? {width: 300,alignSelf:'center'} : {flex: 1}}>
                     <TouchableOpacity
                         activeOpacity={1}
-                        onPress={this.toggle} style={{height:110}}/>
+                        onPress={this.toggle}
+                        style={{height: this.props.type && this.props.type === 'ModalPrompt' ? 290 : 110}}/>
                     <FlatList
                         style={{}}
                         data={codes}

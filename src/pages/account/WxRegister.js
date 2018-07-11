@@ -14,6 +14,7 @@ import {checkPhone, strNotNull, showToast, checkMail, getDispatchAction} from '.
 import {BtnLong, BtnSoild, InputView, CountDownBtn} from '../../components';
 import {postVCode, postVerifyCode, postWxBind, getAccountExit} from '../../services/AccountDao';
 import {GET_RECENT_RACES, GET_PROFILE} from '../../actions/ActionTypes';
+import ExtArea from '../comm/ExtArea';
 
 export default class WxRegister extends React.Component {
 
@@ -21,13 +22,31 @@ export default class WxRegister extends React.Component {
     state = {
         canNextDisable: true,
         mobile: '',
-        vcode: ''
+        vcode: '',
+        ext: ''
     };
 
     _inputMobileCodeView = () => {
-
+        const {ext} = this.state;
         return (
             <View>
+                {/*区号选择*/}
+                <TouchableOpacity style={styles.areaView} onPress={() => {
+                    this.areaAction && this.areaAction.toggle();
+                }}>
+                    <TextInput
+                        autoFocus={false}
+                        editable={false}
+                        placeholderTextColor={Colors._BBBB}
+                        underlineColorAndroid='transparent'
+                        testID="ext"
+                        placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                        value={ext}/>
+                    <View style={{flex: 1}}/>
+
+                    <Image style={{width: 16, height: 12}} source={Images.bottomarea}/>
+                </TouchableOpacity>
+
                 {/*手机号*/}
                 <InputView
                     testID="input_phone"
@@ -73,11 +92,13 @@ export default class WxRegister extends React.Component {
     };
 
     _postVcode = () => {
-        if (checkPhone(this.state.mobile)) {
+        const {mobile, ext} = this.state;
+        if (checkPhone(mobile) && strNotNull(ext)) {
             const body = {
                 option_type: 'bind_wx_account',
                 vcode_type: 'mobile',
-                mobile: this.state.mobile
+                mobile: this.state.mobile,
+                ext: ext
             };
 
 
@@ -92,14 +113,15 @@ export default class WxRegister extends React.Component {
     };
 
     _next = () => {
-        const {mobile, vcode} = this.state;
+        const {mobile, vcode,ext} = this.state;
 
         if (mobile.length > 1 && vcode.length > 1) {
             const body = {
                 option_type: 'bind_wx_account',
                 vcode_type: 'mobile',
                 account: mobile,
-                vcode: vcode
+                vcode: vcode,
+                ext:ext
             };
             const account = {
                 account: mobile
@@ -112,7 +134,8 @@ export default class WxRegister extends React.Component {
                             access_token: this.props.params.access_token,
                             type: "mobile",
                             account: mobile,
-                            code: vcode
+                            code: vcode,
+                            ext:ext
                         };
                         router.toInputPwd(wx)
 
@@ -125,7 +148,8 @@ export default class WxRegister extends React.Component {
                             access_token: this.props.params.access_token,
                             type: "mobile",
                             account: mobile,
-                            code: vcode
+                            code: vcode,
+                            ext:ext
                         };
 
                         postWxBind(wx, data => {
@@ -199,10 +223,17 @@ export default class WxRegister extends React.Component {
 
                 <View style={{flex: 1}}/>
 
-
+                <ExtArea
+                    ref={ref => this.areaAction = ref}
+                    changed_ext={this.changed_ext}/>
             </View>
 
         )
+    }
+    changed_ext = (code) => {
+        this.setState({
+            ext: code
+        })
     }
 
     _protocol = () => {
@@ -213,6 +244,15 @@ export default class WxRegister extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    areaView: {
+        marginTop: 7,
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: 'white',
+        flexDirection: 'row', alignItems: 'center'
+    },
     input_view: {
         borderBottomColor: Colors._E5E5,
         borderBottomWidth: 1,

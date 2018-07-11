@@ -307,8 +307,7 @@ const styles = StyleSheet.create({
         paddingLeft: 17,
         paddingRight: 17,
         backgroundColor: 'white',
-        flexDirection: 'row', alignItems: 'center',
-        zIndex: 9999
+        flexDirection: 'row', alignItems: 'center'
     },
     input_view: {
         borderBottomColor: Colors._E5E5,

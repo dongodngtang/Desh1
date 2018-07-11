@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/1/21.
  */
-import React from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text
@@ -18,23 +18,26 @@ import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import {POST_VCODE_LOGIN} from '../../actions/ActionTypes';
 import {closeDrawer} from '../../reducers/DrawerRedux';
 import {postVCode, postLogin} from '../../services/AccountDao';
+import ExtArea from '../comm/ExtArea';
 
-class LoginCodeView extends React.Component {
+class LoginCodeView extends Component {
 
     state = {
         mobile: '',
         vcode: '',
         getCodeDisable: false,
         phoneClear: false,
+        ext: ''
     };
 
     doLogin = () => {
-        const {mobile, vcode} = this.state;
-        if (strNotNull(mobile) && strNotNull(vcode)) {
+        const {mobile, vcode, ext} = this.state;
+        if (strNotNull(mobile) && strNotNull(vcode) && strNotNull(ext)) {
             let body = {
                 type: 'vcode',
                 mobile: mobile,
-                vcode: vcode
+                vcode: vcode,
+                ext: ext
             };
             postLogin(body, data => {
 
@@ -56,13 +59,14 @@ class LoginCodeView extends React.Component {
     };
     _sendCode = () => {
 
-        const {mobile} = this.state;
-        if (checkPhone(mobile)) {
+        const {mobile,ext} = this.state;
+        if (checkPhone(mobile) && strNotNull(ext)) {
 
             const body = {
                 option_type: 'login',
                 vcode_type: 'mobile',
-                mobile: mobile
+                mobile: mobile,
+                ext:ext
             };
             postVCode(body, data => {
                 showToast(I18n.t('mobile_code_send'))
@@ -74,6 +78,8 @@ class LoginCodeView extends React.Component {
                 showToast(err)
             })
 
+        }else{
+            showToast("信息请填写完整")
         }
     }
 
@@ -101,10 +107,16 @@ class LoginCodeView extends React.Component {
 
             </TouchableOpacity>
         )
-    }
+    };
+
+    changed_ext = (code) => {
+        this.setState({
+            ext: code
+        })
+    };
 
     render() {
-        const {getCodeDisable, phoneClear} = this.state;
+        const {getCodeDisable, phoneClear,ext} = this.state;
         return (
             <View
                 testID="page_login_code"
@@ -127,8 +139,25 @@ class LoginCodeView extends React.Component {
                 </View>
 
                 <View style={{flex: 1}}>
+                    {/*区号选择*/}
+                    <TouchableOpacity style={styles.areaView} onPress={() => {
+                        this.areaAction && this.areaAction.toggle();
+                    }}>
+                        <TextInput
+                            autoFocus={false}
+                            editable={false}
+                            placeholderTextColor={Colors._BBBB}
+                            underlineColorAndroid='transparent'
+                            testID="ext"
+                            placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                            value={ext}/>
+                        <View style={{flex: 1}}/>
+
+                        <Image style={{width: 16, height: 12}} source={Images.bottomarea}/>
+                    </TouchableOpacity>
+
                     {/*手机号*/}
-                    <View style={styles.input_view}>
+                    <View style={[styles.input_view,{marginTop:8}]}>
                         <TextInput style={styles.input}
                                    placeholderTextColor={Colors._BBBB}
                                    underlineColorAndroid='transparent'
@@ -224,19 +253,33 @@ class LoginCodeView extends React.Component {
                     <Text style={styles.text_other_sign}>
                         {I18n.t('sign_with_pass')}</Text>
                 </TouchableOpacity>
+
+                <ExtArea
+                    ref={ref => this.areaAction = ref}
+                    changed_ext={this.changed_ext}/>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    areaView: {
+        marginTop: 7,
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: 'white',
+        flexDirection: 'row', alignItems: 'center'
+    },
     input_view: {
         borderBottomColor: Colors._E5E5,
         borderBottomWidth: 1,
         height: 60,
         flexDirection: 'row',
         alignItems: 'center',
-        width: Metrics.screenWidth
+        width: Metrics.screenWidth,
+        backgroundColor: 'white'
     },
     input: {
         height: 50,
