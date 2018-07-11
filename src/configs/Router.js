@@ -977,7 +977,7 @@ export default class Router {
         })
     }
 
-    forgetPhoneToPwdPage(props, phone, code) {
+    forgetPhoneToPwdPage(props, phone, code,ext) {
         this.push(props, {
 
             name: 'InputPwdPage',
@@ -985,7 +985,8 @@ export default class Router {
                 phone: phone,
                 isEmailOrMobile: 'mobile',
                 code: code,
-                isRegisterOrForget: 'forget'
+                isRegisterOrForget: 'forget',
+                ext:ext
 
             }
         })
@@ -1005,7 +1006,7 @@ export default class Router {
     }
 
 
-    toInputPwdPage(props, phone, code) {
+    toInputPwdPage(props, phone, code,ext) {
         this.push(props, {
 
             name: 'InputPwdPage',
@@ -1013,7 +1014,8 @@ export default class Router {
                 phone: phone,
                 code: code,
                 isEmailOrMobile: 'mobile',
-                isRegisterOrForget: 'register'
+                isRegisterOrForget: 'register',
+                ext:ext
             }
         })
     }

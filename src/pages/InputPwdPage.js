@@ -32,7 +32,8 @@ class InputPwdPage extends Component {
             password: '',
             isRegisterOrForget: '',
             isEmailOrMobile: '',
-            pwdEye: true
+            pwdEye: true,
+            ext:''
         }
     }
 
@@ -51,7 +52,8 @@ class InputPwdPage extends Component {
             code: this.props.params.code,
             email: this.props.params.email,
             isRegisterOrForget: this.props.params.isRegisterOrForget,
-            isEmailOrMobile: this.props.params.isEmailOrMobile
+            isEmailOrMobile: this.props.params.isEmailOrMobile,
+            ext:this.props.params.ext
         });
 
         console.log(this.props.params)

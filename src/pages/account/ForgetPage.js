@@ -15,6 +15,7 @@ import NavigationBar from '../../components/NavigationBar';
 import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
 import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {BtnLong, BtnSoild} from '../../components';
+import ExtArea from '../comm/ExtArea'
 
 class ForgetPage extends React.Component {
     state = {
@@ -23,33 +24,37 @@ class ForgetPage extends React.Component {
         getCodeDisable: false,
         canNextDisable: true,
         phoneClear: false,
-        isEmailFind: false
+        isEmailFind: false,
+        ext:''
     }
 
     componentWillReceiveProps(newProps) {
-        const {isEmailFind, mobile, vcode} = this.state;
+        const {isEmailFind, mobile, vcode,ext} = this.state;
         if (this.props.loading != newProps.loading)
             if (newProps.actionType === POST_VERIFY_CODE
                 && !newProps.loading && newProps.hasData && !isEmailFind) {
                 router.forgetPhoneToPwdPage(this.props,
-                    mobile, vcode);
+                    mobile, vcode,ext);
             }
 
     }
 
     _sendCode = () => {
 
-        const {mobile} = this.state;
+        const {mobile,ext} = this.state;
 
-        if (checkPhone(mobile)) {
+        if (checkPhone(mobile) && strNotNull(ext)) {
             this.countStart();
             const body = {
                 option_type: 'reset_pwd',
                 vcode_type: 'mobile',
-                mobile: mobile
+                mobile: mobile,
+                ext:ext
             };
             this.props.fetchVCode(body);
 
+        }else{
+            showToast("请填写完整信息")
         }
 
     }
@@ -92,11 +97,28 @@ class ForgetPage extends React.Component {
 
 
     _inputMobileCodeView = () => {
-        const {getCodeDisable, phoneClear} = this.state;
+        const {getCodeDisable, phoneClear,ext} = this.state;
         return (
             <View>
+                {/*区号选择*/}
+                <TouchableOpacity style={styles.areaView} onPress={() => {
+                    this.areaAction && this.areaAction.toggle();
+                }}>
+                    <TextInput
+                        autoFocus={false}
+                        editable={false}
+                        placeholderTextColor={Colors._BBBB}
+                        underlineColorAndroid='transparent'
+                        testID="ext"
+                        placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                        value={ext}/>
+                    <View style={{flex: 1}}/>
+
+                    <Image style={{width: 16, height: 12}} source={Images.bottomarea}/>
+                </TouchableOpacity>
+
                 {/*手机号*/}
-                <View style={styles.input_view}>
+                <View style={[styles.input_view,{backgroundColor:'white',marginTop:8}]}>
                     <TextInput style={styles.input}
                                placeholderTextColor={Colors._BBBB}
                                underlineColorAndroid='transparent'
@@ -113,7 +135,7 @@ class ForgetPage extends React.Component {
 
                 </View>
                 {/*验证码*/}
-                <View style={styles.input_view}>
+                <View style={[styles.input_view,{backgroundColor:'white'}]}>
                     <TextInput style={styles.input}
                                placeholderTextColor={Colors._BBBB}
                                underlineColorAndroid='transparent'
@@ -210,15 +232,34 @@ class ForgetPage extends React.Component {
                         name={I18n.t('get_pwd_by_email')}/>
 
                 </View>
+
+                <ExtArea
+                    ref={ref => this.areaAction = ref}
+                    changed_ext={this.changed_ext}/>
             </View>
 
         )
+    }
+
+    changed_ext = (code) => {
+        this.setState({
+            ext: code
+        })
     }
 
 }
 
 
 const styles = StyleSheet.create({
+    areaView: {
+        marginTop: 7,
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: 'white',
+        flexDirection: 'row', alignItems: 'center'
+    },
     input_view: {
         borderBottomColor: Colors._E5E5,
         borderBottomWidth: 1,
