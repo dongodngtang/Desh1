@@ -11,7 +11,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SetInputView, BtnLong} from '../../components';
 import {CountDownText} from '../../components/countdown/CountDownText';
-import {checkPhone, strNotNull, showToast, putLoginUser} from '../../utils/ComonHelper';
+import {checkPhone, strNotNull, showToast, putLoginUser,checkPhone2} from '../../utils/ComonHelper';
 import {POST_BIND_ACCOUNT, POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {fetchBindAccount, fetchPostVCode, fetchPostVerifyCode} from '../../actions/AccountAction';
 import StorageKey from '../../configs/StorageKey';
@@ -170,7 +170,7 @@ class BindingPhonePage extends Component {
         });
     };
     _countBtn = () => {
-        if (checkPhone(this.phone) && strNotNull(this.ext)) {
+        if (checkPhone2(this.phone,this.ext) && strNotNull(this.ext)) {
 
 
             const body = {
@@ -181,13 +181,11 @@ class BindingPhonePage extends Component {
             };
 
             this.props._postVCode(body);
-        }else{
-            showToast("请填写完整信息")
         }
     };
 
     _btnBind = () => {
-        if (checkPhone(this.phone) && strNotNull(this.code) && strNotNull(this.ext)) {
+        if (checkPhone2(this.phone,ext) && strNotNull(this.code) && strNotNull(this.ext)) {
 
             const body = {
                 option_type: 'bind_account',

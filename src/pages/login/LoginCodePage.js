@@ -10,7 +10,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import {connect} from 'react-redux';
-import {checkPhone, strNotNull, showToast} from '../../utils/ComonHelper';
+import {checkPhone, strNotNull, showToast,checkPhone2} from '../../utils/ComonHelper';
 import {CountDownText} from '../../components/countdown/CountDownText';
 import {fetchPostVerifyCode, fetchPostVCode, fetchPostLogin} from '../../actions/AccountAction';
 import {fetchGetProfile} from '../../actions/PersonAction';
@@ -60,7 +60,7 @@ class LoginCodeView extends Component {
     _sendCode = () => {
 
         const {mobile, ext} = this.state;
-        if (checkPhone(mobile) && strNotNull(ext)) {
+        if (checkPhone2(mobile,ext) && strNotNull(ext)) {
 
             const body = {
                 option_type: 'login',

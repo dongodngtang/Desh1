@@ -12,7 +12,7 @@ import {CountDownText}from '../../components/countdown/CountDownText';
 import {fetchPostVerifyCode, fetchPostVCode}from '../../actions/AccountAction';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
-import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
+import {checkPhone, strNotNull, showToast, checkMail,checkPhone2} from '../../utils/ComonHelper';
 import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {BtnLong, BtnSoild} from '../../components';
 import ExtArea from '../comm/ExtArea'
@@ -43,7 +43,7 @@ class ForgetPage extends React.Component {
 
         const {mobile,ext} = this.state;
 
-        if (checkPhone(mobile) && strNotNull(ext)) {
+        if (checkPhone2(mobile,ext) && strNotNull(ext)) {
             this.countStart();
             const body = {
                 option_type: 'reset_pwd',
@@ -53,9 +53,6 @@ class ForgetPage extends React.Component {
             };
             this.props.fetchVCode(body);
 
-        }else{
-            if (!strNotNull(ext))
-            showToast("请填写完整信息")
         }
 
     }
@@ -180,13 +177,14 @@ class ForgetPage extends React.Component {
 
     _next = () => {
 
-        const {mobile, vcode} = this.state;
-        if (checkPhone(mobile)) {
+        const {mobile, vcode,ext} = this.state;
+        if (checkPhone2(mobile,ext)) {
             let body = {
                 option_type: 'reset_pwd',
                 vcode_type: 'mobile',
                 account: mobile,
-                vcode: vcode
+                vcode: vcode,
+                ext:ext
             };
             this.props.fetchVerifyCode(body);
         }

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {checkPhone, showToast, clearLoginUser, strNotNull} from '../../utils/ComonHelper';
+import {checkPhone, showToast, clearLoginUser, strNotNull,checkPhone2} from '../../utils/ComonHelper';
 import {Password, SecurityText, CountDownBtn} from '../../components';
 import {POST_CHANGE_BIND, POST_VERIFY_CODE, POST_V_CODE, POST_CHANGE_PERMISSION} from '../../actions/ActionTypes';
 import {fetchChangBind, fetchPostVerifyCode} from '../../actions/AccountAction';
@@ -392,7 +392,7 @@ class ModalPrompt extends Component {
 
 
     _btnNewNext = () => {
-        if (checkPhone(this.state.phone)) {
+        if (checkPhone2(this.state.phone,this.state.ext)) {
             this.verifyType = 'bind_new_account';
             this.setState({
                 popup: 5,
@@ -444,7 +444,7 @@ class ModalPrompt extends Component {
 
     };
     _countBtn = () => {
-        if (checkPhone(this.state.phone)) {
+        if (checkPhone2(this.state.phone,this.state.ext)) {
 
             if (this.verifyType === 'bind_new_account') {
                 this._sendNewCode();

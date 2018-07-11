@@ -871,11 +871,28 @@ export function showWeek(week) {
 }
 
 
-var myreg = /^1(3|4|5|7|8)\d{9}$/;
+var myreg = /^\d{5,20}$/;
+
+var myreg2 = /^1(3|4|5|7|8)\d{9}$/;
 
 export function checkPhone(phone) {
     if (phone != null && phone != undefined) {
         if (!myreg.test(phone.trim())) {
+            showToast(`${I18n.t('show_put_phone')}`);
+            return false;
+        }
+        return true;
+    }
+}
+
+export function checkPhone2(phone, ext) {
+    if (!strNotNull(ext)) {
+        showToast("请填写完整的信息")
+    } else if (phone != null && phone != undefined) {
+        if (ext === '86' && !myreg2.test(phone.trim())) {
+            showToast(`${I18n.t('show_put_phone')}`);
+            return false;
+        } else if (!myreg.test(phone.trim())) {
             showToast(`${I18n.t('show_put_phone')}`);
             return false;
         }

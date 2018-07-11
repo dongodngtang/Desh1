@@ -10,7 +10,7 @@ import I18n from 'react-native-i18n';
 import NavigationBar from '../../components/NavigationBar';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {fetchPostVerifyCode, fetchPostVCode} from '../../actions/AccountAction';
-import {checkPhone, strNotNull, showToast, checkMail, getDispatchAction} from '../../utils/ComonHelper';
+import {checkPhone2, strNotNull, showToast, checkMail, getDispatchAction} from '../../utils/ComonHelper';
 import {BtnLong, BtnSoild, InputView, CountDownBtn} from '../../components';
 import {postVCode, postVerifyCode, postWxBind, getAccountExit} from '../../services/AccountDao';
 import {GET_RECENT_RACES, GET_PROFILE} from '../../actions/ActionTypes';
@@ -93,7 +93,7 @@ export default class WxRegister extends React.Component {
 
     _postVcode = () => {
         const {mobile, ext} = this.state;
-        if (checkPhone(mobile) && strNotNull(ext)) {
+        if (checkPhone2(mobile,ext) && strNotNull(ext)) {
             const body = {
                 option_type: 'bind_wx_account',
                 vcode_type: 'mobile',
@@ -108,12 +108,7 @@ export default class WxRegister extends React.Component {
             }, err => {
                 showToast(err)
             })
-        }else{
-            if (!strNotNull(ext)){
-                showToast("请填写完整的信息")
-            }
         }
-
     };
 
     _next = () => {
