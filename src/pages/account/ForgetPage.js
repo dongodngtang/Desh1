@@ -54,6 +54,7 @@ class ForgetPage extends React.Component {
             this.props.fetchVCode(body);
 
         }else{
+            if (!strNotNull(ext))
             showToast("请填写完整信息")
         }
 

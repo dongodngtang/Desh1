@@ -69,7 +69,8 @@ class RegisterPage extends React.Component {
 
 
         } else {
-            showToast("请填写完整信息")
+            if (!strNotNull(ext))
+                showToast("请填写完整信息")
         }
     }
 

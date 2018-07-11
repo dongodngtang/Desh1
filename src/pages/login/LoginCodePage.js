@@ -59,14 +59,14 @@ class LoginCodeView extends Component {
     };
     _sendCode = () => {
 
-        const {mobile,ext} = this.state;
+        const {mobile, ext} = this.state;
         if (checkPhone(mobile) && strNotNull(ext)) {
 
             const body = {
                 option_type: 'login',
                 vcode_type: 'mobile',
                 mobile: mobile,
-                ext:ext
+                ext: ext
             };
             postVCode(body, data => {
                 showToast(I18n.t('mobile_code_send'))
@@ -78,8 +78,9 @@ class LoginCodeView extends Component {
                 showToast(err)
             })
 
-        }else{
-            showToast("信息请填写完整")
+        } else {
+            if (!strNotNull(ext))
+                showToast("信息请填写完整")
         }
     }
 
@@ -116,7 +117,7 @@ class LoginCodeView extends Component {
     };
 
     render() {
-        const {getCodeDisable, phoneClear,ext} = this.state;
+        const {getCodeDisable, phoneClear, ext} = this.state;
         return (
             <View
                 testID="page_login_code"
@@ -157,7 +158,7 @@ class LoginCodeView extends Component {
                     </TouchableOpacity>
 
                     {/*手机号*/}
-                    <View style={[styles.input_view,{marginTop:8}]}>
+                    <View style={[styles.input_view, {marginTop: 8}]}>
                         <TextInput style={styles.input}
                                    placeholderTextColor={Colors._BBBB}
                                    underlineColorAndroid='transparent'

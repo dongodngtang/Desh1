@@ -108,6 +108,10 @@ export default class WxRegister extends React.Component {
             }, err => {
                 showToast(err)
             })
+        }else{
+            if (!strNotNull(ext)){
+                showToast("请填写完整的信息")
+            }
         }
 
     };
