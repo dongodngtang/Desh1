@@ -51,7 +51,7 @@ class RegisterPage extends React.Component {
 
     _sendCode = () => {
         const {mobile, ext} = this.state;
-        if (checkPhone(mobile)) {
+        if (checkPhone(mobile) && strNotNull(ext)) {
             const body = {
                 option_type: 'register',
                 vcode_type: 'mobile',
@@ -74,6 +74,8 @@ class RegisterPage extends React.Component {
             });
 
 
+        }else{
+            showToast("请填写完整信息")
         }
     }
 
