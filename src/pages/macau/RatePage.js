@@ -46,7 +46,7 @@ export default class RatePage extends Component {
 
                 </TouchableOpacity>
 
-                <Text style={{color:"#333333",fontSize:14,marginTop:10,alignSelf:'center'}}>
+                <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
                     数据仅供参考，每小时刷新一次
                 </Text>
             </View>
@@ -58,9 +58,9 @@ export class RateTop extends Component {
 
     state = {
         ratesItem: {},
-        price_changed: [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥', price2: 0, price: ''},
-            {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$', price2: 0, price: ''},
-            {id: 2, img: Images.mop, abb: 'MOP', name: '澳门币$', price2: 0, price: ''}],
+        price_changed: [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥', price2: 0, price: '', showTrue: true},
+            {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$', price2: 0, price: '', showTrue: false},
+            {id: 2, img: Images.mop, abb: 'MOP', name: '澳门币$', price2: 0, price: '', showTrue: false}],
         show: false
     };
 
@@ -154,7 +154,7 @@ export class RateTop extends Component {
 
     clean_txt = () => {
         let rate = [100, 0, 0];
-        const {price_changed,ratesItem} = this.state;
+        const {price_changed, ratesItem} = this.state;
         rate[1] = mul(ratesItem.cny_to_hkd_rate.rate, rate[0]);
         rate[2] = mul(ratesItem.cny_to_mop_rate.rate, rate[0]);
 
@@ -196,12 +196,13 @@ export class RateTop extends Component {
                                 <View style={{flex: 1}}/>
                                 <View style={{flexDirection: 'column', alignItems: 'flex-end'}}>
                                     <TextInput
+                                        autoFocus={item.showTrue}
                                         keyboardType={'numeric'}
                                         style={{
                                             paddingTop: 0,
                                             paddingBottom: 0,
                                             width: 230,
-                                            height:40,
+                                            height: 40,
                                             fontSize: 24,
                                             fontWeight: 'bold',
                                             color: show ? '#444444' : '#F3F3F3',
