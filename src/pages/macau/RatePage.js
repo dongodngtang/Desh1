@@ -153,11 +153,15 @@ export class RateTop extends Component {
     };
 
     clean_txt = () => {
-        const {price_changed} = this.state;
+        let rate = [100, 0, 0];
+        const {price_changed,ratesItem} = this.state;
+        rate[1] = mul(ratesItem.cny_to_hkd_rate.rate, rate[0]);
+        rate[2] = mul(ratesItem.cny_to_mop_rate.rate, rate[0]);
+
         let group2 = price_changed;
         group2.map((x, index) => {
             x.price = '';
-            x.price2 = ''
+            x.price2 = rate[index]
         });
         this.setState({
             price_changed: group2

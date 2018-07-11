@@ -49,7 +49,7 @@ export default class LocalRatePage extends Component {
                 global.router.toUserTopicPage(item)
             }}>
 
-                <Text style={[styles.txt_num,{width:25}]}>{this.show_index(index)}</Text>
+                {this.show_index(index)}
 
                 <ImageLoad style={styles.avatar}
                            source={{uri: avatar}}/>
