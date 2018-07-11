@@ -17,12 +17,7 @@ import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {BtnLong, BtnSoild, InputView} from '../../components';
 import {postVCode} from '../../services/AccountDao';
 import * as Animatable from 'react-native-animatable';
-
-const codes = [{id: 0, name: '大陆', code: '86'}, {id: 1, name: '香港', code: '852'}, {id: 2, name: '澳门', code: '853'}, {
-    id: 3,
-    name: '台湾',
-    code: '886'
-}];
+import ExtArea from '../comm/ExtArea';
 
 class RegisterPage extends React.Component {
 
@@ -74,7 +69,7 @@ class RegisterPage extends React.Component {
             });
 
 
-        }else{
+        } else {
             showToast("请填写完整信息")
         }
     }
@@ -87,71 +82,27 @@ class RegisterPage extends React.Component {
         });
     };
 
-    _separator = () => {
-        return <View style={{width: '100%', height: 1, backgroundColor: '#F3F3F3'}}/>
-    };
-
-    _renderItem = ({item}) => {
-        const {id, name, code} = item;
-        return (
-            <TouchableOpacity style={{backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', height: 50}}
-                              onPress={() => {
-                                  this.setState({
-                                      ext: code,
-                                      show_area: !this.state.show_area
-                                  })
-                              }}>
-                <Text style={{color: "#666666", fontSize: 14, marginLeft: 17}}>{name}</Text>
-                <View style={{flex: 1}}/>
-                <Text style={{color: "#666666", fontSize: 14, marginRight: 17}}>{code}</Text>
-            </TouchableOpacity>
-        )
+    changed_ext = (code) => {
+        this.setState({
+            ext: code
+        })
     }
 
-    showArea = () => {
-        return (
-            <Modal
-                animationType={"none"}
-                transparent={true}
-                onRequestClose={() => {
-
-                }}
-                visible={this.state.show_area}
-                style={{flex:1}}
-            >
-                <View style={{marginTop: 110}}>
-                    <FlatList
-                        style={{}}
-                        data={codes}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `coupon${index}`}
-                    />
-                </View>
-                {/*<TouchableOpacity style={{height:Metrics.screenHeight - 180}}*/}
-                {/*onPress={()=>{*/}
-                {/*this.setState({*/}
-                {/*show_area:!this.state.show_area*/}
-                {/*})*/}
-                {/*}}>*/}
-
-                {/*</TouchableOpacity>*/}
-            </Modal>
-        )
-    };
+    changed_area = () => {
+        this.setState({
+            show_area: !this.state.show_area
+        })
+    }
 
 
     _inputMobileCodeView = () => {
-        const {getCodeDisable, ext,show_area} = this.state;
+        const {getCodeDisable, ext, show_area} = this.state;
         return (
             <View>
 
                 {/*区号选择*/}
                 <TouchableOpacity style={styles.areaView} onPress={() => {
-                    this.setState({
-                        show_area: !this.state.show_area
-                    })
+                    this.changed_area()
                 }}>
                     <TextInput
                         autoFocus={false}
@@ -222,7 +173,10 @@ class RegisterPage extends React.Component {
 
                 </View>
 
-                {show_area ? this.showArea() : null}
+                {show_area ? <ExtArea
+                    show_area={this.state.show_area}
+                    changed_ext={this.changed_ext}
+                    changed_area={this.changed_area}/> : null}
 
             </View>
         )
@@ -238,7 +192,7 @@ class RegisterPage extends React.Component {
                         vcode_type: 'mobile',
                         account: mobile,
                         vcode: vcode,
-                        ext:ext
+                        ext: ext
                     };
 
                     this.props.fetchVerifyCode(body);
