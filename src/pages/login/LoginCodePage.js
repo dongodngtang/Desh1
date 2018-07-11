@@ -145,6 +145,7 @@ class LoginCodeView extends Component {
                         this.areaAction && this.areaAction.toggle();
                     }}>
                         <TextInput
+                            style={{width:100}}
                             autoFocus={false}
                             editable={false}
                             placeholderTextColor={Colors._BBBB}
