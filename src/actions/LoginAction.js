@@ -5,11 +5,12 @@ import * as TYPTES from './ActionTypes';
 import * as LoginService from '../services/AccountDao';
 
 /*手机注册*/
-export function registerByMobile(phone,vcode) {
+export function registerByMobile(phone,vcode,ext) {
      const body = {
          type:'mobile',
          mobile:phone,
-         vcode:vcode
+         vcode:vcode,
+         ext:ext
      };
      return (dispatch)=>{
          dispatch(registerDoing());

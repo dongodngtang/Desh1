@@ -361,12 +361,13 @@ export function fetchPostRegister(body) {
     }
 }
 
-export function fetchPostMobileRegister(mobile, vcode, password) {
+export function fetchPostMobileRegister(mobile, vcode, password,ext) {
     const body = {
         type: 'mobile',
         mobile: mobile,
         vcode: vcode,
-        password: password
+        password: password,
+        ext:ext
     };
     return (dispatch) => {
         dispatch(_postRegister());

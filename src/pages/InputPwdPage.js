@@ -60,7 +60,7 @@ class InputPwdPage extends Component {
     }
 
     _request_register = () => {
-        const {mobile, code, email, isEmailOrMobile, isRegisterOrForget, password} = this.state;
+        const {mobile, code, email, isEmailOrMobile, isRegisterOrForget, password,ext} = this.state;
         if (!pwdVaild(password)) {
             return;
         }
@@ -78,6 +78,7 @@ class InputPwdPage extends Component {
             } else if (isEmailOrMobile === 'mobile') {
                 body.type = 'mobile';
                 body.mobile = mobile;
+                body.ext = ext;
             }
 
             postRegister(body, data => {
@@ -98,6 +99,7 @@ class InputPwdPage extends Component {
             } else if (isEmailOrMobile === 'mobile') {
                 body.type = 'mobile';
                 body.mobile = mobile;
+                body.ext = ext;
             }
             postResetPwdCode(body, data => {
                 router.popToLogin()
@@ -216,10 +218,10 @@ const styles = StyleSheet.create({
 
 function bindAction(dispatch) {
     return {
-        _registerByMobile: (mobile, vcode, password) => dispatch(fetchPostMobileRegister(mobile, vcode, password)),
+        _registerByMobile: (mobile, vcode, password,ext) => dispatch(fetchPostMobileRegister(mobile, vcode, password,ext)),
         _registerByEmail: (email, password) => dispatch(fetchPostEmailRegister(email, password)),
         _resetPwdEmail: (email, vcode, password) => dispatch(fetchPostEmailResetPwd(email, vcode, password)),
-        _resetPwdMobile: (phone, vcode, password) => dispatch(fetchPostMobileResetPwd(phone, vcode, password)),
+        _resetPwdMobile: (phone, vcode, password,ext) => dispatch(fetchPostMobileResetPwd(phone, vcode, password,ext)),
         _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
         _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
         closeDrawer: () => dispatch(closeDrawer()),
