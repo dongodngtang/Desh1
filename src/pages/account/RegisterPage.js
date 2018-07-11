@@ -106,7 +106,7 @@ class RegisterPage extends React.Component {
                         value={ext}/>
                     <View style={{flex: 1}}/>
 
-                    <Image style={{width: 16, height: 12}} source={Images.integral.frends}/>
+                    <Image style={{width: 16, height: 12}} source={Images.bottomarea}/>
                 </TouchableOpacity>
                 {/*手机号*/}
                 <View style={{width: Metrics.screenWidth, backgroundColor: 'white', marginTop: 8}}>

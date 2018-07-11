@@ -62,24 +62,22 @@ export default class ExtArea extends Component {
                 }}
                 visible={this.state.visible}
             >
-                <TouchableOpacity style={{marginTop: 110,backgroundColor: 'rgba(0,0,0,0.6)'}}>
+                <View style={{flex:1}}>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={this.toggle} style={{height:110}}/>
                     <FlatList
                         style={{}}
                         data={codes}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `coupon${index}`}
+                        keyExtractor={(item, index) => `extArea${index}`}
                     />
-                </TouchableOpacity>
-                {/*<TouchableOpacity style={{height:Metrics.screenHeight - 180}}*/}
-                {/*onPress={()=>{*/}
-                {/*this.setState({*/}
-                {/*show_area:!this.state.show_area*/}
-                {/*})*/}
-                {/*}}>*/}
-
-                {/*</TouchableOpacity>*/}
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={this.toggle} style={{flex: 1}}/>
+                </View>
             </Modal>
         )
     }
