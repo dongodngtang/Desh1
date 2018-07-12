@@ -1,7 +1,7 @@
 {
   "app_name": "澳门旅行",
   "register": "注册",
-  "phone_email": "邮箱或手机号",
+  "phone_email": "手机号",
   "password": "密码",
   "sign_in": "登录",
   "problem_for_sign_in": "忘记密码？",
