@@ -108,26 +108,26 @@ export default class IntegralPage extends Component {
                             {coupons.map((item, index) => {
                                 return <TouchableOpacity key={index} style={[styles.mallBottomView]}
                                                          onPress={() => {
-                                                             global.router.toIntegralInfoPage(item.id, total_points,this.refresh)
+                                                             global.router.toIntegralInfoPage(item.id, total_points, this.refresh)
                                                          }}>
-                                    <ImageLoad style={{height: 52,width: 83}} source={{uri:item.cover_link}}/>
+                                    <ImageLoad style={{height: 52, width: 83}} source={{uri: item.cover_link}}/>
                                     {/*<ImageBackground key={index} style={{*/}
-                                        {/*height: 32,*/}
-                                        {/*width: 83,*/}
-                                        {/*flexDirection: 'row',*/}
-                                        {/*alignItems: 'center'*/}
+                                    {/*height: 32,*/}
+                                    {/*width: 83,*/}
+                                    {/*flexDirection: 'row',*/}
+                                    {/*alignItems: 'center'*/}
                                     {/*}}*/}
-                                                     {/*source={Images.integral.couponTop}>*/}
-                                        {/*<Text style={{color: "#F34247", fontSize: 12, marginLeft: 7}}>¥<Text*/}
-                                            {/*style={{fontSize: 20, fontWeight: 'bold'}}>{item.reduce_price}</Text></Text>*/}
-                                        {/*<View style={{width: 120, flexDirection: 'column'}}>*/}
-                                            {/*<Text style={{color: "#444444", fontSize: 7, marginLeft: 5}}>{item.name}</Text>*/}
-                                            {/*<Text style={{*/}
-                                                {/*color: "#444444",*/}
-                                                {/*fontSize: 7,*/}
-                                                {/*marginTop: 3*/}
-                                            {/*}}>{item.short_desc}</Text>*/}
-                                        {/*</View>*/}
+                                    {/*source={Images.integral.couponTop}>*/}
+                                    {/*<Text style={{color: "#F34247", fontSize: 12, marginLeft: 7}}>¥<Text*/}
+                                    {/*style={{fontSize: 20, fontWeight: 'bold'}}>{item.reduce_price}</Text></Text>*/}
+                                    {/*<View style={{width: 120, flexDirection: 'column'}}>*/}
+                                    {/*<Text style={{color: "#444444", fontSize: 7, marginLeft: 5}}>{item.name}</Text>*/}
+                                    {/*<Text style={{*/}
+                                    {/*color: "#444444",*/}
+                                    {/*fontSize: 7,*/}
+                                    {/*marginTop: 3*/}
+                                    {/*}}>{item.short_desc}</Text>*/}
+                                    {/*</View>*/}
                                     {/*</ImageBackground>*/}
                                     {/*<ImageLoad style={{height: 21,width: 83}} source={Images.integral.couponBootom}/>*/}
                                     <Text style={{
@@ -202,7 +202,7 @@ export default class IntegralPage extends Component {
         } else if (doing_times > 0 && done_times < limit_times) {
             action = "领取"
         } else if (doing_times === 0 && done_times < limit_times) {
-            action = "未完成"
+            action = "去完成"
         }
         return action;
 
@@ -212,18 +212,32 @@ export default class IntegralPage extends Component {
         let action = this._action(item);
         if (action === '领取') {
             return '#6CC7FF'
-        } else if (action === '未完成') {
+        } else if (action === '去完成') {
             return '#FF6B4C'
         } else {
             return "#D9D9D9"
         }
     };
 
+    toPage = (item) => {
+        const {option_type} = item;
+        if (option_type === 'topic') {
+            router.pop();
+        } else if (option_type === 'share') {
+            global.router.toSettingPage()
+        } else if (option_type === 'comment') {
+            router.pop();
+        } else if (option_type === 'friend_register') {
+            global.router.toSettingPage()
+        }
+
+    };
+
     _renderItem = ({item, index}, type) => {
         if (isEmptyObject(item)) {
             return <View/>
         }
-        const {doing_times, done_times, total_doing_points, mark, limit_times, total_done_points,point} = item;
+        const {doing_times, done_times, total_doing_points, mark, limit_times, total_done_points, point} = item;
 
         let unfinished = doing_times > 0 && total_doing_points > 0 ?
             <Text style={{
@@ -264,8 +278,11 @@ export default class IntegralPage extends Component {
                     activeOpacity={this.action === "领取" ? 0 : 1}
                     style={[styles.statusView, {backgroundColor: this._background(item)}]}
                     onPress={() => {
-                        if (type === 'unfinished')
+                        if (this._action(item) === '去完成') {
+                            this.toPage(item)
+                        } else if (type === 'unfinished') {
                             this._doingTime(item)
+                        }
                     }}>
                     <Text style={{color: '#FFFFFF', fontSize: 14}}>{this._action(item)}</Text>
                 </TouchableOpacity>
