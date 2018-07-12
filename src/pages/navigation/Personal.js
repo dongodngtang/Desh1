@@ -13,14 +13,26 @@ import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
 import HotelOrderPage from "../macau/hotelOrder/HotelOrderPage";
+import {wallet_account} from '../../services/MacauDao';
 
 
 class Personal extends Component {
 
     state = {
-        viewRef: 0
+        viewRef: 0,
+        total_account:'0.0'
     };
 
+    componentDidMount(){
+        if(!isEmptyObject(global.login_user)){
+            wallet_account(data =>{
+                console.log("个人页面钱包：",data)
+                this.setState({
+                    total_account:data.total_account
+                })
+            })
+        }
+    }
 
     componentWillReceiveProps(newProps) {
 
@@ -139,21 +151,25 @@ class Personal extends Component {
 
             })}
 
-            <View style={{height: 1, marginLeft: 69}}/>
-            {this._item(stylesP.item_view, Images.coupon.coupon, stylesP.img_dy, '钱包', () => {
-                if (isEmptyObject(global.login_user))
-                    global.router.toLoginFirstPage()
-                else
-                    global.router.toWalletPage()
+            {/*<View style={{height: 1, marginLeft: 69}}/>*/}
+            {/*{this._item(stylesP.item_view, Images.coupon.coupon, stylesP.img_dy, '钱包', () => {*/}
+                {/*if (isEmptyObject(global.login_user))*/}
+                    {/*global.router.toLoginFirstPage()*/}
+                {/*else*/}
+                    {/*global.router.toWalletPage()*/}
 
-            })}
+            {/*})}*/}
 
-            <View style={{height: 5, width: '100%'}}/>
+            <View style={{height: 15, width: '100%'}}/>
 
             {this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},
-                I18n.t('business_cooperation'), () => {
-                    umengEvent('more_business');
-                    router.toBusinessPage()
+                '钱包', () => {
+                    // umengEvent('more_business');
+                    // router.toBusinessPage()
+                    if (isEmptyObject(global.login_user))
+                        global.router.toLoginFirstPage()
+                    else
+                        global.router.toWalletPage()
 
                 })}
             <View style={{height: 1, marginLeft: 69}}/>
@@ -178,13 +194,13 @@ class Personal extends Component {
             <Image style={imgStyle} source={img}/>
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
-            {title === I18n.t('my_coins') ? <Text
+            {title === '钱包' && !isEmptyObject(global.login_user) ? <Text
                     style={{
                         fontSize: 16,
                         color: '#AAAAAA',
                         marginRight: 12,
                         lineHeight: 22
-                    }}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
+                    }}>{(this.state.total_account === '0.0' || this.state.total_account === '0') ? '0.00' : this.state.total_account}</Text>
                 : null}
             <Image style={stylesP.personalImg} source={Images.is}/>
         </TouchableOpacity>
