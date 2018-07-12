@@ -17,7 +17,7 @@ import {
 import {Images, Colors, Metrics} from '../../Themes';
 import styles from './wallet.style'
 import {BaseComponent, NavigationBar} from '../../components'
-import {wallet_account} from "../../services/MacauDao";
+import {wallet_account} from "../../services/WallDao";
 import {moneyFormat} from "../../utils/ComonHelper";
 
 export default class WalletPage extends Component {
@@ -75,6 +75,9 @@ export default class WalletPage extends Component {
                         key={item.type}
                         style={styles.wallet_item}
                         onPress={() => {
+                            if (item.type === 0) {
+                                router.toWalletDetailsPage()
+                            }
                             if (item.type === 2) {
                                 router.toWithdraw(this.state.total_account)
                             }

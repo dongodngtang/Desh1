@@ -1,19 +1,6 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
-export function account_details(resolve, reject) {
-    helper.get(Api.account_details, ret => {
-        resolve(ret.data)
-    }, reject)
-}
-
-
-export function wallet_account(resolve, reject) {
-    helper.get(Api.wallet_account, ret => {
-        resolve(ret.data)
-    }, reject)
-}
-
 export function getExchange_traders(resolve, reject) {
     helper.get(Api.exchange_traders, ret => {
         resolve(ret.data)

@@ -13,7 +13,7 @@ import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
 import HotelOrderPage from "../macau/hotelOrder/HotelOrderPage";
-import {wallet_account} from '../../services/MacauDao';
+import {wallet_account} from '../../services/WallDao';
 
 
 class Personal extends Component {
