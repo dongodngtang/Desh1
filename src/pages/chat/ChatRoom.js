@@ -316,25 +316,30 @@ export default class ChatRoom extends Component {
             messageType: msg.messageType,
         };
 
+        let notificationText = '';
         ///发送文字类型消息
         if (msg.messageType === "text") {
             msgInfo.text = msg.text;
+            notificationText = msg.text;
         }
 
         ///语音类型 消息体拼接path字段
         if (msg.messageType === "voice") {
             msgInfo.path = msg.path;
+            notificationText = '[语音]'
         }
 
         ///图片类型 消息体拼接path字段
         if (msg.messageType === "image") {
             msgInfo.path = msg.path;
+            notificationText = '[图片]'
         }
 
         ///文件类型 消息体拼接path字段
         if (msg.messageType === "file") {
             msgInfo.path = msg.path;
             msgInfo.extras = {coverPath: msg.coverPath};
+            notificationText = '[视频]'
         }
 
 
@@ -356,7 +361,13 @@ export default class ChatRoom extends Component {
                 id: message.id,
                 type: msgInfo.type,
                 username: msgInfo.username,
-                extras: {coverPath: msg.coverPath}
+                extras: {coverPath: msg.coverPath},
+                messageSendingOptions: {
+                    isCustomNotificationEnabled: true,
+                    notificationTitle: this.myInfo.nickname,
+                    notificationText: notificationText
+
+                }
             }, (jmessage) => {
 
 
@@ -840,7 +851,7 @@ export default class ChatRoom extends Component {
         let voiceView = {};
         if (this.state.inputVoice)
             voiceView = {renderComposer: this.createTextInput};
-        if(Platform.OS === 'ios'){
+        if (Platform.OS === 'ios') {
             return (
                 <KeyboardAvoidingView style={styles.container}>
                     {/*导航栏*/}
@@ -896,7 +907,7 @@ export default class ChatRoom extends Component {
 
                 </KeyboardAvoidingView>
             );
-        }else{
+        } else {
             return (
                 <View style={styles.container}>
                     {/*导航栏*/}
@@ -955,7 +966,6 @@ export default class ChatRoom extends Component {
         }
 
     }
-
 
 
     ///计时格式
