@@ -139,6 +139,15 @@ class Personal extends Component {
 
             })}
 
+            <View style={{height: 1, marginLeft: 69}}/>
+            {this._item(stylesP.item_view, Images.coupon.coupon, stylesP.img_dy, '钱包', () => {
+                if (isEmptyObject(global.login_user))
+                    global.router.toLoginFirstPage()
+                else
+                    global.router.toWalletPage()
+
+            })}
+
             <View style={{height: 5, width: '100%'}}/>
 
             {this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},
@@ -204,7 +213,7 @@ class Personal extends Component {
     readerMe = () => {
         const {profile} = this.props;
         const {following_count, followers_count} = profile;
-        console.log("person:",profile)
+        console.log("person:", profile)
         return <View style={stylesP.meView}>
 
 
@@ -249,7 +258,7 @@ class Personal extends Component {
                     <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>
                 </View>
 
-                <View style={{marginLeft: 20,marginRight:17,width: Metrics.reallySize(248)}}>
+                <View style={{marginLeft: 20, marginRight: 17, width: Metrics.reallySize(248)}}>
 
                     <Text
                         style={stylesP.personSignature2}>{isEmptyObject(login_user) ? I18n.t('log_register') : profile.nick_name}</Text>

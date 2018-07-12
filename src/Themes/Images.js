@@ -393,6 +393,11 @@ const images = {
         unSelected: require('../../source/coupon/unSelected.png'),
         coupon_used: require('../../source/coupon/coupon_used.png')
 
+    },
+    wallet:{
+        get_cash:require('../../source/wallet/get_cash.png'),
+        card:require('../../source/wallet/card.png'),
+        record:require('../../source/wallet/record_money.png')
     }
 
 };

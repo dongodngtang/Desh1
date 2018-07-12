@@ -190,6 +190,8 @@ const api = {
     using_coupon: using_coupon,//用户订单可用优惠券
     integral_info: integral_info,//优惠券详情
     exchange_traders: 'exchange_traders',//获取换汇人列表
+    wallet_account:'wallet/account',//获取用户钱包余额
+    account_details:'wallet/account_details',//获取用户钱包交易明细
 }
 
 export default api;

@@ -1,6 +1,18 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+export function account_details(resolve, reject) {
+    helper.get(Api.account_details, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
+export function wallet_account(resolve, reject) {
+    helper.get(Api.wallet_account, ret => {
+        resolve(ret.data)
+    }, reject)
+}
 
 export function getExchange_traders(resolve, reject) {
     helper.get(Api.exchange_traders, ret => {
@@ -8,10 +20,10 @@ export function getExchange_traders(resolve, reject) {
     }, reject)
 }
 
-export function getExchange_rates(body,resolve, reject) {
+export function getExchange_rates(body, resolve, reject) {
     helper.get(Api.exchange_rates(body), ret => {
         resolve(ret.data)
-    }, reject,body)
+    }, reject, body)
 }
 
 export function getUsingCoupons(body, resolve, reject) {
