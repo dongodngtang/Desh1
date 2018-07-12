@@ -134,5 +134,30 @@ export default StyleSheet.create({
     txt_cash: {
         color: 'white',
         fontSize: 14
+    },
+    invite_view:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginLeft:17,marginRight:17
+    },
+    botton_view:{
+        paddingTop:11,
+        paddingBottom:11,
+        paddingLeft:50,paddingRight:50,
+        borderRadius:3,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    view33:{
+        flexDirection:'column',
+        justifyContent:'center'
+    },
+    txt44:{
+        color:'#444444',
+        fontSize:26
+    },
+    txt55:{
+        color:'#888888',
+        fontSize:12
     }
 })
