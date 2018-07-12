@@ -401,7 +401,7 @@ const images = {
         invite:require('../../source/wallet/invite.png'),
         bg:require('../../source/wallet/bg.png'),
         friends:require('../../source/wallet/friends.png'),
-        money:require('../../source/wallet/money.png'),
+        moneys:require('../../source/wallet/moneys.png'),
         rlue:require('../../source/wallet/rlue.png'),
         rule2:require('../../source/wallet/rule2.png'),
         dddd:require('../../source/wallet/dddd.png')

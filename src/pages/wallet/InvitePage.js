@@ -54,7 +54,7 @@ export default class InvitePage extends Component {
     render() {
         return (
             <ScrollView style={ApplicationStyles.bgContainer}>
-                <ImageBackground style={{width:Metrics.screenWidth,height:400}} source={Images.wallet.bg}>
+                <ImageBackground style={{width:Metrics.screenWidth,height:284}} source={Images.wallet.bg}>
                     <NavigationBar
                         toolbarStyle={{backgroundImage:Images.wallet.bg}}
                         title=""
@@ -75,7 +75,7 @@ export default class InvitePage extends Component {
                         </View>
                     </View>
                     <View style={[styles.invite_view,{marginTop:31}]}>
-                        <ImageLoad style={{width:20,height:20}} source={Images.wallet.money}/>
+                        <Image style={{width:20,height:20}} source={Images.wallet.moneys}/>
                         <Text style={{color:'#444444',fontSize:15,marginLeft:8}}>邀请奖励</Text>
                         <View style={{flex:1}}/>
                         <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>

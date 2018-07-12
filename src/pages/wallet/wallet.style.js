@@ -150,11 +150,12 @@ export default StyleSheet.create({
     },
     view33:{
         flexDirection:'column',
-        justifyContent:'center'
+        alignItems:'center'
     },
     txt44:{
         color:'#444444',
-        fontSize:26
+        fontSize:26,
+        fontWeight:'bold'
     },
     txt55:{
         color:'#888888',
