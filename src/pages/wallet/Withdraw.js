@@ -25,7 +25,8 @@ const list = [{id: 0, name: '支付宝'}, {id: 1, name: '微信'}, {id: 2, name:
 export default class Withdraw extends Component {
 
     state = {
-        way: '支付宝'
+        way: '支付宝',
+
     }
 
     render() {
@@ -73,7 +74,7 @@ export default class Withdraw extends Component {
                            source={Images.adr_right}/>
                 </TouchableOpacity>
 
-                <Text style={[styles.txt_pay, {marginTop: 34}]}>支付宝账号</Text>
+                <Text style={[styles.txt_pay, {marginTop: 34}]}>{way}号</Text>
 
                 <View style={styles.view_pay}>
 
@@ -83,7 +84,7 @@ export default class Withdraw extends Component {
                                 keyboardType: 'numeric'
                             }}
                         style={styles.txt_pay}
-                        placeholder={'填写支付宝账号'}/>
+                        placeholder={`填写${way}号`}/>
                 </View>
 
                 <Text style={[styles.txt_pay, {marginTop: 34}]}>真实姓名</Text>
