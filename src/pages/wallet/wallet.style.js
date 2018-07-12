@@ -127,7 +127,8 @@ export default StyleSheet.create({
         backgroundColor: '#E54A2E',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 20
+        marginTop: 20,
+        borderRadius:2
     },
     txt_cash: {
         color: 'white',
