@@ -222,11 +222,11 @@ export default class IntegralPage extends Component {
     toPage = (item) => {
         const {option_type} = item;
         if (option_type === 'topic') {
-            router.pop();
+            router.popToTop();
         } else if (option_type === 'share') {
             global.router.toSettingPage()
         } else if (option_type === 'comment') {
-            router.pop();
+            router.popToTop();
         } else if (option_type === 'friend_register') {
             global.router.toSettingPage()
         }
