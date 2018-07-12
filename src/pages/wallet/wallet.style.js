@@ -113,6 +113,7 @@ export default StyleSheet.create({
     txt_pay: {
         fontSize: 14,
         color: Colors.txt_444,
+        fontWeight:'bold'
     },
     view_pay: {
         height: 30,

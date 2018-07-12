@@ -19,7 +19,7 @@ import styles from './wallet.style'
 import {BaseComponent, NavigationBar, Input} from '../../components'
 import PopAction from "../comm/PopAction";
 import I18n from "react-native-i18n";
-import {moneyFormat, strNotNull} from "../../utils/ComonHelper";
+import {moneyFormat, showToast, strNotNull} from "../../utils/ComonHelper";
 
 const list = [{id: 0, name: '支付宝'}, {id: 1, name: '微信'}, {id: 2, name: '银行卡'}];
 
@@ -27,11 +27,12 @@ export default class Withdraw extends Component {
 
     state = {
         way: '支付宝',
-        amount: ''
+        amount: '',
+        prompt_show: false
     }
 
     render() {
-        const {way, amount} = this.state;
+        const {way, amount, prompt_show} = this.state;
         const {total_account} = this.props.params;
 
         return <BaseComponent>
@@ -67,6 +68,15 @@ export default class Withdraw extends Component {
                         underlineColorAndroid={'transparent'}
                         onChangeText={txt => {
                             this.state.amount = txt
+                            if (txt > total_account) {
+                                this.setState({
+                                    prompt_show: true
+                                })
+                            } else {
+                                this.setState({
+                                    prompt_show: false
+                                })
+                            }
                         }}
 
                     />
@@ -83,7 +93,8 @@ export default class Withdraw extends Component {
             </View>
 
             <View style={styles.view_desc}>
-                <Text style={styles.lb_around}>最低提现50元，最高提现¥1000元</Text>
+                <Text
+                    style={[styles.lb_around, {color: prompt_show ? '#E54A2E' : '#CCCCCC'}]}>{prompt_show ? '金额超出可提现金额' : '最低提现50元，最高提现¥1000元'}</Text>
             </View>
 
             <View style={styles.card3}>
@@ -97,7 +108,22 @@ export default class Withdraw extends Component {
                            source={Images.adr_right}/>
                 </TouchableOpacity>
 
-                <Text style={[styles.txt_pay, {marginTop: 34}]}>{way}号</Text>
+                {way === '银行卡' ? <View style={{flexDirection: 'column', marginTop: 34}}>
+                    <Text style={styles.txt_pay}>开户行</Text>
+
+                    <View style={styles.view_pay}>
+
+                        <Input
+                            others={
+                                {
+                                    keyboardType: 'numeric'
+                                }}
+                            style={styles.txt_pay}
+                            placeholder={`填写银行开户行`}/>
+                    </View>
+                </View> : null}
+
+                <Text style={[styles.txt_pay, {marginTop: way === '银行卡' ? 13 : 34}]}>{way}号</Text>
 
                 <View style={styles.view_pay}>
 
@@ -110,7 +136,7 @@ export default class Withdraw extends Component {
                         placeholder={`填写${way}号`}/>
                 </View>
 
-                <Text style={[styles.txt_pay, {marginTop: 34}]}>真实姓名</Text>
+                <Text style={[styles.txt_pay, {marginTop: 13}]}>真实姓名</Text>
 
                 <View style={styles.view_pay}>
 
@@ -123,7 +149,9 @@ export default class Withdraw extends Component {
                         placeholder={'填写真实姓名'}/>
                 </View>
 
-                <TouchableOpacity style={styles.btn_cash}>
+                <TouchableOpacity style={styles.btn_cash} onPress={() => {
+                    this._check()
+                }}>
 
                     <Text style={styles.txt_cash}>立即提现</Text>
                 </TouchableOpacity>
@@ -136,6 +164,21 @@ export default class Withdraw extends Component {
 
         </BaseComponent>
     }
+
+    _check = () => {
+        const {way, amount, prompt_show} = this.state;
+        const {total_account} = this.props.params;
+        if (prompt_show) {
+            showToast("金额超出最高限额")
+        } else if (!strNotNull(total_account) || total_account === '0.0') {
+            showToast("提现金额不足")
+        } else if (!strNotNull(amount)) {
+            showToast("请输入正确的金额数")
+        } else {
+
+        }
+
+    };
 
     report = (data) => {
         this.setState({
