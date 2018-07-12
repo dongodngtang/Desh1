@@ -128,9 +128,11 @@ import LocalRatePage from '../pages/macau/LocalRatePage';
 import WalletPage from "../pages/wallet/WalletPage";
 import Withdraw from "../pages/wallet/Withdraw";
 import WalletDetailsPage from "../pages/wallet/WalletDetailsPage";
+import InvitePage from "../pages/wallet/InvitePage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="InvitePage" component={InvitePage} hideNavBar/>
         <Scene key="WalletDetailsPage" component={WalletDetailsPage} hideNavBar/>
         <Scene key="Withdraw" component={Withdraw} hideNavBar/>
         <Scene key="WalletPage" component={WalletPage} hideNavBar/>

@@ -179,6 +179,19 @@ class Personal extends Component {
 
                 })}
 
+            <View style={{height: 1, width: '100%'}}/>
+
+            {this._item(stylesP.item_view, Images.wallet.invite, {width: 21, height: 22, marginLeft: 20},
+                '我的邀请', () => {
+                    // umengEvent('more_business');
+                    // router.toBusinessPage()
+                    if (isEmptyObject(global.login_user))
+                        global.router.toLoginFirstPage()
+                    else
+                        global.router.toInvitePage()
+
+                })}
+
             <View style={{height: 50}}/>
         </ScrollView>
     };

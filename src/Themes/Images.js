@@ -397,7 +397,13 @@ const images = {
     wallet:{
         get_cash:require('../../source/wallet/get_cash.png'),
         card:require('../../source/wallet/card.png'),
-        record:require('../../source/wallet/record_money.png')
+        record:require('../../source/wallet/record_money.png'),
+        invite:require('../../source/wallet/invite.png'),
+        bg:require('../../source/wallet/bg.png'),
+        friends:require('../../source/wallet/friends.png'),
+        money:require('../../source/wallet/money.png'),
+        rlue:require('../../source/wallet/rlue.png'),
+        rule2:require('../../source/wallet/rule2.png')
     }
 
 };

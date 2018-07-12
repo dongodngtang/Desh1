@@ -31,10 +31,10 @@ export default class WalletPage extends Component {
             icon: Images.wallet.record, name: '交易记录', type: 0,
             style: {height: 24, width: 22, marginRight: 16}
         },
-        {
-            icon: Images.wallet.card, name: '银行卡绑定', type: 1,
-            style: {height: 22, width: 30, marginRight: 8}
-        },
+        // {
+        //     icon: Images.wallet.card, name: '银行卡绑定', type: 1,
+        //     style: {height: 22, width: 30, marginRight: 8}
+        // },
         {
             icon: Images.wallet.get_cash, name: '提现', type: 2,
             style: {height: 26, width: 27, marginRight: 11}

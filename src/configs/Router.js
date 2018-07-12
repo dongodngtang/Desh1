@@ -57,6 +57,12 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toInvitePage(){
+        this.stackPush({
+            name:'InvitePage'
+        })
+    }
+
     toWalletDetailsPage(){
         this.stackPush({
             name:'WalletDetailsPage'
