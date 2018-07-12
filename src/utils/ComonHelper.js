@@ -32,6 +32,7 @@ export const MM_DD = 'MM-DD';
 const HOST = 'https://kkh5.deshpro.com/';
 const THOST = 'http://test.kkh5.deshpro.com/';
 
+
 export const util = _;
 
 export function shareHost() {
@@ -218,13 +219,20 @@ export function localFilePath(path) {
     return path;
 }
 
+function getUserId() {
+    if (!isEmptyObject(global.login_user) && strNotNull(global.login_user.user_id)) {
+        return login_user.user_id;
+    }
+    return '0';
+}
 
 export function uShareLoad() {
     let param = {
-        shareTitle: '海量房源优惠券',
-        shareText: I18n.t('ads_poker'),
+        shareTitle: '【澳门旅行APP】下载立送200元优惠卷',
+        shareText: '在这里，可以随时随地找美食、定酒店！还有家庭旅行订制化服务等你体验！赶紧来下载吧！',
         shareImage: shareIcon,
-        shareLink: shareHost() + "loadApp",
+        // shareLink: shareHost() + "invite_load?id=" + getUserId()
+        shareLink: shareHost() + "loadApp"
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
