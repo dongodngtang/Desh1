@@ -12,13 +12,14 @@ import {
     TouchableOpacity,
     StyleSheet,
     Text, Image,
-    View,
+    View, TextInput
 } from 'react-native';
 import {Images, Colors, Metrics} from '../../Themes';
 import styles from './wallet.style'
 import {BaseComponent, NavigationBar, Input} from '../../components'
 import PopAction from "../comm/PopAction";
 import I18n from "react-native-i18n";
+import {moneyFormat, strNotNull} from "../../utils/ComonHelper";
 
 const list = [{id: 0, name: '支付宝'}, {id: 1, name: '微信'}, {id: 2, name: '银行卡'}];
 
@@ -26,11 +27,13 @@ export default class Withdraw extends Component {
 
     state = {
         way: '支付宝',
-
+        amount: ''
     }
 
     render() {
-        const {way} = this.state;
+        const {way, amount} = this.state;
+        const {total_account} = this.props.params;
+
         return <BaseComponent>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors._E54}}
@@ -44,18 +47,38 @@ export default class Withdraw extends Component {
                 <Text style={styles.txt_withdraw}>提现金额</Text>
                 <View style={styles.item_input}>
                     <Text style={[styles.money, {marginRight: 8}]}>¥</Text>
-                    <Input
-                        others={
-                            {
-                                keyboardType: 'numeric'
-                            }}
-                        style={styles.money}
-                        placeholder={'输入提现金额'}/>
+                    <TextInput
+                        // autoFocus={true}
+                        keyboardType={'numeric'}
+                        style={{
+                            width: 300,
+                            paddingTop: 0,
+                            paddingBottom: 0,
+                            fontSize: strNotNull(amount) ? 30 : 20,
+                            fontWeight: 'bold',
+                            color: '#444444'
+                        }}
+                        maxLength={4}
+                        numberOfLines={1}
+                        placeholderTextColor={'#CCCCCC'}
+                        placeholder={strNotNull(amount) ? '' : '输入提现金额'}
+                        value={amount + ''}
+                        clearTextOnFocus={true}
+                        underlineColorAndroid={'transparent'}
+                        onChangeText={txt => {
+                            this.state.amount = txt
+                        }}
+
+                    />
                 </View>
-                <View style={styles.view_can}>
-                    <Text style={styles.can_money}>{`可提现￥0.00元`}</Text>
+                <TouchableOpacity style={styles.view_can} onPress={() => {
+                    this.setState({
+                        amount: total_account
+                    })
+                }}>
+                    <Text style={styles.can_money}>{`可提现￥${moneyFormat(total_account)}元`}</Text>
                     <Text style={styles.all_get}>全部提现</Text>
-                </View>
+                </TouchableOpacity>
 
             </View>
 

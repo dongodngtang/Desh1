@@ -57,8 +57,13 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
-    toWithdraw(){
-        this.stackPush({name:'Withdraw'})
+    toWithdraw(total_account){
+        this.stackPush({
+            name:'Withdraw',
+            params:{
+                total_account
+            }
+        })
     }
 
     toWalletPage(){

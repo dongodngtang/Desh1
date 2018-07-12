@@ -76,7 +76,7 @@ export default class WalletPage extends Component {
                         style={styles.wallet_item}
                         onPress={() => {
                             if (item.type === 2) {
-                                router.toWithdraw()
+                                router.toWithdraw(this.state.total_account)
                             }
                         }}
                     >
