@@ -49,18 +49,20 @@ export default class WxRegister extends React.Component {
                 </TouchableOpacity>
 
                 {/*手机号*/}
-                <InputView
-                    testID="input_phone"
-                    placeholder={I18n.t('please_input_phone')}
-                    stateText={(text) => {
-                        this.setState({
-                            mobile: text,
-                            canNextDisable: !(text.length > 0 && this.state.vcode.length > 0)
-                        })
-                    }}
-                />
+                <View style={{backgroundColor:'white',marginTop:8}}>
+                    <InputView
+                        testID="input_phone"
+                        placeholder={I18n.t('please_input_phone')}
+                        stateText={(text) => {
+                            this.setState({
+                                mobile: text,
+                                canNextDisable: !(text.length > 0 && this.state.vcode.length > 0)
+                            })
+                        }}
+                    />
+                </View>
                 {/*验证码*/}
-                <View style={styles.input_view}>
+                <View style={[styles.input_view,{backgroundColor:'white'}]}>
                     <TextInput style={styles.input}
                                placeholderTextColor={Colors._BBBB}
                                underlineColorAndroid='transparent'
