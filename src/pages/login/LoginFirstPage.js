@@ -224,7 +224,7 @@ class LoginFirstPage extends Component {
 
                     <View style={{flex: 1}}/>
 
-                    {this.wxLogin()}
+                    {/*{this.wxLogin()}*/}
                 </View>
 
 
