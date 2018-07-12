@@ -125,9 +125,13 @@ import CouponPage from '../pages/coupon/CouponPage';
 import CouponSelectPage from '../pages/coupon/CouponSelectPage';
 import RatePage from '../pages/macau/RatePage';
 import LocalRatePage from '../pages/macau/LocalRatePage';
+import WalletPage from "../pages/wallet/WalletPage";
+import Withdraw from "../pages/wallet/Withdraw";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="Withdraw" component={Withdraw} hideNavBar/>
+        <Scene key="WalletPage" component={WalletPage} hideNavBar/>
         <Scene key="LocalRatePage" component={LocalRatePage} hideNavBar/>
         <Scene key="RatePage" component={RatePage} hideNavBar/>
         <Scene key="CouponSelectPage" component={CouponSelectPage} hideNavBar/>
@@ -259,3 +263,5 @@ export const Stacks = Actions.create(
 
     </Scene>
 );
+
+

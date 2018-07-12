@@ -35,6 +35,7 @@ import ProgressBar from './ProgressBar';
 import ActionPay from './ActionPay';
 import {LeftAlignedImage} from "./LeftAlignedImage";
 import Button from './Button'
+import Input from './Input'
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -66,5 +67,6 @@ export {
     ProgressBar,
     ActionPay,
     LeftAlignedImage,
-    Button
+    Button,
+    Input
 }

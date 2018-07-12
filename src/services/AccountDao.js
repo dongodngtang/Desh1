@@ -288,7 +288,6 @@ function JmessageLogin(imUser, count, callback) {
             },
             //登录失败回调
             (error) => {
-                showToast('IM正在加载')
                 console.log("极光IM登录失败" + count, error);
                 JmessageLogin(imUser, --count,callback)
             }

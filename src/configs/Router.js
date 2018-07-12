@@ -9,6 +9,7 @@ import UserTopicPage from "../pages/socials/UserTopicPage";
 import Crowdfunding from "../pages/crowdfundings/crowds/Crowdfunding";
 import HotelDetail from "../pages/macau/HotelDetail";
 import {SelectTimePage} from "../pages/macau/SelectTimePage";
+import WalletPage from "../pages/wallet/WalletPage";
 
 
 const customFloatFromRight = '';
@@ -54,6 +55,14 @@ export default class Router {
     popToTop() {
         getDispatchAction()['BACK_TOP']();
         Actions.popTo('tab_home')
+    }
+
+    toWithdraw(){
+        this.stackPush({name:'Withdraw'})
+    }
+
+    toWalletPage(){
+        this.stackPush({name:'WalletPage'})
     }
 
     toCouponSelectPage(total_price,_selectedCoupon,coupon) {
