@@ -17,10 +17,19 @@ import {
 import {Images, Colors, Metrics} from '../../Themes';
 import styles from './wallet.style'
 import {BaseComponent, NavigationBar, Input} from '../../components'
+import PopAction from "../comm/PopAction";
+import I18n from "react-native-i18n";
+
+const list = [{id: 0, name: '支付宝'}, {id: 1, name: '微信'}, {id: 2, name: '银行卡'}];
 
 export default class Withdraw extends Component {
 
+    state = {
+        way: '支付宝'
+    }
+
     render() {
+        const {way} = this.state;
         return <BaseComponent>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors._E54}}
@@ -54,13 +63,15 @@ export default class Withdraw extends Component {
             </View>
 
             <View style={styles.card3}>
-                <View style={styles.item_way}>
+                <TouchableOpacity style={styles.item_way} onPress={() => {
+                    this.popAction && this.popAction.toggle();
+                }}>
                     <Text style={styles.txt_withdraw}>提现方式</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={[styles.txt_pay, {marginRight: 12}]}>支付宝</Text>
+                    <Text style={[styles.txt_pay, {marginRight: 12}]}>{way}</Text>
                     <Image style={styles.right}
                            source={Images.adr_right}/>
-                </View>
+                </TouchableOpacity>
 
                 <Text style={[styles.txt_pay, {marginTop: 34}]}>支付宝账号</Text>
 
@@ -95,7 +106,34 @@ export default class Withdraw extends Component {
             </View>
 
 
+            <PopAction
+                ref={ref => this.popAction = ref}
+                btnArray={this.popActions()}/>
+
         </BaseComponent>
     }
+
+    report = (data) => {
+        this.setState({
+            way: data.name
+        })
+        this.popAction && this.popAction.toggle()
+    };
+
+    //弹窗
+    popActions = () => {
+        let resultArray = [];
+        list.forEach((data, index) => {
+            let item = {name: data.name, txtStyle: {color: '#444444'}, onPress: () => this.report(data)};
+            resultArray.push(item);
+        });
+        // resultArray.push({
+        //     name: I18n.t('cancel'),
+        //     txtStyle: {color: Colors._AAA},
+        //     onPress: () => this.popAction.toggle()
+        // });
+
+        return resultArray;
+    };
 
 }
