@@ -80,7 +80,7 @@ export default class InvitePage extends Component {
                         <View style={{flex:1}}/>
                         <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
                             <Text style={{color:'#888888',fontSize:12,marginLeft:8}}>查看明细</Text>
-                            <Image source={Images.adr_right} style={{height:14,width:7}}/>
+                            <Image source={Images.adr_right} style={{height:14,width:7,marginLeft:5}}/>
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.invite_view,{marginLeft:58,marginRight:58,marginTop:24}]}>
@@ -98,9 +98,17 @@ export default class InvitePage extends Component {
 
                 </View>
 
-                <Text style={{color: "#000000", fontSize: 14, marginTop: 17, marginLeft: 17, marginBottom: 6}}>
-                    我邀请的好友
-                </Text>
+                <View style={{flexDirection:'row',alignItems:'center',marginTop: 17, marginLeft: 17, marginRight:17,marginBottom: 6}}>
+                    <Image style={{width:25,height:23,marginRight:6}} source={Images.wallet.friends}/>
+                    <Text style={{color: "#000000", fontSize: 14}}>
+                        我邀请的好友
+                    </Text>
+                    <View style={{flex:1}}/>
+                    <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={{color:'#888888',fontSize:12,marginLeft:8}}>更多好友</Text>
+                        <Image source={Images.adr_right} style={{height:14,width:7,marginLeft:5}}/>
+                    </TouchableOpacity>
+                </View>
 
                 <FlatList
                     style={{flex: 1, backgroundColor: '#FFFFFF', paddingBottom: 50}}
