@@ -57,6 +57,10 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toWithdraw(){
+        this.stackPush({name:'Withdraw'})
+    }
+
     toWalletPage(){
         this.stackPush({name:'WalletPage'})
     }
