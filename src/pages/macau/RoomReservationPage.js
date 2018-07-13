@@ -22,7 +22,7 @@ const prompt = "订单一经确认，不可更改或添入住人姓名。 未满
 export default class RoomReservationPage extends PureComponent {
     state = {
         room_num: 1,
-        tempStock: 10,
+        tempStock: this.props.params.item.saleable_num,
         detailsShow: false,
         roomReservation: [],
         selected_coupon: {},
@@ -73,7 +73,7 @@ export default class RoomReservationPage extends PureComponent {
 
 
         }, err => {
-
+            console.log("房间1",err)
         })
 
     };
@@ -148,7 +148,7 @@ export default class RoomReservationPage extends PureComponent {
                 roomReservation: data
             })
         }, err => {
-
+            console.log("房间2",err)
         })
     }
 
@@ -242,7 +242,7 @@ export default class RoomReservationPage extends PureComponent {
                 roomReservation: data
             })
         }, err => {
-
+            console.log("房间3",err)
         })
 
     };
@@ -416,7 +416,7 @@ export class RoomMessage extends PureComponent {
                 <View style={styles.roomView}>
                     <Text style={styles.rooms}>房间数</Text>
                     <View style={{flex: 1}}/>
-                    {this.props.roomQuantity(room_num, persons)}
+                    {this.roomQuantity(room_num, persons)}
                 </View>
 
                 <View style={styles.Roomcounts}>

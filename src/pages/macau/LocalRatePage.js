@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, FlatList,ScrollView
+    StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
@@ -13,48 +13,49 @@ import styles from './Styles';
 
 export default class LocalRatePage extends Component {
 
-    state={
-        exchange_traders:[]
+    state = {
+        exchange_traders: []
     }
 
-    componentDidMount(){
+    componentDidMount() {
         getExchange_traders(data => {
             console.log("exchange_traders:", data)
 
             this.setState({
-                exchange_traders:data.items
+                exchange_traders: data.items
             });
         }, err => {
 
         })
     };
 
-    show_index=(index)=>{
-        if(index === 0){
-            return <Image style={{width:reallySize(18),height:reallySize(25)}} source={Images.one1}/>
-        }else if(index === 1){
-            return <Image style={{width:reallySize(18),height:reallySize(25)}} source={Images.two}/>
-        }else if(index === 2){
-            return <Image style={{width:reallySize(18),height:reallySize(25)}} source={Images.three}/>
-        }else{
-            return <Text style={[styles.txt_num,{width:25}]}>{index+1}</Text>
+    show_index = (index) => {
+        if (index === 0) {
+            return <Image style={{width: Metrics.reallySize(18), height: Metrics.reallySize(25)}} source={Images.one1}/>
+        } else if (index === 1) {
+            return <Image style={{width: Metrics.reallySize(18), height: Metrics.reallySize(25)}} source={Images.two}/>
+        } else if (index === 2) {
+            return <Image style={{width: Metrics.reallySize(18), height: Metrics.reallySize(25)}}
+                          source={Images.three}/>
+        } else {
+            return <Text style={[styles.txt_num, {width: 25}]}>{index + 1}</Text>
         }
     }
 
-    _renderItem = ({item,index}) => {
-        const {avatar,mobile,nick_name,signature,user_id} = item
+    _renderItem = ({item, index}) => {
+        const {avatar, mobile, nick_name, signature, user_id} = item
         return (
             <TouchableOpacity style={styles.pageItem}
-            onPress={()=>{
-                global.router.toUserTopicPage(item)
-            }}>
+                              onPress={() => {
+                                  global.router.toUserTopicPage(item)
+                              }}>
 
                 {this.show_index(index)}
 
                 <ImageLoad style={styles.avatar}
                            source={{uri: avatar}}/>
 
-                <View style={{width:'50%'}}>
+                <View style={{width: '50%'}}>
                     <Text style={styles.txt_name}>{nick_name}</Text>
                     <Text style={[styles.txt_decs, {marginTop: 2}]}>{signature}</Text>
                 </View>
@@ -91,8 +92,8 @@ export default class LocalRatePage extends Component {
                         汇率资讯达人排行榜
                     </Text>
 
-                    {isEmptyObject(this.state.exchange_traders)?null:<FlatList
-                        style={{flex: 1, backgroundColor: '#FFFFFF',paddingBottom:50}}
+                    {isEmptyObject(this.state.exchange_traders) ? null : <FlatList
+                        style={{flex: 1, backgroundColor: '#FFFFFF', paddingBottom: 50}}
                         data={this.state.exchange_traders}
                         showsHorizontalScrollIndicator={false}
                         renderItem={this._renderItem}

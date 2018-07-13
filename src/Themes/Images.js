@@ -368,7 +368,8 @@ const images = {
         price2: require('../../source/macau/price2.png'),
         price1_red: require('../../source/macau/price1_red.png'),
         price2_red: require('../../source/macau/price2_red.png'),
-        callPhone: require('../../source/macau/callPhone.png')
+        callPhone: require('../../source/macau/callPhone.png'),
+        notRoom: require('../../source/macau/notRoom.png')
 
     },
     integral: {
@@ -394,17 +395,17 @@ const images = {
         coupon_used: require('../../source/coupon/coupon_used.png')
 
     },
-    wallet:{
-        get_cash:require('../../source/wallet/get_cash.png'),
-        card:require('../../source/wallet/card.png'),
-        record:require('../../source/wallet/record_money.png'),
-        invite:require('../../source/wallet/invite.png'),
-        bg:require('../../source/wallet/bg.png'),
-        friends:require('../../source/wallet/friends.png'),
-        moneys:require('../../source/wallet/moneys.png'),
-        rlue:require('../../source/wallet/rlue.png'),
-        rule2:require('../../source/wallet/rule2.png'),
-        dddd:require('../../source/wallet/dddd.png')
+    wallet: {
+        get_cash: require('../../source/wallet/get_cash.png'),
+        card: require('../../source/wallet/card.png'),
+        record: require('../../source/wallet/record_money.png'),
+        invite: require('../../source/wallet/invite.png'),
+        bg: require('../../source/wallet/bg.png'),
+        friends: require('../../source/wallet/friends.png'),
+        moneys: require('../../source/wallet/moneys.png'),
+        rlue: require('../../source/wallet/rlue.png'),
+        rule2: require('../../source/wallet/rule2.png'),
+        dddd: require('../../source/wallet/dddd.png')
     }
 
 };

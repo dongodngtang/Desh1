@@ -165,21 +165,21 @@ class Personal extends Component {
 
             <View style={{height: 15, width: '100%'}}/>
 
-            {/*{this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},*/}
-                {/*'商务合作', () => {*/}
-                    {/*umengEvent('more_business');*/}
-                    {/*router.toBusinessPage()*/}
-
-                {/*})}*/}
-
             {this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},
-                '钱包', () => {
-                    if (isEmptyObject(global.login_user))
-                        global.router.toLoginFirstPage()
-                    else
-                        global.router.toWalletPage()
+                '商务合作', () => {
+                    umengEvent('more_business');
+                    router.toBusinessPage()
 
                 })}
+
+            {/*{this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},*/}
+                {/*'钱包', () => {*/}
+                    {/*if (isEmptyObject(global.login_user))*/}
+                        {/*global.router.toLoginFirstPage()*/}
+                    {/*else*/}
+                        {/*global.router.toWalletPage()*/}
+
+                {/*})}*/}
             <View style={{height: 1, marginLeft: 69}}/>
             {this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},
                 I18n.t('setting'), () => {
@@ -190,14 +190,14 @@ class Personal extends Component {
 
             <View style={{height: 1, width: '100%'}}/>
 
-            {this.state.display_check?this._item(stylesP.item_view, Images.wallet.invite, {width: 21, height: 22, marginLeft: 20},
-                '我的邀请', () => {
-                    if (isEmptyObject(global.login_user))
-                        global.router.toLoginFirstPage()
-                    else
-                        global.router.toInvitePage()
+            {/*{this.state.display_check?this._item(stylesP.item_view, Images.wallet.invite, {width: 21, height: 22, marginLeft: 20},*/}
+                {/*'我的邀请', () => {*/}
+                    {/*if (isEmptyObject(global.login_user))*/}
+                        {/*global.router.toLoginFirstPage()*/}
+                    {/*else*/}
+                        {/*global.router.toInvitePage()*/}
 
-                }):<View/>}
+                {/*}):<View/>}*/}
 
             <View style={{height: 50}}/>
         </ScrollView>
