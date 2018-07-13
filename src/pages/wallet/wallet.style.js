@@ -143,7 +143,7 @@ export default StyleSheet.create({
     botton_view:{
         paddingTop:11,
         paddingBottom:11,
-        paddingLeft:50,paddingRight:50,
+        paddingLeft:45,paddingRight:45,
         borderRadius:3,
         justifyContent:'center',
         alignItems:'center'

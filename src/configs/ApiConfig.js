@@ -3,6 +3,7 @@
  */
 import {LoginUser} from '../services/AccountDao';
 import {strNotNull, isEmptyObject} from '../utils/ComonHelper';
+import {invite_count} from "../services/WallDao";
 
 const api = {
     //内部测试
@@ -194,6 +195,7 @@ const api = {
     account_details:'wallet/account_details',//获取用户钱包交易明细
     display_check:'my_invites/display_check',//用户主页是否显示我的邀请
     award_details:'my_invites/award_details',//获取用户邀请奖励明细
+    invite_count:'my_invites/count',//获取用户邀请奖励明细
 
 
 }

@@ -9,15 +9,21 @@ import {getExchange_traders} from '../../services/MacauDao';
 import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/ComonHelper";
 import ImageLoad from "../../components/ImageLoad";
 import styles from './wallet.style';
+import {invite_count} from "../../services/WallDao";
 
 export default class InvitePage extends Component {
 
     state = {
-        invites: []
+        invites: [],
+        invite_count:{}
     }
 
     componentDidMount() {
+        invite_count(data => {
+            console.log('总的邀请数和邀请奖励', data);
 
+            this.setState({invite_count: data})
+        })
     };
 
 
@@ -52,6 +58,7 @@ export default class InvitePage extends Component {
 
 
     render() {
+        const {total_invite_number,total_invite_money} = this.state.invite_count
         return (
             <ScrollView style={ApplicationStyles.bgContainer}>
                 <ImageBackground style={{width:Metrics.screenWidth,height:284}} source={Images.wallet.bg}>
@@ -65,11 +72,12 @@ export default class InvitePage extends Component {
                 </ImageBackground>
 
 
-                <View style={{backgroundColor: 'white',paddingTop:28,paddingBottom:12,flexDirection:'column',justifyContent:'space-between'}}>
+                <View style={{backgroundColor: 'white',paddingTop:28,paddingBottom:12,flexDirection:'column',justifyContent:'space-around'}}>
                     <View style={[styles.invite_view]}>
                         <View style={[styles.botton_view,{backgroundColor:'#E54A2E',borderWidth:1,borderColor:'#E54A2E'}]}>
                             <Text style={{color:"white",fontSize:14}}>立即邀请</Text>
                         </View>
+                        <View style={{flex:1}}/>
                         <View style={[styles.botton_view,{backgroundColor:'white',borderWidth:1,borderColor:'#E54A2E'}]}>
                             <Text style={{color:"#E54A2E",fontSize:14}}>二维码邀请</Text>
                         </View>
@@ -81,18 +89,18 @@ export default class InvitePage extends Component {
                         <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}} onPress={()=>{
                             global.router.toAwardDetailPage()
                         }}>
-                            <Text style={{color:'#888888',fontSize:12,marginLeft:8}}>查看明细</Text>
+                            <Text style={{color:'#888888',fontSize:12,marginLeft:8}}>查看明细</Text>K
                             <Image source={Images.adr_right} style={{height:14,width:7,marginLeft:5}}/>
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.invite_view,{marginLeft:58,marginRight:58,marginTop:24}]}>
                         <View style={styles.view33}>
-                            <Text style={styles.txt44}>0.00元</Text>
+                            <Text style={styles.txt44}>{total_invite_money}元</Text>
                             <Text style={styles.txt55}>累计赚取</Text>
                         </View>
                         <Image source={Images.wallet.dddd} style={{height:39,width:3,marginLeft:49,marginRight:49}}/>
                         <View style={styles.view33}>
-                            <Text  style={styles.txt44}>0人</Text>
+                            <Text  style={styles.txt44}>{total_invite_number}人</Text>
                             <Text style={styles.txt55}>成功邀请</Text>
                         </View>
                     </View>
