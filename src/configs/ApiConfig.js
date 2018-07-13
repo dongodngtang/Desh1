@@ -117,7 +117,7 @@ const api = {
     topic_comments: 'topic/comments',
     comment_replies: 'replies',
     replies_replies: replies_replies,
-    replies_comments:replies_comments,//查看回复
+    replies_comments: replies_comments,//查看回复
     new_likes: new_likes,
     person_dynamics: person_dynamics,
     person_reply: person_reply,
@@ -191,11 +191,12 @@ const api = {
     using_coupon: using_coupon,//用户订单可用优惠券
     integral_info: integral_info,//优惠券详情
     exchange_traders: 'exchange_traders',//获取换汇人列表
-    wallet_account:'wallet/account',//获取用户钱包余额
-    account_details:'wallet/account_details',//获取用户钱包交易明细
-    display_check:'my_invites/display_check',//用户主页是否显示我的邀请
-    award_details:'my_invites/award_details',//获取用户邀请奖励明细
-    invite_count:'my_invites/count',//获取用户邀请奖励明细
+    wallet_account: 'wallet/account',//获取用户钱包余额
+    account_details: 'wallet/account_details',//获取用户钱包交易明细
+    display_check: 'my_invites/display_check',//用户主页是否显示我的邀请
+    award_details: 'my_invites/award_details',//获取用户邀请奖励明细
+    invite_count: 'my_invites/count',//获取用户邀请奖励明细
+    user_invite: 'my_invites',//查看某个用户邀请的用户 [只有1级和2级用户有权限
 
 
 }

@@ -6,23 +6,30 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {LoadingView, NoDataView} from '../../components/load';
 import {getExchange_traders} from '../../services/MacauDao';
-import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/ComonHelper";
+import {isEmptyObject, mul, div, formatCurrency, strNotNull, sharePage, uShareRegistered} from "../../utils/ComonHelper";
 import ImageLoad from "../../components/ImageLoad";
 import styles from './wallet.style';
-import {invite_count} from "../../services/WallDao";
+import {invite_count,user_invite} from "../../services/WallDao";
 
 export default class InvitePage extends Component {
 
     state = {
         invites: [],
-        invite_count:{}
-    }
+        invite_count:{},
+        user_invite:{}
+    };
 
     componentDidMount() {
         invite_count(data => {
             console.log('总的邀请数和邀请奖励', data);
 
             this.setState({invite_count: data})
+        })
+
+        user_invite(data => {
+            console.log('我的邀请好友', data);
+
+            this.setState({user_invite: data})
         })
     };
 
@@ -32,7 +39,7 @@ export default class InvitePage extends Component {
         return (
             <TouchableOpacity style={styles.pageItem}
                               onPress={() => {
-                                  global.router.toUserTopicPage(item)
+
                               }}>
 
                 {this.show_index(index)}
@@ -58,7 +65,8 @@ export default class InvitePage extends Component {
 
 
     render() {
-        const {total_invite_number,total_invite_money} = this.state.invite_count
+        const {user_invite,invite_count} = this.state;
+        const {total_invite_number,total_invite_money} = invite_count;
         return (
             <ScrollView style={ApplicationStyles.bgContainer}>
                 <ImageBackground style={{width:Metrics.screenWidth,height:284}} source={Images.wallet.bg}>
@@ -74,9 +82,12 @@ export default class InvitePage extends Component {
 
                 <View style={{backgroundColor: 'white',paddingTop:28,paddingBottom:12,flexDirection:'column',justifyContent:'space-around'}}>
                     <View style={[styles.invite_view]}>
-                        <View style={[styles.botton_view,{backgroundColor:'#E54A2E',borderWidth:1,borderColor:'#E54A2E'}]}>
+                        <TouchableOpacity style={[styles.botton_view,{backgroundColor:'#E54A2E',borderWidth:1,borderColor:'#E54A2E'}]}
+                        onPress={()=>{
+                            uShareRegistered();
+                        }}>
                             <Text style={{color:"white",fontSize:14}}>立即邀请</Text>
-                        </View>
+                        </TouchableOpacity>
                         <View style={{flex:1}}/>
                         <View style={[styles.botton_view,{backgroundColor:'white',borderWidth:1,borderColor:'#E54A2E'}]}>
                             <Text style={{color:"#E54A2E",fontSize:14}}>二维码邀请</Text>
@@ -114,7 +125,10 @@ export default class InvitePage extends Component {
                         我邀请的好友
                     </Text>
                     <View style={{flex:1}}/>
-                    <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
+                    <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}
+                    onPress={()=>{
+                        global.router.toUserInvitePage(user_invite)
+                    }}>
                         <Text style={{color:'#888888',fontSize:12,marginLeft:8}}>更多好友</Text>
                         <Image source={Images.adr_right} style={{height:14,width:7,marginLeft:5}}/>
                     </TouchableOpacity>
