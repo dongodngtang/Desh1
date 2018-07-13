@@ -13,14 +13,15 @@ import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
 import HotelOrderPage from "../macau/hotelOrder/HotelOrderPage";
-import {wallet_account} from '../../services/WallDao';
+import {wallet_account,display_check} from '../../services/WallDao';
 
 
 class Personal extends Component {
 
     state = {
         viewRef: 0,
-        total_account:'0.0'
+        total_account:'0.0',
+        display_check:false
     };
 
     componentDidMount(){
@@ -31,7 +32,17 @@ class Personal extends Component {
                     total_account:data.total_account
                 })
             })
+
+            display_check(data=>{
+                console.log("是否显示我的邀请：",data)
+                this.setState({
+                    display_check:true
+                })
+            })
+
         }
+
+
     }
 
     componentWillReceiveProps(newProps) {
@@ -179,9 +190,10 @@ class Personal extends Component {
 
                 })}
 
+
             <View style={{height: 1, width: '100%'}}/>
 
-            {this._item(stylesP.item_view, Images.wallet.invite, {width: 21, height: 22, marginLeft: 20},
+            {this.state.display_check?this._item(stylesP.item_view, Images.wallet.invite, {width: 21, height: 22, marginLeft: 20},
                 '我的邀请', () => {
                     // umengEvent('more_business');
                     // router.toBusinessPage()
@@ -190,7 +202,7 @@ class Personal extends Component {
                     else
                         global.router.toInvitePage()
 
-                })}
+                }):<View/>}
 
             <View style={{height: 50}}/>
         </ScrollView>

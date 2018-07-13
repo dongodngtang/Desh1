@@ -1,5 +1,12 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
+import {showToast} from "../utils/ComonHelper";
+
+export function award_details(resolve, reject) {
+    helper.get(Api.award_details, ret => {
+        resolve(ret.data)
+    }, reject)
+}
 
 export function wallet_account(resolve, reject) {
     helper.get(Api.wallet_account, ret => {
@@ -12,3 +19,12 @@ export function account_details(resolve, reject) {
         resolve(ret.data)
     }, reject)
 }
+
+export function display_check(resolve, reject) {
+    helper.get(Api.display_check, ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    })
+}
+

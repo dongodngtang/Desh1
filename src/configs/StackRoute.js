@@ -129,9 +129,11 @@ import WalletPage from "../pages/wallet/WalletPage";
 import Withdraw from "../pages/wallet/Withdraw";
 import WalletDetailsPage from "../pages/wallet/WalletDetailsPage";
 import InvitePage from "../pages/wallet/InvitePage";
+import AwardDetailPage from "../pages/wallet/AwardDetailPage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="AwardDetailPage" component={AwardDetailPage} hideNavBar/>
         <Scene key="InvitePage" component={InvitePage} hideNavBar/>
         <Scene key="WalletDetailsPage" component={WalletDetailsPage} hideNavBar/>
         <Scene key="Withdraw" component={Withdraw} hideNavBar/>

@@ -103,7 +103,7 @@ export default class Withdraw extends Component {
                 }}>
                     <Text style={styles.txt_withdraw}>提现方式</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={[styles.txt_pay, {marginRight: 12}]}>{way}</Text>
+                    <Text style={[styles.txt_pay, {marginRight: 12,color:'#444444',fontWeight:'normal'}]}>{way}</Text>
                     <Image style={styles.right}
                            source={Images.adr_right}/>
                 </TouchableOpacity>

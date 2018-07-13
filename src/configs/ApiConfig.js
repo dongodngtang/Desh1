@@ -192,6 +192,10 @@ const api = {
     exchange_traders: 'exchange_traders',//获取换汇人列表
     wallet_account:'wallet/account',//获取用户钱包余额
     account_details:'wallet/account_details',//获取用户钱包交易明细
+    display_check:'my_invites/display_check',//用户主页是否显示我的邀请
+    award_details:'my_invites/award_details',//获取用户邀请奖励明细
+
+
 }
 
 export default api;

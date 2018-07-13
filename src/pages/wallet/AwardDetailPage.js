@@ -8,41 +8,42 @@ import {
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
 import {NavigationBar} from '../../components';
-import {account_details} from "../../services/WallDao";
+import {award_details} from "../../services/WallDao";
 import Details from './Details';
 
-export default class WalletDetailsPage extends Component {
+export default class AwardDetailPage extends Component {
 
     state = {
-        wallet_details: []
+        award_details: []
     };
 
     componentDidMount() {
-        account_details(data => {
-            console.log('wallet_details', data);
+        award_details(data => {
+            console.log('award_details', data);
 
-            this.setState({wallet_details: data})
+            this.setState({award_details: data.items})
         })
     }
 
     render() {
-        const {wallet_details} = this.state;
+        const {award_details} = this.state;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: Colors._E54}}
-                    title={'收支明细'}
+                    title={'邀请奖励明细'}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                {isEmptyObject(wallet_details) ? null : <Details details={wallet_details.items}/>}
+                <Details details={award_details}/>
 
 
             </View>
         )
     }
+
 
 
 };

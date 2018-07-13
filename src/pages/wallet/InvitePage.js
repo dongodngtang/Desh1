@@ -41,7 +41,7 @@ export default class InvitePage extends Component {
 
                 <View style={{flex: 1}}/>
 
-                <Text style={styles.txt_decs}>联系他</Text>
+                <Text style={styles.txt_decs}>他的邀请</Text>
 
                 <Image style={styles.img_left}
                        source={Images.adr_right}/>
@@ -56,7 +56,7 @@ export default class InvitePage extends Component {
             <ScrollView style={ApplicationStyles.bgContainer}>
                 <ImageBackground style={{width:Metrics.screenWidth,height:284}} source={Images.wallet.bg}>
                     <NavigationBar
-                        toolbarStyle={{backgroundImage:Images.wallet.bg}}
+
                         title=""
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -78,7 +78,9 @@ export default class InvitePage extends Component {
                         <Image style={{width:20,height:20}} source={Images.wallet.moneys}/>
                         <Text style={{color:'#444444',fontSize:15,marginLeft:8}}>邀请奖励</Text>
                         <View style={{flex:1}}/>
-                        <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
+                        <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}} onPress={()=>{
+                            global.router.toAwardDetailPage()
+                        }}>
                             <Text style={{color:'#888888',fontSize:12,marginLeft:8}}>查看明细</Text>
                             <Image source={Images.adr_right} style={{height:14,width:7,marginLeft:5}}/>
                         </TouchableOpacity>
