@@ -118,6 +118,7 @@ export default class Withdraw extends Component {
 
                     <View style={styles.view_pay}>
                         <TextInput
+                            key={way}
                             style={{
                                 width: 300,
                                 paddingTop: 0,
@@ -144,6 +145,7 @@ export default class Withdraw extends Component {
 
                 <View style={styles.view_pay}>
                     <TextInput
+                        key={way}
                         style={{
                             width: 300,
                             paddingTop: 0,
@@ -169,6 +171,7 @@ export default class Withdraw extends Component {
 
                 <View style={styles.view_pay}>
                     <TextInput
+                        key={way}
                         style={{
                             width: 300,
                             paddingTop: 0,
