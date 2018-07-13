@@ -4,8 +4,6 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
-import {LoadingView, NoDataView} from '../../components/load';
-import {getExchange_traders} from '../../services/MacauDao';
 import {
     isEmptyObject, mul, div, formatCurrency, strNotNull, sharePage, uShareRegistered,
     shareHost
@@ -50,14 +48,12 @@ export default class InvitePage extends Component {
                                   }
                               }}>
 
-                {this.show_index(index)}
 
                 <ImageLoad style={styles.avatar}
                            source={{uri: avatar}}/>
 
                 <View style={{width: '50%'}}>
                     <Text style={styles.txt_name}>{nick_name}</Text>
-                    <Text style={[styles.txt_decs, {marginTop: 2}]}>{signature}</Text>
                 </View>
 
                 <View style={{flex: 1}}/>
@@ -166,9 +162,9 @@ export default class InvitePage extends Component {
                     </TouchableOpacity>
                 </View>
 
-                {isEmptyObject(this.state.exchange_traders) ? null : <FlatList
+                {isEmptyObject(user_invite) || isEmptyObject(user_invite.items)? null : <FlatList
                     style={{flex: 1, backgroundColor: '#FFFFFF', paddingBottom: 50}}
-                    data={this.state.exchange_traders}
+                    data={user_invite.items}
                     showsHorizontalScrollIndicator={false}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => `comment${index}`}

@@ -22,15 +22,18 @@ export default class InviteDetails extends Component {
                                   // global.router.toUserTopicPage(item)
                               }}>
 
-                {this.show_index(index)}
-
                 <ImageLoad style={styles.avatar}
                            source={{uri: avatar}}/>
 
                 <View style={{width:'50%'}}>
                     <Text style={styles.txt_name}>{nick_name}</Text>
                 </View>
+                <View style={{flex: 1}}/>
 
+                <Text style={styles.txt_decs}>他的邀请</Text>
+
+                <Image style={styles.img_left}
+                       source={Images.adr_right}/>
             </TouchableOpacity>
         )
     };
@@ -40,7 +43,8 @@ export default class InviteDetails extends Component {
     }
 
     render(){
-        const {invites} = this.props.details;
+        const {invites} = this.props;
+        console.log("dshdsk",invites)
         return(
 
             <ScrollView style={styles.View}>
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         marginRight:17,
-        marginLeft:22,
+        marginLeft:17,
         borderBottomWidth:1,
         borderBottomColor:'#F3F3F3'
 
@@ -80,8 +84,7 @@ const styles = StyleSheet.create({
         height:50,
         width:50,
         borderRadius:25,
-        marginRight:15,
-        marginLeft:24
+        marginRight:15
     },
     txt_name:{
         color:Colors._333,

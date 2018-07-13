@@ -66,11 +66,11 @@ export default class Router {
         })
     }
 
-    toUserInvitePage(user_invites){
+    toUserInvitePage(user_invite){
         this.stackPush({
             name:'UserInvitePage',
             params:{
-                user_invites
+                user_invite
             }
         })
     }

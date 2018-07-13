@@ -40,7 +40,7 @@ export default class Details extends Component {
     }
 
     render(){
-        const {details} = this.props.details;
+        const {details} = this.props;
         return(
 
             <ScrollView style={styles.View}>

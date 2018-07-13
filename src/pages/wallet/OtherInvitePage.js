@@ -39,7 +39,7 @@ export default class OtherInvitePage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                {isEmptyObject(other_invite) ? <InviteDetails invites={other_invite}/> : null}
+                {isEmptyObject(other_invite) ? null : <InviteDetails invites={other_invite}/>}
 
 
             </View>
