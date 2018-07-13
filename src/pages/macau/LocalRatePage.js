@@ -91,13 +91,14 @@ export default class LocalRatePage extends Component {
                         汇率资讯达人排行榜
                     </Text>
 
-                    <FlatList
+                    {isEmptyObject(this.state.exchange_traders)?null:<FlatList
                         style={{flex: 1, backgroundColor: '#FFFFFF',paddingBottom:50}}
                         data={this.state.exchange_traders}
                         showsHorizontalScrollIndicator={false}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => `comment${index}`}
-                    />
+                    />}
+
                 </ScrollView>
 
             </View>

@@ -31,13 +31,6 @@ export default class InviteDetails extends Component {
                     <Text style={styles.txt_name}>{nick_name}</Text>
                 </View>
 
-                <View style={{flex: 1}}/>
-
-                <Text style={styles.txt_decs}>他的邀请</Text>
-
-                <Image style={styles.img_left}
-                       source={Images.adr_right}/>
-
             </TouchableOpacity>
         )
     };
