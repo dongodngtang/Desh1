@@ -22,7 +22,7 @@ const prompt = "订单一经确认，不可更改或添入住人姓名。 未满
 export default class RoomReservationPage extends PureComponent {
     state = {
         room_num: 1,
-        tempStock: this.props.params.item.saleable_num,
+        tempStock: this.props.params.item.saleable_num > 10 ? 10 : this.props.params.item.saleable_num,
         detailsShow: false,
         roomReservation: [],
         selected_coupon: {},
@@ -73,7 +73,8 @@ export default class RoomReservationPage extends PureComponent {
 
 
         }, err => {
-            console.log("房间1",err)
+            showToast("已售罄");
+            console.log("房间1", err)
         })
 
     };
@@ -148,7 +149,7 @@ export default class RoomReservationPage extends PureComponent {
                 roomReservation: data
             })
         }, err => {
-            console.log("房间2",err)
+            console.log("房间2", err)
         })
     }
 
@@ -242,7 +243,7 @@ export default class RoomReservationPage extends PureComponent {
                 roomReservation: data
             })
         }, err => {
-            console.log("房间3",err)
+            console.log("房间3", err)
         })
 
     };
@@ -293,7 +294,7 @@ export default class RoomReservationPage extends PureComponent {
 
                     <TouchableOpacity style={styles.offerView}
                                       onPress={() => {
-                                          global.router.toCouponSelectPage(order.total_price, this._selectedCoupon,this.state.selected_coupon)
+                                          global.router.toCouponSelectPage(order.total_price, this._selectedCoupon, this.state.selected_coupon)
                                       }}>
                         <View style={{
                             width: 14, height: 14, alignItems: 'center',
@@ -340,6 +341,7 @@ export default class RoomReservationPage extends PureComponent {
                     room_num={order.room_num}
                 /> : null}
                 <ReservationBottom
+                    saleable_num={this.props.params.item.saleable_num}
                     _detailsShow={this._detailsShow}
                     refresh={this.refresh}
                     order={order}
@@ -416,7 +418,7 @@ export class RoomMessage extends PureComponent {
                 <View style={styles.roomView}>
                     <Text style={styles.rooms}>房间数</Text>
                     <View style={{flex: 1}}/>
-                    {this.roomQuantity(room_num, persons)}
+                    {this.props.roomQuantity(room_num, persons)}
                 </View>
 
                 <View style={styles.Roomcounts}>

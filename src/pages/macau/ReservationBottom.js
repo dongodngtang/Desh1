@@ -33,6 +33,10 @@ export default class ReservationBottom extends Component {
                                 return;
                             }
                         }
+                        if(this.props.saleable_num <= 0){
+                            showToast("已售罄");
+                            return;
+                        }
                         if(!checkMobile(phone)){
                             return;
                         }

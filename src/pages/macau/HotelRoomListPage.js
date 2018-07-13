@@ -79,7 +79,7 @@ export default class HotelRoomListPage extends PureComponent {
                 <View style={styles.priceView}>
                     <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{price}</Text>
-                    <TouchableOpacity style={styles.reservation}
+                    <TouchableOpacity style={[styles.reservation,{backgroundColor:item.saleable_num <= 0 ? '#F3F3F3':'#FF6448'}]}
                                       onPress={() => {
                                           if (item.saleable_num > 0) {
                                               if (isEmptyObject(global.login_user)) {
@@ -89,7 +89,7 @@ export default class HotelRoomListPage extends PureComponent {
                                           }
                                       }}>
                         <Text style={{
-                            color: item.saleable_num <= 0 ? '#F3F3F3' : "#FFFFFF",
+                            color: item.saleable_num <= 0 ? '#888888' : "#FFFFFF",
                             fontSize: 14
                         }}>{item.saleable_num <= 0 ? '售罄' : '预定'}</Text>
                     </TouchableOpacity>
