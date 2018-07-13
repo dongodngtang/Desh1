@@ -14,26 +14,29 @@ import ImageLoad from "../../components/ImageLoad";
 export default class InviteDetails extends Component {
 
 
-    _renderItem = ({item,index}) => {
+    _renderItem = ({item, index}) => {
         const {user_id, nick_name, avatar} = item;
+        const {type,next_step} = this.props;
         return (
             <TouchableOpacity style={styles.pageItem}
-                              onPress={()=>{
-                                  // global.router.toUserTopicPage(item)
+                              onPress={() => {
+                                  if(type === '2' && next_step){
+                                      global.router.toOtherInvitePage(item)
+                                  }
                               }}>
 
                 <ImageLoad style={styles.avatar}
                            source={{uri: avatar}}/>
 
-                <View style={{width:'50%'}}>
+                <View style={{width: '50%'}}>
                     <Text style={styles.txt_name}>{nick_name}</Text>
                 </View>
                 <View style={{flex: 1}}/>
 
-                <Text style={styles.txt_decs}>他的邀请</Text>
+                {type === '2' ? <Text style={styles.txt_decs}>他的邀请</Text> : null}
 
-                <Image style={styles.img_left}
-                       source={Images.adr_right}/>
+                {type === '2' ? <Image style={styles.img_left}
+                                       source={Images.adr_right}/> : null}
             </TouchableOpacity>
         )
     };
@@ -42,13 +45,12 @@ export default class InviteDetails extends Component {
         return <View style={{backgroundColor: '#F3F3F3', height: 2, width: '100%'}}/>
     }
 
-    render(){
+    render() {
         const {invites} = this.props;
-        console.log("dshdsk",invites)
-        return(
+        return (
 
             <ScrollView style={styles.View}>
-                {isEmptyObject(invites)? <View/> : <FlatList
+                {isEmptyObject(invites) ? <View/> : <FlatList
                     style={{backgroundColor: 'white'}}
                     data={invites}
                     showsHorizontalScrollIndicator={false}
@@ -64,42 +66,42 @@ export default class InviteDetails extends Component {
 
 
 const styles = StyleSheet.create({
-    pageItem:{
-        flexDirection:'row',
-        alignItems:'center',
-        paddingTop:10,
-        paddingBottom:10,
-        marginRight:17,
-        marginLeft:17,
-        borderBottomWidth:1,
-        borderBottomColor:'#F3F3F3'
+    pageItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginRight: 17,
+        marginLeft: 17,
+        borderBottomWidth: 1,
+        borderBottomColor: '#F3F3F3'
 
     },
-    txt_num:{
-        color:Colors._666,
-        fontSize:15,
-        fontWeight:'bold'
+    txt_num: {
+        color: Colors._666,
+        fontSize: 15,
+        fontWeight: 'bold'
     },
-    avatar:{
-        height:50,
-        width:50,
-        borderRadius:25,
-        marginRight:15
+    avatar: {
+        height: 50,
+        width: 50,
+        borderRadius: 25,
+        marginRight: 15
     },
-    txt_name:{
-        color:Colors._333,
-        fontSize:14,
-        fontWeight:'bold',
-        marginBottom:2
+    txt_name: {
+        color: Colors._333,
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 2
     },
-    txt_decs:{
-        color:Colors._AAA,
-        fontSize:12
+    txt_decs: {
+        color: Colors._AAA,
+        fontSize: 12
     },
-    img_left:{
-        height:12,
-        width:6,
-        marginLeft:8
+    img_left: {
+        height: 12,
+        width: 6,
+        marginLeft: 8
     },
     nav: {
         height: Metrics.navBarHeight,

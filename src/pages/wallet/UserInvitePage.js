@@ -33,7 +33,10 @@ export default class UserInvitePage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                {isEmptyObject(user_invite) || isEmptyObject(user_invite.items) ? null :<InviteDetails invites={user_invite.items}/> }
+                {isEmptyObject(user_invite) || isEmptyObject(user_invite.items) ? null :
+                    <InviteDetails invites={user_invite.items}
+                                   next_step={user_invite.next_step}
+                                   type={'2'}/>}
 
 
             </View>

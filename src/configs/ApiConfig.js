@@ -197,6 +197,7 @@ const api = {
     award_details: 'my_invites/award_details',//获取用户邀请奖励明细
     invite_count: 'my_invites/count',//获取用户邀请奖励明细
     user_invite: 'my_invites',//查看某个用户邀请的用户 [只有1级和2级用户有权限
+    other_invite: 'my_invites/indirect',//查看某个用户间接邀请的用户 [只有1级用户有权限]
 
 
 }

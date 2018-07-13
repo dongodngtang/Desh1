@@ -2,6 +2,12 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import {showToast} from "../utils/ComonHelper";
 
+export function other_invite(body, resolve, reject) {
+    helper.get(Api.other_invite, ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function user_invite(resolve, reject) {
     helper.get(Api.user_invite, ret => {
         resolve(ret.data)

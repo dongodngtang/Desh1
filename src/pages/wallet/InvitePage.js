@@ -39,32 +39,35 @@ export default class InvitePage extends Component {
 
     _renderItem = ({item, index}) => {
         const {user_invite} = this.state;
-        const {avatar, mobile, nick_name, signature, user_id} = item
-        return (
-            <TouchableOpacity style={styles.pageItem}
-                              onPress={() => {
-                                  if (user_invite.next_step) {
-                                      global.router.toOtherInvitePage(item)
-                                  }
-                              }}>
+        const {avatar, mobile, nick_name, signature, user_id} = item;
+        if (index <= 3) {
+            return (
+                <TouchableOpacity style={styles.pageItem}
+                                  onPress={() => {
+                                      if (user_invite.next_step) {
+                                          global.router.toOtherInvitePage(item)
+                                      }
+                                  }}>
 
 
-                <ImageLoad style={styles.avatar}
-                           source={{uri: avatar}}/>
+                    <ImageLoad style={styles.avatar}
+                               source={{uri: avatar}}/>
 
-                <View style={{width: '50%'}}>
-                    <Text style={styles.txt_name}>{nick_name}</Text>
-                </View>
+                    <View style={{width: '50%'}}>
+                        <Text style={styles.txt_name}>{nick_name}</Text>
+                    </View>
 
-                <View style={{flex: 1}}/>
+                    <View style={{flex: 1}}/>
 
-                <Text style={styles.txt_decs}>他的邀请</Text>
+                    <Text style={styles.txt_decs}>他的邀请</Text>
 
-                <Image style={styles.img_left}
-                       source={Images.adr_right}/>
+                    <Image style={styles.img_left}
+                           source={Images.adr_right}/>
 
-            </TouchableOpacity>
-        )
+                </TouchableOpacity>
+            )
+        }
+
     };
 
 
@@ -162,7 +165,7 @@ export default class InvitePage extends Component {
                     </TouchableOpacity>
                 </View>
 
-                {isEmptyObject(user_invite) || isEmptyObject(user_invite.items)? null : <FlatList
+                {isEmptyObject(user_invite) || isEmptyObject(user_invite.items) ? null : <FlatList
                     style={{flex: 1, backgroundColor: '#FFFFFF', paddingBottom: 50}}
                     data={user_invite.items}
                     showsHorizontalScrollIndicator={false}
@@ -177,10 +180,10 @@ export default class InvitePage extends Component {
                     }}>
                     <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.6)'}}>
                         <QRCode
-                        value={shareHost() + "invite_load?id=" + this.getUserId()}
-                        size={200}
-                        bgColor='purple'
-                        fgColor='white'/>
+                            value={shareHost() + "invite_load?id=" + this.getUserId()}
+                            size={200}
+                            bgColor='purple'
+                            fgColor='white'/>
 
                     </View>
 

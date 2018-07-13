@@ -19,7 +19,8 @@ export default class OtherInvitePage extends Component {
     };
 
     componentDidMount() {
-        other_invite(data => {
+        const {item} = this.props.params;
+        other_invite({target_id: item.user_id}, data => {
             console.log('别人的邀请好友', data);
 
             this.setState({user_invite: data.items})
@@ -39,7 +40,9 @@ export default class OtherInvitePage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                {isEmptyObject(other_invite) ? null : <InviteDetails invites={other_invite}/>}
+                {isEmptyObject(other_invite) ? null : <InviteDetails invites={other_invite}
+                                                                     next_step={false}
+                                                                     type={'3'}/>}
 
 
             </View>
