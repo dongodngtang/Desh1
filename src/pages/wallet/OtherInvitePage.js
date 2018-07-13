@@ -23,7 +23,7 @@ export default class OtherInvitePage extends Component {
         other_invite({target_id: item.user_id}, data => {
             console.log('别人的邀请好友', data);
 
-            this.setState({user_invite: data.items})
+            this.setState({other_invite: data.items})
         })
     }
 

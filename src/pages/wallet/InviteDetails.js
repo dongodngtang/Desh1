@@ -7,8 +7,6 @@ import {
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
-import {NavigationBar} from '../../components';
-import {award_details} from "../../services/WallDao";
 import ImageLoad from "../../components/ImageLoad";
 
 export default class InviteDetails extends Component {
@@ -70,8 +68,8 @@ const styles = StyleSheet.create({
     pageItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 1,
-        paddingBottom: 10,
+        paddingTop: 6,
+        paddingBottom: 9,
         marginRight: 17,
         marginLeft: 17,
         borderBottomWidth: 1,
