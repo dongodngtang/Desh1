@@ -73,7 +73,7 @@ export default class RoomReservationPage extends PureComponent {
 
 
         }, err => {
-            showToast("已售罄");
+            showToast(err);
             console.log("房间1", err)
         })
 
