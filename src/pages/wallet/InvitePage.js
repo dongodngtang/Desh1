@@ -35,11 +35,14 @@ export default class InvitePage extends Component {
 
 
     _renderItem = ({item, index}) => {
+        const {user_invite} = this.state;
         const {avatar, mobile, nick_name, signature, user_id} = item
         return (
             <TouchableOpacity style={styles.pageItem}
                               onPress={() => {
-
+                                  if(user_invite.next_step){
+                                      global.router.toOtherInvitePage(item)
+                                  }
                               }}>
 
                 {this.show_index(index)}

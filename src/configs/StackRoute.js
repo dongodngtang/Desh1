@@ -131,9 +131,11 @@ import WalletDetailsPage from "../pages/wallet/WalletDetailsPage";
 import InvitePage from "../pages/wallet/InvitePage";
 import AwardDetailPage from "../pages/wallet/AwardDetailPage";
 import UserInvitePage from "../pages/wallet/UserInvitePage";
+import OtherInvitePage from "../pages/wallet/OtherInvitePage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="OtherInvitePage" component={OtherInvitePage} hideNavBar/>
         <Scene key="UserInvitePage" component={UserInvitePage} hideNavBar/>
         <Scene key="AwardDetailPage" component={AwardDetailPage} hideNavBar/>
         <Scene key="InvitePage" component={InvitePage} hideNavBar/>

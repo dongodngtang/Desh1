@@ -57,6 +57,15 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toOtherInvitePage(item){
+        this.stackPush({
+            name:'OtherInvitePage',
+            params:{
+                item
+            }
+        })
+    }
+
     toUserInvitePage(user_invites){
         this.stackPush({
             name:'UserInvitePage',
