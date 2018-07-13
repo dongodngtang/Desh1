@@ -9,7 +9,7 @@ import {getExchange_traders} from '../../services/MacauDao';
 import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/ComonHelper";
 import {RateTop} from './RatePage'
 import ImageLoad from "../../components/ImageLoad";
-import styles from './Styles'
+import styles from './Styles';
 
 export default class LocalRatePage extends Component {
 
@@ -31,11 +31,11 @@ export default class LocalRatePage extends Component {
 
     show_index=(index)=>{
         if(index === 0){
-            return <Image style={{width:18,height:25}} source={Images.one1}/>
+            return <Image style={{width:reallySize(18),height:reallySize(25)}} source={Images.one1}/>
         }else if(index === 1){
-            return <Image style={{width:18,height:25}} source={Images.two}/>
+            return <Image style={{width:reallySize(18),height:reallySize(25)}} source={Images.two}/>
         }else if(index === 2){
-            return <Image style={{width:18,height:25}} source={Images.three}/>
+            return <Image style={{width:reallySize(18),height:reallySize(25)}} source={Images.three}/>
         }else{
             return <Text style={[styles.txt_num,{width:25}]}>{index+1}</Text>
         }

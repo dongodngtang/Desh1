@@ -28,11 +28,15 @@ export default class Withdraw extends Component {
     state = {
         way: '支付宝',
         amount: '',
-        prompt_show: false
+        prompt_show: false,
+        bank: '',
+        account_number: '',
+        name: '',
+
     }
 
     render() {
-        const {way, amount, prompt_show} = this.state;
+        const {way, amount, prompt_show, bank, account_number, name} = this.state;
         const {total_account} = this.props.params;
 
         return <BaseComponent>
@@ -103,7 +107,8 @@ export default class Withdraw extends Component {
                 }}>
                     <Text style={styles.txt_withdraw}>提现方式</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={[styles.txt_pay, {marginRight: 12,color:'#444444',fontWeight:'normal'}]}>{way}</Text>
+                    <Text
+                        style={[styles.txt_pay, {marginRight: 12, color: '#444444', fontWeight: 'normal'}]}>{way}</Text>
                     <Image style={styles.right}
                            source={Images.adr_right}/>
                 </TouchableOpacity>
@@ -112,41 +117,77 @@ export default class Withdraw extends Component {
                     <Text style={styles.txt_pay}>开户行</Text>
 
                     <View style={styles.view_pay}>
+                        <TextInput
+                            style={{
+                                width: 300,
+                                paddingTop: 0,
+                                paddingBottom: 0,
+                                fontSize: 14,
+                                fontWeight: 'bold',
+                                color: '#444444'
+                            }}
+                            maxLength={10}
+                            numberOfLines={1}
+                            placeholderTextColor={'#CCCCCC'}
+                            placeholder={strNotNull(bank) ? '' : '填写银行开户行'}
+                            value={bank}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={txt => {
+                                this.state.bank = txt
+                            }}
 
-                        <Input
-                            others={
-                                {
-                                    keyboardType: 'numeric'
-                                }}
-                            style={styles.txt_pay}
-                            placeholder={`填写银行开户行`}/>
+                        />
                     </View>
                 </View> : null}
 
                 <Text style={[styles.txt_pay, {marginTop: way === '银行卡' ? 13 : 34}]}>{way}号</Text>
 
                 <View style={styles.view_pay}>
+                    <TextInput
+                        style={{
+                            width: 300,
+                            paddingTop: 0,
+                            paddingBottom: 0,
+                            fontSize: 14,
+                            fontWeight: 'bold',
+                            color: '#444444'
+                        }}
+                        maxLength={25}
+                        numberOfLines={1}
+                        placeholderTextColor={'#CCCCCC'}
+                        placeholder={strNotNull(account_number) ? '' : `填写${way}号`}
+                        value={account_number}
+                        underlineColorAndroid={'transparent'}
+                        onChangeText={txt => {
+                            this.state.account_number = txt
+                        }}
 
-                    <Input
-                        others={
-                            {
-                                keyboardType: 'numeric'
-                            }}
-                        style={styles.txt_pay}
-                        placeholder={`填写${way}号`}/>
+                    />
                 </View>
 
                 <Text style={[styles.txt_pay, {marginTop: 13}]}>真实姓名</Text>
 
                 <View style={styles.view_pay}>
+                    <TextInput
+                        style={{
+                            width: 300,
+                            paddingTop: 0,
+                            paddingBottom: 0,
+                            fontSize: 14,
+                            fontWeight: 'bold',
+                            color: '#444444'
+                        }}
+                        maxLength={20}
+                        numberOfLines={1}
+                        placeholderTextColor={'#CCCCCC'}
+                        placeholder={strNotNull(name) ? '' : `填写真实姓名`}
+                        value={name}
+                        underlineColorAndroid={'transparent'}
+                        onChangeText={txt => {
+                            this.state.name = txt
+                        }}
 
-                    <Input
-                        others={
-                            {
-                                keyboardType: 'numeric'
-                            }}
-                        style={styles.txt_pay}
-                        placeholder={'填写真实姓名'}/>
+                    />
                 </View>
 
                 <TouchableOpacity style={styles.btn_cash} onPress={() => {
@@ -182,7 +223,10 @@ export default class Withdraw extends Component {
 
     report = (data) => {
         this.setState({
-            way: data.name
+            way: data.name,
+            bank:'',
+            account_number:'',
+            name:''
         })
         this.popAction && this.popAction.toggle()
     };
