@@ -26,10 +26,11 @@ export default class UserInvitePage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
+                    titleStyle={{fontSize: 18, color: '#444444'}}
                     refreshPage={this.refreshPage}
-                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    toolbarStyle={{backgroundColor: Colors._FFF}}
                     title={`我的邀请好友-${isEmptyObject(user_invite) ? '0' : user_invite.items.length}人`}
-                    leftBtnIcon={Images.sign_return}
+                    leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 

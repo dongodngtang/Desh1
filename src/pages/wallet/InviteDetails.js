@@ -50,6 +50,7 @@ export default class InviteDetails extends Component {
         return (
 
             <ScrollView style={styles.View}>
+                <View style={{height:1}}/>
                 {isEmptyObject(invites) ? <View/> : <FlatList
                     style={{backgroundColor: 'white'}}
                     data={invites}
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     pageItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 10,
+        paddingTop: 1,
         paddingBottom: 10,
         marginRight: 17,
         marginLeft: 17,
@@ -126,11 +127,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     View: {
-        marginTop: 7,
         width: '100%'
     },
     item: {
-        marginTop: 16,
+        marginTop: 1,
         marginBottom: 7,
         flexDirection: 'row',
 

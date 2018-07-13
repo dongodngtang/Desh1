@@ -31,7 +31,7 @@ export default class Details extends Component {
                     color: amount < 0 ? '#34BA3C' : "#E54A2E",
                     fontSize: 20,
                     marginRight: 17
-                }}>{amount < 0 ? "" : "+"}{amount}</Text>
+                }}>{amount < 0 ? "" : "+"}{amount}元</Text>
             </View>
         )
     };
@@ -41,9 +41,11 @@ export default class Details extends Component {
 
     render(){
         const {details} = this.props;
+        // let details=[1,2,3,4]
         return(
 
             <ScrollView style={styles.View}>
+                <View style={{height:7}}/>
                 {isEmptyObject(details)? <View/> : <FlatList
                     style={{backgroundColor: 'white'}}
                     data={details}
@@ -83,11 +85,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     View: {
-        marginTop: 7,
         width: '100%'
     },
     item: {
-        marginTop: 16,
+        marginTop: 9,
         marginBottom: 7,
         flexDirection: 'row',
 

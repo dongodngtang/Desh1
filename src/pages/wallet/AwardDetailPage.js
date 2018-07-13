@@ -30,10 +30,11 @@ export default class AwardDetailPage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
+                    titleStyle={{fontSize: 18, color: '#444444'}}
                     refreshPage={this.refreshPage}
-                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    toolbarStyle={{backgroundColor: Colors._FFF}}
                     title={'邀请奖励明细'}
-                    leftBtnIcon={Images.sign_return}
+                    leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
