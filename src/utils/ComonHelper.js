@@ -257,7 +257,11 @@ export function uShareMallInfo(title, desc, icon, id) {
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
-//根据路径获取后缀名
+/**
+ * 根据路径获取后缀名
+ * @param filePath
+ * @returns {string}
+ */
 export function getFileMine(filePath) {
     //获取最后一个.的位置
     let index = filePath.lastIndexOf(".");
@@ -656,7 +660,11 @@ export function hotelOrderStatus(status) {
     }
 }
 
-
+/**
+ * 微信登录
+ * @param resolve
+ * @param reject
+ */
 export function loginWX(resolve, reject) {
     wechat.sendAuthRequest('snsapi_userinfo', 'pokerpro')
         .then(data => {
