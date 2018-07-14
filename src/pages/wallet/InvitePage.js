@@ -123,7 +123,7 @@ export default class InvitePage extends Component {
                         <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={() => {
                             global.router.toAwardDetailPage()
                         }}>
-                            <Text style={{color: '#888888', fontSize: 12, marginLeft: 8}}>查看明细</Text>K
+                            <Text style={{color: '#888888', fontSize: 12, marginLeft: 8}}>查看明细</Text>
                             <Image source={Images.adr_right} style={{height: 14, width: 7, marginLeft: 5}}/>
                         </TouchableOpacity>
                     </View>
@@ -179,11 +179,11 @@ export default class InvitePage extends Component {
                     onRequestClose={() => {
                     }}>
                     <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.6)'}}>
-                        <QRCode
-                            value={shareHost() + "invite_load?id=" + this.getUserId()}
-                            size={200}
-                            bgColor='purple'
-                            fgColor='white'/>
+                        {/*<QRCode*/}
+                            {/*value={shareHost() + "invite_load?id=" + this.getUserId()}*/}
+                            {/*size={200}*/}
+                            {/*bgColor='purple'*/}
+                            {/*fgColor='white'/>*/}
 
                     </View>
 

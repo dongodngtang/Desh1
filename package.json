@@ -39,7 +39,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-picker": "^4.3.5",
     "react-native-qrcode": "^0.2.6",
-    "react-native-render-html": "^3.9.3",
+    "react-native-render-html": "^3.10.0",
     "react-native-root-modal": "^3.0.0",
     "react-native-root-toast": "^3.0.1",
     "react-native-router-flux": "4.0.0-beta.27",
