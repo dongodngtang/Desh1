@@ -37,29 +37,20 @@ class BottomNavigation extends Component {
         const {jumpToIndex, actionType, share_param} = this.props;
         const {shareLink, shareTitle, shareImage, shareText} = share_param;
         this.props._swichTab(index)
+        console.log(SHOW_BACK_TOP,'alksjdf')
         return (
             <View style={styleBN.navigation}>
                 <StatusBar barStyle={"light-content"}/>
-                {index === 0 && actionType === SHOW_BACK_TOP ? <TouchableOpacity
-                        style={styleBN.navigations}
-                        onPress={() => {
-                            this.props._backTop();
-                        }}>
-                        <View style={styleBN.buttonView}>
-                            <Image style={styleBN.topImg} source={Images.top}/>
-                            <Text style={styleBN.topText}>{I18n.t('backTop')}</Text>
-                        </View>
-                    </TouchableOpacity> :
-                    <TouchableOpacity
-                        onPress={() => {
+                <TouchableOpacity
+                    onPress={() => {
 
-                            this.props._videoPause();
-                            jumpToIndex(0)
+                        this.props._videoPause();
+                        jumpToIndex(0)
 
-                        }}
-                        style={styleBN.navigations}>
-                        <TabIcon tab={'home'} focused={index === 0}/>
-                    </TouchableOpacity>}
+                    }}
+                    style={styleBN.navigations}>
+                    <TabIcon tab={'home'} focused={index === 0}/>
+                </TouchableOpacity>
 
 
                 <TouchableOpacity

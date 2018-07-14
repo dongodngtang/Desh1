@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, TextInput
+    StyleSheet, Text, View, Image, TouchableOpacity, TextInput,ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
@@ -20,35 +20,37 @@ export default class RatePage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <RateTop
-                    type={'real_time'}/>
+                <ScrollView>
+                    <RateTop
+                        type={'real_time'}/>
 
-                <TouchableOpacity
-                    onPress={() => {
-                        if (isEmptyObject(global.login_user)) {
-                            router.toLoginFirstPage()
-                        } else {
-                            global.router.toLocalRatePage()
-                        }
+                    <TouchableOpacity
+                        onPress={() => {
+                            if (isEmptyObject(global.login_user)) {
+                                router.toLoginFirstPage()
+                            } else {
+                                global.router.toLocalRatePage()
+                            }
 
-                    }}
-                    activeOpacity={1}
-                    style={{
-                        height: 142, width: '100%', alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
+                        }}
+                        activeOpacity={1}
+                        style={{
+                            height: 142, width: '100%', alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
 
 
-                    <Image
-                        source={Images.macau.rate2}
-                        style={{height: 142, width: '100%', position: 'absolute'}}/>
-                    <Text style={{fontSize: 15, color: 'white'}}>澳门本地汇率参考</Text>
+                        <Image
+                            source={Images.macau.rate2}
+                            style={{height: 142, width: '100%', position: 'absolute'}}/>
+                        <Text style={{fontSize: 15, color: 'white'}}>澳门本地汇率参考</Text>
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
 
-                <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
-                    数据仅供参考，每小时刷新一次
-                </Text>
+                    <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
+                        数据仅供参考，每小时刷新一次
+                    </Text>
+                </ScrollView>
             </View>
         )
     }
