@@ -72,7 +72,6 @@ export default class Withdraw extends Component {
                             numberOfLines={1}
                             placeholderTextColor={'#CCCCCC'}
                             placeholder={strNotNull(amount) ? '' : '输入提现金额'}
-                            value={amount + ''}
                             clearTextOnFocus={true}
                             underlineColorAndroid={'transparent'}
                             onChangeText={txt => {
@@ -136,10 +135,11 @@ export default class Withdraw extends Component {
                                 numberOfLines={1}
                                 placeholderTextColor={'#CCCCCC'}
                                 placeholder={strNotNull(bank) ? '' : '填写银行开户行'}
-                                value={bank}
                                 underlineColorAndroid={'transparent'}
                                 onChangeText={txt => {
-                                    this.state.bank = txt
+                                    this.setState({
+                                        bank:txt
+                                    })
                                 }}
 
                             />
@@ -163,10 +163,11 @@ export default class Withdraw extends Component {
                             numberOfLines={1}
                             placeholderTextColor={'#CCCCCC'}
                             placeholder={strNotNull(account_number) ? '' : `填写${way}号`}
-                            value={account_number}
                             underlineColorAndroid={'transparent'}
                             onChangeText={txt => {
-                                this.state.account_number = txt
+                                this.setState({
+                                    account_number:txt
+                                })
                             }}
 
                         />
@@ -192,7 +193,9 @@ export default class Withdraw extends Component {
                             value={name}
                             underlineColorAndroid={'transparent'}
                             onChangeText={txt => {
-                                this.state.name = txt
+                                this.setState({
+                                    name:txt
+                                })
                             }}
 
                         />
