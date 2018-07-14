@@ -143,12 +143,14 @@ export default class ChatRoom extends Component {
     ///进入聊天室
     enterChat = () => {
         //停止接收推送
+        console.log('停止接收推送')
         let userInfo = this.otherInfo;
         JMessage.enterConversation({type: 'single', username: userInfo.username},
             (conversation) => {
+            console.log('停止接收推送',conversation)
 
             }, (error) => {
-
+                console.log('停止接收推送失败',error)
             });
 
 

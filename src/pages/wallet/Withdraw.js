@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {
-    TouchableOpacity,ScrollView,
+    TouchableOpacity, ScrollView,
     StyleSheet,
     Text, Image,
     View, TextInput
@@ -74,17 +74,19 @@ export default class Withdraw extends Component {
                             placeholder={strNotNull(amount) ? '' : '输入提现金额'}
                             clearTextOnFocus={true}
                             underlineColorAndroid={'transparent'}
+                            value={amount}
                             onChangeText={txt => {
-                                this.state.amount = txt
-                                if (txt > total_account) {
-                                    this.setState({
-                                        prompt_show: true
-                                    })
+                                let show = prompt_show;
+                                if (Number.parseFloat(txt) > Number.parseFloat(total_account)) {
+                                    show = true;
                                 } else {
-                                    this.setState({
-                                        prompt_show: false
-                                    })
+                                    show = false;
+
                                 }
+                                this.setState({
+                                    prompt_show: show,
+                                    amount: txt
+                                })
                             }}
 
                         />
@@ -112,7 +114,11 @@ export default class Withdraw extends Component {
                         <Text style={styles.txt_withdraw}>提现方式</Text>
                         <View style={{flex: 1}}/>
                         <Text
-                            style={[styles.txt_pay, {marginRight: 12, color: '#444444', fontWeight: 'normal'}]}>{way}</Text>
+                            style={[styles.txt_pay, {
+                                marginRight: 12,
+                                color: '#444444',
+                                fontWeight: 'normal'
+                            }]}>{way}</Text>
                         <Image style={styles.right}
                                source={Images.adr_right}/>
                     </TouchableOpacity>
@@ -136,9 +142,10 @@ export default class Withdraw extends Component {
                                 placeholderTextColor={'#CCCCCC'}
                                 placeholder={strNotNull(bank) ? '' : '填写银行开户行'}
                                 underlineColorAndroid={'transparent'}
+                                value={bank}
                                 onChangeText={txt => {
                                     this.setState({
-                                        bank:txt
+                                        bank: txt
                                     })
                                 }}
 
@@ -164,9 +171,10 @@ export default class Withdraw extends Component {
                             placeholderTextColor={'#CCCCCC'}
                             placeholder={strNotNull(account_number) ? '' : `填写${way}号`}
                             underlineColorAndroid={'transparent'}
+                            value={account_number}
                             onChangeText={txt => {
                                 this.setState({
-                                    account_number:txt
+                                    account_number: txt
                                 })
                             }}
 
@@ -194,7 +202,7 @@ export default class Withdraw extends Component {
                             underlineColorAndroid={'transparent'}
                             onChangeText={txt => {
                                 this.setState({
-                                    name:txt
+                                    name: txt
                                 })
                             }}
 
@@ -225,9 +233,9 @@ export default class Withdraw extends Component {
             showToast("金额超出最高限额")
         } else if (!strNotNull(total_account) || total_account === '0.0') {
             showToast("提现金额不足")
-        } else if (Number(total_account) > 1000) {
+        } else if (Number.parseFloat(amount) > 1000) {
             showToast("提现金额超额")
-        } else if (!strNotNull(amount)) {
+        } else if (!strNotNull(amount) || Number.parseFloat(amount) <= 0) {
             showToast("请输入正确的金额数")
         } else if (way === '银行卡') {
             if (!strNotNull(bank.trim()) || !strNotNull(account_number.trim()) || !strNotNull(name.trim())) {

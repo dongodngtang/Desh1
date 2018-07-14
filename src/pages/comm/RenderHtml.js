@@ -24,6 +24,7 @@ export default class RenderHtml extends PureComponent {
                 router.toWebViewPage(attribs, href)
 
             }}
+            baseFontStyle={{fontSize: 15, lineHeight: 20}}
             ignoredTags={[...IGNORED_TAGS, 'br']}
             renderers={{img}}
             html={html}/>
