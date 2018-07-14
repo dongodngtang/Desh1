@@ -166,6 +166,14 @@ class MessageCenter extends Component {
                 this.setState({conversations: this.rows})
             }, err => {
             })
+        }else if(avatarThumbPath.indexOf('http')<0 && !strNotNull(item.avatar)){
+            item.avatar = 'request'
+            visit_other({userId: username}, data => {
+                item.target.avatarThumbPath = data.avatar;
+                item.target.nickname = data.nickname;
+                this.setState({conversations: this.rows})
+            }, err => {
+            })
         }
 
 
