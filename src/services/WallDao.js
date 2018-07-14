@@ -2,6 +2,15 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import {showToast} from "../utils/ComonHelper";
 
+export function postWithdrawal(body, resolve, reject) {
+    helper.post(Api.withdrawal, body, data => {
+        resolve(data)
+    }, err => {
+        reject(err)
+        showToast(err)
+    })
+}
+
 export function other_invite(body, resolve, reject) {
     helper.get(Api.other_invite, ret => {
         resolve(ret.data)

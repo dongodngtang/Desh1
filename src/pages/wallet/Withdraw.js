@@ -18,10 +18,15 @@ import {Images, Colors, Metrics} from '../../Themes';
 import styles from './wallet.style'
 import {BaseComponent, NavigationBar, Input} from '../../components'
 import PopAction from "../comm/PopAction";
-import I18n from "react-native-i18n";
-import {moneyFormat, showToast, strNotNull} from "../../utils/ComonHelper";
+import {alertOrder, moneyFormat, showToast, strNotNull} from "../../utils/ComonHelper";
+import {postWithdrawal} from '../../services/WallDao'
+import {cancelHotelOrder} from "../../services/MacauDao";
 
-const list = [{id: 0, name: '支付宝'}, {id: 1, name: '微信'}, {id: 2, name: '银行卡'}];
+const list = [{id: 0, name: '支付宝', account_type: 'alipay'}, {id: 1, name: '微信', account_type: 'wx'}, {
+    id: 2,
+    name: '银行卡',
+    account_type: 'bank'
+}];
 
 export default class Withdraw extends Component {
 
@@ -32,11 +37,12 @@ export default class Withdraw extends Component {
         bank: '',
         account_number: '',
         name: '',
+        account_type: 'alipay'
 
     }
 
     render() {
-        const {way, amount, prompt_show, bank, account_number, name} = this.state;
+        const {way, amount, prompt_show, bank, account_number, name, account_type} = this.state;
         const {total_account} = this.props.params;
 
         return <BaseComponent>
@@ -210,15 +216,38 @@ export default class Withdraw extends Component {
     }
 
     _check = () => {
-        const {way, amount, prompt_show} = this.state;
+        const {way, bank, amount, prompt_show, name, account_type, account_number} = this.state;
         const {total_account} = this.props.params;
         if (prompt_show) {
             showToast("金额超出最高限额")
         } else if (!strNotNull(total_account) || total_account === '0.0') {
             showToast("提现金额不足")
+        } else if (Number(total_account) > 1000) {
+            showToast("提现金额超额")
         } else if (!strNotNull(amount)) {
             showToast("请输入正确的金额数")
+        } else if (way === '银行卡') {
+            if (!strNotNull(bank.trim()) || !strNotNull(account_number.trim()) || !strNotNull(name.trim())) {
+                showToast("请填写完整信息")
+            }
+        } else if (!strNotNull(account_number.trim()) || !strNotNull(name.trim())) {
+            showToast("请填写完整信息");
         } else {
+            let body = {
+                amount: amount,
+                real_name: name,
+                account_type: account_type,
+                account: account_number,
+                account_memo: bank
+            }
+            console.log("提现：", body)
+            alertOrder("确认提现？", () => {
+                postWithdrawal(body, data => {
+                    showToast("提现申请成功");
+                }, err => {
+
+                })
+            });
 
         }
 
@@ -227,9 +256,10 @@ export default class Withdraw extends Component {
     report = (data) => {
         this.setState({
             way: data.name,
-            bank:'',
-            account_number:'',
-            name:''
+            bank: '',
+            account_number: '',
+            name: '',
+            account_type: data.account_type
         })
         this.popAction && this.popAction.toggle()
     };
