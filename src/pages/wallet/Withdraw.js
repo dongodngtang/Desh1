@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {
-    TouchableOpacity,
+    TouchableOpacity,ScrollView,
     StyleSheet,
     Text, Image,
     View, TextInput
@@ -20,7 +20,6 @@ import {BaseComponent, NavigationBar, Input} from '../../components'
 import PopAction from "../comm/PopAction";
 import {alertOrder, moneyFormat, showToast, strNotNull} from "../../utils/ComonHelper";
 import {postWithdrawal} from '../../services/WallDao'
-import {cancelHotelOrder} from "../../services/MacauDao";
 
 const list = [{id: 0, name: '支付宝', account_type: 'alipay'}, {id: 1, name: '微信', account_type: 'wx'}, {
     id: 2,
@@ -53,74 +52,101 @@ export default class Withdraw extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
+            <ScrollView>
+                <View style={styles.card2}>
+                    <Text style={styles.txt_withdraw}>提现金额</Text>
+                    <View style={styles.item_input}>
+                        <Text style={[styles.money, {marginRight: 8}]}>¥</Text>
+                        <TextInput
+                            // autoFocus={true}
+                            keyboardType={'numeric'}
+                            style={{
+                                width: 300,
+                                paddingTop: 0,
+                                paddingBottom: 0,
+                                fontSize: strNotNull(amount) ? 30 : 20,
+                                fontWeight: 'bold',
+                                color: '#444444'
+                            }}
+                            maxLength={4}
+                            numberOfLines={1}
+                            placeholderTextColor={'#CCCCCC'}
+                            placeholder={strNotNull(amount) ? '' : '输入提现金额'}
+                            value={amount + ''}
+                            clearTextOnFocus={true}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={txt => {
+                                this.state.amount = txt
+                                if (txt > total_account) {
+                                    this.setState({
+                                        prompt_show: true
+                                    })
+                                } else {
+                                    this.setState({
+                                        prompt_show: false
+                                    })
+                                }
+                            }}
 
-            <View style={styles.card2}>
-                <Text style={styles.txt_withdraw}>提现金额</Text>
-                <View style={styles.item_input}>
-                    <Text style={[styles.money, {marginRight: 8}]}>¥</Text>
-                    <TextInput
-                        // autoFocus={true}
-                        keyboardType={'numeric'}
-                        style={{
-                            width: 300,
-                            paddingTop: 0,
-                            paddingBottom: 0,
-                            fontSize: strNotNull(amount) ? 30 : 20,
-                            fontWeight: 'bold',
-                            color: '#444444'
-                        }}
-                        maxLength={4}
-                        numberOfLines={1}
-                        placeholderTextColor={'#CCCCCC'}
-                        placeholder={strNotNull(amount) ? '' : '输入提现金额'}
-                        value={amount + ''}
-                        clearTextOnFocus={true}
-                        underlineColorAndroid={'transparent'}
-                        onChangeText={txt => {
-                            this.state.amount = txt
-                            if (txt > total_account) {
-                                this.setState({
-                                    prompt_show: true
-                                })
-                            } else {
-                                this.setState({
-                                    prompt_show: false
-                                })
-                            }
-                        }}
+                        />
+                    </View>
+                    <TouchableOpacity style={styles.view_can} onPress={() => {
+                        this.setState({
+                            amount: total_account
+                        })
+                    }}>
+                        <Text style={styles.can_money}>{`可提现￥${moneyFormat(total_account)}元`}</Text>
+                        <Text style={styles.all_get}>全部提现</Text>
+                    </TouchableOpacity>
 
-                    />
                 </View>
-                <TouchableOpacity style={styles.view_can} onPress={() => {
-                    this.setState({
-                        amount: total_account
-                    })
-                }}>
-                    <Text style={styles.can_money}>{`可提现￥${moneyFormat(total_account)}元`}</Text>
-                    <Text style={styles.all_get}>全部提现</Text>
-                </TouchableOpacity>
 
-            </View>
-
-            <View style={styles.view_desc}>
-                <Text
-                    style={[styles.lb_around, {color: prompt_show ? '#E54A2E' : '#CCCCCC'}]}>{prompt_show ? '金额超出可提现金额' : '最低提现50元，最高提现¥1000元'}</Text>
-            </View>
-
-            <View style={styles.card3}>
-                <TouchableOpacity style={styles.item_way} onPress={() => {
-                    this.popAction && this.popAction.toggle();
-                }}>
-                    <Text style={styles.txt_withdraw}>提现方式</Text>
-                    <View style={{flex: 1}}/>
+                <View style={styles.view_desc}>
                     <Text
-                        style={[styles.txt_pay, {marginRight: 12, color: '#444444', fontWeight: 'normal'}]}>{way}</Text>
-                    <Image style={styles.right}
-                           source={Images.adr_right}/>
-                </TouchableOpacity>
+                        style={[styles.lb_around, {color: prompt_show ? '#E54A2E' : '#CCCCCC'}]}>{prompt_show ? '金额超出可提现金额' : '最低提现50元，最高提现¥1000元'}</Text>
+                </View>
 
-                {way === '银行卡' ? <View style={{flexDirection: 'column', marginTop: 34}}>
-                    <Text style={styles.txt_pay}>开户行</Text>
+                <View style={styles.card3}>
+                    <TouchableOpacity style={styles.item_way} onPress={() => {
+                        this.popAction && this.popAction.toggle();
+                    }}>
+                        <Text style={styles.txt_withdraw}>提现方式</Text>
+                        <View style={{flex: 1}}/>
+                        <Text
+                            style={[styles.txt_pay, {marginRight: 12, color: '#444444', fontWeight: 'normal'}]}>{way}</Text>
+                        <Image style={styles.right}
+                               source={Images.adr_right}/>
+                    </TouchableOpacity>
+
+                    {way === '银行卡' ? <View style={{flexDirection: 'column', marginTop: 34}}>
+                        <Text style={styles.txt_pay}>开户行</Text>
+
+                        <View style={styles.view_pay}>
+                            <TextInput
+                                key={way}
+                                style={{
+                                    width: 300,
+                                    paddingTop: 0,
+                                    paddingBottom: 0,
+                                    fontSize: 14,
+                                    fontWeight: 'bold',
+                                    color: '#444444'
+                                }}
+                                maxLength={10}
+                                numberOfLines={1}
+                                placeholderTextColor={'#CCCCCC'}
+                                placeholder={strNotNull(bank) ? '' : '填写银行开户行'}
+                                value={bank}
+                                underlineColorAndroid={'transparent'}
+                                onChangeText={txt => {
+                                    this.state.bank = txt
+                                }}
+
+                            />
+                        </View>
+                    </View> : null}
+
+                    <Text style={[styles.txt_pay, {marginTop: way === '银行卡' ? 13 : 34}]}>{way}号</Text>
 
                     <View style={styles.view_pay}>
                         <TextInput
@@ -133,79 +159,53 @@ export default class Withdraw extends Component {
                                 fontWeight: 'bold',
                                 color: '#444444'
                             }}
-                            maxLength={10}
+                            maxLength={25}
                             numberOfLines={1}
                             placeholderTextColor={'#CCCCCC'}
-                            placeholder={strNotNull(bank) ? '' : '填写银行开户行'}
-                            value={bank}
+                            placeholder={strNotNull(account_number) ? '' : `填写${way}号`}
+                            value={account_number}
                             underlineColorAndroid={'transparent'}
                             onChangeText={txt => {
-                                this.state.bank = txt
+                                this.state.account_number = txt
                             }}
 
                         />
                     </View>
-                </View> : null}
 
-                <Text style={[styles.txt_pay, {marginTop: way === '银行卡' ? 13 : 34}]}>{way}号</Text>
+                    <Text style={[styles.txt_pay, {marginTop: 13}]}>真实姓名</Text>
 
-                <View style={styles.view_pay}>
-                    <TextInput
-                        key={way}
-                        style={{
-                            width: 300,
-                            paddingTop: 0,
-                            paddingBottom: 0,
-                            fontSize: 14,
-                            fontWeight: 'bold',
-                            color: '#444444'
-                        }}
-                        maxLength={25}
-                        numberOfLines={1}
-                        placeholderTextColor={'#CCCCCC'}
-                        placeholder={strNotNull(account_number) ? '' : `填写${way}号`}
-                        value={account_number}
-                        underlineColorAndroid={'transparent'}
-                        onChangeText={txt => {
-                            this.state.account_number = txt
-                        }}
+                    <View style={styles.view_pay}>
+                        <TextInput
+                            key={way}
+                            style={{
+                                width: 300,
+                                paddingTop: 0,
+                                paddingBottom: 0,
+                                fontSize: 14,
+                                fontWeight: 'bold',
+                                color: '#444444'
+                            }}
+                            maxLength={20}
+                            numberOfLines={1}
+                            placeholderTextColor={'#CCCCCC'}
+                            placeholder={strNotNull(name) ? '' : `填写真实姓名`}
+                            value={name}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={txt => {
+                                this.state.name = txt
+                            }}
 
-                    />
+                        />
+                    </View>
+
+                    <TouchableOpacity style={styles.btn_cash} onPress={() => {
+                        this._check()
+                    }}>
+
+                        <Text style={styles.txt_cash}>立即提现</Text>
+                    </TouchableOpacity>
                 </View>
-
-                <Text style={[styles.txt_pay, {marginTop: 13}]}>真实姓名</Text>
-
-                <View style={styles.view_pay}>
-                    <TextInput
-                        key={way}
-                        style={{
-                            width: 300,
-                            paddingTop: 0,
-                            paddingBottom: 0,
-                            fontSize: 14,
-                            fontWeight: 'bold',
-                            color: '#444444'
-                        }}
-                        maxLength={20}
-                        numberOfLines={1}
-                        placeholderTextColor={'#CCCCCC'}
-                        placeholder={strNotNull(name) ? '' : `填写真实姓名`}
-                        value={name}
-                        underlineColorAndroid={'transparent'}
-                        onChangeText={txt => {
-                            this.state.name = txt
-                        }}
-
-                    />
-                </View>
-
-                <TouchableOpacity style={styles.btn_cash} onPress={() => {
-                    this._check()
-                }}>
-
-                    <Text style={styles.txt_cash}>立即提现</Text>
-                </TouchableOpacity>
-            </View>
+            </ScrollView>
 
 
             <PopAction
