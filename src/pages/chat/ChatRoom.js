@@ -347,7 +347,6 @@ export default class ChatRoom extends Component {
 
         console.log("创建一条" + msg.messageType + "类型的消息");
         console.log('消息对象', msgInfo);
-        msgInfo.id = 'msgId_1524644642276219';
         ///创建消息
         JMessage.createSendMessage(msgInfo, (message) => {
 
@@ -365,6 +364,8 @@ export default class ChatRoom extends Component {
                 username: msgInfo.username,
                 extras: {coverPath: msg.coverPath},
                 messageSendingOptions: {
+                    isShowNotification:true,
+                    isRetainOffline:true,
                     isCustomNotificationEnabled: true,
                     notificationTitle: this.myInfo.nickname,
                     notificationText: notificationText

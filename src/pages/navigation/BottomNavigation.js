@@ -37,7 +37,7 @@ class BottomNavigation extends Component {
         const {jumpToIndex, actionType, share_param} = this.props;
         const {shareLink, shareTitle, shareImage, shareText} = share_param;
         this.props._swichTab(index)
-        console.log(SHOW_BACK_TOP,'alksjdf')
+
         return (
             <View style={styleBN.navigation}>
                 <StatusBar barStyle={"light-content"}/>
