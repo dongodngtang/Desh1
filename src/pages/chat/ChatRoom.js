@@ -147,10 +147,10 @@ export default class ChatRoom extends Component {
         let userInfo = this.otherInfo;
         JMessage.enterConversation({type: 'single', username: userInfo.username},
             (conversation) => {
-            console.log('停止接收推送',conversation)
+                console.log('停止接收推送', conversation)
 
             }, (error) => {
-                console.log('停止接收推送失败',error)
+                console.log('停止接收推送失败', error)
             });
 
 
@@ -364,8 +364,8 @@ export default class ChatRoom extends Component {
                 username: msgInfo.username,
                 extras: {coverPath: msg.coverPath},
                 messageSendingOptions: {
-                    isShowNotification:true,
-                    isRetainOffline:true,
+                    isShowNotification: true,
+                    isRetainOffline: true,
                     isCustomNotificationEnabled: true,
                     notificationTitle: this.myInfo.nickname,
                     notificationText: notificationText
@@ -893,6 +893,8 @@ export default class ChatRoom extends Component {
                             renderAccessory={this.renderAccessoryAction}
                             renderActions={this.createToolButton}       //自定义左侧按钮
                         /> : null}
+                    {this.state.messages.length>0? null :
+                        <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={1}/>}
 
 
                     {this.state.recording ? <View style={styles.voiceAlert}><Text
