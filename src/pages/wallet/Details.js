@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     itemLeft: {
-        width:'75%',
+        width:'70%',
         flexDirection: 'column',
         marginLeft: 17
     }
