@@ -92,7 +92,7 @@ export default class IntegralInfoPage extends Component {
                 <ScrollView style={{flexDirection: 'column'}}>
 
                     <View style={[styles.infoPage, {marginTop: 1, paddingBottom: 15}]}>
-                        <ImageLoad style={{alignSelf: 'center', marginTop: 28, height: 102, width: 265}}
+                        <ImageLoad style={{alignSelf: 'center', marginTop: 28, height: 161, width: 265}}
                                    source={{uri: integral_info.cover_link}}/>
                         <Text style={[styles.marginS, styles.TXt, {marginTop: 21, fontWeight: 'bold'}]}>{name}</Text>
                         <View style={[styles.marginS, {marginTop: 5, flexDirection: 'row'}]}>
