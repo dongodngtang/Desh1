@@ -4629,19 +4629,19 @@ react-native-image-crop-picker@^0.20.0:
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.20.1.tgz#048c70219ba9f4fcf70fea5819f8dcaadefc63f9"
 
-react-native-image-pan-zoom@^2.1.2:
-  version "2.1.3"
-  resolved "http://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.3.tgz#1f1847518eb0d10a43fce20ee387a9f273dacd9a"
+react-native-image-pan-zoom@^2.1.7:
+  version "2.1.7"
+  resolved "http://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.7.tgz#1c066e66f8f345f5e1fc187f02d92c482952bb59"
 
 react-native-image-resizer@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-image-resizer/-/react-native-image-resizer-1.0.0.tgz#d47e14943c37938e287fbd639e4db7ceb7fd8917"
 
-react-native-image-zoom-viewer@^2.2.5:
-  version "2.2.5"
-  resolved "http://registry.npm.taobao.org/react-native-image-zoom-viewer/download/react-native-image-zoom-viewer-2.2.5.tgz#ad06f7b4666ef554ab2a900b92b56d2658570464"
+react-native-image-zoom-viewer@^2.2.13:
+  version "2.2.13"
+  resolved "http://registry.npm.taobao.org/react-native-image-zoom-viewer/download/react-native-image-zoom-viewer-2.2.13.tgz#05d085dae399129970c3c6e58b03276bf25f032e"
   dependencies:
-    react-native-image-pan-zoom "^2.1.2"
+    react-native-image-pan-zoom "^2.1.7"
 
 react-native-iphone-x-helper@^1.0.1:
   version "1.0.2"

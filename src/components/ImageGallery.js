@@ -7,9 +7,19 @@ import {
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import {showToast} from "../utils/ComonHelper";
 
 export default class ImageGallery extends React.Component {
 
+//保存图片
+//     saveImg=(img)=> {
+//         var promise = CameraRoll.saveToCameraRoll(img);
+//         promise.then(function(result) {
+//             showToast('保存成功！');
+//         }).catch(function(error) {
+//             showToast('保存失败！');
+//         });
+//     };
 
     render() {
 
@@ -21,7 +31,8 @@ export default class ImageGallery extends React.Component {
                         color='white'/>
                 }}
                 onLongPress={(image) => {
-                    console.log(image)
+                    console.log('image',image);
+                    // this.saveImg(image.url)
                 }}
                 imageUrls={images}
                 index={index}
