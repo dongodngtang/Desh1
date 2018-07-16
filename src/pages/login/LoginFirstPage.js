@@ -143,7 +143,7 @@ class LoginFirstPage extends Component {
                             borderBottomColor: Colors._CCC, borderBottomWidth: 0.5,
                             flex: 1, height: 40, alignItems: 'center', flexDirection: 'row'
                         }}>
-                            <Image style={{width: 13, height: 16, marginRight: 17}}
+                            <Image style={{width: Metrics.reallySize(13), height: Metrics.reallySize(16), marginRight: 17}}
                                    source={Images.sign_number}/>
 
                             <TextInput style={styles.text_input}
@@ -167,7 +167,7 @@ class LoginFirstPage extends Component {
                             borderBottomColor: Colors._CCC, borderBottomWidth: 0.5,
                             flex: 1, height: 40, alignItems: 'center', flexDirection: 'row'
                         }}>
-                            <Image style={{width: 13, height: 16, marginRight: 17}} source={Images.sign_password}/>
+                            <Image style={{width: Metrics.reallySize(13), height: Metrics.reallySize(16), marginRight: 17}} source={Images.sign_password}/>
                             <TextInput style={styles.text_input}
                                        numberOfLines={1}
                                        placeholderTextColor={Colors._CCC}
@@ -224,7 +224,7 @@ class LoginFirstPage extends Component {
 
                     <View style={{flex: 1}}/>
 
-                    {/*{this.wxLogin()}*/}
+                    {this.wxLogin()}
                 </View>
 
 
