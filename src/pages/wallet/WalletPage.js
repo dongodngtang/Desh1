@@ -43,6 +43,7 @@ export default class WalletPage extends Component {
 
     componentDidMount() {
         wallet_account(data => {
+            console.log("钱包",data)
             this.setState({
                 total_account: data.total_account
             })

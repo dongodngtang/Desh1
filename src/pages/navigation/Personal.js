@@ -24,8 +24,14 @@ class Personal extends Component {
         display_check: false
     };
 
-    componentDidMount() {
-        if (!isEmptyObject(global.login_user)) {
+
+    componentDidMount(){
+        this._loadUserParams(this.props)
+    }
+
+
+    _loadUserParams = (props)=>{
+        if (!isEmptyObject(props.profile)) {
             wallet_account(data => {
                 console.log("个人页面钱包：", data)
                 this.setState({
@@ -40,17 +46,23 @@ class Personal extends Component {
                 })
             })
 
+        }else{
+            this.setState({
+                total_account: '0.0',
+                display_check:false
+            })
         }
-
-
     }
 
     componentWillReceiveProps(newProps) {
 
 
-        if (newProps.actionType1 === 'SWITCH_LANGUAGE') {
-            this.forceUpdate()
+
+        if(newProps.actionType ==='GET_PROFILE'){
+            this._loadUserParams(newProps)
         }
+
+
     }
 
     _unReadMsg = () => {
@@ -190,7 +202,7 @@ class Personal extends Component {
 
             <View style={{height: 1, width: '100%'}}/>
 
-            {this.state.display_check ? this._item(stylesP.item_view, Images.wallet.invite, {
+            {this.state.display_check? this._item(stylesP.item_view, Images.wallet.invite, {
                     width: 21,
                     height: 22,
                     marginLeft: 20
@@ -201,7 +213,7 @@ class Personal extends Component {
                     else
                         global.router.toInvitePage()
 
-                }) : <View/>}
+                }) : null}
 
             <View style={{height: 50}}/>
         </ScrollView>
@@ -212,6 +224,9 @@ class Personal extends Component {
 
     _item = (itemStyle, img, imgStyle, title, onPress) => {
         const {profile} = this.props;
+        let {total_account} = this.state;
+        total_account = (total_account === '0.0' || total_account === '0') ? '0.00' : total_account;
+        total_account = isEmptyObject(profile) ? '0.00' : total_account;
         return <TouchableOpacity
             activeOpacity={1}
             style={itemStyle} onPress={onPress}>
@@ -224,7 +239,7 @@ class Personal extends Component {
                         color: '#AAAAAA',
                         marginRight: 12,
                         lineHeight: 22
-                    }}>{(this.state.total_account === '0.0' || this.state.total_account === '0') ? '0.00' : this.state.total_account}</Text>
+                    }}>{total_account}</Text>
                 : null}
             <Image style={stylesP.personalImg} source={Images.is}/>
         </TouchableOpacity>
