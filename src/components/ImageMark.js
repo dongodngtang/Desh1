@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, TouchableOpacity, View, Image} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
 import PropTypes from 'prop-types';
-import {util} from '../utils/ComonHelper';
+import {strNotNull, util} from '../utils/ComonHelper';
 
 
 export default class ImageMark extends Component {
@@ -21,11 +21,18 @@ export default class ImageMark extends Component {
     };
 
     componentDidMount() {
-        Image.getSize(this.props.src, (width, height) => {
-            let screenWidth = Metrics.screenWidth - 40;
-            height = screenWidth * height / width; //按照屏幕宽度进行等比缩放
-            this.setState({width: screenWidth, height});
-        });
+        if (this.no_chang()) {
+            Image.getSize(this.props.src, (width, height) => {
+                let screenWidth = Metrics.screenWidth - 40;
+                height = screenWidth * height / width; //按照屏幕宽度进行等比缩放
+                this.setState({width: screenWidth, height});
+            });
+        } else {
+            this.setState({
+                width: Number.parseFloat(this.props.width),
+                height: Number.parseFloat(this.props.height)
+            })
+        }
     }
 
     imageClick = (source) => {
@@ -40,6 +47,16 @@ export default class ImageMark extends Component {
 
     };
 
+    no_chang = () => {
+        const {alt} = this.props;
+        if (alt && alt === 'MACAUHIKE') {
+            return false;
+        } else {
+            return true;
+        }
+
+    };
+
 
     render() {
         const {success} = this.state;
@@ -48,7 +65,11 @@ export default class ImageMark extends Component {
         return (
             <TouchableOpacity
                 activeOpacity={0.5}
-                onPress={() => this.imageClick(src)}
+                onPress={() => {
+                    if(this.no_chang()){
+                        this.imageClick(src)
+                    }
+                }}
                 style={{
                     backgroundColor: Colors._ECE,
                     width: this.state.width,

@@ -2,15 +2,19 @@ import React, {PureComponent} from 'react';
 import Html from 'react-native-render-html';
 import ImageMark from '../../components/ImageMark'
 import {IGNORED_TAGS} from 'react-native-render-html/src/HTMLUtils';
+import {strNotNull} from "../../utils/ComonHelper";
 
 let img = (props) => {
     if (!props.src) {
         return false;
     }
-
+    console.log("jdkdjs",props)
     return <ImageMark
         key={props.src}
-        src={props.src}/>
+        src={props.src}
+        alt={props.alt}
+        width={props.width}
+        height={props.height}/>
 
 }
 

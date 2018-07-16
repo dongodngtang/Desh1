@@ -3,7 +3,7 @@
  */
 import React, {PropTypes} from 'react';
 import {
-    Modal, ActivityIndicator
+    Modal, ActivityIndicator,View
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
@@ -31,7 +31,7 @@ export default class ImageGallery extends React.Component {
                         color='white'/>
                 }}
                 onLongPress={(image) => {
-                    console.log('image',image);
+                    console.log('image', image);
                     // this.saveImg(image.url)
                 }}
                 imageUrls={images}
