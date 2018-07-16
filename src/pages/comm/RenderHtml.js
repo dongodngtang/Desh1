@@ -8,7 +8,6 @@ let img = (props) => {
     if (!props.src) {
         return false;
     }
-    console.log("jdkdjs",props)
     return <ImageMark
         key={props.src}
         src={props.src}

@@ -29,8 +29,8 @@ export default class ImageMark extends Component {
             });
         } else {
             this.setState({
-                width: Number.parseFloat(this.props.width),
-                height: Number.parseFloat(this.props.height)
+                width: strNotNull(this.props.width) && Number.parseFloat(this.props.width),
+                height:strNotNull(this.props.height) && Number.parseFloat(this.props.height)
             })
         }
     }
