@@ -256,7 +256,7 @@ export default class Withdraw extends Component {
                 postWithdrawal(body, data => {
                     showToast("提现申请成功");
                 }, err => {
-
+                    showToast(err)
                 })
             });
 
