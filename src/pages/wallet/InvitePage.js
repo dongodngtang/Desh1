@@ -83,7 +83,10 @@ export default class InvitePage extends Component {
                             leftBtnIcon={Images.sign_return}
                             leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                             leftBtnPress={() => router.pop()}
-                            rightBtnIcon={Images.wallet.rule2}/>
+                            rightBtnIcon={Images.wallet.rule2}
+                            rightBtnPress={() => {
+                                global.router.toInviteRulePage()
+                            }}/>
                     </ImageBackground>
 
 
