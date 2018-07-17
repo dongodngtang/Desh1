@@ -3,9 +3,9 @@ import {
     TouchableOpacity, ScrollView,
     StyleSheet, Platform,
     Text, Image,
-    View, Animated, findNodeHandle, Linking
+    View, Animated, findNodeHandle, Linking, Modal, ImageBackground
 } from 'react-native';
-import {Images, Colors, Metrics} from '../../Themes';
+import {Images, Colors, Metrics, ApplicationStyles} from '../../Themes';
 import {strNotNull, isEmptyObject, getLoginUser, getUserData, getDispatchAction} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
@@ -13,8 +13,9 @@ import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
 import HotelOrderPage from "../macau/hotelOrder/HotelOrderPage";
-import {wallet_account, display_check} from '../../services/WallDao';
-
+import {wallet_account, display_check, novice_task} from '../../services/WallDao';
+import {NavigationBar} from '../../components';
+import NewUserTask from "./NewUserTask";
 
 class Personal extends Component {
 
@@ -25,24 +26,24 @@ class Personal extends Component {
     };
 
 
-    componentDidMount(){
+    componentDidMount() {
         this._loadUserParams(this.props)
     }
 
 
-    _loadUserParams = (props)=>{
+    _loadUserParams = (props) => {
         if (!isEmptyObject(props.profile)) {
             this.refresh()
 
-        }else{
+        } else {
             this.setState({
                 total_account: '0.0',
-                display_check:false
+                display_check: false
             })
         }
     };
 
-    refresh=()=>{
+    refresh = () => {
         wallet_account(data => {
             console.log("个人页面钱包：", data)
             this.setState({
@@ -55,14 +56,13 @@ class Personal extends Component {
             this.setState({
                 display_check: data.display
             })
-        })
+        });
     };
 
     componentWillReceiveProps(newProps) {
 
 
-
-        if(newProps.actionType ==='GET_PROFILE'){
+        if (newProps.actionType === 'GET_PROFILE') {
             this._loadUserParams(newProps)
         }
 
@@ -76,13 +76,26 @@ class Personal extends Component {
 
 
     render() {
-
         return (
             <View style={{flex: 1}}>
                 {this.readerMe()}
 
                 {this.renderItem()}
 
+                {this.props.profile && this.props.profile.new_user ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
+                                                                 onPress={() => {
+                                                                     this.taskAction && this.taskAction.toggle();
+                                                                 }}>
+                    <Image style={{
+                        width: Metrics.reallySize(53),
+                        height: Metrics.reallySize(49)
+                    }}
+                           source={Images.lucky_bag}/>
+                </TouchableOpacity> : null}
+
+                <NewUserTask
+                    ref={ref => this.taskAction = ref}
+                />
 
             </View>
         )
@@ -206,7 +219,7 @@ class Personal extends Component {
 
             <View style={{height: 1, width: '100%'}}/>
 
-            {this.state.display_check? this._item(stylesP.item_view, Images.wallet.invite, {
+            {this.state.display_check ? this._item(stylesP.item_view, Images.wallet.invite, {
                     width: 21,
                     height: 22,
                     marginLeft: 20

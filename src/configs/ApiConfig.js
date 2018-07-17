@@ -199,6 +199,7 @@ const api = {
     user_invite: 'my_invites',//查看某个用户邀请的用户 [只有1级和2级用户有权限
     other_invite: 'my_invites/indirect',//查看某个用户间接邀请的用户 [只有1级用户有权限]
     withdrawal: 'wallet/withdrawal',//用户钱包账户提现
+    novice_task: novice_task,//获取新手红包任务进度
 
 
 }
@@ -217,6 +218,10 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function novice_task() {
+    return `account/users/${getUserId()}/novice_task`;
+}
 
 export function replies_comments(body) {
 

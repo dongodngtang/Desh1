@@ -209,6 +209,10 @@ const images = {
     verified_exmple: require('../../source/verified/exmple.png'),
     verifed_passport: require('../../source/verified/passport.png'),
 
+    right2:require('../../source/navigation/right2.png'),
+    task_close:require('../../source/navigation/task_close.png'),
+    new_user_task:require('../../source/navigation/new_user_task.png'),
+    lucky_bag:require('../../source/navigation/lucky_bag.png'),
     pukes: require('../../source/navigation/pukes.png'),
     raceBegin: require('../../source/navigation/raceBegin.png'),
     is: require('../../source/navigation/is>.png'),

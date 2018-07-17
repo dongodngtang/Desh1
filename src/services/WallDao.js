@@ -11,6 +11,12 @@ export function postWithdrawal(body, resolve, reject) {
     })
 }
 
+export function novice_task(body, resolve, reject) {
+    helper.get(Api.novice_task(), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function other_invite(body, resolve, reject) {
     helper.get(Api.other_invite, ret => {
         resolve(ret.data)
