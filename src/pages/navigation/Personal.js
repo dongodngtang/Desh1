@@ -84,7 +84,7 @@ class Personal extends Component {
 
                 {this.props.profile && this.props.profile.new_user ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
                                                                  onPress={() => {
-                                                                     this.taskAction && this.taskAction.toggle();
+                                                                    router.toNewUserTask()
                                                                  }}>
                     <Image style={{
                         width: Metrics.reallySize(53),
@@ -93,9 +93,7 @@ class Personal extends Component {
                            source={Images.lucky_bag}/>
                 </TouchableOpacity> : null}
 
-                <NewUserTask
-                    ref={ref => this.taskAction = ref}
-                />
+
 
             </View>
         )

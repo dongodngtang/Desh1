@@ -5,6 +5,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {display_check, invite_count, novice_task, user_invite, wallet_account} from "../../services/WallDao";
+import {setZero} from "../../utils/ComonHelper";
 
 export default class NewUserTask extends Component {
 
@@ -15,6 +16,7 @@ export default class NewUserTask extends Component {
 
     componentDidMount() {
         this.refresh()
+
     }
 
     refresh = () => {
@@ -36,54 +38,47 @@ export default class NewUserTask extends Component {
         const {user_task} = this.state;
         const {login_days, login_days_required, share_count, share_count_required} = user_task;
         return(
-            <Modal
-                transparent={true}
-                visible={this.state.visible}
-                onRequestClose={() => {
-                }}>
-                <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
-                    <ImageBackground style={{width: Metrics.screenWidth, height: 313}}
-                                     source={Images.new_user_task}>
-                        <NavigationBar
-
-                            title=""
-                            leftBtnIcon={Images.task_close}
-                            leftImageStyle={{height: 13, width: 13, marginLeft: 20, marginRight: 20}}
-                            leftBtnPress={() => this.toggle()}
-                        />
-                    </ImageBackground>
+            <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+                <ImageBackground style={{width: Metrics.screenWidth, height: 313}}
+                                 source={Images.new_user_task}>
+                    <NavigationBar
+                        title=""
+                        leftBtnIcon={Images.task_close}
+                        leftImageStyle={{height: 13, width: 13, marginLeft: 20, marginRight: 20}}
+                        leftBtnPress={() => router.pop()}
+                    />
+                </ImageBackground>
 
 
-                    <View style={styles.task_view}>
-                        <Image style={styles.img44}
-                               source={Images.integral.login}/>
-                        <Text style={styles.text44}>{`登录满7天（${login_days}/${login_days_required}）`}</Text>
-                        <View style={{flex: 1}}/>
-                        {login_days > 0 && login_days <= login_days_required ? <Image style={styles.img45}
-                                                                                      source={Images.right2}/> : null}
-                    </View>
-                    <View style={styles.task_view}>
-                        <Image style={styles.img44}
-                               source={Images.integral.share}/>
-                        <Text style={styles.text44}>{`分享（${share_count}/${share_count_required}）`}</Text>
-                        <View style={{flex: 1}}/>
-                        {share_count > 0 && share_count <= share_count_required ? <Image style={styles.img45}
-                                                                                         source={Images.right2}/> : null}
-                    </View>
+                <View style={styles.task_view}>
+                    <Image style={styles.img44}
+                           source={Images.integral.login}/>
+                    <Text style={styles.text44}>{`登录满7天（${setZero(login_days)}/${setZero(login_days_required)}）`}</Text>
+                    <View style={{flex: 1}}/>
+                    {login_days > 0 && login_days <= login_days_required ? <Image style={styles.img45}
+                                                                                  source={Images.right2}/> : null}
+                </View>
+                <View style={styles.task_view}>
+                    <Image style={styles.img44}
+                           source={Images.integral.share}/>
+                    <Text style={styles.text44}>{`分享（${setZero(share_count)}/${setZero(share_count_required)}）`}</Text>
+                    <View style={{flex: 1}}/>
+                    {share_count > 0 && share_count <= share_count_required ? <Image style={styles.img45}
+                                                                                     source={Images.right2}/> : null}
+                </View>
 
-                    <View style={{marginLeft:17,marginRight:17,marginTop:18}}>
-                        <Text style={styles.txt57}>
-                            活动规则：
-                        </Text>
-                        <Text  style={[styles.txt57,{marginTop:5}]}>
-                            新用户注册以后完成登录满7天并分享2次澳门旅行
-                        </Text>
-                        <Text  style={styles.txt57}>
-                            APP下载任务即可随机获得最高888元现金或积分奖励
-                        </Text>
-                    </View>
-                </ScrollView>
-            </Modal>
+                <View style={{marginLeft:17,marginRight:17,marginTop:18}}>
+                    <Text style={styles.txt57}>
+                        活动规则：
+                    </Text>
+                    <Text  style={[styles.txt57,{marginTop:5}]}>
+                        新用户注册以后完成登录满7天并分享2次澳门旅行
+                    </Text>
+                    <Text  style={styles.txt57}>
+                        APP下载任务即可随机获得最高888元现金或积分奖励
+                    </Text>
+                </View>
+            </ScrollView>
         )
     }
 }

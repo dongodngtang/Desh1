@@ -1425,5 +1425,12 @@ export function checkZip(zip) {
     }
 }
 
+export function setZero(str){
+    if(!strNotNull(str) || str === undefined || isEmptyObject(str)){
+        return 0
+    }else{
+        return str;
+    }
+}
 
 

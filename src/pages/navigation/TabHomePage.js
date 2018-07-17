@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     View, ScrollView, StyleSheet, RefreshControl,
-    Text, ActivityIndicator, Platform
+    Text, ActivityIndicator, Platform,Image,TouchableOpacity
 }
     from 'react-native';
 // import Races from './Races';
@@ -15,15 +15,16 @@ import Router from '../../configs/Router';
 import {connect} from 'react-redux';
 // import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
-import {getDispatchAction, alertRefresh, getCurrentDate, strNotNull} from '../../utils/ComonHelper';
+import {getDispatchAction, alertRefresh, getCurrentDate, strNotNull, isEmptyObject} from '../../utils/ComonHelper';
 import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
 import I18n from 'react-native-i18n';
-import {ApplicationStyles, Images, Colors} from '../../Themes';
+import {ApplicationStyles, Images, Colors, Metrics} from '../../Themes';
 import NavigationBar from "../../components/NavigationBar";
 import Catalog from './Catalog'
 import {home_recommends} from '../../services/MacauDao'
+import NewUserTask from './NewUserTask'
 
 class TabHomePage extends Component {
     state = {
@@ -265,8 +266,19 @@ class TabHomePage extends Component {
                     }}>
                         <Text style={{color: Colors._AAA}}>{I18n.t('no_more')}</Text>
                     </View> : null}
+
                 </ScrollView>
 
+                {!isEmptyObject(global.login_user) &&  global.login_user.new_user ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
+                                                                                                      onPress={() => {
+                                                                                                          router.toNewUserTask()
+                                                                                                      }}>
+                    <Image style={{
+                        width: Metrics.reallySize(53),
+                        height: Metrics.reallySize(49)
+                    }}
+                           source={Images.lucky_bag}/>
+                </TouchableOpacity> : null}
 
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>

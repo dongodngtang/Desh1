@@ -10,6 +10,7 @@ import Crowdfunding from "../pages/crowdfundings/crowds/Crowdfunding";
 import HotelDetail from "../pages/macau/HotelDetail";
 import {SelectTimePage} from "../pages/macau/SelectTimePage";
 import WalletPage from "../pages/wallet/WalletPage";
+import NewUserTask from "../pages/navigation/NewUserTask";
 
 
 const customFloatFromRight = '';
@@ -57,6 +58,9 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toNewUserTask(){
+        this.stackPush({name:'NewUserTask'})
+    }
     toInviteRulePage(){
         this.stackPush({
             name:'InviteRulePage'
