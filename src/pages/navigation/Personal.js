@@ -32,19 +32,7 @@ class Personal extends Component {
 
     _loadUserParams = (props)=>{
         if (!isEmptyObject(props.profile)) {
-            wallet_account(data => {
-                console.log("个人页面钱包：", data)
-                this.setState({
-                    total_account: data.total_account
-                })
-            })
-
-            display_check(data => {
-                console.log("是否显示我的邀请：", data)
-                this.setState({
-                    display_check: data.display
-                })
-            })
+            this.refresh()
 
         }else{
             this.setState({
@@ -52,7 +40,23 @@ class Personal extends Component {
                 display_check:false
             })
         }
-    }
+    };
+
+    refresh=()=>{
+        wallet_account(data => {
+            console.log("个人页面钱包：", data)
+            this.setState({
+                total_account: data.total_account
+            })
+        })
+
+        display_check(data => {
+            console.log("是否显示我的邀请：", data)
+            this.setState({
+                display_check: data.display
+            })
+        })
+    };
 
     componentWillReceiveProps(newProps) {
 
@@ -189,7 +193,7 @@ class Personal extends Component {
                     if (isEmptyObject(global.login_user))
                         global.router.toLoginFirstPage()
                     else
-                        global.router.toWalletPage()
+                        global.router.toWalletPage(this.refresh)
 
                 })}
             <View style={{height: 1, width: '100%'}}/>

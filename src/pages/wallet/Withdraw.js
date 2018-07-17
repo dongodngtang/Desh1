@@ -21,11 +21,7 @@ import PopAction from "../comm/PopAction";
 import {alertOrder, moneyFormat, showToast, strNotNull} from "../../utils/ComonHelper";
 import {postWithdrawal} from '../../services/WallDao'
 
-const list = [{id: 0, name: '支付宝', account_type: 'alipay'}, {id: 1, name: '微信', account_type: 'wx'}, {
-    id: 2,
-    name: '银行卡',
-    account_type: 'bank'
-}];
+const list = [{id: 0, name: '支付宝', account_type: 'alipay'}, {id: 1, name: '银行卡', account_type: 'bank'}];
 
 export default class Withdraw extends Component {
 
@@ -50,7 +46,10 @@ export default class Withdraw extends Component {
                 title="提现"
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}/>
+                leftBtnPress={() => {
+                    router.pop();
+                    this.props.params.refresh();
+                }}/>
 
             <ScrollView>
                 <View style={styles.card2}>
@@ -227,6 +226,7 @@ export default class Withdraw extends Component {
     }
 
     _check = () => {
+        console.log("进入提现判断")
         const {way, bank, amount, prompt_show, name, account_type, account_number} = this.state;
         const {total_account} = this.props.params;
         if (prompt_show) {
@@ -237,10 +237,8 @@ export default class Withdraw extends Component {
             showToast("提现金额超额")
         } else if (!strNotNull(amount) || Number.parseFloat(amount) <= 0) {
             showToast("请输入正确的金额数")
-        } else if (way === '银行卡') {
-            if (!strNotNull(bank.trim()) || !strNotNull(account_number.trim()) || !strNotNull(name.trim())) {
-                showToast("请填写完整信息")
-            }
+        } else if (way === '银行卡' && (!strNotNull(bank.trim()) || !strNotNull(account_number.trim()) || !strNotNull(name.trim()))) {
+            showToast("请填写完整信息")
         } else if (!strNotNull(account_number.trim()) || !strNotNull(name.trim())) {
             showToast("请填写完整信息");
         } else {

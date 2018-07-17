@@ -99,17 +99,23 @@ export default class Router {
         })
     }
 
-    toWithdraw(total_account){
+    toWithdraw(total_account,refresh){
         this.stackPush({
             name:'Withdraw',
             params:{
-                total_account
+                total_account,
+                refresh
             }
         })
     }
 
-    toWalletPage(){
-        this.stackPush({name:'WalletPage'})
+    toWalletPage(refresh){
+        this.stackPush({
+            name:'WalletPage',
+            params:{
+                refresh
+            }
+        })
     }
 
     toCouponSelectPage(total_price,_selectedCoupon,coupon) {

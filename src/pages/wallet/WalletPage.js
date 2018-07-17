@@ -42,15 +42,19 @@ export default class WalletPage extends Component {
     ]
 
     componentDidMount() {
+        this.refresh()
+    }
+
+    refresh = () => {
         wallet_account(data => {
-            console.log("钱包",data)
+            console.log("钱包", data)
             this.setState({
                 total_account: data.total_account
             })
         }, err => {
 
         })
-    }
+    };
 
     render() {
 
@@ -61,7 +65,8 @@ export default class WalletPage extends Component {
                            leftBtnIcon={Images.coupon.return_hei}
                            leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                            leftBtnPress={() => {
-                               router.pop()
+                               router.pop();
+                               this.props.params.refresh()
                            }}/>
 
             <View style={styles.card}>
@@ -80,7 +85,7 @@ export default class WalletPage extends Component {
                                 router.toWalletDetailsPage()
                             }
                             if (item.type === 2) {
-                                router.toWithdraw(this.state.total_account)
+                                router.toWithdraw(this.state.total_account,this.refresh)
                             }
                         }}
                     >
