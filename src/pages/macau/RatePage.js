@@ -1,14 +1,24 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, TextInput,ScrollView
+    StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import {LoadingView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
-import {isEmptyObject, mul, div, formatCurrency, strNotNull} from "../../utils/ComonHelper";
+import {isEmptyObject, mul, div, formatCurrency, strNotNull, convertDate,utcDate} from "../../utils/ComonHelper";
 
 export default class RatePage extends Component {
+
+    state = {
+        update_time: convertDate(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    };
+
+    change_time = (time) => {
+        this.setState({
+            update_time: time
+        })
+    }
 
     render() {
         return (
@@ -22,7 +32,8 @@ export default class RatePage extends Component {
 
                 <ScrollView>
                     <RateTop
-                        type={'real_time'}/>
+                        type={'real_time'}
+                        change_time={this.change_time}/>
 
                     <TouchableOpacity
                         onPress={() => {
@@ -48,14 +59,9 @@ export default class RatePage extends Component {
                     </TouchableOpacity>
 
                     <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
-                        数据仅供参考，更新时间：
+                        数据仅供参考，更新时间：{this.state.update_time}
                     </Text>
-                    <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
-                        HKD更新时间：
-                    </Text>
-                    <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
-                        MOP更新时间：
-                    </Text>
+
                 </ScrollView>
             </View>
         )
@@ -77,7 +83,6 @@ export class RateTop extends Component {
         const {price_changed} = this.state;
         const {type} = this.props;
         getExchange_rates({exchange_type: type}, data => {
-            console.log("type", type)
             console.log("ratesItem:", data)
             rate[1] = mul(data.cny_to_hkd_rate.rate, rate[0]);
             rate[2] = mul(data.cny_to_mop_rate.rate, rate[0]);
@@ -90,7 +95,10 @@ export class RateTop extends Component {
                 ratesItem: data,
                 price_changed: group2
             })
-            console.log("price_changed:", group2)
+            console.log("price_changed:", group2);
+            if (type === 'real_time') {
+                this.props.change_time(utcDate(data.cny_to_hkd_rate.updated_at, 'YYYY-MM-DD HH:mm:ss'))
+            }
         }, err => {
 
         })
