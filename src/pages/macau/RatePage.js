@@ -11,7 +11,7 @@ import {isEmptyObject, mul, div, formatCurrency, strNotNull, convertDate,utcDate
 export default class RatePage extends Component {
 
     state = {
-        update_time: convertDate(new Date(), 'YYYY-MM-DD HH:mm:ss')
+        update_time: ''
     };
 
     change_time = (time) => {
@@ -96,7 +96,7 @@ export class RateTop extends Component {
                 price_changed: group2
             })
             console.log("price_changed:", group2);
-            if (type === 'real_time') {
+            if (type === 'real_time' && strNotNull(data.cny_to_hkd_rate.updated_at)) {
                 this.props.change_time(utcDate(data.cny_to_hkd_rate.updated_at, 'YYYY-MM-DD HH:mm:ss'))
             }
         }, err => {
