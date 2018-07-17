@@ -192,7 +192,7 @@ class Personal extends Component {
                         global.router.toWalletPage()
 
                 })}
-            <View style={{height: 1, marginLeft: 69}}/>
+            <View style={{height: 1, width: '100%'}}/>
             {this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},
                 I18n.t('setting'), () => {
                     router.toSettingPage()

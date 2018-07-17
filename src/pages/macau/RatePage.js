@@ -50,6 +50,12 @@ export default class RatePage extends Component {
                     <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
                         数据仅供参考，更新时间：
                     </Text>
+                    <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
+                        HKD更新时间：
+                    </Text>
+                    <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
+                        MOP更新时间：
+                    </Text>
                 </ScrollView>
             </View>
         )
