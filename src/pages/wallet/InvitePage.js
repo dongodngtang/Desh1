@@ -149,12 +149,13 @@ export default class InvitePage extends Component {
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginTop: 17,
-                        marginLeft: 17,
-                        marginRight: 17,
-                        marginBottom: 6
+                        paddingTop: 17,
+                        paddingLeft: 17,
+                        paddingRight: 17,
+                        paddingBottom: 6,
+                        backgroundColor:'white'
                     }}>
-                        <Image style={{width: 25, height: 23, marginRight: 6}} source={Images.wallet.friends}/>
+                        <Image style={{width: 23, height: 20, marginRight: 6}} source={Images.wallet.friends}/>
                         <Text style={{color: "#000000", fontSize: 14}}>
                             我邀请的好友
                         </Text>
