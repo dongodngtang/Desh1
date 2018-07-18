@@ -72,7 +72,7 @@ export default class WalletPage extends Component {
             <View style={styles.card}>
                 <View style={styles.my_amount}>
                     <Text style={styles.lb_amount}>账户余额（元）</Text>
-                    <Text style={styles.txt_amount}>{moneyFormat(this.state.total_account)}</Text>
+                    <Text style={styles.txt_amount}>{this.state.total_account}</Text>
                 </View>
 
 

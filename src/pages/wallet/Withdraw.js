@@ -95,7 +95,7 @@ export default class Withdraw extends Component {
                             amount: total_account
                         })
                     }}>
-                        <Text style={styles.can_money}>{`可提现￥${moneyFormat(total_account)}元`}</Text>
+                        <Text style={styles.can_money}>{`可提现￥${total_account}元`}</Text>
                         <Text style={styles.all_get}>全部提现</Text>
                     </TouchableOpacity>
 
@@ -229,9 +229,7 @@ export default class Withdraw extends Component {
         console.log("进入提现判断")
         const {way, bank, amount, prompt_show, name, account_type, account_number} = this.state;
         const {total_account} = this.props.params;
-        if (prompt_show) {
-            showToast("金额超出最高限额")
-        } else if (!strNotNull(total_account) || total_account === '0.0') {
+        if (!strNotNull(total_account) || total_account === '0.0' || Number.parseFloat(amount) < 50) {
             showToast("提现金额不足")
         } else if (Number.parseFloat(amount) > 1000) {
             showToast("提现金额超额")
