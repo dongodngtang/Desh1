@@ -218,8 +218,8 @@ class Personal extends Component {
             <View style={{height: 1, width: '100%'}}/>
 
             {this.state.display_check ? this._item(stylesP.item_view, Images.wallet.invite, {
-                    width: 21,
-                    height: 22,
+                    width: 23,
+                    height: 20,
                     marginLeft: 20
                 },
                 '我的邀请', () => {

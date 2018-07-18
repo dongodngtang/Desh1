@@ -74,7 +74,7 @@ export default class InvitePage extends Component {
     render() {
         const {user_invite, invite_count, showQRCode} = this.state;
         const {total_invite_number, total_invite_money} = invite_count;
-        return (<View style={[ApplicationStyles.bgContainer]}>
+        return (<View style={[ApplicationStyles.bgContainer,{backgroundColor:'white'}]}>
                 <ScrollView>
                     <ImageBackground style={{width: Metrics.screenWidth, height: 284}} source={Images.wallet.bg}>
                         <NavigationBar
@@ -170,7 +170,7 @@ export default class InvitePage extends Component {
                     </View>
 
                     {isEmptyObject(user_invite) || isEmptyObject(user_invite.items) ? null : <FlatList
-                        style={{flex: 1, backgroundColor: '#FFFFFF', paddingBottom: 50}}
+                        style={{flex: 1,paddingBottom: 50,backgroundColor:'white'}}
                         data={user_invite.items}
                         showsHorizontalScrollIndicator={false}
                         renderItem={this._renderItem}
@@ -180,12 +180,13 @@ export default class InvitePage extends Component {
 
                 </ScrollView>
                 <Modal
+                    animationType={'none'}
                     transparent={true}
                     visible={this.state.visible}
                     onRequestClose={() => {
                     }}>
                     <TouchableOpacity
-                        activeopacity={0}
+                        activeopacity={1}
                         style={{
                             flex: 1,
                             backgroundColor: 'rgba(0,0,0,0.6)',
@@ -195,11 +196,13 @@ export default class InvitePage extends Component {
                         onPress={() => {
                             this.toggle()
                         }}>
-                        <QRCode
-                            value={shareHost() + "invite_load?id=" + this.getUserId()}
-                            size={200}
-                            bgColor='black'
-                            fgColor='white'/>
+                        <View style={{width:204,height:204,borderWidth:2,borderColor:'white'}}>
+                            <QRCode
+                                value={shareHost() + "invite_load?id=" + this.getUserId()}
+                                size={200}
+                                bgColor='black'
+                                fgColor='white'/>
+                        </View>
 
                     </TouchableOpacity>
 
