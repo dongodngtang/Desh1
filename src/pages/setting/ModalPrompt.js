@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {
-    TouchableOpacity, View, TextInput, Alert,
+    TouchableOpacity, View, TextInput, Alert,ScrollView,
     StyleSheet, Image, Text, Modal
 } from 'react-native';
 import I18n from 'react-native-i18n';
