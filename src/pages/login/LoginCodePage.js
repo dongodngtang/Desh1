@@ -126,7 +126,7 @@ class LoginCodeView extends Component {
                     alignItems: 'center', justifyContent: 'center'
                 }}>
 
-                <View style={{backgroundColor: Colors._E54}}>
+                <View style={{backgroundColor: Colors._E54,paddingRight:17}}>
                     <NavigationBar
                         leftBtnIcon={Images.sign_close}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
