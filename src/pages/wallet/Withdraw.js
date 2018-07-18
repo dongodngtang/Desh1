@@ -251,6 +251,7 @@ export default class Withdraw extends Component {
             alertOrder("确认提现？", () => {
                 postWithdrawal(body, data => {
                     showToast("提现申请成功");
+                    this.props.params.refresh();
                 }, err => {
                     showToast(err)
                 })
