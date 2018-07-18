@@ -29,15 +29,14 @@ export default class NewUserTask extends Component {
     };
 
 
-
-    render(){
+    render() {
         const {user_task} = this.state;
         let {login_days, login_days_required, share_count, share_count_required} = user_task;
-        login_days = strNotNull(login_days)?login_days:0;
-        login_days_required = strNotNull(login_days_required)?login_days_required:0;
-        share_count = strNotNull(share_count)?share_count:0;
-        share_count_required = strNotNull(share_count_required)?share_count_required:0;
-        return(
+        login_days = strNotNull(login_days) ? login_days : 0;
+        login_days_required = strNotNull(login_days_required) ? login_days_required : 0;
+        share_count = strNotNull(share_count) ? share_count : 0;
+        share_count_required = strNotNull(share_count_required) ? share_count_required : 0;
+        return (
             <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
                 <ImageBackground style={{width: Metrics.screenWidth, height: 313}}
                                  source={Images.new_user_task}>
@@ -53,7 +52,7 @@ export default class NewUserTask extends Component {
                 <View style={styles.task_view}>
                     <Image style={styles.img44}
                            source={Images.integral.login}/>
-                    <Text style={styles.text44}>{`登录满7天（${login_days}/${login_days_required}）`}</Text>
+                    <Text style={styles.text44}>{`登录满7天（${login_days >= login_days_required ? login_days_required :login_days}/${login_days_required}）`}</Text>
                     <View style={{flex: 1}}/>
                     {login_days > 0 && login_days >= login_days_required ? <Image style={styles.img45}
                                                                                   source={Images.right2}/> : null}
@@ -61,20 +60,21 @@ export default class NewUserTask extends Component {
                 <View style={styles.task_view}>
                     <Image style={styles.img44}
                            source={Images.integral.share}/>
-                    <Text style={styles.text44}>{`分享（${share_count}/${share_count_required}）`}</Text>
+                    <Text
+                        style={styles.text44}>{`分享（${share_count >= share_count_required ? share_count_required : share_count}/${share_count_required}）`}</Text>
                     <View style={{flex: 1}}/>
                     {share_count > 0 && share_count >= share_count_required ? <Image style={styles.img45}
                                                                                      source={Images.right2}/> : null}
                 </View>
 
-                <View style={{marginLeft:17,marginRight:17,marginTop:18}}>
+                <View style={{marginLeft: 17, marginRight: 17, marginTop: 18}}>
                     <Text style={styles.txt57}>
                         活动规则：
                     </Text>
-                    <Text  style={[styles.txt57,{marginTop:5}]}>
+                    <Text style={[styles.txt57, {marginTop: 5}]}>
                         新用户注册以后完成登录满7天并分享2次澳门旅行
                     </Text>
-                    <Text  style={styles.txt57}>
+                    <Text style={styles.txt57}>
                         APP下载任务即可随机获得最高888元现金或积分奖励
                     </Text>
                 </View>
