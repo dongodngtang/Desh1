@@ -58,8 +58,13 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
-    toNewUserTask(){
-        this.stackPush({name:'NewUserTask'})
+    toNewUserTask(refresh){
+        this.stackPush({
+            name:'NewUserTask',
+            params:{
+                refresh
+            }
+        })
     }
     toInviteRulePage(){
         this.stackPush({

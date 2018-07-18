@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     View, ScrollView, StyleSheet, RefreshControl,
-    Text, ActivityIndicator, Platform,Image,TouchableOpacity
+    Text, ActivityIndicator, Platform, Image, TouchableOpacity
 }
     from 'react-native';
 // import Races from './Races';
@@ -25,6 +25,7 @@ import NavigationBar from "../../components/NavigationBar";
 import Catalog from './Catalog'
 import {home_recommends} from '../../services/MacauDao'
 import NewUserTask from './NewUserTask'
+import {profile} from "../../services/SocialDao";
 
 class TabHomePage extends Component {
     state = {
@@ -39,7 +40,8 @@ class TabHomePage extends Component {
         informationY: 0,
         isRefreshing: false,
         info_page: 1,
-        load_more: ''
+        load_more: '',
+        show_task:false
     };
 
     componentWillReceiveProps(newProps) {
@@ -56,10 +58,23 @@ class TabHomePage extends Component {
     }
 
     componentWillMount() {
+        this.refresh()
+
+    };
+
+    refresh = () => {
         this.router = this.router || new Router();
         global.router = this.router;
-
-    }
+        if(!isEmptyObject(global.login_user)){
+            profile(global.login_user.user_id, data => {
+                console.log("主页是否显示福袋：",data)
+                this.setState({
+                    show_task: data.new_user
+                })
+            }, err => {
+            })
+        }
+    };
 
     componentDidMount() {
 
@@ -223,8 +238,7 @@ class TabHomePage extends Component {
     };
 
     render() {
-        const {banners, headlines, load_more} = this.state;
-
+        const {banners, headlines, load_more,show_task} = this.state;
         return (
 
             <View style={ApplicationStyles.bgContainer}>
@@ -269,16 +283,17 @@ class TabHomePage extends Component {
 
                 </ScrollView>
 
-                {!isEmptyObject(global.login_user) &&  global.login_user.new_user ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
-                                                                                                      onPress={() => {
-                                                                                                          router.toNewUserTask()
-                                                                                                      }}>
-                    <Image style={{
-                        width: Metrics.reallySize(53),
-                        height: Metrics.reallySize(49)
-                    }}
-                           source={Images.lucky_bag}/>
-                </TouchableOpacity> : null}
+                {show_task ?
+                    <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
+                                      onPress={() => {
+                                          global.router.toNewUserTask(this.refresh)
+                                      }}>
+                        <Image style={{
+                            width: Metrics.reallySize(53),
+                            height: Metrics.reallySize(49)
+                        }}
+                               source={Images.lucky_bag}/>
+                    </TouchableOpacity> : null}
 
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>

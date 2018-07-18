@@ -6,6 +6,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {display_check, invite_count, novice_task, user_invite, wallet_account} from "../../services/WallDao";
 import {strNotNull} from "../../utils/ComonHelper";
+import Router from "../../configs/Router";
 
 export default class NewUserTask extends Component {
 
@@ -25,6 +26,9 @@ export default class NewUserTask extends Component {
             this.setState({
                 user_task: data
             })
+        },err=>{
+            this.props.params.refresh();
+            router.pop();
         })
     };
 

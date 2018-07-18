@@ -84,7 +84,7 @@ class Personal extends Component {
 
                 {this.props.profile && this.props.profile.new_user ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
                                                                  onPress={() => {
-                                                                    router.toNewUserTask()
+                                                                    router.toNewUserTask(this.refresh)
                                                                  }}>
                     <Image style={{
                         width: Metrics.reallySize(53),
