@@ -55,7 +55,7 @@ export default class NewUserTask extends Component {
                            source={Images.integral.login}/>
                     <Text style={styles.text44}>{`登录满7天（${login_days}/${login_days_required}）`}</Text>
                     <View style={{flex: 1}}/>
-                    {login_days > 0 && login_days <= login_days_required ? <Image style={styles.img45}
+                    {login_days > 0 && login_days >= login_days_required ? <Image style={styles.img45}
                                                                                   source={Images.right2}/> : null}
                 </View>
                 <View style={styles.task_view}>
@@ -63,7 +63,7 @@ export default class NewUserTask extends Component {
                            source={Images.integral.share}/>
                     <Text style={styles.text44}>{`分享（${share_count}/${share_count_required}）`}</Text>
                     <View style={{flex: 1}}/>
-                    {share_count > 0 && share_count <= share_count_required ? <Image style={styles.img45}
+                    {share_count > 0 && share_count >= share_count_required ? <Image style={styles.img45}
                                                                                      source={Images.right2}/> : null}
                 </View>
 
