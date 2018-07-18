@@ -92,15 +92,17 @@ export function fetchGetProfile(user_id) {
     }
 }
 
-export function fetchPutProfile(user_id, body) {
+export function fetchPutProfile(user_id, body,callback) {
     return (dispatch) => {
         dispatch(_putProfile());
         putProfile(user_id, body, (ret) => {
             showToast('修改成功');
             dispatch(_putProfileOk(ret))
+            callback('success')
         }, (err) => {
             showToast(err);
             dispatch(_putProfileFail(err))
+            callback('fail')
         })
     }
 }

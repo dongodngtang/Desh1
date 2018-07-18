@@ -10,9 +10,10 @@ import {Colors, Images} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {fetchGetProfile, fetchPutProfile, fetchPostAvatar} from '../../actions/PersonAction'
 import PersonInfo from './PersonInfo';
-import {NavigationBar} from '../../components'
+import {NavigationBar, BaseComponent} from '../../components'
 import {getLoginUser, strNotNull} from '../../utils/ComonHelper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {PUT_PROFILE} from "../../actions/ActionTypes";
 
 class PersonPage extends Component {
 
@@ -38,33 +39,25 @@ class PersonPage extends Component {
 
     _putProfile = () => {
         const {profile} = this.Profile.props;
-        this.props._putProfile(profile.user_id, profile);
+        this.props._putProfile(profile.user_id, profile,(type)=>{
+            this.base.close();
+            if(type==='success'){
+                router.pop()
+            }
+        });
     };
 
-    _renderLoading() {
-        return (
-            <View style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 20
-            }}>
-                <ActivityIndicator
-                    color={Colors._E0C294}
-                />
-                <Text style={{marginLeft: 10, color: Colors._E0C294}}>{I18n.t('person_page')}</Text>
-            </View>
-        );
-    }
+
 
 
     render() {
 
-        const {loading, error, hasData, profile, actionType} = this.props;
-
+        let {loading, error, hasData, profile, actionType} = this.props;
+        profile = {...profile}
 
         return (
-            <View
+            <BaseComponent
+                ref={ref => this.base = ref}
                 testID="page_profile"
                 style={{backgroundColor: '#ECECEE', flex: 1}}>
                 <NavigationBar
@@ -83,8 +76,9 @@ class PersonPage extends Component {
                                 {text: I18n.t("save_n"), onPress: () => router.pop()},
                                 {
                                     text: I18n.t("save_s"), onPress: () => {
+                                        this.base.open();
                                         this._putProfile();
-                                        router.pop();
+
                                     }
                                 },
                             ],
@@ -93,7 +87,7 @@ class PersonPage extends Component {
                     }}/>
 
                 <KeyboardAwareScrollView>
-                    {loading ? this._renderLoading() : null}
+
                     <PersonInfo
                         postAvatar={this.props._postAvatar}
                         ref={ref => this.Profile = ref}
@@ -101,7 +95,7 @@ class PersonPage extends Component {
 
 
                 </KeyboardAwareScrollView>
-            </View>
+            </BaseComponent>
         )
     }
 }
@@ -110,7 +104,7 @@ class PersonPage extends Component {
 function bindAction(dispatch) {
     return {
         _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
-        _putProfile: (user_id, body) => dispatch(fetchPutProfile(user_id, body)),
+        _putProfile: (user_id, body,callback) => dispatch(fetchPutProfile(user_id, body,callback)),
         _postAvatar: (body) => dispatch(fetchPostAvatar(body))
     };
 }
