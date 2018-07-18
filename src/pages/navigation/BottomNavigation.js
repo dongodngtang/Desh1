@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, StatusBar, Image, Platform} from 'react-native';
 import I18n from 'react-native-i18n';
-import {Images, Colors} from '../../Themes';
+import {Images, Colors, Metrics} from '../../Themes';
 import TabIcon from './TabIcon';
 import {
     showTabTop, hideTabTop, onPressBackTop, videoPause,
@@ -32,7 +32,6 @@ class BottomNavigation extends Component {
 
 
     render() {
-
         const {index} = this.props.navigationState;
         const {jumpToIndex, actionType, share_param} = this.props;
         const {shareLink, shareTitle, shareImage, shareText} = share_param;
@@ -103,6 +102,7 @@ class BottomNavigation extends Component {
                                                            shareImage={shareImage}/> : null}
 
                 <PopRelease ref={ref => this.popRelease = ref}/>
+
             </View>
 
         )
@@ -113,14 +113,15 @@ class BottomNavigation extends Component {
 
 const styleBN = StyleSheet.create({
     navigation: {
-        height: 50,
+        height: (Platform.OS === 'ios') && (Metrics.screenHeight === 812 && Metrics.screenWidth === 375) ? 75 : 50,
         width: '100%',
         backgroundColor: '#ffffff',
         opacity: 0.96,
         flexDirection: 'row',
         alignItems: 'center',
         borderTopWidth: 1,
-        borderTopColor: Colors._ECE
+        borderTopColor: Colors._ECE,
+        paddingBottom: (Platform.OS === 'ios') && (Metrics.screenHeight === 812 && Metrics.screenWidth === 375) ? 16 : 0
     },
     navigations: {
         flex: 1,
