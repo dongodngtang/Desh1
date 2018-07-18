@@ -385,6 +385,7 @@ class ModalPrompt extends Component {
                     phone: ''
                 })
             }, err => {
+                Alert.alert(err)
             })
         }
 
