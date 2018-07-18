@@ -23,7 +23,7 @@ export default class WxRegister extends React.Component {
         canNextDisable: true,
         mobile: '',
         vcode: '',
-        ext: ''
+        ext: '86'
     };
 
     _inputMobileCodeView = () => {
@@ -41,7 +41,7 @@ export default class WxRegister extends React.Component {
                         placeholderTextColor={Colors._BBBB}
                         underlineColorAndroid='transparent'
                         testID="ext"
-                        placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                        // placeholder={!strNotNull(ext) ? '86' : ext}
                         value={ext}/>
                     <View style={{flex: 1}}/>
 

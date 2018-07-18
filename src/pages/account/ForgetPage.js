@@ -25,7 +25,7 @@ class ForgetPage extends React.Component {
         canNextDisable: true,
         phoneClear: false,
         isEmailFind: false,
-        ext:''
+        ext:'86'
     }
 
     componentWillReceiveProps(newProps) {
@@ -109,7 +109,7 @@ class ForgetPage extends React.Component {
                         placeholderTextColor={Colors._BBBB}
                         underlineColorAndroid='transparent'
                         testID="ext"
-                        placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                        // placeholder={!strNotNull(ext) ? '86' : ext}
                         value={ext}/>
                     <View style={{flex: 1}}/>
 

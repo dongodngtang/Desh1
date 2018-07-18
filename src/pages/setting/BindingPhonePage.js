@@ -24,7 +24,7 @@ class BindingPhonePage extends Component {
         super(props);
         this.phone = '';
         this.code = '';
-        this.ext=''
+        this.ext='86'
     }
 
 
@@ -90,7 +90,7 @@ class BindingPhonePage extends Component {
                     placeholderTextColor={Colors._BBBB}
                     underlineColorAndroid='transparent'
                     testID="ext"
-                    placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                    // placeholder={!strNotNull(ext) ? '86' : ext}
                     value={ext}/>
                 <View style={{flex: 1}}/>
 

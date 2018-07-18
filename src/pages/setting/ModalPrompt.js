@@ -218,7 +218,7 @@ class ModalPrompt extends Component {
                             placeholderTextColor={Colors._BBBB}
                             underlineColorAndroid='transparent'
                             testID="ext"
-                            placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                            // placeholder={!strNotNull(ext) ? '86' : ext}
                             value={ext}/>
                         <View style={{flex: 1}}/>
 

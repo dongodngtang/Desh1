@@ -28,7 +28,7 @@ class RegisterPage extends React.Component {
         checkAgree: true,
         canNextDisable: true,
         phoneClear: false,
-        ext: ''
+        ext: '86'
     }
 
     componentWillReceiveProps(newProps) {
@@ -101,7 +101,7 @@ class RegisterPage extends React.Component {
                         placeholderTextColor={Colors._BBBB}
                         underlineColorAndroid='transparent'
                         testID="ext"
-                        placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                        // placeholder={!strNotNull(ext) ? '86' : ext}
                         value={ext}/>
                     <View style={{flex: 1}}/>
 

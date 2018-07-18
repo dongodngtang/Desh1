@@ -27,7 +27,7 @@ class LoginCodeView extends Component {
         vcode: '',
         getCodeDisable: false,
         phoneClear: false,
-        ext: ''
+        ext: '86'
     };
 
     doLogin = () => {
@@ -151,7 +151,7 @@ class LoginCodeView extends Component {
                             placeholderTextColor={Colors._BBBB}
                             underlineColorAndroid='transparent'
                             testID="ext"
-                            placeholder={!strNotNull(ext) ? '选择地区' : ext}
+                            // placeholder={!strNotNull(ext) ? '86' : ext}
                             value={ext}/>
                         <View style={{flex: 1}}/>
 
