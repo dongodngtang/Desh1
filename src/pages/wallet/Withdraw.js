@@ -252,6 +252,7 @@ export default class Withdraw extends Component {
                 postWithdrawal(body, data => {
                     showToast("提现申请成功");
                     this.props.params.refresh();
+                    router.pop();
                 }, err => {
                     showToast(err)
                 })

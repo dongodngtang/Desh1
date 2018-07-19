@@ -62,7 +62,7 @@ class Personal extends Component {
     componentWillReceiveProps(newProps) {
 
 
-        if (newProps.actionType === 'GET_PROFILE') {
+        if (newProps.actionType === 'GET_PROFILE' && newProps.hasData !== this.props.hasData) {
             this._loadUserParams(newProps)
         }
 

@@ -25,7 +25,7 @@ import NavigationBar from "../../components/NavigationBar";
 import Catalog from './Catalog'
 import {home_recommends} from '../../services/MacauDao'
 import NewUserTask from './NewUserTask'
-import {profile} from "../../services/SocialDao";
+import _ from 'lodash'
 
 class TabHomePage extends Component {
     state = {
@@ -46,32 +46,34 @@ class TabHomePage extends Component {
 
     componentWillReceiveProps(newProps) {
 
-        if (newProps.actionType === BACK_TOP) {
-            if (this.mainScroll)
-                this.mainScroll.scrollTo({x: 0, y: 0, animated: true})
+        if(!_.isEqual(newProps.profile,this.props.profile)){
+            console.log('首页',newProps.profile)
+            this.setState({
+                show_task: newProps.profile.new_user
+            })
         }
-
-        if (newProps.actionType === 'SWITCH_LANGUAGE') {
-
-            setTimeout(this._getData, 300)
-        }
+        //
+        // if (newProps.actionType === BACK_TOP) {
+        //     if (this.mainScroll)
+        //         this.mainScroll.scrollTo({x: 0, y: 0, animated: true})
+        // }
+        //
+        // if (newProps.actionType === 'SWITCH_LANGUAGE') {
+        //     setTimeout(this._getData, 300)
+        // }
     }
 
     componentWillMount() {
-        this.refresh()
+        this.router = this.router || new Router();
+        global.router = this.router;
 
     };
 
     refresh = () => {
-        this.router = this.router || new Router();
-        global.router = this.router;
-        if(!isEmptyObject(global.login_user)){
-            profile(global.login_user.user_id, data => {
-                console.log("主页是否显示福袋：",data)
-                this.setState({
-                    show_task: data.new_user
-                })
-            }, err => {
+        console.log('首页',this.props.profile)
+        if(!isEmptyObject(this.props.profile)){
+            this.setState({
+                show_task: this.props.profile.new_user
             })
         }
     };
@@ -127,6 +129,9 @@ class TabHomePage extends Component {
     };
 
     _getData = () => {
+        this.setState({
+            load_more: 'loading'
+        });
         this._getPushActivity();
         getMainBanners(data => {
             this.setState({
@@ -135,12 +140,10 @@ class TabHomePage extends Component {
 
         }, err => {
 
-        });
+        })
 
 
-        this.setState({
-            load_more: 'loading'
-        });
+
         home_recommends(data => {
             if (data.items.length > 0) {
 
@@ -308,9 +311,10 @@ class TabHomePage extends Component {
 const bindAction = dispatch => ({});
 
 const mapStateToProps = state => ({
-
+    profile: state.PersonState.profile,
     actionType: state.AccountState.actionType,
     unread: state.AccountState.unread,
+    hasData: state.PersonState.hasData,
 });
 
 export default connect(mapStateToProps, bindAction)(TabHomePage);
