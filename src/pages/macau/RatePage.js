@@ -6,7 +6,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import {LoadingView, NoDataView} from '../../components/load';
 import {getExchange_rates} from '../../services/MacauDao';
-import {isEmptyObject, mul, div, formatCurrency, strNotNull, convertDate,utcDate} from "../../utils/ComonHelper";
+import {isEmptyObject, mul, div, formatCurrency, strNotNull, convertDate, utcDate} from "../../utils/ComonHelper";
 
 export default class RatePage extends Component {
 
@@ -50,7 +50,6 @@ export default class RatePage extends Component {
                             justifyContent: 'center'
                         }}>
 
-
                         <Image
                             source={Images.macau.rate2}
                             style={{height: 142, width: '100%', position: 'absolute'}}/>
@@ -59,7 +58,8 @@ export default class RatePage extends Component {
                     </TouchableOpacity>
 
                     <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
-                        数据仅供参考，更新时间：{this.state.update_time}
+                        数据来源于中国银行官网，仅供参考{'\n'}
+                        更新时间：{this.state.update_time}
                     </Text>
 
                 </ScrollView>
@@ -200,6 +200,11 @@ export class RateTop extends Component {
                             style={styles.txt}>{`1人民币=${cny_to_hkd_rate.rate}港币，1港币=${div(1, cny_to_hkd_rate.rate).toFixed(4)}人民币`}</Text>
                         <Text
                             style={[styles.txt, {marginTop: 5}]}>{`1人民币=${cny_to_mop_rate.rate}澳门币，1澳门币=${div(1, cny_to_mop_rate.rate).toFixed(4)}人民币`}</Text>
+
+                        {this.props.type === 'local' ?
+                            <Text style={[styles.txt, {marginTop: 5, marginRight: 30, lineHeight: 20}]}>
+                                参考数据来源于澳门当地实时汇率{'\n'}更新时间：{utcDate(cny_to_hkd_rate.updated_at, 'YYYY-MM-DD HH:mm:ss')}
+                            </Text> : null}
                     </View>
                 </View>
 
