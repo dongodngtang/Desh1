@@ -59,7 +59,8 @@ export default class ShareItem extends Component {
         if (isAllowShare) {
 
             let rootPath = fs.DocumentDirectoryPath;
-            let savePath = rootPath + '/temp_share.jpg';
+            let unix = new Date()/1000;
+            let savePath = rootPath + `/${unix}temp_share.jpg`;
 
             console.log(this.props.shareImage);
 
