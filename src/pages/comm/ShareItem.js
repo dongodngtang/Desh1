@@ -96,6 +96,56 @@ export default class ShareItem extends Component {
 
     };
 
+    // shareUrl = (platform, imagePath) => {
+    //     let message = {
+    //         platform: platform,
+    //         type: "link",
+    //         url: this.props.shareLink,
+    //         title: this.props.shareTitle,
+    //         text: this.props.shareText,
+    //         imagePath: imagePath,
+    //     };
+    //     console.log('分享参数', message);
+    //     if (Platform.OS === 'android' && platform === 'wechat_timeLine') {
+    //         WeChat.shareToTimeline({
+    //             thumbImage: "file://" + imagePath,
+    //             type: 'news',
+    //             webpageUrl: this.props.shareLink,
+    //             description: this.props.shareText,
+    //             title: this.props.shareTitle
+    //         }).then(data => {
+    //             console.log('分享成功', data);
+    //             this._share_success()
+    //         }).catch(err => {
+    //             console.log('分享失败', err);
+    //         })
+    //     } else if (Platform.OS === 'android' && platform === 'wechat_session') {
+    //         WeChat.shareToSession({
+    //             thumbImage: "file://" + imagePath,
+    //             type: 'news',
+    //             webpageUrl: this.props.shareLink,
+    //             description: this.props.shareText,
+    //             title: this.props.shareTitle
+    //         }).then(data => {
+    //             console.log('分享成功', data);
+    //             this._share_success()
+    //
+    //         }).catch(err => {
+    //             console.log('分享失败', err);
+    //         })
+    //     } else {
+    //         JShareModule.share(message, (map) => {
+    //             console.log('分享成功', map);
+    //             this._share_success()
+    //         }, (map) => {
+    //             console.log('分享失败', map);
+    //         });
+    //
+    //     }
+    //
+    //     if (this.props.itemClick === null) return;
+    //     this.props.itemClick();
+    // };
     shareUrl = (platform, imagePath) => {
         let message = {
             platform: platform,
@@ -106,43 +156,14 @@ export default class ShareItem extends Component {
             imagePath: imagePath,
         };
         console.log('分享参数', message);
-        if (Platform.OS === 'android' && platform === 'wechat_timeLine') {
-            WeChat.shareToTimeline({
-                thumbImage: "file://" + imagePath,
-                type: 'news',
-                webpageUrl: this.props.shareLink,
-                description: this.props.shareText,
-                title: this.props.shareTitle
-            }).then(data => {
-                console.log('分享成功', data);
-                this._share_success()
-            }).catch(err => {
-                console.log('分享失败', err);
-            })
-        } else if (Platform.OS === 'android' && platform === 'wechat_session') {
-            WeChat.shareToSession({
-                thumbImage: "file://" + imagePath,
-                type: 'news',
-                webpageUrl: this.props.shareLink,
-                description: this.props.shareText,
-                title: this.props.shareTitle
-            }).then(data => {
-                console.log('分享成功', data);
-                this._share_success()
 
-            }).catch(err => {
-                console.log('分享失败', err);
-            })
-        } else {
-            JShareModule.share(message, (map) => {
-                console.log('分享成功', map);
-                this._share_success()
-            }, (map) => {
-                console.log('分享失败', map);
-            });
+        JShareModule.share(message, (map) => {
+            console.log('分享成功', map);
 
-        }
-
+        }, (map) => {
+            console.log('分享失败', map);
+        });
+        this._share_success()
         if (this.props.itemClick === null) return;
         this.props.itemClick();
     };

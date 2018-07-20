@@ -193,7 +193,7 @@ export default class InvitePage extends Component {
                     onPress={() => {
                         this.toggle()
                     }}>
-                    <View style={{width: 204, height: 204, borderWidth: 2, borderColor: 'white'}}>
+                    <View style={{width: 210, height: 210, borderWidth: 8, borderColor: 'white',alignItems:'center',justifyContent:'center'}}>
                         <QRCode
                             value={shareHost() + "invite_load?id=" + this.getUserId()}
                             size={200}
