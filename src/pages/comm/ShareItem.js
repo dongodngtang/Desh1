@@ -11,10 +11,12 @@ import {
 import JShareModule from "jshare-react-native";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import {Lang, strNotNull, showToast} from '../../utils/ComonHelper';
+import {Lang, strNotNull, showToast,isEmptyObject} from '../../utils/ComonHelper';
 import fs from 'react-native-fs';
 import ImageResizer from 'react-native-image-resizer';
 import {postShareCount} from "../../services/AccountDao";
+import * as WeChat from 'react-native-wechat';
+
 
 export default class ShareItem extends Component {
 
@@ -102,21 +104,57 @@ export default class ShareItem extends Component {
             text: this.props.shareText,
             imagePath: imagePath,
         };
-        console.log('分享参数',message);
-        JShareModule.share(message, (map) => {
-            console.log('分享成功',map);
+        console.log('分享参数', message);
+        if (Platform.OS === 'android' && platform === 'wechat_timeLine') {
+            WeChat.shareToTimeline({
+                thumbImage: "file://" + imagePath,
+                type: 'news',
+                webpageUrl: this.props.shareLink,
+                description: this.props.shareText,
+                title: this.props.shareTitle
+            }).then(data => {
+                console.log('分享成功', data);
+                this._share_success()
+            }).catch(err => {
+                console.log('分享失败', err);
+            })
+        } else if (Platform.OS === 'android' && platform === 'wechat_session') {
+            WeChat.shareToSession({
+                thumbImage: "file://" + imagePath,
+                type: 'news',
+                webpageUrl: this.props.shareLink,
+                description: this.props.shareText,
+                title: this.props.shareTitle
+            }).then(data => {
+                console.log('分享成功', data);
+                this._share_success()
+
+            }).catch(err => {
+                console.log('分享失败', err);
+            })
+        } else {
+            JShareModule.share(message, (map) => {
+                console.log('分享成功', map);
+                this._share_success()
+            }, (map) => {
+                console.log('分享失败', map);
+            });
+
+        }
+
+        if (this.props.itemClick === null) return;
+        this.props.itemClick();
+    };
+
+    _share_success = () => {
+        if (!isEmptyObject(global.login_user))
             postShareCount({}, data => {
                 console.log("用户推荐好友分享成功:")
             }, err => {
 
             })
-        }, (map) => {
-            console.log('分享失败',map);
-        });
+    }
 
-        if (this.props.itemClick === null) return;
-        this.props.itemClick();
-    };
 
     render() {
         const {item} = this.props;
