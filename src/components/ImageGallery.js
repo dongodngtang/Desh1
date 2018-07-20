@@ -30,10 +30,11 @@ export default class ImageGallery extends React.Component {
                     return <ActivityIndicator
                         color='white'/>
                 }}
-                onLongPress={(image) => {
-                    console.log('image', image);
-                    // this.saveImg(image.url)
-                }}
+                // saveToLocalByLongPress={true}
+                // onLongPress={(image) => {
+                //     console.log('image', image);
+                //     // this.saveImg(image.url)
+                // }}
                 imageUrls={images}
                 index={index}
                 onClick={() => router.pop()}/>

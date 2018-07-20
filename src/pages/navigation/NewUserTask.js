@@ -5,7 +5,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {display_check, invite_count, novice_task, user_invite, wallet_account} from "../../services/WallDao";
-import {strNotNull} from "../../utils/ComonHelper";
+import {showToast, strNotNull} from "../../utils/ComonHelper";
 import Router from "../../configs/Router";
 
 export default class NewUserTask extends Component {
@@ -28,6 +28,7 @@ export default class NewUserTask extends Component {
             })
         },err=>{
             this.props.params.refresh();
+            showToast("新手任务已完成")
             router.pop();
         })
     };
