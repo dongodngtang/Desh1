@@ -336,13 +336,13 @@ export function getFileName(o) {
 //App更新
 export function updateApp(data) {
     const {android_platform, ios_platform} = data;
-    console.log(data)
+    console.log("更新提示",data)
     if (Platform.OS === 'ios') {
-        if (Number.parseInt(ios_platform.version) > Constants.UpdateVersion) {
+        if (Number.parseFloat(ios_platform.version) > Constants.UpdateVersion) {
             updateAlet(ios_platform)
         }
     } else {
-        if (Number.parseInt(android_platform.version) > Constants.UpdateVersion) {
+        if (Number.parseFloat(android_platform.version) > Constants.UpdateVersion) {
             updateAlet(android_platform)
         }
     }
@@ -398,10 +398,13 @@ export function pushProductToCart(product) {
 /*App更新提示*/
 function updateAlet(data) {
 
+    console.log("更新提示弹框",data)
     const upgrade = data.force_upgrade ? [{
         text: I18n.t('update_download'),
         onPress: () => {
-            Linking.openURL(data.download_url)
+            if(strNotNull(data.download_url)){
+                Linking.openURL(data.download_url)
+            }
         }
     }] : [{
         text: I18n.t('update_cancel'),
@@ -412,11 +415,16 @@ function updateAlet(data) {
         {
             text: I18n.t('update_download'),
             onPress: () => {
-                Linking.openURL(data.download_url)
+                if(strNotNull(data.download_url)){
+                    Linking.openURL(data.download_url)
+                }
+
             }
         }];
+
+    let content = `当前版本：${Constants.VERSION}  更新版本：${data.version}\n\n${ data.content}`
     Alert.alert(strNotNull(data.title) ? data.title : 'Alert',
-        strNotNull(data.content) ? data.content : 'content', upgrade, {cancelable: false})
+        content, upgrade, {cancelable: false,onDismiss:()=>{}})
 }
 
 export function strToDate(date) {
