@@ -204,6 +204,10 @@ export default class NewAddress extends Component {
         if(!checkZip(this.zip)){
             return;
         }
+        if(this.receiverAdr2.length<=5){
+            showToast("详细地址不少于五个字");
+            return;
+        }
         if (this.receiver &&
             this.receiverAdr1 && this.receiverAdr2) {
             const body = {
