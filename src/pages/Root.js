@@ -80,11 +80,11 @@ class Root extends Component {
     _getUpdate = () => {
         getUpdate(data => {
             updateApp(data);
-            releases_show(data => {
-                global.menuReleases = data;
-                getDispatchAction()['BACK_TOP']();
-            }, err => {
-            })
+            // releases_show(data => {
+            //     global.menuReleases = data;
+            //     getDispatchAction()['BACK_TOP']();
+            // }, err => {
+            // })
         }, err => {
 
         })

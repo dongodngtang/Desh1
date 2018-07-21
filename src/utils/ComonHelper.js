@@ -401,11 +401,7 @@ function updateAlet(data) {
     const upgrade = data.force_upgrade ? [{
         text: I18n.t('update_download'),
         onPress: () => {
-            if (Platform.OS === 'ios') {
-                Linking.openURL(Constants.IOSLOAD)
-            } else {
-                Linking.openURL(Constants.ANDROIDLOAD)
-            }
+            Linking.openURL(data.download_url)
         }
     }] : [{
         text: I18n.t('update_cancel'),
@@ -416,11 +412,7 @@ function updateAlet(data) {
         {
             text: I18n.t('update_download'),
             onPress: () => {
-                if (Platform.OS === 'ios') {
-                    Linking.openURL(Constants.IOSLOAD)
-                } else {
-                    Linking.openURL(Constants.ANDROIDLOAD)
-                }
+                Linking.openURL(data.download_url)
             }
         }];
     Alert.alert(strNotNull(data.title) ? data.title : 'Alert',

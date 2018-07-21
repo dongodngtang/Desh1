@@ -108,9 +108,9 @@ export function getMsgUnRead(resolve, reject) {
 
 
 export function getUpdate(resolve, reject) {
-    // helper.get(Api.app_versions, ret => {
-    //     resolve(ret.data)
-    // }, reject)
+    helper.get(Api.app_versions, ret => {
+        resolve(ret.data)
+    }, reject)
 }
 
 

@@ -34,11 +34,11 @@ let shareList = [
     //     icon: Images.icon_share_qq,
     //     name: "QQ",
     // },
-    {
-        platform: "sina_weibo",
-        icon: Images.icon_share_sina,
-        name: "微博",
-    },
+    // {
+    //     platform: "sina_weibo",
+    //     icon: Images.icon_share_sina,
+    //     name: "微博",
+    // },
 ];
 
 export default class ShareToast extends Component {
