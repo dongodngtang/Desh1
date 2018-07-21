@@ -30,7 +30,11 @@ export default class MallInfoBottom extends Component {
                     {this.countView()}
 
                 </TouchableOpacity>
-                <View style={{flex: 1}}/>
+
+                <View style={{width:20}}/>
+
+
+
                 <TouchableOpacity
                     onPress={() => {
                         if (isEmptyObject(global.login_user))
@@ -39,8 +43,20 @@ export default class MallInfoBottom extends Component {
                              this.props.showSpecInfo();
 
                     }}
+                    style={[styleB.joinShoppingCar,{backgroundColor:'white',  borderColor: '#EEEEEE',borderWidth:1}]}>
+                    <Text style={[styleB.joinShoppingCarTxt,{color:Colors.txt_444}]}>{I18n.t('add_cart')}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        if (isEmptyObject(global.login_user))
+                            global.router.toLoginFirstPage();
+                        else
+                            this.props.showSpecInfo();
+
+                    }}
                     style={styleB.joinShoppingCar}>
-                    <Text style={styleB.joinShoppingCarTxt}>{I18n.t('add_cart')}</Text>
+                    <Text style={styleB.joinShoppingCarTxt}>直接购买</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -71,22 +87,20 @@ const styleB = StyleSheet.create({
     },
     shoppingCar: {
         borderRadius: 3,
-        width: '31%',
+        width: 60,
         height: 40,
         marginLeft: 17,
-        borderWidth: 1,
-        borderColor: '#CCCCCC',
         alignItems: 'center',
         justifyContent: 'center'
     },
     joinShoppingCar: {
         backgroundColor: '#F34A4A',
         borderRadius: 3,
-        width: '55%',
         height: 40,
-        marginRight: 16,
+        marginRight: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flex:1
     },
     shoppingCarImg: {
         width: 24,
@@ -100,7 +114,7 @@ const styleB = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
-        left: 60,
+        left: 30,
         bottom: 15
     },
     shoppingCarTxt: {
@@ -108,7 +122,7 @@ const styleB = StyleSheet.create({
         color: '#FFFFFF'
     },
     joinShoppingCarTxt: {
-        fontSize: 18,
+        fontSize: 15,
         color: '#FFFFFF'
     }
 })

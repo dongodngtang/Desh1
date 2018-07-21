@@ -238,36 +238,10 @@ export default class ProductSpecificationInfo extends PureComponent {
                         onPress={() => {
                             if (isEmptyObject(global.login_user))
                                 global.router.toLoginFirstPage();
-                            else{
-                                const {id} = this.props.product;
-                                const {number} = this.state;
-                                if (_.isEmpty(this.tempProduct) || number < 1) {
-                                    showToast(I18n.t('ple_select_all'));
-                                    return;
-                                }
-                                if (!strNotNull(this.tempProduct.image))
-                                    this.tempProduct.image = this.state.tempImg;
-
-                                let selectCommodity = {number: number, variant: this.tempProduct, title: this.tempProduct.title};
-                                console.log('直接购买', selectCommodity)
-                                let selects = [];
-                                selects.push(selectCommodity)
-                                global.router.toOrderConfirm(selects)
-                            }
-
-                        }}
-                        style={[styleP.confirm,{marginLeft:17,marginRight:10}]}>
-                        <Text style={styleP.confirmTxt}>直接购买</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => {
-                            if (isEmptyObject(global.login_user))
-                                global.router.toLoginFirstPage();
                             else
                                 this.addCarts()
                         }}
-                        style={[styleP.confirm,{marginRight:17}]}>
+                        style={styleP.confirm}>
                         <Text style={styleP.confirmTxt}>{I18n.t('confirm')}</Text>
                     </TouchableOpacity>
                 </View>
@@ -435,9 +409,9 @@ const styleP = StyleSheet.create({
         borderRadius: 3,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 4,
-        marginBottom: 5,
-        flex:1
+        flex:1,
+        marginLeft:17,
+        marginRight:17
     },
     confirmTxt: {
         fontSize: 18,

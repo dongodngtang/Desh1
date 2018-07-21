@@ -87,6 +87,7 @@ export default class MallInfoPage extends Component {
 
                 </BaseComponent>
                 {this.topBar()}
+
                 <MallInfoBottom
                     showSpecInfo={this.showSpecInfo}/>
 
