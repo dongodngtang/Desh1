@@ -6,6 +6,7 @@ import Api from '../configs/ApiConfig';
 import {clearLoginUser, showToast, strNotNull, permissionAlert} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import I18n from 'react-native-i18n';
+import {NetInfo} from 'react-native'
 
 
 let TAG = 'PuKeHttp:';
@@ -167,7 +168,14 @@ function netError(response, reject) {
     else if (response.problem === TIMEOUT_ERROR)
         msgErr = I18n.t('TIMEOUT_ERROR');
     else if (response.problem === NETWORK_ERROR) {
-        permissionAlert('澳门旅行网络权限已被关闭，是否前往开启')
+
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+            console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+            if (connectionInfo.type === 'unknown') {
+                permissionAlert('澳门旅行网络权限已被关闭，是否前往开启')
+            }
+        });
+
         msgErr = I18n.t('NETWORK_ERROR');
     }
 
@@ -178,6 +186,7 @@ function netError(response, reject) {
 }
 
 function handle(response, resolve, reject) {
+
     if (response.ok) {
 
         const {code, msg} = response.data;

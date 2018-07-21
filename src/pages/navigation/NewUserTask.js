@@ -5,8 +5,9 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {display_check, invite_count, novice_task, user_invite, wallet_account} from "../../services/WallDao";
-import {showToast, strNotNull} from "../../utils/ComonHelper";
+import {getDispatchAction, showToast, strNotNull} from "../../utils/ComonHelper";
 import Router from "../../configs/Router";
+import {GET_PROFILE} from "../../actions/ActionTypes";
 
 export default class NewUserTask extends Component {
 
@@ -27,6 +28,7 @@ export default class NewUserTask extends Component {
                 user_task: data
             })
         },err=>{
+            getDispatchAction()['GET_PROFILE']();
             this.props.params.refresh();
             showToast("新手任务已完成")
             router.pop();
