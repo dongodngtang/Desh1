@@ -40,7 +40,7 @@ export default class MallInfoBottom extends Component {
                         if (isEmptyObject(global.login_user))
                             global.router.toLoginFirstPage();
                         else
-                             this.props.showSpecInfo();
+                             this.props.showSpecInfo({},'cart');
 
                     }}
                     style={[styleB.joinShoppingCar,{backgroundColor:'white',  borderColor: '#EEEEEE',borderWidth:1}]}>
@@ -52,7 +52,7 @@ export default class MallInfoBottom extends Component {
                         if (isEmptyObject(global.login_user))
                             global.router.toLoginFirstPage();
                         else
-                            this.props.showSpecInfo();
+                            this.props.showSpecInfo({},'buy');
 
                     }}
                     style={styleB.joinShoppingCar}>

@@ -10,7 +10,7 @@ import MallIntroduction from './MallIntroduction';
 import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../../services/MallDao';
-import {util,uShareMallInfo} from '../../../utils/ComonHelper';
+import {util, uShareMallInfo} from '../../../utils/ComonHelper';
 
 
 export default class MallInfoPage extends Component {
@@ -19,6 +19,7 @@ export default class MallInfoPage extends Component {
         opacity: 0,
         product: {},
         selectProduct: {},
+        buy_cart_type: ''
     };
 
     componentDidMount() {
@@ -49,8 +50,8 @@ export default class MallInfoPage extends Component {
                 testID="btn_bar_right"
                 style={styleM.popBtn}
                 onPress={() => {
-                    const{title,icon,description,id} = this.state.product;
-                    uShareMallInfo(title, description, icon,id)
+                    const {title, icon, description, id} = this.state.product;
+                    uShareMallInfo(title, description, icon, id)
                 }}>
                 <Image style={styleM.imgShare}
                        source={Images.mall_share}/>
@@ -62,9 +63,9 @@ export default class MallInfoPage extends Component {
 
 
     render() {
-        const {specShow, product, selectProduct} = this.state;
+        const {specShow, product, selectProduct, buy_cart_type} = this.state;
         return (
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
                 <BaseComponent
                     ref={ref => this.container = ref}>
 
@@ -92,9 +93,10 @@ export default class MallInfoPage extends Component {
                     showSpecInfo={this.showSpecInfo}/>
 
                 {specShow ? <ProductSpecificationInfo
-                        selectProduct={selectProduct}
-                        product={product}
-                        showSpecInfo={this.showSpecInfo}/> : null}
+                    type={buy_cart_type}
+                    selectProduct={selectProduct}
+                    product={product}
+                    showSpecInfo={this.showSpecInfo}/> : null}
 
             </View>
 
@@ -115,17 +117,26 @@ export default class MallInfoPage extends Component {
         }
     };
 
-    showSpecInfo = (temp) => {
-
+    showSpecInfo = (temp, type) => {
+        console.log('购入类型', temp, type)
         if (util.isEmpty(temp)) {
             this.setState({
-                specShow: !this.state.specShow
-            })
-        } else
-            this.setState({
                 specShow: !this.state.specShow,
-                selectProduct: temp
+                buy_cart_type: type
             })
+        } else {
+            if (type === 'buy') {
+                let selectData = [];
+                selectData.push(temp)
+                router.toOrderConfirm(selectData)
+            } else
+                this.setState({
+                    specShow: !this.state.specShow,
+                    selectProduct: temp,
+                    buy_cart_type: type
+                })
+        }
+
     }
 }
 
@@ -141,7 +152,7 @@ const styleM = StyleSheet.create({
         position: 'absolute',
         top: 0,
         width: '100%',
-        zIndex:999
+        zIndex: 999
     },
     popBtn: {
         height: 44,

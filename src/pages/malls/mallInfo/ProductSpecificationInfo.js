@@ -259,14 +259,22 @@ export default class ProductSpecificationInfo extends PureComponent {
             return;
         }
 
-        showToast(I18n.t('add_cart_ok'));
+
         if (!strNotNull(this.tempProduct.image))
             this.tempProduct.image = this.state.tempImg;
 
         let selectCommodity = {number: number, variant: this.tempProduct, title: this.tempProduct.title};
         console.log('购物车', selectCommodity)
-        pushProductToCart(selectCommodity);
-        this.props.showSpecInfo(this.tempProduct)
+
+        if(this.props.type === 'buy'){
+            this.props.showSpecInfo(selectCommodity,this.props.type)
+        }else{
+            showToast(I18n.t('add_cart_ok'));
+            pushProductToCart(selectCommodity);
+            this.props.showSpecInfo(this.tempProduct,this.props.type)
+
+        }
+
     }
 }
 const styleP = StyleSheet.create({
