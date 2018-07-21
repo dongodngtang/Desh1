@@ -99,6 +99,14 @@ export default class CompletedBottom extends Component {
     };
 
     paidOrder = (orderItem) => {
+        let isShowRefund = false;
+        orderItem.order_items.forEach(x => {
+            if (x.returnable) {
+                isShowRefund = true
+                return
+            }
+
+        })
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
@@ -107,14 +115,16 @@ export default class CompletedBottom extends Component {
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+
+            {isShowRefund ? <TouchableOpacity
 
                 onPress={() => {
                     global.router.toMallSelectPage(orderItem, this.props.refresh)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> : <View/>}
+
         </View>
     };
 

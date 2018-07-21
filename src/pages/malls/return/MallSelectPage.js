@@ -108,8 +108,8 @@ export default class MallSelectPage extends PureComponent {
             <View
                 style={{height: 120, width: 38, alignItems: 'center', justifyContent: 'center'}}
             >
-                {strNotNull(item.return_status_text) || !item.returnable ? null : <Image style={styleS.radioImg}
-                                                                                         source={imageURL}/>}
+                { item.returnable ? <Image style={styleS.radioImg}
+                                           source={imageURL}/>:null}
 
             </View>
         )
