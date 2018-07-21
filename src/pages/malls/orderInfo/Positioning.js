@@ -67,10 +67,10 @@ export default class Positioning extends PureComponent {
                     </View>
 
                     <View style={styleC.shipAddr}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styleC.shipAddrTxt1}>{I18n.t('buy_person')}</Text>
-                            <Text style={styleC.shipAddrTxt1}>{name}</Text>
-                            <Text style={styleC.mobile}>{mobile}</Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center',flexWrap:'wrap'}}>
+                            <Text style={styleC.shipAddrTxt1}>{`${I18n.t('buy_person')}:${name}  `}<Text
+                                style={styleC.mobile}>{mobile}</Text></Text>
+
                         </View>
                         <View style={styleC.shipAddrView}>
                             <Text style={styleC.shipAddrTxt2}>{`${province}${city}${area}${address}`}</Text>
@@ -129,6 +129,7 @@ const styleC = StyleSheet.create({
     shipAddr: {
         marginLeft: 21,
         marginTop: 20,
+        marginRight: 17
     },
     shipAddrTxt1: {
         fontSize: 14,
