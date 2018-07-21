@@ -1,5 +1,7 @@
 import React, {PureComponent} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, TextInput} from 'react-native';
+import {View, Text, Image, StyleSheet,
+    TouchableOpacity, ScrollView, TextInput,
+KeyboardAvoidingView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
@@ -89,22 +91,23 @@ export default class ProductSpecificationInfo extends PureComponent {
                 </TouchableOpacity>
 
                 <View style={styleP.buyInput}>
-                    {/*<TextInput*/}
-                        {/*keyboardType={'numeric'}*/}
-                        {/*style={{flex: 1, paddingTop: 5, paddingBottom: 5,paddingLeft:5,paddingRight:5}}*/}
-                        {/*maxLength={4}*/}
-                        {/*numberOfLines={1}*/}
-                        {/*underlineColorAndroid={'transparent'}*/}
-                        {/*onChangeText={txt => {*/}
-                            {/*if (txt > tempStock){*/}
-                                {/*showToast('库存不足');*/}
-                                {/*return;*/}
-                            {/*}else{*/}
-                                {/*this.setState({number:txt})*/}
-                            {/*}*/}
-                        {/*}}*/}
-                        {/*value={number}/>*/}
-                    <Text>{number}</Text>
+                    <TextInput
+                        keyboardType={'numeric'}
+                        style={{ width: 60,
+                            height: 30,textAlign:'center'}}
+                        maxLength={4}
+                        numberOfLines={1}
+                        underlineColorAndroid={'transparent'}
+                        onChangeText={txt => {
+                            if (txt > tempStock){
+                                showToast('库存不足');
+                                return;
+                            }else{
+                                this.setState({number:txt})
+                            }
+                        }}
+                        value={number+''}/>
+                    {/*<Text>{number}</Text>*/}
                 </View>
 
                 <TouchableOpacity
@@ -401,7 +404,7 @@ const styleP = StyleSheet.create({
         height: 12,
     },
     buyInput: {
-        width: 38,
+        width: 60,
         height: 30,
         borderRadius: 1,
         marginLeft: 2,
