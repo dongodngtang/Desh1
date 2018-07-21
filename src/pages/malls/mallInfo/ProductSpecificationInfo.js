@@ -94,7 +94,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     <TextInput
                         keyboardType={'numeric'}
                         style={{ width: 60,
-                            height: 30,textAlign:'center'}}
+                            height: 40,textAlign:'center'}}
                         maxLength={4}
                         numberOfLines={1}
                         underlineColorAndroid={'transparent'}
