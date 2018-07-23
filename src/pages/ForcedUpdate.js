@@ -22,8 +22,9 @@ export default class ForcedUpdate extends Component {
 
     render() {
 
-       logMsg('更新数据',this.props.app_update)
+        logMsg('更新数据', this.props.app_update)
         const {app_update} = this.props;
+        let url = `${app_update.download_url}?version=${app_update.version}`;
         return (
             <Modal
                 animationType={"none"}
@@ -50,7 +51,10 @@ export default class ForcedUpdate extends Component {
                         justifyContent: 'center'
                     }}>
                         <Text style={{color: '#000000', fontWeight: 'bold'}}>app升级提示</Text>
-                        <Text style={{color: '#000000', marginTop: 7}}>{`当前版本：${Constants.VERSION}  更新版本：${app_update.version}`}</Text>
+                        <Text style={{
+                            color: '#000000',
+                            marginTop: 7
+                        }}>{`当前版本：${Constants.VERSION}  更新版本：${app_update.version}`}</Text>
                         <Text style={{color: '#000000', marginTop: 10}}>{app_update.content}</Text>
 
                         <TouchableOpacity style={{
@@ -63,9 +67,9 @@ export default class ForcedUpdate extends Component {
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}
-                        onPress={()=>{
-                            Linking.openURL(app_update.download_url)
-                        }}>
+                                          onPress={() => {
+                                              Linking.openURL(url)
+                                          }}>
                             <Text style={{color: '#007AFF'}}>前往更新</Text>
                         </TouchableOpacity>
                     </View>

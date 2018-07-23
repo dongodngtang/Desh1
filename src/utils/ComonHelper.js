@@ -404,6 +404,8 @@ export function logMsg(...msg) {
 export function updateAlet(data) {
 
     console.log("更新提示弹框", data)
+    let url = `${data.download_url}?version=${data.version}`
+
     const upgrade = data.force_upgrade ? [{
         text: I18n.t('update_download'),
         onPress: () => {
@@ -421,7 +423,7 @@ export function updateAlet(data) {
             text: I18n.t('update_download'),
             onPress: () => {
                 if (strNotNull(data.download_url)) {
-                    Linking.openURL(data.download_url)
+                    Linking.openURL(url)
                 }
 
             }
