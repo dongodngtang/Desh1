@@ -58,7 +58,7 @@ export default class RatePage extends Component {
                     </TouchableOpacity>
 
                     <Text style={{color: "#333333", fontSize: 14, marginTop: 10, alignSelf: 'center'}}>
-                        数据来源于中国银行官网，仅供参考{'\n'}
+                        本数据来源于中国银行官网，仅供参考{'\n'}
                         更新时间：{this.state.update_time}
                     </Text>
 
@@ -203,7 +203,7 @@ export class RateTop extends Component {
 
                         {this.props.type === 'local' ?
                             <Text style={[styles.txt, {marginTop: 5, marginRight: 30, lineHeight: 20}]}>
-                                参考数据来源于澳门当地实时汇率{'\n'}更新时间：{utcDate(cny_to_hkd_rate.updated_at, 'YYYY-MM-DD HH:mm:ss')}
+                                更新时间：{utcDate(cny_to_hkd_rate.updated_at, 'YYYY-MM-DD HH:mm:ss')}
                             </Text> : null}
                     </View>
                 </View>
