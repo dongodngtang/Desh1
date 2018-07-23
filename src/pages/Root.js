@@ -59,9 +59,7 @@ class Root extends Component {
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
 
         getUserData();
-        getBaseURL(() => {
-            this._getUpdate();
-        });
+
         //App更新
 
         storage.load({key: StorageKey.LoginUser})
@@ -77,18 +75,7 @@ class Root extends Component {
         });
 
     }
-    _getUpdate = () => {
-        getUpdate(data => {
-            updateApp(data);
-            // releases_show(data => {
-            //     global.menuReleases = data;
-            //     getDispatchAction()['BACK_TOP']();
-            // }, err => {
-            // })
-        }, err => {
 
-        })
-    };
 
     receiveCb = (notification) => {
         const {aps} = notification;

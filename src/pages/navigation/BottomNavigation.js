@@ -12,13 +12,21 @@ import {
     SHARE_OPEN, SHARE_CLOSE, SWITCH_TAB
 } from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
-import {isEmptyObject, setDispatchAction, getDispatchAction} from '../../utils/ComonHelper';
+import {isEmptyObject, setDispatchAction, getDispatchAction, updateAlet, util} from '../../utils/ComonHelper';
 import ShareToast from "../comm/ShareToast";
 import PopRelease from '../socials/PopRelease'
+import {getUpdate} from "../../services/AccountDao";
+import * as Constants from "../../configs/Constants";
+import ForcedUpdate from "../ForcedUpdate";
+import {getBaseURL} from "../../services/RequestHelper";
 
 
 class BottomNavigation extends Component {
 
+
+    state = {
+        app_update:{}
+    }
 
     componentDidMount() {
         setDispatchAction(SHOW_BACK_TOP, this.props._showBackTop);
@@ -27,9 +35,45 @@ class BottomNavigation extends Component {
         setDispatchAction(SHARE_OPEN, this.props._showShare);
         setDispatchAction(SHARE_CLOSE, this.props._closeShare);
         setDispatchAction(SWITCH_TAB, this.props._swichTab);
+        getBaseURL(() => {
+            setTimeout(()=>{
+                this._getUpdate()
+            },1000)
+        });
 
     }
 
+
+    _getUpdate = () => {
+        getUpdate(data => {
+            const {android_platform, ios_platform} = data;
+            console.log("更新提示",data)
+            if (Platform.OS === 'ios') {
+                if (Number.parseFloat(ios_platform.version) > Constants.UpdateVersion) {
+                   if(ios_platform.force_upgrade){
+                       this.setState({
+                           app_update:ios_platform
+                       })
+                   }else {
+                       updateAlet(ios_platform)
+                   }
+                }
+            } else {
+                if (Number.parseFloat(android_platform.version) > Constants.UpdateVersion) {
+                    if(android_platform.force_upgrade){
+                        this.setState({
+                            app_update:android_platform
+                        })
+                    }else{
+                        updateAlet(android_platform)
+                    }
+                }
+            }
+
+        }, err => {
+
+        })
+    };
 
     render() {
         const {index} = this.props.navigationState;
@@ -102,6 +146,8 @@ class BottomNavigation extends Component {
                                                            shareImage={shareImage}/> : null}
 
                 <PopRelease ref={ref => this.popRelease = ref}/>
+
+                {util.isEmpty(this.state.app_update)?null:<ForcedUpdate app_update={this.state.app_update}/>}
 
             </View>
 
