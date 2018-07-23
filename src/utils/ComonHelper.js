@@ -410,7 +410,7 @@ export function updateAlet(data) {
         text: I18n.t('update_download'),
         onPress: () => {
             if (strNotNull(data.download_url)) {
-                Linking.openURL(data.download_url)
+                Linking.openURL(url)
             }
         }
     }] : [{
