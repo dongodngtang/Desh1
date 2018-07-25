@@ -21,14 +21,12 @@ export default class GuidePage extends Component {
 
     show_index = () => {
         const {show_index} = this.state;
-        if (show_index === 1) {
+        if (show_index === 3) {
             return (
                 <View style={{flexDirection: 'column', position: 'absolute', bottom: 0}}>
                     <TouchableOpacity style={{alignSelf: 'center', alignItems: 'center', justifyContent: 'center'}}
                                       onPress={() => {
-                                          this.setState({
-                                              show_index: 2
-                                          })
+                                          this.toggle()
                                       }}>
                         <Image style={{width: Metrics.reallySize(160), height: Metrics.reallySize(42)}}
                                source={Images.guide_next}/>
@@ -62,7 +60,7 @@ export default class GuidePage extends Component {
 
                 </View>
             )
-        } else if (show_index === 3) {
+        } else if (show_index === 1) {
             return (
                 <View style={{
                     flexDirection: 'column',
@@ -73,7 +71,9 @@ export default class GuidePage extends Component {
                     <Image style={{marginBottom: 25, width: 296, height: 186}} source={Images.guide2}/>
                     <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}
                                       onPress={() => {
-                                          this.toggle()
+                                          this.setState({
+                                              show_index: 2
+                                          })
                                       }}>
                         <Image style={{width: Metrics.reallySize(160), height: Metrics.reallySize(42)}}
                                source={Images.guide_next}/>
@@ -100,7 +100,7 @@ export default class GuidePage extends Component {
                     flex: 1,
                     flexDirection: 'column',
                     justifyContent: show_index === 1 || show_index === 3 ? 'center' : 'flex-start',
-                    alignItems: show_index === 1 ? 'center' : 'flex-start',
+                    alignItems: show_index === 3 ? 'center' : 'flex-start',
                     backgroundColor: 'rgba(0,0,0,0.6)'
                 }}>
 
