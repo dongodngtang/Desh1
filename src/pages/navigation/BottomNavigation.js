@@ -52,8 +52,8 @@ class BottomNavigation extends Component {
         if (newProps.actionType === 'GET_PROFILE' && newProps.hasData !== this.props.hasData) {
 
             storage.load({key: 'FirstLogin'}).then(first_users => {
-                console.log('引导页只显示一次，已显示过')
-                if (newProps.profile.new_user && data.indexOf(newProps.profile.user_id) < 0) {
+                console.log('引导页只显示一次，已显示过', first_users)
+                if (newProps.profile.new_user && first_users.indexOf(newProps.profile.user_id) === -1) {
                     console.log('引导页新用户显示')
                     first_users.push(newProps.profile.user_id)
                     router.popToTop()
@@ -69,10 +69,10 @@ class BottomNavigation extends Component {
 
                 console.log('引导页还没有显示')
 
-
                 if (newProps.profile.new_user) {
                     let first_users = [];
                     first_users.push(newProps.profile.user_id)
+                    logMsg('引导页', first_users)
                     router.popToTop()
                     storage.save({
                         key: 'FirstLogin',
