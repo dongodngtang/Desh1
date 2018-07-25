@@ -289,7 +289,7 @@ function JmessageLogin(imUser, count, callback) {
             //登录失败回调
             (error) => {
                 console.log("极光IM登录失败" + count, error);
-                JmessageLogin(imUser, --count,callback)
+                JmessageLogin(imUser, --count, callback)
             }
         );
     }
@@ -356,18 +356,21 @@ export function setLoginUser(ret) {
 
 
 function postLocation() {
-    navigator.geolocation.getCurrentPosition(data => {
-        const {coords} = data;
-        if (!isEmptyObject(coords) && !isEmptyObject(global.login_user)) {
-            const {longitude, latitude} = coords;
-            postNearBys({lat: latitude, lng: longitude}, ret => {
-            }, err => {
-            })
-        }
+    setTimeout(() => {
+        navigator.geolocation.getCurrentPosition(data => {
+            const {coords} = data;
+            if (!isEmptyObject(coords) && !isEmptyObject(global.login_user)) {
+                const {longitude, latitude} = coords;
+                postNearBys({lat: latitude, lng: longitude}, ret => {
+                }, err => {
+                })
+            }
 
-    }, err => {
-        console.log(err)
-    })
+        }, err => {
+            console.log(err)
+        })
+    }, 3000)
+
 }
 
 export function removeToken() {
