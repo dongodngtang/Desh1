@@ -3,7 +3,7 @@
  */
 import {create, SERVER_ERROR, TIMEOUT_ERROR, NETWORK_ERROR} from 'apisauce';
 import Api from '../configs/ApiConfig';
-import {clearLoginUser, showToast, strNotNull, permissionAlert} from '../utils/ComonHelper';
+import {clearLoginUser, showToast, strNotNull, permissionAlert, logMsg} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import I18n from 'react-native-i18n';
 import {NetInfo} from 'react-native'
@@ -156,49 +156,58 @@ export function get(url, resolve, reject, params = {}) {
 
 /*token过期*/
 function netError(response, reject) {
-    let msgErr = '';
-    if (response.status === 401) {
-        clearLoginUser();
-        router.popToLoginFirstPage();
-        msgErr = response.data.message;
+    try{
+        let msgErr = '';
+        if (response.status === 401) {
+            clearLoginUser();
+            router.popToLoginFirstPage();
+            msgErr = response.data.message;
+        }
+
+        if (response.problem === SERVER_ERROR)
+            msgErr = I18n.t('SERVER_ERROR');
+        else if (response.problem === TIMEOUT_ERROR)
+            msgErr = I18n.t('TIMEOUT_ERROR');
+        else if (response.problem === NETWORK_ERROR) {
+
+            NetInfo.getConnectionInfo().then((connectionInfo) => {
+                console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+                if (connectionInfo.type === 'unknown') {
+                    permissionAlert('澳门旅行网络权限已被关闭，是否前往开启')
+                }
+            });
+
+            msgErr = I18n.t('NETWORK_ERROR');
+        }
+
+
+        showToast(msgErr);
+        reject && reject(msgErr);
+    }catch (e) {
+        logMsg(e)
     }
-
-    if (response.problem === SERVER_ERROR)
-        msgErr = I18n.t('SERVER_ERROR');
-    else if (response.problem === TIMEOUT_ERROR)
-        msgErr = I18n.t('TIMEOUT_ERROR');
-    else if (response.problem === NETWORK_ERROR) {
-
-        NetInfo.getConnectionInfo().then((connectionInfo) => {
-            console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
-            if (connectionInfo.type === 'unknown') {
-                permissionAlert('澳门旅行网络权限已被关闭，是否前往开启')
-            }
-        });
-
-        msgErr = I18n.t('NETWORK_ERROR');
-    }
-
-
-    showToast(msgErr);
-    reject && reject(msgErr);
 
 }
 
 function handle(response, resolve, reject) {
 
-    if (response.ok) {
+    try{
+        if (response.ok) {
 
-        const {code, msg} = response.data;
-        if (code === 0) {
-            resolve(response.data);
+            const {code, msg} = response.data;
+            if (code === 0) {
+                resolve(response.data);
+            } else {
+                reject && reject(msg);
+            }
         } else {
-            reject && reject(msg);
-        }
-    } else {
 
-        netError(response, reject);
+            netError(response, reject);
+        }
+    }catch (e) {
+        logMsg(e)
     }
+
 }
 
 

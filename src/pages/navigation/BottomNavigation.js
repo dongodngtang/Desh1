@@ -12,7 +12,7 @@ import {
     SHARE_OPEN, SHARE_CLOSE, SWITCH_TAB
 } from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
-import {isEmptyObject, setDispatchAction, getDispatchAction, updateAlet, util} from '../../utils/ComonHelper';
+import {isEmptyObject, setDispatchAction, getDispatchAction, updateAlet, util, logMsg} from '../../utils/ComonHelper';
 import ShareToast from "../comm/ShareToast";
 import PopRelease from '../socials/PopRelease'
 import {getUpdate} from "../../services/AccountDao";
@@ -26,7 +26,8 @@ class BottomNavigation extends Component {
 
 
     state = {
-        app_update: {}
+        app_update: {},
+        FirstLogin: false
     }
 
     componentDidMount() {
@@ -41,6 +42,30 @@ class BottomNavigation extends Component {
                 this._getUpdate()
             }, 1000)
         });
+
+
+    }
+
+    componentWillReceiveProps(newProps) {
+
+
+        if (newProps.actionType === 'GET_PROFILE' && newProps.hasData !== this.props.hasData) {
+
+            storage.load({key: 'FirstLogin'}).then(data => {
+                console.log('引导页只显示一次，已显示过')
+            }).catch(err => {
+                router.popToTop()
+                console.log('引导页还没有显示')
+                this.setState({
+                    FirstLogin: newProps.profile.new_user
+                })
+                storage.save({
+                    key: 'FirstLogin',
+                    rawData: 'FirstLogin'
+                });
+            })
+        }
+
 
     }
 
@@ -150,7 +175,7 @@ class BottomNavigation extends Component {
 
                 {util.isEmpty(this.state.app_update) ? null : <ForcedUpdate app_update={this.state.app_update}/>}
 
-                {isEmptyObject(global.login_user)  ? null : <GuidePage/>}
+                {this.state.FirstLogin ? <GuidePage/> : null}
 
             </View>
 
@@ -229,9 +254,11 @@ const bindAction = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-
+    hasData: state.PersonState.hasData,
+    profile: state.PersonState.profile,
     actionType: state.AccountState.actionType,
     share_param: state.AccountState.share_param,
+    actionType: state.PersonState.actionType
 });
 
 export default connect(mapStateToProps, bindAction)(BottomNavigation);
