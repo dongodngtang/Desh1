@@ -54,15 +54,21 @@ class BottomNavigation extends Component {
             storage.load({key: 'FirstLogin'}).then(data => {
                 console.log('引导页只显示一次，已显示过')
             }).catch(err => {
-                router.popToTop()
+
                 console.log('引导页还没有显示')
-                this.setState({
-                    FirstLogin: newProps.profile.new_user
-                })
-                storage.save({
-                    key: 'FirstLogin',
-                    rawData: 'FirstLogin'
-                });
+
+                if (newProps.profile.new_user) {
+                    router.popToTop()
+                    storage.save({
+                        key: 'FirstLogin',
+                        rawData: 'FirstLogin'
+                    });
+                    this.setState({
+                        FirstLogin: newProps.profile.new_user
+                    })
+                }
+
+
             })
         }
 
