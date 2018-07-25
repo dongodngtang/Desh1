@@ -5,7 +5,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {display_check, invite_count, novice_task, user_invite, wallet_account} from "../../services/WallDao";
-import {getDispatchAction, showToast, strNotNull} from "../../utils/ComonHelper";
+import {getDispatchAction, showToast, strNotNull, uShareRegistered} from "../../utils/ComonHelper";
 import Router from "../../configs/Router";
 import {GET_PROFILE} from "../../actions/ActionTypes";
 
@@ -81,7 +81,7 @@ export default class NewUserTask extends Component {
                             justifyContent: 'center', backgroundColor: '#FF6B4C'
                         }}
                         onPress={() => {
-                            global.router.toSettingPage()
+                            uShareRegistered();
                         }}>
                         <Text style={{color: '#FFFFFF', fontSize: 14}}>分享</Text>
                     </TouchableOpacity> : null}
