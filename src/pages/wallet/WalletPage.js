@@ -55,7 +55,8 @@ export default class WalletPage extends Component {
             })
         }, err => {
 
-        })
+        });
+        this.props.params.refresh();
     };
 
     render() {
