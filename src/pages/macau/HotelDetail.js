@@ -13,7 +13,7 @@ import * as Animatable from 'react-native-animatable';
 import PopAction from '../comm/PopAction';
 import I18n from "react-native-i18n";
 
-const list = [{id: 0, name: '高德', type: 'gaode'}, {id: 1, name: '苹果', type: 'pingguo'}];
+const list = [{id: 0, name: '高德地图', type: 'gaode'}, {id: 1, name: '苹果地图', type: 'pingguo'}];
 
 const styles = StyleSheet.create({
     banner: {

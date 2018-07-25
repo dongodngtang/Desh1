@@ -41,6 +41,10 @@ export default class WalletPage extends Component {
         }
     ]
 
+    componentWillUnmount(){
+        this.refresh()
+    }
+
     componentDidMount() {
         this.refresh()
     }
