@@ -19,6 +19,7 @@ import {getUpdate} from "../../services/AccountDao";
 import * as Constants from "../../configs/Constants";
 import ForcedUpdate from "../ForcedUpdate";
 import {getBaseURL} from "../../services/RequestHelper";
+import GuidePage from "../comm/GuidePage";
 
 
 class BottomNavigation extends Component {
@@ -148,6 +149,8 @@ class BottomNavigation extends Component {
                 <PopRelease ref={ref => this.popRelease = ref}/>
 
                 {util.isEmpty(this.state.app_update)?null:<ForcedUpdate app_update={this.state.app_update}/>}
+
+                <GuidePage/>
 
             </View>
 

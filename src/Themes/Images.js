@@ -1,4 +1,8 @@
 const images = {
+    guide_next: require('../../source/guide_next.png'),
+    guide1: require('../../source/guide1.png'),
+    guide2: require('../../source/guide2.png'),
+    guide3: require('../../source/guide3.png'),
     one1: require('../../source/one1.png'),
     bottomarea: require('../../source/bottomarea.png'),
     two: require('../../source/two.png'),
