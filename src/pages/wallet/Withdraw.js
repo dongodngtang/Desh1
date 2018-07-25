@@ -36,6 +36,11 @@ export default class Withdraw extends Component {
 
     }
 
+    componentWillUnmount(){
+        console.log("钱包componentWillUnmount")
+        this.props.params.refresh();
+    }
+
     render() {
         const {way, amount, prompt_show, bank, account_number, name, account_type} = this.state;
         const {total_account} = this.props.params;
@@ -48,7 +53,7 @@ export default class Withdraw extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => {
                     router.pop();
-                    this.props.params.refresh();
+
                 }}/>
 
 
