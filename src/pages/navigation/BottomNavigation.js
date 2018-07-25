@@ -27,8 +27,7 @@ class BottomNavigation extends Component {
 
     state = {
         app_update: {},
-        firstLogin: false,
-        guideVersion: 1,
+        FirstLogin: false
     }
 
     componentDidMount() {
@@ -51,52 +50,41 @@ class BottomNavigation extends Component {
 
 
         if (newProps.actionType === 'GET_PROFILE' && newProps.hasData !== this.props.hasData) {
-            console.log("版本")
-            storage.load({key: 'guideVersion'}).then(data => {
-                console.log('guideVersion',this.state.guideVersion)
-                console.log('firstLogin',this.state.firstLogin)
-                console.log("kkkk",data)
-                // 如果已经查看过的引导页版本与当前引导页版本不一致，则需要显示引导页
-                if (data !== this.state.guideVersion) {
+
+            storage.load({key: 'FirstLogin'}).then(first_users => {
+                logMsg('引导页只显示一次，已显示过', first_users)
+                if (newProps.profile.new_user && first_users.indexOf(newProps.profile.user_id) === -1) {
+                    logMsg('引导页新用户显示')
+                    first_users.push(newProps.profile.user_id)
+                    router.popToTop()
                     storage.save({
-                        key: 'guideVersion',
-                        rawData: 'guideVersion'
+                        key: 'FirstLogin',
+                        rawData: first_users
                     });
                     this.setState({
-                        firstLogin: true
+                        FirstLogin:true
                     })
                 }
             }).catch(err => {
-                console.log('没有记录过已查看的指引页版本号:', err)
-                // 没有记录过已查看的指引页版本号
-                storage.save({
-                    key: 'guideVersion',
-                    rawData: 'guideVersion'
-                });
-                this.setState({
-                    firstLogin: true
-                })
-            })
 
-            // storage.load({key: 'FirstLogin'}).then(data => {
-            //     console.log('引导页只显示一次，已显示过')
-            // }).catch(err => {
-            //
-            //     console.log('引导页还没有显示')
-            //
-            //     if (newProps.profile.new_user) {
-            //         router.popToTop()
-            //         storage.save({
-            //             key: 'FirstLogin',
-            //             rawData: 'FirstLogin'
-            //         });
-            //         this.setState({
-            //             FirstLogin: newProps.profile.new_user
-            //         })
-            //     }
-            //
-            //
-            // })
+                logMsg('引导页还没有显示')
+
+                if (newProps.profile.new_user) {
+                    let first_users = [];
+                    first_users.push(newProps.profile.user_id)
+                    logMsg('引导页', first_users)
+                    router.popToTop()
+                    storage.save({
+                        key: 'FirstLogin',
+                        rawData: first_users
+                    });
+                    this.setState({
+                        FirstLogin: true
+                    })
+                }
+
+
+            })
         }
 
 
@@ -131,13 +119,6 @@ class BottomNavigation extends Component {
 
         }, err => {
 
-        })
-    };
-
-    change_version = () => {
-        this.setState({
-            firstLogin: false,
-            guideVersion: this.state.guideVersion + 1
         })
     };
 
@@ -215,8 +196,7 @@ class BottomNavigation extends Component {
 
                 {util.isEmpty(this.state.app_update) ? null : <ForcedUpdate app_update={this.state.app_update}/>}
 
-                {this.state.firstLogin ?
-                    <GuidePage change_version={this.change_version}/> : null}
+                {this.state.FirstLogin ? <GuidePage/> : null}
 
             </View>
 
@@ -297,7 +277,6 @@ const bindAction = dispatch => ({
 const mapStateToProps = state => ({
     hasData: state.PersonState.hasData,
     profile: state.PersonState.profile,
-    actionType: state.AccountState.actionType,
     share_param: state.AccountState.share_param,
     actionType: state.PersonState.actionType
 });
