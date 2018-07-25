@@ -26,7 +26,7 @@ class BottomNavigation extends Component {
 
 
     state = {
-        app_update:{}
+        app_update: {}
     }
 
     componentDidMount() {
@@ -37,9 +37,9 @@ class BottomNavigation extends Component {
         setDispatchAction(SHARE_CLOSE, this.props._closeShare);
         setDispatchAction(SWITCH_TAB, this.props._swichTab);
         getBaseURL(() => {
-            setTimeout(()=>{
+            setTimeout(() => {
                 this._getUpdate()
-            },1000)
+            }, 1000)
         });
 
     }
@@ -48,24 +48,24 @@ class BottomNavigation extends Component {
     _getUpdate = () => {
         getUpdate(data => {
             const {android_platform, ios_platform} = data;
-            console.log("更新提示",data)
+            console.log("更新提示", data)
             if (Platform.OS === 'ios') {
                 if (Number.parseFloat(ios_platform.version) > Constants.UpdateVersion) {
-                   if(ios_platform.force_upgrade){
-                       this.setState({
-                           app_update:ios_platform
-                       })
-                   }else {
-                       updateAlet(ios_platform)
-                   }
+                    if (ios_platform.force_upgrade) {
+                        this.setState({
+                            app_update: ios_platform
+                        })
+                    } else {
+                        updateAlet(ios_platform)
+                    }
                 }
             } else {
                 if (Number.parseFloat(android_platform.version) > Constants.UpdateVersion) {
-                    if(android_platform.force_upgrade){
+                    if (android_platform.force_upgrade) {
                         this.setState({
-                            app_update:android_platform
+                            app_update: android_platform
                         })
-                    }else{
+                    } else {
                         updateAlet(android_platform)
                     }
                 }
@@ -148,9 +148,9 @@ class BottomNavigation extends Component {
 
                 <PopRelease ref={ref => this.popRelease = ref}/>
 
-                {util.isEmpty(this.state.app_update)?null:<ForcedUpdate app_update={this.state.app_update}/>}
+                {util.isEmpty(this.state.app_update) ? null : <ForcedUpdate app_update={this.state.app_update}/>}
 
-                <GuidePage/>
+                {isEmptyObject(global.login_user)  ? null : <GuidePage/>}
 
             </View>
 

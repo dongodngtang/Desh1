@@ -27,7 +27,7 @@ export default class NewUserTask extends Component {
             this.setState({
                 user_task: data
             })
-        },err=>{
+        }, err => {
             getDispatchAction()['GET_PROFILE']();
             this.props.params.refresh();
             showToast("新手任务已完成")
@@ -59,7 +59,8 @@ export default class NewUserTask extends Component {
                 <View style={styles.task_view}>
                     <Image style={styles.img44}
                            source={Images.integral.login}/>
-                    <Text style={styles.text44}>{`登录满7天（${login_days >= login_days_required ? login_days_required :login_days}/${login_days_required}）`}</Text>
+                    <Text
+                        style={styles.text44}>{`登录满7天（${login_days >= login_days_required ? login_days_required : login_days}/${login_days_required}）`}</Text>
                     <View style={{flex: 1}}/>
                     {login_days > 0 && login_days >= login_days_required ? <Image style={styles.img45}
                                                                                   source={Images.right2}/> : null}
@@ -72,6 +73,18 @@ export default class NewUserTask extends Component {
                     <View style={{flex: 1}}/>
                     {share_count > 0 && share_count >= share_count_required ? <Image style={styles.img45}
                                                                                      source={Images.right2}/> : null}
+                    {share_count < share_count_required ? <TouchableOpacity
+                        style={{
+                            width: 68, height: 30,
+                            borderRadius: 15,
+                            alignItems: 'center',
+                            justifyContent: 'center', backgroundColor: '#FF6B4C'
+                        }}
+                        onPress={() => {
+                            global.router.toSettingPage()
+                        }}>
+                        <Text style={{color: '#FFFFFF', fontSize: 14}}>分享</Text>
+                    </TouchableOpacity> : null}
                 </View>
 
                 <View style={{marginLeft: 17, marginRight: 17, marginTop: 18}}>
