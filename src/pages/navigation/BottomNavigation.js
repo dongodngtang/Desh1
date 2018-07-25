@@ -51,7 +51,11 @@ class BottomNavigation extends Component {
 
 
         if (newProps.actionType === 'GET_PROFILE' && newProps.hasData !== this.props.hasData) {
+            console.log("版本")
             storage.load({key: 'guideVersion'}).then(data => {
+                console.log('guideVersion',this.state.guideVersion)
+                console.log('firstLogin',this.state.firstLogin)
+                console.log("kkkk",data)
                 // 如果已经查看过的引导页版本与当前引导页版本不一致，则需要显示引导页
                 if (data !== this.state.guideVersion) {
                     storage.save({
