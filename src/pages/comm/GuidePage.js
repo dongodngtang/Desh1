@@ -26,7 +26,8 @@ export default class GuidePage extends Component {
                 <View style={{flexDirection: 'column', position: 'absolute', bottom: 0}}>
                     <TouchableOpacity style={{alignSelf: 'center', alignItems: 'center', justifyContent: 'center'}}
                                       onPress={() => {
-                                          this.toggle()
+                                          this.props.change_version();
+                                          this.toggle();
                                       }}>
                         <Image style={{width: Metrics.reallySize(160), height: Metrics.reallySize(42)}}
                                source={Images.guide_next}/>
