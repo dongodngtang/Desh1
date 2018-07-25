@@ -6,7 +6,14 @@ import {Router} from 'react-native-router-flux';
 import {Stacks} from '../configs/StackRoute';
 import StorageKey from '../configs/StorageKey';
 import {setAccessToken, getBaseURL} from '../services/RequestHelper';
-import {putLoginUser, getUserData, updateApp, setDispatchAction, isEmptyObject,getDispatchAction} from '../utils/ComonHelper';
+import {
+    putLoginUser,
+    getUserData,
+    updateApp,
+    setDispatchAction,
+    isEmptyObject,
+    getDispatchAction
+} from '../utils/ComonHelper';
 import {init} from '../services/ConfigDao';
 import {releases_show, getUpdate} from '../services/AccountDao';
 import {
@@ -44,7 +51,7 @@ class Root extends Component {
         setDispatchAction(VIDEO_PAUSE, this.props._videoPause);
         setDispatchAction(DELETE_CART, this.props._deleteCart);
         setDispatchAction(ADD_CART, this.props._addCart);
-        setDispatchAction(CLEAR_PROFILE,this.props._getProfileNull)
+        setDispatchAction(CLEAR_PROFILE, this.props._getProfileNull)
 
 
         init(() => {
@@ -66,10 +73,13 @@ class Root extends Component {
             .then(ret => {
                 console.log('User', ret);
                 let {access_token, user_id} = ret;
-                putLoginUser(ret);
                 setAccessToken(access_token);
-                this.props._getProfile(user_id);
-                this.props._fetchUnreadMsg();
+                putLoginUser(ret);
+                setTimeout(() => {
+                    this.props._getProfile(user_id);
+                    this.props._fetchUnreadMsg();
+                }, 500)
+
             }).catch(err => {
 
         });
