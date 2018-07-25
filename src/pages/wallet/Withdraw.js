@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {
-    TouchableOpacity, ScrollView,
+    TouchableOpacity, ScrollView,KeyboardAvoidingView,
     StyleSheet,
     Text, Image,
     View, TextInput
@@ -51,8 +51,8 @@ export default class Withdraw extends Component {
                     this.props.params.refresh();
                 }}/>
 
-            <ScrollView>
-                <View style={styles.card2}>
+
+                <KeyboardAvoidingView style={styles.card2}>
                     <Text style={styles.txt_withdraw}>提现金额</Text>
                     <View style={styles.item_input}>
                         <Text style={[styles.money, {marginRight: 8}]}>¥</Text>
@@ -99,7 +99,7 @@ export default class Withdraw extends Component {
                         <Text style={styles.all_get}>全部提现</Text>
                     </TouchableOpacity>
 
-                </View>
+                </KeyboardAvoidingView>
 
                 <View style={styles.view_desc}>
                     <Text
@@ -215,7 +215,7 @@ export default class Withdraw extends Component {
                         <Text style={styles.txt_cash}>立即提现</Text>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
+
 
 
             <PopAction
