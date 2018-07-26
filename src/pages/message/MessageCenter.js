@@ -31,7 +31,7 @@ const icons = [
 const titles = [
     I18n.t('order_notice'),
     I18n.t('ads_activity'),
-    'Poker Pro官方客服'
+    '澳门旅行官方客服'
 ];
 
 class MessageCenter extends Component {
@@ -230,7 +230,7 @@ class MessageCenter extends Component {
                       ListHeaderComponent={
                           <View>
                               {/*{this.readerItem(0, I18n.t('order_notice'), notice.title, notice.created_at, msgUnRead)}*/}
-                              {this.readerItem(1, I18n.t('ads_activity'), activity.title, activity.activity_time, 0)}
+                              {/*{this.readerItem(1, I18n.t('ads_activity'), activity.title, activity.activity_time, 0)}*/}
                               <View style={[{height: 1}, {backgroundColor: "white"}]}>
                                   <View style={[{height: 1}, {backgroundColor: "#ECECEE"}, {marginLeft: 15}]}/>
                               </View>

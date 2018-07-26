@@ -69,7 +69,7 @@ export default class GuidePage extends Component {
                 }}>
 
                     <Image style={{marginBottom: 25, width: 296, height: 186}} source={Images.guide2}/>
-                    <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}
+                    <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center',alignSelf:'center'}}
                                       onPress={() => {
                                           this.setState({
                                               show_index: 2
