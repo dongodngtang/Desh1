@@ -63,13 +63,13 @@ export default class GuidePage extends Component {
         } else if (show_index === 1) {
             return (
                 <View style={{
-                    flexDirection: 'column',
-                    marginLeft: 10,
-                    marginTop: 50
+                    display:'flex',
+                    marginTop: 50,
+                    width:'100%'
                 }}>
 
-                    <Image style={{marginBottom: 25, width: 296, height: 186}} source={Images.guide2}/>
-                    <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center',alignSelf:'center'}}
+                    <Image style={{marginLeft: 10,marginBottom: 25, width: 296, height: 186}} source={Images.guide2}/>
+                    <TouchableOpacity style={{alignSelf:'center',alignItems: 'center', justifyContent: 'center'}}
                                       onPress={() => {
                                           this.setState({
                                               show_index: 2
