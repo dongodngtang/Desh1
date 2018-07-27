@@ -63,7 +63,7 @@ export default class CouponPage extends Component {
     };
 
     _renderItem = (item) => {
-        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price,coupon_type} = item.item;
+        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price, coupon_type} = item.item;
         const {selectId} = this.state;
         return (
             <ImageBackground
@@ -77,7 +77,7 @@ export default class CouponPage extends Component {
                                     color: selectId === 0 ? "#F34247" : "#AAAAAA",
                                     fontSize: 40,
                                     fontWeight: 'bold',
-                                    width:100
+                                    width: 100
                                 }}>{mul(discount, 10)}<Text
                                     style={{
                                         color: selectId === 0 ? "#F34247" : "#AAAAAA",
@@ -88,9 +88,12 @@ export default class CouponPage extends Component {
                                 <Text style={{
                                     color: selectId === 0 ? "#F34247" : "#AAAAAA",
                                     fontSize: 18,
-                                    width:100
+                                    width: 100
                                 }}>¥<Text
-                                    style={{fontSize: 40, fontWeight: 'bold'}}>{reduce_price}</Text></Text>}
+                                    style={{
+                                        fontSize: reduce_price < 1000 ? 40 : 26,
+                                        fontWeight: 'bold'
+                                    }}>{reduce_price}</Text></Text>}
 
                             <View style={{width: 125, flexDirection: 'column'}}>
                                 <Text
@@ -109,7 +112,7 @@ export default class CouponPage extends Component {
                         {selectId === 0 ? <TouchableOpacity
                                 style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
                                 onPress={() => {
-                                    if(coupon_type === 'hotel'){
+                                    if (coupon_type === 'hotel') {
                                         router.pop();
                                         global.router.toSelectTimePage();
                                     }
