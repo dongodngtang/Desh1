@@ -132,7 +132,7 @@ export default class ProductSpecificationInfo extends PureComponent {
     optionTypesView = (option_types) => {
         let that = this;
 
-        return <View>
+        return <View style={{paddingBottom:150}}>
             {option_types.map((x, index, array) => {
 
                 return <View
@@ -227,7 +227,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
 
-                    <ScrollView style={{height: Metrics.screenHeight}}>
+                    <ScrollView>
                         {this.optionTypesView(optionTypes)}
                     </ScrollView>
 
@@ -288,7 +288,6 @@ const styleP = StyleSheet.create({
         zIndex: 999
     },
     specificationInfo: {
-        paddingBottom: 160,
         marginTop: 160,
         backgroundColor: '#EEEEEE'
     },
