@@ -36,7 +36,7 @@ export default class OtherInvitePage extends Component {
                     refreshPage={this.refreshPage}
                     titleStyle={{fontSize: 18, color: '#444444'}}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
-                    title={`${item.nick_name.length > 2 ? '...' : item.nick_name}的邀请好友-${isEmptyObject(other_invite) ? '1' : other_invite.length}人`}
+                    title={`${item.nick_name.length > 2 ? '...' : item.nick_name}的邀请好友-${isEmptyObject(other_invite) ? '0' : other_invite.length}人`}
                     leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
