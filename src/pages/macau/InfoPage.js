@@ -36,7 +36,7 @@ export default class InfoPage extends PureComponent {
 
     render() {
 
-        const {description,title} = this.state.info;
+        const {description, title} = this.state.info;
 
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
@@ -46,7 +46,9 @@ export default class InfoPage extends PureComponent {
                 }}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}/>
+                leftBtnPress={() => router.pop()}
+                rightBtnIcon={Images.share2}
+                rightImageStyle={{height: 20, width: 19, marginLeft: 20, marginRight: 20}}/>
 
             {isEmptyObject(description) ? <LoadingView/> : <ScrollView>
                 <View style={{
