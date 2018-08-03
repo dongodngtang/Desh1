@@ -30,5 +30,50 @@ export default StyleSheet.create({
         marginTop:7
 
 
+    },
+    nav: {
+        height: Metrics.navBarHeight,
+        width: '100%',
+        backgroundColor: Colors._E54,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: Metrics.statusBarHeight
+    },
+    cancel: {
+        fontSize: 14,
+        color: Colors.white
+    },
+    title: {
+        fontSize: 18,
+        color: Colors.white
+    },
+    btn_search: {
+        width: 50,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    View: {
+        marginTop: 7,
+        width: '100%'
+    },
+    info_item:{
+        marginLeft:17,
+        paddingTop:9,
+        paddingBottom:9,
+        flexDirection:'row',
+        alignItems:'center',
+        borderBottomWidth:1,
+        borderBottomColor:"#F3F3F3"
+    },
+    text22:{
+        width:45,
+        color:'#444444',
+        fontSize:14
+    },
+    text23:{
+        color:'#AAAAAA',
+        fontSize:14,
+        marginRight:17
     }
 })

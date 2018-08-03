@@ -70,7 +70,10 @@ export default class CouponPage extends Component {
                 style={styles.sameView}
                 source={Images.coupon.background}>
                 <View style={styles.itemView}>
-                    <View style={[styles.itemLeft]}>
+                    <TouchableOpacity style={[styles.itemLeft]}
+                                      onPress={() => {
+                                          global.router.toCouponInfoPage(item.item)
+                                      }}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             {discount_type === 'rebate' ?
                                 <Text style={{
@@ -104,7 +107,7 @@ export default class CouponPage extends Component {
                         <Text style={[styles.txt1, {marginTop: 10}]}>{short_desc}</Text>
                         <Text style={[styles.txt1, {marginTop: 1}]}>{`有限期：${begin_date}至${end_date}`}</Text>
 
-                    </View>
+                    </TouchableOpacity>
                     <View style={{flex: 1}}/>
 
                     <View style={[styles.itemLeft, {alignItems: 'center'}]}>
