@@ -59,15 +59,15 @@ export default StyleSheet.create({
     },
     info_item:{
         marginLeft:17,
-        paddingTop:9,
-        paddingBottom:9,
+        paddingTop:17,
+        paddingBottom:17,
         flexDirection:'row',
         alignItems:'center',
         borderBottomWidth:1,
         borderBottomColor:"#F3F3F3"
     },
     text22:{
-        width:45,
+        width:90,
         color:'#444444',
         fontSize:14
     },
@@ -75,5 +75,19 @@ export default StyleSheet.create({
         color:'#AAAAAA',
         fontSize:14,
         marginRight:17
+    },
+    sameView2:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginLeft:17,marginRight:17,
+        marginTop:11
+    },
+    infoBottom:{
+        width:'100%',
+        paddingTop:16,
+        paddingBottom:13,
+        alignItems:'center',
+        justifyContent:'center',
+        bottom: 0
     }
 })

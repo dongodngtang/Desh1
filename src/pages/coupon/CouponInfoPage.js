@@ -32,46 +32,44 @@ export default class CouponInfoPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <ScrollView style={styles.View}>
-                    <View style={{marginTop:7,marginLeft:17,marginRight:17,marginBottom:11,alignItems:'center',justifyContent:'center'}}>
-                        <ImageBackground
-                            style={styles.sameView}
-                            source={Images.coupon.background}>
-                            <View style={styles.itemView}>
-                                <View style={styles.itemLeft}>
-                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                        {discount_type === 'rebate' ?
-                                            <Text style={{
-                                                color: "#F34247",
-                                                fontSize: 40,
-                                                marginRight: 16,
-                                                fontWeight: 'bold'
-                                            }}>{mul(discount, 10)}<Text
-                                                style={{color: "#F34247", fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
+                <ScrollView>
+                    <ImageBackground
+                        style={styles.sameView2}
+                        source={Images.coupon.background}>
+                        <View style={styles.itemView}>
+                            <View style={styles.itemLeft}>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                    {discount_type === 'rebate' ?
+                                        <Text style={{
+                                            color: "#F34247",
+                                            fontSize: 40,
+                                            marginRight: 16,
+                                            fontWeight: 'bold'
+                                        }}>{mul(discount, 10)}<Text
+                                            style={{color: "#F34247", fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
 
-                                            <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
-                                                style={{
-                                                    fontSize: reduce_price.length > 3 ? 30 : 40,
-                                                    fontWeight: 'bold',
-                                                    letterSpacing: 1
-                                                }}>{reduce_price}</Text></Text>}
-                                        <View style={{width: 140}}>
-                                            <Text style={{
-                                                color: "#444444",
-                                                fontSize: name.length > 13 ? 12 : 20,
-                                                marginLeft: 22
-                                            }}
-                                                  numberOfLines={2}>{name}</Text>
-                                        </View>
+                                        <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
+                                            style={{
+                                                fontSize: reduce_price.length > 3 ? 30 : 40,
+                                                fontWeight: 'bold',
+                                                letterSpacing: 1
+                                            }}>{reduce_price}</Text></Text>}
+                                    <View style={{width: 140}}>
+                                        <Text style={{
+                                            color: "#444444",
+                                            fontSize: name.length > 13 ? 12 : 20,
+                                            marginLeft: 22
+                                        }}
+                                              numberOfLines={2}>{name}</Text>
                                     </View>
-                                    <Text style={[styles.txt1, {marginTop: 10}]}>{short_desc}</Text>
-                                    <Text style={[styles.txt1, {marginTop: 1}]}>{`有限期：${begin_date}至${end_date}`}</Text>
                                 </View>
+                                <Text style={[styles.txt1, {marginTop: 10}]}>{short_desc}</Text>
+                                <Text style={[styles.txt1, {marginTop: 1}]}>{`有限期：${begin_date}至${end_date}`}</Text>
                             </View>
-                        </ImageBackground>
-                    </View>
+                        </View>
+                    </ImageBackground>
 
-                    <View style={{backgroundColor:'white'}}>
+                    <View style={{backgroundColor:'white',marginTop:19}}>
                         <View style={styles.info_item}>
                             <Text style={styles.text22}>折扣</Text>
                             <Text style={styles.text23} numberOfLines={1}>任意消费9.5折</Text>
@@ -90,6 +88,15 @@ export default class CouponInfoPage extends Component {
                         </View>
                     </View>
                 </ScrollView>
+
+                <TouchableOpacity
+                    style={[styles.infoBottom, {backgroundColor:'#E54A2E'}]}
+                    activeOpacity={0}
+                    onPress={() => {
+
+                    }}>
+                    <Text style={{color: "#FFFFFF", fontSize: 18}}>立即使用</Text>
+                </TouchableOpacity>
             </View>
         )
     }
