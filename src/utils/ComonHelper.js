@@ -257,6 +257,16 @@ export function uShareMallInfo(title, desc, icon, id) {
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
+export function uShareInfoItem(title, desc, icon, id) {
+    let param = {
+        shareTitle: title,
+        shareText: I18n.t('ads_poker'),
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "infos/" + id,
+    };
+    getDispatchAction()["SHARE_OPEN"](param);
+}
+
 /**
  * 根据路径获取后缀名
  * @param filePath
