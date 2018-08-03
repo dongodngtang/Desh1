@@ -1,4 +1,5 @@
 const images = {
+    weather: require('../../source/weather.png'),
     guide_next: require('../../source/guide_next.png'),
     guide1: require('../../source/guide1.png'),
     guide2: require('../../source/guide2.png'),

@@ -46,10 +46,10 @@ export default class Catalog extends PureComponent {
                 },
 
                 {
-                    name: '人闻',
+                    name: '天气',
                     type: 'humanities',
-                    size: {height: 34, width: 30},
-                    icon: Images.macau.book
+                    size: {height: 32, width: 30},
+                    icon: Images.weather
                 }
             ],
             [
@@ -103,7 +103,9 @@ export default class Catalog extends PureComponent {
                         } else if (item.type === 'exchange_rate') {
                             router.toRatePage();
                         } else if (item.type === 'entry_exit') {
-                            router.toWebView('出入境','http://www.fsm.gov.mo/psp/pspmonitor/mobile/PortasdoCerco.aspx')
+                            router.toWebView('出入境', 'http://www.fsm.gov.mo/psp/pspmonitor/mobile/PortasdoCerco.aspx')
+                        } else if (item.type === 'humanities') {
+                            router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml')
                         } else
                             router.toHotelSearch(item)
                     }}
