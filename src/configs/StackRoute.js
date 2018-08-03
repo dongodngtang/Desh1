@@ -134,9 +134,11 @@ import UserInvitePage from "../pages/wallet/UserInvitePage";
 import OtherInvitePage from "../pages/wallet/OtherInvitePage";
 import InviteRulePage from "../pages/wallet/InviteRulePage";
 import NewUserTask from "../pages/navigation/NewUserTask";
+import CouponReceivePage from "../pages/coupon/CouponReceivePage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="CouponReceivePage" component={CouponReceivePage} hideNavBar/>
         <Scene key="NewUserTask" component={NewUserTask} hideNavBar/>
         <Scene key="InviteRulePage" component={InviteRulePage} hideNavBar/>
         <Scene key="OtherInvitePage" component={OtherInvitePage} hideNavBar/>

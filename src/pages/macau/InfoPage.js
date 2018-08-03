@@ -78,6 +78,16 @@ export default class InfoPage extends PureComponent {
                 </View>
             </ScrollView>}
 
+            <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
+                              onPress={() => {
+                                  global.router.toCouponReceivePage()
+                              }}>
+                <Image style={{
+                    width: Metrics.reallySize(54),
+                    height: Metrics.reallySize(54)
+                }}
+                       source={Images.coupon.croup_receive}/>
+            </TouchableOpacity>
 
         </View>
     }

@@ -401,7 +401,8 @@ const images = {
         return_hei: require('../../source/coupon/return_hei.png'),
         selected: require('../../source/coupon/selected.png'),
         unSelected: require('../../source/coupon/unSelected.png'),
-        coupon_used: require('../../source/coupon/coupon_used.png')
+        coupon_used: require('../../source/coupon/coupon_used.png'),
+        croup_receive: require('../../source/coupon/croup_receive.png')
 
     },
     wallet: {
