@@ -72,7 +72,9 @@ export default class CouponPage extends Component {
                 <View style={styles.itemView}>
                     <TouchableOpacity style={[styles.itemLeft]}
                                       onPress={() => {
-                                          global.router.toCouponInfoPage(item.item)
+                                          if(selectId === 0){
+                                              global.router.toCouponInfoPage(item.item)
+                                          }
                                       }}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             {discount_type === 'rebate' ?
