@@ -202,6 +202,7 @@ const api = {
     novice_task: novice_task,//获取新手红包任务进度
     info_coupons:info_coupons,//获取咨询中的优惠券列表
     receive_coupons:receive_coupons,//领取优惠券
+    coupons_infos:coupons_infos,//获取优惠券详情
 
 }
 
@@ -219,6 +220,11 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function coupons_infos(body) {
+    const {coupon_number} = body;
+    return `infos/${getUserId()}/coupons/${coupon_number}`;
+}
 
 export function receive_coupons(body) {
     const {coupon_id} = body;

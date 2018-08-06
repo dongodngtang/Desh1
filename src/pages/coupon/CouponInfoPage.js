@@ -3,25 +3,42 @@ import {
     FlatList, ScrollView,
     StyleSheet, Text,
     View, Image,
-    TouchableOpacity,ImageBackground
+    TouchableOpacity, ImageBackground
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject, mul} from "../../utils/ComonHelper";
 import {NavigationBar} from '../../components';
 import styles from './couponStyle';
+import {getCouponInfos} from "../../services/MacauDao";
 
 export default class CouponInfoPage extends Component {
 
     state = {
-
+        coupon_infos: {}
     };
 
     componentDidMount() {
+        this.refresh();
+    };
 
-    }
+    refresh = () => {
+        getCouponInfos({coupon_number: this.props.params.item.coupon_number}, data => {
+            console.log("coupon_infos:", data);
+            this.setState({
+                coupon_infos: data
+            });
+        }, err => {
+
+        })
+
+        //获取详情优惠券
+
+
+    };
 
     render() {
-        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price, coupon_type} = this.props.params.item;
+        const {coupon_infos} = this.state;
+        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price, coupon_type} = coupon_infos;
         return (
             <View style={ApplicationStyles.bgContainer2}>
                 <NavigationBar
@@ -46,7 +63,11 @@ export default class CouponInfoPage extends Component {
                                             marginRight: 16,
                                             fontWeight: 'bold'
                                         }}>{mul(discount, 10)}<Text
-                                            style={{color: "#F34247", fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
+                                            style={{
+                                                color: "#F34247",
+                                                fontSize: 18,
+                                                fontWeight: 'bold'
+                                            }}>折</Text></Text> :
 
                                         <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
                                             style={{
@@ -69,7 +90,7 @@ export default class CouponInfoPage extends Component {
                         </View>
                     </ImageBackground>
 
-                    <View style={{backgroundColor:'white',marginTop:19}}>
+                    <View style={{backgroundColor: 'white', marginTop: 19}}>
                         <View style={styles.info_item}>
                             <Text style={styles.text22}>折扣</Text>
                             <Text style={styles.text23} numberOfLines={1}>任意消费9.5折</Text>
@@ -90,7 +111,7 @@ export default class CouponInfoPage extends Component {
                 </ScrollView>
 
                 <TouchableOpacity
-                    style={[styles.infoBottom, {backgroundColor:'#E54A2E'}]}
+                    style={[styles.infoBottom, {backgroundColor: '#E54A2E'}]}
                     activeOpacity={0}
                     onPress={() => {
 
@@ -100,7 +121,6 @@ export default class CouponInfoPage extends Component {
             </View>
         )
     }
-
 
 
 };

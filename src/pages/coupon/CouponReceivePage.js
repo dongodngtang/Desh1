@@ -72,19 +72,19 @@ export default class CouponReceivePage extends Component {
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             {discount_type === 'rebate' ?
                                 <Text style={{
-                                    color: selectId === 0 ? "#F34247" : "#AAAAAA",
+                                    color: "#F34247",
                                     fontSize: 40,
                                     fontWeight: 'bold',
                                     width: 100
                                 }}>{mul(discount, 10)}<Text
                                     style={{
-                                        color: selectId === 0 ? "#F34247" : "#AAAAAA",
+                                        color: "#F34247",
                                         fontSize: 18,
                                         fontWeight: 'bold'
                                     }}>折</Text></Text> :
 
                                 <Text style={{
-                                    color: selectId === 0 ? "#F34247" : "#AAAAAA",
+                                    color: "#F34247",
                                     fontSize: 18,
                                     width: 100
                                 }}>¥<Text

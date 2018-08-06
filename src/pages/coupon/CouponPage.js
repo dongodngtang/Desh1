@@ -52,6 +52,9 @@ export default class CouponPage extends Component {
 
         })
 
+        //获取详情优惠券
+
+
 
     };
 
