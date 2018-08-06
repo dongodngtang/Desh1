@@ -935,10 +935,7 @@ export function checkPhone2(phone, ext) {
     if (!strNotNull(ext)) {
         showToast("请填写完整的信息")
     } else if (phone != null && phone != undefined) {
-        if (ext === '86' && !myreg2.test(phone.trim())) {
-            showToast(`${I18n.t('show_put_phone')}`);
-            return false;
-        } else if (!myreg.test(phone.trim())) {
+        if (!myreg.test(phone.trim())) {
             showToast(`${I18n.t('show_put_phone')}`);
             return false;
         }
