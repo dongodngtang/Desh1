@@ -48,8 +48,9 @@ export default class CouponReceivePage extends Component {
     };
 
     _clickCoupon = (item) => {
+        console.log("dhsjds",item)
         alertOrder("确认领取？", () => {
-            postReceiveCoupons({coupon_id: item.id}, data => {
+            postReceiveCoupons({coupon_id: item.item.id}, data => {
                 showToast("领取成功");
                 this.refresh();
             }, err => {
