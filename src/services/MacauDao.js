@@ -28,7 +28,7 @@ export function getUsingCoupons(body, resolve, reject) {
 }
 
 export function getInfoCoupons(body, resolve, reject) {
-    helper.get(Api.info_coupons(), ret => {
+    helper.get(Api.info_coupons(body), ret => {
         resolve(ret.data)
     }, reject, body)
 }

@@ -225,8 +225,9 @@ export function receive_coupons(body) {
     return `infos/${coupon_id}/receive_coupon`;
 }
 
-export function info_coupons() {
-    return `infos/${getUserId()}/coupons`;
+export function info_coupons(body) {
+    const {id} = body;
+    return `infos/${id}/coupons`;
 }
 
 export function novice_task() {

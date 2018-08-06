@@ -67,9 +67,12 @@ export default class Router {
         })
     }
 
-    toCouponReceivePage(){
+    toCouponReceivePage(id){
         this.stackPush({
-            name:'CouponReceivePage'
+            name:'CouponReceivePage',
+            params:{
+                id
+            }
         })
     }
 

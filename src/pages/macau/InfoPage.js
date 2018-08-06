@@ -81,7 +81,7 @@ export default class InfoPage extends PureComponent {
 
             {exist_coupon ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
                                               onPress={() => {
-                                                  global.router.toCouponReceivePage()
+                                                  global.router.toCouponReceivePage(id)
                                               }}>
                 <Image style={{
                     width: Metrics.reallySize(54),

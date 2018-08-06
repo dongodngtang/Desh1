@@ -14,16 +14,12 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
-import {getInfoCoupons, postReceiveCoupons} from "../../services/MacauDao";
-import {mul, DateDiff} from '../../utils/ComonHelper'
+import {delHotelOrder, getInfoCoupons, postReceiveCoupons} from "../../services/MacauDao";
+import {mul, DateDiff, showToast, alertOrder} from '../../utils/ComonHelper'
 
 export default class CouponReceivePage extends Component {
 
     state = {
-        person_coupons: [],
-        using_coupons: [],
-        expired_coupons: [],
-        selectId: 0,
         info_coupons: []
     };
 
@@ -32,7 +28,7 @@ export default class CouponReceivePage extends Component {
     };
 
     refresh = () => {
-        getInfoCoupons({}, data => {
+        getInfoCoupons({id:this.props.params.id}, data => {
             console.log("info_coupons:", data);
             this.setState({
                 info_coupons: data.items
@@ -52,11 +48,15 @@ export default class CouponReceivePage extends Component {
     };
 
     _clickCoupon = (item) => {
-        postReceiveCoupons({coupon_id: item.id}, data => {
-            this.refresh();
-        }, err => {
+        alertOrder("确认领取？", () => {
+            postReceiveCoupons({coupon_id: item.id}, data => {
+                showToast("领取成功");
+                this.refresh();
+            }, err => {
 
-        })
+            })
+        });
+
     };
 
     _renderItem = (item) => {

@@ -110,13 +110,13 @@ export default class OrderStatusPage extends Component {
                 onPress={() => {
                     alertOrder("确认删除？", () => {
                         delHotelOrder({order_number: order_number}, ret => {
-
+                            showToast("删除成功");
+                            this.props.params.refresh && this.props.params.refresh();
+                            router.pop();
+                            global.router.toHotelOrderPage();
                         }, err => {
                         })
-                        showToast("删除成功");
-                        this.props.params.refresh && this.props.params.refresh();
-                        router.pop();
-                        global.router.toHotelOrderPage();
+
                     });
                 }}>
                 <Text style={[styles.btn_book_txt, {color: "#444444"}]}>删除订单</Text>
