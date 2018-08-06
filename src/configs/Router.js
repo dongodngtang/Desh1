@@ -58,6 +58,21 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toCouponInfoPage(item){
+        this.stackPush({
+            name:'CouponInfoPage',
+            params:{
+                item
+            }
+        })
+    }
+
+    toCouponReceivePage(){
+        this.stackPush({
+            name:'CouponReceivePage'
+        })
+    }
+
     toNewUserTask(refresh){
         this.stackPush({
             name:'NewUserTask',

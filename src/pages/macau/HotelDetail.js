@@ -274,8 +274,11 @@ export default class HotelDetail extends PureComponent {
         reportList.forEach((data, index) => {
             let item = {
                 name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => {
-                    if (strNotNull(amap_navigation_url))
+                    if (strNotNull(amap_navigation_url)){
+                        this.popAction.toggle();
                         turn2MapMark(amap_location, amap_navigation_url, amap_poiid, location, title, data.type)
+                    }
+
                 }
             };
             resultArray.push(item);

@@ -1,4 +1,3 @@
-//退换货申请页面
 import React, {Component} from 'react';
 import {
     View,
@@ -18,7 +17,7 @@ import styles from './couponStyle'
 import {getPersonCoupons} from "../../services/MacauDao";
 import {mul, DateDiff} from '../../utils/ComonHelper'
 
-export default class CouponPage extends Component {
+export default class CouponReceivePage extends Component {
 
     state = {
         person_coupons: [],
@@ -62,6 +61,10 @@ export default class CouponPage extends Component {
         )
     };
 
+    _clickCoupon=()=>{
+
+    };
+
     _renderItem = (item) => {
         const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price, coupon_type} = item.item;
         const {selectId} = this.state;
@@ -70,12 +73,7 @@ export default class CouponPage extends Component {
                 style={styles.sameView}
                 source={Images.coupon.background}>
                 <View style={styles.itemView}>
-                    <TouchableOpacity style={[styles.itemLeft]}
-                                      onPress={() => {
-                                          if(selectId === 0){
-                                              global.router.toCouponInfoPage(item.item)
-                                          }
-                                      }}>
+                    <View style={[styles.itemLeft]}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             {discount_type === 'rebate' ?
                                 <Text style={{
@@ -109,21 +107,17 @@ export default class CouponPage extends Component {
                         <Text style={[styles.txt1, {marginTop: 10}]}>{short_desc}</Text>
                         <Text style={[styles.txt1, {marginTop: 1}]}>{`有限期：${begin_date}至${end_date}`}</Text>
 
-                    </TouchableOpacity>
+                    </View>
                     <View style={{flex: 1}}/>
 
                     <View style={[styles.itemLeft, {alignItems: 'center'}]}>
                         {/*<Text style={{color: "#666666", fontSize: 16}}>剩{DateDiff(begin_date,end_date)}日</Text>*/}
                         {selectId === 0 ? <TouchableOpacity
-                                style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
+                                style={[styles.touchView, {backgroundColor: '#4CB6FF'}]}
                                 onPress={() => {
-                                    if (coupon_type === 'hotel') {
-                                        router.pop();
-                                        global.router.toSelectTimePage();
-                                    }
-
+                                    this._clickCoupon(item)
                                 }}>
-                                <Text style={{color: "#FFFFFF", fontSize: 14}}>去使用</Text>
+                                <Text style={{color: "#FFFFFF", fontSize: 14}}>领取</Text>
                             </TouchableOpacity> :
                             <Image style={{height: 37, width: 45}} source={Images.coupon.coupon_used}/>}
 
@@ -142,43 +136,17 @@ export default class CouponPage extends Component {
                 <NavigationBar
                     titleStyle={{fontSize: 17, color: Colors._161817}}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
-                    title={'优惠券'}
+                    title={'领取优惠券'}
                     leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
                         router.pop()
                     }}
                 />
-                <View style={{backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', paddingTop: 10}}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.setState({
-                                selectId: 0
-                            })
-                        }}
-                        style={{marginLeft: 95, flexDirection: 'column', alignItems: 'center', width: 46}}>
-                        <Text style={{color: selectId === 0 ? "#161718" : "#AAAAAA", fontSize: 14}}>未使用</Text>
-                        {selectId === 0 ?
-                            <View style={{width: 46, height: 2, marginTop: 9, backgroundColor: '#E54A2E'}}/> : null}
-                    </TouchableOpacity>
-                    <View style={{flex: 1}}/>
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.setState({
-                                selectId: 1
-                            })
-                        }}
-                        style={{marginRight: 95, flexDirection: 'column', alignItems: 'center', width: 46}}>
-                        <Text style={{color: selectId === 1 ? "#161718" : "#AAAAAA", fontSize: 14}}>已失效</Text>
-                        {selectId === 1 ?
-                            <View style={{width: 46, height: 2, marginTop: 9, backgroundColor: '#E54A2E'}}/> : null}
-                    </TouchableOpacity>
-                </View>
-
                 <ScrollView>
                     <FlatList
                         style={{marginTop: 15, marginLeft: 17, marginRight: 17}}
-                        data={selectId === 0 ? using_coupons : expired_coupons}
+                        data={using_coupons}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}

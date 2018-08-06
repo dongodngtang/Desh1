@@ -1,4 +1,5 @@
 const images = {
+    weather: require('../../source/weather.png'),
     guide_next: require('../../source/guide_next.png'),
     guide1: require('../../source/guide1.png'),
     guide2: require('../../source/guide2.png'),
@@ -400,7 +401,8 @@ const images = {
         return_hei: require('../../source/coupon/return_hei.png'),
         selected: require('../../source/coupon/selected.png'),
         unSelected: require('../../source/coupon/unSelected.png'),
-        coupon_used: require('../../source/coupon/coupon_used.png')
+        coupon_used: require('../../source/coupon/coupon_used.png'),
+        croup_receive: require('../../source/coupon/croup_receive.png')
 
     },
     wallet: {

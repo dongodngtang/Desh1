@@ -157,6 +157,10 @@ const ApplicationStyles = {
         flex: 1,
         backgroundColor: Colors.bg_f5
     },
+    bgContainer2: {
+        flex: 1,
+        backgroundColor: '#F3F3F3'
+    },
     bg_black: {
         flex: 1,
         backgroundColor: Colors.bg_ec

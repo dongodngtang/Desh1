@@ -257,6 +257,16 @@ export function uShareMallInfo(title, desc, icon, id) {
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
+export function uShareInfoItem(title, desc, icon, id) {
+    let param = {
+        shareTitle: title,
+        shareText: I18n.t('ads_poker'),
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "infos/" + id,
+    };
+    getDispatchAction()["SHARE_OPEN"](param);
+}
+
 /**
  * 根据路径获取后缀名
  * @param filePath
@@ -925,10 +935,7 @@ export function checkPhone2(phone, ext) {
     if (!strNotNull(ext)) {
         showToast("请填写完整的信息")
     } else if (phone != null && phone != undefined) {
-        if (ext === '86' && !myreg2.test(phone.trim())) {
-            showToast(`${I18n.t('show_put_phone')}`);
-            return false;
-        } else if (!myreg.test(phone.trim())) {
+        if (!myreg.test(phone.trim())) {
             showToast(`${I18n.t('show_put_phone')}`);
             return false;
         }

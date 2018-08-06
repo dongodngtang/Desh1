@@ -30,5 +30,64 @@ export default StyleSheet.create({
         marginTop:7
 
 
+    },
+    nav: {
+        height: Metrics.navBarHeight,
+        width: '100%',
+        backgroundColor: Colors._E54,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: Metrics.statusBarHeight
+    },
+    cancel: {
+        fontSize: 14,
+        color: Colors.white
+    },
+    title: {
+        fontSize: 18,
+        color: Colors.white
+    },
+    btn_search: {
+        width: 50,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    View: {
+        marginTop: 7,
+        width: '100%'
+    },
+    info_item:{
+        marginLeft:17,
+        paddingTop:17,
+        paddingBottom:17,
+        flexDirection:'row',
+        alignItems:'center',
+        borderBottomWidth:1,
+        borderBottomColor:"#F3F3F3"
+    },
+    text22:{
+        width:90,
+        color:'#444444',
+        fontSize:14
+    },
+    text23:{
+        color:'#AAAAAA',
+        fontSize:14,
+        marginRight:17
+    },
+    sameView2:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginLeft:17,marginRight:17,
+        marginTop:11
+    },
+    infoBottom:{
+        width:'100%',
+        paddingTop:16,
+        paddingBottom:13,
+        alignItems:'center',
+        justifyContent:'center',
+        bottom: 0
     }
 })

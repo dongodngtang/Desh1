@@ -88,9 +88,11 @@ export default class LocalRatePage extends Component {
                             type={'local'}/>
                     </View>
 
-                    <Text style={{color: "#000000", fontSize: 14, marginTop: 17, marginLeft: 17, marginBottom: 6}}>
-                        汇率资讯达人排行榜
-                    </Text>
+                    <View style={{marginTop: 17, marginLeft: 17, marginRight:17,marginBottom: 10,flexDirection:'row',alignItems:'center'}}>
+                        <Text style={{color: "#000000", fontSize: 14}}>
+                            汇率资讯达人
+                        </Text>
+                    </View>
 
                     {isEmptyObject(this.state.exchange_traders) ? null : <FlatList
                         style={{flex: 1, backgroundColor: '#FFFFFF', paddingBottom: 50}}
