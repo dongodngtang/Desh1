@@ -200,7 +200,8 @@ const api = {
     other_invite: 'my_invites/indirect',//查看某个用户间接邀请的用户 [只有1级用户有权限]
     withdrawal: 'wallet/withdrawal',//用户钱包账户提现
     novice_task: novice_task,//获取新手红包任务进度
-
+    info_coupons:info_coupons,//获取咨询中的优惠券列表
+    receive_coupons:receive_coupons,//领取优惠券
 
 }
 
@@ -218,6 +219,15 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function receive_coupons(body) {
+    const {coupon_id} = body;
+    return `infos/${coupon_id}/receive_coupon`;
+}
+
+export function info_coupons() {
+    return `infos/${getUserId()}/coupons`;
+}
 
 export function novice_task() {
     return `account/users/${getUserId()}/novice_task`;

@@ -1,6 +1,14 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+
+export function postReceiveCoupons(body, resolve, reject) {
+    helper.post(Api.receive_coupons(body), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 export function getExchange_traders(resolve, reject) {
     helper.get(Api.exchange_traders, ret => {
         resolve(ret.data)
@@ -19,7 +27,11 @@ export function getUsingCoupons(body, resolve, reject) {
     }, reject)
 }
 
-
+export function getInfoCoupons(body, resolve, reject) {
+    helper.get(Api.info_coupons(), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
 export function getPersonCoupons(body, resolve, reject) {
     helper.get(Api.person_coupons(), ret => {
         resolve(ret.data)

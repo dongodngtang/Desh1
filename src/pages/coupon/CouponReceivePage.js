@@ -14,7 +14,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
-import {getPersonCoupons} from "../../services/MacauDao";
+import {getInfoCoupons, postReceiveCoupons} from "../../services/MacauDao";
 import {mul, DateDiff} from '../../utils/ComonHelper'
 
 export default class CouponReceivePage extends Component {
@@ -23,7 +23,8 @@ export default class CouponReceivePage extends Component {
         person_coupons: [],
         using_coupons: [],
         expired_coupons: [],
-        selectId: 0
+        selectId: 0,
+        info_coupons: []
     };
 
     componentDidMount() {
@@ -31,21 +32,10 @@ export default class CouponReceivePage extends Component {
     };
 
     refresh = () => {
-        getPersonCoupons({}, data => {
-            console.log("person_personCoupons:", data);
-            let using_coupons = [];
-            let expired_coupons = [];
-            data.items.forEach((item) => {
-                if (item.status === 'unused' || item.status === 'refund') {
-                    using_coupons.push(item)
-                } else if (item.status === 'expired' || item.status === 'used') {
-                    expired_coupons.push(item)
-                }
-            });
+        getInfoCoupons({}, data => {
+            console.log("info_coupons:", data);
             this.setState({
-                person_coupons: data.items,
-                using_coupons: using_coupons,
-                expired_coupons: expired_coupons
+                info_coupons: data.items
             });
         }, err => {
 
@@ -61,12 +51,16 @@ export default class CouponReceivePage extends Component {
         )
     };
 
-    _clickCoupon=()=>{
+    _clickCoupon = (item) => {
+        postReceiveCoupons({coupon_id: item.id}, data => {
+            this.refresh();
+        }, err => {
 
+        })
     };
 
     _renderItem = (item) => {
-        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price, coupon_type} = item.item;
+        const {id, name, short_desc, coupon_type, discount_type, reduce_price, limite_price, discount, begin_date, end_date, user_received} = item.item;
         const {selectId} = this.state;
         return (
             <ImageBackground
@@ -111,17 +105,15 @@ export default class CouponReceivePage extends Component {
                     <View style={{flex: 1}}/>
 
                     <View style={[styles.itemLeft, {alignItems: 'center'}]}>
-                        {/*<Text style={{color: "#666666", fontSize: 16}}>剩{DateDiff(begin_date,end_date)}日</Text>*/}
-                        {selectId === 0 ? <TouchableOpacity
-                                style={[styles.touchView, {backgroundColor: '#4CB6FF'}]}
-                                onPress={() => {
+                        <TouchableOpacity
+                            style={[styles.touchView, {backgroundColor: user_received ? '#DDDDDD' : '#4CB6FF'}]}
+                            onPress={() => {
+                                if (!user_received) {
                                     this._clickCoupon(item)
-                                }}>
-                                <Text style={{color: "#FFFFFF", fontSize: 14}}>领取</Text>
-                            </TouchableOpacity> :
-                            <Image style={{height: 37, width: 45}} source={Images.coupon.coupon_used}/>}
-
-
+                                }
+                            }}>
+                            <Text style={{color: "#FFFFFF", fontSize: 14}}>{user_received ? '已领取' : '领取'}</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ImageBackground>
@@ -129,8 +121,7 @@ export default class CouponReceivePage extends Component {
     };
 
     render() {
-        const {person_coupons, using_coupons, expired_coupons, selectId} = this.state;
-
+        const {info_coupons} = this.state;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -146,7 +137,7 @@ export default class CouponReceivePage extends Component {
                 <ScrollView>
                     <FlatList
                         style={{marginTop: 15, marginLeft: 17, marginRight: 17}}
-                        data={using_coupons}
+                        data={info_coupons}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
