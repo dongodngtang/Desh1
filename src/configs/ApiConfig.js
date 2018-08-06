@@ -223,7 +223,7 @@ const page_size = 10;
 
 export function coupons_infos(body) {
     const {coupon_number} = body;
-    return `infos/${getUserId()}/coupons/${coupon_number}`;
+    return `account/users/${getUserId()}/coupons/${coupon_number}`;
 }
 
 export function receive_coupons(body) {

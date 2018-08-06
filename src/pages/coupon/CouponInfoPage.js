@@ -38,6 +38,17 @@ export default class CouponInfoPage extends Component {
 
     render() {
         const {coupon_infos} = this.state;
+        if(isEmptyObject(coupon_infos)){
+            return <View style={ApplicationStyles.bgContainer2}>
+                <NavigationBar
+                    refreshPage={this.refreshPage}
+                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    title={'使用规则'}
+                    leftBtnIcon={Images.sign_return}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}/>
+            </View>
+        }
         const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price, coupon_type} = coupon_infos;
         return (
             <View style={ApplicationStyles.bgContainer2}>
