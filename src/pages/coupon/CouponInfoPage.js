@@ -38,7 +38,7 @@ export default class CouponInfoPage extends Component {
 
     render() {
         const {coupon_infos} = this.state;
-        if(isEmptyObject(coupon_infos)){
+        if (isEmptyObject(coupon_infos)) {
             return <View style={ApplicationStyles.bgContainer2}>
                 <NavigationBar
                     refreshPage={this.refreshPage}
@@ -49,7 +49,7 @@ export default class CouponInfoPage extends Component {
                     leftBtnPress={() => router.pop()}/>
             </View>
         }
-        const {begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price, coupon_type} = coupon_infos;
+        const {telephone, address, begin_date, discount, discount_type, cover_link, end_date, name, short_desc, reduce_price, limit_price, coupon_type} = coupon_infos;
         return (
             <View style={ApplicationStyles.bgContainer2}>
                 <NavigationBar
@@ -104,20 +104,22 @@ export default class CouponInfoPage extends Component {
                     <View style={{backgroundColor: 'white', marginTop: 19}}>
                         <View style={styles.info_item}>
                             <Text style={styles.text22}>折扣</Text>
-                            <Text style={styles.text23} numberOfLines={1}>任意消费9.5折</Text>
+                            <Text style={styles.text23} numberOfLines={1}>{short_desc}</Text>
                         </View>
                         <View style={styles.info_item}>
                             <Text style={styles.text22}>过期时间</Text>
-                            <Text style={styles.text23} numberOfLines={1}>2018-06-31 23:59:59</Text>
+                            <Text style={styles.text23} numberOfLines={1}>{end_date}</Text>
                         </View>
-                        <View style={styles.info_item}>
+                        {coupon_type === 'offline_store' ? <View style={styles.info_item}>
                             <Text style={styles.text22}>地址</Text>
-                            <Text style={styles.text23} numberOfLines={1}>澳门威尼斯酒店3楼344</Text>
-                        </View>
-                        <View style={styles.info_item}>
+                            <Text style={styles.text23} numberOfLines={1}>{address}</Text>
+                        </View> : null}
+
+                        {coupon_type === 'offline_store' ? <View style={styles.info_item}>
                             <Text style={styles.text22}>电话</Text>
-                            <Text style={styles.text23} numberOfLines={1}>55779384</Text>
-                        </View>
+                            <Text style={styles.text23} numberOfLines={1}>{telephone}</Text>
+                        </View> : null}
+
                     </View>
                 </ScrollView>
 
