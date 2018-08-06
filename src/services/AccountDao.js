@@ -5,7 +5,7 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
-import {isEmptyObject, showToast} from '../utils/ComonHelper';
+import {isEmptyObject, logMsg, showToast} from '../utils/ComonHelper';
 import {getAddressList} from './OrderDao';
 import JMessage from 'jmessage-react-plugin';
 import {followships, postNearBys} from './SocialDao';
@@ -241,6 +241,7 @@ export function postVCode(body, resolve, reject) {
 
 /*注册*/
 export function postRegister(body, resolve, reject) {
+    logMsg('注册参数', body)
 
     helper.post(Api.register, body, (ret) => {
         setLoginData(ret.data);

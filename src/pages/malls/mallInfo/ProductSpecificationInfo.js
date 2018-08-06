@@ -1,7 +1,9 @@
 import React, {PureComponent} from 'react';
-import {View, Text, Image, StyleSheet,
+import {
+    View, Text, Image, StyleSheet,
     TouchableOpacity, ScrollView, TextInput,
-KeyboardAvoidingView} from 'react-native';
+    KeyboardAvoidingView
+} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
@@ -93,20 +95,22 @@ export default class ProductSpecificationInfo extends PureComponent {
                 <View style={styleP.buyInput}>
                     <TextInput
                         keyboardType={'numeric'}
-                        style={{ width: 60,
-                            height: 40,textAlign:'center'}}
+                        style={{
+                            width: 60,
+                            height: 40, textAlign: 'center'
+                        }}
                         maxLength={4}
                         numberOfLines={1}
                         underlineColorAndroid={'transparent'}
                         onChangeText={txt => {
-                            if (txt > tempStock){
+                            if (txt > tempStock) {
                                 showToast('库存不足');
                                 return;
-                            }else{
-                                this.setState({number:txt})
+                            } else {
+                                this.setState({number: txt})
                             }
                         }}
-                        value={number+''}/>
+                        value={number + ''}/>
                     {/*<Text>{number}</Text>*/}
                 </View>
 
@@ -132,7 +136,7 @@ export default class ProductSpecificationInfo extends PureComponent {
     optionTypesView = (option_types) => {
         let that = this;
 
-        return <View>
+        return <View style={{flex: 1}}>
             {option_types.map((x, index, array) => {
 
                 return <View
@@ -227,7 +231,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
 
-                    <ScrollView style={{height: Metrics.screenHeight}}>
+                    <ScrollView>
                         {this.optionTypesView(optionTypes)}
                     </ScrollView>
 
@@ -266,12 +270,12 @@ export default class ProductSpecificationInfo extends PureComponent {
         let selectCommodity = {number: number, variant: this.tempProduct, title: this.tempProduct.title};
         console.log('购物车', selectCommodity)
 
-        if(this.props.type === 'buy'){
-            this.props.showSpecInfo(selectCommodity,this.props.type)
-        }else{
+        if (this.props.type === 'buy') {
+            this.props.showSpecInfo(selectCommodity, this.props.type)
+        } else {
             showToast(I18n.t('add_cart_ok'));
             pushProductToCart(selectCommodity);
-            this.props.showSpecInfo(this.tempProduct,this.props.type)
+            this.props.showSpecInfo(this.tempProduct, this.props.type)
 
         }
 
@@ -405,10 +409,10 @@ const styleP = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         height: 50,
-        flexDirection:'row',
+        flexDirection: 'row',
         width: '100%',
         alignItems: 'center',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
 
     },
     confirm: {
@@ -417,9 +421,9 @@ const styleP = StyleSheet.create({
         borderRadius: 3,
         justifyContent: 'center',
         alignItems: 'center',
-        flex:1,
-        marginLeft:17,
-        marginRight:17
+        flex: 1,
+        marginLeft: 17,
+        marginRight: 17
     },
     confirmTxt: {
         fontSize: 18,

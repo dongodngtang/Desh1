@@ -18,7 +18,7 @@ import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
 import {closeDrawer} from '../reducers/DrawerRedux';
 import {postRegister, postResetPwdCode} from '../services/AccountDao';
-import {showToast} from "../utils/ComonHelper";
+import {logMsg, showToast} from "../utils/ComonHelper";
 
 
 class InputPwdPage extends Component {
@@ -26,15 +26,17 @@ class InputPwdPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mobile: '',
-            code: '',
-            email: '',
+            mobile: props.params.phone,
+            code: props.params.code,
+            email: props.params.email,
             password: '',
-            isRegisterOrForget: '',
-            isEmailOrMobile: '',
+            isRegisterOrForget: props.params.isRegisterOrForget,
+            isEmailOrMobile: props.params.isEmailOrMobile,
             pwdEye: true,
-            ext:''
+            ext:props.params.ext
         }
+
+        logMsg(this.state)
     }
 
     _toHome = (loginUser) => {
@@ -44,20 +46,6 @@ class InputPwdPage extends Component {
         router.popToTop();
     };
 
-
-    componentDidMount() {
-
-        this.setState({
-            mobile: this.props.params.phone,
-            code: this.props.params.code,
-            email: this.props.params.email,
-            isRegisterOrForget: this.props.params.isRegisterOrForget,
-            isEmailOrMobile: this.props.params.isEmailOrMobile,
-            ext:this.props.params.ext
-        });
-
-        console.log(this.props.params)
-    }
 
     _request_register = () => {
         const {mobile, code, email, isEmailOrMobile, isRegisterOrForget, password,ext} = this.state;

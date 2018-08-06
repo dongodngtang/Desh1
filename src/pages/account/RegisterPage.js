@@ -12,10 +12,10 @@ import NavigationBar from '../../components/NavigationBar';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {CountDownText} from '../../components/countdown/CountDownText';
 import {fetchPostVerifyCode, fetchPostVCode} from '../../actions/AccountAction';
-import {checkPhone, strNotNull, showToast, checkMail,checkPhone2} from '../../utils/ComonHelper';
+import {checkPhone, strNotNull, showToast, checkMail, checkPhone2} from '../../utils/ComonHelper';
 import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {BtnLong, BtnSoild, InputView} from '../../components';
-import {postVCode} from '../../services/AccountDao';
+import {postVCode, postVerifyCode} from '../../services/AccountDao';
 import * as Animatable from 'react-native-animatable';
 import ExtArea from '../comm/ExtArea';
 
@@ -31,21 +31,10 @@ class RegisterPage extends React.Component {
         ext: '86'
     }
 
-    componentWillReceiveProps(newProps) {
-        const {useEmailRegister, mobile, vcode, ext} = this.state;
-        if (this.props.loading != newProps.loading)
-            if (newProps.actionType === POST_VERIFY_CODE
-                && !newProps.loading && newProps.hasData) {
-                if (!useEmailRegister) {
-                    router.toInputPwdPage(this.props, mobile, vcode, ext)
-                }
-            }
-
-    }
 
     _sendCode = () => {
         const {mobile, ext} = this.state;
-        if (checkPhone2(mobile,ext) && strNotNull(ext)) {
+        if (checkPhone2(mobile, ext) && strNotNull(ext)) {
             const body = {
                 option_type: 'register',
                 vcode_type: 'mobile',
@@ -95,7 +84,7 @@ class RegisterPage extends React.Component {
                     this.areaAction && this.areaAction.toggle();
                 }}>
                     <TextInput
-                        style={{width:100}}
+                        style={{width: 100}}
                         autoFocus={false}
                         editable={false}
                         placeholderTextColor={Colors._BBBB}
@@ -176,17 +165,20 @@ class RegisterPage extends React.Component {
         const {checkAgree, mobile, vcode, ext} = this.state;
         if (checkAgree) {
             if (mobile.length > 1 && vcode.length > 1 && strNotNull(ext)) {
-                if (checkPhone2(mobile,ext)) {
-                    let body = {
-                        option_type: 'register',
-                        vcode_type: 'mobile',
-                        account: mobile,
-                        vcode: vcode,
-                        ext: ext
-                    };
+                let body = {
+                    option_type: 'register',
+                    vcode_type: 'mobile',
+                    account: mobile,
+                    vcode: vcode,
+                    ext: ext
+                };
 
-                    this.props.fetchVerifyCode(body);
-                }
+                postVerifyCode(body, data => {
+                    router.toInputPwdPage(this.props, mobile, vcode, ext)
+                }, err => {
+                    showToast(err)
+                })
+
 
             }
             else
