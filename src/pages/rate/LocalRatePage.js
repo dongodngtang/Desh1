@@ -68,7 +68,7 @@ export default class LocalRatePage extends Component {
                                 <View key={index} style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
                                     <TouchableOpacity
 
-                                        style={{}}
+                                        style={{marginBottom:5}}
                                         onPress={() => {
                                             this.setState({
                                                 trader_type: item.type,
@@ -83,13 +83,14 @@ export default class LocalRatePage extends Component {
                                         </Text>
                                     </TouchableOpacity>
                                     {show_index === item.id ?
-                                        <View style={{width: '34%', height: 1.5, backgroundColor: '#E54A2E'}}/> : null}
+                                        <View style={{width: item.name.length*15, height: 1.5, backgroundColor: '#E54A2E'}}/> : null}
 
                                 </View>
                             )
                         })}
                     </View>
-                    <Leaderboard category={categories[this.state.show_index]}/>
+                    <Leaderboard
+                        category={categories[this.state.show_index-1]}/>
 
                 </ScrollView>
 
