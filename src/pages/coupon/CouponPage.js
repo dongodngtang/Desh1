@@ -16,7 +16,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
 import {getPersonCoupons} from "../../services/MacauDao";
-import {mul, DateDiff} from '../../utils/ComonHelper'
+import {mul, DateDiff,checkPriceLength} from '../../utils/ComonHelper'
 
 export default class CouponPage extends Component {
 
@@ -99,11 +99,11 @@ export default class CouponPage extends Component {
                                     width: 100
                                 }}>¥<Text
                                     style={{
-                                        fontSize: reduce_price < 1000 ? 40 : 26,
+                                        fontSize: checkPriceLength(reduce_price),
                                         fontWeight: 'bold'
                                     }}>{reduce_price}</Text></Text>}
 
-                            <View style={{width: 125, flexDirection: 'column'}}>
+                            <View style={{width: 120, marginLeft:5,flexDirection: 'column'}}>
                                 <Text
                                     style={{color: selectId === 0 ? "#444444" : "#AAAAAA", fontSize: 20}}>{name}</Text>
                             </View>

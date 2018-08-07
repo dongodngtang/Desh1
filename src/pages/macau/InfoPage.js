@@ -14,6 +14,7 @@ import RenderHtml from '../comm/RenderHtml';
 import {getInfos} from '../../services/MacauDao'
 import {isEmptyObject, strNotNull, uShareInfoItem} from "../../utils/ComonHelper";
 import LoadingView from "../../components/load/LoadingView";
+import MusicPlayer from "./MusicPlayer";
 
 export default class InfoPage extends PureComponent {
     state = {
@@ -36,8 +37,8 @@ export default class InfoPage extends PureComponent {
     }
 
     render() {
-        const {info} =this.state;
-        if(isEmptyObject(info)){
+        const {info} = this.state;
+        if (isEmptyObject(info)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
                     <NavigationBar
@@ -98,6 +99,7 @@ export default class InfoPage extends PureComponent {
                                                             this.setState({
                                                                 music: !this.state.music
                                                             })
+                                                            this.musicShow && this.musicShow.toggle();
                                                         }}>
                 <Image style={{
                     width: Metrics.reallySize(26),
@@ -105,6 +107,7 @@ export default class InfoPage extends PureComponent {
                 }}
                        source={this.state.music ? Images.macau.bg_music : Images.macau.bg_music_close}/>
             </TouchableOpacity> : null}
+            {strNotNull(audio_link) && this.state.music? <MusicPlayer ref={ref => this.musicShow = ref}/> : null}
 
             {exist_coupon ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
                                               onPress={() => {

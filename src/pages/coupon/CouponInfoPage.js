@@ -6,7 +6,7 @@ import {
     TouchableOpacity, ImageBackground
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
-import {utcDate, isEmptyObject, mul} from "../../utils/ComonHelper";
+import {utcDate, isEmptyObject, mul, checkPriceLength} from "../../utils/ComonHelper";
 import {NavigationBar} from '../../components';
 import styles from './couponStyle';
 import {getCouponInfos} from "../../services/MacauDao";
@@ -82,7 +82,7 @@ export default class CouponInfoPage extends Component {
 
                                         <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
                                             style={{
-                                                fontSize: reduce_price.length > 3 ? 30 : 40,
+                                                fontSize: checkPriceLength(reduce_price),
                                                 fontWeight: 'bold',
                                                 letterSpacing: 1
                                             }}>{reduce_price}</Text></Text>}
@@ -123,14 +123,20 @@ export default class CouponInfoPage extends Component {
                     </View>
                 </ScrollView>
 
-                <TouchableOpacity
+                {coupon_type !== 'offline_store' ? <TouchableOpacity
                     style={[styles.infoBottom, {backgroundColor: '#E54A2E'}]}
                     activeOpacity={0}
                     onPress={() => {
-
+                        if (coupon_type === 'hotel') {
+                            router.pop();
+                            global.router.toSelectTimePage();
+                        } else if (coupon_type === 'shop') {
+                            router.pop();
+                            global.router.toMallPage();
+                        }
                     }}>
                     <Text style={{color: "#FFFFFF", fontSize: 18}}>立即使用</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> : null}
             </View>
         )
     }

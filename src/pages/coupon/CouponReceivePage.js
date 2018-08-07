@@ -15,7 +15,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
 import {delHotelOrder, getInfoCoupons, postReceiveCoupons} from "../../services/MacauDao";
-import {mul, DateDiff, showToast, alertOrder} from '../../utils/ComonHelper'
+import {mul, DateDiff, showToast, alertOrder, checkPriceLength} from '../../utils/ComonHelper'
 
 export default class CouponReceivePage extends Component {
 
@@ -89,7 +89,7 @@ export default class CouponReceivePage extends Component {
                                     width: 100
                                 }}>¥<Text
                                     style={{
-                                        fontSize: reduce_price < 1000 ? 40 : 26,
+                                        fontSize: checkPriceLength(reduce_price),
                                         fontWeight: 'bold'
                                     }}>{reduce_price}</Text></Text>}
 

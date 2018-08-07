@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Sound from 'react-native-sound'
 import RNFS from 'react-native-fs'
-import {getFileName, logMsg} from "../utils/ComonHelper";
+import {getFileName, logMsg} from "../../utils/ComonHelper";
 
 Sound.setCategory('Playback');
 
@@ -61,6 +61,10 @@ export default class MusicPlayer extends Component {
             logMsg(e)
         }
 
+    }
+
+    toggle=(Path)=>{
+        this.downloadMusic(Path)
     }
 
     componentWillUnmount() {
