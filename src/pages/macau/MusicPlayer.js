@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {
-    View
+    View, Platform
 } from 'react-native';
 import Sound from 'react-native-sound'
 import RNFS from 'react-native-fs'
@@ -21,8 +21,13 @@ export default class MusicPlayer extends Component {
 
 
     downloadMusic = (fromUrlPath) => {
-        let toFilePath = RNFS.CachesDirectoryPath + `/${getFileName(fromUrlPath)}`
+        let toFilePath = Platform.select({
+            ios: RNFS.MainBundlePath + `/${getFileName(fromUrlPath)}`,
+            android: RNFS.ExternalStorageDirectoryPath + `/${getFileName(fromUrlPath)}`
+        })
 
+
+        logMsg('缓存路径', toFilePath)
         try {
             this.download = RNFS.downloadFile({
                 fromUrl: fromUrlPath,
@@ -35,27 +40,32 @@ export default class MusicPlayer extends Component {
             })
 
             this.download.promise.then(res => {
-                this.sound = new Sound(toFilePath, Sound.MAIN_BUNDLE, error => {
+                logMsg('下载成功', res)
+                this.sound = new Sound(toFilePath, '', error => {
                     if (error) {
                         logMsg('播放失败：', error)
                         return
                     }
-
+                    //设置音量为一半
+                    this.sound.setVolume(0.5)
+                    //单曲循环 调用stop停止
+                    this.sound.setNumberOfLoops(-1)
                     //播放
                     this.sound.play(success => {
                         if (success) {
-                            logMsg('正在播放...', toFilePath)
+                            logMsg('播放结束...', toFilePath)
                         } else {
                             logMsg('reset 重试')
                             this.sound.reset();
                         }
                     })
 
-                    //播放结束后重新播放
-                    this.sound.stop(() => {
-                        this.sound.play();
-                    });
+
+
+
                 })
+            }).catch(err => {
+                logMsg('下载失败', err)
             })
         } catch (e) {
             logMsg(e)
@@ -63,13 +73,17 @@ export default class MusicPlayer extends Component {
 
     }
 
-    toggle=(Path)=>{
-        this.downloadMusic(Path)
+    stop = () => {
+        this.sound && this.sound.stop(() => {
+            logMsg('暂停播放')
+        })
     }
 
+
     componentWillUnmount() {
+        logMsg('停止下载')
         this.download && RNFS.stopDownload(this.download.jobId)
-        this.sound && this.sound.pause()
+        this.stop()
     }
 
     render() {

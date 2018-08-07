@@ -3,7 +3,7 @@ import Api from '../configs/ApiConfig';
 
 
 export function postReceiveCoupons(body, resolve, reject) {
-    helper.post(Api.receive_coupons(body), {}, ret => {
+    helper.post(Api.receive_coupons(body), body, ret => {
         resolve(ret.data)
     }, reject)
 }

@@ -339,6 +339,7 @@ export function toDecimal(x) {
 
 //根据路径获取文件名
 export function getFileName(o) {
+    logMsg('文件路径',o)
     let pos = o.lastIndexOf("/");
     return o.substring(pos + 1);
 }
