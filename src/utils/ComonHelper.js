@@ -1444,7 +1444,6 @@ export function checkZip(zip) {
 
 let reg = /^[0-9]+$/
 export function checkPriceLength(price) {
-    console.log("jskds",price)
     if(reg.test(price)){
         if(price < 1000){
             return 40

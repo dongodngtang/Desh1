@@ -14,7 +14,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
-import {delHotelOrder, getInfoCoupons, postReceiveCoupons} from "../../services/MacauDao";
+import {delHotelOrder, getInfoCoupons, postReceiveCoupons, returnHotelOrder} from "../../services/MacauDao";
 import {mul, DateDiff, showToast, alertOrder, checkPriceLength} from '../../utils/ComonHelper'
 
 export default class CouponReceivePage extends Component {
@@ -48,13 +48,13 @@ export default class CouponReceivePage extends Component {
     };
 
     _clickCoupon = (item) => {
-        console.log("dhsjds",item)
         alertOrder("确认领取？", () => {
-            postReceiveCoupons({coupon_id: item.item.id}, data => {
+            postReceiveCoupons({id: this.props.params.id, coupon_id: item.item.id}, ret => {
                 showToast("领取成功");
                 this.refresh();
-            }, err => {
 
+            }, err => {
+                showToast(err);
             })
         });
 

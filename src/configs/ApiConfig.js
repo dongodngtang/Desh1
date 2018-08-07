@@ -227,9 +227,10 @@ export function coupons_infos(body) {
 }
 
 export function receive_coupons(body) {
-    const {coupon_id} = body;
-    return `infos/${coupon_id}/receive_coupon`;
+    const {id} = body;
+    return `infos/${id}/receive_coupon`;
 }
+
 
 export function info_coupons(body) {
     const {id} = body;
