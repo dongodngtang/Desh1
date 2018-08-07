@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, Image,
-    TouchableOpacity, Platform
+    TouchableOpacity, Platform, FlatList
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -19,9 +19,7 @@ export default class Leaderboard extends Component {
     };
 
     state = {
-        exchange_traders: [],
-        trader_type: 'ex_rate',
-        show_index: 1
+        exchange_traders: []
     };
 
 
@@ -68,10 +66,7 @@ export default class Leaderboard extends Component {
     };
 
     render() {
-        return (<View>
-
-            {this.renderFlatList()}
-        </View>)
+        return (this.renderFlatList())
 
     }
 
@@ -106,9 +101,9 @@ export default class Leaderboard extends Component {
 
 
     refresh = (page, startFetch, abortFetch) => {
-        const {trader_type} = this.state;
-        getExchange_traders({page: page, page_size: 20,trader_type: trader_type}, data => {
-            console.log("trader_type:", trader_type);
+        const {type} = this.props.category;
+        getExchange_traders({page: page, page_size: 20, trader_type: type}, data => {
+            console.log("trader_type:", type);
             console.log("exchange_traders:", data);
             startFetch(data.items, 6)
         }, err => {

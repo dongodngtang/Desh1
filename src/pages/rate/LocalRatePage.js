@@ -65,9 +65,9 @@ export default class LocalRatePage extends Component {
                     }}>
                         {categories.map((item, index) => {
                             return (
-                                <View style={{flex: 1, flexDirection: 'column',alignItems:'center'}}>
+                                <View key={index} style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
                                     <TouchableOpacity
-                                        key={index}
+
                                         style={{}}
                                         onPress={() => {
                                             this.setState({
@@ -82,7 +82,9 @@ export default class LocalRatePage extends Component {
                                             {item.name}
                                         </Text>
                                     </TouchableOpacity>
-                                    <View style={{width:'34%', height: 1.5, backgroundColor: '#E54A2E'}}/>
+                                    {show_index === item.id ?
+                                        <View style={{width: '34%', height: 1.5, backgroundColor: '#E54A2E'}}/> : null}
+
                                 </View>
                             )
                         })}
