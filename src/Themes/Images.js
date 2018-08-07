@@ -378,7 +378,10 @@ const images = {
         price1_red: require('../../source/macau/price1_red.png'),
         price2_red: require('../../source/macau/price2_red.png'),
         callPhone: require('../../source/macau/callPhone.png'),
-        notRoom: require('../../source/macau/notRoom.png')
+        notRoom: require('../../source/macau/notRoom.png'),
+        bg_music: require('../../source/macau/bg_music.png'),
+        bg_music_close: require('../../source/macau/bg_music_close.png')
+
 
     },
     integral: {
