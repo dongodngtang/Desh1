@@ -2,9 +2,9 @@ import React, {PureComponent, Component} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, BaseComponent} from '../../components';
-import {LoadingView, NoDataView} from '../../components/load';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes/index';
+import {NavigationBar, BaseComponent} from '../../components/index';
+import {LoadingView, NoDataView} from '../../components/load/index';
 import {getExchange_rates} from '../../services/MacauDao';
 import {isEmptyObject, mul, div, formatCurrency, strNotNull, convertDate, utcDate} from "../../utils/ComonHelper";
 

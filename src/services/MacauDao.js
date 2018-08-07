@@ -9,10 +9,10 @@ export function postReceiveCoupons(body, resolve, reject) {
 }
 
 
-export function getExchange_traders(resolve, reject) {
+export function getExchange_traders(body, resolve, reject) {
     helper.get(Api.exchange_traders, ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject, body)
 }
 
 export function getExchange_rates(body, resolve, reject) {
