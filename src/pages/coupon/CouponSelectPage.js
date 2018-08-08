@@ -16,7 +16,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle';
 import {getUsingCoupons} from "../../services/MacauDao";
-import {isEmptyObject, mul} from "../../utils/ComonHelper";
+import {checkPriceLength, isEmptyObject, mul} from "../../utils/ComonHelper";
 
 export default class CouponSelectPage extends Component {
     state = {
@@ -70,24 +70,22 @@ export default class CouponSelectPage extends Component {
                                 <Text style={{
                                     color: "#F34247",
                                     fontSize: 40,
-                                    marginRight: 16,
+                                    width: 100,
                                     fontWeight: 'bold'
                                 }}>{mul(discount, 10)}<Text
                                     style={{color: "#F34247", fontSize: 18, fontWeight: 'bold'}}>折</Text></Text> :
 
-                                <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
+                                <Text style={{color: "#F34247", fontSize: 18,width: 100}}>¥<Text
                                     style={{
-                                        fontSize: reduce_price.length > 3 ? 30 : 40,
-                                        fontWeight: 'bold',
-                                        letterSpacing: 1
+                                        fontSize: checkPriceLength(reduce_price),
+                                        fontWeight: 'bold'
                                     }}>{reduce_price}</Text></Text>}
                             {/*<Text style={{color: "#F34247", fontSize: 18}}>¥<Text*/}
                             {/*style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>*/}
-                            <View style={{width: 140}}>
+                            <View style={{width: 140,marginLeft:5}}>
                                 <Text style={{
                                     color: "#444444",
-                                    fontSize: name.length > 13 ? 12 : 20,
-                                    marginLeft: 22
+                                    fontSize: name.length > 13 ? 16 : 20,
                                 }}
                                       numberOfLines={2}>{name}</Text>
                             </View>

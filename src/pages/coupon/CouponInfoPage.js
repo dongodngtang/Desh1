@@ -88,7 +88,7 @@ export default class CouponInfoPage extends Component {
                                     <View style={{width: 200,marginLeft: 5}}>
                                         <Text style={{
                                             color: "#444444",
-                                            fontSize: name.length > 13 ? 12 : 20
+                                            fontSize: 20
                                         }}
                                               numberOfLines={2}>{name}</Text>
                                     </View>
