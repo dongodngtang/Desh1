@@ -74,7 +74,8 @@ export default StyleSheet.create({
     text23:{
         color:'#AAAAAA',
         fontSize:14,
-        marginRight:17
+        marginRight:17,
+        width:'70%'
     },
     sameView2:{
         flexDirection:'row',

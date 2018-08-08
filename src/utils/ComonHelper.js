@@ -1453,7 +1453,7 @@ export function checkPriceLength(price) {
         }else if(price >= 10000 && price < 100000){
             return 28
         }else{
-            return 20
+            return 18
         }
     }
 }

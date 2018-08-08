@@ -16,7 +16,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import styles from './couponStyle'
 import {getPersonCoupons} from "../../services/MacauDao";
-import {mul, DateDiff,checkPriceLength} from '../../utils/ComonHelper'
+import {mul, DateDiff, checkPriceLength} from '../../utils/ComonHelper'
 
 export default class CouponPage extends Component {
 
@@ -55,7 +55,6 @@ export default class CouponPage extends Component {
         //获取详情优惠券
 
 
-
     };
 
 
@@ -75,7 +74,7 @@ export default class CouponPage extends Component {
                 <View style={styles.itemView}>
                     <TouchableOpacity style={[styles.itemLeft]}
                                       onPress={() => {
-                                          if(selectId === 0){
+                                          if (selectId === 0) {
                                               global.router.toCouponInfoPage(item.item)
                                           }
                                       }}>
@@ -103,7 +102,7 @@ export default class CouponPage extends Component {
                                         fontWeight: 'bold'
                                     }}>{reduce_price}</Text></Text>}
 
-                            <View style={{width: 120, marginLeft:5,flexDirection: 'column'}}>
+                            <View style={{width: coupon_type !== 'offline_store'?120:200, marginLeft: 5, flexDirection: 'column'}}>
                                 <Text
                                     style={{color: selectId === 0 ? "#444444" : "#AAAAAA", fontSize: 20}}>{name}</Text>
                             </View>
@@ -114,8 +113,7 @@ export default class CouponPage extends Component {
 
                     </TouchableOpacity>
                     <View style={{flex: 1}}/>
-
-                    <View style={[styles.itemLeft, {alignItems: 'center'}]}>
+                    {coupon_type !== 'offline_store' ? <View style={[styles.itemLeft, {alignItems: 'center'}]}>
                         {/*<Text style={{color: "#666666", fontSize: 16}}>剩{DateDiff(begin_date,end_date)}日</Text>*/}
                         {selectId === 0 ? <TouchableOpacity
                                 style={[styles.touchView, {backgroundColor: selectId === 0 ? "#FF4C4C" : "#ECECEE"}]}
@@ -123,6 +121,9 @@ export default class CouponPage extends Component {
                                     if (coupon_type === 'hotel') {
                                         router.pop();
                                         global.router.toSelectTimePage();
+                                    } else if (coupon_type === 'shop') {
+                                        router.pop();
+                                        global.router.toMallPage();
                                     }
 
                                 }}>
@@ -131,7 +132,8 @@ export default class CouponPage extends Component {
                             <Image style={{height: 37, width: 45}} source={Images.coupon.coupon_used}/>}
 
 
-                    </View>
+                    </View> : null}
+
                 </View>
             </ImageBackground>
         )

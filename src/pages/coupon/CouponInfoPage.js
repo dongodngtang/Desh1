@@ -71,7 +71,7 @@ export default class CouponInfoPage extends Component {
                                         <Text style={{
                                             color: "#F34247",
                                             fontSize: 40,
-                                            marginRight: 16,
+                                            width: 100,
                                             fontWeight: 'bold'
                                         }}>{mul(discount, 10)}<Text
                                             style={{
@@ -80,17 +80,15 @@ export default class CouponInfoPage extends Component {
                                                 fontWeight: 'bold'
                                             }}>折</Text></Text> :
 
-                                        <Text style={{color: "#F34247", fontSize: 18, marginRight: 16}}>¥<Text
+                                        <Text style={{color: "#F34247", fontSize: 18, width: 100}}>¥<Text
                                             style={{
                                                 fontSize: checkPriceLength(reduce_price),
-                                                fontWeight: 'bold',
-                                                letterSpacing: 1
+                                                fontWeight: 'bold'
                                             }}>{reduce_price}</Text></Text>}
-                                    <View style={{width: 140}}>
+                                    <View style={{width: 200,marginLeft: 5}}>
                                         <Text style={{
                                             color: "#444444",
-                                            fontSize: name.length > 13 ? 12 : 20,
-                                            marginLeft: 22
+                                            fontSize: name.length > 13 ? 12 : 20
                                         }}
                                               numberOfLines={2}>{name}</Text>
                                     </View>
@@ -112,7 +110,7 @@ export default class CouponInfoPage extends Component {
                         </View>
                         {coupon_type === 'offline_store' ? <View style={styles.info_item}>
                             <Text style={styles.text22}>地址</Text>
-                            <Text style={styles.text23} numberOfLines={1}>{address}</Text>
+                            <Text style={styles.text23} numberOfLines={2}>{address}</Text>
                         </View> : null}
 
                         {coupon_type === 'offline_store' ? <View style={styles.info_item}>
