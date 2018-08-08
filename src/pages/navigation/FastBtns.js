@@ -10,19 +10,19 @@ import {logMsg} from "../../utils/ComonHelper";
 const catalogs = [{
     name: '天气',
     type: 'weather',
-    size: {height: 28, width: 28,marginRight:8},
+    size: {height: 25, width: 25,marginRight:8},
     icon: Images.navigation2.weather
 },
     {
         name: '快餐',
         type: 'fast_food',
-        size: {height: 24, width: 24,marginRight:8},
+        size: {height: 22, width: 22,marginRight:8},
         icon: Images.navigation2.fast_food
     },
     {
         name: '往返',
         type: 'round_trip',
-        size: {height: 24, width: 24,marginRight:8},
+        size: {height: 20, width: 20,marginRight:8},
         icon: Images.navigation2.round_trip
     },
     {
@@ -51,22 +51,18 @@ export default class FastBtns extends Component {
         }}>
 
             {catalogs.map((item, index) => {
-                logMsg("hdsjjd",item)
                 return <TouchableOpacity
                     key={item.name}
                     onPress={() => {
                         if (item.type === 'weather')
                             router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml')
-                        else if (item.type === 'hotel') {
-                            router.toSelectTimePage();
-                        } else if (item.type === 'exchange_rate') {
-                            router.toRatePage();
-                        } else if (item.type === 'entry_exit') {
-                            router.toWebView('出入境', 'http://www.fsm.gov.mo/psp/pspmonitor/mobile/PortasdoCerco.aspx')
-                        } else if (item.type === 'humanities') {
-                            router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml')
-                        } else
-                            router.toHotelSearch(item)
+                        else if (item.type === 'fast_food') {
+                            router.toWebView('快餐热线', 'http://wx.weather.com.cn/mweather/101330101.shtml')
+                        } else if (item.type === 'round_trip') {
+                            router.toWebView('邮轮往返', 'http://wx.weather.com.cn/mweather/101330101.shtml')
+                        } else if (item.type === 'convenient') {
+                            router.toWebView('便民电话', 'http://wx.weather.com.cn/mweather/101330101.shtml')
+                        }
                     }}
                     style={{
                         flexDirection: 'row',
