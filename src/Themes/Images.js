@@ -419,7 +419,14 @@ const images = {
         rlue: require('../../source/wallet/rlue.png'),
         rule2: require('../../source/wallet/rule2.png'),
         dddd: require('../../source/wallet/dddd.png')
-    }
+    },
+    navigation2: {
+        weather: require('../../source/navigation/weather.png'),
+        round_trip: require('../../source/navigation/round_trip.png'),
+        fast_food: require('../../source/navigation/fast_food.png'),
+        convenient: require('../../source/navigation/convenient.png')
+    },
+
 
 };
 

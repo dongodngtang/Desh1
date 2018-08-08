@@ -23,6 +23,7 @@ import I18n from 'react-native-i18n';
 import {ApplicationStyles, Images, Colors, Metrics} from '../../Themes';
 import NavigationBar from "../../components/NavigationBar";
 import Catalog from './Catalog'
+import FastBtns from './FastBtns'
 import {home_recommends} from '../../services/MacauDao'
 import NewUserTask from './NewUserTask'
 import _ from 'lodash'
@@ -261,6 +262,10 @@ class TabHomePage extends Component {
                     <MainBanner
                         banners={banners}/>
                     <Catalog/>
+
+                    <View style={{width:Metrics.reallySize(Metrics.screenWidth - 34),height:1.6,backgroundColor:'#F3F3F3'}}/>
+
+                    <FastBtns/>
 
                     {/*<Races*/}
                     {/*raceTickets={raceTickets}/>*/}
