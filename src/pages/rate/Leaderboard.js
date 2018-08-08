@@ -7,7 +7,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import propTypes from 'prop-types';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {isEmptyObject, logMsg} from '../../utils/ComonHelper';
 import {getExchange_traders} from "../../services/MacauDao";
 import styles from '../macau/Styles';
 import ImageLoad from "../../components/ImageLoad";
@@ -22,6 +22,19 @@ export default class Leaderboard extends Component {
         exchange_traders: []
     };
 
+    constructor(props){
+        super(props)
+        this.trade_type = props.category.type;
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.category.type !== this.props.category.type){
+            this.trade_type = newProps.category.type;
+            this._onRefresh()
+        }
+
+    }
+
 
     show_index = (index) => {
         if (index === 0) {
@@ -34,14 +47,23 @@ export default class Leaderboard extends Component {
         } else {
             return <Text style={[styles.txt_num, {width: 25}]}>{index + 1}</Text>
         }
-    }
+    };
+
+    toUserPage = (user) => {
+        if (!isEmptyObject(login_user) && user.user_id === login_user.user_id) {
+            global.router.toPersonDynamic(user)
+        } else {
+            global.router.toUserTopicPage(user)
+        }
+
+    };
 
     _renderItem = (item, index) => {
-        const {avatar, mobile, nick_name, signature, user_id} = item
+        const {avatar, mobile, nick_name, signature, user_id} = item;
         return (
             <TouchableOpacity style={styles.pageItem}
                               onPress={() => {
-                                  global.router.toUserTopicPage(item)
+                                  this.toUserPage(item)
                               }}>
 
                 {this.show_index(index)}
@@ -77,7 +99,6 @@ export default class Leaderboard extends Component {
             onFetch={this.onFetch}
             keyExtractor={(item, index) => `Leaderboard${index}`}  //this is required when you are using FlatList
             item={this._renderItem}  //this takes two params (item, index)
-            numColumns={2}
             refreshableTitlePull={I18n.t('pull_refresh')}
             refreshableTitleRelease={I18n.t('release_refresh')}
             dateTitle={I18n.t('last_refresh')}
@@ -90,6 +111,10 @@ export default class Leaderboard extends Component {
     };
 
 
+    _onRefresh = () => {
+        this.listView && this.listView.refresh()
+    }
+
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
 
@@ -101,17 +126,14 @@ export default class Leaderboard extends Component {
 
 
     refresh = (page, startFetch, abortFetch) => {
-        const {type} = this.props.category;
-        getExchange_traders({page: page, page_size: 20, trader_type: type}, data => {
-            console.log("trader_type:", type);
+
+
+        getExchange_traders({page: page, page_size: 20, trader_type: this.trade_type}, data => {
+            console.log("trader_type:", this.trade_type);
             console.log("exchange_traders:", data);
-            startFetch(data.items, 6)
+            startFetch(data.items, 16)
         }, err => {
             abortFetch()
-        }, {
-            page: 1,
-            page_size: 20,
-            trader_type: trader_type
         })
     };
 }

@@ -101,7 +101,7 @@ export default class InfoPage extends PureComponent {
                                                             this.setState({
                                                                 music: !this.state.music
                                                             })
-                                                            this.musicShow && this.musicShow.stop()
+                                                            this.musicShow && this.musicShow.pause()
                                                         }}>
                 <Image style={{
                     width: Metrics.reallySize(26),
