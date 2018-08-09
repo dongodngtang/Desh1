@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView
+    StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView,findNodeHandle
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes/index';
 import {NavigationBar, BaseComponent} from '../../components/index';
@@ -182,6 +182,21 @@ export class RateTop extends Component {
         this.setState({
             price_changed: group2
         })
+    };
+
+    _reset() {
+        this.refs.scrollView.scrollTo({y: 0});
+    };
+
+    _onFocus(refName) {
+
+        setTimeout(()=> {
+
+            let scrollResponder = this.refs.scrollView.getScrollResponder();
+            scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+                findNodeHandle(this.refs[refName]), 0, true);
+
+        }, 100);
     }
 
     render() {
@@ -192,7 +207,7 @@ export class RateTop extends Component {
             return <LoadingView/>
         }
         return (
-            <View>
+            <ScrollView ref="scrollView">
                 <View style={styles.page}>
                     <Text style={styles.txt}>今日汇率：</Text>
                     <View style={{flexDirection: 'column', alignSelf: 'center'}}>
@@ -252,7 +267,7 @@ export class RateTop extends Component {
                         </View>
                     )
                 })}
-            </View>
+            </ScrollView>
         )
     }
 }
