@@ -184,20 +184,6 @@ export class RateTop extends Component {
         })
     };
 
-    _reset() {
-        this.refs.scrollView.scrollTo({y: 0});
-    };
-
-    _onFocus(refName) {
-
-        setTimeout(()=> {
-
-            let scrollResponder = this.refs.scrollView.getScrollResponder();
-            scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-                findNodeHandle(this.refs[refName]), 0, true);
-
-        }, 100);
-    }
 
     render() {
         const {ratesItem, price_changed, show} = this.state;
@@ -207,7 +193,7 @@ export class RateTop extends Component {
             return <LoadingView/>
         }
         return (
-            <ScrollView ref="scrollView">
+            <View>
                 <View style={styles.page}>
                     <Text style={styles.txt}>今日汇率：</Text>
                     <View style={{flexDirection: 'column', alignSelf: 'center'}}>
@@ -267,7 +253,7 @@ export class RateTop extends Component {
                         </View>
                     )
                 })}
-            </ScrollView>
+            </View>
         )
     }
 }
