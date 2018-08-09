@@ -29,6 +29,12 @@ export default class CouponSelectPage extends Component {
 
     componentDidMount() {
 
+        this.refresh();
+
+
+    };
+
+    refresh=()=>{
         const {total_price, coupon} = this.props.params;
         // 用户订单可用优惠券
 
@@ -47,9 +53,7 @@ export default class CouponSelectPage extends Component {
         }, err => {
 
         })
-
-
-    };
+    }
 
 
     _separator = () => {
