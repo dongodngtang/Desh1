@@ -56,15 +56,28 @@ export default class MusicPlayer extends Component {
     }
 
     pause = ()=>{
+        console.log("dhsjhdsjd",this)
         if(this.sound){
-           if( this.sound.isPlaying()){
-               this.sound && this.sound.pause(msg=>{
-                   logMsg('pause 暂停播放',msg)
-               })
+           if(Platform.OS === 'ios'){
+               if( this.sound.isPlaying()){
+                   this.sound && this.sound.pause(msg=>{
+                       logMsg('pause 暂停播放',msg)
+                   })
+               }else{
+                   this.sound.play(msg=>{
+                       logMsg('重新播放')
+                   })
+               }
            }else{
-               this.sound.play(msg=>{
-                   logMsg('重新播放')
-               })
+               if(this.props.music){
+                   this.sound && this.sound.pause(msg=>{
+                       logMsg('pause 暂停播放',msg)
+                   })
+               }else{
+                   this.sound.play(msg=>{
+                       logMsg('重新播放')
+                   })
+               }
            }
         }
 

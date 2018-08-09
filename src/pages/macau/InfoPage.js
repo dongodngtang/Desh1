@@ -109,7 +109,7 @@ export default class InfoPage extends PureComponent {
                 }}
                        source={this.state.music ? Images.macau.bg_music : Images.macau.bg_music_close}/>
             </TouchableOpacity> : null}
-            <MusicPlayer ref={ref => this.musicShow = ref}/>
+            <MusicPlayer ref={ref => this.musicShow = ref} music={this.state.music}/>
 
             {exist_coupon ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
                                               onPress={() => {
