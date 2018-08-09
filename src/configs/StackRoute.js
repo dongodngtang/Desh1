@@ -136,9 +136,13 @@ import InviteRulePage from "../pages/wallet/InviteRulePage";
 import NewUserTask from "../pages/navigation/NewUserTask";
 import CouponReceivePage from "../pages/coupon/CouponReceivePage";
 import CouponInfoPage from "../pages/coupon/CouponInfoPage";
+import RoundTripPage from "../pages/fastBtn/RoundTripPage";
+import FastFoodPage from "../pages/fastBtn/FastFoodPage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="FastFoodPage" component={FastFoodPage} hideNavBar/>
+        <Scene key="RoundTripPage" component={RoundTripPage} hideNavBar/>
         <Scene key="CouponInfoPage" component={CouponInfoPage} hideNavBar/>
         <Scene key="CouponReceivePage" component={CouponReceivePage} hideNavBar/>
         <Scene key="NewUserTask" component={NewUserTask} hideNavBar/>

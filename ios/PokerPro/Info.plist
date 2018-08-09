@@ -66,16 +66,6 @@
 				<string>wb1050957035</string>
 			</array>
 		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.deshpro.macauhike</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>macuahike_app</string>
-			</array>
-		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>32</string>

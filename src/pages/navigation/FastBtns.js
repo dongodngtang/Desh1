@@ -6,6 +6,8 @@ import {
 } from 'react-native';
 import {Images, Colors, Metrics} from '../../Themes';
 import {logMsg} from "../../utils/ComonHelper";
+import RoundTripPage from "../fastBtn/RoundTripPage";
+import FastFoodPage from "../fastBtn/FastFoodPage";
 
 const catalogs = [{
     name: '天气',
@@ -57,9 +59,9 @@ export default class FastBtns extends Component {
                         if (item.type === 'weather')
                             router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml')
                         else if (item.type === 'fast_food') {
-                            router.toWebView('快餐热线', 'http://wx.weather.com.cn/mweather/101330101.shtml')
+                            global.router.toFastFoodPage()
                         } else if (item.type === 'round_trip') {
-                            router.toWebView('邮轮往返', 'http://wx.weather.com.cn/mweather/101330101.shtml')
+                            global.router.toRoundTripPage()
                         } else if (item.type === 'convenient') {
                             router.toWebView('便民电话', 'http://wx.weather.com.cn/mweather/101330101.shtml')
                         }

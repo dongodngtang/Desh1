@@ -424,7 +424,8 @@ const images = {
         weather: require('../../source/navigation/weather.png'),
         round_trip: require('../../source/navigation/round_trip.png'),
         fast_food: require('../../source/navigation/fast_food.png'),
-        convenient: require('../../source/navigation/convenient.png')
+        convenient: require('../../source/navigation/convenient.png'),
+        hotline: require('../../source/navigation/hotline.png')
     },
 
 

@@ -11,6 +11,7 @@ import HotelDetail from "../pages/macau/HotelDetail";
 import {SelectTimePage} from "../pages/macau/SelectTimePage";
 import WalletPage from "../pages/wallet/WalletPage";
 import NewUserTask from "../pages/navigation/NewUserTask";
+import FastFoodPage from "../pages/fastBtn/FastFoodPage";
 
 
 const customFloatFromRight = '';
@@ -56,6 +57,18 @@ export default class Router {
     popToTop() {
         getDispatchAction()['BACK_TOP']();
         Actions.popTo('tab_home')
+    }
+
+    toFastFoodPage(){
+        this.stackPush({
+            name:'FastFoodPage'
+        })
+    }
+
+    toRoundTripPage(){
+        this.stackPush({
+            name:'RoundTripPage'
+        })
     }
 
     toCouponInfoPage(item){

@@ -263,9 +263,9 @@ class TabHomePage extends Component {
                         banners={banners}/>
                     <Catalog/>
 
-                    {/*<View style={{width:Metrics.reallySize(Metrics.screenWidth - 34),height:1.6,backgroundColor:'#F3F3F3'}}/>*/}
+                    <View style={{width:Metrics.reallySize(Metrics.screenWidth - 34),height:1.6,backgroundColor:'#F3F3F3'}}/>
 
-                    {/*<FastBtns/>*/}
+                    <FastBtns/>
 
                     {/*<Races*/}
                     {/*raceTickets={raceTickets}/>*/}
