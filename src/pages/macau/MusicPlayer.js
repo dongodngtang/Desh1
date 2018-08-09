@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Platform
+  View, Platform
 } from 'react-native';
 import Sound from 'react-native-sound'
 import {getFileName, logMsg} from "../../utils/ComonHelper";
@@ -19,83 +19,82 @@ Sound.setCategory('Playback');
 export default class MusicPlayer extends Component {
 
 
-    downloadMusic = (fromUrlPath) => {
+  downloadMusic = (fromUrlPath) => {
 
 
-        logMsg('缓存路径', fromUrlPath)
+    logMsg('缓存路径', fromUrlPath)
 
-        try{
-            this.sound = new Sound(fromUrlPath, '', error => {
-                if (error) {
-                    logMsg('播放失败：', error)
-                    return
-                }
-                //设置音量为一半
-                this.sound.setVolume(0.5)
-                //单曲循环 调用stop停止
-                this.sound.setNumberOfLoops(-1)
-                //播放
-                this.sound.play(success => {
-                    if (success) {
-                        logMsg('播放结束...', fromUrlPath)
-                    } else {
-                        logMsg('reset 重试')
-                        this.sound.reset();
-                    }
-                })
-            })
-
-        }catch (e){
-            logMsg(e)
+    try {
+      this.sound = new Sound(fromUrlPath, '', error => {
+        if (error) {
+          logMsg('播放失败：', error)
+          return
         }
-
-
-
-
-    }
-
-    pause = ()=>{
-        console.log("dhsjhdsjd",this)
-        if(this.sound){
-           if(Platform.OS === 'ios'){
-               if( this.sound.isPlaying()){
-                   this.sound && this.sound.pause(msg=>{
-                       logMsg('pause 暂停播放',msg)
-                   })
-               }else{
-                   this.sound.play(msg=>{
-                       logMsg('重新播放')
-                   })
-               }
-           }else{
-               if(this.props.music){
-                   this.sound && this.sound.pause(msg=>{
-                       logMsg('pause 暂停播放',msg)
-                   })
-               }else{
-                   this.sound.play(msg=>{
-                       logMsg('重新播放')
-                   })
-               }
-           }
-        }
-
-    }
-
-    stop = () => {
-        this.sound && this.sound.stop(() => {
-            logMsg('暂停播放')
+        //设置音量为一半
+        this.sound.setVolume(0.5)
+        //单曲循环 调用stop停止
+        this.sound.setNumberOfLoops(-1)
+        //播放
+        this.sound.play(success => {
+          if (success) {
+            logMsg('播放结束...', fromUrlPath)
+          } else {
+            logMsg('reset 重试')
+            this.sound.reset();
+          }
         })
+      })
+
+    } catch (e) {
+      logMsg(e)
     }
 
 
-    componentWillUnmount() {
-        logMsg('暂停播放componentWillUnmount')
-        this.stop()
+  }
+
+  pause = () => {
+    console.log("dhsjhdsjd", this)
+    if (this.sound) {
+      if (Platform.OS === 'ios') {
+        if (this.sound.isPlaying()) {
+          this.sound && this.sound.pause(msg => {
+            logMsg('pause 暂停播放', msg)
+          })
+        } else {
+          this.sound.play(msg => {
+            logMsg('重新播放')
+          })
+        }
+      } else {
+        if (this.props.music) {
+          this.sound && this.sound.pause(msg => {
+            logMsg('pause 暂停播放', msg)
+          })
+        } else {
+          this.sound.play(msg => {
+            logMsg('重新播放')
+          })
+        }
+      }
     }
 
-    render() {
-        return <View/>
-    }
+  }
+
+  stop = () => {
+    this.sound && this.sound.pause()
+    this.sound && this.sound.stop(() => {
+      logMsg('暂停播放')
+    })
+  }
+
+
+  componentWillUnmount() {
+    logMsg('暂停播放componentWillUnmount')
+    this.stop()
+  }
+
+  render() {
+    return <View/>
+  }
 
 }
