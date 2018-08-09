@@ -14,7 +14,7 @@ import {
 import Sound from 'react-native-sound'
 import {getFileName, logMsg} from "../../utils/ComonHelper";
 
-Sound.setCategory('Playback');
+// Sound.setCategory('Playback');
 
 export default class MusicPlayer extends Component {
 
@@ -53,7 +53,6 @@ export default class MusicPlayer extends Component {
   }
 
   pause = () => {
-    console.log("dhsjhdsjd", this)
     if (this.sound) {
       if (Platform.OS === 'ios') {
         if (this.sound.isPlaying()) {
