@@ -102,7 +102,7 @@ export default class CouponPage extends Component {
                                         fontWeight: 'bold'
                                     }}>{reduce_price}</Text></Text>}
 
-                            <View style={{width: coupon_type !== 'offline_store'?120:200, marginLeft: 5, flexDirection: 'column'}}>
+                            <View style={{width: coupon_type !== 'offline_store'?'38%':'62%', marginLeft: 5, flexDirection: 'column'}}>
                                 <Text
                                     style={{color: selectId === 0 ? "#444444" : "#AAAAAA", fontSize: 20}}>{name}</Text>
                             </View>

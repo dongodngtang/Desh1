@@ -86,10 +86,10 @@ export default class CouponSelectPage extends Component {
                                     }}>{reduce_price}</Text></Text>}
                             {/*<Text style={{color: "#F34247", fontSize: 18}}>¥<Text*/}
                             {/*style={{fontSize: 50, fontWeight: 'bold'}}>50</Text></Text>*/}
-                            <View style={{width: 140,marginLeft:5}}>
+                            <View style={{width: '38%',marginLeft:5}}>
                                 <Text style={{
                                     color: "#444444",
-                                    fontSize: name.length > 13 ? 16 : 20,
+                                    fontSize: 18,
                                 }}
                                       numberOfLines={2}>{name}</Text>
                             </View>

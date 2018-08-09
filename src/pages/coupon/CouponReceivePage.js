@@ -93,9 +93,9 @@ export default class CouponReceivePage extends Component {
                                         fontWeight: 'bold'
                                     }}>{reduce_price}</Text></Text>}
 
-                            <View style={{width: 125, flexDirection: 'column'}}>
+                            <View style={{width: '38%', flexDirection: 'column'}}>
                                 <Text
-                                    style={{color: selectId === 0 ? "#444444" : "#AAAAAA", fontSize: 20}}>{name}</Text>
+                                    style={{color: selectId === 0 ? "#444444" : "#AAAAAA", fontSize: 18}}>{name}</Text>
                             </View>
 
                         </View>

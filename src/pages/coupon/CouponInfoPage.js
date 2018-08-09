@@ -85,10 +85,10 @@ export default class CouponInfoPage extends Component {
                                                 fontSize: checkPriceLength(reduce_price),
                                                 fontWeight: 'bold'
                                             }}>{reduce_price}</Text></Text>}
-                                    <View style={{width: 200,marginLeft: 5}}>
+                                    <View style={{width: '62%',marginLeft: 5}}>
                                         <Text style={{
                                             color: "#444444",
-                                            fontSize: 20
+                                            fontSize: 18
                                         }}
                                               numberOfLines={2}>{name}</Text>
                                     </View>
