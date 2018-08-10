@@ -57,7 +57,7 @@ export default class FastBtns extends Component {
                     key={item.name}
                     onPress={() => {
                         if (item.type === 'weather')
-                            router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml')
+                            router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml#1')
                         else if (item.type === 'fast_food') {
                             global.router.toFastFoodPage('fast_food')
                         } else if (item.type === 'round_trip') {

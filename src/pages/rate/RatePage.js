@@ -221,7 +221,6 @@ export class RateTop extends Component {
                                 <View style={{flex: 1}}/>
                                 <View style={{flexDirection: 'column', alignItems: 'flex-end'}}>
                                     <TextInput
-                                        autoFocus={item.showTrue}
                                         keyboardType={'numeric'}
                                         style={{
                                             paddingTop: 0,
