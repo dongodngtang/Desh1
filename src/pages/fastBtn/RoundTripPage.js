@@ -33,7 +33,7 @@ export default class RoundTripPage extends Component {
                     <View  style={{marginLeft:17,marginRight:17,paddingBottom:40}}>
                         <Text style={[styles.txt1,{marginTop:15}]}>一、过境准备</Text>
                         <Text style={[styles.txt2,{marginTop:6}]}>{txt1}</Text>
-                        <Image  style={{width:'100%',height:210,marginTop:6,alignSelf:'center'}} source={Images.fastBtn.round1}/>
+                        <Image  style={{width:'100%',height:230,marginTop:6,alignSelf:'center'}} source={Images.fastBtn.round1}/>
                         <Text style={[styles.txt1,{marginTop:17}]}>二、船票购票流程 </Text>
                         <Text style={[styles.txt3,{marginTop:4}]}>*目前蛇口邮轮的订购方式主要为现场自主买票及微信预定 </Text>
                         <Text style={[styles.txt2,{marginTop:6}]}>1、微信搜索「招商蛇口邮轮码头」，点击关注并进入微信公众号 </Text>
@@ -50,7 +50,7 @@ export default class RoundTripPage extends Component {
                         <Image  style={{width:'100%',height:229,marginTop:14,alignSelf:'center'}} source={Images.fastBtn.round2}/>
                         <Text style={[styles.txt1,{marginTop:18}]}>四、蛇口邮轮码头交通信息 </Text>
                         <Text style={[styles.txt2,{marginTop:6}]}>{txt2}</Text>
-                        <Image  style={{width:'100%',height:276,marginTop:11,alignSelf:'center'}} source={Images.fastBtn.round6}/>
+                        <Image  style={{width:'100%',height:280,marginTop:11,alignSelf:'center'}} source={Images.fastBtn.round6}/>
                     </View>
                 </ScrollView>
             </View>
