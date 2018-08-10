@@ -23,13 +23,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-    			<key>CFBundleURLName</key>
-    			<string>com.deshpro.macauhike</string>
-    			<key>CFBundleURLSchemes</key>
-    			<array>
-    				<string>iosmacauhike</string>
-    			</array>
-    		</dict>
+			<key>CFBundleURLName</key>
+			<string>com.deshpro.macauhike</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>iosmacauhike</string>
+			</array>
+		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -76,7 +76,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>32</string>
+	<string>33</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
