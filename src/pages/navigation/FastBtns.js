@@ -29,7 +29,7 @@ const catalogs = [{
     },
     {
         name: '便民',
-        type: 'convenient',
+        type: 'public_service',
         size: {height: 18, width: 18,marginRight:8},
         icon: Images.navigation2.convenient
     }
@@ -62,8 +62,8 @@ export default class FastBtns extends Component {
                             global.router.toFastFoodPage('fast_food')
                         } else if (item.type === 'round_trip') {
                             global.router.toRoundTripPage()
-                        } else if (item.type === 'convenient') {
-                            global.router.toFastFoodPage('convenient')
+                        } else if (item.type === 'public_service') {
+                            global.router.toFastFoodPage('public_service')
                         }
                     }}
                     style={{

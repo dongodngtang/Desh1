@@ -74,6 +74,10 @@ export default class FastFoodPage extends Component {
                     onFetch={this.onFetch}
                     keyExtractor={(item, index) => `FastFoodPage${index}`}  //this is required when you are using FlatList
                     item={this._renderItem}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
                     waitingSpinnerText={I18n.t('loading')}
                     separator={this._separator}
                     emptyView={() => <Text>暂无信息</Text>}
