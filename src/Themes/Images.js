@@ -214,10 +214,10 @@ const images = {
     verified_exmple: require('../../source/verified/exmple.png'),
     verifed_passport: require('../../source/verified/passport.png'),
 
-    right2:require('../../source/navigation/right2.png'),
-    task_close:require('../../source/navigation/task_close.png'),
-    new_user_task:require('../../source/navigation/new_user_task.png'),
-    lucky_bag:require('../../source/navigation/lucky_bag.png'),
+    right2: require('../../source/navigation/right2.png'),
+    task_close: require('../../source/navigation/task_close.png'),
+    new_user_task: require('../../source/navigation/new_user_task.png'),
+    lucky_bag: require('../../source/navigation/lucky_bag.png'),
     pukes: require('../../source/navigation/pukes.png'),
     raceBegin: require('../../source/navigation/raceBegin.png'),
     is: require('../../source/navigation/is>.png'),
@@ -426,6 +426,14 @@ const images = {
         fast_food: require('../../source/navigation/fast_food.png'),
         convenient: require('../../source/navigation/convenient.png'),
         hotline: require('../../source/navigation/hotline.png')
+    },
+    fastBtn: {
+        round1: require('../../source/fastBtn/round1.jpeg'),
+        round2: require('../../source/fastBtn/round2.jpeg'),
+        round3: require('../../source/fastBtn/round3.jpeg'),
+        round4: require('../../source/fastBtn/round4.jpeg'),
+        round5: require('../../source/fastBtn/round5.jpeg'),
+        round6: require('../../source/fastBtn/round6.jpeg')
     },
 
 

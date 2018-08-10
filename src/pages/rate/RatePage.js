@@ -31,6 +31,7 @@ export default class RatePage extends Component {
                     leftBtnPress={() => router.pop()}/>
 
                 <ScrollView>
+                    <View style={{height:500}}/>
                     <RateTop
                         type={'real_time'}
                         change_time={this.change_time}/>

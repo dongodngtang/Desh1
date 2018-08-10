@@ -20,6 +20,7 @@
 #import "Orientation.h"
 #import <React/RCTLinkingManager.h>
 #import "AlipayModule.h"
+#import <RCTJShareModule.h>
 
 @implementation AppDelegate
 
@@ -102,7 +103,15 @@
   }
 
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  [JSHAREService handleOpenUrl:url];
+  return YES;
+}
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+  [JSHAREService handleOpenUrl:url];
+  return YES;
+}
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
@@ -118,8 +127,11 @@
     result = other;
   }
   [AlipayModule handleCallback:url];
+
+   [JSHAREService handleOpenUrl:url];
   return result;
 }
+
 
 
 @end
