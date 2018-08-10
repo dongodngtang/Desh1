@@ -9,6 +9,13 @@ export function postReceiveCoupons(body, resolve, reject) {
 }
 
 
+export function getHotlines(body, resolve, reject) {
+    helper.get(Api.hotlines, ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
+
 export function getExchange_traders(body, resolve, reject) {
     helper.get(Api.exchange_traders, ret => {
         resolve(ret.data)

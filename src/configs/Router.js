@@ -59,9 +59,12 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
-    toFastFoodPage(){
+    toFastFoodPage(type){
         this.stackPush({
-            name:'FastFoodPage'
+            name:'FastFoodPage',
+            params:{
+                type
+            }
         })
     }
 

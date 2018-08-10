@@ -12,7 +12,7 @@ import FastFoodPage from "../fastBtn/FastFoodPage";
 const catalogs = [{
     name: '天气',
     type: 'weather',
-    size: {height: 25, width: 25,marginRight:8},
+    size: {height: 23, width: 23,marginRight:8},
     icon: Images.navigation2.weather
 },
     {
@@ -59,11 +59,11 @@ export default class FastBtns extends Component {
                         if (item.type === 'weather')
                             router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml')
                         else if (item.type === 'fast_food') {
-                            global.router.toFastFoodPage()
+                            global.router.toFastFoodPage('fast_food')
                         } else if (item.type === 'round_trip') {
                             global.router.toRoundTripPage()
                         } else if (item.type === 'convenient') {
-                            router.toWebView('便民电话', 'http://wx.weather.com.cn/mweather/101330101.shtml')
+                            global.router.toFastFoodPage('convenient')
                         }
                     }}
                     style={{

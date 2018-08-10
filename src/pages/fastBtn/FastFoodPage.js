@@ -1,34 +1,66 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity,
-    ScrollView, InteractionManager,FlatList
+    ScrollView, InteractionManager, FlatList
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import RenderHtml from '../comm/RenderHtml';
-import {getInfos} from '../../services/MacauDao'
-import {isEmptyObject, strNotNull, uShareInfoItem} from "../../utils/ComonHelper";
-import LoadingView from "../../components/load/LoadingView";
+import {getHotlines} from '../../services/MacauDao'
 import RenderItem from './RenderItem';
 import styles from './fastStyles'
+import I18n from "react-native-i18n";
+import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
+import {logMsg, strNotNull} from "../../utils/ComonHelper";
 
 export default class FastFoodPage extends Component {
 
-    _separator=()=>{
+    constructor(props) {
+        super(props)
+        this.type = props.params.type;
+    }
+
+    _separator = () => {
         return (
-            <View style={{height:1,width:'100%',backgroundColor:'#F3F3F3'}}/>
+            <View style={{height: 1, width: '100%', backgroundColor: '#F3F3F3'}}/>
         )
     };
 
-    _renderItem=({item,index})=>{
+    _renderItem = (item, index) => {
         return <RenderItem item={item}/>
     };
 
-    render(){
-        return(
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+
+            this.refresh(page, startFetch, abortFetch);
+        } catch (err) {
+            abortFetch();
+        }
+    };
+
+    _onRefresh = () => {
+        this.listView && this.listView.close()
+    };
+
+    refresh = (page, startFetch, abortFetch) => {
+
+
+        getHotlines({page: page, page_size: 20, line_type: this.type}, data => {
+            logMsg("Hotlines_type:", this.type);
+            logMsg("Hotlines:", data);
+            startFetch(data.items, 16)
+        }, err => {
+            abortFetch();
+        })
+    };
+
+    render() {
+
+        return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    title={'快餐热线'}
+                    title={this.type === 'fast_food' ? '快餐热线' : '便民电话'}
                     toolbarStyle={{
                         backgroundColor: Colors._E54
                     }}
@@ -36,15 +68,16 @@ export default class FastFoodPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}
                 />
-                <ScrollView>
-                    <FlatList
-                        style={{backgroundColor:'white',paddingLeft:17,paddingRight:17}}
-                        data={[1,2,3,4,5,6,7]}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                    />
-                </ScrollView>
+                <UltimateFlatList
+                    firstLoader={true}
+                    ref={(ref) => this.listView = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `FastFoodPage${index}`}  //this is required when you are using FlatList
+                    item={this._renderItem}
+                    waitingSpinnerText={I18n.t('loading')}
+                    separator={this._separator}
+                    emptyView={() => <Text>暂无信息</Text>}
+                />
 
             </View>
         )
