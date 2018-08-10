@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView
+    StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView, KeyboardAvoidingView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes/index';
 import {NavigationBar} from '../../components/index';
@@ -50,8 +50,10 @@ export default class LocalRatePage extends Component {
                     leftBtnPress={() => router.pop()}/>
 
                 <ScrollView style={{backgroundColor: 'white'}}>
-                    <RateTop
-                        type={'local'}/>
+                    <KeyboardAvoidingView behavior='position'  keyboardVerticalOffset={20}>
+                        <RateTop
+                            type={'local'}/>
+                    </KeyboardAvoidingView>
 
                     <View style={{
                         paddingTop: 17,
@@ -68,7 +70,7 @@ export default class LocalRatePage extends Component {
                                 <View key={index} style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
                                     <TouchableOpacity
 
-                                        style={{marginBottom:5}}
+                                        style={{marginBottom: 5}}
                                         onPress={() => {
                                             this.setState({
                                                 trader_type: item.type,
@@ -83,14 +85,18 @@ export default class LocalRatePage extends Component {
                                         </Text>
                                     </TouchableOpacity>
                                     {show_index === item.id ?
-                                        <View style={{width: item.name.length*15, height: 1.5, backgroundColor: '#E54A2E'}}/> : null}
+                                        <View style={{
+                                            width: item.name.length * 15,
+                                            height: 1.5,
+                                            backgroundColor: '#E54A2E'
+                                        }}/> : null}
 
                                 </View>
                             )
                         })}
                     </View>
                     <Leaderboard
-                        category={categories[this.state.show_index-1]}/>
+                        category={categories[this.state.show_index - 1]}/>
 
                 </ScrollView>
 

@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView,findNodeHandle
+    StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView,findNodeHandle,KeyboardAvoidingView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes/index';
 import {NavigationBar, BaseComponent} from '../../components/index';
@@ -31,10 +31,12 @@ export default class RatePage extends Component {
                     leftBtnPress={() => router.pop()}/>
 
                 <ScrollView>
-                    <View style={{height:500}}/>
-                    <RateTop
-                        type={'real_time'}
-                        change_time={this.change_time}/>
+                    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={20}>
+                        <RateTop
+                            type={'real_time'}
+                            change_time={this.change_time}/>
+                    </KeyboardAvoidingView>
+
 
                     <TouchableOpacity
                         onPress={() => {
