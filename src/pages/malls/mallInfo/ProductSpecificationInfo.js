@@ -288,7 +288,7 @@ const styleP = StyleSheet.create({
         zIndex: 999
     },
     specificationInfo: {
-        marginTop: 160,
+        marginTop: 160,paddingBottom:100,
         backgroundColor: '#EEEEEE'
     },
     specificationInfoTop: {

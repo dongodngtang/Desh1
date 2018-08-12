@@ -56,55 +56,59 @@ export default class Withdraw extends Component {
 
                 }}/>
 
+            <ScrollView>
+                <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={20}>
 
-                <KeyboardAvoidingView style={styles.card2}>
-                    <Text style={styles.txt_withdraw}>提现金额</Text>
-                    <View style={styles.item_input}>
-                        <Text style={[styles.money, {marginRight: 8}]}>¥</Text>
-                        <TextInput
-                            // autoFocus={true}
-                            keyboardType={'numeric'}
-                            style={{
-                                width: 300,
-                                paddingTop: 0,
-                                paddingBottom: 0,
-                                fontSize: strNotNull(amount) ? 30 : 20,
-                                fontWeight: 'bold',
-                                color: '#444444'
-                            }}
-                            maxLength={4}
-                            numberOfLines={1}
-                            placeholderTextColor={'#CCCCCC'}
-                            placeholder={strNotNull(amount) ? '' : '输入提现金额'}
-                            clearTextOnFocus={true}
-                            underlineColorAndroid={'transparent'}
-                            value={amount}
-                            onChangeText={txt => {
-                                let show = prompt_show;
-                                if (Number.parseFloat(txt) > Number.parseFloat(total_account)) {
-                                    show = true;
-                                } else {
-                                    show = false;
+                    <View style={styles.card2}>
+                        <Text style={styles.txt_withdraw}>提现金额</Text>
+                        <View style={styles.item_input}>
+                            <Text style={[styles.money, {marginRight: 8}]}>¥</Text>
+                            <TextInput
+                                // autoFocus={true}
+                                keyboardType={'numeric'}
+                                style={{
+                                    width: 300,
+                                    paddingTop: 0,
+                                    paddingBottom: 0,
+                                    fontSize: strNotNull(amount) ? 30 : 20,
+                                    fontWeight: 'bold',
+                                    color: '#444444'
+                                }}
+                                maxLength={4}
+                                numberOfLines={1}
+                                placeholderTextColor={'#CCCCCC'}
+                                placeholder={strNotNull(amount) ? '' : '输入提现金额'}
+                                clearTextOnFocus={true}
+                                underlineColorAndroid={'transparent'}
+                                value={amount}
+                                onChangeText={txt => {
+                                    let show = prompt_show;
+                                    if (Number.parseFloat(txt) > Number.parseFloat(total_account)) {
+                                        show = true;
+                                    } else {
+                                        show = false;
 
-                                }
-                                this.setState({
-                                    prompt_show: show,
-                                    amount: txt
-                                })
-                            }}
+                                    }
+                                    this.setState({
+                                        prompt_show: show,
+                                        amount: txt
+                                    })
+                                }}
 
-                        />
+                            />
+                        </View>
+                        <TouchableOpacity style={styles.view_can} onPress={() => {
+                            this.setState({
+                                amount: total_account
+                            })
+                        }}>
+                            <Text style={styles.can_money}>{`可提现￥${total_account}元`}</Text>
+                            <Text style={styles.all_get}>全部提现</Text>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.view_can} onPress={() => {
-                        this.setState({
-                            amount: total_account
-                        })
-                    }}>
-                        <Text style={styles.can_money}>{`可提现￥${total_account}元`}</Text>
-                        <Text style={styles.all_get}>全部提现</Text>
-                    </TouchableOpacity>
 
-                </KeyboardAvoidingView>
+
+
 
                 <View style={styles.view_desc}>
                     <Text
@@ -220,8 +224,8 @@ export default class Withdraw extends Component {
                         <Text style={styles.txt_cash}>立即提现</Text>
                     </TouchableOpacity>
                 </View>
-
-
+                </KeyboardAvoidingView>
+        </ScrollView>
 
             <PopAction
                 ref={ref => this.popAction = ref}

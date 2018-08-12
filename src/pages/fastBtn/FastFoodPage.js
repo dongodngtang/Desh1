@@ -80,7 +80,7 @@ export default class FastFoodPage extends Component {
                     allLoadedText={I18n.t('no_more')}
                     waitingSpinnerText={I18n.t('loading')}
                     separator={this._separator}
-                    emptyView={() => <Text>暂无信息</Text>}
+                    emptyView={() => <View  style={{alignItems:'center',justifyContent:'center'}}><Text>暂无信息</Text></View>}
                 />
 
             </View>
