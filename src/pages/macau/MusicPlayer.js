@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Platform,AppState
+    View, Platform, AppState
 } from 'react-native';
 import Sound from 'react-native-sound'
 import {getFileName, logMsg} from "../../utils/ComonHelper";
@@ -56,9 +56,15 @@ export default class MusicPlayer extends Component {
         if (this.sound) {
             if (Platform.OS === 'ios') {
                 if (this.sound.isPlaying()) {
-                    this.sound && this.sound.pause(msg => {
-                        logMsg('pause 暂停播放', msg)
-                    })
+                    if (AppState.currentState !== 'active') {
+                        this.sound && this.sound.pause(msg => {
+                            logMsg('pause 暂停播放', msg)
+                        })
+                    } else if (AppState.currentState === 'active') {
+                        this.sound.play(msg => {
+                            logMsg('重新播放')
+                        })
+                    }
                 } else {
                     this.sound.play(msg => {
                         logMsg('重新播放')
@@ -66,9 +72,16 @@ export default class MusicPlayer extends Component {
                 }
             } else {
                 if (this.props.music) {
-                    this.sound && this.sound.pause(msg => {
-                        logMsg('pause 暂停播放', msg)
-                    })
+                    if (AppState.currentState !== 'active') {
+                        this.sound && this.sound.pause(msg => {
+                            logMsg('pause 暂停播放', msg)
+                        })
+                    } else if (AppState.currentState === 'active') {
+                        this.sound.play(msg => {
+                            logMsg('重新播放')
+                        })
+                    }
+
                 } else {
                     this.sound.play(msg => {
                         logMsg('重新播放')
@@ -91,17 +104,15 @@ export default class MusicPlayer extends Component {
     componentWillUnmount() {
         logMsg('暂停播放componentWillUnmount')
         this.stop();
-        AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
     }
 
     componentDidMount() {
         AppState.addEventListener('change', this.handleAppStateChange.bind(this));
+        // this.pause()
     }
 
     handleAppStateChange(currentAppState) {
-        if (currentAppState !== 'active') {
-            this.pause()
-        }
+        this.pause()
     }
 
     render() {
