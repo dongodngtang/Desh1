@@ -45,7 +45,7 @@ export default class Leaderboard extends Component {
             return <Image style={{width: Metrics.reallySize(18), height: Metrics.reallySize(25)}}
                           source={Images.three}/>
         } else {
-            return <Text style={[styles.txt_num, {width: 25}]}>{index + 1}</Text>
+            return <Text style={[styles.txt_num, {width: 18}]}>{index + 1}</Text>
         }
     };
 
