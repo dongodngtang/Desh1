@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Platform
+    View, Platform,AppState
 } from 'react-native';
 import Sound from 'react-native-sound'
 import {getFileName, logMsg} from "../../utils/ComonHelper";
@@ -90,7 +90,18 @@ export default class MusicPlayer extends Component {
 
     componentWillUnmount() {
         logMsg('暂停播放componentWillUnmount')
-        this.stop()
+        this.stop();
+        AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
+    }
+
+    componentDidMount() {
+        AppState.addEventListener('change', this.handleAppStateChange.bind(this));
+    }
+
+    handleAppStateChange(currentAppState) {
+        if (currentAppState !== 'active') {
+            this.pause()
+        }
     }
 
     render() {
