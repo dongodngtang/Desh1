@@ -29,7 +29,7 @@ export default class InvitePage extends Component {
             this.setState({invite_count: data})
         })
 
-        user_invite(data => {
+        user_invite({page:1,page_size:4},data => {
             console.log('我的邀请好友', data);
 
             this.setState({user_invite: data})

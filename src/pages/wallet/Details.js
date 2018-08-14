@@ -11,7 +11,6 @@ import {NavigationBar} from '../../components';
 import {account_details, award_details} from "../../services/WallDao";
 import I18n from "react-native-i18n";
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
-import {postIntegralDetails} from "../../services/IntegralDao";
 
 export default class Details extends Component {
 
@@ -79,19 +78,15 @@ export default class Details extends Component {
             if (this.props.type === 'WalletDetails') {
                 account_details({page, page_size: 20}, data => {
                     console.log('wallet_details', data);
-                    this.contain && this.contain.close();
                     startFetch(data.items, 18)
                 }, err => {
-                    this.contain && this.contain.close();
                     abortFetch()
                 })
             } else if (this.props.type === 'AwardDetail') {
                 award_details({page, page_size: 20}, data => {
                     console.log('award_details', data);
-                    this.contain && this.contain.close();
                     startFetch(data.items, 18)
                 }, err => {
-                    this.contain && this.contain.close();
                     abortFetch()
                 })
             }

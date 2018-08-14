@@ -67,10 +67,8 @@ export default class IntegralDetailsPage extends Component {
         try {
             postIntegralDetails({page, page_size: 20}, data => {
                 console.log('details', data);
-                this.contain && this.contain.close();
                 startFetch(data.items, 18)
             }, err => {
-                this.contain && this.contain.close();
                 abortFetch()
             })
         } catch (err) {

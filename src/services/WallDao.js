@@ -23,10 +23,10 @@ export function other_invite(body, resolve, reject) {
     }, reject, body)
 }
 
-export function user_invite(resolve, reject) {
+export function user_invite(body,resolve, reject) {
     helper.get(Api.user_invite, ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject,body)
 }
 
 export function invite_count(resolve, reject) {
