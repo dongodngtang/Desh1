@@ -41,35 +41,23 @@ export default class Details extends Component {
     }
 
     render() {
-        const {details} = this.props;
-        // let details=[1,2,3,4]
         return (
 
-            <ScrollView style={styles.View}>
-                <View style={{height: 7}}/>
-                <UltimateFlatList
-                    style={{backgroundColor: 'white'}}
-                    ref={(ref) => this.listView = ref}
-                    onFetch={this.onFetch}
-                    keyExtractor={(item, index) => `IntegralDetailsPage${index}`}
-                    item={this._renderItem}
-                    separator={this._separator}
-                    refreshableTitlePull={I18n.t('pull_refresh')}
-                    refreshableTitleRelease={I18n.t('release_refresh')}
-                    dateTitle={I18n.t('last_refresh')}
-                    allLoadedText={I18n.t('no_more')}
-                    waitingSpinnerText={I18n.t('loading')}
-                    emptyView={() => <View/>}
-                />
-                {/*{isEmptyObject(details)? <View/> : <FlatList*/}
-                {/*style={{backgroundColor: 'white'}}*/}
-                {/*data={details}*/}
-                {/*showsHorizontalScrollIndicator={false}*/}
-                {/*ItemSeparatorComponent={this._separator}*/}
-                {/*renderItem={this._renderItem}*/}
-                {/*keyExtractor={(item, index) => `details${index}`}*/}
-                {/*/>}*/}
-            </ScrollView>
+            <UltimateFlatList
+                header={() => <View style={{height: 7, backgroundColor: Colors._ECE}}/>}
+                style={{backgroundColor: 'white',paddingBottom:40}}
+                ref={(ref) => this.listView = ref}
+                onFetch={this.onFetch}
+                keyExtractor={(item, index) => `IntegralDetailsPage${index}`}
+                item={this._renderItem}
+                separator={this._separator}
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={I18n.t('loading')}
+                emptyView={() => <View/>}
+            />
         )
     }
 

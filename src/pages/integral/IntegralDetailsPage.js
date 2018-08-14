@@ -43,22 +43,21 @@ export default class IntegralDetailsPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <ScrollView style={styles.View}>
-                    <UltimateFlatList
-                        style={{backgroundColor: 'white'}}
-                        ref={(ref) => this.listView = ref}
-                        onFetch={this.onFetch}
-                        keyExtractor={(item, index) => `IntegralDetailsPage${index}`}
-                        item={this._renderItem}
-                        separator={this._separator}
-                        refreshableTitlePull={I18n.t('pull_refresh')}
-                        refreshableTitleRelease={I18n.t('release_refresh')}
-                        dateTitle={I18n.t('last_refresh')}
-                        allLoadedText={I18n.t('no_more')}
-                        waitingSpinnerText={I18n.t('loading')}
-                        emptyView={() => <View/>}
-                    />
-                </ScrollView>
+                <UltimateFlatList
+                    header={() => <View style={{height: 5, backgroundColor: Colors._ECE}}/>}
+                    style={{backgroundColor: 'white',paddingBottom:40}}
+                    ref={(ref) => this.listView = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `IntegralDetailsPage${index}`}
+                    item={this._renderItem}
+                    separator={this._separator}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    emptyView={() => <View/>}
+                />
             </View>
         )
     }

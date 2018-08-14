@@ -8,17 +8,20 @@ import {
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
 import ImageLoad from "../../components/ImageLoad";
+import I18n from "react-native-i18n";
+import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
+import {user_invite} from "../../services/WallDao";
 
 export default class InviteDetails extends Component {
 
 
-    _renderItem = ({item, index}) => {
+    _renderItem = (item, index) => {
         const {user_id, nick_name, avatar} = item;
-        const {type,next_step} = this.props;
+        const {type, next_step} = this.props;
         return (
             <TouchableOpacity style={styles.pageItem}
                               onPress={() => {
-                                  if(type === '2' && next_step){
+                                  if (type === '2' && next_step) {
                                       global.router.toOtherInvitePage(item)
                                   }
                               }}>
@@ -41,25 +44,45 @@ export default class InviteDetails extends Component {
 
     _separator = () => {
         return <View style={{backgroundColor: '#F3F3F3', height: 2, width: '100%'}}/>
-    }
+    };
 
     render() {
-        const {invites} = this.props;
         return (
 
-            <ScrollView style={styles.View}>
-                <View style={{height:1}}/>
-                {isEmptyObject(invites) ? <View/> : <FlatList
-                    style={{backgroundColor: 'white'}}
-                    data={invites}
-                    showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => `details${index}`}
-                />}
-            </ScrollView>
+            <UltimateFlatList
+                header={() => <View style={{height: 1, backgroundColor: Colors._ECE}}/>}
+                pagination={false}
+                style={{backgroundColor: 'white',paddingBottom:80}}
+                ref={(ref) => this.listView = ref}
+                onFetch={this.onFetch}
+                keyExtractor={(item, index) => `IntegralDetailsPage${index}`}
+                item={this._renderItem}
+                separator={this._separator}
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={I18n.t('loading')}
+                emptyView={() => <View/>}
+            />
         )
     }
+
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+
+            user_invite({page, page_size: 20}, data => {
+                console.log('user_invite', data);
+                startFetch(data.items, 18)
+
+            }, err => {
+                abortFetch()
+            })
+
+        } catch (err) {
+            abortFetch();
+        }
+    };
 
 }
 
