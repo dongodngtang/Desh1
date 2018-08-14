@@ -8,12 +8,14 @@ import {
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
 import {NavigationBar} from '../../components';
-import {award_details} from "../../services/WallDao";
-
+import {account_details, award_details} from "../../services/WallDao";
+import I18n from "react-native-i18n";
+import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
+import {postIntegralDetails} from "../../services/IntegralDao";
 
 export default class Details extends Component {
 
-    _renderItem = ({item, index}) => {
+    _renderItem = (item, index) => {
         const {memo, amount, created_at} = item;
 
         return (
@@ -39,24 +41,65 @@ export default class Details extends Component {
         return <View style={{backgroundColor: '#F3F3F3', height: 2, width: '100%'}}/>
     }
 
-    render(){
+    render() {
         const {details} = this.props;
         // let details=[1,2,3,4]
-        return(
+        return (
 
             <ScrollView style={styles.View}>
-                <View style={{height:7}}/>
-                {isEmptyObject(details)? <View/> : <FlatList
+                <View style={{height: 7}}/>
+                <UltimateFlatList
                     style={{backgroundColor: 'white'}}
-                    data={details}
-                    showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => `details${index}`}
-                />}
+                    ref={(ref) => this.listView = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `IntegralDetailsPage${index}`}
+                    item={this._renderItem}
+                    separator={this._separator}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    emptyView={() => <View/>}
+                />
+                {/*{isEmptyObject(details)? <View/> : <FlatList*/}
+                {/*style={{backgroundColor: 'white'}}*/}
+                {/*data={details}*/}
+                {/*showsHorizontalScrollIndicator={false}*/}
+                {/*ItemSeparatorComponent={this._separator}*/}
+                {/*renderItem={this._renderItem}*/}
+                {/*keyExtractor={(item, index) => `details${index}`}*/}
+                {/*/>}*/}
             </ScrollView>
         )
     }
+
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+            if (this.props.type === 'WalletDetails') {
+                account_details({page, page_size: 20}, data => {
+                    console.log('wallet_details', data);
+                    this.contain && this.contain.close();
+                    startFetch(data.items, 18)
+                }, err => {
+                    this.contain && this.contain.close();
+                    abortFetch()
+                })
+            } else if (this.props.type === 'AwardDetail') {
+                award_details({page, page_size: 20}, data => {
+                    console.log('award_details', data);
+                    this.contain && this.contain.close();
+                    startFetch(data.items, 18)
+                }, err => {
+                    this.contain && this.contain.close();
+                    abortFetch()
+                })
+            }
+
+        } catch (err) {
+            abortFetch();
+        }
+    };
 
 }
 
@@ -95,7 +138,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     itemLeft: {
-        width:'66%',
+        width: '66%',
         flexDirection: 'column',
         marginLeft: 17
     }

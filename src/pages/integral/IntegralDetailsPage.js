@@ -8,8 +8,9 @@ import {
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
 import {NavigationBar} from '../../components';
-import {postIntegralDetails} from "../../services/IntegralDao";
-
+import {getIntrgralMall, postIntegralDetails} from "../../services/IntegralDao";
+import I18n from "react-native-i18n";
+import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 
 export default class IntegralDetailsPage extends Component {
 
@@ -18,16 +19,16 @@ export default class IntegralDetailsPage extends Component {
     };
 
     componentDidMount() {
-        postIntegralDetails({}, data => {
-            console.log('details', data);
-            let details2 = [];
-            data.items.forEach((item) => {
-                if (item.points !== 0) {
-                    details2.push(item)
-                }
-            })
-            this.setState({details: details2})
-        })
+        // postIntegralDetails({}, data => {
+        //     console.log('details', data);
+        //     let details2 = [];
+        //     data.items.forEach((item) => {
+        //         if (item.points !== 0) {
+        //             details2.push(item)
+        //         }
+        //     })
+        //     this.setState({details: details2})
+        // })
     }
 
     render() {
@@ -43,20 +44,42 @@ export default class IntegralDetailsPage extends Component {
                     leftBtnPress={() => router.pop()}/>
 
                 <ScrollView style={styles.View}>
-                    {isEmptyObject(details) ? <View/> : <FlatList
+                    <UltimateFlatList
                         style={{backgroundColor: 'white'}}
-                        data={details}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `commodities${index}`}
-                    />}
+                        ref={(ref) => this.listView = ref}
+                        onFetch={this.onFetch}
+                        keyExtractor={(item, index) => `IntegralDetailsPage${index}`}
+                        item={this._renderItem}
+                        separator={this._separator}
+                        refreshableTitlePull={I18n.t('pull_refresh')}
+                        refreshableTitleRelease={I18n.t('release_refresh')}
+                        dateTitle={I18n.t('last_refresh')}
+                        allLoadedText={I18n.t('no_more')}
+                        waitingSpinnerText={I18n.t('loading')}
+                        emptyView={() => <View/>}
+                    />
                 </ScrollView>
             </View>
         )
     }
 
-    _renderItem = ({item, index}) => {
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+            postIntegralDetails({page, page_size: 20}, data => {
+                console.log('details', data);
+                this.contain && this.contain.close();
+                startFetch(data.items, 18)
+            }, err => {
+                this.contain && this.contain.close();
+                abortFetch()
+            })
+        } catch (err) {
+            abortFetch();
+        }
+    };
+
+
+    _renderItem = (item, index) => {
         const {active_at, category, created_at, mark, option_type, points} = item;
 
         return (

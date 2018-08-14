@@ -17,13 +17,6 @@ export default class WalletDetailsPage extends Component {
         wallet_details: {}
     };
 
-    componentDidMount() {
-        account_details(data => {
-            console.log('wallet_details', data);
-
-            this.setState({wallet_details: data})
-        })
-    }
 
     render() {
         const {wallet_details} = this.state;
@@ -37,7 +30,7 @@ export default class WalletDetailsPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                {isEmptyObject(wallet_details) ? null : <Details details={wallet_details.items}/>}
+                <Details type={'WalletDetails'}/>
 
 
             </View>

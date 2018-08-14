@@ -17,13 +17,7 @@ export default class AwardDetailPage extends Component {
         award_details: []
     };
 
-    componentDidMount() {
-        award_details(data => {
-            console.log('award_details', data);
 
-            this.setState({award_details: data.items})
-        })
-    }
 
     render() {
         const {award_details} = this.state;
@@ -38,7 +32,7 @@ export default class AwardDetailPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <Details details={award_details}/>
+                <Details type={'AwardDetail'}/>
 
 
             </View>

@@ -35,10 +35,10 @@ export function invite_count(resolve, reject) {
     }, reject)
 }
 
-export function award_details(resolve, reject) {
+export function award_details(body,resolve, reject) {
     helper.get(Api.award_details, ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject,body)
 }
 
 export function wallet_account(resolve, reject) {
@@ -47,10 +47,10 @@ export function wallet_account(resolve, reject) {
     }, reject)
 }
 
-export function account_details(resolve, reject) {
+export function account_details(body,resolve, reject) {
     helper.get(Api.account_details, ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject,body)
 }
 
 export function display_check(resolve, reject) {
