@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import {Image,Platform} from 'react-native';
 import Html from 'react-native-render-html';
 import ImageMark from '../../components/ImageMark'
 import {IGNORED_TAGS} from 'react-native-render-html/src/HTMLUtils';

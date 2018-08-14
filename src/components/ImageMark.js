@@ -2,7 +2,7 @@
  * Created by lorne on 2017/4/21.
  */
 import React, {Component} from 'react';
-import {ActivityIndicator, TouchableOpacity, View, Image} from 'react-native';
+import {ActivityIndicator, TouchableOpacity, View, Image, Platform} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
 import PropTypes from 'prop-types';
 import {strNotNull, util} from '../utils/ComonHelper';
@@ -62,6 +62,12 @@ export default class ImageMark extends Component {
         const {success} = this.state;
 
         const {src} = this.props;
+        if(Platform.OS !== 'ios' && (src.substr(src.lastIndexOf(".")+1)) === 'gif'){
+            return <Image style={{
+                width: this.state.width,
+                height: this.state.height
+            }} source={{uri:src}}/>
+        }
         return (
             <TouchableOpacity
                 activeOpacity={0.5}
