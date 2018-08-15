@@ -12,7 +12,7 @@ import {reallySize} from "./Header";
 import {ImageLoad, NavigationBar, UltimateListView} from '../../components'
 import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from '../../Themes';
-import HTML from 'react-native-render-html';
+import Html from 'react-native-render-html';
 import {
     topics_like, topics_details, topics_comments,
     follow, report_topic
@@ -132,9 +132,24 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginLeft: 17,
         marginRight: 17,
-        marginTop: 10
+        marginTop: 10,
+        letterSpacing: 1,
+        lineHeight:18
     }
 })
+
+const tagsStyles = {
+    p: {
+        marginTop: 1,
+        marginBottom: 1,
+        paddingTop: 0,
+        paddingBottom: 0,
+        fontSize: 16,
+        color: Colors.txt_444,
+        letterSpacing: 1,
+        lineHeight:18
+    }
+}
 
 export default class LongArticle extends PureComponent {
 
@@ -284,8 +299,8 @@ export default class LongArticle extends PureComponent {
         let data = reportList[index];
         let body = {
             body: data.name,
-            target_id:id,
-            target_type:'topic'
+            target_id: id,
+            target_type: 'topic'
         };
         report_topic(body, (ret) => {
             showToast(I18n.t('report_success'));
@@ -324,8 +339,10 @@ export default class LongArticle extends PureComponent {
         return <View>
             <View style={{backgroundColor: 'white'}}>
                 <View style={styles.info}>
-                    {strNotNull(title) ? <View style={{flexDirection: 'row', alignItems: 'center',
-                    marginTop:10,marginBottom:10}}>
+                    {strNotNull(title) ? <View style={{
+                        flexDirection: 'row', alignItems: 'center',
+                        marginTop: 10, marginBottom: 10
+                    }}>
                         <Text
                             numberOfLines={2}
                             style={styles.title}>{title}</Text>
@@ -382,18 +399,12 @@ export default class LongArticle extends PureComponent {
 
 
                 {body_type === 'long' ? <View style={{paddingLeft: 17, paddingRight: 17}}>
-                    <HTML
+                    <Html
+                        tagsStyles={tagsStyles}
                         imagesMaxWidth={Metrics.screenWidth - 34}
                         html={body}
-                        tagsStyles={{
-                            p: {
-                                color: Colors.txt_444,
-                                fontSize: 15,
-                                lineHeight: 25,
-                                marginTop: 14,
-                                marginBottom: 14
-                            }
-                        }}/>
+
+                    />
                 </View> : this.short(this.state.article)}
 
 

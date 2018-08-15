@@ -50,7 +50,8 @@ export const styles = StyleSheet.create({
         color: Colors.txt_444,
         fontSize: reallySize(16),
         paddingRight: reallySize(17),
-        paddingLeft: reallySize(17)
+        paddingLeft: reallySize(17),
+        lineHeight:18
     },
     bottom: {
         height: reallySize(38),
