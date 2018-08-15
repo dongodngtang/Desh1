@@ -250,7 +250,7 @@ export function uShareRegistered() {
 export function uShareMallInfo(title, desc, icon, id) {
     let param = {
         shareTitle: title,
-        shareText: I18n.t('ads_poker'),
+        shareText: strNotNull(desc) ? desc : I18n.t('ads_poker'),
         shareImage: getShareIcon(icon),
         shareLink: shareHost() + "products/" + id,
     };
@@ -260,7 +260,7 @@ export function uShareMallInfo(title, desc, icon, id) {
 export function uShareInfoItem(title, desc, icon, id) {
     let param = {
         shareTitle: title,
-        shareText: I18n.t('ads_poker'),
+        shareText: strNotNull(desc) ? desc : I18n.t('ads_poker'),
         shareImage: getShareIcon(icon),
         shareLink: shareHost() + "infos/" + id,
     };
@@ -339,7 +339,7 @@ export function toDecimal(x) {
 
 //根据路径获取文件名
 export function getFileName(o) {
-    logMsg('文件路径',o)
+    logMsg('文件路径', o)
     let pos = o.lastIndexOf("/");
     return o.substring(pos + 1);
 }
@@ -1444,15 +1444,16 @@ export function checkZip(zip) {
 }
 
 let reg = /^[0-9]+$/
+
 export function checkPriceLength(price) {
-    if(reg.test(price)){
-        if(price < 1000){
+    if (reg.test(price)) {
+        if (price < 1000) {
             return 40
-        }else if(price >= 1000 && price < 10000){
+        } else if (price >= 1000 && price < 10000) {
             return 35
-        }else if(price >= 10000 && price < 100000){
+        } else if (price >= 10000 && price < 100000) {
             return 28
-        }else{
+        } else {
             return 18
         }
     }
