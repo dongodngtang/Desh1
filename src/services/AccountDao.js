@@ -29,6 +29,14 @@ export function report_templates() {
     // })
 }
 
+export function getContacts(resolve, reject) {
+    helper.get(Api.contacts, ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
+
 export function releases_show(resolve, reject) {
     helper.get(Api.releases_show, ret => {
         resolve(ret.data);
