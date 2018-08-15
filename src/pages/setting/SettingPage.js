@@ -141,7 +141,7 @@ class SettingPage extends Component {
             <TouchableOpacity
                 style={{backgroundColor: Colors.setting, marginTop: 10, height: 50, justifyContent: 'center'}}
                 onPress={() => {
-                    call()
+                    call(contacts.mobile)
                 }}>
                 <Text style={[Fonts.H17, {marginLeft: 17, marginRight: 17, color: '#333333', fontSize: 16}]}>联系电话：<Text
                     selectable={true}>{contacts.mobile}</Text></Text>
