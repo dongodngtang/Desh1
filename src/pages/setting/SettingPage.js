@@ -26,8 +26,7 @@ import {getContacts} from "../../services/AccountDao";
 
 class SettingPage extends Component {
     state = {
-        DESTRUCTIVE_INDEX: 1,
-        contacts:{}
+        DESTRUCTIVE_INDEX: 1
     }
 
 
@@ -48,18 +47,11 @@ class SettingPage extends Component {
                 DESTRUCTIVE_INDEX: fontIndex
             })
         })
-
-        getContacts(data => {
-            this.setState({
-                contacts:data
-            })
-        }, err => {
-        })
     }
 
 
     render() {
-        const {DESTRUCTIVE_INDEX,contacts} = this.state;
+        const {DESTRUCTIVE_INDEX} = this.state;
 
         return (<View
             testID="page_setting"
@@ -139,18 +131,15 @@ class SettingPage extends Component {
             </View>
 
             <TouchableOpacity
-                style={{backgroundColor: Colors.setting, marginTop: 10, height: 50, justifyContent: 'center'}}
+                style={{backgroundColor: Colors.setting, marginTop: 10, height: 50,flexDirection:'row', alignItems: 'center'}}
                 onPress={() => {
-                    call(contacts.mobile)
+                    global.router.toBusinessPage()
                 }}>
-                <Text style={[Fonts.H17, {marginLeft: 17, marginRight: 17, color: '#333333', fontSize: 16}]}>联系电话：<Text
-                    selectable={true}>{contacts.mobile}</Text></Text>
-            </TouchableOpacity
-            >
-            <View style={{backgroundColor: Colors.setting, marginTop: 1, height: 50, justifyContent: 'center'}}>
-                <Text style={[Fonts.H17, {marginLeft: 17, marginRight: 17, color: '#333333', fontSize: 16}]}>联系邮箱：<Text
-                    selectable={true}>{contacts.email}</Text></Text>
-            </View>
+                <Text style={[Fonts.H17, {marginLeft: 17, marginRight: 17, color: '#333333', fontSize: 16}]}>商务合作</Text>
+                <View style={{flex:1}}/>
+                <Image style={{height: 15, width: 8,marginRight:17}}
+                       source={Images.set_more}/>
+            </TouchableOpacity>
 
 
             <View style={{flex: 1}}/>
