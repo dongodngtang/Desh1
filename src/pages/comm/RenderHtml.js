@@ -17,7 +17,7 @@ let img = (props) => {
         height={props.height}/>
 
 }
-const tagsStyles= { p: {marginTop:1,marginBottom:1,paddingTop:0,paddingBottom:0} }
+const tagsStyles= { p: {marginTop:1,marginBottom:1,paddingTop:0,paddingBottom:0,fontSize:14,color:'rgb(32, 32, 32)',letterSpacing:1.6} }
 
 export default class RenderHtml extends PureComponent {
 

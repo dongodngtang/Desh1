@@ -85,6 +85,7 @@ export default class InfoPage extends PureComponent {
                             fontSize: 17,
                             color: Colors.txt_444,
                             marginTop: 12,
+                            marginBottom:4,
                             fontWeight: 'bold'
                         }}>{title}</Text>
 
