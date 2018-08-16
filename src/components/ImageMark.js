@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, TouchableOpacity, View, Image, Platform} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
 import PropTypes from 'prop-types';
-import {strNotNull, util} from '../utils/ComonHelper';
+import {logMsg, strNotNull, util} from '../utils/ComonHelper';
 
 
 export default class ImageMark extends Component {
@@ -62,12 +62,14 @@ export default class ImageMark extends Component {
         const {success} = this.state;
 
         const {src} = this.props;
-        if(Platform.OS !== 'ios' && (src.substr(src.lastIndexOf(".")+1)) === 'gif'){
-            return <Image style={{
-                width: this.state.width,
-                height: this.state.height
-            }} source={{uri:src}}/>
-        }
+
+        // if(Platform.OS !== 'ios' && (src.substr(src.lastIndexOf(".")+1)) === 'gif'){
+        //     logMsg('jsakjskaja',this.props)
+        //     return <Image style={{
+        //         width: this.state.width,
+        //         height: this.state.height
+        //     }} source={{uri:src}}/>
+        // }
         return (
             <TouchableOpacity
                 activeOpacity={0.5}

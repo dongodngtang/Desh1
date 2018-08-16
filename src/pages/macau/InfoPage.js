@@ -55,7 +55,7 @@ export default class InfoPage extends PureComponent {
                 </View>
             )
         }
-        const {description, title, image, id, exist_coupon, audio_link} = info;
+        const {description, title, image, id, exist_coupon, audio_link,intro} = info;
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 title={title}
@@ -68,7 +68,7 @@ export default class InfoPage extends PureComponent {
                 rightBtnIcon={Images.share2}
                 rightImageStyle={{height: 20, width: 19, marginLeft: 20, marginRight: 20}}
                 rightBtnPress={() => {
-                    uShareInfoItem(title, description, image, id)
+                    uShareInfoItem(title, intro, image, id)
                 }}/>
 
             {isEmptyObject(description) ? <LoadingView/> : <ScrollView>
