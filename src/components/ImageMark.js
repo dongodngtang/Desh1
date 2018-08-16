@@ -50,6 +50,7 @@ export default class ImageMark extends Component {
     no_chang = () => {
         const {alt} = this.props;
         if (alt && alt === 'MACAUHIKE') {
+            logMsg('sdjsdhk',this.props)
             return false;
         } else {
             return true;
@@ -63,13 +64,6 @@ export default class ImageMark extends Component {
 
         const {src} = this.props;
 
-        // if(Platform.OS !== 'ios' && (src.substr(src.lastIndexOf(".")+1)) === 'gif'){
-        //     logMsg('jsakjskaja',this.props)
-        //     return <Image style={{
-        //         width: this.state.width,
-        //         height: this.state.height
-        //     }} source={{uri:src}}/>
-        // }
         return (
             <TouchableOpacity
                 activeOpacity={0.5}
