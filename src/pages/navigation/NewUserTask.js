@@ -60,7 +60,7 @@ export default class NewUserTask extends Component {
                     <Image style={styles.img44}
                            source={Images.integral.login}/>
                     <Text
-                        style={styles.text44}>{`登录满1天（${login_days >= login_days_required ? login_days_required : login_days}/${login_days_required}）`}</Text>
+                        style={styles.text44}>{`登录满${login_days_required}天（${login_days >= login_days_required ? login_days_required : login_days}/${login_days_required}）`}</Text>
                     <View style={{flex: 1}}/>
                     {login_days > 0 && login_days >= login_days_required ? <Image style={styles.img45}
                                                                                   source={Images.right2}/> : null}
@@ -92,7 +92,7 @@ export default class NewUserTask extends Component {
                         活动规则：
                     </Text>
                     <Text style={[styles.txt57, {marginTop: 5}]}>
-                        新用户注册以后完成登录满1天并分享2次澳门旅行
+                        {`新用户注册以后完成登录满${login_days_required}天并分享2次澳门旅行`}
                     </Text>
                     <Text style={styles.txt57}>
                         APP下载任务即可随机获得最高888元现金或积分奖励
