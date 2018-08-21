@@ -51,7 +51,7 @@ export default class InviteDetails extends Component {
 
             <UltimateFlatList
                 header={() => <View style={{height: 1, backgroundColor: Colors._ECE}}/>}
-                pagination={false}
+
                 style={{backgroundColor: 'white', paddingBottom: 80}}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
@@ -70,16 +70,18 @@ export default class InviteDetails extends Component {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
-            if (type === '2') {
+            if (this.props.type === '2') {
                 user_invite({page, page_size: 20}, data => {
+                    this.props.changed_length(data.items.length);
                     console.log('user_invite', data);
                     startFetch(data.items, 18)
 
                 }, err => {
                     abortFetch()
                 })
-            } else if (type === '3') {
+            } else if (this.props.type === '3') {
                 other_invite({target_id: this.props.user_id, page, page_size: 20}, data => {
+                    this.props.changed_length(data.items.length);
                     console.log('别人的邀请好友', data);
                     startFetch(data.items, 18)
                 }, err => {

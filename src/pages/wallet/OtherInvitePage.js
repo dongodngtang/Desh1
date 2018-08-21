@@ -14,24 +14,34 @@ import InviteDetails from './InviteDetails';
 
 export default class OtherInvitePage extends Component {
 
+    state = {
+        length: 0
+    };
+
+    changed_length = (length) => {
+        this.setState({
+            length: length
+        })
+    }
+
 
     render() {
         const {item} = this.props.params;
-        const {other_invite} = this.state;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     refreshPage={this.refreshPage}
                     titleStyle={{fontSize: 18, color: '#444444'}}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
-                    title={`${item.nick_name.length > 2 ? '...' : item.nick_name}的邀请好友-${isEmptyObject(other_invite) ? '0' : other_invite.length}人`}
+                    title={`${item.nick_name.length > 2 ? '...' : item.nick_name}的邀请好友-${this.state.length}人`}
                     leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
                 <InviteDetails user_id={this.props.params.item.user_id}
                                next_step={false}
-                               type={'3'}/>
+                               type={'3'}
+                               changed_length={this.changed_length}/>
 
             </View>
         )

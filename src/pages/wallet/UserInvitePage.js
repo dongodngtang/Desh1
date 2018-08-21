@@ -14,10 +14,14 @@ import InviteDetails from './InviteDetails';
 
 export default class UserInvitePage extends Component {
 
-    state = {};
+    state = {
+        length: 0
+    };
 
-    componentDidMount() {
-
+    changed_length = (length) => {
+        this.setState({
+            length: length
+        })
     }
 
     render() {
@@ -29,14 +33,15 @@ export default class UserInvitePage extends Component {
                     titleStyle={{fontSize: 18, color: '#444444'}}
                     refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
-                    title={`我的邀请好友-${isEmptyObject(user_invite) ? '0' : user_invite.items.length}人`}
+                    title={`我的邀请好友-${this.state.length}人`}
                     leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
                 <InviteDetails
                                next_step={user_invite.next_step}
-                               type={'2'}/>
+                               type={'2'}
+                               changed_length={this.changed_length}/>
             </View>
         )
     }
