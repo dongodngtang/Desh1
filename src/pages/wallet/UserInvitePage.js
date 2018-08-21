@@ -15,12 +15,12 @@ import InviteDetails from './InviteDetails';
 export default class UserInvitePage extends Component {
 
     state = {
-        length: 0
+        count: 0
     };
 
-    changed_length = (length) => {
+    changed_length = (count) => {
         this.setState({
-            length: length
+            count: count
         })
     }
 
@@ -33,7 +33,7 @@ export default class UserInvitePage extends Component {
                     titleStyle={{fontSize: 18, color: '#444444'}}
                     refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: Colors._FFF}}
-                    title={`我的邀请好友-${this.state.length}人`}
+                    title={`我的邀请好友-${this.state.count}人`}
                     leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
