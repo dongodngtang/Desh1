@@ -38,7 +38,7 @@ export default class CompletedBottom extends Component {
 
 
     wxPay = (item) => {
-        let data = {order_number: item.order_number, total: item.total_product_price};
+        let data = {order_number: item.order_number, total: item.total_price};
         this.payAction && this.payAction.toggle(data)
     };
 
