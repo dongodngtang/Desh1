@@ -11,13 +11,13 @@ import OrderBottom from './OrderBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
 import {
-    util,
-    payWx,
-    isWXAppInstalled,
-    deleteProductFromCart,
-    showToast,
-    alertOrderChat,
-    alipay, isEmptyObject, strNotNull
+  util,
+  payWx,
+  isWXAppInstalled,
+  deleteProductFromCart,
+  showToast,
+  alertOrderChat,
+  alipay, isEmptyObject, strNotNull, logMsg
 } from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult, postAlipay} from '../../../services/MallDao';
 import {addTimeRecode} from "../../../components/PayCountDown";
@@ -141,6 +141,7 @@ export default class OrderSubmitPage extends PureComponent {
             return;
         }
 
+        logMsg('提交订单',this.state.orderData)
         if (this.state.isExpired || util.isEmpty(invalid_items)) {
             let body = this.postParam();
             if (!strNotNull(this.state.order.order_number)) {
@@ -150,7 +151,7 @@ export default class OrderSubmitPage extends PureComponent {
                     this.state.order.order_number = data.order_number;
                     let param = {
                         order_number: data.order_number,
-                        total: this.state.orderData.total_product_price
+                        total: this.state.orderData.total_price
                     }
 
                     this.payAction && this.payAction.toggle(param)
