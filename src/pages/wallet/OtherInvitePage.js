@@ -14,18 +14,6 @@ import InviteDetails from './InviteDetails';
 
 export default class OtherInvitePage extends Component {
 
-    state = {
-        other_invite: []
-    };
-
-    componentDidMount() {
-        const {item} = this.props.params;
-        other_invite({target_id: item.user_id}, data => {
-            console.log('别人的邀请好友', data);
-
-            this.setState({other_invite: data.items})
-        })
-    }
 
     render() {
         const {item} = this.props.params;
@@ -41,10 +29,9 @@ export default class OtherInvitePage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                {isEmptyObject(other_invite) ? null : <InviteDetails invites={other_invite}
-                                                                     next_step={false}
-                                                                     type={'3'}/>}
-
+                <InviteDetails user_id={this.props.params.item.user_id}
+                               next_step={false}
+                               type={'3'}/>
 
             </View>
         )

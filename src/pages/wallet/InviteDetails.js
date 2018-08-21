@@ -10,7 +10,7 @@ import {utcDate, isEmptyObject} from "../../utils/ComonHelper";
 import ImageLoad from "../../components/ImageLoad";
 import I18n from "react-native-i18n";
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
-import {user_invite} from "../../services/WallDao";
+import {other_invite, user_invite} from "../../services/WallDao";
 
 export default class InviteDetails extends Component {
 
@@ -52,7 +52,7 @@ export default class InviteDetails extends Component {
             <UltimateFlatList
                 header={() => <View style={{height: 1, backgroundColor: Colors._ECE}}/>}
                 pagination={false}
-                style={{backgroundColor: 'white',paddingBottom:80}}
+                style={{backgroundColor: 'white', paddingBottom: 80}}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
                 keyExtractor={(item, index) => `IntegralDetailsPage${index}`}
@@ -70,14 +70,23 @@ export default class InviteDetails extends Component {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
+            if (type === '2') {
+                user_invite({page, page_size: 20}, data => {
+                    console.log('user_invite', data);
+                    startFetch(data.items, 18)
 
-            user_invite({page, page_size: 20}, data => {
-                console.log('user_invite', data);
-                startFetch(data.items, 18)
+                }, err => {
+                    abortFetch()
+                })
+            } else if (type === '3') {
+                other_invite({target_id: this.props.user_id, page, page_size: 20}, data => {
+                    console.log('别人的邀请好友', data);
+                    startFetch(data.items, 18)
+                }, err => {
+                    abortFetch()
+                })
+            }
 
-            }, err => {
-                abortFetch()
-            })
 
         } catch (err) {
             abortFetch();

@@ -22,7 +22,7 @@ export default class MallTypeView extends PureComponent {
 
         if (categories.length > 0) {
             this.arrayMenu = [...categories];
-            this.arrayMenu.unshift({id: -1, name: '推荐'});
+            // this.arrayMenu.unshift({id: -1, name: '推荐'});
             return <View style={ApplicationStyles.bgContainer}>
 
                 <ScrollableTabView
