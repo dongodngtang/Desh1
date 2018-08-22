@@ -221,11 +221,11 @@ export default class InfoPage extends PureComponent {
                             target_type: 'info',
                             current_user_liked
                         }, data => {
-                            let article = {...this.state.article};
-                            article.total_likes = data.total_likes;
-                            article.current_user_liked = !current_user_liked;
+                            let info = {...this.state.info};
+                            info.total_likes = data.total_likes;
+                            info.current_user_liked = !current_user_liked;
                             this.setState({
-                                article
+                                info
                             })
 
                         }, err => {
