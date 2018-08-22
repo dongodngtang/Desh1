@@ -19,9 +19,9 @@ import {umengEvent} from '../../utils/UmengEvent';
 import StorageKey from '../../configs/StorageKey';
 import {_getMsgNumOk} from '../../actions/AccountAction';
 import {setLocalLanguage} from '../../services/ConfigDao';
-import {uShareLoad} from '../../utils/ComonHelper';
+import {uShareLoad, call} from '../../utils/ComonHelper';
 import ƒ from "jmessage-react-plugin";
-import {postShareCount} from "../../services/AccountDao";
+import {getContacts} from "../../services/AccountDao";
 
 
 class SettingPage extends Component {
@@ -90,19 +90,19 @@ class SettingPage extends Component {
 
             <View style={{backgroundColor: Colors.setting, marginTop: 10}}>
                 {/*<SetItemView*/}
-                    {/*onPress={this._switchLanguage}*/}
-                    {/*name={I18n.t('Chinese')}*/}
-                    {/*styles={{marginTop: 10}}/>*/}
+                {/*onPress={this._switchLanguage}*/}
+                {/*name={I18n.t('Chinese')}*/}
+                {/*styles={{marginTop: 10}}/>*/}
                 {/*<View*/}
-                    {/*style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>*/}
+                {/*style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>*/}
                 {/*<SetItemView*/}
-                    {/*onPress={() => {*/}
-                        {/*this.ActionSheet.show();*/}
-                    {/*}}*/}
-                    {/*name={I18n.t('font_set')}/>*/}
+                {/*onPress={() => {*/}
+                {/*this.ActionSheet.show();*/}
+                {/*}}*/}
+                {/*name={I18n.t('font_set')}/>*/}
 
                 {/*<View*/}
-                    {/*style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>*/}
+                {/*style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>*/}
 
                 <SetItemView
                     onPress={() => {
@@ -129,6 +129,17 @@ class SettingPage extends Component {
                 <SetItemView name={I18n.t('suggest')}
                              onPress={() => router.toSuggest()}/>
             </View>
+
+            <TouchableOpacity
+                style={{backgroundColor: Colors.setting, marginTop: 10, height: 50,flexDirection:'row', alignItems: 'center'}}
+                onPress={() => {
+                    global.router.toBusinessPage()
+                }}>
+                <Text style={[Fonts.H17, {marginLeft: 17, marginRight: 17, color: '#333333', fontSize: 16}]}>商务合作</Text>
+                <View style={{flex:1}}/>
+                <Image style={{height: 15, width: 8,marginRight:17}}
+                       source={Images.set_more}/>
+            </TouchableOpacity>
 
 
             <View style={{flex: 1}}/>
@@ -178,16 +189,16 @@ class SettingPage extends Component {
 
     _exitView = () => {
         if (strNotNull(getLoginUser().user_id)) {
-            return ( <BtnLong
+            return (<BtnLong
                 name={I18n.t('exit_login')}
                 testID="btn_exit"
                 onPress={this._exitApp}
                 style={{
                     width: Metrics.screenWidth, height: 59,
                     justifyContent: 'center', backgroundColor: 'white',
-                    flex:0
+                    flex: 0
                 }}
-                textStyle={[{color: Colors._333,fontWeight:'normal'}, Fonts.H17]}/>)
+                textStyle={[{color: Colors._333, fontWeight: 'normal'}, Fonts.H17]}/>)
         }
     };
 
@@ -196,15 +207,15 @@ class SettingPage extends Component {
         Alert.alert(I18n.t('language_switch'), '', [
             {
                 text: I18n.t('chinese'), onPress: () => {
-                this._switch('zh')
+                    this._switch('zh')
 
-            }
+                }
             },
             {
                 text: I18n.t('english'), onPress: () => {
-                this._switch('en')
+                    this._switch('en')
 
-            }
+                }
             }
         ]);
     };
@@ -224,18 +235,18 @@ class SettingPage extends Component {
         Alert.alert(I18n.t('tint'), I18n.t('exit_tine'), [
             {
                 text: I18n.t('cancel'), onPress: () => {
-            }
+                }
             },
             {
                 text: I18n.t('certain'), onPress: () => {
-                clearLoginUser();
+                    clearLoginUser();
 
-                this.props._getProfileNull();
-                this.forceUpdate();
-                this.props.setMsgUnreadNull();
-                router.toLoginFirstPage()
+                    this.props._getProfileNull();
+                    this.forceUpdate();
+                    this.props.setMsgUnreadNull();
+                    router.toLoginFirstPage()
 
-            }
+                }
             }
         ]);
 

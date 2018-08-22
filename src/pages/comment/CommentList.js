@@ -1,134 +1,248 @@
-import React,{Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import I18n from 'react-native-i18n';
-import {utcDate, util} from '../../utils/ComonHelper';
-import CommentItem from './CommentItem';
+import React, {Component} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
+import {alertOrder, getDateDiff, isEmptyObject} from "../../utils/ComonHelper";
+import {Colors, Images} from "../../Themes";
+import I18n from "react-native-i18n";
+import {delDeleteComment} from "../../services/CommentDao";
+import {ImageLoad} from '../../components'
+import {reallySize} from "../socials/Header";
 
-export default class Comment extends Component {
-    state={
-        releaseShow:false
-    };
+export default class CommentList extends Component {
 
-    releaseInfo = () => {
-        this.setState({
-            releaseShow: !this.state.releaseShow
-        });
-        console.log("releaseShow:",this.state.releaseShow);
-    };
 
-    _renderItem=()=>{
-        return(
-            <CommentItem releaseInfo={this.releaseInfo}/>
-        )
-    };
+    render() {
+        const {item} = this.props;
+        const {
+            created_at, official,
+            recommended, body, id, total_replies,
+            user
+        } = item;
+        const {avatar, nick_name, user_id} = user;
 
-    _separator = () => {
-        return <View style={{height: 0.5, marginLeft: 68, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
-    };
+        return <View style={{
+            width: '100%', paddingLeft: 17, paddingRight: 17,
+            paddingTop: 12
+        }}>
+            <View style={styles.btn_like}>
+                <TouchableOpacity
+                    onPress={() => this.toUserPage(user)}>
+                    <ImageLoad
+                        emptyBg={Images.home_avatar}
+                        style={styles.c_avatar}
+                        source={{uri: avatar}}/>
+                </TouchableOpacity>
 
-    render(){
-        let dataHosts =[1,2,3,4,5,6,7,8];
-        return(
-            <View style={styles.container}>
-                <View style={{width:'100%',height:3,backgroundColor:'#ECECEE'}}/>
-                <View style={styles.top}>
-                    <Text style={styles.topTxt}>全部评论（555）</Text>
+
+                <View style={{marginLeft: 10}}>
+                    <View style={{flexDirection: 'row'}}>
+
+                        <Text
+                            onPress={() => this.toUserPage(user)}
+                            style={styles.c_nick}>{nick_name}</Text>
+
+                        {official ? <Text style={[styles.c_tag, {
+                            backgroundColor: '#161718',
+                            color: '#FFE9AD'
+                        }]}>{I18n.t('social.official')}</Text> : null}
+
+                        {recommended ? <Text style={[styles.c_tag, {
+                            backgroundColor: '#161718',
+                            color: '#FFE9AD'
+                        }]}>{I18n.t('social.select')}</Text> : null}
+
+                        {this.isMine(user_id) ? <Text
+                            onPress={() => {
+                                alertOrder(I18n.t('confirm_delete'), () => {
+                                    delDeleteComment({comment_id: id}, data => {
+                                        this.props.listView && this.props.listView.refresh()
+                                    }, err => {
+
+                                    })
+                                })
+
+                            }}
+                            style={{color: Colors._CCC, marginLeft: 8, fontSize: 12}}>{I18n.t('delete')}</Text> : null}
+
+
+                    </View>
+
+                    <Text style={[styles.c_time, {marginTop: 5}]}>{getDateDiff(created_at)}</Text>
                 </View>
-                <FlatList
-                    style={{flex:1,paddingTop: 6,marginTop:1,backgroundColor:'#F5F5F5'}}
-                    data={dataHosts}
-                    showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => `comment${index}`}
-                />
-                <View style={{height:50}}/>
+
+
+                <View style={{flex: 1}}/>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        this.props.changed_commentId(id);
+                        this.props.commentBar && this.props.commentBar.showInput()
+                    }}>
+                    <Image style={styles.c_comment}
+                           source={Images.social.reply}/>
+                </TouchableOpacity>
+
+
             </View>
-        )
+
+            <Text
+                onPress={() => {
+                    this.props.changed_commentId(id);
+                    this.props.commentBar && this.props.commentBar.showInput()
+                }}
+                style={styles.c_body}>{body}</Text>
+
+            {total_replies > 0 ? <TouchableOpacity
+                onPress={() => {
+                    global.router.toCommentInfoPage(item);
+                }}
+                style={{
+                    height: 20,
+                    backgroundColor: '#ECECEE',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginLeft: 54,
+                    marginTop: 8
+                }}>
+                <Text
+                    style={[styles.c_nick, {marginLeft: 6}]}>{`${I18n.t('look_detail')}${total_replies}${I18n.t('social.replay')}`}</Text>
+
+
+            </TouchableOpacity> : null}
+
+
+            <View style={{height: 1, backgroundColor: Colors._ECE, marginTop: 8}}/>
+
+
+        </View>
+
+    }
+
+    toUserPage = (user) => {
+        if (!isEmptyObject(login_user) && user.user_id === login_user.user_id) {
+            global.router.toPersonDynamic(user)
+        } else {
+            global.router.toUserTopicPage(user)
+        }
+
+    };
+
+    isMine = (user_id) => {
+        if (isEmptyObject(global.login_user)) {
+            return false
+        }
+
+        return global.login_user.user_id === user_id
     }
 }
 
-const styles= StyleSheet.create({
-    container:{
-       backgroundColor:'#ECECEE',
-       marginTop:1,
-        paddingBottom:50
-   },
-    top:{
-       height:37,
-        backgroundColor:'#FFFFFF',
-        justifyContent:'center'
+const styles = StyleSheet.create({
+    title: {
+        fontSize: 17,
+        color: Colors.txt_444,
+        fontWeight: 'bold',
     },
-    topTxt:{
-        fontSize: 14,
-        color: '#AAAAAA',
-        marginLeft:16
+    avatar: {
+        height: 44,
+        width: 44,
+        borderRadius: 22
     },
-    content:{
-        width:'100%',
-        flexDirection:'row',
-        alignItems:'flex-start',
-        paddingBottom:6,
-        paddingTop:13
+    nick_name: {
+        fontSize: 15,
+        color: Colors._666
     },
-    img:{
-       width:38,
-        height:38,
-        borderRadius:19,
-        marginLeft:17,
-        top:-2
-    },
-    contentRight:{
-       alignItems:'flex-start',
-       flex:1,
-        marginLeft:11,
-        marginRight:17
-    },
-    name:{
-        fontSize: 14,
-        color: '#666666',
-    },
-    commentImg:{
-       width:20,
-        height:18
-    },
-    commentTop:{
-       flexDirection:'row',
-        alignItems:'flex-start',
-
-    },
-    time:{
-        fontSize: 10,
-        color: '#CCCCCC',
-    },
-    messages:{
-        fontSize: 16,
-        color: '#444444',
-        marginTop:6
-    },
-    moreMessagesView:{
-        width:'100%',
-       height:20,
-        marginRight:17,
-        backgroundColor:'#ECECEE',
-        alignItems:'flex-start',
-        marginTop:10,
-        justifyContent:'center'
-    },
-    moreMessages:{
+    time: {
         fontSize: 12,
-        color: '#4990E2',
-        marginLeft:11
+        color: Colors._AAA
     },
-    commentView:{
-        alignItems:'center',
-        justifyContent:'center',
-        // paddingTop:10,
-        // paddingBottom:10,
-        // paddingLeft:10,
-        // paddingRight:10,
-        // marginRight:17
+    focus: {
+        fontSize: 14,
+        color: Colors.txt_444,
+    },
+    btn_focus: {
+        height: 26,
+        width: 80,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: Colors.txt_444,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    info: {
+        width: '100%',
+        paddingLeft: 17,
+        paddingRight: 17
+    },
+    btn_like: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    like: {
+        height: reallySize(15),
+        width: reallySize(15)
+    },
+    comment: {
+        fontSize: 14,
+        color: Colors._AAA
+    },
+    c_avatar: {
+        height: 38,
+        width: 38,
+        borderRadius: 19
+    },
+    c_nick: {
+        color: '#4A90E2',
+        fontSize: 12
+    },
+    c_time: {
+        color: Colors._CCC,
+        fontSize: 10
+    },
+    c_comment: {
+        height: 18,
+        width: 20
+    },
+    c_content: {
+        fontSize: 14,
+        color: Colors.txt_444
+    },
+    c_tag: {
+        paddingRight: 7,
+        paddingLeft: 7,
+        color: 'white',
+        fontSize: 10,
+        paddingTop: 2,
+        paddingBottom: 2,
+        marginLeft: 8,
+        borderRadius: 2
+    },
+    c_reply: {
+        height: 20,
+        width: '100%'
+    },
+    c_body: {
+        fontSize: 16,
+        color: Colors.txt_444,
+        marginLeft: 54,
+        marginTop: 6
+    },
+    long_cover: {
+        height: reallySize(200),
+        width: '100%',
+        marginTop: reallySize(10)
+    },
+    short_image: {
+        height: 108,
+        width: 108,
+        marginTop: 9,
+        marginLeft: 9
+    },
+    body: {
+        color: Colors.txt_444,
+        fontSize: 16,
+        marginLeft: 17,
+        marginRight: 17,
+        marginTop: 10,
+        letterSpacing: 1,
+        lineHeight:18
     }
-
-});
+})

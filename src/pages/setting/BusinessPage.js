@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/8.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -10,35 +10,75 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SetItemView, Button} from '../../components';
 import {call} from '../../utils/ComonHelper';
+import {getContacts} from "../../services/AccountDao";
+import StorageKey from "../../configs/StorageKey";
 
 export default class BusinessPage extends Component {
 
+    state = {
+        contacts: {}
+    }
+
+
+    componentDidMount() {
+        getContacts(data => {
+            this.setState({
+                contacts: data
+            })
+        }, err => {
+        })
+    }
+
     render() {
+        const {contacts} = this.state;
         return (<View
             testID="page_business"
-            style={ApplicationStyles.bg_black}>
+            style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors._E54}}
+                toolbarStyle={{backgroundColor: Colors._E54}}
                 title={I18n.t('business_cooperation')}
                 leftBtnIcon={Images.sign_return}
-                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>router.pop()}/>
-            <View style={{backgroundColor:Colors.setting}}>
-                <SetItemView name={I18n.t('business_cooperation')}
-                             testID="btn_business_email"
-                             rightText={I18n.t('phoebe_email')}
-                />
+                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                leftBtnPress={() => router.pop()}/>
 
-                <View
-                    style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
-
-                <SetItemView
-                    onPress={this._hotLine}
-                    name={I18n.t('line')}
-                    testID="btn_business_phone"
-                    rightText={I18n.t('hot_phone')}
-                />
+            <View style={{backgroundColor: Colors.setting, height: 50, flexDirection:'row',alignItems: 'center'}}>
+                <Text style={[Fonts.H17, {
+                    marginLeft: 17,
+                    marginRight: 17,
+                    color: '#333333',
+                    fontSize: 16
+                }]}>商务合作</Text>
+                <View style={{flex:1}}/>
+                <Text
+                    style={[Fonts.H16, {
+                        marginLeft: 17,
+                        marginRight: 17,
+                        color: Colors._AAA,
+                        fontSize: 16
+                    }]}
+                    selectable={true}>{contacts.email}</Text>
             </View>
+            <TouchableOpacity
+                style={{backgroundColor: Colors.setting,marginTop: 1,  height: 50, flexDirection:'row',alignItems: 'center'}}
+                onPress={() => {
+                    call(contacts.mobile)
+                }}>
+                <Text style={[Fonts.H17, {
+                    marginLeft: 17,
+                    marginRight: 17,
+                    color: '#333333',
+                    fontSize: 16
+                }]}>联系电话</Text>
+                <View style={{flex:1}}/>
+                <Text style={[Fonts.H16, {
+                    marginLeft: 17,
+                    marginRight: 17,
+                    color: Colors._AAA,
+                    fontSize: 16
+                }]}
+                    selectable={true}>{contacts.mobile}</Text>
+            </TouchableOpacity>
+
         </View>)
     }
 
@@ -50,8 +90,8 @@ export default class BusinessPage extends Component {
             },
                 {
                     text: I18n.t('call'), onPress: () => {
-                    call(I18n.t('hot_phone'))
-                }
+                        call(I18n.t('hot_phone'))
+                    }
                 }])
     }
 

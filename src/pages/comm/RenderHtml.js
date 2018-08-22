@@ -17,8 +17,8 @@ let img = (props) => {
         height={props.height}/>
 
 }
-const tagsStyles= { p: {marginTop:1,marginBottom:1,paddingTop:0,paddingBottom:0} }
-
+const tagsStyles= { p: {marginTop:1,marginBottom:1,paddingTop:0,paddingBottom:0,alignSelf:'center'}}
+const baseFontStyle={fontSize:14,letterSpacing:1.5,color:'rgb(62,62,62)',lineHeight:27}
 export default class RenderHtml extends PureComponent {
 
     render() {
@@ -29,7 +29,7 @@ export default class RenderHtml extends PureComponent {
                 router.toWebViewPage(attribs, href)
 
             }}
-            baseFontStyle={{fontSize: 15, lineHeight: 28}}
+            baseFontStyle={baseFontStyle}
             tagsStyles={tagsStyles}
             ignoredTags={[...IGNORED_TAGS, 'br']}
             renderers={{img}}

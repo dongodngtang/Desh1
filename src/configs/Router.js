@@ -239,11 +239,12 @@ export default class Router {
     }
 
 
-    toInfoPage(info) {
+    toInfoPage(info,refresh) {
         this.stackPush({
             name: "InfoPage",
             params: {
-                info
+                info,
+                refresh
             }
         })
     }

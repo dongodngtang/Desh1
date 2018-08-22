@@ -12,7 +12,7 @@ import {reallySize} from "./Header";
 import {ImageLoad, NavigationBar, UltimateListView} from '../../components'
 import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from '../../Themes';
-import HTML from 'react-native-render-html';
+import Html from 'react-native-render-html';
 import {
     topics_like, topics_details, topics_comments,
     follow, report_topic
@@ -25,6 +25,7 @@ import CommentBar from '../comm/CommentBar';
 import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
 import PopAction from '../comm/PopAction';
 import LoadingView from "../../components/load/LoadingView";
+import CommentList from "../comment/CommentList";
 
 const styles = StyleSheet.create({
     title: {
@@ -132,9 +133,24 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginLeft: 17,
         marginRight: 17,
-        marginTop: 10
+        marginTop: 10,
+        letterSpacing: 1,
+        lineHeight: 18
     }
 })
+
+const tagsStyles = {
+    p: {
+        marginTop: 1,
+        marginBottom: 1,
+        paddingTop: 0,
+        paddingBottom: 0,
+        fontSize: 16,
+        color: Colors.txt_444,
+        letterSpacing: 1,
+        lineHeight: 18
+    }
+}
 
 export default class LongArticle extends PureComponent {
 
@@ -284,8 +300,8 @@ export default class LongArticle extends PureComponent {
         let data = reportList[index];
         let body = {
             body: data.name,
-            target_id:id,
-            target_type:'topic'
+            target_id: id,
+            target_type: 'topic'
         };
         report_topic(body, (ret) => {
             showToast(I18n.t('report_success'));
@@ -324,8 +340,10 @@ export default class LongArticle extends PureComponent {
         return <View>
             <View style={{backgroundColor: 'white'}}>
                 <View style={styles.info}>
-                    {strNotNull(title) ? <View style={{flexDirection: 'row', alignItems: 'center',
-                    marginTop:10,marginBottom:10}}>
+                    {strNotNull(title) ? <View style={{
+                        flexDirection: 'row', alignItems: 'center',
+                        marginTop: 10, marginBottom: 10
+                    }}>
                         <Text
                             numberOfLines={2}
                             style={styles.title}>{title}</Text>
@@ -382,18 +400,12 @@ export default class LongArticle extends PureComponent {
 
 
                 {body_type === 'long' ? <View style={{paddingLeft: 17, paddingRight: 17}}>
-                    <HTML
+                    <Html
+                        tagsStyles={tagsStyles}
                         imagesMaxWidth={Metrics.screenWidth - 34}
                         html={body}
-                        tagsStyles={{
-                            p: {
-                                color: Colors.txt_444,
-                                fontSize: 15,
-                                lineHeight: 25,
-                                marginTop: 14,
-                                marginBottom: 14
-                            }
-                        }}/>
+
+                    />
                 </View> : this.short(this.state.article)}
 
 
@@ -506,109 +518,15 @@ export default class LongArticle extends PureComponent {
 
     };
 
+    changed_commentId=(id)=>{
+        this.comment_id = id;
+    };
+
     itemView = (item) => {
-        const {
-            created_at, official,
-            recommended, body, id, total_replies,
-            user
-        } = item;
-
-        const {avatar, nick_name, user_id} = user;
-        return <View style={{
-            width: '100%', paddingLeft: 17, paddingRight: 17,
-            paddingTop: 12
-        }}>
-            <View style={styles.btn_like}>
-                <TouchableOpacity
-                    onPress={() => this.toUserPage(user)}>
-                    <ImageLoad
-                        emptyBg={Images.home_avatar}
-                        style={styles.c_avatar}
-                        source={{uri: avatar}}/>
-                </TouchableOpacity>
-
-
-                <View style={{marginLeft: 10}}>
-                    <View style={{flexDirection: 'row'}}>
-
-                        <Text
-                            onPress={() => this.toUserPage(user)}
-                            style={styles.c_nick}>{nick_name}</Text>
-
-                        {official ? <Text style={[styles.c_tag, {
-                            backgroundColor: '#161718',
-                            color: '#FFE9AD'
-                        }]}>{I18n.t('social.official')}</Text> : null}
-
-                        {recommended ? <Text style={[styles.c_tag, {
-                            backgroundColor: '#161718',
-                            color: '#FFE9AD'
-                        }]}>{I18n.t('social.select')}</Text> : null}
-
-                        {this.isMine(user_id) ? <Text
-                            onPress={() => {
-                                alertOrder(I18n.t('confirm_delete'), () => {
-                                    delDeleteComment({comment_id: id}, data => {
-                                        this.listView && this.listView.refresh()
-                                    }, err => {
-
-                                    })
-                                })
-
-                            }}
-                            style={{color: Colors._CCC, marginLeft: 8, fontSize: 12}}>{I18n.t('delete')}</Text> : null}
-
-
-                    </View>
-
-                    <Text style={[styles.c_time, {marginTop: 5}]}>{getDateDiff(created_at)}</Text>
-                </View>
-
-
-                <View style={{flex: 1}}/>
-
-                <TouchableOpacity
-                    onPress={() => {
-                        this.comment_id = id;
-                        this.commentBar && this.commentBar.showInput()
-                    }}>
-                    <Image style={styles.c_comment}
-                           source={Images.social.reply}/>
-                </TouchableOpacity>
-
-
-            </View>
-
-            <Text
-                onPress={() => {
-                    this.comment_id = id;
-                    this.commentBar && this.commentBar.showInput()
-                }}
-                style={styles.c_body}>{body}</Text>
-
-            {total_replies > 0 ? <TouchableOpacity
-                onPress={() => {
-                    global.router.toCommentInfoPage(item);
-                }}
-                style={{
-                    height: 20,
-                    backgroundColor: '#ECECEE',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginLeft: 54,
-                    marginTop: 8
-                }}>
-                <Text
-                    style={[styles.c_nick, {marginLeft: 6}]}>{`${I18n.t('look_detail')}${total_replies}${I18n.t('social.replay')}`}</Text>
-
-
-            </TouchableOpacity> : null}
-
-
-            <View style={{height: 1, backgroundColor: Colors._ECE, marginTop: 8}}/>
-
-
-        </View>
+        return <CommentList item={item}
+                            listView={this.listView}
+                            commentBar={this.commentBar}
+                            changed_commentId={this.changed_commentId}/>
 
     }
 }

@@ -204,6 +204,7 @@ const api = {
     receive_coupons:receive_coupons,//领取优惠券
     coupons_infos:coupons_infos,//获取优惠券详情
     hotlines:'hotlines',//服务热线电话列表
+    contacts:'contacts'//公司联系方式
 }
 
 export default api;
