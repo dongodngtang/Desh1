@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView,findNodeHandle,KeyboardAvoidingView
+    StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, findNodeHandle, KeyboardAvoidingView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes/index';
 import {NavigationBar, BaseComponent} from '../../components/index';
@@ -75,6 +75,7 @@ export class RateTop extends Component {
 
     state = {
         ratesItem: {},
+        receiving_rate: {},
         price_changed: [{id: 0, img: Images.cny, abb: 'CNY', name: '人民币¥', price2: 0, price: '', showTrue: true},
             {id: 1, img: Images.hkd, abb: 'HKD', name: '港币$', price2: 0, price: '', showTrue: false},
             {id: 2, img: Images.mop, abb: 'MOP', name: '澳门币$', price2: 0, price: '', showTrue: false}],
@@ -85,6 +86,19 @@ export class RateTop extends Component {
         let rate = [100, 0, 0];
         const {price_changed} = this.state;
         const {type} = this.props;
+
+        if (type === 'local') {
+            getExchange_rates({exchange_type: 'receiving'}, data => {
+                console.log("receiving_rate:", data)
+                this.setState({
+                    receiving_rate: data
+                })
+
+            }, err => {
+
+            })
+        }
+
         getExchange_rates({exchange_type: type}, data => {
             console.log("ratesItem:", data)
             rate[1] = mul(data.cny_to_hkd_rate.rate, rate[0]);
@@ -106,7 +120,9 @@ export class RateTop extends Component {
 
         })
 
+
     }
+
 
     changing_price = (item, index, txt) => {
         const {price_changed} = this.state;
@@ -173,7 +189,7 @@ export class RateTop extends Component {
 
     clean_txt = () => {
         let rate = [100, 0, 0];
-        const {price_changed, ratesItem} = this.state;
+        const {price_changed, ratesItem, receiving_rate} = this.state;
         rate[1] = mul(ratesItem.cny_to_hkd_rate.rate, rate[0]);
         rate[2] = mul(ratesItem.cny_to_mop_rate.rate, rate[0]);
 
@@ -189,8 +205,9 @@ export class RateTop extends Component {
 
 
     render() {
-        const {ratesItem, price_changed, show} = this.state;
+        const {ratesItem, price_changed, show, receiving_rate} = this.state;
         const {cny_to_hkd_rate, cny_to_mop_rate} = ratesItem;
+        const {type} = this.props;
 
         if (isEmptyObject(ratesItem)) {
             return <LoadingView/>
@@ -205,12 +222,30 @@ export class RateTop extends Component {
                         <Text
                             style={[styles.txt, {marginTop: 5}]}>{`1人民币=${cny_to_mop_rate.rate}澳门币，1澳门币=${div(1, cny_to_mop_rate.rate).toFixed(4)}人民币`}</Text>
 
-                        {this.props.type === 'local' ?
-                            <Text style={[styles.txt, {marginTop: 5, marginRight: 30, lineHeight: 20}]}>
-                                更新时间：{utcDate(cny_to_hkd_rate.updated_at, 'YYYY-MM-DD HH:mm:ss')}
-                            </Text> : null}
                     </View>
+
                 </View>
+                {!isEmptyObject(receiving_rate) && type === 'local' ? <View style={styles.page2}>
+                    <Text style={styles.txt}>换货汇率：</Text>
+
+                    <View style={{flexDirection: 'column', alignSelf: 'center'}}>
+                        <Text
+                            style={styles.txt}>{`1人民币=${receiving_rate.cny_to_hkd_rate.rate}港币，1港币=${div(1, receiving_rate.cny_to_hkd_rate.rate).toFixed(4)}人民币`}</Text>
+                        <Text
+                            style={[styles.txt, {marginTop: 5}]}>{`1人民币=${receiving_rate.cny_to_mop_rate.rate}澳门币，1澳门币=${div(1, receiving_rate.cny_to_mop_rate.rate).toFixed(4)}人民币`}</Text>
+
+                    </View>
+
+                </View> : null}
+                {this.props.type === 'local' ?
+                    <View style={styles.page3}>
+                        <Text style={[styles.txt, {
+                            marginTop: 5,
+                            backgroundColor: '#F3F3F3'
+                        }]}>
+                            更新时间：{utcDate(cny_to_hkd_rate.updated_at, 'YYYY-MM-DD HH:mm:ss')}
+                        </Text>
+                    </View>: null}
 
                 {price_changed.map((item, index) => {
                     return (
@@ -270,6 +305,22 @@ const styles = StyleSheet.create({
     page: {
         width: '100%',
         paddingTop: 12,
+        paddingBottom: 9,
+        paddingLeft: 17,
+        paddingRight: 17,
+        flexDirection: 'row',
+        backgroundColor: "#F3F3F3"
+    },
+    page2: {
+        width: '100%',
+        paddingBottom: 9,
+        paddingLeft: 17,
+        paddingRight: 17,
+        flexDirection: 'row',
+        backgroundColor: "#F3F3F3"
+    },
+    page3: {
+        width: '100%',
         paddingBottom: 9,
         paddingLeft: 17,
         paddingRight: 17,
