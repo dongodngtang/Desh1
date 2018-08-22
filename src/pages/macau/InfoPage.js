@@ -252,7 +252,8 @@ export default class InfoPage extends PureComponent {
     };
 
     itemView = (item) => {
-        return <CommentList item={item}/>
+        return <CommentList item={item}
+                            listView={this.listView}/>
 
     }
 

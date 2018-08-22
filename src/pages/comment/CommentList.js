@@ -54,7 +54,7 @@ export default class CommentList extends Component {
                             onPress={() => {
                                 alertOrder(I18n.t('confirm_delete'), () => {
                                     delDeleteComment({comment_id: id}, data => {
-                                        this.listView && this.listView.refresh()
+                                        this.props.listView && this.props.listView.refresh()
                                     }, err => {
 
                                     })

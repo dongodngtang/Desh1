@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         marginRight: 17,
         marginTop: 10,
         letterSpacing: 1,
-        lineHeight:18
+        lineHeight: 18
     }
 })
 
@@ -148,7 +148,7 @@ const tagsStyles = {
         fontSize: 16,
         color: Colors.txt_444,
         letterSpacing: 1,
-        lineHeight:18
+        lineHeight: 18
     }
 }
 
@@ -519,7 +519,8 @@ export default class LongArticle extends PureComponent {
     };
 
     itemView = (item) => {
-       return  <CommentList item={item}/>
+        return <CommentList item={item}
+                            listView={this.listView}/>
 
     }
 }
