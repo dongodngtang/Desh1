@@ -63,7 +63,7 @@ export default class InfoPage extends PureComponent {
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                         leftBtnPress={() => {
                             router.pop();
-                            this.props.params.refresh()
+                            this.props.params.refresh && this.props.params.refresh()
                         }}
                     />
                 </View>
@@ -80,7 +80,7 @@ export default class InfoPage extends PureComponent {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => {
                     router.pop();
-                    this.props.params.refresh()
+                    this.props.params.refresh && this.props.params.refresh()
                 }}
                 // rightBtnIcon={Images.share2}
                 // rightImageStyle={{height: 20, width: 19, marginLeft: 20, marginRight: 20}}

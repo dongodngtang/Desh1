@@ -214,6 +214,16 @@ export default class PersonDynamicPage extends Component {
             }
         }
 
+        if (target_type === 'info') {
+            switch (option_type) {
+                case 'like':
+                    return '我点赞了';
+                case 'reply':
+                    return '我回复了';
+                case 'comment':
+                    return '我评论了';
+            }
+        }
         if (option_type === 'follow')
             return '我关注了';
 
@@ -227,6 +237,16 @@ export default class PersonDynamicPage extends Component {
             switch (option_type) {
                 case 'like':
                     return item.topic.body_type === 'short' ? '说说' : '长帖';
+                case 'reply':
+                    return item.reply.body;
+                case 'comment':
+                    return item.comment.body;
+            }
+        }
+        if (target_type === 'info') {
+            switch (option_type) {
+                case 'like':
+                    return item.title;
                 case 'reply':
                     return item.reply.body;
                 case 'comment':
@@ -253,6 +273,16 @@ export default class PersonDynamicPage extends Component {
                     return item.comment.topic.title;
             }
         }
+        if (target_type === 'info') {
+            switch (option_type) {
+                case 'like':
+                    return item.title;
+                case 'reply':
+                    return item.reply.info.title;
+                case 'comment':
+                    return item.comment.info.title;
+            }
+        }
 
         if (option_type === 'follow')
             return item.target_user.signature
@@ -271,6 +301,16 @@ export default class PersonDynamicPage extends Component {
                     return item.reply.topic.cover_link;
                 case 'comment':
                     return item.comment.topic.cover_link;
+            }
+        }
+        if (target_type === 'info') {
+            switch (option_type) {
+                case 'like':
+                    return item.info.preview_image;
+                case 'reply':
+                    return item.reply.info.preview_image;
+                case 'comment':
+                    return item.comment.info.preview_image;
             }
         }
 
@@ -293,6 +333,19 @@ export default class PersonDynamicPage extends Component {
                     return;
                 case 'comment':
                     router.toLongArticle(item.comment.topic)
+                    return
+            }
+        }
+        if (target_type === 'info') {
+            switch (option_type) {
+                case 'like':
+                    router.toInfoPage(item.info)
+                    return
+                case 'reply':
+                    router.toInfoPage(item.reply.info)
+                    return;
+                case 'comment':
+                    router.toInfoPage(item.comment.info)
                     return
             }
         }
