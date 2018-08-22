@@ -33,7 +33,7 @@ export default class InfoPage extends PureComponent {
     }
 
     componentDidMount() {
-        this.info_id = '';
+        this.comment_id = '';
         InteractionManager.runAfterInteractions(() => {
             const {id} = this.props.params.info
             getInfos(id, data => {
@@ -174,22 +174,22 @@ export default class InfoPage extends PureComponent {
 
             <View style={{position: 'absolute', bottom: 0}}>
                 <CommentBar
-                    placeholder={strNotNull(this.info_id) ?
+                    placeholder={strNotNull(this.comment_id) ?
                         I18n.t('reply') : I18n.t('write_comment')}
                     isLike={current_user_liked}
                     ref={ref => this.commentBar = ref}
                     count={this.state.comments_count}
                     send={comment => {
 
-                        if (strNotNull(this.info_id)) {
+                        if (strNotNull(this.comment_id)) {
 
                             postRelaies({
-                                    target_id: this.info_id,
+                                    target_id: this.comment_id,
                                     target_type: 'comment',
                                     body: comment
                                 },
                                 data => {
-                                    this.info_id = '';
+                                    this.comment_id = '';
                                     showToast(I18n.t('reply_success'));
                                     this.listView && this.listView.refresh()
                                 }, err => {
@@ -250,10 +250,15 @@ export default class InfoPage extends PureComponent {
             abortFetch()
         })
     };
+    changed_commentId=(id)=>{
+        this.comment_id = id;
+    };
 
     itemView = (item) => {
         return <CommentList item={item}
-                            listView={this.listView}/>
+                            listView={this.listView}
+                            commentBar={this.commentBar}
+                            changed_commentId={this.changed_commentId}/>
 
     }
 

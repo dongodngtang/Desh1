@@ -74,8 +74,8 @@ export default class CommentList extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        this.comment_id = id;
-                        this.commentBar && this.commentBar.showInput()
+                        this.props.changed_commentId(id);
+                        this.props.commentBar && this.props.commentBar.showInput()
                     }}>
                     <Image style={styles.c_comment}
                            source={Images.social.reply}/>
@@ -86,8 +86,8 @@ export default class CommentList extends Component {
 
             <Text
                 onPress={() => {
-                    this.comment_id = id;
-                    this.commentBar && this.commentBar.showInput()
+                    this.props.changed_commentId(id);
+                    this.props.commentBar && this.props.commentBar.showInput()
                 }}
                 style={styles.c_body}>{body}</Text>
 

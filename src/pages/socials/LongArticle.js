@@ -518,9 +518,15 @@ export default class LongArticle extends PureComponent {
 
     };
 
+    changed_commentId=(id)=>{
+        this.comment_id = id;
+    };
+
     itemView = (item) => {
         return <CommentList item={item}
-                            listView={this.listView}/>
+                            listView={this.listView}
+                            commentBar={this.commentBar}
+                            changed_commentId={this.changed_commentId}/>
 
     }
 }
