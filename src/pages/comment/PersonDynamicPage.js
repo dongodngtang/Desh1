@@ -246,7 +246,7 @@ export default class PersonDynamicPage extends Component {
         if (target_type === 'info') {
             switch (option_type) {
                 case 'like':
-                    return item.title;
+                    return '';
                 case 'reply':
                     return item.reply.body;
                 case 'comment':
@@ -276,7 +276,7 @@ export default class PersonDynamicPage extends Component {
         if (target_type === 'info') {
             switch (option_type) {
                 case 'like':
-                    return item.title;
+                    return item.info.title;
                 case 'reply':
                     return item.reply.info.title;
                 case 'comment':
