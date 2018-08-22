@@ -9,6 +9,8 @@ import {Images, Colors, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {ImageLoad} from "../../components";
 import moment from "moment/moment";
+import {strNotNull} from "../../utils/ComonHelper";
+import {reallySize} from "../socials/Header";
 
 const styles = StyleSheet.create({
     informationLine: {
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
     },
     row_center: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'flex-start'
     },
     hotel_title: {
         fontSize: 16,
@@ -126,7 +128,7 @@ _separator = () => {
 class ItemInfo extends PureComponent {
 
     render() {
-        const {title, id, date, image, type} = this.props.info;
+        const {title, id, date, image, type, likes_count, comments_count, total_views} = this.props.info;
         return <TouchableOpacity
             onPress={() => {
                 router.toInfoPage({id})
@@ -149,7 +151,47 @@ class ItemInfo extends PureComponent {
 
             <ImageLoad
                 source={{uri: image}}
-                style={{height: Metrics.reallySize(164), width: '100%', marginBottom: 16}}/>
+                style={{height: Metrics.reallySize(164), width: '100%'}}/>
+
+            <View style={{
+                flexDirection: 'row-reverse',
+                alignItems: 'flex-start',
+                marginTop:10,
+                marginBottom: 10,
+                marginRight:17
+            }}>
+
+
+                <View
+                    style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{fontSize: 12, color: Colors._AAA}}>阅读</Text>
+                    <Text style={{
+                        fontSize: 12,
+                        color: Colors._AAA,
+                        marginLeft: 4,
+                        marginRight: 20
+                    }}>{strNotNull(total_views) ? total_views : 0}</Text>
+
+                    <Image
+                        style={{height: reallySize(12), width: reallySize(12)}}
+                        source={Images.social.like_gray}/>
+                    <Text style={{
+                        fontSize: 12,
+                        color: Colors._AAA,
+                        marginRight:20,
+                        marginLeft:4
+                    }}>{strNotNull(likes_count) ? likes_count : 0}</Text>
+
+                    <Image
+                        style={{height: reallySize(12), width: reallySize(12)}}
+                        source={Images.social.reply}/>
+                    <Text style={{
+                        fontSize: 12,
+                        color: Colors._AAA,
+                        marginLeft:4
+                    }}>{strNotNull(comments_count) ? comments_count : 0}</Text>
+                </View>
+            </View>
 
         </TouchableOpacity>
     }
@@ -165,7 +207,11 @@ class ItemHotel extends PureComponent {
         return <TouchableOpacity
             onPress={() => {
                 // router.toHotelDetail({id})
-                router.toHotelRoomListPage(this.props.hotel, {begin_date: moment().format('YYYY-MM-DD'), end_date: moment().add('hours', 24).format('YYYY-MM-DD'), counts: 1})
+                router.toHotelRoomListPage(this.props.hotel, {
+                    begin_date: moment().format('YYYY-MM-DD'),
+                    end_date: moment().add('hours', 24).format('YYYY-MM-DD'),
+                    counts: 1
+                })
             }}
             style={[styles.item_hotel, styles.row_center,]}>
 
@@ -188,13 +234,13 @@ class ItemHotel extends PureComponent {
 
                 {/*<View style={[styles.row_center, {justifyContent: 'space-between'}]}>*/}
 
-                    {/*<Text*/}
-                        {/*numberOfLines={1}*/}
-                        {/*style={styles.hotel_location}>阅 224</Text>*/}
+                {/*<Text*/}
+                {/*numberOfLines={1}*/}
+                {/*style={styles.hotel_location}>阅 224</Text>*/}
 
-                    {/*<Text*/}
-                        {/*numberOfLines={1}*/}
-                        {/*style={styles.hotel_location}>5-23</Text>*/}
+                {/*<Text*/}
+                {/*numberOfLines={1}*/}
+                {/*style={styles.hotel_location}>5-23</Text>*/}
                 {/*</View>*/}
 
             </View>
