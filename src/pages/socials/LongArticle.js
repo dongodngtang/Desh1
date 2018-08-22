@@ -25,6 +25,7 @@ import CommentBar from '../comm/CommentBar';
 import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
 import PopAction from '../comm/PopAction';
 import LoadingView from "../../components/load/LoadingView";
+import CommentList from "../comment/CommentList";
 
 const styles = StyleSheet.create({
     title: {
@@ -518,108 +519,7 @@ export default class LongArticle extends PureComponent {
     };
 
     itemView = (item) => {
-        const {
-            created_at, official,
-            recommended, body, id, total_replies,
-            user
-        } = item;
-
-        const {avatar, nick_name, user_id} = user;
-        return <View style={{
-            width: '100%', paddingLeft: 17, paddingRight: 17,
-            paddingTop: 12
-        }}>
-            <View style={styles.btn_like}>
-                <TouchableOpacity
-                    onPress={() => this.toUserPage(user)}>
-                    <ImageLoad
-                        emptyBg={Images.home_avatar}
-                        style={styles.c_avatar}
-                        source={{uri: avatar}}/>
-                </TouchableOpacity>
-
-
-                <View style={{marginLeft: 10}}>
-                    <View style={{flexDirection: 'row'}}>
-
-                        <Text
-                            onPress={() => this.toUserPage(user)}
-                            style={styles.c_nick}>{nick_name}</Text>
-
-                        {official ? <Text style={[styles.c_tag, {
-                            backgroundColor: '#161718',
-                            color: '#FFE9AD'
-                        }]}>{I18n.t('social.official')}</Text> : null}
-
-                        {recommended ? <Text style={[styles.c_tag, {
-                            backgroundColor: '#161718',
-                            color: '#FFE9AD'
-                        }]}>{I18n.t('social.select')}</Text> : null}
-
-                        {this.isMine(user_id) ? <Text
-                            onPress={() => {
-                                alertOrder(I18n.t('confirm_delete'), () => {
-                                    delDeleteComment({comment_id: id}, data => {
-                                        this.listView && this.listView.refresh()
-                                    }, err => {
-
-                                    })
-                                })
-
-                            }}
-                            style={{color: Colors._CCC, marginLeft: 8, fontSize: 12}}>{I18n.t('delete')}</Text> : null}
-
-
-                    </View>
-
-                    <Text style={[styles.c_time, {marginTop: 5}]}>{getDateDiff(created_at)}</Text>
-                </View>
-
-
-                <View style={{flex: 1}}/>
-
-                <TouchableOpacity
-                    onPress={() => {
-                        this.comment_id = id;
-                        this.commentBar && this.commentBar.showInput()
-                    }}>
-                    <Image style={styles.c_comment}
-                           source={Images.social.reply}/>
-                </TouchableOpacity>
-
-
-            </View>
-
-            <Text
-                onPress={() => {
-                    this.comment_id = id;
-                    this.commentBar && this.commentBar.showInput()
-                }}
-                style={styles.c_body}>{body}</Text>
-
-            {total_replies > 0 ? <TouchableOpacity
-                onPress={() => {
-                    global.router.toCommentInfoPage(item);
-                }}
-                style={{
-                    height: 20,
-                    backgroundColor: '#ECECEE',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginLeft: 54,
-                    marginTop: 8
-                }}>
-                <Text
-                    style={[styles.c_nick, {marginLeft: 6}]}>{`${I18n.t('look_detail')}${total_replies}${I18n.t('social.replay')}`}</Text>
-
-
-            </TouchableOpacity> : null}
-
-
-            <View style={{height: 1, backgroundColor: Colors._ECE, marginTop: 8}}/>
-
-
-        </View>
+       return  <CommentList item={item}/>
 
     }
 }
