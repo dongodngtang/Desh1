@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {
-    StyleSheet, Text, View, Image,
-    TouchableOpacity,
+  StyleSheet, Text, View, Image,
+  TouchableOpacity,
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -9,48 +9,68 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import ScrollableTabBar from './ScrollableTabBar';
 import MallList from './MallList';
 import propTypes from 'prop-types';
+import {logMsg} from "../../utils/ComonHelper";
 
 export default class MallTypeView extends PureComponent {
-    static propTypes = {
-        categories: propTypes.array.isRequired,
-        // showCatePage: propTypes.func.isRequired
-    };
+  static propTypes = {
+    categories: propTypes.array.isRequired,
+    // showCatePage: propTypes.func.isRequired
+  };
 
 
-    render() {
-        const {categories} = this.props;
+  render() {
+    const {categories} = this.props;
 
-        if (categories.length > 0) {
-            this.arrayMenu = [...categories];
-            this.arrayMenu.unshift({id: -1, name: '推荐'});
-            return <View style={ApplicationStyles.bgContainer}>
+    if (categories && categories.length > 0) {
 
-                <ScrollableTabView
-                    renderTabBar={() => <ScrollableTabBar
-                        // showCatePage={this.props.showCatePage}
-                        backgroundColor={Colors.white}
-                        activeTextColor="#F34A4A"
-                        inactiveTextColor={Colors.txt_444}
-                        textStyle={{fontSize: 15}}
-                        style={{borderColor: Colors._EEE}}
-                        underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
-                    />}>
+      return <View style={ApplicationStyles.bgContainer}>
 
-                    {this.arrayMenu.map((item, key) => {
+        <ScrollableTabView
+          renderTabBar={() => <TabNav/>}>
 
-                        return <MallList
-                            category={item}
-                            tabLabel={item.name}
-                            key={`mallList${key}`}/>
-                    })}
+          {categories.map((item, key) => {
+
+            return <MallList
+              category={item}
+              tabLabel={item.name}
+              key={`mallList${key}`}/>
+          })}
 
 
-                </ScrollableTabView>
-            </View>;
-        }
-        else
-            return <View/>
-
+        </ScrollableTabView>
+      </View>;
     }
+    else
+      return <View/>
+
+  }
+
+}
+
+class TabNav extends PureComponent {
+
+  render() {
+    const {goToPage, activeTab, tabs} = this.props;
+    logMsg(this.props)
+    return <View style={{
+      minHeight: 44, flexWrap: 'wrap',
+      width: Metrics.screenWidth,
+      backgroundColor: 'white',
+      flexDirection: 'row',
+      alignItems: 'center'
+    }}>
+      {tabs && tabs.map((name, page) => {
+        return <TouchableOpacity
+          onPress={() => goToPage && goToPage(page)}
+          style={{height: 44, paddingLeft: 15, paddingRight: 15, alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={{
+            fontSize: 15,
+            color: activeTab === page ? '#F34A4A' : Colors.txt_444
+          }}>{name}</Text>
+        </TouchableOpacity>
+      })}
+
+    </View>
+  }
 
 }
