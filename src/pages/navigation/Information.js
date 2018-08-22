@@ -127,6 +127,18 @@ _separator = () => {
 
 class ItemInfo extends PureComponent {
 
+    show_count = (item) => {
+        if (strNotNull(item)) {
+            if (item.length > 3) {
+                return '999+'
+            } else {
+                return item
+            }
+        } else {
+            return 0
+        }
+    }
+
     render() {
         const {title, id, date, image, type, likes_count, comments_count, total_views} = this.props.info;
         return <TouchableOpacity
@@ -170,7 +182,7 @@ class ItemInfo extends PureComponent {
                         color: Colors._AAA,
                         marginLeft: 4,
                         marginRight: 20
-                    }}>{strNotNull(total_views) ? total_views : 0}</Text>
+                    }}>{this.show_count(total_views)}</Text>
 
                     <Image
                         style={{height: reallySize(12), width: reallySize(12)}}
@@ -180,7 +192,7 @@ class ItemInfo extends PureComponent {
                         color: Colors._AAA,
                         marginRight:20,
                         marginLeft:4
-                    }}>{strNotNull(likes_count) ? likes_count : 0}</Text>
+                    }}>{this.show_count(likes_count)}</Text>
 
                     <Image
                         style={{height: reallySize(12), width: reallySize(12)}}
@@ -189,7 +201,7 @@ class ItemInfo extends PureComponent {
                         fontSize: 12,
                         color: Colors._AAA,
                         marginLeft:4
-                    }}>{strNotNull(comments_count) ? comments_count : 0}</Text>
+                    }}>{this.show_count(comments_count)}</Text>
                 </View>
             </View>
 

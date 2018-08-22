@@ -61,7 +61,10 @@ export default class InfoPage extends PureComponent {
                         }}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                        leftBtnPress={() => router.pop()}
+                        leftBtnPress={() => {
+                            router.pop();
+                            this.props.params.refresh()
+                        }}
                     />
                 </View>
             )
@@ -75,7 +78,10 @@ export default class InfoPage extends PureComponent {
                 }}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}
+                leftBtnPress={() => {
+                    router.pop();
+                    this.props.params.refresh()
+                }}
                 // rightBtnIcon={Images.share2}
                 // rightImageStyle={{height: 20, width: 19, marginLeft: 20, marginRight: 20}}
                 // rightBtnPress={() => {
@@ -118,7 +124,10 @@ export default class InfoPage extends PureComponent {
                     <View style={{flex: 1}}/>
 
                     <Text style={styles.time}>阅读</Text>
-                    <Text style={[styles.time, {marginLeft: 4, marginRight: 20}]}>{strNotNull(total_views)?total_views:0}</Text>
+                    <Text style={[styles.time, {
+                        marginLeft: 4,
+                        marginRight: 20
+                    }]}>{strNotNull(total_views) ? total_views : 0}</Text>
                     <View
                         style={styles.btn_like}>
                         <Image
@@ -127,7 +136,7 @@ export default class InfoPage extends PureComponent {
                         <Text style={[styles.time, {marginLeft: 4}]}>{strNotNull(total_likes) ? total_likes : 0}</Text>
                     </View>
                 </View>
-                <View style={{width: Metrics.screenWidth,height:1.5,backgroundColor:'#F3F3F3'}}/>
+                <View style={{width: Metrics.screenWidth, height: 1.5, backgroundColor: '#F3F3F3'}}/>
                 <UltimateListView
                     style={{marginBottom: 50}}
                     keyExtractor={(item, index) => index + "info"}
@@ -250,7 +259,7 @@ export default class InfoPage extends PureComponent {
             abortFetch()
         })
     };
-    changed_commentId=(id)=>{
+    changed_commentId = (id) => {
         this.comment_id = id;
     };
 

@@ -8,7 +8,8 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {hotels, info_types, exchange_rates} from '../../services/MacauDao';
-import {isEmptyObject} from "../../utils/ComonHelper";
+import {isEmptyObject, strNotNull} from "../../utils/ComonHelper";
+import {reallySize} from "../socials/Header";
 
 
 const styles = StyleSheet.create({
@@ -130,14 +131,16 @@ export default class HotelSearch extends PureComponent {
             return <RateItem
                 refresh={() => {
                     this.listView.refresh()
-                }
-                }
+                }}
                 key={`${type}${index}`}
                 item={item}/>
         else
             return <FoodItem
                 key={`${type}${index}`}
-                item={item}/>
+                item={item}
+                refresh={() => {
+                    this.listView.refresh()
+                }}/>
 
 
     }
@@ -225,11 +228,23 @@ class HotelItem extends Component {
 
 class FoodItem extends PureComponent {
 
+    show_count = (item) => {
+        if (strNotNull(item)) {
+            if (item.length > 3) {
+                return '999+'
+            } else {
+                return item
+            }
+        } else {
+            return 0
+        }
+    }
+
     render() {
-        const {title, read, like, image, date} = this.props.item;
+        const {title, read, like, image, date, total_views, likes_count, comments_count} = this.props.item;
         return <TouchableOpacity
             onPress={() => {
-                router.toInfoPage(this.props.item)
+                router.toInfoPage(this.props.item,this.props.refresh)
             }}
             style={{
                 height: 102, backgroundColor: Colors.white, width: '100%',
@@ -247,16 +262,44 @@ class FoodItem extends PureComponent {
                         numberOfLines={1}
                         style={{fontSize: 12, color: Colors._AAA}}>{date}</Text>
 
-                    <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                        {/*<Image*/}
-                        {/*style={{height: 13, width: 13}}*/}
-                        {/*source={Images.social.like_gray}/>*/}
-                        <Text
-                            numberOfLines={1}
-                            style={{
-                                fontSize: 12, color: Colors._AAA,
-                                marginLeft: 3
-                            }}>{like}</Text>
+                    <View style={{
+                        flexDirection: 'row-reverse',
+                        alignItems: 'flex-start',
+                        marginTop: 10,
+                        marginBottom: 10,
+                        marginRight: 17
+                    }}>
+
+
+                        <View
+                            style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text style={{fontSize: 12, color: Colors._AAA}}>阅读</Text>
+                            <Text style={{
+                                fontSize: 12,
+                                color: Colors._AAA,
+                                marginLeft: 4,
+                                marginRight: 10
+                            }}>{this.show_count(total_views)}</Text>
+
+                            <Image
+                                style={{height: reallySize(12), width: reallySize(12)}}
+                                source={Images.social.like_gray}/>
+                            <Text style={{
+                                fontSize: 12,
+                                color: Colors._AAA,
+                                marginRight: 10,
+                                marginLeft: 4
+                            }}>{this.show_count(likes_count)}</Text>
+
+                            <Image
+                                style={{height: reallySize(12), width: reallySize(12)}}
+                                source={Images.social.reply}/>
+                            <Text style={{
+                                fontSize: 12,
+                                color: Colors._AAA,
+                                marginLeft: 4
+                            }}>{this.show_count(comments_count)}</Text>
+                        </View>
                     </View>
 
                 </View>
