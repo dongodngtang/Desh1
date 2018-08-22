@@ -226,7 +226,7 @@ export class RateTop extends Component {
 
                 </View>
                 {!isEmptyObject(receiving_rate) && type === 'local' ? <View style={styles.page2}>
-                    <Text style={styles.txt}>换货汇率：</Text>
+                    <Text style={styles.txt}>收货汇率：</Text>
 
                     <View style={{flexDirection: 'column', alignSelf: 'center'}}>
                         <Text
