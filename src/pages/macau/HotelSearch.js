@@ -279,7 +279,7 @@ class FoodItem extends PureComponent {
                                 color: Colors._AAA,
                                 marginLeft: 2,
                                 marginRight: 8
-                            }}>{this.show_count(total_views)}</Text>
+                            }}>{total_views}</Text>
 
                             <Image
                                 style={{height: reallySize(12), width: reallySize(12)}}

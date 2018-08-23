@@ -327,7 +327,17 @@ export default class LongArticle extends PureComponent {
 
         return resultArray;
     };
-
+    show_count = (item) => {
+        if (strNotNull(item)) {
+            if (item >= 1000 || item.length > 3) {
+                return '999+'
+            } else {
+                return item
+            }
+        } else {
+            return 0
+        }
+    }
     //长帖 个人信息
     flatHeader = () => {
 
@@ -414,7 +424,7 @@ export default class LongArticle extends PureComponent {
                     marginLeft: 17,
                     marginRight: 17
                 }]}>
-                    <Text style={styles.comment}>{`${I18n.t('social.comments')} (${this.state.comments_count})`}</Text>
+                    <Text style={styles.comment}>{`${I18n.t('social.comments')} (${this.show_count(this.state.comments_count)})`}</Text>
 
                     <View style={{flex: 1}}/>
 
@@ -425,7 +435,7 @@ export default class LongArticle extends PureComponent {
                         <Image
                             style={styles.like}
                             source={current_user_liked ? Images.social.like_red : Images.social.like_gray}/>
-                        <Text style={[styles.time, {marginLeft: 4}]}>{total_likes}</Text>
+                        <Text style={[styles.time, {marginLeft: 4}]}>{this.show_count(total_likes)}</Text>
                     </View>
                 </View>
 

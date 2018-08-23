@@ -139,7 +139,7 @@ export default class InfoPage extends PureComponent {
                     <Text style={[styles.time, {
                         marginLeft: 4,
                         marginRight: 20
-                    }]}>{this.show_count(total_views)}</Text>
+                    }]}>{total_views}</Text>
                     <View
                         style={styles.btn_like}>
                         <Image

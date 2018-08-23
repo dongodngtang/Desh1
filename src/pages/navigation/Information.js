@@ -180,7 +180,7 @@ class ItemInfo extends PureComponent {
                         fontSize: 12,
                         color: Colors._AAA,
                         marginLeft: 4
-                    }}>{this.show_count(total_views)}</Text>
+                    }}>{total_views}</Text>
                     <View style={{flex:1}}/>
                     <Image
                         style={{height: reallySize(12), width: reallySize(12)}}
