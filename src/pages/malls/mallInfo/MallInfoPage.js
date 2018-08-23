@@ -50,8 +50,8 @@ export default class MallInfoPage extends Component {
                 testID="btn_bar_right"
                 style={styleM.popBtn}
                 onPress={() => {
-                    const {title, icon, description, id} = this.state.product;
-                    uShareMallInfo(title, description, icon, id)
+                    const {title, icon, intro, id} = this.state.product;
+                    uShareMallInfo(title, intro, icon, id)
                 }}>
                 <Image style={styleM.imgShare}
                        source={Images.mall_share}/>

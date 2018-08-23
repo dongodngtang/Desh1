@@ -59,8 +59,9 @@ class TabNav extends PureComponent {
       flexDirection: 'row',
       alignItems: 'center'
     }}>
-      {tabs && tabs.map((name, page) => {
+      {tabs && tabs.map((name, page,index) => {
         return <TouchableOpacity
+            key = {index}
           onPress={() => goToPage && goToPage(page)}
           style={{height: 44, paddingLeft: 15, paddingRight: 15, alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{
