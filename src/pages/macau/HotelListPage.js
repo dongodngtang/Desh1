@@ -54,7 +54,7 @@ export default class HotelListPage extends PureComponent {
         this.setState({
             changeTime: date
         });
-
+        this.listView && this.listView.refresh();
         console.log("第二次选择的时间：", this.state.changeTime)
     };
 
