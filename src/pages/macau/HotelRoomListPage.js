@@ -5,28 +5,22 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {convertDate, isEmptyObject} from "../../utils/ComonHelper";
-import {getRoomList} from "../../services/MacauDao";
+import {getRoomList, hotels} from "../../services/MacauDao";
 import TimeSpecificationInfo from './TimeSpecificationInfo';
 import SearchBar from './SearchBar';
+import I18n from "react-native-i18n";
+import {ImageLoad, UltimateListView} from "../../components";
+import {LoadErrorView, NoDataView} from '../../components/load';
 
 export default class HotelRoomListPage extends PureComponent {
 
     state = {
         timeShow: false,
-        roomList: [],
         last_change_time: this.props.params.date
     };
 
     componentDidMount() {
-        const {hotel, date} = this.props.params;
-        getRoomList({begin_date: date.begin_date, id: hotel.id}, data => {
-            console.log("RoomList:", data)
-            this.setState({
-                roomList: data.items
-            })
-        }, err => {
 
-        })
     }
 
     showSpecInfo = () => {
@@ -39,37 +33,60 @@ export default class HotelRoomListPage extends PureComponent {
         this.setState({
             last_change_time: date
         });
-
+        this.listView && this.listView.refresh();
         console.log("最后选择的时间：", this.state.last_change_time)
     };
 
     render() {
         const {hotel, date} = this.props.params;
-        const {timeShow, last_change_time, roomList} = this.state;
+        const {timeShow, last_change_time} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
                 <SearchBar
                     showSpecInfo={this.showSpecInfo}
                     changeTime={last_change_time}
                     _click={hotel.title}/>
 
-                {isEmptyObject(roomList) ? <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{fontSize: 18, color: "#888888"}}>该酒店暂无空余房间</Text>
-                </View> : <FlatList
+                <UltimateListView
+                    style={{paddingTop:6}}
                     ListHeaderComponent={this._separator}
-                    showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
-                    data={roomList}
-                    renderItem={this._renderItem}
+                    separator={this._separator}
                     keyExtractor={(item, index) => index + "item"}
-                />}
+                    ref={(ref) => this.listView = ref}
+                    onFetch={this.onFetch}
+                    item={this._renderItem}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    emptyView={() => <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={{fontSize: 18, color: "#888888"}}>该酒店暂无空余房间</Text>
+                    </View>}
+                />
+
                 {timeShow ? <TimeSpecificationInfo
                     showSpecInfo={this.showSpecInfo}
                     _change={this._change}/> : null}
             </View>
         )
-    }
+    };
 
-    _renderItem = ({item, index}) => {
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+            const {hotel, date} = this.props.params;
+            getRoomList({page,page_size:20,begin_date: this.state.last_change_time.begin_date, id: hotel.id}, data => {
+                console.log("RoomList:", data)
+                startFetch(data.items, 18)
+            }, err => {
+                abortFetch()
+            })
+        } catch (err) {
+            console.log(err)
+            abortFetch()
+        }
+    };
+
+    _renderItem = (item, index) => {
         const {id, images, notes, price, tags, title} = item;
         return (
             <View style={styles.itemView}>
