@@ -230,7 +230,7 @@ class FoodItem extends PureComponent {
 
     show_count = (item) => {
         if (strNotNull(item)) {
-            if (item.length > 3) {
+            if (item >= 1000 || item.length > 3) {
                 return '999+'
             } else {
                 return item
@@ -244,7 +244,7 @@ class FoodItem extends PureComponent {
         const {title, read, like, image, date, total_views, likes_count, comments_count} = this.props.item;
         return <TouchableOpacity
             onPress={() => {
-                router.toInfoPage(this.props.item,this.props.refresh)
+                router.toInfoPage(this.props.item, this.props.refresh)
             }}
             style={{
                 height: 102, backgroundColor: Colors.white, width: '100%',
@@ -277,8 +277,8 @@ class FoodItem extends PureComponent {
                             <Text style={{
                                 fontSize: 12,
                                 color: Colors._AAA,
-                                marginLeft: 4,
-                                marginRight: 10
+                                marginLeft: 2,
+                                marginRight: 8
                             }}>{this.show_count(total_views)}</Text>
 
                             <Image
@@ -287,18 +287,18 @@ class FoodItem extends PureComponent {
                             <Text style={{
                                 fontSize: 12,
                                 color: Colors._AAA,
-                                marginRight: 10,
-                                marginLeft: 4
+                                marginRight: 8,
+                                marginLeft: 2
                             }}>{this.show_count(likes_count)}</Text>
 
-                            <Image
-                                style={{height: reallySize(12), width: reallySize(12)}}
-                                source={Images.social.reply}/>
-                            <Text style={{
-                                fontSize: 12,
-                                color: Colors._AAA,
-                                marginLeft: 4
-                            }}>{this.show_count(comments_count)}</Text>
+                            {/*<Image*/}
+                                {/*style={{height: reallySize(12), width: reallySize(12)}}*/}
+                                {/*source={Images.social.reply}/>*/}
+                            {/*<Text style={{*/}
+                                {/*fontSize: 12,*/}
+                                {/*color: Colors._AAA,*/}
+                                {/*marginLeft: 2*/}
+                            {/*}}>{this.show_count(comments_count)}</Text>*/}
                         </View>
                     </View>
 

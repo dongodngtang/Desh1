@@ -47,6 +47,18 @@ export default class InfoPage extends PureComponent {
         })
 
 
+    };
+
+    show_count = (item) => {
+        if (strNotNull(item)) {
+            if (item >= 1000 || item.length > 3) {
+                return '999+'
+            } else {
+                return item
+            }
+        } else {
+            return 0
+        }
     }
 
     render() {
@@ -119,7 +131,7 @@ export default class InfoPage extends PureComponent {
                     marginLeft: 17,
                     marginRight: 17
                 }]}>
-                    <Text style={styles.comment}>{`${I18n.t('social.comments')} (${this.state.comments_count})`}</Text>
+                    <Text style={styles.comment}>{`${I18n.t('social.comments')} (${this.show_count(this.state.comments_count)})`}</Text>
 
                     <View style={{flex: 1}}/>
 
@@ -127,13 +139,13 @@ export default class InfoPage extends PureComponent {
                     <Text style={[styles.time, {
                         marginLeft: 4,
                         marginRight: 20
-                    }]}>{strNotNull(total_views) ? total_views : 0}</Text>
+                    }]}>{this.show_count(total_views)}</Text>
                     <View
                         style={styles.btn_like}>
                         <Image
                             style={styles.like}
                             source={current_user_liked ? Images.social.like_red : Images.social.like_gray}/>
-                        <Text style={[styles.time, {marginLeft: 4}]}>{strNotNull(total_likes) ? total_likes : 0}</Text>
+                        <Text style={[styles.time, {marginLeft: 4}]}>{this.show_count(total_likes)}</Text>
                     </View>
                 </View>
                 <View style={{width: Metrics.screenWidth, height: 1.5, backgroundColor: '#F3F3F3'}}/>

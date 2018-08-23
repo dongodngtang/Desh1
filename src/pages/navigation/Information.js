@@ -129,7 +129,7 @@ class ItemInfo extends PureComponent {
 
     show_count = (item) => {
         if (strNotNull(item)) {
-            if (item.length > 3) {
+            if (item >= 1000  || item.length > 3) {
                 return '999+'
             } else {
                 return item
@@ -166,11 +166,10 @@ class ItemInfo extends PureComponent {
                 style={{height: Metrics.reallySize(164), width: '100%'}}/>
 
             <View style={{
-                flexDirection: 'row-reverse',
+                flexDirection: 'row',
                 alignItems: 'flex-start',
                 marginTop:10,
-                marginBottom: 10,
-                marginRight:17
+                marginBottom: 10
             }}>
 
 
@@ -180,10 +179,9 @@ class ItemInfo extends PureComponent {
                     <Text style={{
                         fontSize: 12,
                         color: Colors._AAA,
-                        marginLeft: 4,
-                        marginRight: 20
+                        marginLeft: 4
                     }}>{this.show_count(total_views)}</Text>
-
+                    <View style={{flex:1}}/>
                     <Image
                         style={{height: reallySize(12), width: reallySize(12)}}
                         source={Images.social.like_gray}/>
@@ -198,6 +196,7 @@ class ItemInfo extends PureComponent {
                         style={{height: reallySize(12), width: reallySize(12)}}
                         source={Images.social.reply}/>
                     <Text style={{
+
                         fontSize: 12,
                         color: Colors._AAA,
                         marginLeft:4
