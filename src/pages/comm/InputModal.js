@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, showToast, strNotNull} from "../../utils/ComonHelper";
+import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 
 
@@ -13,7 +13,7 @@ export default class InputModal extends Component {
 
     state = {
         comment: '',
-        height: 0,
+        height: 48,
         visible: false
     };
 
@@ -24,8 +24,23 @@ export default class InputModal extends Component {
         } else
             this.setState({
                 visible: !this.state.visible,
-                comment:''
+                comment: ''
             })
+    }
+
+    _onContentSizeChange = (event) => {
+        let h = event.nativeEvent.contentSize.height;
+        logMsg("dsjkdjsjd", event.nativeEvent.contentSize.height)
+        if (h > 106) {
+            this.setState({
+                height: 106
+            })
+        }else{
+            this.setState({
+                height: h
+            })
+        }
+
     }
 
 
@@ -49,35 +64,39 @@ export default class InputModal extends Component {
 
                 </TouchableOpacity>
 
-                <View style={styles.bottom}>
+                <View style={[styles.bottom, {height: this.state.height + 10}]}>
                     <View style={{
                         width: '80%', marginLeft: 17,
                         borderWidth: 0, padding: 5
                     }}>
                         <TextInput
+                            ref={'description'}
                             underlineColorAndroid="transparent"
-                            style={styles.inputComment}
+                            style={[styles.inputComment, {height: this.state.height}]}
+                            onContentSizeChange={this._onContentSizeChange.bind(this)}
                             autoGrow={true}
                             placeholder={I18n.t('write_comment')}
                             placeholderTextColor={Colors._CCC}
                             returnKeyType={'done'}
                             autoFocus={true}
                             multiline={true}
-                            maxHeight={70}
-                            onChangeText={comment => this.setState({
-                                comment
-                            })}
+                            maxHeight={106}
+                            onChangeText={(comment) => {
+                                this.setState({
+                                    comment
+                                })
+                            }}
                         />
 
                     </View>
 
                     <TouchableOpacity
                         onPress={() => {
-                            if(strNotNull(this.state.comment.trim())){
+                            if (strNotNull(this.state.comment.trim())) {
                                 dismissKeyboard()
                                 this.props.send(this.state.comment);
                                 this.toggle()
-                            }else
+                            } else
                                 showToast('内容不能为空')
 
                         }}
@@ -96,12 +115,12 @@ export default class InputModal extends Component {
 
 const styles = StyleSheet.create({
     bottom: {
-        height: 48,
+
         width: '100%',
         backgroundColor: '#FFFFFF',
         borderColor: '#EEEEEE',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'flex-end'
     },
     input: {
         height: 30,
@@ -184,7 +203,8 @@ const styles = StyleSheet.create({
     inputComment: {
         backgroundColor: Colors._ECE,
         borderRadius: 15,
-        paddingLeft: 20,
+        paddingLeft: 17,
+        paddingRight: 4,
         fontSize: 14,
         minHeight: 30
     },
