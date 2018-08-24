@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
+import {isEmptyObject, logMsg, showToast, strNotNull, add} from "../../utils/ComonHelper";
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 
 
@@ -13,7 +13,7 @@ export default class InputModal extends Component {
 
     state = {
         comment: '',
-        height: 48,
+        height: 30,
         visible: false
     };
 
@@ -30,12 +30,15 @@ export default class InputModal extends Component {
 
     _onContentSizeChange = (event) => {
         let h = event.nativeEvent.contentSize.height;
-        logMsg("dsjkdjsjd", event.nativeEvent.contentSize.height)
-        if (h > 106) {
+        if (h < 30) {
+            this.setState({
+                height: 30
+            })
+        } else if (h > 106) {
             this.setState({
                 height: 106
             })
-        }else{
+        } else {
             this.setState({
                 height: h
             })
@@ -64,7 +67,7 @@ export default class InputModal extends Component {
 
                 </TouchableOpacity>
 
-                <View style={[styles.bottom, {height: this.state.height + 10}]}>
+                <View style={[styles.bottom_view, {height: add(this.state.height, 10)}]}>
                     <View style={{
                         width: '80%', marginLeft: 17,
                         borderWidth: 0, padding: 5
@@ -114,10 +117,10 @@ export default class InputModal extends Component {
 }
 
 const styles = StyleSheet.create({
-    bottom: {
+    bottom_view: {
 
         width: '100%',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#ffffff',
         borderColor: '#EEEEEE',
         flexDirection: 'row',
         alignItems: 'flex-end'

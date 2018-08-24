@@ -131,7 +131,7 @@ export default class InfoPage extends PureComponent {
                     marginLeft: 17,
                     marginRight: 17
                 }]}>
-                    <Text style={styles.comment}>{`${I18n.t('social.comments')} (${this.show_count(this.state.comments_count)})`}</Text>
+                    <Text style={styles.comment}>{`用户评论(${this.show_count(this.state.comments_count)})`}</Text>
 
                     <View style={{flex: 1}}/>
 
