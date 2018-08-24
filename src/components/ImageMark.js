@@ -50,7 +50,6 @@ export default class ImageMark extends Component {
     no_chang = () => {
         const {alt} = this.props;
         if (alt && alt === 'MACAUHIKE') {
-            logMsg('sdjsdhk',this.props)
             return false;
         } else {
             return true;
