@@ -40,11 +40,11 @@ export default class ImageGallery extends React.Component {
             try {
                 const ret = RNFS.downloadFile({fromUrl: path, toFile: downloadDest,background: true});
                 ret.promise.then(res => {
-                    CameraRoll.saveToCameraRoll(downloadDest)
+                    CameraRoll.saveToCameraRoll("file://"+downloadDest)
                         .then(()=>{
                             logMsg('图片已保存到相册')
                         }).catch(()=>{
-                        logMsg('图片保存失败')
+                        logMsg('图片保存失败',res)
                     })
 
                 }).catch(err => {
@@ -52,7 +52,7 @@ export default class ImageGallery extends React.Component {
                 });
             }
             catch (e) {
-                console.log(error);
+                console.log(e);
             }
         }
 

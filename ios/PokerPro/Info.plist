@@ -152,6 +152,8 @@
 	<string>需要您的同意访问动作，以使用运动健康等功能</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>需要您的同意访问相册，用以设置头像、分享图片等功能</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+    <string>A需要您的同意,才能保存图片到您的相册</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>需要您的同意访问语音，用以语音聊天等功能</string>
 	<key>UIAppFonts</key>
