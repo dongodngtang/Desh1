@@ -8,9 +8,9 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {hotels, info_types, exchange_rates} from '../../services/MacauDao';
-import {isEmptyObject, strNotNull} from "../../utils/ComonHelper";
+import {isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import {reallySize} from "../socials/Header";
-
+import RejectPage from "../comm/RejectPage";
 
 const styles = StyleSheet.create({
     nav: {
@@ -45,11 +45,65 @@ const styles = StyleSheet.create({
 export default class HotelSearch extends PureComponent {
     state = {
         search: false,
-        show_content: true
+        show_content: true,
+        reject_problem: ''
+    };
+
+    refresh = () => {
+        this.setState({
+            reject_problem:''
+        });
+        this.listView && this.listView.refresh();
     };
 
     render() {
         const {name, type} = this.props.params.item;
+        if (this.state.reject_problem === 'NETWORK_ERROR') {
+            return (
+                <View style={ApplicationStyles.bgContainer}>
+                    <View style={styles.nav}>
+                        <TouchableOpacity
+                            style={styles.btn_search}
+                            onPress={() => {
+                                router.pop()
+                            }}>
+
+                            <Image
+                                style={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                                source={Images.sign_return}/>
+
+                        </TouchableOpacity>
+                        <View style={{flex: 1}}/>
+                        {this.state.search ? <SearchBar
+                            keyword={keyword => {
+                                this.keyword = keyword;
+                                this.listView && this.listView.refresh()
+
+                            }}/> : <Text style={styles.title}>{name}</Text>}
+                        <View style={{flex: 1}}/>
+
+
+                        {type === 'exchange_rate' ? <View style={{width: 40}}/> : <TouchableOpacity
+                            style={styles.btn_search}
+                            onPress={() => {
+                                this.setState({
+                                    search: !this.state.search
+                                })
+                                this.keyword = undefined;
+                                this.listView && this.listView.refresh()
+                            }}>
+                            {this.state.search ? <Text style={styles.cancel}>取消</Text> : <Image
+                                style={styles.img_search}
+                                source={Images.macau.search}/>}
+
+                        </TouchableOpacity>}
+
+                    </View>
+
+                    <RejectPage refresh={this.refresh}/>
+                </View>
+            )
+        }
         return <View style={ApplicationStyles.bgContainer}>
             <View style={styles.nav}>
                 <TouchableOpacity
@@ -152,11 +206,21 @@ export default class HotelSearch extends PureComponent {
                 hotels({page, page_size: 20, keyword: this.keyword}, data => {
                     startFetch(data.items, 18)
                 }, err => {
+                    logMsg("reject:", err)
+                    this.setState({
+                        reject_problem: err.problem
+                    })
                     abortFetch()
                 })
             } else if (type === 'exchange_rate') {
                 exchange_rates(data => {
                     startFetch(data.items, 18)
+                },err=>{
+                    logMsg("reject:", err)
+                    this.setState({
+                        reject_problem: err.problem
+                    })
+                    abortFetch()
                 })
 
             } else {
@@ -164,6 +228,10 @@ export default class HotelSearch extends PureComponent {
                     data => {
                         startFetch(data.items, 18)
                     }, err => {
+                        logMsg("reject:", err)
+                        this.setState({
+                            reject_problem: err.problem
+                        })
                         abortFetch()
                     })
             }
@@ -292,12 +360,12 @@ class FoodItem extends PureComponent {
                             }}>{this.show_count(likes_count)}</Text>
 
                             {/*<Image*/}
-                                {/*style={{height: reallySize(12), width: reallySize(12)}}*/}
-                                {/*source={Images.social.reply}/>*/}
+                            {/*style={{height: reallySize(12), width: reallySize(12)}}*/}
+                            {/*source={Images.social.reply}/>*/}
                             {/*<Text style={{*/}
-                                {/*fontSize: 12,*/}
-                                {/*color: Colors._AAA,*/}
-                                {/*marginLeft: 2*/}
+                            {/*fontSize: 12,*/}
+                            {/*color: Colors._AAA,*/}
+                            {/*marginLeft: 2*/}
                             {/*}}>{this.show_count(comments_count)}</Text>*/}
                         </View>
                     </View>
