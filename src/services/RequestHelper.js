@@ -153,10 +153,11 @@ export function get(url, resolve, reject, params = {}) {
     });
 }
 
+let netCount = 0
 
 /*token过期*/
 function netError(response, reject) {
-    try{
+    try {
         let msgErr = '';
         if (response.status === 401) {
             clearLoginUser();
@@ -169,29 +170,38 @@ function netError(response, reject) {
         else if (response.problem === TIMEOUT_ERROR)
             msgErr = I18n.t('TIMEOUT_ERROR');
         else if (response.problem === NETWORK_ERROR) {
-
-            NetInfo.getConnectionInfo().then((connectionInfo) => {
-                console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
-                if (connectionInfo.type === 'unknown') {
-                    permissionAlert('澳门旅行网络权限已被关闭，是否前往开启')
-                }
-            });
-
-            msgErr = I18n.t('NETWORK_ERROR');
+            // netinfo(netCount++)
+            reject && reject(response)
+            return
         }
-
-
         showToast(msgErr);
         reject && reject(msgErr);
-    }catch (e) {
+    } catch (e) {
         logMsg(e)
+    }
+
+}
+
+
+function netinfo(count) {
+    logMsg('网络问题次数',count)
+    if (count > 4) {
+        netCount = 0;
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+            console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+            if (connectionInfo.type === 'unknown' || connectionInfo.type === 'none') {
+                permissionAlert('澳门旅行网络权限已被关闭或当前网路不可用')
+            }
+        });
+    }else{
+        showToast('网路加载慢，请稍后再试！')
     }
 
 }
 
 function handle(response, resolve, reject) {
 
-    try{
+    try {
         if (response.ok) {
 
             const {code, msg} = response.data;
@@ -204,7 +214,7 @@ function handle(response, resolve, reject) {
 
             netError(response, reject);
         }
-    }catch (e) {
+    } catch (e) {
         logMsg(e)
     }
 

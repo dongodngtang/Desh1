@@ -15,7 +15,10 @@ import Router from '../../configs/Router';
 import {connect} from 'react-redux';
 // import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
-import {getDispatchAction, alertRefresh, getCurrentDate, strNotNull, isEmptyObject} from '../../utils/ComonHelper';
+import {
+    getDispatchAction, alertRefresh, getCurrentDate, strNotNull, isEmptyObject,
+    logMsg
+} from '../../utils/ComonHelper';
 import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
@@ -161,6 +164,7 @@ class TabHomePage extends Component {
 
 
         }, err => {
+            logMsg('错误回调',err)
             this.setState({
                 load_more: 'fail'
             });
@@ -206,9 +210,10 @@ class TabHomePage extends Component {
                             load_more: 'load_all'
                         });
                     }
-
+                    logMsg('错误回调2323',data)
 
                 }, err => {
+                    logMsg('错误回调',err)
                     this.setState({
                         load_more: 'fail'
                     });

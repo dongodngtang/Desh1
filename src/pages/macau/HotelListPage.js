@@ -9,8 +9,9 @@ import {ImageLoad, UltimateListView} from "../../components";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {exchange_rates, hotels, info_types} from '../../services/MacauDao';
 import I18n from "react-native-i18n";
-import {isEmptyObject} from "../../utils/ComonHelper";
+import {isEmptyObject, logMsg} from "../../utils/ComonHelper";
 import moment from "moment/moment";
+import RejectPage from "../comm/RejectPage";
 
 const categorie1 = [{id: 0, name: '全部', type: '', isSelect: true},
     {id: 1, name: '氹仔区', type: 'dangzai', isSelect: false}, {
@@ -19,11 +20,17 @@ const categorie1 = [{id: 0, name: '全部', type: '', isSelect: true},
         type: 'aomenbandao',
         isSelect: false
     }];
-const categorie2 = [{id: 0, name: 'price_asc', img: Images.macau.price1, img2:Images.macau.price1_red,isSelect: false}, {
+const categorie2 = [{
+    id: 0,
+    name: 'price_asc',
+    img: Images.macau.price1,
+    img2: Images.macau.price1_red,
+    isSelect: false
+}, {
     id: 1,
     name: 'price_desc',
     img: Images.macau.price2,
-    img2:Images.macau.price2_red,
+    img2: Images.macau.price2_red,
     isSelect: false
 }];
 
@@ -39,7 +46,8 @@ export default class HotelListPage extends PureComponent {
         region_keyword: '',
         order_keyword: '',
         categorie_area: categorie1,
-        categorie_price: categorie2
+        categorie_price: categorie2,
+        reject_problem: ''
     };
 
     showSpecInfo = (temp) => {
@@ -58,10 +66,87 @@ export default class HotelListPage extends PureComponent {
         console.log("第二次选择的时间：", this.state.changeTime)
     };
 
+    refresh = () => {
+        this.setState({
+            reject_problem:''
+        });
+        this.listView && this.listView.refresh();
+    };
+
 
     render() {
-
         const {timeShow, changeTime, categorie_area, categorie_price, region_keyword, select2_keyword} = this.state;
+
+        if (this.state.reject_problem === 'NETWORK_ERROR') {
+            return (
+                <View style={ApplicationStyles.bgContainer}>
+                    <SearchBar
+                        onChangeText={keyword => {
+                            this.keyword = keyword;
+                            this.listView && this.listView.refresh()
+                        }}
+                        showSpecInfo={this.showSpecInfo}
+                        changeTime={changeTime}
+                        _click={'HotelListPage'}/>
+                    {timeShow ? <TimeSpecificationInfo
+                        showSpecInfo={this.showSpecInfo}
+                        _change={this._change}/> : null}
+                    <View style={styles.selectView}>
+                        {categorie_area.map((item, index, arr) => {
+                            return <TouchableOpacity
+                                key={'categorie_area' + index}
+                                style={{paddingTop: 14, paddingBottom: 14, paddingRight: 26}}
+                                onPress={() => {
+                                    arr.forEach(x => {
+                                        x.isSelect = x.id === item.id;
+                                        this.state.region_keyword = item.type
+
+                                        this.setState({
+                                            categorie_area: [...arr]
+                                        })
+
+                                        this.listView && this.listView.refresh()
+                                    })
+                                }}>
+                                <Text
+                                    style={{
+                                        color: item.isSelect ? '#E54A2E' : '#888888',
+                                        fontSize: 12
+                                    }}>{item.name}</Text>
+                            </TouchableOpacity>
+                        })}
+                        {categorie_price.map((item, index, arr) => {
+                            return <TouchableOpacity
+                                key={'categorie_price' + index}
+                                style={{
+                                    paddingTop: 14,
+                                    paddingBottom: 14,
+                                    paddingRight: 26,
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}
+                                onPress={() => {
+                                    arr.forEach(x => {
+                                        x.isSelect = x.id === item.id;
+                                        this.state.order_keyword = item.name
+                                        this.setState({
+                                            categorie_price: [...arr]
+                                        })
+                                        this.listView && this.listView.refresh()
+                                    })
+
+                                }}>
+                                <Text style={{color: item.isSelect ? '#E54A2E' : '#888888', fontSize: 12}}>价格</Text>
+                                <Image style={{width: 12, height: 8}} source={item.isSelect ? item.img2 : item.img}/>
+                            </TouchableOpacity>
+                        })}
+                    </View>
+                    <RejectPage refresh={this.refresh}/>
+                </View>
+
+            )
+        }
+
         return (<View style={ApplicationStyles.bgContainer}>
                 <SearchBar
                     onChangeText={keyword => {
@@ -124,7 +209,7 @@ export default class HotelListPage extends PureComponent {
                 </View>
 
                 <UltimateListView
-                    style={{paddingTop:6}}
+                    style={{paddingTop: 6}}
                     ListHeaderComponent={this._separator}
                     separator={this._separator}
                     keyExtractor={(item, index) => index + "item"}
@@ -136,12 +221,7 @@ export default class HotelListPage extends PureComponent {
                     dateTitle={I18n.t('last_refresh')}
                     allLoadedText={I18n.t('no_more')}
                     waitingSpinnerText={I18n.t('loading')}
-                    emptyView={() => {
-                        return this.state.error ? <LoadErrorView
-                            onPress={() => {
-                                this.listView.refresh()
-                            }}/> : <NoDataView/>;
-                    }}
+                    emptyView={() => <NoDataView/>}
                 />
             </View>
         )
@@ -160,10 +240,14 @@ export default class HotelListPage extends PureComponent {
                 console.log("HotelList:", data)
                 startFetch(data.items, 18)
             }, err => {
+                logMsg("reject:", err)
+                this.setState({
+                    reject_problem: err.problem
+                })
                 abortFetch()
             })
         } catch (err) {
-            console.log(err)
+            console.log('catchErr', err)
             abortFetch()
         }
     };
@@ -206,7 +290,7 @@ export default class HotelListPage extends PureComponent {
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{title}</Text>
                     {item.star_level > 0 ? <View style={styles.starView}>
-                        <Text style={{color: '#999999',fontSize:12}}>酒店星级：</Text>
+                        <Text style={{color: '#999999', fontSize: 12}}>酒店星级：</Text>
                         {this._star(item.star_level).map((index) => {
                             return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                         })}
