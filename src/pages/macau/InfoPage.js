@@ -30,6 +30,7 @@ export default class InfoPage extends PureComponent {
         info: {},
         music: true,
         comments_count: 0,
+        like_counts: 0
     }
 
     componentDidMount() {
@@ -38,7 +39,8 @@ export default class InfoPage extends PureComponent {
             const {id} = this.props.params.info
             getInfos(id, data => {
                 this.setState({
-                    info: data.info
+                    info: data.info,
+                    like_counts: data.info.likes_count
                 })
                 if (strNotNull(data.info.audio_link))
                     this.musicShow && this.musicShow.downloadMusic(data.info.audio_link)
@@ -81,7 +83,7 @@ export default class InfoPage extends PureComponent {
                 </View>
             )
         }
-        const {description, title, image, id, exist_coupon, audio_link, intro, total_views, total_likes, current_user_liked} = info;
+        const {description, title, image, id, exist_coupon, audio_link, intro, total_views, total_likes, current_user_liked} = this.state.info;
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 title={title}
@@ -145,7 +147,7 @@ export default class InfoPage extends PureComponent {
                         <Image
                             style={styles.like}
                             source={current_user_liked ? Images.social.like_red : Images.social.like_gray}/>
-                        <Text style={[styles.time, {marginLeft: 4}]}>{this.show_count(total_likes)}</Text>
+                        <Text style={[styles.time, {marginLeft: 4}]}>{this.show_count(this.state.like_counts)}</Text>
                     </View>
                 </View>
                 <View style={{width: Metrics.screenWidth, height: 1.5, backgroundColor: '#F3F3F3'}}/>
@@ -246,7 +248,8 @@ export default class InfoPage extends PureComponent {
                             info.total_likes = data.total_likes;
                             info.current_user_liked = !current_user_liked;
                             this.setState({
-                                info
+                                info: info,
+                                like_counts: data.total_likes
                             })
 
                         }, err => {
