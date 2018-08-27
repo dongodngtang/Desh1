@@ -68,9 +68,9 @@ export default class ImageGallery extends React.Component {
                         color='white'/>
                 }}
                 // saveToLocalByLongPress={true}
-                onLongPress={(image) => {
-                    this.saveImg(image);
-                }}
+                // onLongPress={(image) => {
+                //     this.saveImg(image);
+                // }}
                 imageUrls={images}
                 index={index}
                 onClick={() => router.pop()}/>
