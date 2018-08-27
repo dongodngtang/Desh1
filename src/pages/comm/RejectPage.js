@@ -8,22 +8,6 @@ import {
     StyleSheet, Text, View, Image, TouchableOpacity,
     ScrollView, InteractionManager
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, UltimateListView} from '../../components';
-import RenderHtml from '../comm/RenderHtml';
-import {getInfos} from '../../services/MacauDao'
-import {
-    isEmptyObject, isFollowed, shareHost, sharePage, showToast, strNotNull,
-    uShareInfoItem
-} from "../../utils/ComonHelper";
-import LoadingView from "../../components/load/LoadingView";
-
-import {topics_comments, topics_details, topics_like} from "../../services/SocialDao";
-import {postComment, postRelaies} from "../../services/CommentDao";
-import I18n from "react-native-i18n";
-import CommentBar from '../comm/CommentBar';
-import CommentList from "../comment/CommentList";
-import {reallySize} from "../socials/Header";
 
 export default class RejectPage extends Component {
 
