@@ -8,7 +8,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {Images, Metrics, Colors} from "../../Themes";
-import {localFilePath} from '../../utils/ComonHelper';
+import {localFilePath, logMsg} from '../../utils/ComonHelper';
 import ImageLoad from "../../components/ImageLoad";
 
 export default class OtherMessage extends Component {
@@ -59,12 +59,21 @@ export default class OtherMessage extends Component {
     render() {
         const {type, userInfo} = this.props.message;
         let avatarThumbPath = userInfo.avatarThumbPath;
+
         return (
             <View style={styles.container}>
-                <ImageLoad
-                    emptyBg={Images.home_avatar}
-                    source={{uri: avatarThumbPath}}
-                    style={styles.userIcon}/>
+                <TouchableOpacity
+                    onPress={() => {
+                        logMsg(userInfo)
+                        userInfo.user_id = userInfo.username
+                        global.router.toUserTopicPage(userInfo)
+                    }}>
+                    <ImageLoad
+                        emptyBg={Images.home_avatar}
+                        source={{uri: avatarThumbPath}}
+                        style={styles.userIcon}/>
+                </TouchableOpacity>
+
                 {Platform.OS === 'ios' ? type === "image" || type === "video" ? null :
                     <Image source={Images.social.chat_left} style={styles.leftCorner}/> : null}
 
