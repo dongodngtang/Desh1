@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
-import {convertDate, isEmptyObject} from "../../utils/ComonHelper";
+import {convertDate, isEmptyObject, strNotNull} from "../../utils/ComonHelper";
 import {getRoomList, hotels} from "../../services/MacauDao";
 import TimeSpecificationInfo from './TimeSpecificationInfo';
 import SearchBar from './SearchBar';
@@ -47,7 +47,7 @@ export default class HotelRoomListPage extends PureComponent {
                     _click={hotel.title}/>
 
                 <UltimateListView
-                    style={{paddingTop:6}}
+                    style={{paddingTop: 6}}
                     ListHeaderComponent={this._separator}
                     separator={this._separator}
                     keyExtractor={(item, index) => index + "item"}
@@ -74,7 +74,12 @@ export default class HotelRoomListPage extends PureComponent {
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
             const {hotel, date} = this.props.params;
-            getRoomList({page,page_size:20,begin_date: this.state.last_change_time.begin_date, id: hotel.id}, data => {
+            getRoomList({
+                page,
+                page_size: 20,
+                begin_date: this.state.last_change_time.begin_date,
+                id: hotel.id
+            }, data => {
                 console.log("RoomList:", data)
                 startFetch(data.items, 18)
             }, err => {
@@ -86,8 +91,20 @@ export default class HotelRoomListPage extends PureComponent {
         }
     };
 
+    _discount = (price, discount_amount) => {
+        if (strNotNull(discount_amount)) {
+            if(discount_amount>price){
+                return price;
+            }else{
+                return price - discount_amount
+            }
+        }else{
+            return price
+        }
+    }
+
     _renderItem = (item, index) => {
-        const {id, images, notes, price, tags, title} = item;
+        const {id, images, notes, price, tags, title, discount_amount} = item;
         return (
             <View style={styles.itemView}>
                 <ImageMessage images={images}/>
@@ -95,16 +112,26 @@ export default class HotelRoomListPage extends PureComponent {
 
                 <View style={styles.priceView}>
                     <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
-                        style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{price}</Text>
-                    <TouchableOpacity style={[styles.reservation,{backgroundColor:item.saleable_num <= 0 ? '#F3F3F3':'#FF6448'}]}
-                                      onPress={() => {
-                                          if (item.saleable_num > 0) {
-                                              if (isEmptyObject(global.login_user)) {
-                                                  router.toLoginFirstPage()
-                                              } else
-                                                  router.toRoomReservationPage(item, this.state.last_change_time)
-                                          }
-                                      }}>
+                        style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this._discount(price, discount_amount)}</Text>
+
+
+                    <View style={{flexDirection: 'row', alignItems: "center"}}>
+                        <Text style={{color: "#AAAAAA", fontSize: 12, marginRight: 4}}>原价</Text>
+                        <Text
+                            style={{color: "#AAAAAA", fontSize: 12, textDecorationLine: 'line-through'}}>¥{price}</Text>
+                    </View>
+
+
+                    <TouchableOpacity
+                        style={[styles.reservation, {backgroundColor: item.saleable_num <= 0 ? '#F3F3F3' : '#FF6448'}]}
+                        onPress={() => {
+                            if (item.saleable_num > 0) {
+                                if (isEmptyObject(global.login_user)) {
+                                    router.toLoginFirstPage()
+                                } else
+                                    router.toRoomReservationPage(item, this.state.last_change_time)
+                            }
+                        }}>
                         <Text style={{
                             color: item.saleable_num <= 0 ? '#888888' : "#FFFFFF",
                             fontSize: 14
@@ -204,7 +231,6 @@ export class Message extends PureComponent {
 const styles = StyleSheet.create({
     itemView: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
         paddingTop: 25,
         paddingBottom: 20,
         backgroundColor: "#FFFFFF"
@@ -241,7 +267,8 @@ const styles = StyleSheet.create({
     priceView: {
         flexDirection: 'column',
         marginRight: 17,
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        justifyContent: 'space-between'
     },
     reservation: {
         paddingTop: 8,
@@ -251,7 +278,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FF6448',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 18,
+        marginTop: 10,
         borderRadius: 3,
         shadowOffset: {width: 1, height: 1},
         shadowColor: "#FF4726"

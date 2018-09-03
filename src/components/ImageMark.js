@@ -72,7 +72,7 @@ export default class ImageMark extends Component {
                     }
                 }}
                 style={{
-                    backgroundColor: Colors._ECE,
+                    backgroundColor: 'white',
                     width: this.state.width,
                     height: this.state.height
                 }}>
