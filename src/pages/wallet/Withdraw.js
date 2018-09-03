@@ -24,17 +24,21 @@ import {postWithdrawal} from '../../services/WallDao'
 const list = [{id: 0, name: '支付宝', account_type: 'alipay'}, {id: 1, name: '银行卡', account_type: 'bank'}];
 
 export default class Withdraw extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            way: '支付宝',
+            amount: '',
+            prompt_show: false,
 
-    state = {
-        way: '支付宝',
-        amount: '',
-        prompt_show: false,
-        bank: '',
-        account_number: '',
-        name: '',
-        account_type: 'alipay'
+            account_number: '',
+            account_type: 'alipay'
 
+        };
+        this.name = '';
+        this.bank = ''
     }
+
 
     componentWillUnmount(){
         console.log("钱包componentWillUnmount")
@@ -42,7 +46,7 @@ export default class Withdraw extends Component {
     }
 
     render() {
-        const {way, amount, prompt_show, bank, account_number, name, account_type} = this.state;
+        const {way, amount, prompt_show, account_number, account_type} = this.state;
         const {total_account} = this.props.params;
 
         return <BaseComponent>
@@ -148,13 +152,11 @@ export default class Withdraw extends Component {
                                 maxLength={10}
                                 numberOfLines={1}
                                 placeholderTextColor={'#CCCCCC'}
-                                placeholder={strNotNull(bank) ? '' : '填写银行开户行'}
+                                placeholder={strNotNull(this.bank) ? '' : '填写银行开户行'}
                                 underlineColorAndroid={'transparent'}
-                                value={bank}
+                                value={this.bank}
                                 onChangeText={txt => {
-                                    this.setState({
-                                        bank: txt
-                                    })
+                                    this.bank=txt
                                 }}
 
                             />
@@ -205,13 +207,11 @@ export default class Withdraw extends Component {
                             maxLength={20}
                             numberOfLines={1}
                             placeholderTextColor={'#CCCCCC'}
-                            placeholder={strNotNull(name) ? '' : `填写真实姓名`}
-                            value={name}
+                            placeholder={strNotNull(this.name) ? '' : `填写真实姓名`}
+                            value={this.name}
                             underlineColorAndroid={'transparent'}
                             onChangeText={txt => {
-                                this.setState({
-                                    name: txt
-                                })
+                                this.name=txt
                             }}
 
                         />
@@ -235,8 +235,8 @@ export default class Withdraw extends Component {
     }
 
     _check = () => {
-        console.log("进入提现判断")
-        const {way, bank, amount, prompt_show, name, account_type, account_number} = this.state;
+        console.log("进入提现判断",this.state)
+        const {way, amount, prompt_show, account_type, account_number} = this.state;
         const {total_account} = this.props.params;
         if (!strNotNull(total_account) || total_account === '0.0' || Number.parseFloat(amount) < 50) {
             showToast("提现金额不足")
@@ -244,17 +244,17 @@ export default class Withdraw extends Component {
             showToast("提现金额超额")
         } else if (!strNotNull(amount) || Number.parseFloat(amount) <= 0) {
             showToast("请输入正确的金额数")
-        } else if (way === '银行卡' && (!strNotNull(bank.trim()) || !strNotNull(account_number.trim()) || !strNotNull(name.trim()))) {
+        } else if (way === '银行卡' && (!strNotNull(this.bank.trim()) || !strNotNull(account_number.trim()) || !strNotNull(this.name.trim()))) {
             showToast("请填写完整信息")
-        } else if (!strNotNull(account_number.trim()) || !strNotNull(name.trim())) {
+        } else if (!strNotNull(account_number.trim()) || !strNotNull(this.name.trim())) {
             showToast("请填写完整信息");
         } else {
             let body = {
                 amount: amount,
-                real_name: name,
+                real_name: this.name,
                 account_type: account_type,
                 account: account_number,
-                account_memo: bank
+                account_memo: this.bank
             }
             console.log("提现：", body)
             alertOrder("确认提现？", () => {
