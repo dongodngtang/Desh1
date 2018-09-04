@@ -109,7 +109,7 @@ export default class InfoPage extends PureComponent {
                     alignItems: 'center',
                     paddingLeft: 17,
                     paddingRight: 17,
-                    paddingBottom: 70
+                    paddingBottom: 35
                 }}>
 
                     <View style={{width: '100%'}}>
