@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, Image,
     TouchableOpacity, StatusBar, Platform
@@ -8,7 +8,14 @@ import I18n from 'react-native-i18n';
 import {Badge} from '../../components';
 import propTypes from 'prop-types';
 
-export default class DynamicTopBar extends PureComponent {
+export default class DynamicTopBar extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            unreadCount: props.props
+        }
+    }
 
 
     render() {
@@ -58,14 +65,18 @@ export default class DynamicTopBar extends PureComponent {
                     <View style={{flex: 1}}/>
                     {this.props.hideReceived ? <TouchableOpacity
                         onPress={() => {
+
                             setUnreadCount && setUnreadCount(0);
                             global.router.toReceivedReply();
+                            this.setState({
+                                unreadCount: 0
+                            })
 
                         }}
                         style={styles.btnCat}>
                         <Image style={styles.imgCat}
                                source={Images.commentWhite}/>
-                        {this._carts(unreadCount)}
+                        {this._carts()}
 
                     </TouchableOpacity> : <View style={styles.btnCat}/>}
 
@@ -91,8 +102,9 @@ export default class DynamicTopBar extends PureComponent {
 
     }
 
-    _carts = (unreadCount) => {
+    _carts = () => {
 
+        const {unreadCount} = this.state;
         if (unreadCount && unreadCount > 0)
             return <View
                 style={styles.badge}>
