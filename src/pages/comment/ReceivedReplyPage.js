@@ -92,42 +92,45 @@ export default class ReceivedReplyPage extends Component {
 
         const {created_at, from, notify_type} = item;
         const {avatar, nick_name, official} = from.target_user;
-        if(notify_type === "follow"){
-            return;
+        if (notify_type === "follow") {
+            return
         }
         return (
-            <TouchableOpacity
-                onPress={() => {
-                    if(notify_type === "follow"){
-                        this.toUserPage(from.target_user)
-                    }else{
-                        global.router.toLongArticle(this.type_topic(item))
+            <View>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (notify_type === "follow") {
+                            this.toUserPage(from.target_user)
+                        } else {
+                            global.router.toLongArticle(this.type_topic(item))
+                        }
                     }
-                }
-                }
-                style={styles.itemPage}>
-                <Image style={styles.personImg} source={this._avatar(avatar)}/>
-                <View style={styles.pageRight}>
-                    <View style={{flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6}}>
-                        <Text style={[styles.name,{width:'55%'}]}>{nick_name}</Text>
-                        {official ? this.official() : null}
-                        <View style={{flex: 1}}/>
-                        <Text style={styles.time}>{utcDate(created_at, 'YYYY-MM-DD HH:mm')}</Text>
+                    }
+                    style={styles.itemPage}>
+                    <Image style={styles.personImg} source={this._avatar(avatar)}/>
+                    <View style={styles.pageRight}>
+                        <View style={{flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6}}>
+                            <Text style={[styles.name, {width: '55%'}]}>{nick_name}</Text>
+                            {official ? this.official() : null}
+                            <View style={{flex: 1}}/>
+                            <Text style={styles.time}>{utcDate(created_at, 'YYYY-MM-DD HH:mm')}</Text>
+                        </View>
+
+                        <View style={styles.replyView}>
+                            <Text style={styles.replyTxt1}>
+                                {this.notifyType(notify_type)}
+                            </Text>
+
+                            {notify_type !== 'like' ? <Text
+                                style={styles.replyTxt1}>
+                                {this.type_body(item)}
+                            </Text> : null}
+
+                        </View>
                     </View>
-
-                    <View style={styles.replyView}>
-                        <Text style={styles.replyTxt1}>
-                            {this.notifyType(notify_type)}
-                        </Text>
-
-                        {notify_type !== 'like' ? <Text
-                            style={styles.replyTxt1}>
-                            {this.type_body(item)}
-                        </Text> : null}
-
-                    </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+                {this._separator()}
+            </View>
         )
     };
 
@@ -156,7 +159,6 @@ export default class ReceivedReplyPage extends Component {
                         dateTitle={I18n.t('last_refresh')}
                         allLoadedText={I18n.t('no_more')}
                         waitingSpinnerText={I18n.t('loading')}
-                        separator={this._separator}
                         emptyView={() => <DynamicEmpty/>}
                     />
 
@@ -211,7 +213,7 @@ const styles = StyleSheet.create({
     replyView: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'flex-start',
+        justifyContent: 'flex-start',
         flexWrap: 'wrap',
     },
     replyTxt1: {
