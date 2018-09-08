@@ -53,8 +53,8 @@ export default class ReceivedReplyPage extends Component {
                 return I18n.t('comment') + ":"
             case 'like':
                 return I18n.t('liked')
-            case 'follow':
-                return "关注了你"
+            // case 'follow':
+            //     return "关注了你"
         }
     }
 
@@ -92,6 +92,9 @@ export default class ReceivedReplyPage extends Component {
 
         const {created_at, from, notify_type} = item;
         const {avatar, nick_name, official} = from.target_user;
+        if(notify_type === "follow"){
+            return;
+        }
         return (
             <TouchableOpacity
                 onPress={() => {
