@@ -329,7 +329,7 @@ export default class MomentList extends PureComponent {
                 style={styles.long_cover}
             >
                 <LeftAlignedImage
-                    height={200}
+
                     source={{uri: item.cover_link}}/>
             </View> : null}
 
@@ -363,12 +363,11 @@ export default class MomentList extends PureComponent {
         if (images.length === 1) {
             return <View
                 style={styles.long_cover}
-                onPress={() => {
-                    this.previewImage(images, 0)
-                }}
             >
                 <LeftAlignedImage
-                    height={200}
+                    onPress={() => {
+                        this.previewImage(images, 0)
+                    }}
                     source={{uri: images[0].url}}/>
             </View>
 

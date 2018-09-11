@@ -8,88 +8,53 @@ import {
 
 
 export class LeftAlignedImage extends Component {
-
     constructor(props) {
         super(props)
 
         this.state = {
             height: 200,
-            width: 0,
-            imageWidth: 0,
-            imageHeight: 0,
-            source: null,
+            width: 0
         }
+
+
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._updateState(this.props)
     }
 
-    componentWillReceiveProps(nextProps) {
-        this._updateState(nextProps)
-    }
+    _updateState = (props) => {
+        const {source, maxWidth, maxHeight = 200} = props;
+        Image.getSize(source.uri, (originWidth, originHeight) => {
 
-    _updateState(props) {
-        const {source, height} = props;
-        const width = props.width || Dimensions.get('window').width;
+            let width = maxHeight * originWidth / originHeight; //按照屏幕高度进行等比缩放
+            width = width > maxWidth ? maxWidth : width;
 
-        Image.getSize(source.uri, (iw, ih) => {
-            const {imageWidth, imageHeight} = this.calcDim(iw, ih, height, width - 34)
+            this.setState({height: maxHeight, width});
 
-            this.setState({
-                imageWidth,
-                imageHeight,
-                source,
-                height: height,
-                width: width,
-            });
+
         });
     }
 
     render() {
-        const {source, imageWidth, imageHeight} = this.state;
-
+        const {width, height} = this.state;
+        const {onPress} = this.props;
 
         return (
             <TouchableOpacity
-                style={{
-                    width: imageWidth, height: imageHeight,
-                    backgroundColor: '#ECECEC'
-                }}
-                onPress={() => {
-                    global.router.toImageGalleryPage([{url: source.uri}], 0)
-                }}>
-                {source && imageHeight > 0 ?
-                    <Image
-                        style={{
-                            width: imageWidth, height: imageHeight
-                        }}
-                        resizeMode="center"
-                        source={source}
-                    />
-                    :
-                    null
-                }
+                disabled={!onPress}
+                onPress={() => onPress && onPress()}
+                activeOpacity={1}
+            >
+                <Image
+                    source={this.props.source}
+                    style={{
+                        width, height,
+                        backgroundColor: '#ECECEC'
+                    }}/>
+
             </TouchableOpacity>
-        )
-    }
-
-    calcDim = (imageWidth, imageHeight, maxHeight, maxWidth) => {
-
-        const imageRatio = imageWidth / imageHeight;
-
-        let newImageHeight = Math.min(maxHeight, imageHeight)
-        let newImageWidth = newImageHeight * imageRatio;
-
-        if (maxWidth > 0 && newImageWidth > maxWidth) {
-            newImageWidth = maxWidth;
-            newImageHeight = maxWidth / imageRatio
-        }
-
-        return {
-            imageWidth: newImageWidth,
-            imageHeight: newImageHeight,
-        }
+        );
     }
 }
 
