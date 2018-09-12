@@ -6,6 +6,7 @@ import {setLanguage} from '../I18n/I18n';
 import {getSize, setLang, getCarts} from '../utils/ComonHelper';
 import {setDpLang} from '../services/RequestHelper';
 import {listVerified} from './AccountDao';
+import {Platform, PermissionsAndroid} from 'react-native'
 
 export function init(resolve) {
     storage.load({key: StorageKey.Language})
@@ -42,5 +43,19 @@ export function setLocalLanguage(language) {
         rawData: language
     });
 
+}
+
+export async function requestCameraPermission() {
+    if (Platform.OS === 'android') {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            )
+
+            return granted;
+        } catch (err) {
+            console.warn(err)
+        }
+    }
 }
 

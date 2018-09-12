@@ -2,6 +2,7 @@
  * Created by lorne on 2016/12/20.
  */
 import React, {Component} from 'react';
+import {Platform, PermissionsAndroid} from 'react-native'
 import {Router} from 'react-native-router-flux';
 import {Stacks} from '../configs/StackRoute';
 import StorageKey from '../configs/StorageKey';
@@ -14,7 +15,7 @@ import {
     isEmptyObject,
     getDispatchAction
 } from '../utils/ComonHelper';
-import {init} from '../services/ConfigDao';
+import {init,requestCameraPermission} from '../services/ConfigDao';
 import {releases_show, getUpdate} from '../services/AccountDao';
 import {
     GET_CERTIFICATION,
@@ -59,6 +60,8 @@ class Root extends Component {
                 languageChange: true
             });
         });
+
+        requestCameraPermission()
     }
 
     constructor(props) {
