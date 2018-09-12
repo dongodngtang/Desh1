@@ -322,8 +322,9 @@ export default class MomentList extends PureComponent {
     }
 
     long = (item) => {
+        let title2=  item.title.replace(/\n/g, '');
         return <View>
-            <Text style={styles.body}>{item.title}</Text>
+            <Text style={styles.body}>{title2}</Text>
 
             {strNotNull(item.cover_link) ? <View
                 style={styles.long_cover}
@@ -339,11 +340,12 @@ export default class MomentList extends PureComponent {
 
     short = (item) => {
         const {images, body} = item;
+        let title2=  body.replace(/\n/g, '');
         return <View>
             {strNotNull(body) ? <Text
                 numberOfLines={6}
                 ellipsizeMode="tail"
-                style={styles.body}>{body}</Text> : null}
+                style={styles.body}>{title2}</Text> : null}
 
 
             {images && images.length > 0 ? this.shortImage(images) : null}

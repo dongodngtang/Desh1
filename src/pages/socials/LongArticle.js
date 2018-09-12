@@ -149,6 +149,9 @@ const tagsStyles = {
         color: Colors.txt_444,
         letterSpacing: 1,
         lineHeight: 18
+    },
+    img:{
+        alignSelf:'center'
     }
 }
 
@@ -346,17 +349,21 @@ export default class LongArticle extends PureComponent {
             user, created_at, total_likes, comments, id, body_type,
             body, title, total_views, location, current_user_liked
         } = this.state.article;
+
+        let des = body.trim().replace(/\n/g, "<br/>");
+        let title2 = title.replace(/\n/g, '');
+
         const {address_title} = location;
         return <View>
             <View style={{backgroundColor: 'white'}}>
                 <View style={styles.info}>
-                    {strNotNull(title) ? <View style={{
+                    {strNotNull(title2) ? <View style={{
                         flexDirection: 'row', alignItems: 'center',
                         marginTop: 10, marginBottom: 10
                     }}>
                         <Text
                             numberOfLines={2}
-                            style={styles.title}>{title}</Text>
+                            style={styles.title}>{title2}</Text>
                     </View> : <View style={{height: 15}}/>}
 
 
@@ -397,7 +404,7 @@ export default class LongArticle extends PureComponent {
                                 )
                             }}
                             style={styles.btn_focus}>
-                            < Text
+                            <Text
                                 style={styles.focus}>{this.state.followed ?
                                 I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
                         </TouchableOpacity>
@@ -413,7 +420,7 @@ export default class LongArticle extends PureComponent {
                     <Html
                         tagsStyles={tagsStyles}
                         imagesMaxWidth={Metrics.screenWidth - 34}
-                        html={body}
+                        html={des}
 
                     />
                 </View> : this.short(this.state.article)}
