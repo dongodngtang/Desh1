@@ -380,7 +380,9 @@ const images = {
         callPhone: require('../../source/macau/callPhone.png'),
         notRoom: require('../../source/macau/notRoom.png'),
         bg_music: require('../../source/macau/bg_music.png'),
-        bg_music_close: require('../../source/macau/bg_music_close.png')
+        bg_music_close: require('../../source/macau/bg_music_close.png'),
+        top: require('../../source/macau/top.png'),
+        bth: require('../../source/macau/bth.png')
 
 
     },

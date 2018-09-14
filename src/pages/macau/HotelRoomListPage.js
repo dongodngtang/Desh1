@@ -16,7 +16,8 @@ export default class HotelRoomListPage extends PureComponent {
 
     state = {
         timeShow: false,
-        last_change_time: this.props.params.date
+        last_change_time: this.props.params.date,
+        click_index: false
     };
 
     componentDidMount() {
@@ -93,23 +94,75 @@ export default class HotelRoomListPage extends PureComponent {
 
     _discount = (price, discount_amount) => {
         if (strNotNull(discount_amount)) {
-            if(discount_amount>price){
+            if (discount_amount > price) {
                 return price;
-            }else{
+            } else {
                 return price - discount_amount
             }
-        }else{
+        } else {
             return price
         }
-    }
+    };
+
+    lowest_price = (prices) => {
+        let lowst = prices[0].price;
+        prices.forEach((item) => {
+            if (Number.parseFloat(item.price) < Number.parseFloat(lowst)) {
+                lowst = item.price
+            }
+        });
+        return lowst;
+    };
 
     _renderItem = (item, index) => {
-        const {id, images, notes, price, tags, title, discount_amount} = item;
+        const {id, images, notes, prices, tags, title, discount_amount} = item;
         return (
             <View style={styles.itemView}>
-                <ImageMessage images={images}/>
-                <Message item={item}/>
+                <View style={styles.itemView2}>
+                    <ImageMessage images={images}/>
+                    <Message item={item}/>
 
+                    <TouchableOpacity style={styles.priceView} onPress={() => {
+                        if (item.id === index + 1) {
+                            this.setState({
+                                click_index: !this.state.click_index
+                            })
+                        }
+                    }}>
+                        <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
+                            style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this.lowest_price(prices)}起</Text>
+
+
+                        {/*<View style={{flexDirection: 'row', alignItems: "center"}}>*/}
+                        {/*<Text style={{color: "#AAAAAA", fontSize: 12, marginRight: 4}}>原价</Text>*/}
+                        {/*<Text*/}
+                        {/*style={{color: "#AAAAAA", fontSize: 12, textDecorationLine: 'line-through'}}>¥{price}</Text>*/}
+                        {/*</View>*/}
+
+                        <Image style={{width: 16, height: 8, marginTop: 12}}
+                               source={this.state.click_index ? Images.macau.bth : Images.macau.top}/>
+
+                    </TouchableOpacity>
+                </View>
+
+                {this.state.click_index ? <FlatList
+                    data={prices}
+                    showsHorizontalScrollIndicator={false}
+                    ItemSeparatorComponent={<View style={{height: 1, backgroundColor: 'white'}}/>}
+                    renderItem={price_item => this.items(price_item, item)}
+                    keyExtractor={(item, index) => `items${index}`}/> : null}
+            </View>
+
+        )
+    };
+
+    items = (price_item, item) => {
+        const {id, images, notes, prices, tags, title} = item;
+        const {discount_amount, price, room_price_id, saleable_num} = price_item;
+
+        return (
+            <View style={[styles.itemView2, {backgroundColor: '#F3F3F3'}]}>
+                <Message item={item}/>
                 <View style={styles.priceView}>
                     <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this._discount(price, discount_amount)}</Text>
@@ -120,7 +173,6 @@ export default class HotelRoomListPage extends PureComponent {
                         <Text
                             style={{color: "#AAAAAA", fontSize: 12, textDecorationLine: 'line-through'}}>¥{price}</Text>
                     </View>
-
 
                     <TouchableOpacity
                         style={[styles.reservation, {backgroundColor: item.saleable_num <= 0 ? '#F3F3F3' : '#FF6448'}]}
@@ -140,6 +192,7 @@ export default class HotelRoomListPage extends PureComponent {
                 </View>
             </View>
         )
+
     };
 
     _separator = () => {
@@ -230,10 +283,15 @@ export class Message extends PureComponent {
 
 const styles = StyleSheet.create({
     itemView: {
-        flexDirection: 'row',
+        flexDirection: 'column',
+        alignItems: 'center',
         paddingTop: 25,
         paddingBottom: 20,
         backgroundColor: "#FFFFFF"
+    },
+    itemView2: {
+        flexDirection: 'row',
+
     },
     messageView: {
         flex: 1,
@@ -266,9 +324,14 @@ const styles = StyleSheet.create({
     },
     priceView: {
         flexDirection: 'column',
+        alignItems: 'center',
         marginRight: 17,
-        alignItems: 'flex-end',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 6,
+        paddingRight: 6,
+        backgroundColor: '#F3F3F3'
     },
     reservation: {
         paddingTop: 8,
