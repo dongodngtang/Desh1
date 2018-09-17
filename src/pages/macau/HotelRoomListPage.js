@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
-import {convertDate, isEmptyObject, strNotNull} from "../../utils/ComonHelper";
+import {convertDate, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import {getRoomList, hotels} from "../../services/MacauDao";
 import TimeSpecificationInfo from './TimeSpecificationInfo';
 import SearchBar from './SearchBar';
@@ -17,7 +17,8 @@ export default class HotelRoomListPage extends PureComponent {
     state = {
         timeShow: false,
         last_change_time: this.props.params.date,
-        click_index: false
+        click_index: false,
+        room_list: []
     };
 
     componentDidMount() {
@@ -81,8 +82,15 @@ export default class HotelRoomListPage extends PureComponent {
                 begin_date: this.state.last_change_time.begin_date,
                 id: hotel.id
             }, data => {
+                let lists = data.items;
+                lists.map((item) => {
+                    item.isSelect = false;
+                });
+                this.setState({
+                    room_list: lists
+                })
                 console.log("RoomList:", data)
-                startFetch(data.items, 18)
+                startFetch(lists, 18)
             }, err => {
                 abortFetch()
             })
@@ -115,6 +123,8 @@ export default class HotelRoomListPage extends PureComponent {
     };
 
     _renderItem = (item, index) => {
+        logMsg('酒店 bianhua')
+        const {room_list} = this.state;
         const {id, images, notes, prices, tags, title, discount_amount} = item;
         return (
             <View style={styles.itemView}>
@@ -123,29 +133,28 @@ export default class HotelRoomListPage extends PureComponent {
                     <Message item={item}/>
 
                     <TouchableOpacity style={styles.priceView} onPress={() => {
-                        if (item.id === index + 1) {
-                            this.setState({
-                                click_index: !this.state.click_index
-                            })
-                        }
+                        room_list.forEach((x) => {
+                            if (x.id === item.id) {
+                                x.isSelect = !x.isSelect
+                            } else
+                                x.isSelect = false
+                        })
+                        this.setState({
+                            room_list: [...room_list]
+                        })
                     }}>
                         <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
-                            style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this.lowest_price(prices)}起</Text>
+                            style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this.lowest_price(prices)}
+                            <Text style={{fontSize: 12}}>起</Text></Text>
 
-
-                        {/*<View style={{flexDirection: 'row', alignItems: "center"}}>*/}
-                        {/*<Text style={{color: "#AAAAAA", fontSize: 12, marginRight: 4}}>原价</Text>*/}
-                        {/*<Text*/}
-                        {/*style={{color: "#AAAAAA", fontSize: 12, textDecorationLine: 'line-through'}}>¥{price}</Text>*/}
-                        {/*</View>*/}
 
                         <Image style={{width: 16, height: 8, marginTop: 12}}
-                               source={this.state.click_index ? Images.macau.bth : Images.macau.top}/>
+                               source={item.isSelect ? Images.macau.bth : Images.macau.top}/>
 
                     </TouchableOpacity>
                 </View>
 
-                {this.state.click_index ? <FlatList
+                {item.isSelect ? <FlatList
                     data={prices}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={<View style={{height: 1, backgroundColor: 'white'}}/>}
@@ -157,13 +166,21 @@ export default class HotelRoomListPage extends PureComponent {
     };
 
     items = (price_item, item) => {
+        console.log("price_item",price_item)
+        console.log("item",item)
         const {id, images, notes, prices, tags, title} = item;
-        const {discount_amount, price, room_price_id, saleable_num} = price_item;
+        const {discount_amount, price, room_price_id, saleable_num} = price_item.item;
 
         return (
-            <View style={[styles.itemView2, {backgroundColor: '#F3F3F3'}]}>
-                <Message item={item}/>
-                <View style={styles.priceView}>
+            <View style={[styles.itemView2, {
+                backgroundColor: '#F3F3F3',
+                width: Metrics.screenWidth - 30,
+                marginTop: 21,
+                paddingTop: 14,
+                alignSelf: 'center'
+            }]}>
+                <Message item={item} select={true}/>
+                <View style={[styles.priceView, {alignItems: 'flex-start'}]}>
                     <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this._discount(price, discount_amount)}</Text>
 
@@ -175,19 +192,19 @@ export default class HotelRoomListPage extends PureComponent {
                     </View>
 
                     <TouchableOpacity
-                        style={[styles.reservation, {backgroundColor: item.saleable_num <= 0 ? '#F3F3F3' : '#FF6448'}]}
+                        style={[styles.reservation, {backgroundColor: saleable_num <= 0 ? '#F3F3F3' : '#FF6448'}]}
                         onPress={() => {
-                            if (item.saleable_num > 0) {
+                            if (saleable_num > 0) {
                                 if (isEmptyObject(global.login_user)) {
                                     router.toLoginFirstPage()
                                 } else
-                                    router.toRoomReservationPage(item, this.state.last_change_time)
+                                    router.toRoomReservationPage(item, price_item.item,this.state.last_change_time)
                             }
                         }}>
                         <Text style={{
-                            color: item.saleable_num <= 0 ? '#888888' : "#FFFFFF",
+                            color: saleable_num <= 0 ? '#888888' : "#FFFFFF",
                             fontSize: 14
-                        }}>{item.saleable_num <= 0 ? '售罄' : '预定'}</Text>
+                        }}>{saleable_num <= 0 ? '售罄' : '预定'}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -243,6 +260,7 @@ export class ImageMessage extends PureComponent {
 }
 
 export class Message extends PureComponent {
+
     _breakfast = (notes) => {
         return (
             <View style={{flexDirection: 'row', marginTop: 8}}>
@@ -256,7 +274,11 @@ export class Message extends PureComponent {
         return (
             <View style={styles.message}>
                 {tags.map((tag, index) => {
-                    return <View key={index} style={[styles.message1, {marginRight: 6}]}>
+                    return <View key={index} style={[styles.message1, {
+                        marginRight: 6,
+                        alignItems: this.props.select && this.props.select === true ? 'flex-start' : 'center',
+                        paddingLeft: this.props.select && this.props.select === true? 0 : 5
+                    }]}>
                         <Text style={styles.txt}>{tag}</Text>
                     </View>
                 })}
@@ -291,7 +313,6 @@ const styles = StyleSheet.create({
     },
     itemView2: {
         flexDirection: 'row',
-
     },
     messageView: {
         flex: 1,
@@ -325,8 +346,9 @@ const styles = StyleSheet.create({
     priceView: {
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
         marginRight: 17,
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         paddingTop: 8,
         paddingBottom: 8,
         paddingLeft: 6,

@@ -22,7 +22,7 @@ const prompt = "订单一经确认，不可更改或添入住人姓名。 未满
 export default class RoomReservationPage extends PureComponent {
     state = {
         room_num: 1,
-        tempStock: this.props.params.item.saleable_num > 10 ? 10 : this.props.params.item.saleable_num,
+        tempStock: this.props.params.price_item.saleable_num > 10 ? 10 : this.props.params.price_item.saleable_num,
         detailsShow: false,
         roomReservation: [],
         selected_coupon: {},
@@ -33,6 +33,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     componentDidMount() {
+        console.log("11",this)
         isWXAppInstalled(isInstall => {
             this.setState({
                 isInstall: isInstall
@@ -42,12 +43,13 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     refreshParam = () => {
-        const {item, date} = this.props.params;
+        const {item, date,price_item} = this.props.params;
         let body = {
             coupon_id: this.state.selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
             hotel_room_id: item.id,
+            room_price_id:price_item.room_price_id,
             room_num: this.state.room_num
         }
         return body;
@@ -132,13 +134,14 @@ export default class RoomReservationPage extends PureComponent {
             persons: persons
         })
         const {roomReservation, phone, selected_coupon} = this.state;
-        const {date} = this.props.params;
+        const {date,price_item} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
             coupon_id: selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
             hotel_room_id: room.id,
+            room_price_id:price_item.room_price_id,
             room_num: room_num,
             telephone: phone,
             checkin_infos: persons
@@ -226,13 +229,14 @@ export default class RoomReservationPage extends PureComponent {
             selected_coupon: selected_coupon
         })
         const {roomReservation, phone, persons} = this.state;
-        const {date} = this.props.params;
+        const {date,price_item} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
             coupon_id: selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
             hotel_room_id: room.id,
+            room_price_id:price_item.room_price_id,
             room_num: order.room_num,
             telephone: phone,
             checkin_infos: persons
@@ -341,7 +345,7 @@ export default class RoomReservationPage extends PureComponent {
                     room_num={order.room_num}
                 /> : null}
                 <ReservationBottom
-                    saleable_num={this.props.params.item.saleable_num}
+                    saleable_num={this.props.params.price_item.saleable_num}
                     _detailsShow={this._detailsShow}
                     refresh={this.refresh}
                     order={order}
