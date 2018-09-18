@@ -141,7 +141,8 @@ export default class HotelRoomListPage extends PureComponent {
                         this.setState({
                             room_list: [...room_list]
                         })
-                    }}>
+                    }}
+                                      activeOpacity={1}>
                         <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
                             style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this.lowest_price(prices)}
                             <Text style={{fontSize: 12}}>起</Text></Text>
