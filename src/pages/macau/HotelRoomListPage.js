@@ -136,8 +136,7 @@ export default class HotelRoomListPage extends PureComponent {
                         room_list.forEach((x) => {
                             if (x.id === item.id) {
                                 x.isSelect = !x.isSelect
-                            } else
-                                x.isSelect = false
+                            }
                         })
                         this.setState({
                             room_list: [...room_list]
@@ -166,8 +165,8 @@ export default class HotelRoomListPage extends PureComponent {
     };
 
     items = (price_item, item) => {
-        console.log("price_item",price_item)
-        console.log("item",item)
+        console.log("price_item", price_item)
+        console.log("item", item)
         const {id, images, notes, prices, tags, title} = item;
         const {discount_amount, price, room_price_id, saleable_num} = price_item.item;
 
@@ -177,10 +176,11 @@ export default class HotelRoomListPage extends PureComponent {
                 width: Metrics.screenWidth - 30,
                 marginTop: 21,
                 paddingTop: 14,
-                alignSelf: 'center'
+                alignSelf: 'center',
+                alignItems: 'flex-start'
             }]}>
                 <Message item={item} select={true}/>
-                <View style={[styles.priceView, {alignItems: 'flex-start'}]}>
+                <View style={[styles.priceView, {paddingTop: 0, marginTop: 0, alignItems: 'flex-start'}]}>
                     <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this._discount(price, discount_amount)}</Text>
 
@@ -198,7 +198,7 @@ export default class HotelRoomListPage extends PureComponent {
                                 if (isEmptyObject(global.login_user)) {
                                     router.toLoginFirstPage()
                                 } else
-                                    router.toRoomReservationPage(item, price_item.item,this.state.last_change_time)
+                                    router.toRoomReservationPage(item, price_item.item, this.state.last_change_time)
                             }
                         }}>
                         <Text style={{
@@ -240,7 +240,7 @@ export class ImageMessage extends PureComponent {
                 }}
             >
                 <ImageBackground
-                    emptyBg={Images.crowd_banner}
+                    emptyBg={Images.default_img}
                     style={{
                         width: 68,
                         height: 68,
@@ -248,7 +248,7 @@ export class ImageMessage extends PureComponent {
                         justifyContent: 'flex-end',
                         alignItems: 'flex-end'
                     }}
-                    source={{uri: images[0]}}>
+                    source={isEmptyObject(images) ? Images.empty_image : {uri: images[0]}}>
                     <View style={styles.counts}>
                         <Text style={{color: '#FFFFFF', fontSize: 9}}>{images.length}张</Text>
                     </View>
@@ -277,7 +277,7 @@ export class Message extends PureComponent {
                     return <View key={index} style={[styles.message1, {
                         marginRight: 6,
                         alignItems: this.props.select && this.props.select === true ? 'flex-start' : 'center',
-                        paddingLeft: this.props.select && this.props.select === true? 0 : 5
+                        paddingLeft: this.props.select && this.props.select === true ? 0 : 5
                     }]}>
                         <Text style={styles.txt}>{tag}</Text>
                     </View>
