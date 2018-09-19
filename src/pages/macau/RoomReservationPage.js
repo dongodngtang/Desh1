@@ -84,7 +84,7 @@ export default class RoomReservationPage extends PureComponent {
 
     postParam = () => {
         const {detailsShow, roomReservation, room_num, persons, phone, selected_coupon} = this.state;
-        const {date} = this.props.params;
+        const {date,price_item} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
             coupon_id: selected_coupon.coupon_number,
@@ -92,6 +92,7 @@ export default class RoomReservationPage extends PureComponent {
             checkout_date: date.end_date,
             hotel_room_id: room.id,
             room_num: order.room_num,
+            room_price_id:price_item.room_price_id,
             telephone: phone,
             checkin_infos: persons
         }
