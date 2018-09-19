@@ -123,7 +123,6 @@ export default class HotelRoomListPage extends PureComponent {
     };
 
     _renderItem = (item, index) => {
-        logMsg('酒店 bianhua')
         const {room_list} = this.state;
         const {id, images, notes, prices, tags, title, discount_amount} = item;
         return (
@@ -154,12 +153,14 @@ export default class HotelRoomListPage extends PureComponent {
                     </TouchableOpacity>
                 </View>
 
+                <View style={{height:20}}/>
+
                 {item.isSelect ? <FlatList
                     data={prices}
                     showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={<View style={{height: 1, backgroundColor: 'white'}}/>}
+                    ItemSeparatorComponent={()=><View style={{height: 1, backgroundColor: 'white'}}/>}
                     renderItem={price_item => this.items(price_item, item)}
-                    keyExtractor={(item, index) => `items${index}`}/> : null}
+                    keyExtractor={(item, index) => `items${index}`}/>:null}
             </View>
 
         )
@@ -175,7 +176,7 @@ export default class HotelRoomListPage extends PureComponent {
             <View style={[styles.itemView2, {
                 backgroundColor: '#F3F3F3',
                 width: Metrics.screenWidth - 30,
-                marginTop: 21,
+                marginTop: 1,
                 paddingTop: 14,
                 alignSelf: 'center',
                 alignItems: 'flex-start'
