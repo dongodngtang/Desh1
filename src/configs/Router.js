@@ -198,13 +198,14 @@ export default class Router {
         })
     }
 
-    toRoomReservationPage(item,price_item, date) {
+    toRoomReservationPage(item,price_item, date,refresh) {
         this.stackPush({
             name: 'RoomReservationPage',
             params: {
                 item,
                 price_item,
-                date
+                date,
+                refresh
             }
         })
     }

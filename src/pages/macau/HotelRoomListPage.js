@@ -39,6 +39,10 @@ export default class HotelRoomListPage extends PureComponent {
         console.log("最后选择的时间：", this.state.last_change_time)
     };
 
+    refresh=()=>{
+        this.listView && this.listView.refresh();
+    };
+
     render() {
         const {hotel, date} = this.props.params;
         const {timeShow, last_change_time} = this.state;
@@ -200,7 +204,7 @@ export default class HotelRoomListPage extends PureComponent {
                                 if (isEmptyObject(global.login_user)) {
                                     router.toLoginFirstPage()
                                 } else
-                                    router.toRoomReservationPage(item, price_item.item, this.state.last_change_time)
+                                    router.toRoomReservationPage(item, price_item.item, this.state.last_change_time,this.refresh)
                             }
                         }}>
                         <Text style={{

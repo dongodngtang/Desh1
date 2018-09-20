@@ -263,7 +263,10 @@ export default class RoomReservationPage extends PureComponent {
                         title="房间预订"
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                        leftBtnPress={() => router.pop()}/>
+                        leftBtnPress={() => {
+                            this.props.refresh && this.props.refresh();
+                            router.pop();
+                        }}/>
                 </View>
             )
         }
@@ -277,7 +280,10 @@ export default class RoomReservationPage extends PureComponent {
                     title="房间预订"
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
+                    leftBtnPress={() => {
+                        this.props.refresh && this.props.refresh();
+                        router.pop();
+                    }}/>
                 <ScrollView style={{flexDirection: 'column', paddingBottom: 90}}>
 
                     <View style={styles.barView}>
