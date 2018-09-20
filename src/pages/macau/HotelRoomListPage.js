@@ -151,7 +151,7 @@ export default class HotelRoomListPage extends PureComponent {
                             <Text style={{fontSize: 12}}>起</Text></Text>
 
 
-                        <Image style={{width: 16, height: 8, marginTop: 12}}
+                        <Image style={{width: 16, height: 8, marginTop: 6}}
                                source={item.isSelect ? Images.macau.bth : Images.macau.top}/>
 
                     </TouchableOpacity>
