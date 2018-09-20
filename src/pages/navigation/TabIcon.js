@@ -40,7 +40,7 @@ class TabIcon extends PureComponent {
             case 'home':
                 return '首页';
             case 'news':
-                return '发现';
+                return '澳门圈';
 
             case 'me':
                 return '我的';
