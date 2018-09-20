@@ -106,10 +106,10 @@ export default class HotelRoomListPage extends PureComponent {
 
     _discount = (price, discount_amount) => {
         if (strNotNull(discount_amount)) {
-            if (discount_amount > price) {
+            if (Number.parseFloat(discount_amount) > Number.parseFloat(price)) {
                 return price;
             } else {
-                return price - discount_amount
+                return Number.parseFloat(price) - Number.parseFloat(discount_amount)
             }
         } else {
             return price
