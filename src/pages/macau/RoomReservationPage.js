@@ -7,12 +7,12 @@ import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {
     isEmptyObject, showToast, convertDate, strNotNull, alertOrderChat, payWx, util,
-    isWXAppInstalled, mul, sub, logMsg
+    isWXAppInstalled, mul, sub, logMsg, getMax
 } from "../../utils/ComonHelper";
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
 import PaymentDetail from './PaymentDetail';
-import {postRoomReservation, postHotelOrder} from "../../services/MacauDao";
+import {postRoomReservation, postHotelOrder, getUsingCoupons} from "../../services/MacauDao";
 import {addTimeRecode} from "../../components/PayCountDown";
 import Loading from "../../components/Loading";
 
@@ -39,7 +39,28 @@ export default class RoomReservationPage extends PureComponent {
                 isInstall: isInstall
             })
         });
+
         this.refresh(true)
+    };
+
+    coupon_select = (reservation) => {
+        getUsingCoupons({amount: reservation.order.total_price}, data => {
+
+            if (!isEmptyObject(data) && data.items.length > 0) {
+                let selected_coupon = getMax(data.items, reservation.order.total_price);
+
+                console.log("最优惠的优惠券", selected_coupon);
+
+                this._selectedCoupon(selected_coupon);
+
+                this.setState({
+                    selected_coupon
+                })
+            }
+
+        }, err => {
+
+        })
     };
 
     refreshParam = () => {
@@ -59,7 +80,8 @@ export default class RoomReservationPage extends PureComponent {
         this.container && this.container.open();
         let body = this.refreshParam()
         postRoomReservation(body, data => {
-            console.log("roomReservation:", data)
+            console.log("roomReservation:", data);
+            this.coupon_select(data);
             this.setState({
                 roomReservation: data
             })
@@ -75,12 +97,12 @@ export default class RoomReservationPage extends PureComponent {
 
 
         }, err => {
-            logMsg('错误信息',err)
+            logMsg('错误信息', err)
             showToast("该房间已经售罄啦，请重新选择");
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.props.params.refresh && this.props.params.refresh();
                 router.pop();
-            },1000)
+            }, 1000)
         })
 
     };
@@ -117,7 +139,7 @@ export default class RoomReservationPage extends PureComponent {
                 addTimeRecode(data.order_number);
                 global.router.toOrderStatusPage(data.order_number)
             }, err => {
-               logMsg('错误信息',err)
+                logMsg('错误信息', err)
                 // showToast("该房间已经售罄啦，请重新选择");
             });
 
@@ -257,8 +279,17 @@ export default class RoomReservationPage extends PureComponent {
 
     };
 
+    coupon_name = () => {
+        const {selected_coupon} = this.state;
+        if (!strNotNull(selected_coupon.name)) {
+            return '暂无可用优惠券';
+        } else {
+            return selected_coupon.name;
+        }
+    }
+
     render() {
-        const {detailsShow, roomReservation, persons, phone, selected_coupon} = this.state;
+        const {detailsShow, roomReservation, persons, phone, selected_coupon, max_coupons} = this.state;
         if (isEmptyObject(roomReservation)) {
             return (
                 <View style={ApplicationStyles.bgContainer}>
@@ -330,7 +361,7 @@ export default class RoomReservationPage extends PureComponent {
                                 marginTop: 8,
                                 color: '#AAAAAA',
                                 fontSize: 12
-                            }}>{!strNotNull(selected_coupon.name) ? '点击选择优惠券更划算' : selected_coupon.name}</Text>
+                            }}>{this.coupon_name()}</Text>
                         </View>
                         <View style={{flex: 1}}/>
                         <Image style={{width: 10, height: 20, marginRight: 14, alignSelf: 'center'}}

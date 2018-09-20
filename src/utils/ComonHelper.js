@@ -1459,3 +1459,27 @@ export function checkPriceLength(price) {
     }
 }
 
+//计算数组中的最大值
+export function getMax(items, total_price) {
+
+    let max = items[0];
+    for (let i = 1; i < items.length; i++) {
+
+        if (getDiscount(items[i], total_price) < getDiscount(max, total_price)) {
+            max = items[i]
+        }
+    }
+    return max;
+}
+
+export function getDiscount(item, total_price) {
+    if (item.discount_type === 'rebate') {
+        console.log("rebate", mul(Number.parseFloat(item.discount), Number.parseFloat(total_price)))
+        return mul(Number.parseFloat(item.discount), Number.parseFloat(total_price))
+    } else {
+        console.log("reduce", Number.parseFloat(item.reduce_price))
+        return Number.parseFloat(total_price) - Number.parseFloat(item.reduce_price);
+    }
+}
+
+
