@@ -39,7 +39,7 @@ export default class HotelRoomListPage extends PureComponent {
         console.log("最后选择的时间：", this.state.last_change_time)
     };
 
-    refresh=()=>{
+    refresh = () => {
         this.listView && this.listView.refresh();
     };
 
@@ -157,14 +157,14 @@ export default class HotelRoomListPage extends PureComponent {
                     </TouchableOpacity>
                 </View>
 
-                <View style={{height:20}}/>
+                <View style={{height: 20}}/>
 
                 {item.isSelect ? <FlatList
                     data={prices}
                     showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={()=><View style={{height: 1, backgroundColor: 'white'}}/>}
+                    ItemSeparatorComponent={() => <View style={{height: 1, backgroundColor: 'white'}}/>}
                     renderItem={price_item => this.items(price_item, item)}
-                    keyExtractor={(item, index) => `items${index}`}/>:null}
+                    keyExtractor={(item, index) => `items${index}`}/> : null}
             </View>
 
         )
@@ -198,13 +198,13 @@ export default class HotelRoomListPage extends PureComponent {
                     </View>
 
                     <TouchableOpacity
-                        style={[styles.reservation, {backgroundColor: saleable_num <= 0 ? '#F3F3F3' : '#FF6448'}]}
+                        style={[saleable_num <= 0 ? styles.reservation2 : styles.reservation, {backgroundColor: saleable_num <= 0 ? '#F3F3F3' : '#FF6448'}]}
                         onPress={() => {
                             if (saleable_num > 0) {
                                 if (isEmptyObject(global.login_user)) {
                                     router.toLoginFirstPage()
                                 } else
-                                    router.toRoomReservationPage(item, price_item.item, this.state.last_change_time,this.refresh)
+                                    router.toRoomReservationPage(item, price_item.item, this.state.last_change_time, this.refresh)
                             }
                         }}>
                         <Text style={{
@@ -366,6 +366,19 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
         paddingLeft: 16,
         paddingRight: 16,
+        backgroundColor: '#FF6448',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        borderRadius: 3,
+        shadowOffset: {width: 1, height: 1},
+        shadowColor: "#FF4726"
+    },
+    reservation2: {
+        paddingTop: 0,
+        paddingBottom: 8,
+        paddingLeft: 16,
+        paddingRight: 0,
         backgroundColor: '#FF6448',
         alignItems: 'center',
         justifyContent: 'center',
