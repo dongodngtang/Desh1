@@ -9,7 +9,7 @@ import {ImageLoad, UltimateListView} from "../../components";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {exchange_rates, hotels, info_types} from '../../services/MacauDao';
 import I18n from "react-native-i18n";
-import {isEmptyObject, logMsg} from "../../utils/ComonHelper";
+import {isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import moment from "moment/moment";
 import RejectPage from "../comm/RejectPage";
 
@@ -276,8 +276,20 @@ export default class HotelListPage extends PureComponent {
         )
     };
 
+    _discount = (price, discount_amount) => {
+        if (strNotNull(discount_amount)) {
+            if (Number.parseFloat(discount_amount) > Number.parseFloat(price)) {
+                return price;
+            } else {
+                return Number.parseFloat(price) - Number.parseFloat(discount_amount)
+            }
+        } else {
+            return price
+        }
+    };
+
     _renderItem = (item, index) => {
-        const {title, address, location, logo, start_price, star_level} = item;
+        const {title, address, location, logo, start_price, star_level,discount_amount} = item;
         const {changeTime} = this.state;
         return (
             <TouchableOpacity style={styles.item} key={index}
@@ -301,7 +313,7 @@ export default class HotelListPage extends PureComponent {
                         {item.recommend ? this._recommend() : <View/>}
                         <View style={{flex: 1}}/>
                         {item.start_price !== '0.0' ? <Text style={styles.price}><Text
-                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{start_price}<Text
+                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{this._discount(start_price, discount_amount)}<Text
                             style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text> : null}
                     </View>
                 </View>
