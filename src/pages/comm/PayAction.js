@@ -10,11 +10,12 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {
     isEmptyObject, strNotNull, payWx, alipay, showToast, alertOrderChat,
-    isWXAppInstalled
+    isWXAppInstalled, logMsg
 } from '../../utils/ComonHelper';
 import propType from 'prop-types';
 import * as helper from '../../services/RequestHelper';
 import Api from '../../configs/ApiConfig';
+import {cancelHotelOrder} from "../../services/MacauDao";
 
 
 export default class PayAction extends Component {
@@ -209,6 +210,7 @@ export default class PayAction extends Component {
         let url = '';
         const {type} = this.props;
         const {order} = this.state;
+        console.log("djskjdskds", order)
 
         let pay_result = '';
 
@@ -228,9 +230,9 @@ export default class PayAction extends Component {
                     payWx(ret.data, ret => {
                         console.log('支付成功', ret)
 
-                        helper.get(pay_result,data=>{
+                        helper.get(pay_result, data => {
                             this.pay_handle()
-                        },err=>{
+                        }, err => {
                             this.pay_handle()
                         })
 
@@ -244,6 +246,13 @@ export default class PayAction extends Component {
                 }
             })
         }, err => {
+            logMsg('错误信息', err);
+            if (type === 'hotel') {
+                showToast("该房间已经售罄啦，请重新选择");
+                setTimeout(() => {
+                    this.props.refresh && this.props.refresh();
+                }, 1000)
+            }
         })
     }
 

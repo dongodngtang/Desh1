@@ -181,14 +181,14 @@ export default class OrderStatusPage extends Component {
 
     _discount = (discount_amount, refund_price) => {
         if (discount_amount > 0) {
-            return <View style={[styles.txtView,{borderTopWidth:1,borderTopColor:"#F3F3F3"}]}>
+            return <View style={[styles.txtView, {borderTopWidth: 1, borderTopColor: "#F3F3F3"}]}>
                 <Text style={styles.txt}>折扣</Text>
-                <Text style={[styles.room_num,{marginLeft:38}]}>{discount_amount}</Text>
+                <Text style={[styles.room_num, {marginLeft: 38}]}>{discount_amount}</Text>
             </View>
-        }else if (refund_price > 0) {
-            return <View style={[styles.txtView,{borderTopWidth:1,borderTopColor:"#F3F3F3"}]}>
+        } else if (refund_price > 0) {
+            return <View style={[styles.txtView, {borderTopWidth: 1, borderTopColor: "#F3F3F3"}]}>
                 <Text style={styles.txt}>折扣</Text>
-                <Text style={[styles.room_num,{marginLeft:38}]}>{refund_price}</Text>
+                <Text style={[styles.room_num, {marginLeft: 38}]}>{refund_price}</Text>
             </View>
         }
 
@@ -308,7 +308,8 @@ export default class OrderStatusPage extends Component {
                 {status === 'unpaid' ? this.statusBottom(order) : null}
                 <PayAction
                     ref={ref => this.payAction = ref}
-                    type={'hotel'}/>
+                    type={'hotel'}
+                    refresh={this._refresh}/>
             </View>
         )
     }

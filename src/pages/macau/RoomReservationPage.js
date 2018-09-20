@@ -7,7 +7,7 @@ import {NavigationBar} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
 import {
     isEmptyObject, showToast, convertDate, strNotNull, alertOrderChat, payWx, util,
-    isWXAppInstalled, mul, sub
+    isWXAppInstalled, mul, sub, logMsg
 } from "../../utils/ComonHelper";
 import {ImageMessage, Message} from './HotelRoomListPage';
 import ReservationBottom from "./ReservationBottom";
@@ -33,7 +33,7 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     componentDidMount() {
-        console.log("11",this)
+        console.log("11", this)
         isWXAppInstalled(isInstall => {
             this.setState({
                 isInstall: isInstall
@@ -43,13 +43,13 @@ export default class RoomReservationPage extends PureComponent {
     };
 
     refreshParam = () => {
-        const {item, date,price_item} = this.props.params;
+        const {item, date, price_item} = this.props.params;
         let body = {
             coupon_id: this.state.selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
             hotel_room_id: item.id,
-            room_price_id:price_item.room_price_id,
+            room_price_id: price_item.room_price_id,
             room_num: this.state.room_num
         }
         return body;
@@ -75,8 +75,12 @@ export default class RoomReservationPage extends PureComponent {
 
 
         }, err => {
-            showToast(err);
-            console.log("房间1", err)
+            logMsg('错误信息',err)
+            showToast("该房间已经售罄啦，请重新选择");
+            setTimeout(()=>{
+                this.props.params.refresh && this.props.params.refresh();
+                router.pop();
+            },1000)
         })
 
     };
@@ -84,7 +88,7 @@ export default class RoomReservationPage extends PureComponent {
 
     postParam = () => {
         const {detailsShow, roomReservation, room_num, persons, phone, selected_coupon} = this.state;
-        const {date,price_item} = this.props.params;
+        const {date, price_item} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
             coupon_id: selected_coupon.coupon_number,
@@ -92,7 +96,7 @@ export default class RoomReservationPage extends PureComponent {
             checkout_date: date.end_date,
             hotel_room_id: room.id,
             room_num: order.room_num,
-            room_price_id:price_item.room_price_id,
+            room_price_id: price_item.room_price_id,
             telephone: phone,
             checkin_infos: persons
         }
@@ -112,9 +116,9 @@ export default class RoomReservationPage extends PureComponent {
                 });
                 addTimeRecode(data.order_number);
                 global.router.toOrderStatusPage(data.order_number)
-
             }, err => {
-                showToast(err)
+               logMsg('错误信息',err)
+                // showToast("该房间已经售罄啦，请重新选择");
             });
 
         }
@@ -135,14 +139,14 @@ export default class RoomReservationPage extends PureComponent {
             persons: persons
         })
         const {roomReservation, phone, selected_coupon} = this.state;
-        const {date,price_item} = this.props.params;
+        const {date, price_item} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
             coupon_id: selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
             hotel_room_id: room.id,
-            room_price_id:price_item.room_price_id,
+            room_price_id: price_item.room_price_id,
             room_num: room_num,
             telephone: phone,
             checkin_infos: persons
@@ -230,14 +234,14 @@ export default class RoomReservationPage extends PureComponent {
             selected_coupon: selected_coupon
         })
         const {roomReservation, phone, persons} = this.state;
-        const {date,price_item} = this.props.params;
+        const {date, price_item} = this.props.params;
         const {order, room} = roomReservation;
         let body = {
             coupon_id: selected_coupon.coupon_number,
             checkin_date: date.begin_date,
             checkout_date: date.end_date,
             hotel_room_id: room.id,
-            room_price_id:price_item.room_price_id,
+            room_price_id: price_item.room_price_id,
             room_num: order.room_num,
             telephone: phone,
             checkin_infos: persons

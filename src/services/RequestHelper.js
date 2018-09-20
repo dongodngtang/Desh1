@@ -158,6 +158,7 @@ let netCount = 0
 /*token过期*/
 function netError(response, reject) {
     try {
+        logMsg('错误信息',response)
         let msgErr = '';
         if (response.status === 401) {
             clearLoginUser();
@@ -169,13 +170,17 @@ function netError(response, reject) {
             msgErr = I18n.t('SERVER_ERROR');
         else if (response.problem === TIMEOUT_ERROR)
             msgErr = I18n.t('TIMEOUT_ERROR');
-        else if (response.problem === NETWORK_ERROR) {
+        else if(response.problem === "CLIENT_ERROR"){
             // netinfo(netCount++)
             reject && reject(response)
             return
         }
-        showToast(msgErr);
-        reject && reject(msgErr);
+
+        if(strNotNull(msgErr)){
+            showToast(msgErr);
+            reject && reject(msgErr);
+        }
+
     } catch (e) {
         logMsg(e)
     }
@@ -201,6 +206,7 @@ function netinfo(count) {
 
 function handle(response, resolve, reject) {
 
+    logMsg('源头',response)
     try {
         if (response.ok) {
 
