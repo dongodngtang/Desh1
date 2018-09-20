@@ -186,7 +186,7 @@ export default class HotelRoomListPage extends PureComponent {
                 alignItems: 'flex-start'
             }]}>
                 <Message item={item} select={true}/>
-                <View style={[styles.priceView, {paddingTop: 0, marginTop: 0, alignItems: 'flex-start'}]}>
+                <View style={[styles.priceView, {paddingTop: 0, marginTop: 0, alignItems: 'flex-end'}]}>
                     <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this._discount(price, discount_amount)}</Text>
 

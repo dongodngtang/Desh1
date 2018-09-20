@@ -281,7 +281,7 @@ export default class RoomReservationPage extends PureComponent {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
-                        this.props.refresh && this.props.refresh();
+                        this.props.params.refresh && this.props.params.refresh();
                         router.pop();
                     }}/>
                 <ScrollView style={{flexDirection: 'column', paddingBottom: 90}}>

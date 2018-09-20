@@ -248,6 +248,16 @@ class Personal extends Component {
             <Image style={imgStyle} source={img}/>
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
+
+            {title === '我的邀请' && !isEmptyObject(global.login_user) ? <Text
+                    style={{
+                        fontSize: 14,
+                        color: '#DA8575',
+                        marginRight: 12,
+                        lineHeight: 22
+                    }}>最高可获得88元红包奖励</Text>
+                : null}
+
             {title === '钱包' && !isEmptyObject(global.login_user) ? <Text
                     style={{
                         fontSize: 16,
@@ -256,6 +266,7 @@ class Personal extends Component {
                         lineHeight: 22
                     }}>{total_account}</Text>
                 : null}
+
             <Image style={stylesP.personalImg} source={Images.is}/>
         </TouchableOpacity>
     };
