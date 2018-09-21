@@ -104,17 +104,6 @@ export default class HotelRoomListPage extends PureComponent {
         }
     };
 
-    _discount = (price, discount_amount) => {
-        if (strNotNull(discount_amount)) {
-            if (Number.parseFloat(discount_amount) > Number.parseFloat(price)) {
-                return price;
-            } else {
-                return Number.parseFloat(price) - Number.parseFloat(discount_amount)
-            }
-        } else {
-            return price
-        }
-    };
 
     _discount = (price, discount_amount) => {
         if (strNotNull(discount_amount)) {
