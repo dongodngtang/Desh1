@@ -116,10 +116,22 @@ export default class HotelRoomListPage extends PureComponent {
         }
     };
 
+    _discount = (price, discount_amount) => {
+        if (strNotNull(discount_amount)) {
+            if (Number.parseFloat(discount_amount) > Number.parseFloat(price)) {
+                return price;
+            } else {
+                return Number.parseFloat(price) - Number.parseFloat(discount_amount)
+            }
+        } else {
+            return price
+        }
+    };
+
     lowest_price = (prices) => {
-        let lowst = prices[0].price;
+        let lowst = this._discount(prices[0].price, prices[0].discount_amount);
         prices.forEach((item) => {
-            if (Number.parseFloat(item.price) < Number.parseFloat(lowst)) {
+            if (Number.parseFloat(this._discount(item.price, item.discount_amount)) < Number.parseFloat(lowst)) {
                 lowst = item.price
             }
         });

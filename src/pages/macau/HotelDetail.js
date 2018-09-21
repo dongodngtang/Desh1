@@ -142,6 +142,18 @@ export default class HotelDetail extends PureComponent {
         return stars;
     };
 
+    _discount = (price, discount_amount) => {
+        if (strNotNull(discount_amount)) {
+            if (Number.parseFloat(discount_amount) > Number.parseFloat(price)) {
+                return price;
+            } else {
+                return Number.parseFloat(price) - Number.parseFloat(discount_amount)
+            }
+        } else {
+            return price
+        }
+    };
+
     render() {
         const {hotel} = this.props.params;
         const {images, location, title, description, telephone, amap_poiid, amap_navigation_url, amap_location} = this.state.hotel;
@@ -170,7 +182,10 @@ export default class HotelDetail extends PureComponent {
 
                     <View style={{marginRight: 22, flexDirection: 'column', alignItems: 'flex-end'}}>
                         {hotel.start_price !== '0.0' ? <Text style={styles.price3}><Text
-                            style={{color: '#FF3F3F', fontSize: 12}}>¥</Text>{hotel.start_price}<Text
+                            style={{
+                                color: '#FF3F3F',
+                                fontSize: 12
+                            }}>¥</Text>{this._discount(hotel.start_price, hotel.discount_amount)}<Text
                             style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text> : null}
                         <View style={{flex: 1}}/>
                         <TouchableOpacity style={{flexDirection: 'row'}}
@@ -274,7 +289,7 @@ export default class HotelDetail extends PureComponent {
         reportList.forEach((data, index) => {
             let item = {
                 name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => {
-                    if (strNotNull(amap_navigation_url)){
+                    if (strNotNull(amap_navigation_url)) {
                         this.popAction.toggle();
                         turn2MapMark(amap_location, amap_navigation_url, amap_poiid, location, title, data.type)
                     }
