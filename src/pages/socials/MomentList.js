@@ -322,7 +322,7 @@ export default class MomentList extends PureComponent {
     }
 
     long = (item) => {
-        let title2=  item.title.replace(/\n/g, '');
+        let title2=  item.title;
         return <View>
             <Text style={styles.body}>{title2}</Text>
 
@@ -340,7 +340,7 @@ export default class MomentList extends PureComponent {
 
     short = (item) => {
         const {images, body} = item;
-        let title2=  body.replace(/\n/g, '');
+        let title2=  body;
         return <View>
             {strNotNull(body) ? <Text
                 numberOfLines={6}
