@@ -197,7 +197,7 @@ export default class HotelRoomListPage extends PureComponent {
                 alignSelf: 'center',
                 alignItems: 'flex-start'
             }]}>
-                <Message item={item} select={true}/>
+                <Message item={item} select={true} price_item={price_item.item}/>
                 <View style={[styles.priceView, {paddingTop: 0, marginTop: 0, alignItems: 'flex-end'}]}>
                     <Text style={{color: "#FF3F3F", fontSize: 20}}><Text
                         style={{color: "#FF3F3F", fontSize: 12}}>¥</Text>{this._discount(price, discount_amount)}</Text>
@@ -281,7 +281,7 @@ export class Message extends PureComponent {
 
     _breakfast = (notes) => {
         return (
-            <View style={{flexDirection: 'row', marginTop: 8}}>
+            <View style={{flexDirection: 'row', marginTop: 6}}>
                 {notes.map((note, index) => {
                     return <Text key={index} style={[styles.txt2, {marginRight: 10}]}>{note}</Text>
                 })}
@@ -304,9 +304,21 @@ export class Message extends PureComponent {
             </View>
         )
     };
+    _prices = (price_item) => {
+        if(price_item.is_official){
+            return (
+                <Text style={{color:"#AAAAAA",fontSize:12,marginTop:4}}>官方挂售</Text>
+            )
+        }else{
+            return (
+                <Text style={{color:"#AAAAAA",fontSize:12,marginTop:4}}>代理挂售</Text>
+            )
+        }
+
+    };
 
     render() {
-        const {item} = this.props;
+        const {item,price_item,select} = this.props;
         const {notes, title, tags} = item;
         return (
             <View style={styles.messageView}>
@@ -315,6 +327,8 @@ export class Message extends PureComponent {
                     <Text style={{color: '#CCCCCC', fontSize: 12, marginTop: 6}}>暂无房型信息</Text>}
 
                 {!isEmptyObject(notes) ? this._breakfast(notes) : null}
+
+                {select && !isEmptyObject(price_item) ? this._prices(price_item) : null}
             </View>
 
         )
