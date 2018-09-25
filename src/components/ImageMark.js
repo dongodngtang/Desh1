@@ -28,10 +28,12 @@ export default class ImageMark extends Component {
                 this.setState({width: screenWidth, height});
             });
         } else {
-            this.setState({
-                width: strNotNull(this.props.width) && Number.parseFloat(this.props.width),
-                height:strNotNull(this.props.height) && Number.parseFloat(this.props.height)
-            })
+          let widthD = Number.parseInt(this.props.width)
+          let heightD =  Number.parseInt(this.props.height)
+          this.setState({
+            width:widthD ,
+            height:heightD
+          })
         }
     }
 
