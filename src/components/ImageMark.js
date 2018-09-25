@@ -28,12 +28,22 @@ export default class ImageMark extends Component {
                 this.setState({width: screenWidth, height});
             });
         } else {
+
           let widthD = Number.parseInt(this.props.width)
           let heightD =  Number.parseInt(this.props.height)
-          this.setState({
-            width:widthD ,
-            height:heightD
-          })
+          if(widthD>0 && heightD>0){
+            this.setState({
+              width:widthD ,
+              height:heightD
+            })
+          }else{
+            Image.getSize(this.props.src, (width, height) => {
+              let screenWidth = Metrics.screenWidth - 40;
+              height = screenWidth * height / width; //按照屏幕宽度进行等比缩放
+              this.setState({width: screenWidth, height});
+            });
+          }
+
         }
     }
 
