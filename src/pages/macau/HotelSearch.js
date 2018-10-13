@@ -41,20 +41,60 @@ const styles = StyleSheet.create({
     }
 });
 
+const names = [{id: 0, name: '休闲娱乐'}, {id: 1, name: '桑拿水疗'}]
 
 export default class HotelSearch extends PureComponent {
     state = {
         search: false,
         show_content: true,
-        reject_problem: ''
+        reject_problem: '',
+        name_index: 0
     };
 
     refresh = () => {
         this.setState({
-            reject_problem:''
+            reject_problem: ''
         });
         this.listView && this.listView.refresh();
     };
+
+    change_content(name) {
+        if (name !== '娱乐') {
+            return <Text style={styles.title}>{name}</Text>
+        } else {
+            let city = global.city_name;
+            if (city !== '澳门') {
+                return (
+                    <View style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        width: '40%',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        {names.map((item, index) => {
+                            return <TouchableOpacity onPress={() => {
+                                this.setState({
+                                    name_index: item.id
+                                })
+                            }}>
+                                <Text key={index}
+                                      style={{
+                                          fontSize: this.state.name_index === item.id ? 18 : 14,
+                                          color: this.state.name_index === item.id ? 'white' : 'grey'
+                                      }}>{item.name}</Text>
+                            </TouchableOpacity>
+                        })}
+                    </View>
+                )
+            } else {
+                return (
+                    <Text style={styles.title}>{'休闲娱乐'}</Text>
+                )
+            }
+        }
+
+    }
 
     render() {
         const {name, type} = this.props.params.item;
@@ -79,7 +119,7 @@ export default class HotelSearch extends PureComponent {
                                 this.keyword = keyword;
                                 this.listView && this.listView.refresh()
 
-                            }}/> : <Text style={styles.title}>{name}</Text>}
+                            }}/> : this.change_content(name)}
                         <View style={{flex: 1}}/>
 
 
@@ -123,7 +163,7 @@ export default class HotelSearch extends PureComponent {
                         this.keyword = keyword;
                         this.listView && this.listView.refresh()
 
-                    }}/> : <Text style={styles.title}>{name}</Text>}
+                    }}/> : this.change_content(name)}
                 <View style={{flex: 1}}/>
 
 
@@ -215,7 +255,7 @@ export default class HotelSearch extends PureComponent {
             } else if (type === 'exchange_rate') {
                 exchange_rates(data => {
                     startFetch(data.items, 18)
-                },err=>{
+                }, err => {
                     logMsg("reject:", err)
                     this.setState({
                         reject_problem: err.problem
