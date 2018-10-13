@@ -355,7 +355,7 @@ export function setLoginUser(ret) {
         let alias = type + '_' + ret.user_id;
         logMsg('jpush',alias);
         JpushHelp.setAlias(alias, (ret) => {
-            logMsg(ret + ' set jpush alias success')
+            logMsg(ret ,' set jpush alias')
         })
     }
 

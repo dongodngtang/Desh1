@@ -107,8 +107,4 @@ export default class App extends Component {
 
     }
 
-    componentWillUnmount(){
-        JpushHelper.stopPush()
-    }
-
 }

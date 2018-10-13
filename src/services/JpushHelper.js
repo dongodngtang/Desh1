@@ -7,9 +7,7 @@ import {logMsg} from "../utils/ComonHelper";
 
 
 export default class JpushHelper {
-    static setTags(array, successCallback, failedCallback) {
-        JPushModule.setTags(array, successCallback, failedCallback)
-    }
+
 
     static getRegistrationID(callback) {
         JPushModule.getRegistrationID(callback);
@@ -17,21 +15,31 @@ export default class JpushHelper {
 
 
     static setAlias(alias, successCallback) {
-        JPushModule.setAlias(alias, successCallback)
+        JPushModule.setAlias(alias, ret => {
+            successCallback && successCallback(ret)
+            if (ret.errorCode !== 0 && Platform.OS === 'android')
+                JPushModule.resumePush()
+
+        })
     }
 
     static addPushListener(receiveCb, openCb) {
 
-        if (Platform.OS !== 'ios')
+        if (Platform.OS === 'android') {
             JPushModule.notifyJSDidLoad((resultCode) => {
                 console.log('Jpush', resultCode)
             });
 
-        JPushModule.addReceiveCustomMsgListener(openCb);
+            JPushModule.addReceiveCustomMsgListener(openCb);
+        }
+
         JPushModule.addReceiveNotificationListener(receiveCb);
         JPushModule.addReceiveOpenNotificationListener(map => {
             console.log('Opening notification!')
-            console.log('map.extra: ' + map.extras)
+            console.log('map.extra: ' ,map)
+            setTimeout(() => {
+                router.toAboutPage()
+            }, 200)
 
         })
 
@@ -39,7 +47,10 @@ export default class JpushHelper {
 
 
     static removePushListener() {
-        JPushModule.removeReceiveCustomMsgListener();
+        if (Platform.OS === 'android') {
+            JPushModule.removeReceiveCustomMsgListener();
+        }
+
         JPushModule.removeReceiveNotificationListener();
         JPushModule.removeReceiveOpenNotificationListener()
 
@@ -55,51 +66,16 @@ export default class JpushHelper {
 
     //***************************IOS******************************************
 //设置本地推送
-    static iosSetLocalNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName) {
 
-        JPushModule.setLocalNotification(date, textContain, badge, alertAction, notificationKey, userInfo, soundName);
-    }
-
-    static iosReceiveNotification(cb) {
-
-        let subscription = NativeAppEventEmitter.addListener(
-            'ReceiveNotification',
-            (notification) => {
-                console.log('ReceiveNotification', notification);
-                cb(notification)
-            }
-        );
-    }
-
-    static iosOpenNotification(cb) {
-        let subscription = NativeAppEventEmitter.addListener(
-            'OpenNotification',
-            (notification) => {
-                console.log('OpenNotification', notification);
-                cb(notification)
-            }
-        );
-    }
-
-    static iosnetworkDidReceiveMessage(cb) {
-        let subscription = NativeAppEventEmitter.addListener(
-            'networkDidReceiveMessage',
-            (message) => {
-                console.log(message);
-                cb(message)
-            }
-        );
-    }
 
     //***************************IOS******************************************
 
 
     //***************************ANDROID******************************************
     static initPush() {
-        if(Platform.OS === 'android')
-        JPushModule.initPush();
+        if (Platform.OS === 'android')
+            JPushModule.initPush();
     }
-
 
 
     static stopPush() {
@@ -107,13 +83,7 @@ export default class JpushHelper {
     }
 
 
-    static addReceiveCustomMsgListener(callback) {
-        JPushModule.addReceiveCustomMsgListener(callback)
-    }
 
-    static removeReceiveCustomMsgListener(event) {
-        JPushModule.removeReceiveCustomMsgListener(event)
-    }
 
 
     //***************************ANDROID******************************************

@@ -92,14 +92,15 @@ class Root extends Component {
 
     receiveCb = (notification) => {
         logMsg('jpush',notification)
-        const {aps} = notification;
-        if (aps.badge > 0) {
-            if (!isEmptyObject(global.login_user))
-                this.props._fetchUnreadMsg()
-        }
+        // const {aps} = notification;
+        // if (aps.badge > 0) {
+        //     if (!isEmptyObject(global.login_user))
+        //         this.props._fetchUnreadMsg()
+        // }
     };
 
     openCb = (notification) => {
+        logMsg('jpush',notification)
 
     };
 
