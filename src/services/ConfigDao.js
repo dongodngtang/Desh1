@@ -3,10 +3,11 @@
  */
 import StorageKey from '../configs/StorageKey';
 import {setLanguage} from '../I18n/I18n';
-import {getSize, setLang, getCarts} from '../utils/ComonHelper';
+import {getSize, setLang, getCarts, logMsg} from '../utils/ComonHelper';
 import {setDpLang} from '../services/RequestHelper';
 import {listVerified} from './AccountDao';
 import {Platform, PermissionsAndroid} from 'react-native'
+import {locations} from "./SocialDao";
 
 export function init(resolve) {
     storage.load({key: StorageKey.Language})
@@ -20,6 +21,22 @@ export function init(resolve) {
     getSize();
     /*获取购物车*/
     getCarts();
+
+    navigator.geolocation.getCurrentPosition(data => {
+        logMsg('位置', data)
+        const {longitude, latitude} = data.coords;
+        let body = {
+            longitude: longitude,
+            latitude: latitude
+        }
+        locations(body, data => {
+            global.city_name = data.base.city_name;
+        }, err => {
+            console.log("获取位置失败");
+        })
+    }, err => {
+        logMsg('位置', err)
+    })
 }
 
 

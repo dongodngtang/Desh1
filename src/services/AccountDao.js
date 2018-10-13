@@ -370,6 +370,7 @@ function postLocation() {
                 const {longitude, latitude} = coords;
                 postNearBys({lat: latitude, lng: longitude}, ret => {
                 }, err => {
+                    logMsg('位置',err)
                 })
             }
 
