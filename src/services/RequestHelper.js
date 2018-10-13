@@ -205,8 +205,6 @@ function netinfo(count) {
 }
 
 function handle(response, resolve, reject) {
-
-    logMsg('源头',response)
     try {
         if (response.ok) {
 

@@ -3,6 +3,7 @@
  */
 import JPushModule from 'jpush-react-native';
 import {DeviceEventEmitter, NativeAppEventEmitter, Platform} from 'react-native'
+import {logMsg} from "../utils/ComonHelper";
 
 
 export default class JpushHelper {
@@ -15,8 +16,8 @@ export default class JpushHelper {
     }
 
 
-    static setAlias(alias, successCallback, failedCallback) {
-        JPushModule.setAlias(alias, successCallback, failedCallback)
+    static setAlias(alias, successCallback) {
+        JPushModule.setAlias(alias, successCallback)
     }
 
     static addPushListener(receiveCb, openCb) {
@@ -48,7 +49,7 @@ export default class JpushHelper {
     static iosSetBadge(badge) {
         if (Platform.OS === 'ios')
             JPushModule.setBadge(badge, (value) => {
-                console.log('badge', value)
+                logMsg('badge', value)
             });
     }
 
@@ -95,24 +96,16 @@ export default class JpushHelper {
 
     //***************************ANDROID******************************************
     static initPush() {
+        if(Platform.OS === 'android')
         JPushModule.initPush();
     }
 
-    static getInfo(map) {
-        JPushModule.getInfo(map)
-    }
+
 
     static stopPush() {
         JPushModule.stopPush();
     }
 
-    static resumePush() {
-        JPushModule.resumePush();
-    }
-
-    static setStyleBasic() {
-        JPushModule.setStyleBasic()
-    }
 
     static addReceiveCustomMsgListener(callback) {
         JPushModule.addReceiveCustomMsgListener(callback)

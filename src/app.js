@@ -54,6 +54,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
+        JpushHelper.initPush()
         JpushHelper.iosSetBadge(0)
         Orientation.lockToPortrait();
         //SplashScreen.close(SplashScreen.animationType.scale, 850, 500)
@@ -104,6 +105,10 @@ export default class App extends Component {
             console.log(err)
         });
 
+    }
+
+    componentWillUnmount(){
+        JpushHelper.stopPush()
     }
 
 }

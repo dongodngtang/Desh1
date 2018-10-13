@@ -349,15 +349,13 @@ export function setLoginUser(ret) {
 
         //Jpush别名设置
         JpushHelp.getRegistrationID((id) => {
-            console.log('JpushId: ' + id)
+            logMsg('JpushId: ' + id)
         });
         let type = helper.getApiType() === 'production' ? 'pro' : helper.getApiType();
         let alias = type + '_' + ret.user_id;
-        console.log(alias);
-        JpushHelp.setAlias(alias, () => {
-            console.log(alias + ' set jpush alias success')
-        }, () => {
-            console.log(alias + ' set jpush alias fail')
+        logMsg('jpush',alias);
+        JpushHelp.setAlias(alias, (ret) => {
+            logMsg(ret + ' set jpush alias success')
         })
     }
 

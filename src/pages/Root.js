@@ -13,7 +13,7 @@ import {
     updateApp,
     setDispatchAction,
     isEmptyObject,
-    getDispatchAction
+    getDispatchAction, logMsg
 } from '../utils/ComonHelper';
 import {init,requestCameraPermission} from '../services/ConfigDao';
 import {releases_show, getUpdate} from '../services/AccountDao';
@@ -91,6 +91,7 @@ class Root extends Component {
 
 
     receiveCb = (notification) => {
+        logMsg('jpush',notification)
         const {aps} = notification;
         if (aps.badge > 0) {
             if (!isEmptyObject(global.login_user))
