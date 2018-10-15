@@ -12,6 +12,7 @@ import StorageKey from '../../configs/StorageKey';
 import {setBaseURL} from '../../services/RequestHelper'
 import Api from '../../configs/ApiConfig';
 import I18n from 'react-native-i18n';
+import {clearLoginUser} from "../../utils/ComonHelper";
 
 export default class ApiSettingPage extends Component {
     state = {
@@ -69,7 +70,7 @@ export default class ApiSettingPage extends Component {
             api: api
         })
         setBaseURL(api);
-
+        clearLoginUser()
     }
 }
 

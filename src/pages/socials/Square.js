@@ -12,7 +12,7 @@ import I18n from "react-native-i18n";
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import MomentList from './MomentList'
 import PopAction from '../comm/PopAction';
-import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
+import {isEmptyObject, isLoginUser, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 import {report_topic} from "../../services/SocialDao";
 import {getMsgUnRead} from "../../services/AccountDao";
 import {getUnreadComments} from "../../services/CommentDao";
@@ -34,7 +34,7 @@ export default class Square extends PureComponent {
     refresh = () => {
         //获取未读消息
         let body = {user_id: global.login_user.user_id};
-        if (strNotNull(body)) {
+        if (strNotNull(body) && isLoginUser()) {
             getUnreadComments(body, data => {
                 console.log("unreadCount:", data)
                 this.setState({

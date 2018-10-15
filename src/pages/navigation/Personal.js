@@ -214,6 +214,13 @@ class Personal extends Component {
 
                 })}
 
+            <View style={{height: 1, width: '100%'}}/>
+            {this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},
+                '联系客服', () => {
+
+
+                })}
+
 
             <View style={{height: 1, width: '100%'}}/>
 
