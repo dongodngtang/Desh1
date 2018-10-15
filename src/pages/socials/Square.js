@@ -22,8 +22,7 @@ let topicId = -1;
 export default class Square extends PureComponent {
 
     state = {
-        // square_types: ['topics', 'recommends', 'follows']
-        square_types: ['topics'],
+        square_types:['topics', 'recommends', 'follows'],
         unread_count: 0
     };
 
@@ -138,14 +137,14 @@ class SquareBar extends PureComponent {
                 height: Metrics.navBarHeight - Metrics.statusBarHeight,
                 marginTop: Metrics.statusBarHeight,
                 alignItems: 'center', justifyContent: 'center',
-                width: 90
+                width: 65
             }}>
             <Text style={[{fontSize: 18},
                 activeTab === index ? {color: Colors.white} : {color: Colors.white}]}>{item}</Text>
-            {/*{activeTab === index ? <View style={{*/}
-            {/*height: 2, width: 48, backgroundColor: Colors.white,*/}
-            {/*position: 'absolute', bottom: 0*/}
-            {/*}}/> : null}*/}
+            {activeTab === index ? <View style={{
+            height: 2, width: 45, backgroundColor: Colors.white,
+            position: 'absolute', bottom: 0
+            }}/> : null}
 
         </TouchableOpacity>);
 
