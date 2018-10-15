@@ -63,6 +63,7 @@ export default class HotelSearch extends PureComponent {
             return <Text style={styles.title}>{name}</Text>
         } else {
             let city = global.city_name;
+            console.log("dshjdsk",city)
             if (city !== '澳门') {
                 return (
                     <View style={{
@@ -73,12 +74,12 @@ export default class HotelSearch extends PureComponent {
                         justifyContent: 'space-between'
                     }}>
                         {names.map((item, index) => {
-                            return <TouchableOpacity onPress={() => {
+                            return <TouchableOpacity key={index} onPress={() => {
                                 this.setState({
                                     name_index: item.id
                                 })
                             }}>
-                                <Text key={index}
+                                <Text
                                       style={{
                                           fontSize: this.state.name_index === item.id ? 18 : 14,
                                           color: this.state.name_index === item.id ? 'white' : 'grey'

@@ -10,7 +10,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
-import {isEmptyObject, showToast, utcDate, localFilePath, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, showToast, utcDate, localFilePath, strNotNull, logMsg} from '../../utils/ComonHelper';
 import {getActivities, getMsgUnRead} from '../../services/AccountDao';
 import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'

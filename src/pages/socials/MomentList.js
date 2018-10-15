@@ -20,6 +20,7 @@ import {
     topics_like, user_topics, topics_delete,
     topics_search, my_foucs
 } from '../../services/SocialDao';
+import {getMsgUnRead} from "../../services/AccountDao";
 
 export const styles = StyleSheet.create({
     avatar: {
@@ -33,7 +34,7 @@ export const styles = StyleSheet.create({
     },
     user: {
         height: reallySize(60),
-        marginRight:17,
+        marginRight: 17,
         alignItems: 'center',
         flexDirection: 'row',
         marginLeft: reallySize(17)
@@ -51,7 +52,7 @@ export const styles = StyleSheet.create({
         fontSize: reallySize(16),
         paddingRight: reallySize(17),
         paddingLeft: reallySize(17),
-        lineHeight:18
+        lineHeight: 18
     },
     bottom: {
         height: reallySize(38),
@@ -116,13 +117,43 @@ export const styles = StyleSheet.create({
 export default class MomentList extends PureComponent {
 
     static props = {
-        showMore: null,
+        showMore: null
     };
 
+    header = () => {
+        return (
+            <View style={{
+                backgroundColor: 'white',
+                width: '100%',
+                flexDirection: "column",
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                {this.props.unread_count > 0 ? <TouchableOpacity style={{
+                    backgroundColor: 'grey',
+                    height: 35,
+                    width: 120,
+                    borderRadius: 5,
+                    flexDirection: "row",
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: 5,
+                    marginTop: 5
+                }}
+                                                                 onPress={() => {
+
+                                                                 }}>
+                    <Image/>
+                    <Text>{`${this.props.unread_count}条未读消息`}</Text>
+                </TouchableOpacity> : null}
+                <View style={styles.separator1}/>
+            </View>
+        )
+    }
 
     render() {
         return <UltimateListView
-            header={() => <View style={styles.separator1}/>}
+            header={this.header}
             scrollEnabled={this.props.scrollEnabled}
             keyExtractor={(item, index) => index + "_moment"}
             ref={(ref) => this.listView = ref}
@@ -223,7 +254,7 @@ export default class MomentList extends PureComponent {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={{marginLeft:14,width:'47%',marginRight:17}}
+                    style={{marginLeft: 14, width: '47%', marginRight: 17}}
                     onPress={() => {
                         this.toUserPage(user)
                     }}>
@@ -237,7 +268,7 @@ export default class MomentList extends PureComponent {
                 {body_type === 'long' ? <Text style={styles.txt_long}>长帖</Text> : null}
 
                 <TouchableOpacity
-                    style={{paddingTop:5,paddingBottom:5,paddingRight:5,paddingLeft:5}}
+                    style={{paddingTop: 5, paddingBottom: 5, paddingRight: 5, paddingLeft: 5}}
                     onPress={() => {
                         if (this.isDelete()) {
 
@@ -322,7 +353,7 @@ export default class MomentList extends PureComponent {
     }
 
     long = (item) => {
-        let title2=  item.title;
+        let title2 = item.title;
         return <View>
             <Text style={styles.body}>{title2}</Text>
 
@@ -340,7 +371,7 @@ export default class MomentList extends PureComponent {
 
     short = (item) => {
         const {images, body} = item;
-        let title2=  body;
+        let title2 = body;
         return <View>
             {strNotNull(body) ? <Text
                 numberOfLines={6}

@@ -12,8 +12,10 @@ import I18n from "react-native-i18n";
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import MomentList from './MomentList'
 import PopAction from '../comm/PopAction';
-import {isEmptyObject, showToast} from "../../utils/ComonHelper";
+import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 import {report_topic} from "../../services/SocialDao";
+import {getMsgUnRead} from "../../services/AccountDao";
+import {getUnreadComments} from "../../services/CommentDao";
 
 let topicId = -1;
 
@@ -21,8 +23,24 @@ export default class Square extends PureComponent {
 
     state = {
         // square_types: ['topics', 'recommends', 'follows']
-        square_types: ['topics']
+        square_types: ['topics'],
+        unread_count: 0
     };
+
+    componentDidMount() {
+        //获取未读消息
+        let body = {user_id: global.login_user.user_id};
+        if (strNotNull(body)) {
+            getUnreadComments(body, data => {
+                console.log("unreadCount:", data)
+                this.setState({
+                    unread_count: data.unread_count
+                })
+            }, err => {
+
+            });
+        }
+    }
 
     //举报原因
     report = (index) => {
@@ -69,7 +87,8 @@ export default class Square extends PureComponent {
                         showMore={(id) => {
                             topicId = id;
                             this.popAction && this.popAction.toggle();
-                        }}/>
+                        }}
+                        unread_count={this.state.unread_count}/>
                 })}
 
             </ScrollableTabView>
