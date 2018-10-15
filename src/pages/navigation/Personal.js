@@ -6,7 +6,10 @@ import {
     View, Animated, findNodeHandle, Linking, Modal, ImageBackground
 } from 'react-native';
 import {Images, Colors, Metrics, ApplicationStyles} from '../../Themes';
-import {strNotNull, isEmptyObject, getLoginUser, getUserData, getDispatchAction} from '../../utils/ComonHelper';
+import {
+    strNotNull, isEmptyObject, getLoginUser, getUserData, getDispatchAction,
+    showToast
+} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
@@ -16,6 +19,8 @@ import HotelOrderPage from "../macau/hotelOrder/HotelOrderPage";
 import {wallet_account, display_check, novice_task} from '../../services/WallDao';
 import {NavigationBar} from '../../components';
 import NewUserTask from "./NewUserTask";
+import {getJmessageInfo} from "../../services/AccountDao";
+import {visit_other} from "../../services/SocialDao";
 
 class Personal extends Component {
 
@@ -82,17 +87,17 @@ class Personal extends Component {
 
                 {this.renderItem()}
 
-                {this.props.profile && this.props.profile.new_user ? <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
-                                                                 onPress={() => {
-                                                                    router.toNewUserTask(this.refresh)
-                                                                 }}>
-                    <Image style={{
-                        width: Metrics.reallySize(53),
-                        height: Metrics.reallySize(49)
-                    }}
-                           source={Images.lucky_bag}/>
-                </TouchableOpacity> : null}
-
+                {this.props.profile && this.props.profile.new_user ?
+                    <TouchableOpacity style={{position: 'absolute', bottom: 20, right: 17}}
+                                      onPress={() => {
+                                          router.toNewUserTask(this.refresh)
+                                      }}>
+                        <Image style={{
+                            width: Metrics.reallySize(53),
+                            height: Metrics.reallySize(49)
+                        }}
+                               source={Images.lucky_bag}/>
+                    </TouchableOpacity> : null}
 
 
             </View>
@@ -218,6 +223,17 @@ class Personal extends Component {
             {this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},
                 '联系客服', () => {
 
+                    if (isEmptyObject(global.login_user))
+                        global.router.toLoginFirstPage()
+                    else {
+                        if (isEmptyObject(global.imUser)) {
+                            getJmessageInfo(() => {
+                                this.getImUser()
+                            })
+                        } else {
+                            this.getImUser()
+                        }
+                    }
 
                 })}
 
@@ -241,6 +257,25 @@ class Personal extends Component {
         </ScrollView>
     };
 
+    getImUser = () => {
+        this.loading && this.loading.open();
+
+        const user_id = 'fd433a53b54c0a4f21a8c07e73f43a0c';
+        ///获取私信用户的用户名
+        visit_other({userId: user_id}, (user) => {
+
+            this.loading && this.loading.close();
+            router.toMessageList({
+                username: user.username,
+                nickname: user.nickname,
+                avatarThumbPath: user.avatar,
+            });
+        }, (error) => {
+            showToast(I18n.t("error_alert"));
+            this.loading && this.loading.close();
+        });
+    }
+
     visitChat = () => {
     };
 
@@ -255,6 +290,15 @@ class Personal extends Component {
             <Image style={imgStyle} source={img}/>
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
+
+            {title === '联系客服' && !isEmptyObject(global.login_user) ? <Text
+                    style={{
+                        width:130,
+                        fontSize: 12,
+                        color: '#AAAAAA',
+                        marginRight:12
+                    }}>(工作时间：周一至周五10:00 - 18:00)</Text>
+                : null}
 
             {title === '我的邀请' && !isEmptyObject(global.login_user) ? <Text
                     style={{
