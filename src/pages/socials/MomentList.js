@@ -142,6 +142,11 @@ export default class MomentList extends PureComponent {
                 }}
                                                                  onPress={() => {
 
+                                                                     global.router.toReceivedReply();
+                                                                     this.setState({
+                                                                         unreadCount: 0
+                                                                     })
+
                                                                  }}>
                     <Image/>
                     <Text>{`${this.props.unread_count}条未读消息`}</Text>

@@ -40,7 +40,7 @@ export default class Square extends PureComponent {
 
             });
         }
-    }
+    };
 
     //举报原因
     report = (index) => {
