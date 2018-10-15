@@ -42,6 +42,13 @@ export default class Square extends PureComponent {
         }
     };
 
+    setUnreadCount = (unread_count) => {
+        this.setState({
+            unread_count
+        })
+
+    };
+
     //举报原因
     report = (index) => {
         let reportList = global.reportList;
@@ -88,7 +95,8 @@ export default class Square extends PureComponent {
                             topicId = id;
                             this.popAction && this.popAction.toggle();
                         }}
-                        unread_count={this.state.unread_count}/>
+                        unread_count={this.state.unread_count}
+                        setUnreadCount={this.setUnreadCount}/>
                 })}
 
             </ScrollableTabView>

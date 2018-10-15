@@ -141,7 +141,7 @@ export default class MomentList extends PureComponent {
                     marginTop: 5
                 }}
                                                                  onPress={() => {
-
+                                                                     this.props.setUnreadCount && this.props.setUnreadCount(0);
                                                                      global.router.toReceivedReply();
                                                                      this.setState({
                                                                          unreadCount: 0
