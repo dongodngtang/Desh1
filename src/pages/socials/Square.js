@@ -28,6 +28,10 @@ export default class Square extends PureComponent {
     };
 
     componentDidMount() {
+        this.refresh()
+    };
+
+    refresh = () => {
         //获取未读消息
         let body = {user_id: global.login_user.user_id};
         if (strNotNull(body)) {
@@ -40,7 +44,7 @@ export default class Square extends PureComponent {
 
             });
         }
-    };
+    }
 
     setUnreadCount = (unread_count) => {
         this.setState({
@@ -96,7 +100,8 @@ export default class Square extends PureComponent {
                             this.popAction && this.popAction.toggle();
                         }}
                         unread_count={this.state.unread_count}
-                        setUnreadCount={this.setUnreadCount}/>
+                        setUnreadCount={this.setUnreadCount}
+                        refresh={this.refresh}/>
                 })}
 
             </ScrollableTabView>
