@@ -45,13 +45,13 @@ class TabHomePage extends Component {
         isRefreshing: false,
         info_page: 1,
         load_more: '',
-        show_task:false
+        show_task: false
     };
 
     componentWillReceiveProps(newProps) {
 
-        if(!_.isEqual(newProps.profile,this.props.profile)){
-            console.log('首页',newProps.profile)
+        if (!_.isEqual(newProps.profile, this.props.profile)) {
+            console.log('首页', newProps.profile)
             this.setState({
                 show_task: newProps.profile.new_user
             })
@@ -74,8 +74,8 @@ class TabHomePage extends Component {
     };
 
     refresh = () => {
-        console.log('首页',this.props.profile)
-        if(!isEmptyObject(this.props.profile)){
+        console.log('首页', this.props.profile)
+        if (!isEmptyObject(this.props.profile)) {
             this.setState({
                 show_task: this.props.profile.new_user
             })
@@ -147,7 +147,6 @@ class TabHomePage extends Component {
         })
 
 
-
         home_recommends(data => {
             if (data.items.length > 0) {
 
@@ -164,7 +163,7 @@ class TabHomePage extends Component {
 
 
         }, err => {
-            logMsg('错误回调',err)
+            logMsg('错误回调', err)
             this.setState({
                 load_more: 'fail'
             });
@@ -210,10 +209,10 @@ class TabHomePage extends Component {
                             load_more: 'load_all'
                         });
                     }
-                    logMsg('错误回调2323',data)
+                    logMsg('错误回调2323', data)
 
                 }, err => {
-                    logMsg('错误回调',err)
+                    logMsg('错误回调', err)
                     this.setState({
                         load_more: 'fail'
                     });
@@ -247,13 +246,17 @@ class TabHomePage extends Component {
     };
 
     render() {
-        const {banners, headlines, load_more,show_task} = this.state;
+        const {banners, headlines, load_more, show_task} = this.state;
         return (
 
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     toolbarStyle={{backgroundColor: Colors._E54}}
-                    title={'澳门旅行'}/>
+                    title={'澳门旅行'}
+                    rightBtnText={'活动'}
+                    rightBtnPress={() => {
+                        global.router.toActivitiesPage()
+                    }}/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
@@ -268,7 +271,11 @@ class TabHomePage extends Component {
                         banners={banners}/>
                     <Catalog/>
 
-                    <View style={{width:Metrics.reallySize(Metrics.screenWidth - 34),height:1.6,backgroundColor:'#F3F3F3'}}/>
+                    <View style={{
+                        width: Metrics.reallySize(Metrics.screenWidth - 34),
+                        height: 1.6,
+                        backgroundColor: '#F3F3F3'
+                    }}/>
 
                     <FastBtns/>
 

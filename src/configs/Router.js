@@ -68,6 +68,12 @@ export default class Router {
         })
     }
 
+    toActivitiesPage(){
+        this.stackPush({
+            name:'ActivitiesPage'
+        })
+    }
+
     toRoundTripPage(){
         this.stackPush({
             name:'RoundTripPage'

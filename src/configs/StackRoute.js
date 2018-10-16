@@ -138,9 +138,11 @@ import CouponReceivePage from "../pages/coupon/CouponReceivePage";
 import CouponInfoPage from "../pages/coupon/CouponInfoPage";
 import RoundTripPage from "../pages/fastBtn/RoundTripPage";
 import FastFoodPage from "../pages/fastBtn/FastFoodPage";
+import ActivitiesPage from "../pages/activity/ActivitiesPage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="ActivitiesPage" component={ActivitiesPage} hideNavBar/>
         <Scene key="FastFoodPage" component={FastFoodPage} hideNavBar/>
         <Scene key="RoundTripPage" component={RoundTripPage} hideNavBar/>
         <Scene key="CouponInfoPage" component={CouponInfoPage} hideNavBar/>
