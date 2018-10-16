@@ -9,7 +9,6 @@
 
 import React, {Component} from "react"
 import {Animated, Easing, View, TouchableOpacity, Modal, Image, StyleSheet, Dimensions, Text} from "react-native"
-import {Metrics} from "../../Themes";
 
 export default class AnimatedTurnTableDrawPage extends Component {
 
@@ -95,6 +94,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     justifyContent: 'center',
                     backgroundColor: 'rgba(0,0,0,0.6)'
                 }}>
+                    <Image source={require('./imgs/turntable.png')} style={{width:200,height:150,top:60,alignSelf:'center',zIndex:1000}}/>
                     <View style={styles.lottery_container}>
                         <Animated.View style={[styles.mainImg, {
                             transform: [{
@@ -105,7 +105,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             }]
                         }]}>
                             <View style={{height: 360, width: 360, alignItems: "center"}}>
-                                <Image style={{position: "absolute", height: 360, width: 360, resizeMode: 'stretch'}}
+                                <Image style={{position: "absolute", height: 430, width: 400, resizeMode: 'stretch'}}
                                        source={require('./imgs/circle_bg.png')}/>
                                 {this.state.drawData.map((one, index) => {
                                     const rotateDeg = 22.5;
@@ -179,14 +179,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         }} style={styles.centerPoint}>
                             <Image source={require('./imgs/point_new.png')}
                                    style={{height: 134, width: 107, resizeMode: "stretch", position: "absolute"}}/>
-                            <Text style={{
-                                color: "#ffffff",
-                                textAlign: "center",
-                                fontSize: 17,
-                                fontWeight: 'bold',
-                                width: 45,
-                                marginTop: 20
-                            }}>{"开始抽奖" || "start game"}</Text>
+                            {/*<Text style={{*/}
+                                {/*color: "#ffffff",*/}
+                                {/*textAlign: "center",*/}
+                                {/*fontSize: 17,*/}
+                                {/*fontWeight: 'bold',*/}
+                                {/*width: 45,*/}
+                                {/*marginTop: 20*/}
+                            {/*}}>{"开始抽奖" || "start game"}</Text>*/}
                         </TouchableOpacity>
                     </View>
 
@@ -197,11 +197,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     }}
                     style={{
                         position:'absolute',
-                        top:30,
-                        right:20,
+                        top:140,
+                        right:40,
                         zIndex:999
                     }}>
-                        <Text style={{fontSize:30,color:'white'}}>X</Text>
+                        <Image source={require('./imgs/lottery_close.png')} style={{width:30,height:30}}/>
                     </TouchableOpacity>
                 </View>
             </Modal>
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     centerPoint: {
         position: 'absolute',
         left: Dimensions.get('window').width / 2 - 53,
-        top: 100,
+        top: 110,
         zIndex: 100,
         height: 134,
         width: 107,
