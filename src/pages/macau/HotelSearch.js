@@ -41,8 +41,6 @@ const styles = StyleSheet.create({
     }
 });
 
-const names = [{id: 0, name: '休闲娱乐', type: 'recreation'}, {id: 1, name: '桑拿水疗', type: 'sauna'}]
-
 export default class HotelSearch extends PureComponent {
     state = {
         search: false,
@@ -59,6 +57,7 @@ export default class HotelSearch extends PureComponent {
     };
 
     change_content(name) {
+        const {name_index} = this.state;
         if (name !== '娱乐') {
             return <Text style={styles.title}>{name}</Text>
         } else {
@@ -72,20 +71,30 @@ export default class HotelSearch extends PureComponent {
                         alignItems: 'center',
                         justifyContent: 'space-between'
                     }}>
-                        {names.map((item, index) => {
-                            return <TouchableOpacity key={index} onPress={() => {
-                                this.setState({
-                                    name_index: item.id
-                                });
-                                this.refresh()
-                            }}>
-                                <Text
-                                    style={{
-                                        fontSize: this.state.name_index === item.id ? 18 : 14,
-                                        color: this.state.name_index === item.id ? 'white' : '#FFCACA'
-                                    }}>{item.name}</Text>
-                            </TouchableOpacity>
-                        })}
+                        <TouchableOpacity onPress={() => {
+                            this.setState({
+                                name_index: 0
+                            });
+                            this.refresh()
+                        }}>
+                            <Text
+                                style={{
+                                    fontSize: name_index === 0 ? 18 : 14,
+                                    color: name_index === 0 ? 'white' : '#FFCACA'
+                                }}>休闲娱乐</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            this.setState({
+                                name_index: 1
+                            });
+                            this.refresh()
+                        }}>
+                            <Text
+                                style={{
+                                    fontSize: name_index === 1 ? 18 : 14,
+                                    color: name_index === 1 ? 'white' : '#FFCACA'
+                                }}>桑拿水疗</Text>
+                        </TouchableOpacity>
                     </View>
                 )
             } else {
@@ -190,8 +199,8 @@ export default class HotelSearch extends PureComponent {
                 separator={() => this.separator()}
                 keyExtractor={(item, index) => index + "item"}
                 ref={(ref) => this.listView = ref}
-                onFetch={this.onFetch}
-                item={this.item_view}
+                onFetch={this.state.name_index === 1 ? this.onFetch_forSunna : this.onFetch}
+                item={this.state.name_index === 1 ? this.item_sunna : this.item_view}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}
@@ -214,6 +223,14 @@ export default class HotelSearch extends PureComponent {
             return <View style={{height: 5}}/>
         else
             return null
+    }
+
+    item_sunna=(item, index)=>{
+        return(
+            <SunnaItem
+                type={`sanna`}
+                item={item}/>
+        )
     }
 
     item_view = (item, index, separators) => {
@@ -240,7 +257,12 @@ export default class HotelSearch extends PureComponent {
 
     }
 
+    onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
+        console.log("onFetch_forSunna")
+    }
+
     onFetch = (page = 1, startFetch, abortFetch) => {
+        console.log("onFetch")
         try {
             const {type} = this.props.params.item;
             if (type === 'hotel') {
@@ -265,22 +287,19 @@ export default class HotelSearch extends PureComponent {
                 })
 
             } else {
-                if(this.state.name_index === 1){
-
-                }else{
-                    info_types({
-                            page, page_size: 20, keyword: this.keyword, type},
-                        data => {
-                            startFetch(data.items, 18)
-                        }, err => {
-                            logMsg("reject:", err)
-                            this.setState({
-                                reject_problem: err.problem
-                            })
-                            abortFetch()
-                        }
-                    )
-                }
+                info_types({
+                        page, page_size: 20, keyword: this.keyword, type
+                    },
+                    data => {
+                        startFetch(data.items, 18)
+                    }, err => {
+                        logMsg("reject:", err)
+                        this.setState({
+                            reject_problem: err.problem
+                        })
+                        abortFetch()
+                    }
+                )
 
             }
 
