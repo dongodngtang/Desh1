@@ -41,14 +41,14 @@ const styles = StyleSheet.create({
     }
 });
 
-const names = [{id: 0, name: '休闲娱乐'}, {id: 1, name: '桑拿水疗'}]
+const names = [{id: 0, name: '休闲娱乐', type: 'recreation'}, {id: 1, name: '桑拿水疗', type: 'sauna'}]
 
 export default class HotelSearch extends PureComponent {
     state = {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: 0
+        name_index: 1
     };
 
     refresh = () => {
@@ -63,7 +63,6 @@ export default class HotelSearch extends PureComponent {
             return <Text style={styles.title}>{name}</Text>
         } else {
             let city = global.city_name;
-            console.log("dshjdsk",city)
             if (city !== '澳门') {
                 return (
                     <View style={{
@@ -77,13 +76,14 @@ export default class HotelSearch extends PureComponent {
                             return <TouchableOpacity key={index} onPress={() => {
                                 this.setState({
                                     name_index: item.id
-                                })
+                                });
+                                this.refresh()
                             }}>
                                 <Text
-                                      style={{
-                                          fontSize: this.state.name_index === item.id ? 18 : 14,
-                                          color: this.state.name_index === item.id ? 'white' : 'grey'
-                                      }}>{item.name}</Text>
+                                    style={{
+                                        fontSize: this.state.name_index === item.id ? 18 : 14,
+                                        color: this.state.name_index === item.id ? 'white' : '#FFCACA'
+                                    }}>{item.name}</Text>
                             </TouchableOpacity>
                         })}
                     </View>
@@ -265,16 +265,23 @@ export default class HotelSearch extends PureComponent {
                 })
 
             } else {
-                info_types({page, page_size: 20, keyword: this.keyword, type},
-                    data => {
-                        startFetch(data.items, 18)
-                    }, err => {
-                        logMsg("reject:", err)
-                        this.setState({
-                            reject_problem: err.problem
-                        })
-                        abortFetch()
-                    })
+                if(this.state.name_index === 1){
+
+                }else{
+                    info_types({
+                            page, page_size: 20, keyword: this.keyword, type},
+                        data => {
+                            startFetch(data.items, 18)
+                        }, err => {
+                            logMsg("reject:", err)
+                            this.setState({
+                                reject_problem: err.problem
+                            })
+                            abortFetch()
+                        }
+                    )
+                }
+
             }
 
 
