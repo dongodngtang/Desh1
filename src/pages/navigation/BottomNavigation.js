@@ -20,6 +20,7 @@ import * as Constants from "../../configs/Constants";
 import ForcedUpdate from "../ForcedUpdate";
 import {getBaseURL} from "../../services/RequestHelper";
 import GuidePage from "../comm/GuidePage";
+import AnimatedTurnTableDrawPage from '../lottery/AnimatedTurnTableDrawPage'
 
 
 class BottomNavigation extends Component {
@@ -27,7 +28,8 @@ class BottomNavigation extends Component {
 
     state = {
         app_update: {},
-        FirstLogin: false
+        FirstLogin: false,
+        lottery :false
     }
 
     componentDidMount() {
@@ -43,7 +45,9 @@ class BottomNavigation extends Component {
             }, 1000)
         });
 
-
+        this.setState({
+            lottery:true
+        })
     }
 
     componentWillReceiveProps(newProps) {
@@ -87,6 +91,10 @@ class BottomNavigation extends Component {
             })
         }
 
+
+    }
+
+    _lottery=()=>{
 
     }
 
@@ -197,6 +205,8 @@ class BottomNavigation extends Component {
                 {util.isEmpty(this.state.app_update) ? null : <ForcedUpdate app_update={this.state.app_update}/>}
 
                 {this.state.FirstLogin ? <GuidePage/> : null}
+
+                {this.state.lottery ? <AnimatedTurnTableDrawPage/> : null}
 
             </View>
 
