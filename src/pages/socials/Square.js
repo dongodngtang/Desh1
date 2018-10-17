@@ -22,7 +22,7 @@ let topicId = -1;
 export default class Square extends PureComponent {
 
     state = {
-        square_types:['topics', 'recommends', 'follows'],
+        square_types:['topics', 'recommends'],
         unread_count: 0
     };
 
