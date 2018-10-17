@@ -139,9 +139,11 @@ import CouponInfoPage from "../pages/coupon/CouponInfoPage";
 import RoundTripPage from "../pages/fastBtn/RoundTripPage";
 import FastFoodPage from "../pages/fastBtn/FastFoodPage";
 import ActivitiesPage from "../pages/activity/ActivitiesPage";
+import RecreationPage from "../pages/macau/RecreationPage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="RecreationPage" component={RecreationPage} hideNavBar/>
         <Scene key="ActivitiesPage" component={ActivitiesPage} hideNavBar/>
         <Scene key="FastFoodPage" component={FastFoodPage} hideNavBar/>
         <Scene key="RoundTripPage" component={RoundTripPage} hideNavBar/>

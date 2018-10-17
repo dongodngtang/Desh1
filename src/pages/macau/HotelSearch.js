@@ -45,8 +45,7 @@ export default class HotelSearch extends PureComponent {
     state = {
         search: false,
         show_content: true,
-        reject_problem: '',
-        name_index: 1
+        reject_problem: ''
     };
 
     refresh = () => {
@@ -56,55 +55,6 @@ export default class HotelSearch extends PureComponent {
         this.listView && this.listView.refresh();
     };
 
-    change_content(name) {
-        const {name_index} = this.state;
-        if (name !== '娱乐') {
-            return <Text style={styles.title}>{name}</Text>
-        } else {
-            let city = global.city_name;
-            if (city !== '澳门') {
-                return (
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '40%',
-                        alignItems: 'center',
-                        justifyContent: 'space-between'
-                    }}>
-                        <TouchableOpacity onPress={() => {
-                            this.setState({
-                                name_index: 0
-                            });
-                            this.refresh()
-                        }}>
-                            <Text
-                                style={{
-                                    fontSize: name_index === 0 ? 18 : 14,
-                                    color: name_index === 0 ? 'white' : '#FFCACA'
-                                }}>休闲娱乐</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {
-                            this.setState({
-                                name_index: 1
-                            });
-                            this.refresh()
-                        }}>
-                            <Text
-                                style={{
-                                    fontSize: name_index === 1 ? 18 : 14,
-                                    color: name_index === 1 ? 'white' : '#FFCACA'
-                                }}>桑拿水疗</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            } else {
-                return (
-                    <Text style={styles.title}>{'休闲娱乐'}</Text>
-                )
-            }
-        }
-
-    }
 
     render() {
         const {name, type} = this.props.params.item;
@@ -129,7 +79,7 @@ export default class HotelSearch extends PureComponent {
                                 this.keyword = keyword;
                                 this.listView && this.listView.refresh()
 
-                            }}/> : this.change_content(name)}
+                            }}/> : <Text style={styles.title}>{name}</Text>}
                         <View style={{flex: 1}}/>
 
 
@@ -173,7 +123,7 @@ export default class HotelSearch extends PureComponent {
                         this.keyword = keyword;
                         this.listView && this.listView.refresh()
 
-                    }}/> : this.change_content(name)}
+                    }}/> : <Text style={styles.title}>{name}</Text>}
                 <View style={{flex: 1}}/>
 
 
@@ -195,12 +145,13 @@ export default class HotelSearch extends PureComponent {
 
             </View>
             {this.separator()}
+
             <UltimateListView
                 separator={() => this.separator()}
                 keyExtractor={(item, index) => index + "item"}
                 ref={(ref) => this.listView = ref}
-                onFetch={this.state.name_index === 1 ? this.onFetch_forSunna : this.onFetch}
-                item={this.state.name_index === 1 ? this.item_sunna : this.item_view}
+                onFetch={this.onFetch}
+                item={this.item_view}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}
@@ -225,14 +176,6 @@ export default class HotelSearch extends PureComponent {
             return null
     }
 
-    item_sunna=(item, index)=>{
-        return(
-            <SunnaItem
-                type={`sanna`}
-                item={item}/>
-        )
-    }
-
     item_view = (item, index, separators) => {
         const {type} = this.props.params.item;
         if (type === 'hotel')
@@ -254,15 +197,9 @@ export default class HotelSearch extends PureComponent {
                     this.listView.refresh()
                 }}/>
 
-
-    }
-
-    onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
-        console.log("onFetch_forSunna")
     }
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-        console.log("onFetch")
         try {
             const {type} = this.props.params.item;
             if (type === 'hotel') {
