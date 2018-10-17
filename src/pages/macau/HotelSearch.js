@@ -298,7 +298,7 @@ class HotelItem extends Component {
     }
 }
 
-class FoodItem extends PureComponent {
+export class FoodItem extends PureComponent {
 
     show_count = (item) => {
         if (strNotNull(item)) {

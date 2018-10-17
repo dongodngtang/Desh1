@@ -9,9 +9,9 @@ import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {hotels, info_types, exchange_rates} from '../../services/MacauDao';
 import {isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
-import {reallySize} from "../socials/Header";
 import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
+import {FoodItem} from './HotelSearch'
 
 const sunna_data = [{
     index:0,
@@ -67,10 +67,14 @@ export default class RecreationPage extends PureComponent {
                         justifyContent: 'space-between'
                     }}>
                         <TouchableOpacity onPress={() => {
+                            this.listView&&this.listView.postRefresh([])
                             this.setState({
                                 name_index: 0
-                            });
-                            this.refresh()
+                            })
+                            setTimeout(()=>{
+                                this.refresh()
+                            },200)
+
                         }}>
                             <Text
                                 style={{
@@ -79,10 +83,13 @@ export default class RecreationPage extends PureComponent {
                                 }}>休闲娱乐</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
+                            this.listView&&this.listView.postRefresh([])
                             this.setState({
                                 name_index: 1
                             });
-                            this.refresh()
+                            setTimeout(()=>{
+                                this.refresh()
+                            },200)
                         }}>
                             <Text
                                 style={{
@@ -162,7 +169,7 @@ export default class RecreationPage extends PureComponent {
                 separator={() => this.separator()}
                 keyExtractor={(item, index) => index + "item"}
                 ref={(ref) => this.listView = ref}
-                onFetch={this.state.name_index === 1 ? this.onFetch_forSunna : this.onFetch}
+                onFetch={this.onFetch}
                 item={this.item_view}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
@@ -190,14 +197,14 @@ export default class RecreationPage extends PureComponent {
             return <SunnaItem
                 key={`${index}sanna`}
                 item={item}/>
-        }else
+        }else if(this.state.name_index === 0){
             return <FoodItem
-                key={`${type}${index}`}
+                key={`recreation${index}`}
                 item={item}
                 refresh={() => {
                     this.listView.refresh()
                 }}/>
-
+        }
     };
 
     onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
@@ -209,22 +216,30 @@ export default class RecreationPage extends PureComponent {
         }
     };
 
+    onFetch_forEn=(page = 1, startFetch, abortFetch)=>{
+        const {type} = this.props.params.item;
+        info_types({
+                page, page_size: 20, keyword: this.keyword, type
+            },
+            data => {
+                startFetch(data.items, 18)
+            }, err => {
+                logMsg("reject:", err)
+                this.setState({
+                    reject_problem: err.problem
+                })
+                abortFetch()
+            }
+        )
+    };
+
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
-            const {type} = this.props.params.item;
-            info_types({
-                    page, page_size: 20, keyword: this.keyword, type
-                },
-                data => {
-                    startFetch(data.items, 18)
-                }, err => {
-                    logMsg("reject:", err)
-                    this.setState({
-                        reject_problem: err.problem
-                    })
-                    abortFetch()
-                }
-            )
+            if(this.state.name_index === 1 ){
+                this.onFetch_forSunna(page,startFetch,abortFetch)
+            }else if(this.state.name_index === 0){
+                this.onFetch_forEn(page,startFetch,abortFetch);
+            }
         } catch (err) {
             console.log(err)
             abortFetch()

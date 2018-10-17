@@ -13,7 +13,6 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
-import {getPersonCoupons} from "../../services/MacauDao";
 import {mul, DateDiff, checkPriceLength} from '../../utils/ComonHelper'
 
 export default class SunnaItem extends Component {
@@ -26,7 +25,7 @@ export default class SunnaItem extends Component {
                               onPress={() => {
                                   // router.toHotelDetail(item, changeTime)
                               }}>
-                <ImageLoad
+                <Image
                     style={{width: 67, height: 95, marginLeft: 12}}
                     source={logo}/>
                 <View style={styles.message}>
