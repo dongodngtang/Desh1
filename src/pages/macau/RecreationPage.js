@@ -111,7 +111,7 @@ export default class RecreationPage extends PureComponent {
             )
         } else {
             return (
-                <Text style={styles.title}>{'休闲娱乐'}</Text>
+                <Text style={[styles.title,{alignSelf:'center'}]}>{'休闲娱乐'}</Text>
             )
         }
 
@@ -142,7 +142,20 @@ export default class RecreationPage extends PureComponent {
 
                             }}/> : this.change_content()}
                         <View style={{flex: 1}}/>
+                        <TouchableOpacity
+                            style={styles.btn_search}
+                            onPress={() => {
+                                this.setState({
+                                    search: !this.state.search
+                                })
+                                this.keyword = undefined;
+                                this.listView && this.listView.refresh()
+                            }}>
+                            {this.state.search ? <Text style={styles.cancel}>取消</Text> : <Image
+                                style={styles.img_search}
+                                source={Images.macau.search}/>}
 
+                        </TouchableOpacity>
                     </View>
 
                     <RejectPage refresh={this.refresh}/>
@@ -170,7 +183,20 @@ export default class RecreationPage extends PureComponent {
 
                     }}/> : this.change_content()}
                 <View style={{flex: 1}}/>
+                <TouchableOpacity
+                    style={styles.btn_search}
+                    onPress={() => {
+                        this.setState({
+                            search: !this.state.search
+                        })
+                        this.keyword = undefined;
+                        this.listView && this.listView.refresh()
+                    }}>
+                    {this.state.search ? <Text style={styles.cancel}>取消</Text> : <Image
+                        style={styles.img_search}
+                        source={Images.macau.search}/>}
 
+                </TouchableOpacity>
             </View>
             {this.separator()}
 
