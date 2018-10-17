@@ -14,21 +14,21 @@ import SunnaItem from './SunnaItem';
 import {FoodItem} from './HotelSearch'
 
 const sunna_data = [{
-    index:0,
+    index: 0,
     title: '金碧辉煌水疗馆',
     location: '富城路33号(富城路陆家嘴西路)',
     logo: Images.wallet.bg,
     price: 2333,
     distance: '1.4km'
 }, {
-    index:1,
+    index: 1,
     title: '金碧辉煌水疗馆2',
     location: '富城路33号(富城路陆家嘴西路)',
     logo: Images.wallet.bg,
     price: 2333,
     distance: '1.4km'
 }, {
-    index:2,
+    index: 2,
     title: '金碧辉煌水疗馆3',
     location: '富城路33号(富城路陆家嘴西路)',
     logo: Images.wallet.bg,
@@ -41,8 +41,21 @@ export default class RecreationPage extends PureComponent {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: 1
+        name_index: 0
     };
+
+    componentDidMount() {
+        let city = global.city_name;
+        let index = this.state.name_index;
+        if (city === '澳门') {
+            index = 1;
+        } else {
+            index = 0;
+        }
+        this.setState({
+            name_index: index
+        })
+    }
 
     refresh = () => {
         this.setState({
@@ -51,64 +64,60 @@ export default class RecreationPage extends PureComponent {
         this.listView && this.listView.refresh();
     };
 
-    change_content(name) {
+    change_content() {
         const {name_index} = this.state;
-        if (name !== '娱乐') {
-            return <Text style={styles.title}>{name}</Text>
-        } else {
-            let city = global.city_name;
-            if (city !== '澳门') {
-                return (
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '40%',
-                        alignItems: 'center',
-                        justifyContent: 'space-between'
-                    }}>
-                        <TouchableOpacity onPress={() => {
-                            this.listView&&this.listView.postRefresh([])
-                            this.setState({
-                                name_index: 0
-                            })
-                            setTimeout(()=>{
-                                this.refresh()
-                            },200)
+        let city = global.city_name;
+        if (city === '澳门') {
+            return (
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '40%',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
+                    <TouchableOpacity onPress={() => {
+                        this.listView && this.listView.postRefresh([])
+                        this.setState({
+                            name_index: 0
+                        })
+                        setTimeout(() => {
+                            this.refresh()
+                        }, 200)
 
-                        }}>
-                            <Text
-                                style={{
-                                    fontSize: name_index === 0 ? 18 : 14,
-                                    color: name_index === 0 ? 'white' : '#FFCACA'
-                                }}>休闲娱乐</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {
-                            this.listView&&this.listView.postRefresh([])
-                            this.setState({
-                                name_index: 1
-                            });
-                            setTimeout(()=>{
-                                this.refresh()
-                            },200)
-                        }}>
-                            <Text
-                                style={{
-                                    fontSize: name_index === 1 ? 18 : 14,
-                                    color: name_index === 1 ? 'white' : '#FFCACA'
-                                }}>桑拿水疗</Text>
-                        </TouchableOpacity>
-                    </View>
-                )
-            } else {
-                return (
-                    <Text style={styles.title}>{'休闲娱乐'}</Text>
-                )
-            }
+                    }}>
+                        <Text
+                            style={{
+                                fontSize: name_index === 0 ? 18 : 14,
+                                color: name_index === 0 ? 'white' : '#FFCACA'
+                            }}>休闲娱乐</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        this.listView && this.listView.postRefresh([])
+                        this.setState({
+                            name_index: 1
+                        });
+                        setTimeout(() => {
+                            this.refresh()
+                        }, 200)
+                    }}>
+                        <Text
+                            style={{
+                                fontSize: name_index === 1 ? 18 : 14,
+                                color: name_index === 1 ? 'white' : '#FFCACA'
+                            }}>桑拿水疗</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        } else {
+            return (
+                <Text style={styles.title}>{'休闲娱乐'}</Text>
+            )
         }
 
     }
 
-    render(){
+    render() {
         const {name, type} = this.props.params.item;
         if (this.state.reject_problem === 'NETWORK_ERROR') {
             return (
@@ -131,7 +140,7 @@ export default class RecreationPage extends PureComponent {
                                 this.keyword = keyword;
                                 this.listView && this.listView.refresh()
 
-                            }}/> : this.change_content(name)}
+                            }}/> : this.change_content()}
                         <View style={{flex: 1}}/>
 
                     </View>
@@ -159,7 +168,7 @@ export default class RecreationPage extends PureComponent {
                         this.keyword = keyword;
                         this.listView && this.listView.refresh()
 
-                    }}/> : this.change_content(name)}
+                    }}/> : this.change_content()}
                 <View style={{flex: 1}}/>
 
             </View>
@@ -193,11 +202,11 @@ export default class RecreationPage extends PureComponent {
 
 
     item_view = (item, index) => {
-        if(this.state.name_index === 1){
+        if (this.state.name_index === 1) {
             return <SunnaItem
                 key={`${index}sanna`}
                 item={item}/>
-        }else if(this.state.name_index === 0){
+        } else if (this.state.name_index === 0) {
             return <FoodItem
                 key={`recreation${index}`}
                 item={item}
@@ -216,7 +225,7 @@ export default class RecreationPage extends PureComponent {
         }
     };
 
-    onFetch_forEn=(page = 1, startFetch, abortFetch)=>{
+    onFetch_forEn = (page = 1, startFetch, abortFetch) => {
         const {type} = this.props.params.item;
         info_types({
                 page, page_size: 20, keyword: this.keyword, type
@@ -235,10 +244,10 @@ export default class RecreationPage extends PureComponent {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
-            if(this.state.name_index === 1 ){
-                this.onFetch_forSunna(page,startFetch,abortFetch)
-            }else if(this.state.name_index === 0){
-                this.onFetch_forEn(page,startFetch,abortFetch);
+            if (this.state.name_index === 1) {
+                this.onFetch_forSunna(page, startFetch, abortFetch)
+            } else if (this.state.name_index === 0) {
+                this.onFetch_forEn(page, startFetch, abortFetch);
             }
         } catch (err) {
             console.log(err)
