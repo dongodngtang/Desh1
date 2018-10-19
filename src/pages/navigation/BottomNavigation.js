@@ -42,12 +42,13 @@ class BottomNavigation extends Component {
         getBaseURL(() => {
             setTimeout(() => {
                 this._getUpdate()
+                this.setState({
+                    lottery:true
+                })
             }, 1000)
         });
 
-        this.setState({
-            lottery:true
-        })
+
     }
 
     componentWillReceiveProps(newProps) {

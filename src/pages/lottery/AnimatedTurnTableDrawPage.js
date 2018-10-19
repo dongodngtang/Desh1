@@ -19,7 +19,9 @@ import {
     Dimensions,
     Text,
     ImageBackground
-} from "react-native"
+} from "react-native";
+import {Images} from '../../Themes'
+import {getProfile} from "../../services/AccountDao";
 
 export default class AnimatedTurnTableDrawPage extends Component {
 
@@ -39,11 +41,30 @@ export default class AnimatedTurnTableDrawPage extends Component {
             ],
             offOn: true,
             rotateDeg: new Animated.Value(0),
-            visible: true
+            visible: true,
+            total_points: 0
         };
+    };
+
+    componentDidMount() {
+        this.refresh()
+    }
+
+    refresh = () => {
+
+        getProfile('', data => {
+            console.log("我的积分",data)
+            this.setState({
+                total_points: data.total_points
+            })
+
+        }, err => {
+            console.log("err", err)
+        })
     }
 
     toggle = () => {
+        if(this.state.offOn)
         this.setState({
             visible: !this.state.visible
         })
@@ -58,7 +79,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
     rotateImg1 = () => {
         //获取抽奖位置
         // let number = Math.floor(Math.random() * 8);
-        let number = 5
+        let number = 5;
         if ((number / 8) == 0.875) {
             number = 1;
         }
@@ -85,11 +106,13 @@ export default class AnimatedTurnTableDrawPage extends Component {
     };
 
     changeValue = (postion) => {
+        if(this.state.visible)
         alert("定位到了" + postion + "上了");
     };
 
 
     render() {
+        const {total_points} = this.state;
         return (
             <Modal
                 animationType={"none"}
@@ -108,12 +131,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 }}>
                     <Image source={require('./imgs/turntable.png')}
                            style={{width: 200, height: 150, top: 60, alignSelf: 'center', zIndex: 1000}}/>
-                    <ImageBackground source={require('./imgs/circle_bg.png')} style={{height:400,width:400,
+                    <ImageBackground source={require('./imgs/circle_bg.png')} style={{
+                        height: 400, width: 400,
                         alignItems: 'center',
-                        justifyContent: 'center'}}>
+                        justifyContent: 'center'
+                    }}>
 
 
-                    <View  style={styles.lottery_container}>
+                        <View style={styles.lottery_container}>
                             <Animated.View style={[styles.mainImg, {
                                 transform: [{
                                     rotate: this.state.rotateDeg.interpolate({
@@ -193,24 +218,27 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                     })}
                                 </View>
                             </Animated.View>
-                        <TouchableOpacity activeOpacity={0.9} onPress={() => {
-                            this.rotateImg()
-                        }} style={styles.centerPoint}>
-                            <Image source={require('./imgs/point_new.png')}
-                                   style={{ height: 157,
-                                       width: 124.5, resizeMode: "stretch", position: "absolute"}}/>
-                            {/*<Text style={{*/}
-                            {/*color: "#ffffff",*/}
-                            {/*textAlign: "center",*/}
-                            {/*fontSize: 17,*/}
-                            {/*fontWeight: 'bold',*/}
-                            {/*width: 45,*/}
-                            {/*marginTop: 20*/}
-                            {/*}}>{"开始抽奖" || "start game"}</Text>*/}
-                        </TouchableOpacity>
-                    </View>
+                            <TouchableOpacity activeOpacity={0.9} onPress={() => {
+                                this.rotateImg()
+                            }} style={styles.centerPoint}>
+                                <Image source={require('./imgs/point_new.png')}
+                                       style={{
+                                           height: 157,
+                                           width: 124.5, resizeMode: "stretch", position: "absolute"
+                                       }}/>
+                                {/*<Text style={{*/}
+                                {/*color: "#ffffff",*/}
+                                {/*textAlign: "center",*/}
+                                {/*fontSize: 17,*/}
+                                {/*fontWeight: 'bold',*/}
+                                {/*width: 45,*/}
+                                {/*marginTop: 20*/}
+                                {/*}}>{"开始抽奖" || "start game"}</Text>*/}
+                            </TouchableOpacity>
+                        </View>
                     </ImageBackground>
                     <TouchableOpacity onPress={() => {
+                        if(this.state.offOn)
                         this.setState({
                             visible: false
                         })
@@ -223,12 +251,21 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                       }}>
                         <Image source={require('./imgs/lottery_close.png')} style={{width: 30, height: 30}}/>
                     </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Text>{`我的积分${total_points}`}</Text>
+                        <Image source={Images.verified_add}/>
+                    </TouchableOpacity>
                 </View>
             </Modal>
         );
     }
-}
 
+
+    componentWillUnmount(){
+
+    }
+}
 
 
 const styles = StyleSheet.create({
@@ -243,7 +280,7 @@ const styles = StyleSheet.create({
     },
     centerPoint: {
         position: 'absolute',
-        left: 300 / 2-62.25,
+        left: 300 / 2 - 62.25,
         top: 72.5,
         zIndex: 100,
         height: 157,
