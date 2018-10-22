@@ -56,11 +56,16 @@ export default class NearFriend extends PureComponent {
     componentDidMount() {
 
         checkPermission('location', ret => {
+            console.log("dsjkdks",ret)
             if (ret) {
                 navigator.geolocation.getCurrentPosition(data => {
+                    console.log("coords2",data)
                     const {coords} = data;
                     if (!isEmptyObject(coords)) {
                         const {longitude, latitude} = coords;
+                        console.log("coords",coords)
+                        console.log("latitude",data.coords.latitude)
+
                         postNearBys({lat: latitude, lng: longitude}, ret => {
                         }, err => {
                         })
