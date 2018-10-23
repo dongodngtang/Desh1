@@ -46,7 +46,7 @@ class SettingPage extends Component {
             this.setState({
                 DESTRUCTIVE_INDEX: fontIndex
             })
-        })
+        }).catch(err=>{})
     }
 
 

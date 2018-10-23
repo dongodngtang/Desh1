@@ -226,7 +226,7 @@ export default class ArticleRelease extends PureComponent {
                         if (key === articleKey) {
                             articleList.splice(index, 1);
                         }
-                    });
+                    }).catch(err=>{})
 
 
                     ///存储草稿列表

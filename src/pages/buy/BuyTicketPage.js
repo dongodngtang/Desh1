@@ -64,7 +64,7 @@ export default class BuyTicketPage extends Component {
         }).then(email => {
             this.setState({email: email})
 
-        });
+        }).catch(err=>{})
 
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();

@@ -117,7 +117,7 @@ export default class SearchMallPage extends PureComponent {
                 this.setState({
                     recordKeys: Array.from(this.setwords)
                 })
-            })
+            }).catch(err=>{})
     }
 
     state = {

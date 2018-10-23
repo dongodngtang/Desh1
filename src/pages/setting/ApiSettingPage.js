@@ -26,7 +26,7 @@ export default class ApiSettingPage extends Component {
                 this._select(ret);
             }).catch(err => {
             this._select(Api.production);
-        })
+        }).catch(err=>{})
     }
 
     _select = (ret) => {
