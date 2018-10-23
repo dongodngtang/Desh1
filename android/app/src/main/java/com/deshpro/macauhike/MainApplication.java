@@ -8,6 +8,7 @@ import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 import com.facebook.react.ReactApplication;
+import cn.qiuxiang.react.geolocation.AMapGeolocationPackage;
 import com.yunpeng.alipay.AlipayPackage;
 import com.rnim.rn.audio.ReactNativeAudioPackage;
 import com.reactlibrary.RNReactNativeThumbPackage;
@@ -55,6 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new AMapGeolocationPackage(),
             new AlipayPackage(),
             new ReactNativeAudioPackage(),
             new RNReactNativeThumbPackage(),
