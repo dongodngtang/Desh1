@@ -33,7 +33,7 @@ export default class ArticleList extends Component{
         ///获取草稿列表
         storage.load({key: "articleList"}).then(ret => {
             this.setState({articleList:ret});
-        });
+        }).catch(err=>{})
     };
 
     ///编辑长贴

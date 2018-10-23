@@ -22,7 +22,8 @@ import * as WeChat from 'react-native-wechat';
 import JShareModule from 'jshare-react-native';
 import JMessage from "jmessage-react-plugin";
 import JpushHelper from "./services/JpushHelper";
-
+import { Geolocation } from "react-native-amap-geolocation"
+import {logMsg} from "./utils/ComonHelper";
 
 console.disableYellowBox = true;
 
@@ -85,6 +86,11 @@ export default class App extends Component {
             ///极光统计
             JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
             JShareModule.setup(config);
+        }else{
+          Geolocation.init({
+            android: "cbacec593fa013206306140b9e6a5e75"
+          }).then(data=>{
+          })
         }
 
 

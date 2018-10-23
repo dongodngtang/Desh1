@@ -4542,6 +4542,10 @@ react-is@^16.3.2:
   version "16.3.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.3.2.tgz#f4d3d0e2f5fbb6ac46450641eb2e25bf05d36b22"
 
+react-native-amap-geolocation@^0.3.2:
+  version "0.3.2"
+  resolved "http://registry.npm.taobao.org/react-native-amap-geolocation/download/react-native-amap-geolocation-0.3.2.tgz#99b208638dd7ff911e60d34b36ee1ffc0d9b82b5"
+
 react-native-animatable@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"

@@ -21,6 +21,8 @@ import JMessage from "jmessage-react-plugin";
 import {CLEAR_PROFILE} from "../actions/ActionTypes";
 import Alipay from 'react-native-yunpeng-alipay';
 import {postRoomReservation} from "../services/MacauDao";
+import {checkPermission} from "../pages/comm/Permission";
+import {Geolocation} from "react-native-amap-geolocation";
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD HH:mm:ss';
@@ -53,6 +55,39 @@ export const picker = {
     compressImageQuality: 0.5,
 };
 
+
+
+export function getPosition(resolve,reject) {
+  checkPermission('location', ret => {
+    if (ret) {
+        if(Platform.OS === 'ios'){
+          navigator.geolocation.getCurrentPosition(data => {
+            const {coords} = data
+            logMsg('iOS定位',ret)
+            resolve(coords)
+          }, err => {
+            logMsg('位置', err)
+            reject(err)
+          },{enableHighAccuracy: Platform.OS !== 'android', timeout: 25000})
+        }else{
+          Geolocation.start()
+          Geolocation.getLastLocation().then(ret=>{
+              resolve(ret)
+            logMsg('amap定位',ret)
+            Geolocation.stop()
+          }).catch(err=>{
+            logMsg('位置', err)
+              reject(err)
+            Geolocation.stop()
+          })
+        }
+
+
+    }else{
+
+    }
+  })
+}
 
 /**
  *
@@ -367,7 +402,7 @@ export function getCarts() {
         .then(ret => {
             console.log('shoppingCarts:', ret);
             global.shoppingCarts = ret;
-        });
+        }).catch(err=>{})
 
 }
 
@@ -1150,12 +1185,12 @@ export function getUserData() {
     storage.load({key: StorageKey.UserData})
         .then((ret) => {
             userData = ret
-        });
+        }).catch(err=>{})
     storage.load({key: StorageKey.PayCountDown})
         .then(time => {
             console.log("payRecodes", time)
             global.timeRecodes = time;
-        })
+        }).catch(err=>{})
 }
 
 export let FontSize = {
@@ -1187,7 +1222,7 @@ export function getSize() {
                 h12: 12 + sizeNum,
                 h9: 9 + sizeNum,
             }
-        });
+        }).catch(err=>{})
 }
 
 

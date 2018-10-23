@@ -56,7 +56,7 @@ class LoginFirstPage extends Component {
             this.setState({
                 avatar: avatar
             })
-        });
+        }).catch(err=>{})
         isWXAppInstalled(isInstall => {
             this.setState({
                 isInstall: isInstall
