@@ -442,7 +442,9 @@ const images = {
     lottery:{
         opportunity:require('../../source/lottery/opportunity.png'),
         ward_add:require('../../source/lottery/ward_add.png'),
-        rule_close:require('../../source/lottery/rule_close.png')
+        rule_close:require('../../source/lottery/rule_close.png'),
+        cus_service:require('../../source/lottery/cus_service.png'),
+        activities:require('../../source/lottery/activities.png')
     }
 
 

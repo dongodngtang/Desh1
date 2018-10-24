@@ -343,34 +343,36 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     {this.content_show()}
 
 
-                    <View style={{alignSelf: 'center', width: 150, flexDirection: 'row', alignItems: 'center'}}>
-                        <ImageBackground
-                            source={Images.lottery.opportunity}
-                            style={{width: 120, height: 40, justifyContent: 'center', alignItems: 'center'}}>
-                            <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{`1次机会`}</Text>
-                        </ImageBackground>
-                        <TouchableOpacity style={{position: 'absolute', right: 10}}
-                                          onPress={() => {
-                                              this.setState({
-                                                  rule_show: true
-                                              })
-                                          }}>
-                            <Image style={{width: 30, height: 30}} source={Images.lottery.ward_add}/>
+                    <View style={{position:'absolute',bottom:30}}>
+                        <View style={{alignSelf: 'center', width: 150, flexDirection: 'row', alignItems: 'center'}}>
+                            <ImageBackground
+                                source={Images.lottery.opportunity}
+                                style={{width: 120, height: 40, justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{`1次机会`}</Text>
+                            </ImageBackground>
+                            <TouchableOpacity style={{position: 'absolute', right: 10}}
+                                              onPress={() => {
+                                                  this.setState({
+                                                      rule_show: true
+                                                  })
+                                              }}>
+                                <Image style={{width: 30, height: 30}} source={Images.lottery.ward_add}/>
+                            </TouchableOpacity>
+                        </View>
+
+                        <TouchableOpacity onPress={() => {
+                            this.toggle();
+                            global.router.toGameRulesPage(this.toggle)
+                        }} style={{marginTop:20,alignSelf:'center'}}>
+                            <Text style={{
+                                fontSize: 18,
+                                color: '#6787EE',
+                                textDecorationLine: 'underline',
+                                textDecorationStyle: "solid",
+                                textDecorationColor: "#6787EE"
+                            }}>游戏规则></Text>
                         </TouchableOpacity>
                     </View>
-
-                    <TouchableOpacity onPress={() => {
-                        this.toggle();
-                        global.router.toGameRulesPage(this.toggle)
-                    }}>
-                        <Text style={{
-                            fontSize: 18,
-                            color: '#6787EE',
-                            textDecorationLine: 'underline',
-                            textDecorationStyle: "solid",
-                            textDecorationColor: "#6787EE"
-                        }}>游戏规则></Text>
-                    </TouchableOpacity>
                 </View>
             </Modal>
         );
