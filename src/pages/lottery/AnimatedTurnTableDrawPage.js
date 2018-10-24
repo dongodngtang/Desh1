@@ -26,8 +26,9 @@ import {getProfile} from "../../services/AccountDao";
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
     {id: 0, name: '游戏分享', des: '每日可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
     {id: 0, name: '积分兑换', des: '每200积分可购买1次抽奖机会', image: Images.integral.exchange, status: '兑换'}];
-export default class AnimatedTurnTableDrawPage extends Component {
+const prompts = ['1.完成每日任务，最高每日可获得45积分','2.成功购买商城现金商品，可获得等额积分','3.转盘小游戏还有赢取积分的机会哦～ '];
 
+export default class AnimatedTurnTableDrawPage extends Component {
 
     constructor(props) {
         super(props);
@@ -189,6 +190,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                 }}/>
                             </View>
                         )
+                    })}
+
+                    <Text style={{color:'#444444',fontSize:14,marginTop:20,marginLeft:23}}>活动规则</Text>
+                    {prompts.map((prompt,index)=>{
+                        return <Text key={index} style={{color:'#666666',fontSize:14,marginTop:5,marginLeft:23}}>{prompt}</Text>
                     })}
                 </View>
             )
