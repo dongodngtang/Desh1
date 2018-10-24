@@ -253,7 +253,8 @@ class TabHomePage extends Component {
                 <NavigationBar
                     toolbarStyle={{backgroundColor: Colors._E54}}
                     title={'澳门旅行'}
-                    rightBtnText={'活动'}
+                    rightBtnIcon={Images.lottery.activities}
+                    rightImageStyle={{width:28,height:26,marginRight:17}}
                     rightBtnPress={() => {
                         global.router.toActivitiesPage()
                     }}/>
