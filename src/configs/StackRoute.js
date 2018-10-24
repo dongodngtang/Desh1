@@ -141,9 +141,11 @@ import FastFoodPage from "../pages/fastBtn/FastFoodPage";
 import ActivitiesPage from "../pages/activity/ActivitiesPage";
 import RecreationPage from "../pages/macau/RecreationPage";
 import SunnaInfoPage from "../pages/macau/SunnaInfoPage";
+import GameRulesPage from "../pages/lottery/GameRulesPage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="GameRulesPage" component={GameRulesPage} hideNavBar/>
         <Scene key="SunnaInfoPage" component={SunnaInfoPage} hideNavBar/>
         <Scene key="RecreationPage" component={RecreationPage} hideNavBar/>
         <Scene key="ActivitiesPage" component={ActivitiesPage} hideNavBar/>

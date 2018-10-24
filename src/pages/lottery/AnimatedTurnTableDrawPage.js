@@ -23,6 +23,9 @@ import {
 import {Images} from '../../Themes'
 import {getProfile} from "../../services/AccountDao";
 
+const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
+    {id: 0, name: '游戏分享', des: '每日可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
+    {id: 0, name: '积分兑换', des: '每200积分可购买1次抽奖机会', image: Images.integral.exchange, status: '兑换'}];
 export default class AnimatedTurnTableDrawPage extends Component {
 
 
@@ -42,7 +45,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
             offOn: true,
             rotateDeg: new Animated.Value(0),
             visible: true,
-            total_points: 0
+            total_points: 0,
+            rule_show: false
         };
     };
 
@@ -53,7 +57,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
     refresh = () => {
 
         getProfile('', data => {
-            console.log("我的积分",data)
+            console.log("我的积分", data)
             this.setState({
                 total_points: data.total_points
             })
@@ -64,10 +68,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
     }
 
     toggle = () => {
-        if(this.state.offOn)
-        this.setState({
-            visible: !this.state.visible
-        })
+        if (this.state.offOn)
+            this.setState({
+                visible: !this.state.visible
+            })
     };
 
     rotateImg = () => {
@@ -106,29 +110,91 @@ export default class AnimatedTurnTableDrawPage extends Component {
     };
 
     changeValue = (postion) => {
-        if(this.state.visible)
-        alert("定位到了" + postion + "上了");
+        if (this.state.visible)
+            alert("定位到了" + postion + "上了");
     };
 
+    _background = (item) => {
+        let action = item.status;
+        if (action === '完成') {
+            return '#6CC7FF'
+        } else if (action === '未完成') {
+            return '#FF6B4C'
+        } else {
+            return "#FF6B4C"
+        }
+    };
 
-    render() {
-        const {total_points} = this.state;
-        return (
-            <Modal
-                animationType={"none"}
-                transparent={true}
-                onRequestClose={() => {
-
-                }}
-                visible={this.state.visible}
-                style={{alignItems: 'center'}}
-            >
+    content_show() {
+        if (this.state.rule_show) {
+            return (
                 <View style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: 'rgba(0,0,0,0.6)'
+                    width: '90%', height: 400, backgroundColor: '#FFFFFF', borderColor: '#6787EE',
+                    borderWidth: 3, borderRadius: 10
                 }}>
+                    <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
+                        <View style={{flex: 1}}/>
+                        <Text style={{
+                            color: '#1E41B2',
+                            fontSize: 18,
+                            alignSelf: 'center',
+                            fontWeight: 'bold'
+                        }}>活动任务</Text>
+                        <View style={{flex: 1}}/>
+                        <TouchableOpacity onPress={() => {
+                            this.setState({
+                                rule_show: false
+                            })
+                        }}>
+                            <Image source={Images.lottery.rule_close} style={{marginRight: 23, width: 18, height: 18}}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    {rule_list.map((item, index) => {
+                        return (
+                            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                                <View style={styles.item} key={index}>
+                                    <Image style={{height: 34, width: 34}}
+                                           source={item.image}/>
+                                    <View style={{marginLeft: 14, flexDirection: 'column'}}>
+                                        <Text style={{color: '#444444', fontSize: 14}}>{item.name}</Text>
+                                        <Text style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{item.des}</Text>
+
+                                    </View>
+                                    <View style={{flex: 1}}/>
+                                    <TouchableOpacity
+                                        activeOpacity={1}
+                                        style={[styles.statusView, {backgroundColor: this._background(item)}]}
+                                        onPress={() => {
+                                            if (item.status === '未完成') {
+
+                                            } else if (item.status === '兑换') {
+
+                                            }
+                                        }}>
+                                        <Text style={{color: '#FFFFFF', fontSize: 14}}>{item.status}</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                {index === rule_list.length - 1 ? <Text style={{color:'#AAAAAA',fontSize:12,marginTop:2,alignSelf:'flex-end',
+                                marginRight:23}}>
+                                    {`当前积分：1000`}
+                                </Text> : null}
+                                <View style={{
+                                    height: 1,
+                                    width: '90%',
+                                    alignSelf: 'center',
+                                    backgroundColor: '#F3F3F3',
+                                    marginTop: 5
+                                }}/>
+                            </View>
+                        )
+                    })}
+                </View>
+            )
+        } else {
+            return (
+                <View>
                     <Image source={require('./imgs/turntable.png')}
                            style={{width: 200, height: 150, top: 60, alignSelf: 'center', zIndex: 1000}}/>
                     <ImageBackground source={require('./imgs/circle_bg.png')} style={{
@@ -226,22 +292,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                            height: 157,
                                            width: 124.5, resizeMode: "stretch", position: "absolute"
                                        }}/>
-                                {/*<Text style={{*/}
-                                {/*color: "#ffffff",*/}
-                                {/*textAlign: "center",*/}
-                                {/*fontSize: 17,*/}
-                                {/*fontWeight: 'bold',*/}
-                                {/*width: 45,*/}
-                                {/*marginTop: 20*/}
-                                {/*}}>{"开始抽奖" || "start game"}</Text>*/}
                             </TouchableOpacity>
                         </View>
                     </ImageBackground>
                     <TouchableOpacity onPress={() => {
-                        if(this.state.offOn)
-                        this.setState({
-                            visible: false
-                        })
+                        if (this.state.offOn)
+                            this.setState({
+                                visible: false
+                            })
                     }}
                                       style={{
                                           position: 'absolute',
@@ -251,10 +309,61 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                       }}>
                         <Image source={require('./imgs/lottery_close.png')} style={{width: 30, height: 30}}/>
                     </TouchableOpacity>
+                </View>
+            )
+        }
+    }
 
-                    <TouchableOpacity>
-                        <Text>{`我的积分${total_points}`}</Text>
-                        <Image source={Images.verified_add}/>
+
+    render() {
+        const {total_points} = this.state;
+        return (
+            <Modal
+                animationType={"none"}
+                transparent={true}
+                onRequestClose={() => {
+
+                }}
+                visible={this.state.visible}
+                style={{alignItems: 'center'}}
+            >
+                <View style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'rgba(0,0,0,0.6)'
+                }}>
+
+                    {this.content_show()}
+
+
+                    <View style={{alignSelf: 'center', width: 150, flexDirection: 'row', alignItems: 'center'}}>
+                        <ImageBackground
+                            source={Images.lottery.opportunity}
+                            style={{width: 120, height: 40, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{`1次机会`}</Text>
+                        </ImageBackground>
+                        <TouchableOpacity style={{position: 'absolute', right: 10}}
+                                          onPress={() => {
+                                              this.setState({
+                                                  rule_show: true
+                                              })
+                                          }}>
+                            <Image style={{width: 30, height: 30}} source={Images.lottery.ward_add}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity onPress={() => {
+                        this.toggle();
+                        global.router.toGameRulesPage(this.toggle)
+                    }}>
+                        <Text style={{
+                            fontSize: 18,
+                            color: '#6787EE',
+                            textDecorationLine: 'underline',
+                            textDecorationStyle: "solid",
+                            textDecorationColor: "#6787EE"
+                        }}>游戏规则></Text>
                     </TouchableOpacity>
                 </View>
             </Modal>
@@ -262,7 +371,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
     }
 
 
-    componentWillUnmount(){
+    componentWillUnmount() {
 
     }
 }
@@ -294,5 +403,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative'
+    },
+    statusView: {
+        width: 68, height: 30,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    item: {
+        marginTop: 12,
+        marginBottom: 13,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 17, marginLeft: 17
     }
 });

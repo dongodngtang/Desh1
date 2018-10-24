@@ -399,7 +399,8 @@ const images = {
         tiezi: require('../../source/integral/tiezi.png'),
         coupon: require('../../source/integral/coupon.png'),
         couponTop: require('../../source/integral/couponTop.png'),
-        couponBootom: require('../../source/integral/couponBootom.png')
+        couponBootom: require('../../source/integral/couponBootom.png'),
+        exchange:require('../../source/integral/exchange.png')
     },
     coupon: {
         background: require('../../source/coupon/background2.png'),
@@ -438,6 +439,11 @@ const images = {
         round5: require('../../source/fastBtn/round5.jpeg'),
         round6: require('../../source/fastBtn/round6.jpeg')
     },
+    lottery:{
+        opportunity:require('../../source/lottery/opportunity.png'),
+        ward_add:require('../../source/lottery/ward_add.png'),
+        rule_close:require('../../source/lottery/rule_close.png')
+    }
 
 
 };

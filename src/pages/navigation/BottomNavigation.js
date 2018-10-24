@@ -207,7 +207,7 @@ class BottomNavigation extends Component {
 
                 {this.state.FirstLogin ? <GuidePage/> : null}
 
-                {/*{this.state.lottery ? <AnimatedTurnTableDrawPage/> : null}*/}
+                {this.state.lottery ? <AnimatedTurnTableDrawPage/> : null}
 
             </View>
 

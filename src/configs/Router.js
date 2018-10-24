@@ -59,6 +59,14 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toGameRulesPage(toggle){
+        this.stackPush({
+            name:'GameRulesPage',
+            params:{
+                toggle
+            }
+        })
+    }
     toSunnaInfoPage(item){
         this.stackPush({
             name:'SunnaInfoPage',
