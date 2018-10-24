@@ -7,7 +7,7 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
-import {hotels, info_types, exchange_rates} from '../../services/MacauDao';
+import {hotels, info_types, getSaunas} from '../../services/MacauDao';
 import {isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
@@ -41,21 +41,21 @@ export default class RecreationPage extends PureComponent {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: 0
+        name_index: 1
     };
 
-    componentDidMount() {
-        let city = global.city_name;
-        let index = this.state.name_index;
-        if (city === '澳门') {
-            index = 1;
-        } else {
-            index = 0;
-        }
-        this.setState({
-            name_index: index
-        })
-    }
+    // componentDidMount() {
+    //     let city = global.city_name;
+    //     let index = this.state.name_index;
+    //     if (city === '澳门') {
+    //         index = 1;
+    //     } else {
+    //         index = 0;
+    //     }
+    //     this.setState({
+    //         name_index: index
+    //     })
+    // }
 
     refresh = () => {
         this.setState({
@@ -67,7 +67,7 @@ export default class RecreationPage extends PureComponent {
     change_content() {
         const {name_index} = this.state;
         let city = global.city_name;
-        if (city === '澳门') {
+        if (city !== '澳门') {
             return (
                 <View style={{
                     display: 'flex',
@@ -111,7 +111,7 @@ export default class RecreationPage extends PureComponent {
             )
         } else {
             return (
-                <Text style={[styles.title,{alignSelf:'center'}]}>{'休闲娱乐'}</Text>
+                <Text style={[styles.title, {alignSelf: 'center'}]}>{'休闲娱乐'}</Text>
             )
         }
 
@@ -243,8 +243,25 @@ export default class RecreationPage extends PureComponent {
     };
 
     onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
+        if (!strNotNull(global.city_name)) {
+            return;
+        }
+        const {latitude, longitude} = global.city_name;
+        let body = {
+            latitude: latitude,
+            longitude: longitude
+        };
         try {
-            startFetch(sunna_data, 18)
+            getSaunas(body, data => {
+                console.log("Saunas", data);
+                startFetch(data.items, 18)
+            }, err => {
+                console.log("Saunas_err", err)
+                this.setState({
+                    reject_problem: err.problem
+                })
+                abortFetch()
+            });
         } catch (err) {
             console.log(err)
             abortFetch()

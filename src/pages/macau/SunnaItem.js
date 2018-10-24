@@ -19,11 +19,11 @@ export default class SunnaItem extends Component {
 
     render(){
         const {item} = this.props;
-        const {index,title, location, logo, price, star_level,distance} = item;
+        const {id,title, location, logo, price, star_level,distance} = item;
         return (
-            <TouchableOpacity style={styles.item} key={index}
+            <TouchableOpacity style={styles.item} key={id}
                               onPress={() => {
-                                  // router.toHotelDetail(item, changeTime)
+                                  router.toSunnaInfoPage(item)
                               }}>
                 <Image
                     style={{width: 67, height: 95, marginLeft: 12}}

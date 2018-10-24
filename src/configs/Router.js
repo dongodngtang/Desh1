@@ -59,6 +59,14 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toSunnaInfoPage(item){
+        this.stackPush({
+            name:'SunnaInfoPage',
+            params:{
+                item
+            }
+        })
+    }
     toRecreationPage(item){
         this.stackPush({
             name:'RecreationPage',

@@ -152,6 +152,12 @@ export function info_types(body, resolve, reject) {
     }, reject, body)
 }
 
+export function getSaunas(body, resolve, reject) {
+    helper.get(Api.saunas, ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function hotels(body, resolve, reject) {
     helper.get(Api.hotels, ret => {
         resolve(ret.data)
