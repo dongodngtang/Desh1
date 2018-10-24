@@ -14,21 +14,21 @@ import SunnaItem from './SunnaItem';
 import {FoodItem} from './HotelSearch'
 
 const sunna_data = [{
-    index: 0,
+    id: 0,
     title: '金碧辉煌水疗馆',
     location: '富城路33号(富城路陆家嘴西路)',
     logo: Images.wallet.bg,
     price: 2333,
     distance: '1.4km'
 }, {
-    index: 1,
+    id: 1,
     title: '金碧辉煌水疗馆2',
     location: '富城路33号(富城路陆家嘴西路)',
     logo: Images.wallet.bg,
     price: 2333,
     distance: '1.4km'
 }, {
-    index: 2,
+    id: 2,
     title: '金碧辉煌水疗馆3',
     location: '富城路33号(富城路陆家嘴西路)',
     logo: Images.wallet.bg,
@@ -243,13 +243,15 @@ export default class RecreationPage extends PureComponent {
     };
 
     onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
-        if (!strNotNull(global.city_name)) {
+        if (isEmptyObject(global.city_name)) {
+            startFetch(sunna_data, 18)
+            // abortFetch();
             return;
         }
         const {latitude, longitude} = global.city_name;
         let body = {
-            latitude: latitude,
-            longitude: longitude
+            latitude: '113.32',
+            longitude: '22.11'
         };
         try {
             getSaunas(body, data => {

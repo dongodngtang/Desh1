@@ -123,7 +123,7 @@ export default class SunnaInfoPage extends PureComponent {
 
     componentWillMount() {
         const {id} = this.props.params.item;
-        sunnaDetail(id, data => {
+        sunnaDetail({id:id}, data => {
             console.log("sunna_info:", data)
             this.setState({
                 sunna: data.sauna

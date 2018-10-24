@@ -66,17 +66,31 @@ export function getPosition(resolve,reject) {
             logMsg('iOS定位',ret)
             resolve(coords)
           }, err => {
-            logMsg('位置', err)
+            logMsg('iOS定位', err)
             reject(err)
-          },{enableHighAccuracy: Platform.OS !== 'android', timeout: 25000})
+          },{enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
         }else{
           Geolocation.start()
           Geolocation.getLastLocation().then(ret=>{
-              resolve(ret)
-            logMsg('amap定位',ret)
-            Geolocation.stop()
+              logMsg('amap定位',ret)
+              Geolocation.stop()
+              if(ret){
+                  resolve(ret)
+              }else{
+                  navigator.geolocation.getCurrentPosition(data => {
+                      const {coords} = data
+                      logMsg('native 定位',ret)
+                      resolve(coords)
+                  }, err => {
+                      logMsg('native 定位', err)
+                      reject(err)
+                  },{enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
+              }
+
+
+
           }).catch(err=>{
-            logMsg('位置', err)
+            logMsg('amap定位 err', err)
               reject(err)
             Geolocation.stop()
           })
