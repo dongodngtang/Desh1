@@ -1,6 +1,11 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+export function sunnaDetail(body, resolve, reject) {
+    helper.get(Api.sunna_detail(body), ret => {
+        resolve(ret.data)
+    }, reject,body)
+}
 
 export function postReceiveCoupons(body, resolve, reject) {
     helper.post(Api.receive_coupons(body), body, ret => {

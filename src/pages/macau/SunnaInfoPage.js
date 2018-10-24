@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swiper from 'react-native-swiper';
-import {hotelDetail} from '../../services/MacauDao';
+import {sunnaDetail} from '../../services/MacauDao';
 import RenderHtml from '../comm/RenderHtml';
 import {NavigationBar} from '../../components'
 import {call, strNotNull, turn2MapMark} from '../../utils/ComonHelper';
@@ -123,7 +123,7 @@ export default class SunnaInfoPage extends PureComponent {
 
     componentWillMount() {
         const {id} = this.props.params.item;
-        hotelDetail(id, data => {
+        sunnaDetail(id, data => {
             console.log("sunna_info:", data)
             this.setState({
                 sunna: data.sauna

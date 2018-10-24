@@ -206,6 +206,7 @@ const api = {
     hotlines:'hotlines',//服务热线电话列表
     contacts:'contacts',//公司联系方式'
     saunas:'saunas',//获取桑拿列表
+    sunna_detail:sunna_detail,//获取桑拿详情
 }
 
 export default api;
@@ -222,6 +223,11 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function sunna_detail(body) {
+    const {id} = body;
+    return `saunas/${id}`;
+}
 
 export function coupons_infos(body) {
     const {coupon_number} = body;
