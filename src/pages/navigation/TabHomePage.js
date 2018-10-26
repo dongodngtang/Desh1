@@ -31,6 +31,7 @@ import {home_recommends} from '../../services/MacauDao'
 import NewUserTask from './NewUserTask'
 import _ from 'lodash';
 import HomeTabBar from './HomeTabBar';
+import HotCatalogs from './HotCatalogs';
 
 class TabHomePage extends Component {
     state = {
@@ -272,7 +273,10 @@ class TabHomePage extends Component {
                 >
                     <MainBanner
                         banners={banners}/>
-                    <Catalog/>
+
+                    <HotCatalogs/>
+
+                    {/*<Catalog/>*/}
 
                     <View style={{
                         width: Metrics.reallySize(Metrics.screenWidth - 34),

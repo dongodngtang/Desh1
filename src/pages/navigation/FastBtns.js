@@ -12,29 +12,52 @@ import FastFoodPage from "../fastBtn/FastFoodPage";
 const catalogs = [{
     name: '天气',
     type: 'weather',
-    size: {height: 23, width: 23,marginRight:8},
+    size: {height: 23, width: 23},
     icon: Images.navigation2.weather
 },
     {
-        name: '快餐',
+        name: '指南',
         type: 'fast_food',
-        size: {height: 22, width: 22,marginRight:8},
-        icon: Images.navigation2.fast_food
+        size: {height: 20, width: 21},
+        icon: Images.navigation2.car_bg
     },
     {
-        name: '往返',
+        name: '船务',
         type: 'round_trip',
-        size: {height: 20, width: 20,marginRight:8},
-        icon: Images.navigation2.round_trip
+        size: {height: 20, width: 21},
+        icon: Images.navigation2.ferry_bg
     },
     {
         name: '便民',
         type: 'public_service',
-        size: {height: 18, width: 18,marginRight:8},
+        size: {height: 18, width: 18},
         icon: Images.navigation2.convenient
-    }
+    }];
 
-    ]
+const catalogs_two = [{
+    name: '攻略',
+    type: 'raiders',
+    size: {height: 19, width: 19},
+    icon: Images.navigation2.raiders_bg
+},
+    {
+        name: '购物',
+        type: 'shop',
+        size: {height: 19, width: 20},
+        icon: Images.navigation2.shop_bg
+    },
+    {
+        name: '优惠',
+        type: 'coupon',
+        size: {height: 20, width: 20},
+        icon: Images.navigation2.coupon_bg
+    },
+    {
+        name: '商城',
+        type: 'mall',
+        size: {height: 18, width: 18},
+        icon: Images.navigation2.mall_bg
+    }]
 
 export default class FastBtns extends Component {
 
@@ -46,40 +69,81 @@ export default class FastBtns extends Component {
             paddingBottom: 17,
             paddingLeft: 17,
             paddingRight: 17,
-            backgroundColor: 'white',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent:'space-around'
+            backgroundColor: 'white'
         }}>
 
-            {catalogs.map((item, index) => {
-                return <TouchableOpacity
-                    key={item.name}
-                    onPress={() => {
-                        if (item.type === 'weather')
-                            router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml#1')
-                        else if (item.type === 'fast_food') {
-                            global.router.toFastFoodPage('fast_food')
-                        } else if (item.type === 'round_trip') {
-                            global.router.toRoundTripPage()
-                        } else if (item.type === 'public_service') {
-                            global.router.toFastFoodPage('public_service')
-                        }
-                    }}
-                    style={{
-                        flexDirection: 'row',
-                        alignItems:'center',
-                        justifyContent:'center'
-                    }}>
-                    <Image style={item.size}
-                           source={item.icon}/>
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent:'space-around'
+            }}>
+                {catalogs.map((item, index) => {
+                    return <TouchableOpacity
+                        key={item.name}
+                        onPress={() => {
+                            if (item.type === 'weather')
+                                router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml#1')
+                            else if (item.type === 'fast_food') {
+                                router.toWebView('出入境', 'http://www.fsm.gov.mo/psp/pspmonitor/mobile/PortasdoCerco.aspx')
+                            } else if (item.type === 'round_trip') {
+                                global.router.toRoundTripPage()
+                            } else if (item.type === 'public_service') {
+                                global.router.toFastFoodPage('public_service')
+                            }
+                        }}
+                        style={{
+                            width:70,
+                            flexDirection: 'row',
+                            alignItems:'center',
+                            justifyContent:'space-around'
+                        }}>
+                        <Image style={item.size}
+                               source={item.icon}/>
 
-                    <Text style={{
-                        fontSize: 14, color: '#444444'
-                    }}>{item.name}</Text>
+                        <Text style={{
+                            fontSize: 14, color: '#444444'
+                        }}>{item.name}</Text>
 
-                </TouchableOpacity>
-            })}
+                    </TouchableOpacity>
+                })}
+            </View>
+
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent:'space-around',
+                marginTop:16
+            }}>
+                {catalogs_two.map((item, index) => {
+                    return <TouchableOpacity
+                        key={item.name}
+                        onPress={() => {
+                            if (item.type === 'raiders')
+                                router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml#1')
+                            else if (item.type === 'shop') {
+                                global.router.toFastFoodPage('fast_food')
+                            } else if (item.type === 'coupon') {
+                                global.router.toRoundTripPage()
+                            } else if (item.type === 'mall') {
+                                global.router.toMallPage()
+                            }
+                        }}
+                        style={{
+                            width:70,
+                            flexDirection: 'row',
+                            alignItems:'center',
+                            justifyContent:'space-around'
+                        }}>
+                        <Image style={item.size}
+                               source={item.icon}/>
+
+                        <Text style={{
+                            fontSize: 14, color: '#444444'
+                        }}>{item.name}</Text>
+
+                    </TouchableOpacity>
+                })}
+            </View>
 
         </View>
     }

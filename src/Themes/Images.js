@@ -429,7 +429,18 @@ const images = {
         round_trip: require('../../source/navigation/round_trip.png'),
         fast_food: require('../../source/navigation/fast_food.png'),
         convenient: require('../../source/navigation/convenient.png'),
-        hotline: require('../../source/navigation/hotline.png')
+        hotline: require('../../source/navigation/hotline.png'),
+        call_bg:require('../../source/navigation/call_bg.png'),
+        car_bg:require('../../source/navigation/car_bg.png'),
+        coupon_bg:require('../../source/navigation/coupon_bg.png'),
+        ferry_bg:require('../../source/navigation/ferry_bg.png'),
+        hotel_bg:require('../../source/navigation/hotel_bg.png'),
+        info_ng:require('../../source/navigation/info_ng.png'),
+        mall_bg:require('../../source/navigation/mall_bg.png'),
+        raiders_bg:require('../../source/navigation/raiders_bg.png'),
+        rate_bg:require('../../source/navigation/rate_bg.png'),
+        rec_bg:require('../../source/navigation/rec_bg.png'),
+        shop_bg:require('../../source/navigation/shop_bg.png')
     },
     fastBtn: {
         round1: require('../../source/fastBtn/round1.jpeg'),
