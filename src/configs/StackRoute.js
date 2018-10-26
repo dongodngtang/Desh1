@@ -144,9 +144,11 @@ import SunnaInfoPage from "../pages/macau/SunnaInfoPage";
 import GameRulesPage from "../pages/lottery/GameRulesPage";
 import MyWardsPage from "../pages/lottery/MyWardsPage";
 import WardReceivePage from "../pages/lottery/WardReceivePage";
+import SearchHomePage from "../pages/navigation/SearchHomePage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="SearchHomePage" component={SearchHomePage} hideNavBar/>
         <Scene key="WardReceivePage" component={WardReceivePage} hideNavBar/>
         <Scene key="MyWardsPage" component={MyWardsPage} hideNavBar/>
         <Scene key="GameRulesPage" component={GameRulesPage} hideNavBar/>

@@ -572,6 +572,11 @@ export default class Router {
         Actions.replace('ShoppingCart')
     }
 
+    toSearchHomePage() {
+        this.stackPush({
+            name: 'SearchHomePage'
+        })
+    }
     toSearchMallPage() {
         this.stackPush({
             name: 'SearchMallPage'

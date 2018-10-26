@@ -29,7 +29,8 @@ import Catalog from './Catalog'
 import FastBtns from './FastBtns'
 import {home_recommends} from '../../services/MacauDao'
 import NewUserTask from './NewUserTask'
-import _ from 'lodash'
+import _ from 'lodash';
+import HomeTabBar from './HomeTabBar';
 
 class TabHomePage extends Component {
     state = {
@@ -250,14 +251,15 @@ class TabHomePage extends Component {
         return (
 
             <View style={ApplicationStyles.bgContainer}>
-                <NavigationBar
-                    toolbarStyle={{backgroundColor: Colors._E54}}
-                    title={'澳门旅行'}
-                    rightBtnIcon={Images.lottery.activities}
-                    rightImageStyle={{width:28,height:26,marginRight:17}}
-                    rightBtnPress={() => {
-                        global.router.toActivitiesPage()
-                    }}/>
+                {/*<NavigationBar*/}
+                    {/*toolbarStyle={{backgroundColor: Colors._E54}}*/}
+                    {/*title={'澳门旅行'}*/}
+                    {/*rightBtnIcon={Images.lottery.activities}*/}
+                    {/*rightImageStyle={{width:28,height:26,marginRight:17}}*/}
+                    {/*rightBtnPress={() => {*/}
+                        {/*global.router.toActivitiesPage()*/}
+                    {/*}}/>*/}
+                    <HomeTabBar/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
