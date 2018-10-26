@@ -153,7 +153,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
                     {rule_list.map((item, index) => {
                         return (
-                            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                            <View key={index} style={{flexDirection: 'column', alignItems: 'center'}}>
                                 <View style={styles.item} key={index}>
                                     <Image style={{height: 34, width: 34}}
                                            source={item.image}/>

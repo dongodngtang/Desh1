@@ -53,9 +53,10 @@ export default class ActivitiesPage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    toolbarStyle={{backgroundColor: Colors._E54}}
+                    toolbarStyle={{backgroundColor: 'white'}}
+                    titleStyle={{fontSize: 18, color: '#444444'}}
                     title="活动"
-                    leftBtnIcon={Images.sign_return}
+                    leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
                         router.pop();
