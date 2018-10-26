@@ -120,6 +120,14 @@ export default class MomentList extends PureComponent {
         showMore: null
     };
 
+    _count=(count)=>{
+        if(count > 99){
+            return '99+'
+        }else{
+            return count
+        }
+    }
+
     header = () => {
         return (
             <View style={{
@@ -130,10 +138,10 @@ export default class MomentList extends PureComponent {
                 justifyContent: 'center',
             }}>
                 {this.props.unread_count > 0 ? <TouchableOpacity style={{
-                    backgroundColor: 'grey',
-                    height: 35,
-                    width: 120,
-                    borderRadius: 5,
+                    backgroundColor: 'rgba(0,93,255,0.48)',
+                    height: 28,
+                    width: 122,
+                    borderRadius: 4,
                     flexDirection: "row",
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -148,8 +156,9 @@ export default class MomentList extends PureComponent {
                                                                      })
 
                                                                  }}>
-                    <Image/>
-                    <Text>{`${this.props.unread_count}条未读消息`}</Text>
+
+                    <Text>{`${this._count(this.props.unread_count)}条未读消息`}</Text>
+                    <Image source={Images.is} style={{width:5,height:10,marginLeft:3}}/>
                 </TouchableOpacity> : null}
                 <View style={styles.separator1}/>
             </View>
