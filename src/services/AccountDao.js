@@ -143,10 +143,10 @@ export function getActivityInfo(body, resolve, reject) {
     }, reject)
 }
 
-export function getActivities(resolve, reject) {
+export function getActivities(body,resolve, reject) {
     helper.get(Api.activities, ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject,body)
 }
 
 export function getAccountExit(body, resolve, reject) {

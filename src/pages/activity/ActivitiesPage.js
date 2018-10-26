@@ -4,46 +4,53 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
-import {convertDate, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
-import {exchange_rates, getRoomList, hotels, info_types} from "../../services/MacauDao";
+import {getActivities} from "../../services/AccountDao";
 import I18n from "react-native-i18n";
 import {ImageLoad, UltimateListView} from "../../components";
 import {LoadErrorView, NoDataView} from '../../components/load';
 
-const activeies = [{id: 0, type: 'active', img: Images.wallet.bg},
-    {id: 0, type: 'begin', img: Images.wallet.bg},
-    {id: 0, type: 'end', img: Images.wallet.bg},
-    {id: 0, type: 'begin', img: Images.wallet.bg}];
-
 export default class ActivitiesPage extends Component {
 
+    refresh = () => {
+        this.listView && this.listView.refresh();
+    }
+
     item_view = (item, index) => {
-        const {type, img} = item;
+        const {status, banner} = item;
         return (
-            <ImageBackground source={img} style={{height: 156, width: '100%'}}>
-                <ImageBackground source={this.backgroundImg(type)} style={{width: 45, height: 16}}>
-                    <Text style={{fontSize: 14, color: '#FFFFFF'}}>{this.active_type(type)}</Text>
+            <TouchableOpacity onPress={() => {
+                global.router.toActivityInfo(this.props, item);
+            }}>
+                <ImageBackground source={{uri: banner}} style={{height: 156, width: '100%'}}>
+                    {/*<ImageBackground source={this.backgroundImg(status)}*/}
+                                     {/*style={{*/}
+                                         {/*width: 45, height: 16, alignItems: 'center', justifyContent: 'center',*/}
+                                         {/*backgroundColor: this.backgroundImg(status)*/}
+                                     {/*}}>*/}
+                        {/*<Text style={{fontSize: 14, color: '#FFFFFF'}}>{this.active_type(status)}</Text>*/}
+                    {/*</ImageBackground>*/}
                 </ImageBackground>
-            </ImageBackground>
+            </TouchableOpacity>
         )
     };
 
+
     backgroundImg = (type) => {
-        if (type === 'active') {
-            return Images.share2
-        } else if (type === 'begin') {
-            return Images.guide1
-        } else {
-            return Images.APPbanner
+        if (type === 'doing') {
+            return 'rgba(0,0,0,0.4796)'
+        } else if (type === 'no_start') {
+            return 'rgba(0,0,0,0.4796)'
+        } else if (type === 'finished') {
+            return 'rgba(177, 177, 177,1)'
         }
     };
 
     active_type = (type) => {
-        if (type === 'active') {
+        if (type === 'doing') {
             return '进行中'
-        } else if (type === 'begin') {
+        } else if (type === 'no_start') {
             return '即将开始'
-        } else {
+        } else if (type === 'finished') {
             return '已结束'
         }
 
@@ -85,7 +92,13 @@ export default class ActivitiesPage extends Component {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
-            startFetch(activeies, 18)
+            getActivities({page: 1, page_size: 20}, data => {
+                console.log("activities", data.items);
+                startFetch(data.items, 18)
+            }, err => {
+                console.log("Activities_err", err)
+                abortFetch()
+            })
 
         } catch (err) {
             console.log(err)

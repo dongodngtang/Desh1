@@ -13,16 +13,15 @@ import {uShareActivity} from '../../utils/ComonHelper';
 export default class ActivityInfo extends Component {
 
     state = {
-        description: '',
-        title: ''
+        activity_detail:{}
     };
 
     componentDidMount() {
         const {activity} = this.props.params;
         getActivityInfo({id: activity.id}, data => {
-            const {description} = data.activity;
+            console.log("activity_detail",data)
             this.setState({
-                description: description
+                activity_detail: data.items
             })
         }, err => {
 
@@ -30,10 +29,10 @@ export default class ActivityInfo extends Component {
     }
 
     render() {
-        const {activity} = this.props.params;
+        const {activity_detail} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                title={activity.title}
+                title={activity_detail.title}
                 toolbarStyle={{backgroundColor: Colors._E54}}
                 router={router}
                 leftBtnIcon={Images.sign_return}
@@ -42,11 +41,11 @@ export default class ActivityInfo extends Component {
                 rightBtnIcon={Images.share}
                 rightImageStyle={{height: 22, width: 23, marginRight: 24.8}}
                 rightBtnPress={() => {
-                    alert(22);
-                    // uShareActivity(activity.title,activity.tag,activity.banner,activity.id)
+                    uShareActivity(activity_detail.title,activity_detail.description,
+                        activity_detail.banner,activity_detail.id)
                 }}/>
             <MarkdownPlat
-                markdownStr={this.state.description}
+                markdownStr={activity_detail.description}
             />
         </View>)
     }
