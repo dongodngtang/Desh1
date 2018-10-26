@@ -602,6 +602,21 @@ export default class Router {
         })
     }
 
+    toMyWardsPage() {
+        this.stackPush({
+            name: 'MyWardsPage'
+        })
+    }
+
+    toWardReceivePage(refresh) {
+        this.stackPush({
+            name: 'WardReceivePage',
+            params:{
+                refresh
+            }
+        })
+    }
+
     toVerifiedPage(backRefresh) {
         this.stackPush({
             name: 'VerifiedPage',

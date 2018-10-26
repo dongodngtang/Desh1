@@ -23,11 +23,11 @@ export default class ActivitiesPage extends Component {
             }}>
                 <ImageBackground source={{uri: banner}} style={{height: 156, width: '100%'}}>
                     {/*<ImageBackground source={this.backgroundImg(status)}*/}
-                                     {/*style={{*/}
-                                         {/*width: 45, height: 16, alignItems: 'center', justifyContent: 'center',*/}
-                                         {/*backgroundColor: this.backgroundImg(status)*/}
-                                     {/*}}>*/}
-                        {/*<Text style={{fontSize: 14, color: '#FFFFFF'}}>{this.active_type(status)}</Text>*/}
+                    {/*style={{*/}
+                    {/*width: 45, height: 16, alignItems: 'center', justifyContent: 'center',*/}
+                    {/*backgroundColor: this.backgroundImg(status)*/}
+                    {/*}}>*/}
+                    {/*<Text style={{fontSize: 14, color: '#FFFFFF'}}>{this.active_type(status)}</Text>*/}
                     {/*</ImageBackground>*/}
                 </ImageBackground>
             </TouchableOpacity>
@@ -67,7 +67,15 @@ export default class ActivitiesPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => {
                         router.pop();
-                    }}/>
+                    }}
+                    rightBtnText={"我的奖品"}
+                    btnTextStyle={{
+                        fontSize: 14, color: '#444444', marginRight: 17
+                    }}
+                    rightBtnPress={()=>{
+                        global.router.toMyWardsPage()
+                    }}
+                />
                 <UltimateListView
                     separator={() => this.separator()}
                     keyExtractor={(item, index) => index + "item"}

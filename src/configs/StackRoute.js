@@ -142,9 +142,13 @@ import ActivitiesPage from "../pages/activity/ActivitiesPage";
 import RecreationPage from "../pages/macau/RecreationPage";
 import SunnaInfoPage from "../pages/macau/SunnaInfoPage";
 import GameRulesPage from "../pages/lottery/GameRulesPage";
+import MyWardsPage from "../pages/lottery/MyWardsPage";
+import WardReceivePage from "../pages/lottery/WardReceivePage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="WardReceivePage" component={WardReceivePage} hideNavBar/>
+        <Scene key="MyWardsPage" component={MyWardsPage} hideNavBar/>
         <Scene key="GameRulesPage" component={GameRulesPage} hideNavBar/>
         <Scene key="SunnaInfoPage" component={SunnaInfoPage} hideNavBar/>
         <Scene key="RecreationPage" component={RecreationPage} hideNavBar/>
