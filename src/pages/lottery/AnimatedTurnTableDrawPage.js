@@ -41,7 +41,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 {id: 5, title: "手机50", icon: require('./imgs/gold_coin.png')},
                 {id: 6, title: "+100金币", icon: require('./imgs/gold_coin.png')},
                 {id: 7, title: "谢谢参与", icon: require('./imgs/cry_coin.png')},
-                {id: 8, title: "手机3", icon: require('./imgs/phone3_coin.png')}
+                {id: 8, title: "手机3", icon: require('./imgs/phone3_coin.png')},
+                {id: 9, title: "谢谢参与", icon: require('./imgs/cry_coin.png')},
+                {id: 10, title: "谢谢参与", icon: require('./imgs/cry_coin.png')}
             ],
             offOn: true,
             rotateDeg: new Animated.Value(0),
@@ -131,7 +133,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             return (
                 <View style={{
                     width: '90%', height: 400, backgroundColor: '#FFFFFF', borderColor: '#6787EE',
-                    borderWidth: 3, borderRadius: 10
+                    borderWidth: 3, borderRadius: 10,marginTop:120
                 }}>
                     <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
                         <View style={{flex: 1}}/>
@@ -179,7 +181,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
                                 {index === rule_list.length - 1 ? <Text style={{color:'#AAAAAA',fontSize:12,marginTop:2,alignSelf:'flex-end',
                                 marginRight:23}}>
-                                    {`当前积分：1000`}
+                                    {`当前积分：${this.state.total_points}`}
                                 </Text> : null}
                                 <View style={{
                                     height: 1,
@@ -200,11 +202,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
             )
         } else {
             return (
-                <View>
+                <View style={{marginTop:60}}>
                     <Image source={require('./imgs/turntable.png')}
                            style={{width: 200, height: 150, top: 60, alignSelf: 'center', zIndex: 1000}}/>
                     <ImageBackground source={require('./imgs/circle_bg.png')} style={{
-                        height: 400, width: 400,
+                        height: 340, width: 340,
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}>
@@ -277,14 +279,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                                 top: 115,
                                                 transform: [{translateX: translateX}, {translateY: translateY}, {rotateZ: `${rotateTemp}deg`}]
                                             }}>
-                                                <Text style={{
-                                                    fontSize: 12,
-                                                    color: "#74340A",
-                                                    fontFamily: "STYuanti-SC-Regular",
-                                                    marginBottom: 10
-                                                }}>{one.name}</Text>
-                                                <Image style={{width: 40, height: 40, resizeMode: "contain"}}
-                                                       source={one.icon}/>
+                                                {/*<Text style={{*/}
+                                                    {/*fontSize: 12,*/}
+                                                    {/*color: "#74340A",*/}
+                                                    {/*fontFamily: "STYuanti-SC-Regular",*/}
+                                                    {/*marginBottom: 10*/}
+                                                {/*}}>{one.name}</Text>*/}
+                                                {/*<Image style={{width: 40, height: 40, resizeMode: "contain"}}*/}
+                                                       {/*source={one.icon}/>*/}
                                             </View>
                                         )
                                     })}
@@ -295,8 +297,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             }} style={styles.centerPoint}>
                                 <Image source={require('./imgs/point_new.png')}
                                        style={{
-                                           height: 157,
-                                           width: 124.5, resizeMode: "stretch", position: "absolute"
+                                           height: 80,
+                                           width: 63.4, resizeMode: "stretch", position: "absolute"
                                        }}/>
                             </TouchableOpacity>
                         </View>
@@ -309,8 +311,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     }}
                                       style={{
                                           position: 'absolute',
-                                          top: 140,
-                                          right: 40,
+                                          top: 100,
+                                          right: 30,
                                           zIndex: 999
                                       }}>
                         <Image source={require('./imgs/lottery_close.png')} style={{width: 30, height: 30}}/>
@@ -336,7 +338,6 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 <View style={{
                     flex: 1,
                     alignItems: 'center',
-                    justifyContent: 'center',
                     backgroundColor: 'rgba(0,0,0,0.6)'
                 }}>
 

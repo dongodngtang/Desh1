@@ -104,9 +104,7 @@ export default class Catalog extends PureComponent {
                             router.toRatePage();
                         } else if (item.type === 'entry_exit') {
                             router.toWebView('出入境', 'http://www.fsm.gov.mo/psp/pspmonitor/mobile/PortasdoCerco.aspx')
-                        }  else if(item.type === 'recreation'){
-                            router.toRecreationPage(item);
-                        }else
+                        } else
                             router.toHotelSearch(item)
                     }}
                     style={{
