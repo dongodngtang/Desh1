@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     hotView: {
-        marginTop: 2,
+        marginTop: 4,
         width: Metrics.screenWidth,
         height: 335,
         flexDirection: 'row'
