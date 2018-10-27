@@ -118,12 +118,12 @@ export default class FastBtns extends Component {
                     return <TouchableOpacity
                         key={item.name}
                         onPress={() => {
-                            if (item.type === 'raiders')
-                                router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml#1')
-                            else if (item.type === 'shop') {
-                                global.router.toFastFoodPage('fast_food')
+                            if (item.type === 'raiders'){
+                                // router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml#1')
+                            }else if (item.type === 'shop') {
+                                // global.router.toFastFoodPage('fast_food')
                             } else if (item.type === 'coupon') {
-                                global.router.toRoundTripPage()
+                                // global.router.toRoundTripPage()
                             } else if (item.type === 'mall') {
                                 global.router.toMallPage()
                             }
