@@ -177,7 +177,14 @@ class TabHomePage extends Component {
     };
 
     _onScroll = (event) => {
-
+        let bannerH = Metrics.reallySize(164)
+        let offsetY = event.nativeEvent.contentOffset.y;
+        if (offsetY <= bannerH - Metrics.navBarHeight) {
+            let opacity = offsetY / (bannerH - Metrics.navBarHeight);
+            this.setState({opacity: opacity});
+        } else {
+            this.setState({opacity: 1});
+        }
         this.onTopScroll(event);
         this.scrollLoad(event);
     };
@@ -248,7 +255,7 @@ class TabHomePage extends Component {
     };
 
     render() {
-        const {banners, headlines, load_more, show_task} = this.state;
+        const {banners, headlines, load_more, show_task,opacity} = this.state;
         return (
 
             <View style={ApplicationStyles.bgContainer}>
@@ -260,7 +267,7 @@ class TabHomePage extends Component {
                     {/*rightBtnPress={() => {*/}
                         {/*global.router.toActivitiesPage()*/}
                     {/*}}/>*/}
-                    <HomeTabBar/>
+                    <HomeTabBar backStyle={{backgroundColor: 'rgba(243,74,74,' + opacity + ')'}}/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}

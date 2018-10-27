@@ -12,7 +12,7 @@ import {Badge} from '../../components';
 export default class HomeTabBar extends PureComponent {
 
     render() {
-        return (<View style={styles.navBar}>
+        return (<View style={[styles.navBar,this.props.backStyle]}>
             <StatusBar barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
 
             <View style={styles.navContent}>
