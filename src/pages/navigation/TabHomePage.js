@@ -32,6 +32,7 @@ import NewUserTask from './NewUserTask'
 import _ from 'lodash';
 import HomeTabBar from './HomeTabBar';
 import HotCatalogs from './HotCatalogs';
+import AnimatedTurnTableDrawPage from '../lottery/AnimatedTurnTableDrawPage'
 
 class TabHomePage extends Component {
     state = {
@@ -47,7 +48,8 @@ class TabHomePage extends Component {
         isRefreshing: false,
         info_page: 1,
         load_more: '',
-        show_task: false
+        show_task: false,
+        lottery: false
     };
 
     componentWillReceiveProps(newProps) {
@@ -72,7 +74,9 @@ class TabHomePage extends Component {
     componentWillMount() {
         this.router = this.router || new Router();
         global.router = this.router;
-
+        this.setState({
+            lottery: true
+        })
     };
 
     refresh = () => {
@@ -255,19 +259,19 @@ class TabHomePage extends Component {
     };
 
     render() {
-        const {banners, headlines, load_more, show_task,opacity} = this.state;
+        const {banners, headlines, load_more, show_task, opacity} = this.state;
         return (
 
             <View style={ApplicationStyles.bgContainer}>
                 {/*<NavigationBar*/}
-                    {/*toolbarStyle={{backgroundColor: Colors._E54}}*/}
-                    {/*title={'澳门旅行'}*/}
-                    {/*rightBtnIcon={Images.lottery.activities}*/}
-                    {/*rightImageStyle={{width:28,height:26,marginRight:17}}*/}
-                    {/*rightBtnPress={() => {*/}
-                        {/*global.router.toActivitiesPage()*/}
-                    {/*}}/>*/}
-                    <HomeTabBar backStyle={{backgroundColor: 'rgba(229, 74, 46,' + opacity + ')'}}/>
+                {/*toolbarStyle={{backgroundColor: Colors._E54}}*/}
+                {/*title={'澳门旅行'}*/}
+                {/*rightBtnIcon={Images.lottery.activities}*/}
+                {/*rightImageStyle={{width:28,height:26,marginRight:17}}*/}
+                {/*rightBtnPress={() => {*/}
+                {/*global.router.toActivitiesPage()*/}
+                {/*}}/>*/}
+                <HomeTabBar backStyle={{backgroundColor: 'rgba(229, 74, 46,' + opacity + ')'}}/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
@@ -331,6 +335,8 @@ class TabHomePage extends Component {
 
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>
+
+                {this.state.lottery && !isEmptyObject(global.login_user) ? <AnimatedTurnTableDrawPage/> : null}
 
             </View>
 

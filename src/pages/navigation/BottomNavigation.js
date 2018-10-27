@@ -20,7 +20,6 @@ import * as Constants from "../../configs/Constants";
 import ForcedUpdate from "../ForcedUpdate";
 import {getBaseURL} from "../../services/RequestHelper";
 import GuidePage from "../comm/GuidePage";
-import AnimatedTurnTableDrawPage from '../lottery/AnimatedTurnTableDrawPage'
 
 
 class BottomNavigation extends Component {
@@ -28,8 +27,7 @@ class BottomNavigation extends Component {
 
     state = {
         app_update: {},
-        FirstLogin: false,
-        lottery :false
+        FirstLogin: false
     }
 
     componentDidMount() {
@@ -42,9 +40,6 @@ class BottomNavigation extends Component {
         getBaseURL(() => {
             setTimeout(() => {
                 this._getUpdate()
-                this.setState({
-                    lottery:true
-                })
             }, 1000)
         });
 
@@ -67,7 +62,7 @@ class BottomNavigation extends Component {
                         rawData: first_users
                     });
                     this.setState({
-                        FirstLogin:true
+                        FirstLogin: true
                     })
                 }
             }).catch(err => {
@@ -95,7 +90,7 @@ class BottomNavigation extends Component {
 
     }
 
-    _lottery=()=>{
+    _lottery = () => {
 
     }
 
@@ -206,8 +201,6 @@ class BottomNavigation extends Component {
                 {util.isEmpty(this.state.app_update) ? null : <ForcedUpdate app_update={this.state.app_update}/>}
 
                 {this.state.FirstLogin ? <GuidePage/> : null}
-
-                {this.state.lottery ? <AnimatedTurnTableDrawPage/> : null}
 
             </View>
 

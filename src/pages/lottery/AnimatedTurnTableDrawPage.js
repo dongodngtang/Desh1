@@ -20,14 +20,15 @@ import {
     Text,
     ImageBackground
 } from "react-native";
-import {Images} from '../../Themes'
+import {Images,Metrics} from '../../Themes'
 import {getProfile} from "../../services/AccountDao";
-import {logMsg} from "../../utils/ComonHelper";
+import {isEmptyObject, logMsg} from "../../utils/ComonHelper";
+
 
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
     {id: 0, name: '游戏分享', des: '每日可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
     {id: 0, name: '积分兑换', des: '每200积分可购买1次抽奖机会', image: Images.integral.exchange, status: '兑换'}];
-const prompts = ['1.完成每日任务，最高每日可获得45积分','2.成功购买商城现金商品，可获得等额积分','3.转盘小游戏还有赢取积分的机会哦～ '];
+const prompts = ['1.完成每日任务，最高每日可获得45积分', '2.成功购买商城现金商品，可获得等额积分', '3.转盘小游戏还有赢取积分的机会哦～ '];
 
 export default class AnimatedTurnTableDrawPage extends Component {
 
@@ -60,15 +61,17 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     refresh = () => {
 
-        getProfile('', data => {
-            console.log("我的积分", data)
-            this.setState({
-                total_points: data.total_points
-            })
+        if (!isEmptyObject(global.login_user)) {
+            getProfile('', data => {
+                console.log("我的积分", data)
+                this.setState({
+                    total_points: data.total_points
+                })
 
-        }, err => {
-            console.log("err", err)
-        })
+            }, err => {
+                console.log("err", err)
+            })
+        }
     }
 
     toggle = () => {
@@ -97,7 +100,6 @@ export default class AnimatedTurnTableDrawPage extends Component {
         this.setState({
             offOn: !this.state.offOn,
         });
-
 
 
         let oneTimeRotate = number / COUNT + 3;
@@ -138,7 +140,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             return (
                 <View style={{
                     width: '90%', height: 400, backgroundColor: '#FFFFFF', borderColor: '#6787EE',
-                    borderWidth: 3, borderRadius: 10,marginTop:120
+                    borderWidth: 3, borderRadius: 10, marginTop: 120
                 }}>
                     <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
                         <View style={{flex: 1}}/>
@@ -184,8 +186,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                     </TouchableOpacity>
                                 </View>
 
-                                {index === rule_list.length - 1 ? <Text style={{color:'#AAAAAA',fontSize:12,marginTop:2,alignSelf:'flex-end',
-                                marginRight:23}}>
+                                {index === rule_list.length - 1 ? <Text style={{
+                                    color: '#AAAAAA', fontSize: 12, marginTop: 2, alignSelf: 'flex-end',
+                                    marginRight: 23
+                                }}>
                                     {`当前积分：${this.state.total_points}`}
                                 </Text> : null}
                                 <View style={{
@@ -199,15 +203,20 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         )
                     })}
 
-                    <Text style={{color:'#444444',fontSize:14,marginTop:20,marginLeft:23}}>活动规则</Text>
-                    {prompts.map((prompt,index)=>{
-                        return <Text key={index} style={{color:'#666666',fontSize:14,marginTop:5,marginLeft:23}}>{prompt}</Text>
+                    <Text style={{color: '#444444', fontSize: 14, marginTop: 20, marginLeft: 23}}>活动规则</Text>
+                    {prompts.map((prompt, index) => {
+                        return <Text key={index} style={{
+                            color: '#666666',
+                            fontSize: 14,
+                            marginTop: 5,
+                            marginLeft: 23
+                        }}>{prompt}</Text>
                     })}
                 </View>
             )
         } else {
             return (
-                <View style={{marginTop:60}}>
+                <View style={{marginTop: 60}}>
                     <Image source={require('./imgs/turntable.png')}
                            style={{width: 200, height: 150, top: 60, alignSelf: 'center', zIndex: 1000}}/>
                     <ImageBackground source={require('./imgs/circle_bg.png')} style={{
@@ -231,74 +240,78 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                         style={{position: "absolute", height: 300, width: 300, resizeMode: 'stretch'}}
                                         source={require('./imgs/circle.png')}/>
                                     {/*{this.state.drawData.map((one, index) => {*/}
-                                        {/*const rotateDeg =18;*/}
-                                        {/*let translateX = 0;*/}
-                                        {/*let translateY = 0;*/}
-                                        {/*const rotateTemp = -rotateDeg - (index * 45);*/}
-                                        {/*const sinTemp = Math.sin(rotateDeg * Math.PI / 180) * 105;*/}
-                                        {/*const consTemp = Math.cos(rotateDeg * Math.PI / 180) * 105;*/}
-                                        {/*switch (index) {*/}
-                                            {/*case 0:*/}
-                                                {/*translateX = -sinTemp;*/}
-                                                {/*translateY = -consTemp;*/}
-                                                {/*break;*/}
-                                            {/*case 1:*/}
-                                                {/*translateX = -consTemp;*/}
-                                                {/*translateY = -sinTemp;*/}
-                                                {/*break;*/}
-                                            {/*case 2:*/}
-                                                {/*translateX = -consTemp;*/}
-                                                {/*translateY = sinTemp;*/}
-                                                {/*break;*/}
-                                            {/*case 3:*/}
-                                                {/*translateX = -sinTemp;*/}
-                                                {/*translateY = consTemp;*/}
-                                                {/*break;*/}
-                                            {/*case 4:*/}
-                                                {/*translateX = sinTemp;*/}
-                                                {/*translateY = consTemp;*/}
-                                                {/*break;*/}
-                                            {/*case 5:*/}
-                                                {/*translateX = consTemp;*/}
-                                                {/*translateY = sinTemp;*/}
-                                                {/*break;*/}
-                                            {/*case 6:*/}
-                                                {/*translateX = consTemp;*/}
-                                                {/*translateY = -sinTemp;*/}
-                                                {/*break;*/}
-                                            {/*case 7:*/}
-                                                {/*translateX = sinTemp;*/}
-                                                {/*translateY = -consTemp;*/}
-                                                {/*break;*/}
-                                            {/*default:*/}
-                                                {/*break*/}
-                                        {/*}*/}
-                                        {/*return (*/}
-                                            {/*<View key={one.id} style={{*/}
-                                                {/*justifyContent: "center",*/}
-                                                {/*alignItems: "center",*/}
-                                                {/*position: "absolute",*/}
-                                                {/*zIndex: 99,*/}
-                                                {/*height: 70,*/}
-                                                {/*width: 60,*/}
-                                                {/*top: 115,*/}
-                                                {/*transform: [{translateX: translateX}, {translateY: translateY}, {rotateZ: `${rotateTemp}deg`}]*/}
-                                            {/*}}>*/}
-                                                {/*/!*<Text style={{*!/*/}
-                                                    {/*/!*fontSize: 12,*!/*/}
-                                                    {/*/!*color: "#74340A",*!/*/}
-                                                    {/*/!*fontFamily: "STYuanti-SC-Regular",*!/*/}
-                                                    {/*/!*marginBottom: 10*!/*/}
-                                                {/*/!*}}>{one.name}</Text>*!/*/}
-                                                {/*/!*<Image style={{width: 40, height: 40, resizeMode: "contain"}}*!/*/}
-                                                       {/*/!*source={one.icon}/>*!/*/}
-                                            {/*</View>*/}
-                                        {/*)*/}
+                                    {/*const rotateDeg =18;*/}
+                                    {/*let translateX = 0;*/}
+                                    {/*let translateY = 0;*/}
+                                    {/*const rotateTemp = -rotateDeg - (index * 45);*/}
+                                    {/*const sinTemp = Math.sin(rotateDeg * Math.PI / 180) * 105;*/}
+                                    {/*const consTemp = Math.cos(rotateDeg * Math.PI / 180) * 105;*/}
+                                    {/*switch (index) {*/}
+                                    {/*case 0:*/}
+                                    {/*translateX = -sinTemp;*/}
+                                    {/*translateY = -consTemp;*/}
+                                    {/*break;*/}
+                                    {/*case 1:*/}
+                                    {/*translateX = -consTemp;*/}
+                                    {/*translateY = -sinTemp;*/}
+                                    {/*break;*/}
+                                    {/*case 2:*/}
+                                    {/*translateX = -consTemp;*/}
+                                    {/*translateY = sinTemp;*/}
+                                    {/*break;*/}
+                                    {/*case 3:*/}
+                                    {/*translateX = -sinTemp;*/}
+                                    {/*translateY = consTemp;*/}
+                                    {/*break;*/}
+                                    {/*case 4:*/}
+                                    {/*translateX = sinTemp;*/}
+                                    {/*translateY = consTemp;*/}
+                                    {/*break;*/}
+                                    {/*case 5:*/}
+                                    {/*translateX = consTemp;*/}
+                                    {/*translateY = sinTemp;*/}
+                                    {/*break;*/}
+                                    {/*case 6:*/}
+                                    {/*translateX = consTemp;*/}
+                                    {/*translateY = -sinTemp;*/}
+                                    {/*break;*/}
+                                    {/*case 7:*/}
+                                    {/*translateX = sinTemp;*/}
+                                    {/*translateY = -consTemp;*/}
+                                    {/*break;*/}
+                                    {/*default:*/}
+                                    {/*break*/}
+                                    {/*}*/}
+                                    {/*return (*/}
+                                    {/*<View key={one.id} style={{*/}
+                                    {/*justifyContent: "center",*/}
+                                    {/*alignItems: "center",*/}
+                                    {/*position: "absolute",*/}
+                                    {/*zIndex: 99,*/}
+                                    {/*height: 70,*/}
+                                    {/*width: 60,*/}
+                                    {/*top: 115,*/}
+                                    {/*transform: [{translateX: translateX}, {translateY: translateY}, {rotateZ: `${rotateTemp}deg`}]*/}
+                                    {/*}}>*/}
+                                    {/*/!*<Text style={{*!/*/}
+                                    {/*/!*fontSize: 12,*!/*/}
+                                    {/*/!*color: "#74340A",*!/*/}
+                                    {/*/!*fontFamily: "STYuanti-SC-Regular",*!/*/}
+                                    {/*/!*marginBottom: 10*!/*/}
+                                    {/*/!*}}>{one.name}</Text>*!/*/}
+                                    {/*/!*<Image style={{width: 40, height: 40, resizeMode: "contain"}}*!/*/}
+                                    {/*/!*source={one.icon}/>*!/*/}
+                                    {/*</View>*/}
+                                    {/*)*/}
                                     {/*})}*/}
                                 </View>
                             </Animated.View>
                             <TouchableOpacity activeOpacity={0.9} onPress={() => {
-                                this.rotateImg()
+                                if(isEmptyObject(global.login_user)){
+                                    global.router.toLoginFirstPage()
+                                }else{
+                                    this.rotateImg()
+                                }
                             }} style={styles.centerPoint}>
                                 <Image source={require('./imgs/point_new.png')}
                                        style={{
@@ -344,12 +357,13 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     flex: 1,
                     alignItems: 'center',
                     backgroundColor: 'rgba(0,0,0,0.6)'
+
                 }}>
 
                     {this.content_show()}
 
 
-                    <View style={{position:'absolute',bottom:30}}>
+                    <View style={{position: 'absolute', bottom: 30}}>
                         <View style={{alignSelf: 'center', width: 150, flexDirection: 'row', alignItems: 'center'}}>
                             <ImageBackground
                                 source={Images.lottery.opportunity}
@@ -369,7 +383,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         <TouchableOpacity onPress={() => {
                             this.toggle();
                             global.router.toGameRulesPage(this.toggle)
-                        }} style={{marginTop:20,alignSelf:'center'}}>
+                        }} style={{marginTop: 20, alignSelf: 'center'}}>
                             <Text style={{
                                 fontSize: 18,
                                 color: '#6787EE',
