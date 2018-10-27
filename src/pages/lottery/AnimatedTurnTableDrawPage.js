@@ -22,6 +22,7 @@ import {
 } from "react-native";
 import {Images} from '../../Themes'
 import {getProfile} from "../../services/AccountDao";
+import {logMsg} from "../../utils/ComonHelper";
 
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
     {id: 0, name: '游戏分享', des: '每日可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
@@ -83,19 +84,23 @@ export default class AnimatedTurnTableDrawPage extends Component {
         }
     };
 
+
     rotateImg1 = () => {
+        //转盘中奖品个数
+        const COUNT = 10
+
         //获取抽奖位置
         // let number = Math.floor(Math.random() * 8);
-        let number = 5;
-        if ((number / 8) == 0.875) {
-            number = 1;
-        }
+        let number = 1;
+
 
         this.setState({
             offOn: !this.state.offOn,
         });
 
-        let oneTimeRotate = number / 8 + 3.0625;
+
+
+        let oneTimeRotate = number / COUNT + 3;
         Animated.timing(this.state.rotateDeg, {
             toValue: oneTimeRotate,
             duration: 5000,
@@ -225,71 +230,71 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                     <Image
                                         style={{position: "absolute", height: 300, width: 300, resizeMode: 'stretch'}}
                                         source={require('./imgs/circle.png')}/>
-                                    {this.state.drawData.map((one, index) => {
-                                        const rotateDeg = 22.5;
-                                        let translateX = 0;
-                                        let translateY = 0;
-                                        const rotateTemp = -rotateDeg - (index * 45);
-                                        const sinTemp = Math.sin(rotateDeg * Math.PI / 180) * 105;
-                                        const consTemp = Math.cos(rotateDeg * Math.PI / 180) * 105;
-                                        switch (index) {
-                                            case 0:
-                                                translateX = -sinTemp;
-                                                translateY = -consTemp;
-                                                break;
-                                            case 1:
-                                                translateX = -consTemp;
-                                                translateY = -sinTemp;
-                                                break;
-                                            case 2:
-                                                translateX = -consTemp;
-                                                translateY = sinTemp;
-                                                break;
-                                            case 3:
-                                                translateX = -sinTemp;
-                                                translateY = consTemp;
-                                                break;
-                                            case 4:
-                                                translateX = sinTemp;
-                                                translateY = consTemp;
-                                                break;
-                                            case 5:
-                                                translateX = consTemp;
-                                                translateY = sinTemp;
-                                                break;
-                                            case 6:
-                                                translateX = consTemp;
-                                                translateY = -sinTemp;
-                                                break;
-                                            case 7:
-                                                translateX = sinTemp;
-                                                translateY = -consTemp;
-                                                break;
-                                            default:
-                                                break
-                                        }
-                                        return (
-                                            <View key={one.id} style={{
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                position: "absolute",
-                                                zIndex: 99,
-                                                height: 70,
-                                                width: 60,
-                                                top: 115,
-                                                transform: [{translateX: translateX}, {translateY: translateY}, {rotateZ: `${rotateTemp}deg`}]
-                                            }}>
-                                                {/*<Text style={{*/}
-                                                    {/*fontSize: 12,*/}
-                                                    {/*color: "#74340A",*/}
-                                                    {/*fontFamily: "STYuanti-SC-Regular",*/}
-                                                    {/*marginBottom: 10*/}
-                                                {/*}}>{one.name}</Text>*/}
-                                                {/*<Image style={{width: 40, height: 40, resizeMode: "contain"}}*/}
-                                                       {/*source={one.icon}/>*/}
-                                            </View>
-                                        )
-                                    })}
+                                    {/*{this.state.drawData.map((one, index) => {*/}
+                                        {/*const rotateDeg =18;*/}
+                                        {/*let translateX = 0;*/}
+                                        {/*let translateY = 0;*/}
+                                        {/*const rotateTemp = -rotateDeg - (index * 45);*/}
+                                        {/*const sinTemp = Math.sin(rotateDeg * Math.PI / 180) * 105;*/}
+                                        {/*const consTemp = Math.cos(rotateDeg * Math.PI / 180) * 105;*/}
+                                        {/*switch (index) {*/}
+                                            {/*case 0:*/}
+                                                {/*translateX = -sinTemp;*/}
+                                                {/*translateY = -consTemp;*/}
+                                                {/*break;*/}
+                                            {/*case 1:*/}
+                                                {/*translateX = -consTemp;*/}
+                                                {/*translateY = -sinTemp;*/}
+                                                {/*break;*/}
+                                            {/*case 2:*/}
+                                                {/*translateX = -consTemp;*/}
+                                                {/*translateY = sinTemp;*/}
+                                                {/*break;*/}
+                                            {/*case 3:*/}
+                                                {/*translateX = -sinTemp;*/}
+                                                {/*translateY = consTemp;*/}
+                                                {/*break;*/}
+                                            {/*case 4:*/}
+                                                {/*translateX = sinTemp;*/}
+                                                {/*translateY = consTemp;*/}
+                                                {/*break;*/}
+                                            {/*case 5:*/}
+                                                {/*translateX = consTemp;*/}
+                                                {/*translateY = sinTemp;*/}
+                                                {/*break;*/}
+                                            {/*case 6:*/}
+                                                {/*translateX = consTemp;*/}
+                                                {/*translateY = -sinTemp;*/}
+                                                {/*break;*/}
+                                            {/*case 7:*/}
+                                                {/*translateX = sinTemp;*/}
+                                                {/*translateY = -consTemp;*/}
+                                                {/*break;*/}
+                                            {/*default:*/}
+                                                {/*break*/}
+                                        {/*}*/}
+                                        {/*return (*/}
+                                            {/*<View key={one.id} style={{*/}
+                                                {/*justifyContent: "center",*/}
+                                                {/*alignItems: "center",*/}
+                                                {/*position: "absolute",*/}
+                                                {/*zIndex: 99,*/}
+                                                {/*height: 70,*/}
+                                                {/*width: 60,*/}
+                                                {/*top: 115,*/}
+                                                {/*transform: [{translateX: translateX}, {translateY: translateY}, {rotateZ: `${rotateTemp}deg`}]*/}
+                                            {/*}}>*/}
+                                                {/*/!*<Text style={{*!/*/}
+                                                    {/*/!*fontSize: 12,*!/*/}
+                                                    {/*/!*color: "#74340A",*!/*/}
+                                                    {/*/!*fontFamily: "STYuanti-SC-Regular",*!/*/}
+                                                    {/*/!*marginBottom: 10*!/*/}
+                                                {/*/!*}}>{one.name}</Text>*!/*/}
+                                                {/*/!*<Image style={{width: 40, height: 40, resizeMode: "contain"}}*!/*/}
+                                                       {/*/!*source={one.icon}/>*!/*/}
+                                            {/*</View>*/}
+                                        {/*)*/}
+                                    {/*})}*/}
                                 </View>
                             </Animated.View>
                             <TouchableOpacity activeOpacity={0.9} onPress={() => {
