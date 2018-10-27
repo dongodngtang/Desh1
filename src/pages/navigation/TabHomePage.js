@@ -267,7 +267,7 @@ class TabHomePage extends Component {
                     {/*rightBtnPress={() => {*/}
                         {/*global.router.toActivitiesPage()*/}
                     {/*}}/>*/}
-                    <HomeTabBar backStyle={{backgroundColor: 'rgba(243,74,74,' + opacity + ')'}}/>
+                    <HomeTabBar backStyle={{backgroundColor: 'rgba(229, 74, 46,' + opacity + ')'}}/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}

@@ -15,5 +15,6 @@ export default {
     Activity:"Activity",
     MallSearchRecord:'MallSearchRecord',
     ShoppingCarts:'ShoppingCarts',
-    PayCountDown:'PayCountDown'
+    PayCountDown:'PayCountDown',
+    InfoSearchRecord:'InfoSearchRecord',
 }

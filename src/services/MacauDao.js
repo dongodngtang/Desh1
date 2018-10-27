@@ -14,6 +14,12 @@ export function postReceiveCoupons(body, resolve, reject) {
 }
 
 
+export function searchAllInfos(body, resolve, reject) {
+    helper.get(Api.all_infos(), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function getHotlines(body, resolve, reject) {
     helper.get(Api.hotlines, ret => {
         resolve(ret.data)
