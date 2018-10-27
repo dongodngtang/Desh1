@@ -8,6 +8,7 @@ import {getActivities} from "../../services/AccountDao";
 import I18n from "react-native-i18n";
 import {ImageLoad, UltimateListView} from "../../components";
 import {LoadErrorView, NoDataView} from '../../components/load';
+import {isEmptyObject} from "../../utils/ComonHelper";
 
 export default class ActivitiesPage extends Component {
 
@@ -73,7 +74,12 @@ export default class ActivitiesPage extends Component {
                         fontSize: 14, color: '#444444', marginRight: 17
                     }}
                     rightBtnPress={()=>{
-                        global.router.toMyWardsPage()
+                        if(isEmptyObject(global.login_user)){
+                            global.router.toLoginFirstPage()
+                        }else{
+                            global.router.toMyWardsPage()
+                        }
+
                     }}
                 />
                 <UltimateListView
