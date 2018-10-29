@@ -34,6 +34,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     constructor(props) {
         super(props);
+        router.popToTop();
         this.state = {
             drawData: [
                 {id: 1, title: "谢谢参与", icon: require('./imgs/cry_coin.png')},
