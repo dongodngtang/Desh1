@@ -4,7 +4,6 @@ import {
     Text, ActivityIndicator, Platform, Image, TouchableOpacity
 }
     from 'react-native';
-// import Races from './Races';
 // import Headlines from './Headlines';
 // import Coming from './Coming';
 import Information from './Information';
@@ -297,7 +296,6 @@ class TabHomePage extends Component {
 
                     <FastBtns/>
 
-                    {/*<Races*/}
                     {/*raceTickets={raceTickets}/>*/}
                     {/*<Coming*/}
                     {/*listRace={listRace}/>*/}
