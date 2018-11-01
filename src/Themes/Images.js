@@ -339,7 +339,9 @@ const images = {
         raiders_bg:require('../../source/navigation/raiders_bg.png'),
         rate_bg:require('../../source/navigation/rate_bg.png'),
         rec_bg:require('../../source/navigation/rec_bg.png'),
-        shop_bg:require('../../source/navigation/shop_bg.png')
+        shop_bg:require('../../source/navigation/shop_bg.png'),
+        visa:require('../../source/navigation/visa.png'),
+        tehui:require('../../source/navigation/tehui.png')
     },
     fastBtn: {
         round1: require('../../source/fastBtn/round1.jpeg'),

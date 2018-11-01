@@ -41,10 +41,10 @@ const catalogs_two = [{
     icon: Images.navigation2.raiders_bg
 },
     {
-        name: '购物',
-        type: 'shop',
+        name: '签证',
+        type: 'visa',
         size: {height: 19, width: 20},
-        icon: Images.navigation2.shop_bg
+        icon: Images.navigation2.visa
     },
     {
         name: '优惠',
@@ -75,7 +75,7 @@ export default class FastBtns extends Component {
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent:'space-around'
+                justifyContent: 'space-around'
             }}>
                 {catalogs.map((item, index) => {
                     return <TouchableOpacity
@@ -92,10 +92,13 @@ export default class FastBtns extends Component {
                             }
                         }}
                         style={{
-                            width:70,
+                            width: 70,
+                            paddingRight: 10,
                             flexDirection: 'row',
-                            alignItems:'center',
-                            justifyContent:'space-around'
+                            alignItems: 'center',
+                            justifyContent: 'space-around',
+                            borderRightWidth: index === catalogs.length - 1 ? 0 : 1,
+                            borderRightColor: '#F3F3F3'
                         }}>
                         <Image style={item.size}
                                source={item.icon}/>
@@ -111,16 +114,16 @@ export default class FastBtns extends Component {
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent:'space-around',
-                marginTop:16
+                justifyContent: 'space-around',
+                marginTop: 16
             }}>
                 {catalogs_two.map((item, index) => {
                     return <TouchableOpacity
                         key={item.name}
                         onPress={() => {
-                            if (item.type === 'raiders'){
+                            if (item.type === 'raiders') {
                                 // router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml#1')
-                            }else if (item.type === 'shop') {
+                            } else if (item.type === 'visa') {
                                 // global.router.toFastFoodPage('fast_food')
                             } else if (item.type === 'coupon') {
                                 // global.router.toRoundTripPage()
@@ -129,11 +132,17 @@ export default class FastBtns extends Component {
                             }
                         }}
                         style={{
-                            width:70,
+                            width: 70,
+                            paddingRight: 10,
                             flexDirection: 'row',
-                            alignItems:'center',
-                            justifyContent:'space-around'
+                            alignItems: 'center',
+                            justifyContent: 'space-around',
+                            borderRightWidth: index === catalogs.length - 1 ? 0 : 1,
+                            borderRightColor: '#F3F3F3'
                         }}>
+                        {item.type === 'visa' ?
+                            <Image style={{width: 30, height: 15, position: 'absolute', bottom:15, left: -15,zIndex:99}}
+                                   source={Images.navigation2.tehui}/> : null}
                         <Image style={item.size}
                                source={item.icon}/>
 
