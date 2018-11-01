@@ -467,9 +467,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         autoplayTimeout={3}
                         autoplay>
                         {prize_messages.map((item, key) => {
-                            return <View style={{flexDirection:'row', height: 24,alignItems: 'center',justifyContent: 'center'}}>
-                                <Text style={{color: '#F3F3F3', fontSize: 12}}
-                                      key={key}>{`恭喜用户${item.nick_name}转盘活动抽奖获得${item.prize}`}</Text>
+                            return <View key={key} style={{flexDirection:'row', height: 24,alignItems: 'center',justifyContent: 'center'}}>
+                                <Text style={{color: '#F3F3F3', fontSize: 12}}>{`恭喜用户${item.nick_name}转盘活动抽奖获得${item.prize}`}</Text>
                             </View>
                         })}
 

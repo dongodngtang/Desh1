@@ -7,14 +7,14 @@ import {
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
-import {getActivities, getJmessageInfo} from "../../services/AccountDao";
-import {isEmptyObject, showToast} from "../../utils/ComonHelper";
+import {getPrizesList, getJmessageInfo} from "../../services/AccountDao";
+import {isEmptyObject, showToast,utcDate} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 import {visit_other} from "../../services/SocialDao";
 import {UltimateListView} from "../../components";
-import {LoadErrorView, NoDataView} from '../../components/load';
 
 export default class MyWardsPage extends Component {
+
 
     refresh = () => {
         this.listView && this.listView.refresh();
@@ -39,20 +39,22 @@ export default class MyWardsPage extends Component {
         });
     };
 
-    item_view = () => {
+    item_view = (item,index) => {
+        const {prize,created_at,id} = item;
         return (
             <TouchableOpacity style={{
                 paddingTop: 14,
                 paddingBottom: 14,
                 paddingLeft: 17,
                 paddingRight: 17,
-                backgroundColor: 'white'
+                backgroundColor: 'white',
+                justifyContent:'center'
             }}
-            onPress={()=>{
-                global.router.toWardReceivePage(this.refresh)
-            }}>
+                              onPress={() => {
+                                  global.router.toWardReceivePage(this.refresh)
+                              }}>
                 <Text style={{color: '#444444', fontSize: 14}}>
-
+                    {`系统通知：恭喜您于${utcDate(created_at,'YYYY年MM月DD日HH：mm')}抽中${prize}，点击进入领取奖品吧>>>`}
                 </Text>
             </TouchableOpacity>
         )
@@ -88,7 +90,7 @@ export default class MyWardsPage extends Component {
                     }}/>
 
                 <UltimateListView
-                    header={()=>this.separator()}
+                    header={() => this.separator()}
                     separator={() => this.separator()}
                     keyExtractor={(item, index) => index + "item"}
                     ref={(ref) => this.listView = ref}
@@ -100,10 +102,10 @@ export default class MyWardsPage extends Component {
                     allLoadedText={I18n.t('no_more')}
                     waitingSpinnerText={I18n.t('loading')}
                     emptyView={() => {
-                        return this.state.error ? <LoadErrorView
-                            onPress={() => {
-                                this.listView.refresh()
-                            }}/> : <NoDataView/>;
+                       return <View style={{flex: 1, alignItems: 'center',marginTop:50}}>
+                            <Text style={{color:'#CCCCCC',fontSize:24}}>暂无奖品</Text>
+                           <Text  style={{color:'#CCCCCC',fontSize:14,marginTop:5}}>赶紧参与活动赢取大奖吧</Text>
+                        </View>
                     }}
                 />
             </View>
@@ -112,13 +114,13 @@ export default class MyWardsPage extends Component {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
-            // getActivities({page: 1, page_size: 20}, data => {
-            //     console.log("activities", data.items);
-            //     startFetch(data.items, 18)
-            // }, err => {
-            //     console.log("Activities_err", err)
-            //     abortFetch()
-            // })
+            getPrizesList({page: 1, page_size: 20}, data => {
+                console.log("奖品列表", data.items);
+                startFetch(data.items, 18)
+            }, err => {
+                console.log("Activities_err", err)
+                abortFetch()
+            })
 
         } catch (err) {
             console.log(err)
