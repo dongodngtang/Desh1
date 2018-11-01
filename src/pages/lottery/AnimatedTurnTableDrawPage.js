@@ -20,9 +20,9 @@ import {
     Text,
     ImageBackground
 } from "react-native";
-import {Images,Metrics} from '../../Themes'
-import {getProfile} from "../../services/AccountDao";
-import {isEmptyObject, logMsg} from "../../utils/ComonHelper";
+import {Images, Metrics} from '../../Themes'
+import {getProfile, getElements, postLottery} from "../../services/AccountDao";
+import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 
 
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
@@ -36,18 +36,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
         super(props);
         router.popToTop();
         this.state = {
-            drawData: [
-                {id: 1, title: "谢谢参与", icon: require('./imgs/cry_coin.png')},
-                {id: 2, title: "手机1", icon: require('./imgs/phone1_coin.png')},
-                {id: 3, title: "+20金币", icon: require('./imgs/gold_coin.png')},
-                {id: 4, title: "手机2", icon: require('./imgs/phone2_coin.png')},
-                {id: 5, title: "手机50", icon: require('./imgs/gold_coin.png')},
-                {id: 6, title: "+100金币", icon: require('./imgs/gold_coin.png')},
-                {id: 7, title: "谢谢参与", icon: require('./imgs/cry_coin.png')},
-                {id: 8, title: "手机3", icon: require('./imgs/phone3_coin.png')},
-                {id: 9, title: "谢谢参与", icon: require('./imgs/cry_coin.png')},
-                {id: 10, title: "谢谢参与", icon: require('./imgs/cry_coin.png')}
-            ],
+            drawData: [],
+            // elements: [],
+            lottery: 1,
             offOn: true,
             rotateDeg: new Animated.Value(0),
             visible: true,
@@ -61,6 +52,12 @@ export default class AnimatedTurnTableDrawPage extends Component {
     }
 
     refresh = () => {
+        getElements(data => {
+            logMsg("转盘元素：", data);
+            this.setState({
+                drawData: data.items
+            })
+        });
 
         if (!isEmptyObject(global.login_user)) {
             getProfile('', data => {
@@ -84,18 +81,25 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     rotateImg = () => {
         if (this.state.offOn) {
-            this.rotateImg1();
+            postLottery({}, data => {
+                logMsg("抽奖的ID", data)
+                this.rotateImg1(data);
+            }, err => {
+                showToast(err.msg);
+                logMsg("抽奖问题", err)
+            });
+
         }
     };
 
 
-    rotateImg1 = () => {
+    rotateImg1 = (lottery) => {
         //转盘中奖品个数
-        const COUNT = 10
+        const COUNT = 10;
 
         //获取抽奖位置
         // let number = Math.floor(Math.random() * 8);
-        let number = 1;
+        let number = strNotNull(lottery.wheel_element_id) ? lottery.wheel_element_id : 1;
 
 
         this.setState({
@@ -144,7 +148,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     borderWidth: 3, borderRadius: 10, marginTop: 120
                 }}>
                     <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
-                        <View style={{flex: 1}}/>
+                        <View style={{flex: 1,marginLeft:17}}/>
                         <Text style={{
                             color: '#1E41B2',
                             fontSize: 18,
@@ -178,6 +182,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                         style={[styles.statusView, {backgroundColor: this._background(item)}]}
                                         onPress={() => {
                                             if (item.status === '未完成') {
+                                                this.setState({
+                                                    rule_show: false
+                                                });
 
                                             } else if (item.status === '兑换') {
 
@@ -239,78 +246,85 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                 <View style={{height: 300, width: 300, alignItems: "center"}}>
                                     <Image
                                         style={{position: "absolute", height: 300, width: 300, resizeMode: 'stretch'}}
-                                        source={require('./imgs/circle.png')}/>
-                                    {/*{this.state.drawData.map((one, index) => {*/}
-                                    {/*const rotateDeg =18;*/}
-                                    {/*let translateX = 0;*/}
-                                    {/*let translateY = 0;*/}
-                                    {/*const rotateTemp = -rotateDeg - (index * 45);*/}
-                                    {/*const sinTemp = Math.sin(rotateDeg * Math.PI / 180) * 105;*/}
-                                    {/*const consTemp = Math.cos(rotateDeg * Math.PI / 180) * 105;*/}
-                                    {/*switch (index) {*/}
-                                    {/*case 0:*/}
-                                    {/*translateX = -sinTemp;*/}
-                                    {/*translateY = -consTemp;*/}
-                                    {/*break;*/}
-                                    {/*case 1:*/}
-                                    {/*translateX = -consTemp;*/}
-                                    {/*translateY = -sinTemp;*/}
-                                    {/*break;*/}
-                                    {/*case 2:*/}
-                                    {/*translateX = -consTemp;*/}
-                                    {/*translateY = sinTemp;*/}
-                                    {/*break;*/}
-                                    {/*case 3:*/}
-                                    {/*translateX = -sinTemp;*/}
-                                    {/*translateY = consTemp;*/}
-                                    {/*break;*/}
-                                    {/*case 4:*/}
-                                    {/*translateX = sinTemp;*/}
-                                    {/*translateY = consTemp;*/}
-                                    {/*break;*/}
-                                    {/*case 5:*/}
-                                    {/*translateX = consTemp;*/}
-                                    {/*translateY = sinTemp;*/}
-                                    {/*break;*/}
-                                    {/*case 6:*/}
-                                    {/*translateX = consTemp;*/}
-                                    {/*translateY = -sinTemp;*/}
-                                    {/*break;*/}
-                                    {/*case 7:*/}
-                                    {/*translateX = sinTemp;*/}
-                                    {/*translateY = -consTemp;*/}
-                                    {/*break;*/}
-                                    {/*default:*/}
-                                    {/*break*/}
-                                    {/*}*/}
-                                    {/*return (*/}
-                                    {/*<View key={one.id} style={{*/}
-                                    {/*justifyContent: "center",*/}
-                                    {/*alignItems: "center",*/}
-                                    {/*position: "absolute",*/}
-                                    {/*zIndex: 99,*/}
-                                    {/*height: 70,*/}
-                                    {/*width: 60,*/}
-                                    {/*top: 115,*/}
-                                    {/*transform: [{translateX: translateX}, {translateY: translateY}, {rotateZ: `${rotateTemp}deg`}]*/}
-                                    {/*}}>*/}
-                                    {/*/!*<Text style={{*!/*/}
-                                    {/*/!*fontSize: 12,*!/*/}
-                                    {/*/!*color: "#74340A",*!/*/}
-                                    {/*/!*fontFamily: "STYuanti-SC-Regular",*!/*/}
-                                    {/*/!*marginBottom: 10*!/*/}
-                                    {/*/!*}}>{one.name}</Text>*!/*/}
-                                    {/*/!*<Image style={{width: 40, height: 40, resizeMode: "contain"}}*!/*/}
-                                    {/*/!*source={one.icon}/>*!/*/}
-                                    {/*</View>*/}
-                                    {/*)*/}
-                                    {/*})}*/}
+                                        source={require('./imgs/circle1.png')}/>
+                                    {this.state.drawData.map((one, index) => {
+                                        const rotateDeg = 22.5;
+                                        let translateX = 0;
+                                        let translateY = 0;
+                                        const rotateTemp = -rotateDeg - (index * 45);
+                                        const sinTemp = Math.sin(rotateDeg * Math.PI / 180) * 105;
+                                        const consTemp = Math.cos(rotateDeg * Math.PI / 180) * 105;
+                                        switch (index) {
+                                            case 0:
+                                                translateX = -sinTemp;
+                                                translateY = -consTemp;
+                                                break;
+                                            case 1:
+                                                translateX = -consTemp;
+                                                translateY = -sinTemp;
+                                                break;
+                                            case 2:
+                                                translateX = -consTemp;
+                                                translateY = sinTemp;
+                                                break;
+                                            case 3:
+                                                translateX = -sinTemp;
+                                                translateY = consTemp;
+                                                break;
+                                            case 4:
+                                                translateX = sinTemp;
+                                                translateY = consTemp;
+                                                break;
+                                            case 5:
+                                                translateX = consTemp;
+                                                translateY = sinTemp;
+                                                break;
+                                            case 6:
+                                                translateX = consTemp;
+                                                translateY = -sinTemp;
+                                                break;
+                                            case 7:
+                                                translateX = sinTemp;
+                                                translateY = -consTemp;
+                                                break;
+                                            case 8:
+                                                translateX = -sinTemp;
+                                                translateY = consTemp;
+                                                break;
+                                            case 9:
+                                                translateX = consTemp;
+                                                translateY = -sinTemp;
+                                                break;
+                                            default:
+                                                break
+                                        }
+                                        return (
+                                            <View key={one.id} style={{
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                position: "absolute",
+                                                zIndex: 99,
+                                                height: 70,
+                                                width: 60,
+                                                top: 115,
+                                                transform: [{translateX: translateX}, {translateY: translateY}, {rotateZ: `${rotateTemp}deg`}]
+                                            }}>
+                                                {/*<Text style={{*/}
+                                                {/*fontSize: 12,*/}
+                                                {/*color: "#74340A",*/}
+                                                {/*marginBottom: 10*/}
+                                                {/*}}>{one.name}</Text>*/}
+                                                <Image style={{width: 60, height: 60, resizeMode: "contain"}}
+                                                source={{uri:one.image}}/>
+                                            </View>
+                                        )
+                                    })}
                                 </View>
                             </Animated.View>
                             <TouchableOpacity activeOpacity={0.9} onPress={() => {
-                                if(isEmptyObject(global.login_user)){
+                                if (isEmptyObject(global.login_user)) {
                                     global.router.toLoginFirstPage()
-                                }else{
+                                } else {
                                     this.rotateImg()
                                 }
                             }} style={styles.centerPoint}>

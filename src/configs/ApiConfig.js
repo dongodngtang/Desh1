@@ -208,6 +208,8 @@ const api = {
     saunas:'saunas',//获取桑拿列表
     sunna_detail:sunna_detail,//获取桑拿详情
     all_infos:all_infos,//资讯全局搜索
+    elements:elements,//获取转盘元素
+    lottery:lottery,//转盘开始抽奖
 }
 
 export default api;
@@ -224,6 +226,14 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function lottery() {
+    return `wheel/lotteries`;
+}
+
+export function elements() {
+    return `wheel/elements`;
+}
 
 export function all_infos() {
     return `infos/all`;

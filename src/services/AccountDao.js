@@ -29,6 +29,20 @@ export function report_templates() {
     // })
 }
 
+export function postLottery(body,resolve, reject) {
+    helper.post(Api.lottery(), body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getElements(resolve, reject) {
+    helper.get(Api.elements(), ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
+
 export function getContacts(resolve, reject) {
     helper.get(Api.contacts, ret => {
         resolve(ret.data);
