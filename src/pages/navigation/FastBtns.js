@@ -141,7 +141,7 @@ export default class FastBtns extends Component {
                             borderRightColor: '#F3F3F3'
                         }}>
                         {item.type === 'visa' ?
-                            <Image style={{width: 30, height: 15, position: 'absolute', bottom:15, left: -15,zIndex:99}}
+                            <Image style={{width: 30, height: 16, position: 'absolute', bottom:15, left: -15,zIndex:999}}
                                    source={Images.navigation2.tehui}/> : null}
                         <Image style={item.size}
                                source={item.icon}/>
