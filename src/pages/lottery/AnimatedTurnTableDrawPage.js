@@ -21,7 +21,7 @@ import {
     ImageBackground
 } from "react-native";
 import {Images, Metrics} from '../../Themes'
-import {getProfile, getElements, postLottery,getWheelTime} from "../../services/AccountDao";
+import {getProfile, getElements, postLottery, getWheelTime, getprizeMessages} from "../../services/AccountDao";
 import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 
 
@@ -44,20 +44,32 @@ export default class AnimatedTurnTableDrawPage extends Component {
             visible: true,
             total_points: 0,
             rule_show: false,
-            wheel_times:1
+            wheel_times: 1,
+            prize_messages: []
         };
     };
 
     componentDidMount() {
         this.getTime();
         this.refresh();
+        this.prizeMessage();
     }
 
-    getTime=()=>{
-        getWheelTime(data=>{
-            logMsg("抽奖次数",data)
+    getTime = () => {
+        getWheelTime(data => {
+            logMsg("抽奖次数", data)
             this.setState({
-                wheel_times:data.wheel_remain_times
+                wheel_times: data.wheel_remain_times
+            })
+        })
+    };
+
+    prizeMessage=()=>{
+        //用户中奖轮播
+        getprizeMessages(data => {
+            logMsg("中奖轮播", data);
+            this.setState({
+                prize_messages: data.items
             })
         })
     }
@@ -81,6 +93,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 console.log("err", err)
             })
         }
+
     }
 
     toggle = () => {
@@ -105,8 +118,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
 
     rotateImg1 = (lottery) => {
-        //刷信次数
+        //刷新次数
         this.getTime();
+        //轮播
+        this.prizeMessage();
 
         //转盘中奖品个数
         const COUNT = 10;
@@ -159,7 +174,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             return (
                 <View style={{
                     width: '90%', height: 400, backgroundColor: '#FFFFFF', borderColor: '#6787EE',
-                    borderWidth: 3, borderRadius: 10, marginTop: 120
+                    borderWidth: 3, borderRadius: 10, marginTop: 100
                 }}>
                     <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
                         <View style={{flex: 1, marginLeft: 17}}/>
@@ -238,7 +253,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             )
         } else {
             return (
-                <View style={{marginTop: 60}}>
+                <View style={{marginTop: 20}}>
                     <Image source={require('./imgs/turntable.png')}
                            style={{width: 200, height: 150, top: 60, alignSelf: 'center', zIndex: 1000}}/>
                     <ImageBackground source={require('./imgs/circle_bg.png')} style={{
@@ -393,12 +408,16 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     {this.content_show()}
 
 
-                    <View style={{position: 'absolute', bottom: 30}}>
+                    <View style={{position: 'absolute', bottom: 60}}>
                         <View style={{alignSelf: 'center', width: 150, flexDirection: 'row', alignItems: 'center'}}>
                             <ImageBackground
                                 source={Images.lottery.opportunity}
                                 style={{width: 120, height: 40, justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{`${this.state.wheel_times}次机会`}</Text>
+                                <Text style={{
+                                    color: 'white',
+                                    fontSize: 16,
+                                    fontWeight: 'bold'
+                                }}>{`${this.state.wheel_times}次机会`}</Text>
                             </ImageBackground>
                             <TouchableOpacity style={{position: 'absolute', right: 10}}
                                               onPress={() => {

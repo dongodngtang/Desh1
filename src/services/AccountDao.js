@@ -35,12 +35,16 @@ export function postLottery(body,resolve, reject) {
     }, reject)
 }
 
+export function getprizeMessages(resolve, reject) {
+    helper.get(Api.prize_messages(), ret => {
+        resolve(ret.data);
+    }, reject)
+}
+
 export function getWheelTime(resolve, reject) {
     helper.get(Api.wheel_time(), ret => {
         resolve(ret.data);
-    }, err => {
-        reject(err)
-    })
+    }, reject)
 }
 
 export function getElements(resolve, reject) {
