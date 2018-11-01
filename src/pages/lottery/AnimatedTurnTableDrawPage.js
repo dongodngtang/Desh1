@@ -23,6 +23,7 @@ import {
 import {Images, Metrics} from '../../Themes'
 import {getProfile, getElements, postLottery, getWheelTime, getprizeMessages} from "../../services/AccountDao";
 import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
+import Swiper from 'react-native-swiper';
 
 
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
@@ -64,7 +65,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
         })
     };
 
-    prizeMessage=()=>{
+    prizeMessage = () => {
         //用户中奖轮播
         getprizeMessages(data => {
             logMsg("中奖轮播", data);
@@ -174,7 +175,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             return (
                 <View style={{
                     width: '90%', height: 400, backgroundColor: '#FFFFFF', borderColor: '#6787EE',
-                    borderWidth: 3, borderRadius: 10, marginTop: 100
+                    borderWidth: 3, borderRadius: 10,marginTop:10
                 }}>
                     <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
                         <View style={{flex: 1, marginLeft: 17}}/>
@@ -253,11 +254,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
             )
         } else {
             return (
-                <View style={{marginTop: 20}}>
+                <View style={{marginTop: 0}}>
                     <Image source={require('./imgs/turntable.png')}
-                           style={{width: 200, height: 150, top: 60, alignSelf: 'center', zIndex: 1000}}/>
+                           style={{width: 200, height: 150, alignSelf: 'center', zIndex: 1000}}/>
                     <ImageBackground source={require('./imgs/circle_bg.png')} style={{
-                        height: 340, width: 340,
+                        height: 340, width: 340, marginTop: -50,
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}>
@@ -374,8 +375,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     }}
                                       style={{
                                           position: 'absolute',
-                                          top: 100,
-                                          right: 30,
+                                          top: 30,
+                                          right: 25,
                                           zIndex: 999
                                       }}>
                         <Image source={require('./imgs/lottery_close.png')} style={{width: 30, height: 30}}/>
@@ -404,8 +405,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     backgroundColor: 'rgba(0,0,0,0.6)'
 
                 }}>
+                    <View style={{marginTop: 50, alignItems: 'center'}}>
+                        {this.carousel()}
 
-                    {this.content_show()}
+                        {this.content_show()}
+                    </View>
 
 
                     <View style={{position: 'absolute', bottom: 60}}>
@@ -445,6 +449,33 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 </View>
             </Modal>
         );
+    }
+
+    carousel = () => {
+        const {prize_messages} = this.state;
+        if (!isEmptyObject(prize_messages) && prize_messages.length > 0)
+            return (
+                <View style={{
+                    height: 24,
+                    backgroundColor: 'rgba(0, 0, 0,0.59)',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+
+                    <Swiper
+                        autoplayTimeout={2}
+                        autoplay>
+                        {prize_messages.map((item, key) => {
+                            return <Text style={{color: '#F3F3F3', fontSize: 12, alignSelf: 'center'}}
+                                         key={key}>{`恭喜用户${item.nick_name}转盘活动抽奖获得${item.prize}`}</Text>
+                        })}
+
+
+                    </Swiper>
+                </View>
+
+
+            );
     }
 
 
