@@ -21,7 +21,7 @@ import {
     ImageBackground
 } from "react-native";
 import {Images, Metrics} from '../../Themes'
-import {getProfile, getElements, postLottery} from "../../services/AccountDao";
+import {getProfile, getElements, postLottery,getWheelTime} from "../../services/AccountDao";
 import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 
 
@@ -43,12 +43,23 @@ export default class AnimatedTurnTableDrawPage extends Component {
             rotateDeg: new Animated.Value(0),
             visible: true,
             total_points: 0,
-            rule_show: false
+            rule_show: false,
+            wheel_times:1
         };
     };
 
     componentDidMount() {
-        this.refresh()
+        this.getTime();
+        this.refresh();
+    }
+
+    getTime=()=>{
+        getWheelTime(data=>{
+            logMsg("抽奖次数",data)
+            this.setState({
+                wheel_times:data.wheel_remain_times
+            })
+        })
     }
 
     refresh = () => {
@@ -94,6 +105,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
 
     rotateImg1 = (lottery) => {
+        //刷信次数
+        this.getTime();
+
         //转盘中奖品个数
         const COUNT = 10;
 
@@ -148,7 +162,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     borderWidth: 3, borderRadius: 10, marginTop: 120
                 }}>
                     <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
-                        <View style={{flex: 1,marginLeft:17}}/>
+                        <View style={{flex: 1, marginLeft: 17}}/>
                         <Text style={{
                             color: '#1E41B2',
                             fontSize: 18,
@@ -247,11 +261,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                     <Image
                                         style={{position: "absolute", height: 300, width: 300, resizeMode: 'stretch'}}
                                         source={require('./imgs/circle1.png')}/>
-                                    {this.state.drawData.map((one, index) => {
-                                        const rotateDeg = 22.5;
+                                    {!isEmptyObject(this.state.drawData) && this.state.drawData.map((one, index) => {
+                                        const rotateDeg = 18;
                                         let translateX = 0;
                                         let translateY = 0;
-                                        const rotateTemp = -rotateDeg - (index * 45);
+                                        const rotateTemp = -rotateDeg - (index * 36);
                                         const sinTemp = Math.sin(rotateDeg * Math.PI / 180) * 105;
                                         const consTemp = Math.cos(rotateDeg * Math.PI / 180) * 105;
                                         switch (index) {
@@ -293,7 +307,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                                 break;
                                             case 9:
                                                 translateX = consTemp;
-                                                translateY = -sinTemp;
+                                                translateY = sinTemp;
                                                 break;
                                             default:
                                                 break
@@ -314,8 +328,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                                 {/*color: "#74340A",*/}
                                                 {/*marginBottom: 10*/}
                                                 {/*}}>{one.name}</Text>*/}
-                                                <Image style={{width: 60, height: 60, resizeMode: "contain"}}
-                                                source={{uri:one.image}}/>
+                                                {strNotNull(one.image) ?
+                                                    <Image style={{width: 50, height: 50, resizeMode: "contain"}}
+                                                           source={{uri: one.image}}/> : null}
                                             </View>
                                         )
                                     })}
@@ -383,7 +398,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             <ImageBackground
                                 source={Images.lottery.opportunity}
                                 style={{width: 120, height: 40, justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{`1次机会`}</Text>
+                                <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{`${this.state.wheel_times}次机会`}</Text>
                             </ImageBackground>
                             <TouchableOpacity style={{position: 'absolute', right: 10}}
                                               onPress={() => {

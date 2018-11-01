@@ -210,6 +210,7 @@ const api = {
     all_infos:all_infos,//资讯全局搜索
     elements:elements,//获取转盘元素
     lottery:lottery,//转盘开始抽奖
+    wheel_time:wheel_time,//转盘剩余抽奖次数
 }
 
 export default api;
@@ -226,6 +227,10 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function wheel_time() {
+    return `wheel/times`;
+}
 
 export function lottery() {
     return `wheel/lotteries`;
