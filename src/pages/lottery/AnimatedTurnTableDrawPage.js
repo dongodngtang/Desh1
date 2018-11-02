@@ -27,8 +27,9 @@ import Swiper from 'react-native-swiper';
 
 
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
-    {id: 0, name: '游戏分享', des: '每日可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
-    {id: 0, name: '积分兑换', des: '每200积分可购买1次抽奖机会', image: Images.integral.exchange, status: '兑换'}];
+    {id: 1, name: '游戏分享', des: '每日可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
+    {id: 2, name: '好友邀请', des: '邀请好友注册可获得1次抽奖机会', image: Images.integral.frends, status: '未完成'},
+    {id: 3, name: '积分兑换', des: '每200积分可购买1次抽奖机会', image: Images.integral.exchange, status: '兑换'}];
 const prompts = ['1.完成每日任务，最高每日可获得45积分', '2.成功购买商城现金商品，可获得等额积分', '3.转盘小游戏还有赢取积分的机会哦～ '];
 
 export default class AnimatedTurnTableDrawPage extends Component {
@@ -175,10 +176,16 @@ export default class AnimatedTurnTableDrawPage extends Component {
         if (this.state.rule_show) {
             return (
                 <View style={{
-                    width: '90%', height: 400, backgroundColor: '#FFFFFF', borderColor: '#6787EE',
-                    borderWidth: 3, borderRadius: 10, marginTop: 10
+                    width: Metrics.screenWidth - 34,
+                    paddingBottom:30,
+                    backgroundColor: '#FFFFFF',
+                    borderColor: '#6787EE',
+                    borderWidth: 3,
+                    borderRadius: 10,
+                    marginTop:10,
+                    paddingTop:30
                 }}>
-                    <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
+                    <View style={{flexDirection: 'row', width: '100%'}}>
                         <View style={{flex: 1, marginLeft: 17}}/>
                         <Text style={{
                             color: '#1E41B2',
@@ -242,22 +249,22 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         )
                     })}
 
-                    <Text style={{color: '#444444', fontSize: 14, marginTop: 20, marginLeft: 23}}>活动规则</Text>
-                    {prompts.map((prompt, index) => {
-                        return <Text key={index} style={{
-                            color: '#666666',
-                            fontSize: 14,
-                            marginTop: 5,
-                            marginLeft: 23
-                        }}>{prompt}</Text>
-                    })}
+                    {/*<Text style={{color: '#444444', fontSize: 14, marginTop: 20, marginLeft: 23}}>活动规则</Text>*/}
+                    {/*{prompts.map((prompt, index) => {*/}
+                        {/*return <Text key={index} style={{*/}
+                            {/*color: '#666666',*/}
+                            {/*fontSize: 14,*/}
+                            {/*marginTop: 5,*/}
+                            {/*marginLeft: 23*/}
+                        {/*}}>{prompt}</Text>*/}
+                    {/*})}*/}
                 </View>
             )
         } else {
             const {wheel_image, prize_counts} = this.state.drawData
             if (wheel_image)
                 return (
-                    <View style={{marginTop: 0}}>
+                    <View style={{marginTop: -5}}>
                         <Image source={require('./imgs/turntable.png')}
                                style={{width: 200, height: 150, alignSelf: 'center', zIndex: 1000}}/>
                         <ImageBackground source={require('./imgs/circle_bg.png')} style={{
@@ -336,7 +343,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     backgroundColor: 'rgba(0,0,0,0.6)'
 
                 }}>
-                    <View style={{marginTop: '15%', alignItems: 'center'}}>
+                    <View style={{marginTop: 50, alignItems: 'center'}}>
                         {this.carousel()}
 
                         {this.content_show()}
@@ -367,7 +374,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         <TouchableOpacity onPress={() => {
                             this.toggle();
                             global.router.toGameRulesPage(this.toggle)
-                        }} style={{marginTop: 20, alignSelf: 'center'}}>
+                        }} style={{marginTop: 10, alignSelf: 'center'}}>
                             <Text style={{
                                 fontSize: 18,
                                 color: '#6787EE',
@@ -406,13 +413,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <Text style={{
+                                <Text numberOfLines={1} style={{
                                     color: '#F3F3F3',
                                     fontSize: 12,
-                                    width:'80%',
-                                    overflow:'hidden',
-                                    textOverflow:'ellipsis',
-                                    whiteSpace:'nowrap'
+                                    width: '80%'
                                 }}>{`恭喜用户${item.nick_name}转盘活动抽奖获得${item.prize}`}</Text>
                             </View>
                         })}
