@@ -104,10 +104,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
     };
 
     rotateImg = (prize_counts) => {
-        if (this.state.offOn  && this.state.wheel_times>0) {
+        if (this.state.offOn && this.state.wheel_times > 0) {
             postLottery({}, data => {
                 logMsg("抽奖的ID", data)
-              this.rotateImg1(data,prize_counts)
+                this.rotateImg1(data, prize_counts)
 
             }, err => {
                 showToast(err);
@@ -118,47 +118,46 @@ export default class AnimatedTurnTableDrawPage extends Component {
     };
 
 
-    rotateImg1 = (lottery,prize_counts) => {
+    rotateImg1 = (lottery, prize_counts) => {
 
 
         //转盘中奖品个数
         let COUNT = prize_counts;
 
         //获取抽奖位置
-        let wheels = this.state.drawData.items.filter(item=>item.id === lottery.wheel_element_id)
-        logMsg('获奖位置',wheels)
-        if(wheels.length ===1){
+        let wheels = this.state.drawData.items.filter(item => item.id === lottery.wheel_element_id)
+        logMsg('获奖位置', wheels)
+        if (wheels.length === 1) {
 
-          let number =wheels[0].position
-          this.setState({
-            offOn: !this.state.offOn,
-          });
-
-          let oneTimeRotate = number / COUNT + 3;
-          Animated.timing(this.state.rotateDeg, {
-            toValue: oneTimeRotate,
-            duration: 5000,
-            easing: Easing.out(Easing.quad)
-          }).start(() => {
-
+            let number = wheels[0].position
             this.setState({
-              offOn: !this.state.offOn,
-              rotateDeg: new Animated.Value(0)
+                offOn: !this.state.offOn,
             });
-            //动画结束时，会把toValue值，回调给callback
-            this.state.rotateDeg.stopAnimation(() => {
-              alert(`${lottery.name} -- ${number}`)
-            })
 
-            //刷新次数
-            this.getTime();
-            //轮播
-            this.prizeMessage();
-          });
+            let oneTimeRotate = number / COUNT + 3;
+            Animated.timing(this.state.rotateDeg, {
+                toValue: oneTimeRotate,
+                duration: 5000,
+                easing: Easing.out(Easing.quad)
+            }).start(() => {
+
+                this.setState({
+                    offOn: !this.state.offOn,
+                    rotateDeg: new Animated.Value(0)
+                });
+                //动画结束时，会把toValue值，回调给callback
+                this.state.rotateDeg.stopAnimation(() => {
+                    alert(`${lottery.name} -- ${number}`)
+                })
+
+                //刷新次数
+                this.getTime();
+                //轮播
+                this.prizeMessage();
+            });
         }
 
     };
-
 
 
     _background = (item) => {
@@ -177,7 +176,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             return (
                 <View style={{
                     width: '90%', height: 400, backgroundColor: '#FFFFFF', borderColor: '#6787EE',
-                    borderWidth: 3, borderRadius: 10,marginTop:10
+                    borderWidth: 3, borderRadius: 10, marginTop: 10
                 }}>
                     <View style={{flexDirection: 'row', width: '100%', marginTop: 20, marginBottom: 26}}>
                         <View style={{flex: 1, marginLeft: 17}}/>
@@ -255,65 +254,65 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 </View>
             )
         } else {
-            const {wheel_image,prize_counts} = this.state.drawData
-            if(wheel_image)
-            return (
-                <View style={{marginTop: 0}}>
-                    <Image source={require('./imgs/turntable.png')}
-                           style={{width: 200, height: 150, alignSelf: 'center', zIndex: 1000}}/>
-                    <ImageBackground source={require('./imgs/circle_bg.png')} style={{
-                        height: 340, width: 340, marginTop: -50,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
+            const {wheel_image, prize_counts} = this.state.drawData
+            if (wheel_image)
+                return (
+                    <View style={{marginTop: 0}}>
+                        <Image source={require('./imgs/turntable.png')}
+                               style={{width: 200, height: 150, alignSelf: 'center', zIndex: 1000}}/>
+                        <ImageBackground source={require('./imgs/circle_bg.png')} style={{
+                            height: 340, width: 340, marginTop: -50,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
 
 
-                        <View style={styles.lottery_container}>
-                            <Animated.View style={[styles.mainImg, {
-                                transform: [{
-                                    rotate: this.state.rotateDeg.interpolate({
-                                        inputRange: [0, 4],
-                                        outputRange: ['0deg', '1440deg']
-                                    })
-                                }]
-                            }]}>
-                              <Image
-                                style={{position: "absolute", height: 300, width: 300, resizeMode: 'stretch'}}
-                                source={{uri:wheel_image}}/>
+                            <View style={styles.lottery_container}>
+                                <Animated.View style={[styles.mainImg, {
+                                    transform: [{
+                                        rotate: this.state.rotateDeg.interpolate({
+                                            inputRange: [0, 4],
+                                            outputRange: ['0deg', '1440deg']
+                                        })
+                                    }]
+                                }]}>
+                                    <Image
+                                        style={{position: "absolute", height: 300, width: 300, resizeMode: 'stretch'}}
+                                        source={{uri: wheel_image}}/>
 
-                            </Animated.View>
-                            <TouchableOpacity activeOpacity={0.9} onPress={() => {
-                                if (isEmptyObject(global.login_user)) {
-                                    global.router.toLoginFirstPage()
-                                } else {
-                                    if(prize_counts)
-                                    this.rotateImg(prize_counts)
-                                }
-                            }} style={styles.centerPoint}>
-                                <Image source={require('./imgs/point_new.png')}
-                                       style={{
-                                           height: 80,
-                                           width: 63.4, resizeMode: "stretch", position: "absolute"
-                                       }}/>
-                            </TouchableOpacity>
-                        </View>
-                    </ImageBackground>
-                    <TouchableOpacity onPress={() => {
-                        if (this.state.offOn)
-                            this.setState({
-                                visible: false
-                            })
-                    }}
-                                      style={{
-                                          position: 'absolute',
-                                          top: 30,
-                                          right: 25,
-                                          zIndex: 999
-                                      }}>
-                        <Image source={require('./imgs/lottery_close.png')} style={{width: 30, height: 30}}/>
-                    </TouchableOpacity>
-                </View>
-            )
+                                </Animated.View>
+                                <TouchableOpacity activeOpacity={0.9} onPress={() => {
+                                    if (isEmptyObject(global.login_user)) {
+                                        global.router.toLoginFirstPage()
+                                    } else {
+                                        if (prize_counts)
+                                            this.rotateImg(prize_counts)
+                                    }
+                                }} style={styles.centerPoint}>
+                                    <Image source={require('./imgs/point_new.png')}
+                                           style={{
+                                               height: 80,
+                                               width: 63.4, resizeMode: "stretch", position: "absolute"
+                                           }}/>
+                                </TouchableOpacity>
+                            </View>
+                        </ImageBackground>
+                        <TouchableOpacity onPress={() => {
+                            if (this.state.offOn)
+                                this.setState({
+                                    visible: false
+                                })
+                        }}
+                                          style={{
+                                              position: 'absolute',
+                                              top: 30,
+                                              right: 25,
+                                              zIndex: 999
+                                          }}>
+                            <Image source={require('./imgs/lottery_close.png')} style={{width: 30, height: 30}}/>
+                        </TouchableOpacity>
+                    </View>
+                )
         }
     }
 
@@ -337,14 +336,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     backgroundColor: 'rgba(0,0,0,0.6)'
 
                 }}>
-                    <View style={{marginTop: 50, alignItems: 'center'}}>
+                    <View style={{marginTop: '15%', alignItems: 'center'}}>
                         {this.carousel()}
 
                         {this.content_show()}
                     </View>
 
 
-                    <View style={{position: 'absolute', bottom: 60}}>
+                    <View style={{position: 'absolute', bottom: '10%'}}>
                         <View style={{alignSelf: 'center', width: 150, flexDirection: 'row', alignItems: 'center'}}>
                             <ImageBackground
                                 source={Images.lottery.opportunity}
@@ -389,18 +388,32 @@ export default class AnimatedTurnTableDrawPage extends Component {
             return (
                 <View style={{
                     height: 24,
-                    backgroundColor: 'rgba(0, 0, 0,0.59)'
+                    backgroundColor: 'rgba(0, 0, 0,0.59)',
+                    width: Metrics.screenWidth
                 }}>
 
                     <Swiper
-                        dotStyle={{width:0,height:0}}
-                        activeDotStyle={{width:0,height:0}}
+                        dotStyle={{width: 0, height: 0}}
+                        activeDotStyle={{width: 0, height: 0}}
                         showsButtons={false}
                         autoplayTimeout={3}
                         autoplay>
                         {prize_messages.map((item, key) => {
-                            return <View key={key} style={{flexDirection:'row', height: 24,alignItems: 'center',justifyContent: 'center'}}>
-                                <Text style={{color: '#F3F3F3', fontSize: 12}}>{`恭喜用户${item.nick_name}转盘活动抽奖获得${item.prize}`}</Text>
+                            return <View key={key} style={{
+                                flexDirection: 'row',
+                                width: Metrics.screenWidth,
+                                height: 24,
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <Text style={{
+                                    color: '#F3F3F3',
+                                    fontSize: 12,
+                                    width:'80%',
+                                    overflow:'hidden',
+                                    textOverflow:'ellipsis',
+                                    whiteSpace:'nowrap'
+                                }}>{`恭喜用户${item.nick_name}转盘活动抽奖获得${item.prize}`}</Text>
                             </View>
                         })}
 

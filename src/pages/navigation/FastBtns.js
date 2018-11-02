@@ -67,12 +67,12 @@ export default class FastBtns extends Component {
             width: Metrics.screenWidth,
             paddingTop: 17,
             paddingBottom: 17,
-            paddingLeft: 17,
-            paddingRight: 17,
             backgroundColor: 'white'
         }}>
 
             <View style={{
+                marginRight:17,
+                marginLeft:17,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-around'
@@ -92,11 +92,11 @@ export default class FastBtns extends Component {
                             }
                         }}
                         style={{
-                            width: 70,
-                            paddingRight: 10,
+                            width: '25%',
+                            height:30,
                             flexDirection: 'row',
                             alignItems: 'center',
-                            justifyContent: 'space-around',
+                            justifyContent: 'center',
                             borderRightWidth: index === catalogs.length - 1 ? 0 : 1,
                             borderRightColor: '#F3F3F3'
                         }}>
@@ -104,7 +104,7 @@ export default class FastBtns extends Component {
                                source={item.icon}/>
 
                         <Text style={{
-                            fontSize: 14, color: '#444444'
+                            fontSize: 14, color: '#444444',marginLeft:8
                         }}>{item.name}</Text>
 
                     </TouchableOpacity>
@@ -112,6 +112,8 @@ export default class FastBtns extends Component {
             </View>
 
             <View style={{
+                marginRight:17,
+                marginLeft:17,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-around',
@@ -132,22 +134,22 @@ export default class FastBtns extends Component {
                             }
                         }}
                         style={{
-                            width: 70,
-                            paddingRight: 10,
+                            width: '25%',
+                            height:30,
                             flexDirection: 'row',
                             alignItems: 'center',
-                            justifyContent: 'space-around',
+                            justifyContent: 'center',
                             borderRightWidth: index === catalogs.length - 1 ? 0 : 1,
                             borderRightColor: '#F3F3F3'
                         }}>
                         {item.type === 'visa' ?
-                            <Image style={{width: 30, height: 16, position: 'absolute', bottom:15, left: -15,zIndex:999}}
+                            <Image style={{width: 28, height: 14, position: 'absolute', bottom:15, left: 0,zIndex:9}}
                                    source={Images.navigation2.tehui}/> : null}
                         <Image style={item.size}
                                source={item.icon}/>
 
                         <Text style={{
-                            fontSize: 14, color: '#444444'
+                            fontSize: 14, color: '#444444',marginLeft:8
                         }}>{item.name}</Text>
 
                     </TouchableOpacity>
