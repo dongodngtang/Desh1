@@ -37,15 +37,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
         super(props);
         router.popToTop();
         this.state = {
-            drawData: [],
-            // elements: [],
+            drawData: {},
             lottery: 1,
             offOn: true,
             rotateDeg: new Animated.Value(0),
             visible: true,
             total_points: 0,
             rule_show: false,
-            wheel_times: 1,
+            wheel_times: 0,
             prize_messages: []
         };
     };
@@ -79,7 +78,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
         getElements(data => {
             logMsg("转盘元素：", data);
             this.setState({
-                drawData: data.items
+                drawData: data
             })
         });
 
@@ -104,13 +103,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
             })
     };
 
-    rotateImg = () => {
-        if (this.state.offOn) {
+    rotateImg = (prize_counts) => {
+        if (this.state.offOn  && this.state.wheel_times>0) {
             postLottery({}, data => {
                 logMsg("抽奖的ID", data)
-                this.rotateImg1(data);
+              this.rotateImg1(data,prize_counts)
+
             }, err => {
-                showToast(err.msg);
+                showToast(err);
                 logMsg("抽奖问题", err)
             });
 
@@ -118,46 +118,48 @@ export default class AnimatedTurnTableDrawPage extends Component {
     };
 
 
-    rotateImg1 = (lottery) => {
-        //刷新次数
-        this.getTime();
-        //轮播
-        this.prizeMessage();
+    rotateImg1 = (lottery,prize_counts) => {
+
 
         //转盘中奖品个数
-        const COUNT = 10;
+        let COUNT = prize_counts;
 
         //获取抽奖位置
-        // let number = Math.floor(Math.random() * 8);
-        let number = strNotNull(lottery.wheel_element_id) ? lottery.wheel_element_id : 1;
+        let wheels = this.state.drawData.items.filter(item=>item.id === lottery.wheel_element_id)
+        logMsg('获奖位置',wheels)
+        if(wheels.length ===1){
 
-
-        this.setState({
+          let number =wheels[0].position
+          this.setState({
             offOn: !this.state.offOn,
-        });
+          });
 
-
-        let oneTimeRotate = number / COUNT + 3;
-        Animated.timing(this.state.rotateDeg, {
+          let oneTimeRotate = number / COUNT + 3;
+          Animated.timing(this.state.rotateDeg, {
             toValue: oneTimeRotate,
             duration: 5000,
             easing: Easing.out(Easing.quad)
-        }).start(() => {
+          }).start(() => {
+
             this.setState({
-                offOn: !this.state.offOn,
-                rotateDeg: new Animated.Value(0)
+              offOn: !this.state.offOn,
+              rotateDeg: new Animated.Value(0)
             });
             //动画结束时，会把toValue值，回调给callback
             this.state.rotateDeg.stopAnimation(() => {
-                this.changeValue(number);
+              alert(`${lottery.name} -- ${lottery.wheel_element_id}`)
             })
-        });
+
+            //刷新次数
+            this.getTime();
+            //轮播
+            this.prizeMessage();
+          });
+        }
+
     };
 
-    changeValue = (postion) => {
-        if (this.state.visible)
-            alert("定位到了" + postion + "上了");
-    };
+
 
     _background = (item) => {
         let action = item.status;
@@ -253,6 +255,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 </View>
             )
         } else {
+            const {wheel_image,prize_counts} = this.state.drawData
+            if(wheel_image)
             return (
                 <View style={{marginTop: 0}}>
                     <Image source={require('./imgs/turntable.png')}
@@ -273,90 +277,17 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                     })
                                 }]
                             }]}>
-                                <View style={{height: 300, width: 300, alignItems: "center"}}>
-                                    <Image
-                                        style={{position: "absolute", height: 300, width: 300, resizeMode: 'stretch'}}
-                                        source={require('./imgs/circle1.png')}/>
-                                    {!isEmptyObject(this.state.drawData) && this.state.drawData.map((one, index) => {
-                                        const rotateDeg = 18;
-                                        let translateX = 0;
-                                        let translateY = 0;
-                                        const rotateTemp = -rotateDeg - (index * 36);
-                                        const sinTemp = Math.sin(rotateDeg * Math.PI / 180) * 105;
-                                        const consTemp = Math.cos(rotateDeg * Math.PI / 180) * 105;
-                                        switch (index) {
-                                            case 0:
-                                                translateX = -sinTemp;
-                                                translateY = -consTemp;
-                                                break;
-                                            case 1:
-                                                translateX = -consTemp;
-                                                translateY = -sinTemp;
-                                                break;
-                                            case 2:
-                                                translateX = -consTemp;
-                                                translateY = sinTemp;
-                                                break;
-                                            case 3:
-                                                translateX = -sinTemp;
-                                                translateY = consTemp;
-                                                break;
-                                            case 4:
-                                                translateX = sinTemp;
-                                                translateY = consTemp;
-                                                break;
-                                            case 5:
-                                                translateX = consTemp;
-                                                translateY = sinTemp;
-                                                break;
-                                            case 6:
-                                                translateX = consTemp;
-                                                translateY = -sinTemp;
-                                                break;
-                                            case 7:
-                                                translateX = sinTemp;
-                                                translateY = -consTemp;
-                                                break;
-                                            case 8:
-                                                translateX = -sinTemp;
-                                                translateY = consTemp;
-                                                break;
-                                            case 9:
-                                                translateX = consTemp;
-                                                translateY = sinTemp;
-                                                break;
-                                            default:
-                                                break
-                                        }
-                                        return (
-                                            <View key={one.id} style={{
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                position: "absolute",
-                                                zIndex: 99,
-                                                height: 70,
-                                                width: 60,
-                                                top: 115,
-                                                transform: [{translateX: translateX}, {translateY: translateY}, {rotateZ: `${rotateTemp}deg`}]
-                                            }}>
-                                                {/*<Text style={{*/}
-                                                {/*fontSize: 12,*/}
-                                                {/*color: "#74340A",*/}
-                                                {/*marginBottom: 10*/}
-                                                {/*}}>{one.name}</Text>*/}
-                                                {strNotNull(one.image) ?
-                                                    <Image style={{width: 50, height: 50, resizeMode: "contain"}}
-                                                           source={{uri: one.image}}/> : null}
-                                            </View>
-                                        )
-                                    })}
-                                </View>
+                              <Image
+                                style={{position: "absolute", height: 300, width: 300, resizeMode: 'stretch'}}
+                                source={{uri:wheel_image}}/>
+
                             </Animated.View>
                             <TouchableOpacity activeOpacity={0.9} onPress={() => {
                                 if (isEmptyObject(global.login_user)) {
                                     global.router.toLoginFirstPage()
                                 } else {
-                                    this.rotateImg()
+                                    if(prize_counts)
+                                    this.rotateImg(prize_counts)
                                 }
                             }} style={styles.centerPoint}>
                                 <Image source={require('./imgs/point_new.png')}
@@ -389,6 +320,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     render() {
         const {total_points} = this.state;
+
         return (
             <Modal
                 animationType={"none"}
@@ -481,9 +413,6 @@ export default class AnimatedTurnTableDrawPage extends Component {
     }
 
 
-    componentWillUnmount() {
-
-    }
 }
 
 
