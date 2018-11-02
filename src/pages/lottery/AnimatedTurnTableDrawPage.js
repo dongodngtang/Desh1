@@ -177,13 +177,13 @@ export default class AnimatedTurnTableDrawPage extends Component {
             return (
                 <View style={{
                     width: Metrics.screenWidth - 34,
-                    paddingBottom:30,
+                    paddingBottom: 30,
                     backgroundColor: '#FFFFFF',
                     borderColor: '#6787EE',
                     borderWidth: 3,
                     borderRadius: 10,
-                    marginTop:10,
-                    paddingTop:30
+                    marginTop: 10,
+                    paddingTop: 30
                 }}>
                     <View style={{flexDirection: 'row', width: '100%'}}>
                         <View style={{flex: 1, marginLeft: 17}}/>
@@ -251,12 +251,12 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
                     {/*<Text style={{color: '#444444', fontSize: 14, marginTop: 20, marginLeft: 23}}>活动规则</Text>*/}
                     {/*{prompts.map((prompt, index) => {*/}
-                        {/*return <Text key={index} style={{*/}
-                            {/*color: '#666666',*/}
-                            {/*fontSize: 14,*/}
-                            {/*marginTop: 5,*/}
-                            {/*marginLeft: 23*/}
-                        {/*}}>{prompt}</Text>*/}
+                    {/*return <Text key={index} style={{*/}
+                    {/*color: '#666666',*/}
+                    {/*fontSize: 14,*/}
+                    {/*marginTop: 5,*/}
+                    {/*marginLeft: 23*/}
+                    {/*}}>{prompt}</Text>*/}
                     {/*})}*/}
                 </View>
             )
@@ -350,8 +350,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     </View>
 
 
-                    <View style={{position: 'absolute', bottom: '10%'}}>
-                        <View style={{alignSelf: 'center', width: 150, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{position: 'absolute', bottom: 20}}>
+                        <View style={{
+                            alignSelf: 'center',
+                            paddingLeft:10,
+                            width: 150,
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
                             <ImageBackground
                                 source={Images.lottery.opportunity}
                                 style={{width: 120, height: 40, justifyContent: 'center', alignItems: 'center'}}>
