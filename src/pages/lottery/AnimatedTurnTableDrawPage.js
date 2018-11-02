@@ -21,7 +21,7 @@ import {
     ImageBackground
 } from "react-native";
 import {Images, Metrics} from '../../Themes'
-import {getProfile, getElements, postLottery, getWheelTime, getprizeMessages} from "../../services/AccountDao";
+import {getTaskCount, getElements, postLottery, getWheelTime, getprizeMessages} from "../../services/AccountDao";
 import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 import Swiper from 'react-native-swiper';
 
@@ -46,7 +46,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
             total_points: 0,
             rule_show: false,
             wheel_times: 0,
-            prize_messages: []
+            prize_messages: [],
+            task_count: {}
         };
     };
 
@@ -84,16 +85,17 @@ export default class AnimatedTurnTableDrawPage extends Component {
         });
 
         if (!isEmptyObject(global.login_user)) {
-            getProfile('', data => {
+            getTaskCount(data => {
                 console.log("我的积分", data)
                 this.setState({
-                    total_points: data.total_points
+                    task_count: data
                 })
 
             }, err => {
                 console.log("err", err)
             })
         }
+
 
     }
 
@@ -114,6 +116,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 showToast(err);
                 logMsg("抽奖问题", err)
             });
+
 
         }
     };
@@ -172,8 +175,43 @@ export default class AnimatedTurnTableDrawPage extends Component {
         }
     };
 
+    judge=(task)=>{
+        if(strNotNull(task)){
+            return task;
+        }else{
+            return ''
+        }
+    };
+
+    showContent=(name)=>{
+        const {today_invite_times, invite_limit_times,today_share_times,share_limit_times} = this.state.task_count;
+        if(name === '好友邀请'){
+            return <Text style={{
+                color: '#444444',
+                fontSize: 14
+            }}>{`(${this.judge(today_invite_times)}/${this.judge(invite_limit_times)})`}</Text>
+        }else if(name === '游戏分享'){
+            return <Text style={{
+                color: '#444444',
+                fontSize: 14
+            }}>{`(${this.judge(today_share_times)}/${this.judge(share_limit_times)})`}</Text>
+        }else{
+            return null;
+        }
+    };
+
+    showDes=(item)=>{
+        const {invite_limit_times,share_limit_times} = this.state.task_count;
+        if(item.name === '好友邀请'){
+            return <Text style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{`每日可获得${invite_limit_times}次抽奖机会`}</Text>
+        }else{
+            return <Text style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{item.des}</Text>
+        }
+    }
+
     content_show() {
         if (this.state.rule_show) {
+            const {total_points, today_invite_times, invite_limit_times} = this.state.task_count;
             return (
                 <View style={{
                     width: Metrics.screenWidth - 34,
@@ -185,7 +223,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     marginTop: 10,
                     paddingTop: 30
                 }}>
-                    <View style={{flexDirection: 'row', width: '100%'}}>
+                    <View style={{flexDirection: 'row', width: '100%', marginBottom: 10}}>
                         <View style={{flex: 1, marginLeft: 17}}/>
                         <Text style={{
                             color: '#1E41B2',
@@ -210,9 +248,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                     <Image style={{height: 34, width: 34}}
                                            source={item.image}/>
                                     <View style={{marginLeft: 14, flexDirection: 'column'}}>
-                                        <Text style={{color: '#444444', fontSize: 14}}>{item.name}</Text>
-                                        <Text style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{item.des}</Text>
-
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{color: '#444444', fontSize: 14,marginRight:3}}>{item.name}</Text>
+                                            {this.showContent(item.name)}
+                                        </View>
+                                        {this.showDes(item)}
                                     </View>
                                     <View style={{flex: 1}}/>
                                     <TouchableOpacity
@@ -236,7 +276,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                     color: '#AAAAAA', fontSize: 12, marginTop: 2, alignSelf: 'flex-end',
                                     marginRight: 23
                                 }}>
-                                    {`当前积分：${this.state.total_points}`}
+                                    {`当前积分：${this.judge(total_points)}`}
                                 </Text> : null}
                                 <View style={{
                                     height: 1,
@@ -353,7 +393,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     <View style={{position: 'absolute', bottom: 20}}>
                         <View style={{
                             alignSelf: 'center',
-                            paddingLeft:10,
+                            paddingLeft: 10,
                             width: 150,
                             flexDirection: 'row',
                             alignItems: 'center'

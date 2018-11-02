@@ -43,6 +43,12 @@ export function getPrizesList(body,resolve, reject) {
     },body)
 }
 
+export function getTaskCount(resolve, reject) {
+    helper.get(Api.task_count(), ret => {
+        resolve(ret.data);
+    }, reject)
+}
+
 export function getprizeMessages(resolve, reject) {
     helper.get(Api.prize_messages(), ret => {
         resolve(ret.data);
