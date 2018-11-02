@@ -147,7 +147,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             });
             //动画结束时，会把toValue值，回调给callback
             this.state.rotateDeg.stopAnimation(() => {
-              alert(`${lottery.name} -- ${lottery.wheel_element_id}`)
+              alert(`${lottery.name} -- ${number}`)
             })
 
             //刷新次数
