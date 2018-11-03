@@ -21,8 +21,15 @@ import {
     ImageBackground
 } from "react-native";
 import {Images, Metrics} from '../../Themes'
-import {getTaskCount, getElements, postLottery, getWheelTime, getprizeMessages} from "../../services/AccountDao";
-import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
+import {
+    getTaskCount,
+    getElements,
+    postLottery,
+    getWheelTime,
+    getprizeMessages,
+    postWheelTimes
+} from "../../services/AccountDao";
+import {alertOrder, isEmptyObject, logMsg, showToast, strNotNull, uShareRegistered} from "../../utils/ComonHelper";
 import Swiper from 'react-native-swiper';
 
 
@@ -47,7 +54,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
             rule_show: false,
             wheel_times: 0,
             prize_messages: [],
-            task_count: {}
+            task_count: {},
+            rule_lists: rule_list
         };
     };
 
@@ -56,6 +64,25 @@ export default class AnimatedTurnTableDrawPage extends Component {
         this.refresh();
         this.prizeMessage();
     }
+
+    changed_status = (item) => {
+        let rules = this.state.rule_lists;
+        const {today_invite_times, invite_limit_times, today_share_times, share_limit_times} = this.state.task_count;
+        if (item.name === '游戏分享') {
+            if (today_share_times === share_limit_times) {
+                rules[item.id].status = '已完成'
+            }else{
+
+            }
+        } else if (item.name === '好友邀请') {
+            if (today_invite_times === invite_limit_times) {
+                rules[item.id].status = '已完成'
+            }else{
+                logMsg("进入邀请分享")
+                uShareRegistered();
+            }
+        }
+    };
 
     getTime = () => {
         getWheelTime(data => {
@@ -175,43 +202,45 @@ export default class AnimatedTurnTableDrawPage extends Component {
         }
     };
 
-    judge=(task)=>{
-        if(strNotNull(task)){
+    judge = (task) => {
+        if (strNotNull(task)) {
             return task;
-        }else{
+        } else {
             return ''
         }
     };
 
-    showContent=(name)=>{
-        const {today_invite_times, invite_limit_times,today_share_times,share_limit_times} = this.state.task_count;
-        if(name === '好友邀请'){
+    showContent = (name) => {
+        const {today_invite_times, invite_limit_times, today_share_times, share_limit_times} = this.state.task_count;
+        if (name === '好友邀请') {
             return <Text style={{
                 color: '#444444',
                 fontSize: 14
             }}>{`(${this.judge(today_invite_times)}/${this.judge(invite_limit_times)})`}</Text>
-        }else if(name === '游戏分享'){
+        } else if (name === '游戏分享') {
             return <Text style={{
                 color: '#444444',
                 fontSize: 14
             }}>{`(${this.judge(today_share_times)}/${this.judge(share_limit_times)})`}</Text>
-        }else{
+        } else {
             return null;
         }
     };
 
-    showDes=(item)=>{
-        const {invite_limit_times,share_limit_times} = this.state.task_count;
-        if(item.name === '好友邀请'){
-            return <Text style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{`每日可获得${invite_limit_times}次抽奖机会`}</Text>
-        }else{
+    showDes = (item) => {
+        const {invite_limit_times, share_limit_times} = this.state.task_count;
+        if (item.name === '好友邀请') {
+            return <Text
+                style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{`每日可获得${invite_limit_times}次抽奖机会`}</Text>
+        } else {
             return <Text style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{item.des}</Text>
         }
-    }
+    };
+
 
     content_show() {
         if (this.state.rule_show) {
-            const {total_points, today_invite_times, invite_limit_times} = this.state.task_count;
+            const {total_points, invite_limit_times, share_limit_times,today_invite_times} = this.state.task_count;
             return (
                 <View style={{
                     width: Metrics.screenWidth - 34,
@@ -241,7 +270,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    {rule_list.map((item, index) => {
+                    {this.state.rule_lists.map((item, index) => {
                         return (
                             <View key={index} style={{flexDirection: 'column', alignItems: 'center'}}>
                                 <View style={styles.item} key={index}>
@@ -249,7 +278,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                            source={item.image}/>
                                     <View style={{marginLeft: 14, flexDirection: 'column'}}>
                                         <View style={{flexDirection: 'row'}}>
-                                            <Text style={{color: '#444444', fontSize: 14,marginRight:3}}>{item.name}</Text>
+                                            <Text style={{
+                                                color: '#444444',
+                                                fontSize: 14,
+                                                marginRight: 3
+                                            }}>{item.name}</Text>
                                             {this.showContent(item.name)}
                                         </View>
                                         {this.showDes(item)}
@@ -260,11 +293,28 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                         style={[styles.statusView, {backgroundColor: this._background(item)}]}
                                         onPress={() => {
                                             if (item.status === '未完成') {
-                                                this.setState({
-                                                    rule_show: false
-                                                });
+                                                this.changed_status(item)
+                                                // this.setState({
+                                                //     rule_show: false
+                                                // });
+                                                // alert('分享成功')
 
                                             } else if (item.status === '兑换') {
+                                                if(total_points < 200){
+                                                    alert('积分不足')
+                                                }else{
+                                                    alertOrder("确认兑换？", () => {
+                                                        postWheelTimes({}, data => {
+                                                            logMsg("积分兑换", data);
+                                                            alert('积分兑换成功');
+                                                            this.getTime();
+                                                            if (this.refresh)
+                                                                this.refresh();
+                                                        }, err => {
+                                                            logMsg("积分兑换err", err)
+                                                        })
+                                                    });
+                                                }
 
                                             }
                                         }}>
@@ -298,6 +348,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     {/*marginLeft: 23*/}
                     {/*}}>{prompt}</Text>*/}
                     {/*})}*/}
+
                 </View>
             )
         } else {

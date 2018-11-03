@@ -29,6 +29,12 @@ export function report_templates() {
     // })
 }
 
+export function postWheelTimes(body,resolve, reject) {
+    helper.post(Api.post_wheel_times(), body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function postLottery(body,resolve, reject) {
     helper.post(Api.lottery(), body, ret => {
         resolve(ret.data)

@@ -214,6 +214,7 @@ const api = {
     prize_messages:prize_messages,//转盘轮播提示用户的中奖信息
     prizes_list:prizes_list,//转盘活动我的奖品列表
     task_count:task_count,//转盘剩余抽奖次数，用户积分剩余情况
+    post_wheel_times:post_wheel_times,//积分兑换转盘次数的接口
 }
 
 export default api;
@@ -230,6 +231,10 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function post_wheel_times() {
+    return `wheel/times`;
+}
 
 export function task_count() {
     return `wheel/task_count`;
