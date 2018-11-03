@@ -27,7 +27,7 @@ import {
     postLottery,
     getWheelTime,
     getprizeMessages,
-    postWheelTimes, getActivityInfo
+    postWheelTimes, getActivityInfo, postShareCount
 } from "../../services/AccountDao";
 import {
     alertOrder, isEmptyObject, logMsg, showToast, strNotNull, uShareActivity, uShareInfoItem,
@@ -80,9 +80,15 @@ export default class AnimatedTurnTableDrawPage extends Component {
             } else {
                 const {activity_id} = this.state.task_count;
                 getActivityInfo({id: activity_id}, data => {
-                    console.log("activity_detail",data)
-                    const {title,description,banner,id} = data;
-                    uShareActivity(title,description,banner,id)
+                    console.log("activity_detail", data)
+                    const {title, description, banner, id} = data;
+                    uShareActivity(title, description, banner, id);
+                    postShareCount({from: 'wheel'}, data => {
+                        logMsg("用户好友分享成功:")
+                        this.refresh();
+                    }, err => {
+
+                    })
                 }, err => {
 
                 })
