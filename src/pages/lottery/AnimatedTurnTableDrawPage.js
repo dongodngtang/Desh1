@@ -78,6 +78,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
             if (today_share_times === share_limit_times) {
                 rules[item.id].status = '已完成'
             } else {
+                this.setState({
+                    rule_show: !this.state.rule_show
+                });
                 const {activity_id} = this.state.task_count;
                 getActivityInfo({id: activity_id}, data => {
                     console.log("activity_detail", data)
@@ -86,6 +89,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     postShareCount({from: 'wheel'}, data => {
                         logMsg("用户好友分享成功:")
                         this.refresh();
+                        this.getTime();
                     }, err => {
 
                     })
@@ -315,10 +319,6 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                         onPress={() => {
                                             if (item.status === '未完成') {
                                                 this.changed_status(item)
-                                                // this.setState({
-                                                //     rule_show: false
-                                                // });
-                                                // alert('分享成功')
 
                                             } else if (item.status === '兑换') {
                                                 if (total_points < 200) {
@@ -481,6 +481,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             </ImageBackground>
                             <TouchableOpacity style={{position: 'absolute', right: 10}}
                                               onPress={() => {
+                                                  this.refresh();
+                                                  this.getTime();
                                                   this.setState({
                                                       rule_show: true
                                                   })
