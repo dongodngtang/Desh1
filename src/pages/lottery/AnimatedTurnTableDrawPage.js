@@ -27,10 +27,10 @@ import {
     postLottery,
     getWheelTime,
     getprizeMessages,
-    postWheelTimes
+    postWheelTimes, getActivityInfo
 } from "../../services/AccountDao";
 import {
-    alertOrder, isEmptyObject, logMsg, showToast, strNotNull, uShareInfoItem,
+    alertOrder, isEmptyObject, logMsg, showToast, strNotNull, uShareActivity, uShareInfoItem,
     uShareRegistered
 } from "../../utils/ComonHelper";
 import Swiper from 'react-native-swiper';
@@ -78,12 +78,15 @@ export default class AnimatedTurnTableDrawPage extends Component {
             if (today_share_times === share_limit_times) {
                 rules[item.id].status = '已完成'
             } else {
-                const {id} = this.state.task_count;
-                getInfos(id, data => {
-                    const {title,intro, image} = data.info;
-                    uShareInfoItem(title, intro, image, id);
+                const {activity_id} = this.state.task_count;
+                getActivityInfo({id: activity_id}, data => {
+                    console.log("activity_detail",data)
+                    const {title,description,banner,id} = data;
+                    uShareActivity(title,description,banner,id)
                 }, err => {
+
                 })
+
 
             }
         } else if (item.name === '好友邀请') {
