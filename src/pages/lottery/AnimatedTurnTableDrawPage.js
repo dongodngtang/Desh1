@@ -18,7 +18,7 @@ import {
     StyleSheet,
     Dimensions,
     Text,
-    ImageBackground
+    ImageBackground, Alert
 } from "react-native";
 import {Images, Metrics} from '../../Themes'
 import {
@@ -34,7 +34,6 @@ import {
     uShareRegistered
 } from "../../utils/ComonHelper";
 import Swiper from 'react-native-swiper';
-import {getInfos} from "../../services/MacauDao";
 
 
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
@@ -203,7 +202,13 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 });
                 //动画结束时，会把toValue值，回调给callback
                 this.state.rotateDeg.stopAnimation(() => {
-                    alert(`${lottery.name} -- ${number}`)
+                    if(lottery.name === '谢谢参与'){
+                        Alert.alert('澳门旅行',`很遗憾没有抽中，谢谢参与`)
+                    }else if(lottery.name.indexOf('积分') !== -1 ){
+                        Alert.alert('澳门旅行',`恭喜您获得${lottery.name}`)
+                    }else{
+                        Alert.alert('澳门旅行',`恭喜您抽中${lottery.name}，请前往我的奖品查看领取`)
+                    }
                 })
 
                 //刷新次数
@@ -322,12 +327,12 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
                                             } else if (item.status === '兑换') {
                                                 if (total_points < 200) {
-                                                    alert('积分不足')
+                                                    Alert.alert('澳门旅行','积分不足')
                                                 } else {
                                                     alertOrder("确认兑换？", () => {
                                                         postWheelTimes({}, data => {
                                                             logMsg("积分兑换", data);
-                                                            alert('积分兑换成功');
+                                                            Alert.alert('澳门旅行','积分兑换成功');
                                                             this.getTime();
                                                             if (this.refresh)
                                                                 this.refresh();
