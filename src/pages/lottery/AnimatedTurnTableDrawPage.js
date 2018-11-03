@@ -29,8 +29,12 @@ import {
     getprizeMessages,
     postWheelTimes
 } from "../../services/AccountDao";
-import {alertOrder, isEmptyObject, logMsg, showToast, strNotNull, uShareRegistered} from "../../utils/ComonHelper";
+import {
+    alertOrder, isEmptyObject, logMsg, showToast, strNotNull, uShareInfoItem,
+    uShareRegistered
+} from "../../utils/ComonHelper";
 import Swiper from 'react-native-swiper';
+import {getInfos} from "../../services/MacauDao";
 
 
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
@@ -43,7 +47,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     constructor(props) {
         super(props);
-        if(this.props.pop){
+        if (this.props.pop) {
             router.popToTop();
         }
         this.state = {
@@ -73,13 +77,19 @@ export default class AnimatedTurnTableDrawPage extends Component {
         if (item.name === '游戏分享') {
             if (today_share_times === share_limit_times) {
                 rules[item.id].status = '已完成'
-            }else{
+            } else {
+                const {id} = this.state.task_count;
+                getInfos(id, data => {
+                    const {title,intro, image} = data.info;
+                    uShareInfoItem(title, intro, image, id);
+                }, err => {
+                })
 
             }
         } else if (item.name === '好友邀请') {
             if (today_invite_times === invite_limit_times) {
                 rules[item.id].status = '已完成'
-            }else{
+            } else {
                 logMsg("进入邀请分享")
                 uShareRegistered();
             }
@@ -242,7 +252,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     content_show() {
         if (this.state.rule_show) {
-            const {total_points, invite_limit_times, share_limit_times,today_invite_times} = this.state.task_count;
+            const {total_points, invite_limit_times, share_limit_times, today_invite_times} = this.state.task_count;
             return (
                 <View style={{
                     width: Metrics.screenWidth - 34,
@@ -302,9 +312,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                                 // alert('分享成功')
 
                                             } else if (item.status === '兑换') {
-                                                if(total_points < 200){
+                                                if (total_points < 200) {
                                                     alert('积分不足')
-                                                }else{
+                                                } else {
                                                     alertOrder("确认兑换？", () => {
                                                         postWheelTimes({}, data => {
                                                             logMsg("积分兑换", data);
