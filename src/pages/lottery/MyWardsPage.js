@@ -51,7 +51,7 @@ export default class MyWardsPage extends Component {
                 justifyContent:'center'
             }}
                               onPress={() => {
-                                  global.router.toWardReceivePage(this.refresh)
+                                  global.router.toWardReceivePage(this.refresh,item)
                               }}>
                 <Text style={{color: '#444444', fontSize: 14}}>
                     {`系统通知：恭喜您于${utcDate(created_at,'YYYY年MM月DD日HH：mm')}抽中${prize}，请点击右上方图标联系客服领取奖品吧>>>`}

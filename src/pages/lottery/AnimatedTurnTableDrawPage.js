@@ -244,7 +244,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             return (
                 <View style={{
                     width: Metrics.screenWidth - 34,
-                    paddingBottom: 30,
+                    paddingBottom: 40,
                     backgroundColor: '#FFFFFF',
                     borderColor: '#6787EE',
                     borderWidth: 3,
@@ -441,7 +441,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     </View>
 
 
-                    <View style={{position: 'absolute', bottom: 20}}>
+                    <View style={{position: 'absolute', bottom: 40}}>
                         <View style={{
                             alignSelf: 'center',
                             paddingLeft: 10,

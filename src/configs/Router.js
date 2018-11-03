@@ -613,11 +613,12 @@ export default class Router {
         })
     }
 
-    toWardReceivePage(refresh) {
+    toWardReceivePage(refresh,item) {
         this.stackPush({
             name: 'WardReceivePage',
             params:{
-                refresh
+                refresh,
+                item
             }
         })
     }

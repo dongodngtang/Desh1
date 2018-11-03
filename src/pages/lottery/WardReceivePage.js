@@ -8,7 +8,7 @@ import {
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
 import {getActivities, getJmessageInfo} from "../../services/AccountDao";
-import {isEmptyObject, showToast} from "../../utils/ComonHelper";
+import {isEmptyObject, showToast, strNotNull} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 import {visit_other} from "../../services/SocialDao";
 import {UltimateListView} from "../../components";
@@ -46,6 +46,7 @@ export default class WardReceivePage extends Component {
     };
 
     render() {
+        const {prize,created_at,id,expired,prize_img} = this.props.params.item;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -74,6 +75,8 @@ export default class WardReceivePage extends Component {
                         }
                     }}/>
                 <ScrollView style={{paddingTop: 14, marginTop: 1, backgroundColor: 'white'}}>
+                    <Text style={{lineHeight:20,color:'#444444',fontSize:14,marginTop:3,marginLeft:17,marginRight:17}}>请联系客服领取奖品</Text>
+                    {strNotNull(prize_img) ? <Image source={{uri:prize_img}} style={{alignSelf:'center',marginTop:15,width:38,height:44}}/> :null}
                     <Text style={{color:'#444444',fontSize:18,marginTop:15,marginLeft:17,marginRight:17,marginBottom:10}}>活动规则</Text>
                     {rules.map((rule,index)=>{
                         return <Text style={{lineHeight:20,color:'#444444',fontSize:14,marginTop:3,marginLeft:17,marginRight:17}} key={index}>{rule}</Text>
