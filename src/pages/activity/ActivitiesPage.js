@@ -9,18 +9,29 @@ import I18n from "react-native-i18n";
 import {ImageLoad, UltimateListView} from "../../components";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {isEmptyObject} from "../../utils/ComonHelper";
+import AnimatedTurnTableDrawPage from '../lottery/AnimatedTurnTableDrawPage'
 
 export default class ActivitiesPage extends Component {
+
+    state = {
+        lottery: false
+    }
 
     refresh = () => {
         this.listView && this.listView.refresh();
     }
 
     item_view = (item, index) => {
-        const {status, banner} = item;
+        const {status, banner, is_wheel} = item;
         return (
             <TouchableOpacity onPress={() => {
-                global.router.toActivityInfo(this.props, item);
+                if (is_wheel) {
+                    this.setState({
+                        lottery:!this.state.lottery
+                    })
+                } else {
+                    global.router.toActivityInfo(this.props, item);
+                }
             }}>
                 <ImageBackground source={{uri: banner}} style={{height: 156, width: '100%'}}>
                     {/*<ImageBackground source={this.backgroundImg(status)}*/}
@@ -73,10 +84,10 @@ export default class ActivitiesPage extends Component {
                     btnTextStyle={{
                         fontSize: 14, color: '#444444', marginRight: 17
                     }}
-                    rightBtnPress={()=>{
-                        if(isEmptyObject(global.login_user)){
+                    rightBtnPress={() => {
+                        if (isEmptyObject(global.login_user)) {
                             global.router.toLoginFirstPage()
-                        }else{
+                        } else {
                             global.router.toMyWardsPage()
                         }
 
@@ -100,6 +111,8 @@ export default class ActivitiesPage extends Component {
                             }}/> : <NoDataView/>;
                     }}
                 />
+
+                {this.state.lottery && !isEmptyObject(global.login_user) ? <AnimatedTurnTableDrawPage pop={false}/> : null}
             </View>
         )
     }

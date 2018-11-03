@@ -43,7 +43,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     constructor(props) {
         super(props);
-        router.popToTop();
+        if(this.props.pop){
+            router.popToTop();
+        }
         this.state = {
             drawData: {},
             lottery: 1,
