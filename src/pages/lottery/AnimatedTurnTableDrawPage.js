@@ -60,11 +60,22 @@ export default class AnimatedTurnTableDrawPage extends Component {
             wheel_times: 0,
             prize_messages: [],
             task_count: {},
-            rule_lists: rule_list
+            rule_lists: rule_list,
+            fadeOutOpacity: new Animated.Value(0)
         };
+
+        this.fadeOutAnimated = Animated.timing(
+            this.state.fadeOutOpacity,
+            {
+                toValue: 1,  //透明度动画最终值
+                duration: 2000,   //动画时长3000毫秒
+                easing: Easing.in,
+            }
+        );
     };
 
     componentDidMount() {
+        this.fadeOutAnimated.start(() => this.state.fadeOutOpacity.setValue(1));
         this.getTime();
         this.refresh();
         this.prizeMessage();
@@ -454,11 +465,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 visible={this.state.visible}
                 style={{alignItems: 'center'}}
             >
-                <View style={{
+                <Animated.View style={{
                     flex: 1,
                     alignItems: 'center',
-                    backgroundColor: 'rgba(0,0,0,0.6)'
-
+                    backgroundColor: 'rgba(0,0,0,0.6)',
+                    opacity: this.state.fadeOutOpacity
                 }}>
                     <View style={{marginTop: 50, alignItems: 'center'}}>
                         {this.carousel()}
@@ -509,7 +520,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             }}>游戏规则></Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </Animated.View>
             </Modal>
         );
     }
