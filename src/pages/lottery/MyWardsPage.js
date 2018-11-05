@@ -74,7 +74,7 @@ export default class MyWardsPage extends Component {
                         router.pop();
                     }}
                     rightBtnIcon={Images.lottery.cus_service}
-                    rightImageStyle={{width: 26, height: 20, marginRight: 17}}
+                    rightImageStyle={{width: 26, height: 22, marginRight: 17}}
                     rightBtnPress={() => {
                         if (isEmptyObject(global.login_user))
                             global.router.toLoginFirstPage()

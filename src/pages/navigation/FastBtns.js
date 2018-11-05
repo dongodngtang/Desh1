@@ -16,7 +16,7 @@ const catalogs = [{
     icon: Images.navigation2.weather
 },
     {
-        name: '指南',
+        name: '出入境',
         type: 'fast_food',
         size: {height: 20, width: 21},
         icon: Images.navigation2.car_bg
@@ -153,7 +153,7 @@ export default class FastBtns extends Component {
                             borderRightColor: '#F3F3F3'
                         }}>
                         {item.type === 'visa' ?
-                            <Image style={{width: 28, height: 14, position: 'absolute', bottom:15, left: 0,zIndex:9}}
+                            <Image style={{width: 28, height: 14, position: 'absolute', bottom:15, left: 10,zIndex:9}}
                                    source={Images.navigation2.tehui}/> : null}
                         <Image style={item.size}
                                source={item.icon}/>
