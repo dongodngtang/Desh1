@@ -13,49 +13,26 @@ import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
 import {FoodItem} from './HotelSearch'
 
-const sunna_data = [{
-    id: 0,
-    title: '金碧辉煌水疗馆',
-    location: '富城路33号(富城路陆家嘴西路)',
-    logo: Images.wallet.bg,
-    price: 2333,
-    distance: '1.4km'
-}, {
-    id: 1,
-    title: '金碧辉煌水疗馆2',
-    location: '富城路33号(富城路陆家嘴西路)',
-    logo: Images.wallet.bg,
-    price: 2333,
-    distance: '1.4km'
-}, {
-    id: 2,
-    title: '金碧辉煌水疗馆3',
-    location: '富城路33号(富城路陆家嘴西路)',
-    logo: Images.wallet.bg,
-    price: 2333,
-    distance: '1.4km'
-}];
-
 export default class RecreationPage extends PureComponent {
     state = {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: 1
+        name_index: 0
     };
 
-    // componentDidMount() {
-    //     let city = global.city_name;
-    //     let index = this.state.name_index;
-    //     if (city === '澳门') {
-    //         index = 1;
-    //     } else {
-    //         index = 0;
-    //     }
-    //     this.setState({
-    //         name_index: index
-    //     })
-    // }
+    componentDidMount() {
+        let city = global.city_name;
+        let index = this.state.name_index;
+        if (city === '澳门') {
+            index = 1;
+        } else {
+            index = 0;
+        }
+        this.setState({
+            name_index: index
+        })
+    }
 
     refresh = () => {
         this.setState({
@@ -67,7 +44,8 @@ export default class RecreationPage extends PureComponent {
     change_content() {
         const {name_index} = this.state;
         let city = global.city_name;
-        if (city !== '澳门') {
+        console.log("djskjds",city)
+        if (city === '澳门') {
             return (
                 <View style={{
                     display: 'flex',
@@ -244,14 +222,14 @@ export default class RecreationPage extends PureComponent {
 
     onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
         if (isEmptyObject(global.city_name)) {
-            startFetch(sunna_data, 18)
-            // abortFetch();
+            // startFetch(sunna_data, 18)
+            abortFetch();
             return;
         }
         const {latitude, longitude} = global.city_name;
         let body = {
-            latitude: '113.32',
-            longitude: '22.11'
+            latitude: latitude,
+            longitude: longitude
         };
         try {
             getSaunas(body, data => {

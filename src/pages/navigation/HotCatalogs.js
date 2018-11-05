@@ -38,12 +38,18 @@ export default class HotCatalogs extends PureComponent {
                                          source={Images.navigation2.info_ng}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{
-                        global.router.toHotelSearch({
+                        global.router.toRecreationPage({
                             name: '娱乐',
                             type: 'recreation',
                             size: {height: 34, width: 36},
                             icon: Images.macau.entertainment
-                        })
+                        });
+                        // global.router.toHotelSearch({
+                        //     name: '娱乐',
+                        //     type: 'recreation',
+                        //     size: {height: 34, width: 36},
+                        //     icon: Images.macau.entertainment
+                        // })
                     }}>
                         <ImageBackground style={[styles.leftTop, {marginTop: 4}]}
                                          source={Images.navigation2.rec_bg}/>

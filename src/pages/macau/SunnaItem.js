@@ -13,13 +13,13 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, BaseComponent} from '../../components';
 import ImageLoad from "../../components/ImageLoad";
-import {mul, DateDiff, checkPriceLength} from '../../utils/ComonHelper'
+import {mul, DateDiff, checkPriceLength, strNotNull} from '../../utils/ComonHelper'
 
 export default class SunnaItem extends Component {
 
-    render(){
+    render() {
         const {item} = this.props;
-        const {id,title, location, logo, price, star_level,distance} = item;
+        const {id, title, location, logo, price, star_level, distance} = item;
         return (
             <TouchableOpacity style={styles.item} key={id}
                               onPress={() => {
@@ -37,11 +37,11 @@ export default class SunnaItem extends Component {
                         })}
                     </View> : null}
                     <Text style={styles.location} numberOfLines={1}>地址：{location}</Text>
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     <View style={styles.priceView}>
-                        <Text style={{color:'#E54A2E',fontSize:16}}>{`人均¥${price}`}</Text>
-                        <View style={{flex:1}}/>
-                        <Text style={{color:'#4A90E2',fontSize:12}}>{distance}</Text>
+                        <Text style={{color: '#E54A2E', fontSize: 16}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>
+                        <View style={{flex: 1}}/>
+                        <Text style={{color: '#4A90E2', fontSize: 12}}>{distance}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

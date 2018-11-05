@@ -123,7 +123,7 @@ export default class SunnaInfoPage extends PureComponent {
 
     componentWillMount() {
         const {id} = this.props.params.item;
-        sunnaDetail({id:id}, data => {
+        sunnaDetail({id: id}, data => {
             console.log("sunna_info:", data)
             this.setState({
                 sunna: data.sauna
@@ -171,7 +171,7 @@ export default class SunnaInfoPage extends PureComponent {
                             style={{
                                 color: '#FF3F3F',
                                 fontSize: 12
-                            }}>{`人均${price}`}</Text>
+                            }}>{`人均${strNotNull(price) ? price : ''}`}</Text>
                         </Text>
                         <View style={{flex: 1}}/>
                         <TouchableOpacity style={{flexDirection: 'row'}}
@@ -221,6 +221,7 @@ export default class SunnaInfoPage extends PureComponent {
                 btnArray={this.popActions()}/>
         </View>
     }
+
     popActions = () => {
         const {title, location, amap_poiid, amap_navigation_url, amap_location} = this.state.sunna;
         let reportList = list;
