@@ -234,7 +234,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     _background = (item) => {
         let action = item.status;
-        if (action === '完成') {
+        if (action === '完成' || action === '已完成') {
             return '#6CC7FF'
         } else if (action === '未完成') {
             return '#FF6B4C'
