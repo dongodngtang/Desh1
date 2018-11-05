@@ -44,7 +44,7 @@ export default class RecreationPage extends PureComponent {
     change_content() {
         const {name_index} = this.state;
         let city = global.city_name;
-        console.log("djskjds",city)
+        console.log("global.city_name",city)
         if (city === '澳门') {
             return (
                 <View style={{
