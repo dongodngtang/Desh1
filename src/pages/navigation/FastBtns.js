@@ -124,11 +124,21 @@ export default class FastBtns extends Component {
                         key={item.name}
                         onPress={() => {
                             if (item.type === 'raiders') {
-                                // router.toWebView('天气', 'http://wx.weather.com.cn/mweather/101330101.shtml#1')
+                                global.router.toHotelSearch({
+                                    name: '攻略',
+                                    type: 'strategy',
+                                    size: item.size,
+                                    icon: item.icon
+                                })
                             } else if (item.type === 'visa') {
                                 // global.router.toFastFoodPage('fast_food')
                             } else if (item.type === 'coupon') {
-                                // global.router.toRoundTripPage()
+                                global.router.toHotelSearch({
+                                    name: '优惠',
+                                    type: 'discounts',
+                                    size: item.size,
+                                    icon: item.icon
+                                })
                             } else if (item.type === 'mall') {
                                 global.router.toMallPage()
                             }
