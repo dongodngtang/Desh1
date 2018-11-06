@@ -33,7 +33,11 @@ export function init(resolve) {
         //     longitude:"113.564241"
         // }
       locations(body, data => {
-        global.city_name = data.base.city_name;
+        global.city = {
+            city_name:data.base.city_name,
+            longitude: longitude,
+            latitude: latitude
+        };
       }, err => {
         console.log("获取位置失败");
       })

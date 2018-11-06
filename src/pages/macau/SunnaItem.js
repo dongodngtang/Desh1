@@ -49,7 +49,7 @@ export default class SunnaItem extends Component {
                     <View style={styles.priceView}>
                         <Text style={{color: '#E54A2E', fontSize: 16}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>
                         <View style={{flex: 1}}/>
-                        <Text style={{color: '#4A90E2', fontSize: 12}}>{distance}</Text>
+                        <Text style={{color: '#4A90E2', fontSize: 12}}>{strNotNull(distance) ? distance.toFixed(2) : distance}km</Text>
                     </View>
                 </View>
             </TouchableOpacity>

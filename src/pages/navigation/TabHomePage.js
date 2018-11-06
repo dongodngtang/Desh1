@@ -348,7 +348,7 @@ class TabHomePage extends Component {
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>
 
-                {/*{this.state.lottery && !isEmptyObject(global.login_user) ? <AnimatedTurnTableDrawPage pop={true}/> : null}*/}
+                {this.state.lottery && !isEmptyObject(global.login_user) ? <AnimatedTurnTableDrawPage pop={true}/> : null}
 
             </View>
 

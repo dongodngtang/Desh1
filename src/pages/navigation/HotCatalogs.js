@@ -5,17 +5,42 @@ import {
     TouchableOpacity, ImageBackground
 } from 'react-native';
 import {ApplicationStyles, Images, Colors, Metrics} from '../../Themes';
-import {isEmptyObject, logMsg} from "../../utils/ComonHelper";
+import {getPosition, isEmptyObject, logMsg} from "../../utils/ComonHelper";
+import {getApiType} from "../../services/RequestHelper";
+import {locations} from "../../services/SocialDao";
 
 export default class HotCatalogs extends PureComponent {
 
-    judge_city = () =>{
-        if(String(global.city_code) === "1853"){
-            return true;
-        }else{
-            return false
-        }
+    state = {
+        isMacau: false
     };
+
+    componentDidMount() {
+
+        getPosition(data=>{
+            const {longitude, latitude} = data;
+            let body = {
+                longitude: longitude,
+                latitude: latitude
+            }
+            locations(body, data => {
+                let city_name = data.base.city_name
+                if(getApiType()=== 'test')
+                    alert('定位城市：'+city_name)
+                if(city_name && city_name.indexOf('澳门')!== -1){
+                    this.setState({
+                        isMacau:true
+                    })
+                    this.refresh()
+
+                }
+            }, err => {
+                console.log("获取位置失败");
+            })
+        },err=>{
+            alert('获取定位失败')
+        })
+    }
 
     render() {
         return (
@@ -36,7 +61,7 @@ export default class HotCatalogs extends PureComponent {
 
                 </View>
                 <View style={styles.viewRight}>
-                    <TouchableOpacity onPress={()=>{
+                    <TouchableOpacity onPress={() => {
                         global.router.toHotelSearch({
                             name: '美食',
                             type: 'cate',
@@ -47,16 +72,16 @@ export default class HotCatalogs extends PureComponent {
                         <ImageBackground style={styles.leftBottom}
                                          source={Images.navigation2.info_ng}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{
+                    <TouchableOpacity onPress={() => {
 
-                        if(this.judge_city()){
+                        if (this.state.isMacau) {
                             global.router.toRecreationPage({
                                 name: '娱乐',
                                 type: 'recreation',
                                 size: {height: 34, width: 36},
                                 icon: Images.macau.entertainment
                             });
-                        }else{
+                        } else {
                             global.router.toHotelSearch({
                                 name: '休闲娱乐',
                                 type: 'recreation',
