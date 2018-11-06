@@ -13,7 +13,7 @@ import {UltimateListView, ImageLoad} from '../../components'
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {FoodItem} from '../macau/HotelSearch'
 
-export default class MallList extends Component {
+export default class InfoList extends Component {
 
     static propTypes = {
         isSearch: propTypes.bool
@@ -35,6 +35,10 @@ export default class MallList extends Component {
             refresh={() => {
                 this.listView.refresh()
             }}/>
+    };
+
+    separator=()=>{
+        return <View style={{height:1,width:'100%',backgroundColor:'#F3F3F3'}}/>
     }
 
     render(){
@@ -68,7 +72,6 @@ export default class MallList extends Component {
                     page_size: 20,
                     keyword: this.searchKey
                 }, data => {
-                    console.log("djskdskd",data)
                     startFetch(data.items, 6)
                 }, err => {
                     abortFetch()

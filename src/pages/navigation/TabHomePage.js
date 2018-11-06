@@ -48,7 +48,8 @@ class TabHomePage extends Component {
         info_page: 1,
         load_more: '',
         show_task: false,
-        lottery: false
+        lottery: false,
+        first_login:true
     };
 
     componentWillReceiveProps(newProps) {
@@ -59,6 +60,19 @@ class TabHomePage extends Component {
                 show_task: newProps.profile.new_user
             })
         }
+        storage.load({key: 'FirstLogin'}).then(first_users => {
+            logMsg('引导页只显示一次，已显示过', first_users)
+            if (newProps.profile.new_user && first_users.indexOf(newProps.profile.user_id) === -1) {
+                this.setState({
+                    first_login : false
+                })
+            }
+        }).catch(err => {
+            this.setState({
+                first_login : true
+            })
+            logMsg('引导页还没有显示')
+        })
         //
         // if (newProps.actionType === BACK_TOP) {
         //     if (this.mainScroll)
@@ -334,7 +348,7 @@ class TabHomePage extends Component {
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>
 
-                {this.state.lottery && !isEmptyObject(global.login_user) && !show_task ? <AnimatedTurnTableDrawPage pop={true}/> : null}
+                {/*{this.state.lottery && !isEmptyObject(global.login_user) ? <AnimatedTurnTableDrawPage pop={true}/> : null}*/}
 
             </View>
 
