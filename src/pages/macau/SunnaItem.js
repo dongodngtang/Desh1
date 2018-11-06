@@ -23,7 +23,7 @@ export default class SunnaItem extends Component {
             stars.push(i);
         }
         return stars;
-    };
+    }
 
     render() {
         const {item} = this.props;
@@ -35,7 +35,7 @@ export default class SunnaItem extends Component {
                               }}>
                 <Image
                     style={{width: 67, height: 95, marginLeft: 12}}
-                    source={{uri: logo}}/>
+                    source={{uri:logo}}/>
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{title}</Text>
                     {star_level > 0 ? <View style={styles.starView}>
@@ -47,12 +47,9 @@ export default class SunnaItem extends Component {
                     <Text style={styles.location} numberOfLines={1}>地址：{location}</Text>
                     <View style={{flex: 1}}/>
                     <View style={styles.priceView}>
-                        {/*<Text style={{color: '#E54A2E', fontSize: 16}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>*/}
+                        <Text style={{color: '#E54A2E', fontSize: 16}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>
                         <View style={{flex: 1}}/>
-                        <Text style={{
-                            color: '#4A90E2',
-                            fontSize: 12
-                        }}>{strNotNull(distance) ? distance.toFixed(2) : distance}km</Text>
+                        <Text style={{color: '#4A90E2', fontSize: 12}}>{distance}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -72,6 +69,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         marginLeft: 12,
+        marginTop: 7,
         marginRight: 22
     },
     name: {
@@ -92,8 +90,7 @@ const styles = StyleSheet.create({
     location: {
         color: '#999999',
         fontSize: 12,
-        marginTop: 8,
-        width:'90%'
+        marginTop: 8
     },
     priceView: {
         flexDirection: 'row',
