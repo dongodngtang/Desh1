@@ -13,6 +13,7 @@ import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
 import {FoodItem} from './HotelSearch'
 import {locations} from "../../services/SocialDao";
+import {getApiType} from "../../services/RequestHelper";
 
 export default class RecreationPage extends PureComponent {
     state = {
@@ -27,29 +28,31 @@ export default class RecreationPage extends PureComponent {
 
         getPosition(data=>{
             const {longitude, latitude} = data;
-            // let body = {
-            //   longitude: longitude,
-            //   latitude: latitude
-            // }
             let body = {
-                latitude:"22.203672",
-                longitude:"113.564241"
+              longitude: longitude,
+              latitude: latitude
             }
+            // let body = {
+            //     latitude:"22.203672",
+            //     longitude:"113.564241"
+            // }
             locations(body, data => {
                 let city_name = data.base.city_name
-
-                if(city_name.indexOf('澳门')!== -1){
+                if(getApiType()=== 'test')
+                    alert('定位城市：'+city_name)
+                if(city_name && city_name.indexOf('澳门')!== -1){
                     this.setState({
                         isMacau:true,
                         name_index: 1
                     })
                     this.refresh()
+
                 }
             }, err => {
                 console.log("获取位置失败");
             })
         },err=>{
-
+            alert('获取定位失败')
         })
     }
 
@@ -247,15 +250,15 @@ export default class RecreationPage extends PureComponent {
         }
         getPosition(data=>{
             const {longitude, latitude} = data;
-            // let body = {
-            //     latitude: latitude,
-            //     longitude: longitude
-            // };
-
             let body = {
-                latitude:"22.203672",
-                longitude:"113.564241"
-            }
+                latitude: latitude,
+                longitude: longitude
+            };
+
+            // let body = {
+            //     latitude:"22.203672",
+            //     longitude:"113.564241"
+            // }
             try {
                 getSaunas(body, data => {
                     console.log("Saunas", data);

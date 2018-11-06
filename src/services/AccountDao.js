@@ -70,25 +70,19 @@ export function getWheelTime(resolve, reject) {
 export function getElements(resolve, reject) {
     helper.get(Api.elements(), ret => {
         resolve(ret.data);
-    }, err => {
-        reject(err)
-    })
+    },reject)
 }
 
 export function getContacts(resolve, reject) {
     helper.get(Api.contacts, ret => {
         resolve(ret.data);
-    }, err => {
-        reject(err)
-    })
+    }, reject)
 }
 
 export function releases_show(resolve, reject) {
     helper.get(Api.releases_show, ret => {
         resolve(ret.data);
-    }, err => {
-        reject(err)
-    })
+    },reject)
 }
 
 export function getPreferential(body, resolve, reject) {
