@@ -407,6 +407,24 @@ export default class AnimatedTurnTableDrawPage extends Component {
             )
         } else {
             const {wheel_image, prize_counts} = this.state.drawData
+            if(isEmptyObject(this.state.drawData)){
+                return (
+                    <TouchableOpacity onPress={() => {
+                        if (this.state.offOn)
+                            this.setState({
+                                visible: false
+                            })
+                    }}
+                                      style={{
+                                          position: 'absolute',
+                                          top: 30,
+                                          right: 25,
+                                          zIndex: 999
+                                      }}>
+                        <Image source={require('./imgs/lottery_close.png')} style={{width: 30, height: 30}}/>
+                    </TouchableOpacity>
+                )
+            }
             if (wheel_image)
                 return (
                     <View style={{marginTop: -5}}>
