@@ -746,7 +746,7 @@ export function loginWX(resolve, reject) {
     });
 }
 
-function shareTxt(msg) {
+export function shareTxt(msg) {
     return strNotNull(msg) ? msg : I18n.t('ads_poker');
 }
 
@@ -836,7 +836,7 @@ export function uVideoShare(title, desc, icon, videoId) {
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
-function getShareIcon(icon) {
+export function getShareIcon(icon) {
     return strNotNull(icon) ? encodeURI(icon) : shareIcon
 }
 

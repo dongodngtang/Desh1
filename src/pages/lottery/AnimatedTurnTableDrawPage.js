@@ -30,10 +30,20 @@ import {
     postWheelTimes, getActivityInfo, postShareCount
 } from "../../services/AccountDao";
 import {
-    alertOrder, isEmptyObject, logMsg, showToast, strNotNull, uShareActivity, uShareInfoItem,
+    alertOrder,
+    getDispatchAction, getShareIcon,
+    isEmptyObject,
+    logMsg,
+    shareHost, shareTxt,
+    showToast,
+    strNotNull,
+    uShareActivity,
+    uShareInfoItem,
     uShareRegistered
 } from "../../utils/ComonHelper";
 import Swiper from 'react-native-swiper';
+import ShareView from '../comm/ShareToast'
+import {SHARE_CLOSE} from "../../actions/ActionTypes";
 
 
 const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
@@ -61,7 +71,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
             prize_messages: [],
             task_count: {},
             rule_lists: rule_list,
-            fadeOutOpacity: new Animated.Value(0)
+            fadeOutOpacity: new Animated.Value(0),
+            showShare: false,
+            shareParam: {}
         };
 
         this.fadeOutAnimated = Animated.timing(
@@ -95,14 +107,19 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 getActivityInfo({id: activity_id}, data => {
                     console.log("activity_detail", data)
                     const {title, description, banner, id} = data;
-                    uShareActivity(title, description, banner, id);
-                    postShareCount({from: 'wheel'}, data => {
-                        logMsg("用户好友分享成功:")
-                        this.refresh();
-                        this.getTime();
-                    }, err => {
+                    // uShareActivity(title, description, banner, id);
+                    let param = {
+                        shareTitle: title,
+                        shareText: shareTxt(description),
+                        shareImage: getShareIcon(banner),
+                        shareLink: shareHost() + "activities/" + id,
+                    };
 
+                    this.setState({
+                        shareParam: param,
+                        showShare: true
                     })
+
                 }, err => {
 
                 })
@@ -213,12 +230,12 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 });
                 //动画结束时，会把toValue值，回调给callback
                 this.state.rotateDeg.stopAnimation(() => {
-                    if(lottery.name === '谢谢参与'){
-                        Alert.alert('澳门旅行',`很遗憾没有抽中，谢谢参与`)
-                    }else if(lottery.name.indexOf('积分') !== -1 ){
-                        Alert.alert('澳门旅行',`恭喜您获得${lottery.name}`)
-                    }else{
-                        Alert.alert('澳门旅行',`恭喜您抽中${lottery.name}，请前往我的奖品查看领取`)
+                    if (lottery.name === '谢谢参与') {
+                        Alert.alert('澳门旅行', `很遗憾没有抽中，谢谢参与`)
+                    } else if (lottery.name.indexOf('积分') !== -1) {
+                        Alert.alert('澳门旅行', `恭喜您获得${lottery.name}`)
+                    } else {
+                        Alert.alert('澳门旅行', `恭喜您抽中${lottery.name}，请前往我的奖品查看领取`)
                     }
                 })
 
@@ -338,12 +355,12 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
                                             } else if (item.status === '兑换') {
                                                 if (total_points < 200) {
-                                                    Alert.alert('澳门旅行','积分不足')
+                                                    Alert.alert('澳门旅行', '积分不足')
                                                 } else {
                                                     alertOrder("确认兑换？", () => {
                                                         postWheelTimes({}, data => {
                                                             logMsg("积分兑换", data);
-                                                            Alert.alert('澳门旅行','积分兑换成功');
+                                                            Alert.alert('澳门旅行', '积分兑换成功');
                                                             this.getTime();
                                                             if (this.refresh)
                                                                 this.refresh();
@@ -453,7 +470,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
 
     render() {
-        const {total_points} = this.state;
+        const {showShare, shareParam} = this.state;
+        const {shareTitle, shareText, shareImage, shareLink} = shareParam
 
         return (
             <Modal
@@ -521,6 +539,26 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         </TouchableOpacity>
                     </View>
                 </Animated.View>
+
+                {showShare ? <ShareView hiddenShareAction={() => {
+                   this.setState({
+                       showShare:false
+                   })
+                }}
+                                        shareClick={() => {
+                                            //点击分享回调
+                                            postShareCount({from: 'wheel'}, data => {
+                                                logMsg("用户好友分享成功:")
+                                                this.refresh();
+                                                this.getTime();
+                                            }, err => {
+
+                                            })
+                                        }}
+                                        shareTitle={shareTitle}
+                                        shareText={shareText}
+                                        shareLink={shareLink}
+                                        shareImage={shareImage}/> : null}
             </Modal>
         );
     }

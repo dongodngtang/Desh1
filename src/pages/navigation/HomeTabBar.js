@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingTop: Metrics.statusBarHeight,
         position: 'absolute',
-        zIndex: 9999
+        zIndex: 9
 
     },
     navContent: {
