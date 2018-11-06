@@ -49,6 +49,12 @@ export function getPrizesList(body,resolve, reject) {
     },body)
 }
 
+export function getLocation_ios(body,resolve, reject) {
+    helper.get(Api.location_ios(body), ret => {
+        resolve(ret);
+    }, reject, {isKkapiUrl: false})
+}
+
 export function getTaskCount(resolve, reject) {
     helper.get(Api.task_count(), ret => {
         resolve(ret.data);

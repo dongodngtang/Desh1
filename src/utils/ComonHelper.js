@@ -7,7 +7,7 @@ import Toast from 'react-native-root-toast';
 import md5 from "react-native-md5";
 import I18n from 'react-native-i18n';
 import moment from 'moment';
-import {LoginUser, setLoginUser, removeToken} from '../services/AccountDao';
+import {LoginUser, setLoginUser, removeToken, getLocation_ios} from '../services/AccountDao';
 import StorageKey from '../configs/StorageKey';
 import {Verified, SellStatus} from '../configs/Status';
 import Communications from 'react-native-communications';
@@ -56,53 +56,56 @@ export const picker = {
 };
 
 
+export function getPosition(resolve, reject) {
+    checkPermission('location', ret => {
+        if (ret) {
+            if (Platform.OS === 'ios') {
+                navigator.geolocation.getCurrentPosition(data => {
+                    const {coords} = data
+                    logMsg('iOS定位2', data)
+                    getLocation_ios(coords, data_ios => {
+                        logMsg("ios的city_code", data_ios)
+                        global.city_code = data_ios.regeocode.addressComponent.citycode;
+                    }, err => {
+                        logMsg("ios的city_codeErr", err)
+                    });
+                    resolve(coords)
+                }, err => {
+                    logMsg('iOS定位', err)
+                    reject(err)
+                }, {enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
+            } else {
+                Geolocation.start()
+                Geolocation.getLastLocation().then(ret => {
+                    logMsg('amap定位', ret)
+                    global.city_code = ret.cityCode;
+                    Geolocation.stop()
+                    if (ret) {
+                        resolve(ret)
+                    } else {
+                        navigator.geolocation.getCurrentPosition(data => {
+                            const {coords} = data
+                            logMsg('native 定位', ret)
+                            resolve(coords)
+                        }, err => {
+                            logMsg('native 定位', err)
+                            reject(err)
+                        }, {enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
+                    }
 
-export function getPosition(resolve,reject) {
-  checkPermission('location', ret => {
-    if (ret) {
-        if(Platform.OS === 'ios'){
-          navigator.geolocation.getCurrentPosition(data => {
-            const {coords} = data
-            logMsg('iOS定位',ret)
-              global.city_code = data.cityCode;
-            resolve(coords)
-          }, err => {
-            logMsg('iOS定位', err)
-            reject(err)
-          },{enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
-        }else{
-          Geolocation.start()
-          Geolocation.getLastLocation().then(ret=>{
-              logMsg('amap定位',ret)
-              global.city_code= ret.cityCode;
-              Geolocation.stop()
-              if(ret){
-                  resolve(ret)
-              }else{
-                  navigator.geolocation.getCurrentPosition(data => {
-                      const {coords} = data
-                      logMsg('native 定位',ret)
-                      resolve(coords)
-                  }, err => {
-                      logMsg('native 定位', err)
-                      reject(err)
-                  },{enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
-              }
+
+                }).catch(err => {
+                    logMsg('amap定位 err', err)
+                    reject(err)
+                    Geolocation.stop()
+                })
+            }
 
 
+        } else {
 
-          }).catch(err=>{
-            logMsg('amap定位 err', err)
-              reject(err)
-            Geolocation.stop()
-          })
         }
-
-
-    }else{
-
-    }
-  })
+    })
 }
 
 /**
@@ -418,7 +421,8 @@ export function getCarts() {
         .then(ret => {
             console.log('shoppingCarts:', ret);
             global.shoppingCarts = ret;
-        }).catch(err=>{})
+        }).catch(err => {
+    })
 
 }
 
@@ -1201,12 +1205,14 @@ export function getUserData() {
     storage.load({key: StorageKey.UserData})
         .then((ret) => {
             userData = ret
-        }).catch(err=>{})
+        }).catch(err => {
+    })
     storage.load({key: StorageKey.PayCountDown})
         .then(time => {
             console.log("payRecodes", time)
             global.timeRecodes = time;
-        }).catch(err=>{})
+        }).catch(err => {
+    })
 }
 
 export let FontSize = {
@@ -1238,7 +1244,8 @@ export function getSize() {
                 h12: 12 + sizeNum,
                 h9: 9 + sizeNum,
             }
-        }).catch(err=>{})
+        }).catch(err => {
+    })
 }
 
 

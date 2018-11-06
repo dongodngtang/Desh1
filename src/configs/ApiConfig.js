@@ -215,6 +215,7 @@ const api = {
     prizes_list:prizes_list,//转盘活动我的奖品列表
     task_count:task_count,//转盘剩余抽奖次数，用户积分剩余情况
     post_wheel_times:post_wheel_times,//积分兑换转盘次数的接口
+    location_ios:location_ios,//ios定位
 }
 
 export default api;
@@ -231,6 +232,11 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
+
+export function location_ios(body) {
+    const {latitude,longitude} = body;
+    return `http://restapi.amap.com/v3/geocode/regeo?key=67d1f5cf8475c8db0ac8524878046f1e&location=${longitude},${latitude}`;
+}
 
 export function post_wheel_times() {
     return `wheel/times`;

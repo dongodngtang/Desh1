@@ -142,9 +142,12 @@ export function put(url, body, resolve, reject) {
 
 export function get(url, resolve, reject, params = {}) {
     console.log(url)
+    const isKkapiUrl = params.isKkapiUrl
+    delete params.isKkapiUrl;
+
     client.get(url, params)
         .then((response) => {
-            handle(response, resolve, reject)
+            handle(response, resolve, reject, isKkapiUrl)
 
         }).catch((error) => {
         showToast(error);
@@ -204,10 +207,11 @@ function netinfo(count) {
 
 }
 
-function handle(response, resolve, reject) {
+function handle(response, resolve, reject, isKkapiUrl = true) {
     try {
         if (response.ok) {
-
+            if (!isKkapiUrl) return resolve(response.data);
+            
             const {code, msg} = response.data;
             if (code === 0) {
                 resolve(response.data);
