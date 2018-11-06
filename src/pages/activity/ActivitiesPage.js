@@ -25,13 +25,18 @@ export default class ActivitiesPage extends Component {
         const {status, banner, is_wheel} = item;
         return (
             <TouchableOpacity onPress={() => {
-                if (is_wheel) {
-                    this.setState({
-                        lottery:!this.state.lottery
-                    })
-                } else {
-                    global.router.toActivityInfo(this.props, item);
+                if (isEmptyObject(global.login_user)){
+                    global.router.toLoginFirstPage()
+                }else{
+                    if (is_wheel) {
+                        this.setState({
+                            lottery:!this.state.lottery
+                        })
+                    } else {
+                        global.router.toActivityInfo(this.props, item);
+                    }
                 }
+
             }}>
                 <ImageBackground source={{uri: banner}} style={{height: 156, width: '100%'}}>
                     {/*<ImageBackground source={this.backgroundImg(status)}*/}
