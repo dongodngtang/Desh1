@@ -17,6 +17,14 @@ import {mul, DateDiff, checkPriceLength, strNotNull} from '../../utils/ComonHelp
 
 export default class SunnaItem extends Component {
 
+    _star = (star) => {
+        let stars = [];
+        for (let i = 1; i <= star; i++) {
+            stars.push(i);
+        }
+        return stars;
+    }
+
     render() {
         const {item} = this.props;
         const {id, title, location, logo, price, star_level, distance} = item;
@@ -27,7 +35,7 @@ export default class SunnaItem extends Component {
                               }}>
                 <Image
                     style={{width: 67, height: 95, marginLeft: 12}}
-                    source={logo}/>
+                    source={{uri:logo}}/>
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{title}</Text>
                     {star_level > 0 ? <View style={styles.starView}>

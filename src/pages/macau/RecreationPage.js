@@ -12,25 +12,44 @@ import {getPosition, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonH
 import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
 import {FoodItem} from './HotelSearch'
+import {locations} from "../../services/SocialDao";
 
 export default class RecreationPage extends PureComponent {
     state = {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: 0
+        name_index: 0,
+        isMacau:false
     };
 
     componentDidMount() {
-        let city = global.city_name;
-        let index = this.state.name_index;
-        if (city === '澳门') {
-            index = 1;
-        } else {
-            index = 0;
-        }
-        this.setState({
-            name_index: index
+
+        getPosition(data=>{
+            const {longitude, latitude} = data;
+            // let body = {
+            //   longitude: longitude,
+            //   latitude: latitude
+            // }
+            let body = {
+                latitude:"22.203672",
+                longitude:"113.564241"
+            }
+            locations(body, data => {
+                let city_name = data.base.city_name
+
+                if(city_name.indexOf('澳门')!== -1){
+                    this.setState({
+                        isMacau:true,
+                        name_index: 1
+                    })
+                    this.refresh()
+                }
+            }, err => {
+                console.log("获取位置失败");
+            })
+        },err=>{
+
         })
     }
 
@@ -42,10 +61,10 @@ export default class RecreationPage extends PureComponent {
     };
 
     change_content() {
-        const {name_index} = this.state;
-        let city = global.city_name;
-        console.log("global.city_name",city)
-        if (city&&city.indexOf('澳门') != -1) {
+        const {name_index,isMacau} = this.state;
+
+        console.log("global.city_name",global.city_name)
+        if (isMacau) {
             return (
                 <View style={{
                     display: 'flex',
