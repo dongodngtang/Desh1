@@ -21,31 +21,6 @@ export default class RecreationPage extends PureComponent {
         name_index: 1
     };
 
-    judge_city = () =>{
-        if(!isEmptyObject(global.city)){
-            if(global.city_code === "1853"){
-                return true;
-            }else{
-                return false
-            }
-        }else {
-            return false
-        }
-    };
-
-
-    componentWillReceiveProps() {
-        let index = this.state.name_index;
-        if (this.judge_city()) {
-            index = 1;
-        } else {
-            index = 0;
-        }
-        this.setState({
-            name_index: index
-        })
-    }
-
     refresh = () => {
         this.setState({
             reject_problem: ''
@@ -55,54 +30,47 @@ export default class RecreationPage extends PureComponent {
 
     change_content() {
         const {name_index} = this.state;
-        if (this.judge_city()) {
-            return (
-                <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    width: '40%',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
+        return (
+            <View style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '40%',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+            }}>
+                <TouchableOpacity onPress={() => {
+                    this.listView && this.listView.postRefresh([])
+                    this.setState({
+                        name_index: 0
+                    })
+                    setTimeout(() => {
+                        this.refresh()
+                    }, 200)
+
                 }}>
-                    <TouchableOpacity onPress={() => {
-                        this.listView && this.listView.postRefresh([])
-                        this.setState({
-                            name_index: 0
-                        })
-                        setTimeout(() => {
-                            this.refresh()
-                        }, 200)
-
-                    }}>
-                        <Text
-                            style={{
-                                fontSize: name_index === 0 ? 18 : 14,
-                                color: name_index === 0 ? 'white' : '#FFCACA'
-                            }}>休闲娱乐</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {
-                        this.listView && this.listView.postRefresh([])
-                        this.setState({
-                            name_index: 1
-                        });
-                        setTimeout(() => {
-                            this.refresh()
-                        }, 200)
-                    }}>
-                        <Text
-                            style={{
-                                fontSize: name_index === 1 ? 18 : 14,
-                                color: name_index === 1 ? 'white' : '#FFCACA'
-                            }}>桑拿水疗</Text>
-                    </TouchableOpacity>
-                </View>
-            )
-        } else {
-            return (
-                <Text style={[styles.title, {alignSelf: 'center'}]}>{'休闲娱乐'}</Text>
-            )
-        }
-
+                    <Text
+                        style={{
+                            fontSize: name_index === 0 ? 18 : 14,
+                            color: name_index === 0 ? 'white' : '#FFCACA'
+                        }}>休闲娱乐</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    this.listView && this.listView.postRefresh([])
+                    this.setState({
+                        name_index: 1
+                    });
+                    setTimeout(() => {
+                        this.refresh()
+                    }, 200)
+                }}>
+                    <Text
+                        style={{
+                            fontSize: name_index === 1 ? 18 : 14,
+                            color: name_index === 1 ? 'white' : '#FFCACA'
+                        }}>桑拿水疗</Text>
+                </TouchableOpacity>
+            </View>
+        )
     }
 
     render() {

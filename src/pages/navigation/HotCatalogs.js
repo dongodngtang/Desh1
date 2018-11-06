@@ -5,8 +5,22 @@ import {
     TouchableOpacity, ImageBackground
 } from 'react-native';
 import {ApplicationStyles, Images, Colors, Metrics} from '../../Themes';
+import {isEmptyObject} from "../../utils/ComonHelper";
 
 export default class HotCatalogs extends PureComponent {
+
+    judge_city = () =>{
+        if(!isEmptyObject(global.city)){
+            if(global.city_code === "1853"){
+                return true;
+            }else{
+                return false
+            }
+        }else {
+            return false
+        }
+    };
+
     render() {
         return (
             <View style={styles.hotView}>
@@ -38,18 +52,23 @@ export default class HotCatalogs extends PureComponent {
                                          source={Images.navigation2.info_ng}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{
-                        global.router.toRecreationPage({
-                            name: '娱乐',
-                            type: 'recreation',
-                            size: {height: 34, width: 36},
-                            icon: Images.macau.entertainment
-                        });
-                        // global.router.toHotelSearch({
-                        //     name: '娱乐',
-                        //     type: 'recreation',
-                        //     size: {height: 34, width: 36},
-                        //     icon: Images.macau.entertainment
-                        // })
+
+                        if(this.judge_city()){
+                            global.router.toRecreationPage({
+                                name: '娱乐',
+                                type: 'recreation',
+                                size: {height: 34, width: 36},
+                                icon: Images.macau.entertainment
+                            });
+                        }else{
+                            global.router.toHotelSearch({
+                                name: '休闲娱乐',
+                                type: 'recreation',
+                                size: {height: 34, width: 36},
+                                icon: Images.macau.entertainment
+                            })
+                        }
+
                     }}>
                         <ImageBackground style={[styles.leftTop, {marginTop: 4}]}
                                          source={Images.navigation2.rec_bg}/>
