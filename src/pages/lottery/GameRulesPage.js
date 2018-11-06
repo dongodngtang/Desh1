@@ -15,6 +15,15 @@ const rules = ['1.新人首次登陆即可获得2次机会','2.每日登陆，�
 const prompts = ['1.完成每日任务，最高每日可获得45积分','2.成功购买商城现金商品，可获得等额积分 ',
     '3.转盘小游戏还有赢取积分的机会哦～ '];
 
+const game_rules = ['1.抽中后请尽快兑换，奖品将从抽中后当天算起，有效期为期1个月。',
+    '2.请点击“我的”-头像-地址，完善地址部分，避免耽误实体物件的寄件，周末以及节假日不发货。',
+    '3.现金奖可在钱包内查询金额，提现需要3个工作日，节假日顺延。',
+    '4.餐券仅限凼仔威尼斯人美食广场，详细请联系客服。',
+    '5.双人旅行套餐将随机抽选双人船票、双人澳门塔自助餐或双人星级酒店一份，兑奖时，请提前三天和客服预约（不能预约当天），按要求提供相关信息。',
+    '6.中奖后需完成客服提示的相应任务，即可完成整个兑奖过程。',
+    '7.如有疑问其他，请自行联系客服咨询。',
+    '8.如发现存在任何作弊或者恶意刷奖行为，官方将有权取消该用户参与资格。',
+    '9.本次活动最终解释权归"澳门旅行 APP"所有。']
 export default class IntegralPage extends Component {
 
     render(){
@@ -37,6 +46,12 @@ export default class IntegralPage extends Component {
                         <Text style={styles.txt1}>活动规则</Text>
                         {rules.map((item, index) => {
                             return <Text key={index} style={[styles.txt2,{marginTop:6}]}>{item}</Text>
+                        })}
+
+                        <Text style={[styles.txt1,{marginTop:17}]}>兑奖规则</Text>
+
+                        {rules.map((rule,index)=>{
+                            return <Text style={[styles.txt2,{marginTop:3}]} key={index}>{rule}</Text>
                         })}
 
                         <Text style={[styles.txt1,{marginTop:17}]}>获得积分小提示</Text>
