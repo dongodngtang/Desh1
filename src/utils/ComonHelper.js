@@ -64,10 +64,10 @@ export function getPosition(resolve,reject) {
           navigator.geolocation.getCurrentPosition(data => {
             const {coords} = data
             logMsg('iOS定位',ret)
-            resolve(coords)
+              resolve &&resolve(coords)
           }, err => {
             logMsg('iOS定位', err)
-            reject(err)
+              reject && reject(err)
           },{enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
         }else{
           Geolocation.start()
@@ -75,15 +75,15 @@ export function getPosition(resolve,reject) {
               logMsg('amap定位',ret)
               Geolocation.stop()
               if(ret){
-                  resolve(ret)
+                  resolve && resolve(ret)
               }else{
                   navigator.geolocation.getCurrentPosition(data => {
                       const {coords} = data
                       logMsg('native 定位',ret)
-                      resolve(coords)
+                      resolve && resolve(coords)
                   }, err => {
                       logMsg('native 定位', err)
-                      reject(err)
+                      reject && reject(err)
                   },{enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
               }
 
@@ -91,8 +91,9 @@ export function getPosition(resolve,reject) {
 
           }).catch(err=>{
             logMsg('amap定位 err', err)
-              reject(err)
-            Geolocation.stop()
+              Geolocation.stop()
+              reject && reject(err)
+
           })
         }
 

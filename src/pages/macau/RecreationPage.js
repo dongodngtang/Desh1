@@ -45,7 +45,7 @@ export default class RecreationPage extends PureComponent {
         const {name_index} = this.state;
         let city = global.city_name;
         console.log("global.city_name",city)
-        if (city === '澳门') {
+        if (city&&city.indexOf('澳门') != -1) {
             return (
                 <View style={{
                     display: 'flex',
@@ -228,10 +228,15 @@ export default class RecreationPage extends PureComponent {
         }
         getPosition(data=>{
             const {longitude, latitude} = data;
+            // let body = {
+            //     latitude: latitude,
+            //     longitude: longitude
+            // };
+
             let body = {
-                latitude: latitude,
-                longitude: longitude
-            };
+                latitude:"22.203672",
+                longitude:"113.564241"
+            }
             try {
                 getSaunas(body, data => {
                     console.log("Saunas", data);
