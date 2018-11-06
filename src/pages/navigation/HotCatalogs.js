@@ -5,13 +5,13 @@ import {
     TouchableOpacity, ImageBackground
 } from 'react-native';
 import {ApplicationStyles, Images, Colors, Metrics} from '../../Themes';
-import {isEmptyObject} from "../../utils/ComonHelper";
+import {isEmptyObject, logMsg} from "../../utils/ComonHelper";
 
 export default class HotCatalogs extends PureComponent {
 
     judge_city = () =>{
         if(!isEmptyObject(global.city)){
-            if(global.city_code === "1853"){
+            if(toString(global.city_code) === "1853"){
                 return true;
             }else{
                 return false
