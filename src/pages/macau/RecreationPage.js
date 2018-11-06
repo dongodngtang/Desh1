@@ -18,13 +18,25 @@ export default class RecreationPage extends PureComponent {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: global.city.city_name.indexOf('澳门') !== -1 ? 1 : 0
+        name_index: 1
     };
 
-    componentDidMount() {
-        let city = global.city.city_name;
+    judge_city = () =>{
+        if(!isEmptyObject(global.city)){
+            if(global.city_code === "1853"){
+                return true;
+            }else{
+                return false
+            }
+        }else {
+            return false
+        }
+    };
+
+
+    componentWillReceiveProps() {
         let index = this.state.name_index;
-        if (city.indexOf('澳门') !== -1) {
+        if (this.judge_city()) {
             index = 1;
         } else {
             index = 0;
@@ -43,9 +55,7 @@ export default class RecreationPage extends PureComponent {
 
     change_content() {
         const {name_index} = this.state;
-        let city = global.city.city_name;
-        console.log("global.city.city_name",city)
-        if (city.indexOf('澳门') !== -1) {
+        if (this.judge_city()) {
             return (
                 <View style={{
                     display: 'flex',

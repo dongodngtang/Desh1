@@ -64,6 +64,7 @@ export function getPosition(resolve,reject) {
           navigator.geolocation.getCurrentPosition(data => {
             const {coords} = data
             logMsg('iOS定位',ret)
+              global.city_code= ret.cityCode;
             resolve(coords)
           }, err => {
             logMsg('iOS定位', err)
@@ -73,6 +74,7 @@ export function getPosition(resolve,reject) {
           Geolocation.start()
           Geolocation.getLastLocation().then(ret=>{
               logMsg('amap定位',ret)
+              global.city_code= ret.cityCode;
               Geolocation.stop()
               if(ret){
                   resolve(ret)
