@@ -216,6 +216,7 @@ const api = {
     task_count:task_count,//转盘剩余抽奖次数，用户积分剩余情况
     post_wheel_times:post_wheel_times,//积分兑换转盘次数的接口
     location_ios:location_ios,//ios定位
+    prizes_info:prizes_info,//奖品详情
 }
 
 export default api;
@@ -244,6 +245,11 @@ export function post_wheel_times() {
 
 export function task_count() {
     return `wheel/task_count`;
+}
+
+export function prizes_info(body) {
+    const {prize_id} = body;
+    return `wheel/user_prizes/${prize_id}`;
 }
 
 export function prizes_list() {

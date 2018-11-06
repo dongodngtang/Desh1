@@ -7,24 +7,29 @@ import {
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
-import {getActivities, getJmessageInfo} from "../../services/AccountDao";
-import {isEmptyObject, showToast, strNotNull} from "../../utils/ComonHelper";
+import {getActivities, getJmessageInfo,getPrizes_info} from "../../services/AccountDao";
+import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 import {visit_other} from "../../services/SocialDao";
 import {UltimateListView} from "../../components";
 import {LoadErrorView, NoDataView} from '../../components/load';
-
-const rules = ['1.抽中后请尽快兑换，奖品将从抽中后当天算起，有效期为期1个月。',
-    '2.请点击“右上角图标”联系客服，完善地址部分，避免耽误实体物件的寄件，周末以及节假日不发货',
-    '3.现金奖可在钱包内查询金额，提现需要3个工作日，节假日顺延。',
-    '4.餐券仅限凼仔威尼斯人美食广场，需直接到澳门旅行官方驻地领取。',
-    '5.双人旅行套餐将随机抽选双人船票、双人澳门塔自助餐或双人星级酒店一份，兑奖时，请提前三天和客服预约（不能预约当天），按要求提供相关信息。',
-    '6.中奖后，需完成客服提示的相应任务，即可完成整个兑奖过程。',
-    '7.如有疑问其他，请自行联系客服咨询',
-    '8.如发现存在任何作弊或者恶意刷奖行为，官方将有权取消该用户参与资格。',
-    '9.本次活动最终解释权归"澳门旅行 APP"所有。']
+import RenderHtml from '../comm/RenderHtml';
 
 export default class WardReceivePage extends Component {
+
+    state={
+        prize_info:{}
+    }
+
+    componentDidMount(){
+        const {prize,created_at,id,expired,prize_img} = this.props.params.item;
+        getPrizes_info({prize_id:id},data=>{
+            logMsg("奖品详情：",data);
+            this.setState({
+                prize_info:data
+            })
+        })
+    }
 
     getImUser = () => {
         // this.loading && this.loading.open();
@@ -46,7 +51,7 @@ export default class WardReceivePage extends Component {
     };
 
     render() {
-        const {prize,created_at,id,expired,prize_img} = this.props.params.item;
+        const {prize,created_at,id,expired,prize_img,description} = this.state.prize_info;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -78,9 +83,16 @@ export default class WardReceivePage extends Component {
                     <Text style={{lineHeight:20,color:'#444444',fontSize:14,marginTop:3,marginLeft:17,marginRight:17}}>请联系客服领取奖品</Text>
                     {strNotNull(prize_img) ? <Image source={{uri:prize_img}} style={{alignSelf:'center',marginTop:15,width:38,height:44}}/> :null}
                     <Text style={{color:'#444444',fontSize:18,marginTop:15,marginLeft:17,marginRight:17,marginBottom:10}}>活动规则</Text>
-                    {rules.map((rule,index)=>{
-                        return <Text style={{lineHeight:20,color:'#444444',fontSize:14,marginTop:3,marginLeft:17,marginRight:17}} key={index}>{rule}</Text>
-                    })}
+                    <View style={{
+                        backgroundColor: 'white',
+                        alignItems: 'center',
+                        marginLeft: 17,
+                        marginRight: 17,
+                        paddingBottom: 70
+                    }}>
+                        <RenderHtml
+                            html={description}/>
+                    </View>
                 </ScrollView>
 
             </View>

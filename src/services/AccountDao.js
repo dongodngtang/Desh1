@@ -41,6 +41,12 @@ export function postLottery(body,resolve, reject) {
     }, reject)
 }
 
+export function getPrizes_info(body,resolve, reject) {
+    helper.get(Api.prizes_info(body), ret => {
+        resolve(ret.data);
+    },  reject)
+}
+
 export function getPrizesList(body,resolve, reject) {
     helper.get(Api.prizes_list(), ret => {
         resolve(ret.data);
