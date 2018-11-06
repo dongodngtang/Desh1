@@ -64,7 +64,7 @@ export function getPosition(resolve,reject) {
           navigator.geolocation.getCurrentPosition(data => {
             const {coords} = data
             logMsg('iOS定位',ret)
-              global.city_code= ret.cityCode;
+              global.city_code = data.cityCode;
             resolve(coords)
           }, err => {
             logMsg('iOS定位', err)

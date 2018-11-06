@@ -34,7 +34,7 @@ export default class HomeTabBar extends PureComponent {
                         global.router.toActivitiesPage()
                     }}>
                     <Image style={styles.imgCat}
-                           source={Images.lottery.activities}/>
+                           source={Images.gift}/>
                 </TouchableOpacity>
             </View>
 
