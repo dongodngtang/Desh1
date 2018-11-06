@@ -8,7 +8,7 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {hotels, info_types, getSaunas} from '../../services/MacauDao';
-import {isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
+import {getPosition, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
 import {FoodItem} from './HotelSearch'
@@ -226,26 +226,29 @@ export default class RecreationPage extends PureComponent {
             abortFetch();
             return;
         }
-        const {latitude, longitude} = global.city_name;
-        let body = {
-            latitude: latitude,
-            longitude: longitude
-        };
-        try {
-            getSaunas(body, data => {
-                console.log("Saunas", data);
-                startFetch(data.items, 18)
-            }, err => {
-                console.log("Saunas_err", err)
-                this.setState({
-                    reject_problem: err.problem
-                })
+        getPosition(data=>{
+            const {longitude, latitude} = data;
+            let body = {
+                latitude: latitude,
+                longitude: longitude
+            };
+            try {
+                getSaunas(body, data => {
+                    console.log("Saunas", data);
+                    startFetch(data.items, 18)
+                }, err => {
+                    console.log("Saunas_err", err)
+                    this.setState({
+                        reject_problem: err.problem
+                    })
+                    abortFetch()
+                });
+            } catch (err) {
+                console.log(err)
                 abortFetch()
-            });
-        } catch (err) {
-            console.log(err)
-            abortFetch()
-        }
+            }
+        })
+
     };
 
     onFetch_forEn = (page = 1, startFetch, abortFetch) => {
