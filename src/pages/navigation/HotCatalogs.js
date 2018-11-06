@@ -26,7 +26,6 @@ export default class HotCatalogs extends PureComponent {
             locations(body, data => {
                 let city_name = data.base.city_name
                 if(getApiType()=== 'test')
-                    alert('定位城市：'+city_name)
                 if(city_name && city_name.indexOf('澳门')!== -1){
                     this.setState({
                         isMacau:true
