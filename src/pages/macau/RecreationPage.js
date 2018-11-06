@@ -18,13 +18,13 @@ export default class RecreationPage extends PureComponent {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: 0
+        name_index: global.city.city_name.indexOf('澳门') !== -1 ? 1 : 0
     };
 
     componentDidMount() {
-        let city = global.city_name;
+        let city = global.city.city_name;
         let index = this.state.name_index;
-        if (city === '澳门') {
+        if (city.indexOf('澳门') !== -1) {
             index = 1;
         } else {
             index = 0;
@@ -43,9 +43,9 @@ export default class RecreationPage extends PureComponent {
 
     change_content() {
         const {name_index} = this.state;
-        let city = global.city_name;
-        console.log("global.city_name",city)
-        if (city === '澳门') {
+        let city = global.city.city_name;
+        console.log("global.city.city_name",city)
+        if (city.indexOf('澳门') !== -1) {
             return (
                 <View style={{
                     display: 'flex',
@@ -221,12 +221,12 @@ export default class RecreationPage extends PureComponent {
     };
 
     onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
-        if (isEmptyObject(global.city_name)) {
+        if (isEmptyObject(global.city)) {
             // startFetch(sunna_data, 18)
             abortFetch();
             return;
         }
-        const {latitude, longitude} = global.city_name;
+        const {latitude, longitude} = global.city;
         let body = {
             latitude: latitude,
             longitude: longitude

@@ -17,6 +17,14 @@ import {mul, DateDiff, checkPriceLength, strNotNull} from '../../utils/ComonHelp
 
 export default class SunnaItem extends Component {
 
+    _star = (star) => {
+        let stars = [];
+        for (let i = 1; i <= star; i++) {
+            stars.push(i);
+        }
+        return stars;
+    };
+
     render() {
         const {item} = this.props;
         const {id, title, location, logo, price, star_level, distance} = item;
@@ -27,7 +35,7 @@ export default class SunnaItem extends Component {
                               }}>
                 <Image
                     style={{width: 67, height: 95, marginLeft: 12}}
-                    source={logo}/>
+                    source={{uri:logo}}/>
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{title}</Text>
                     {star_level > 0 ? <View style={styles.starView}>
@@ -39,9 +47,9 @@ export default class SunnaItem extends Component {
                     <Text style={styles.location} numberOfLines={1}>地址：{location}</Text>
                     <View style={{flex: 1}}/>
                     <View style={styles.priceView}>
-                        <Text style={{color: '#E54A2E', fontSize: 16}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>
+                        {/*<Text style={{color: '#E54A2E', fontSize: 16}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>*/}
                         <View style={{flex: 1}}/>
-                        <Text style={{color: '#4A90E2', fontSize: 12}}>{distance}</Text>
+                        <Text style={{color: '#4A90E2', fontSize: 12}}>{distance.toFixed(2)}km</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -61,7 +69,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         marginLeft: 12,
-        marginTop: 7,
         marginRight: 22
     },
     name: {

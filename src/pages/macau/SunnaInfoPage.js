@@ -150,7 +150,7 @@ export default class SunnaInfoPage extends PureComponent {
                 iosalwaysBounceVertical={false}
                 scrollEventThrottle={16}
                 onScroll={this._onScroll}>
-                <Image source={logo} style={{height: 200, width: '100%'}}/>
+                <Image source={{uri:logo}} style={{height: 200, width: '100%'}}/>
 
                 <View style={styles.nav_view}>
 
@@ -167,12 +167,12 @@ export default class SunnaInfoPage extends PureComponent {
                     <View style={{flex: 1}}/>
 
                     <View style={{marginRight: 22, flexDirection: 'column', alignItems: 'flex-end'}}>
-                        <Text style={styles.price3}><Text
-                            style={{
-                                color: '#FF3F3F',
-                                fontSize: 12
-                            }}>{`人均${strNotNull(price) ? price : ''}`}</Text>
-                        </Text>
+                        {/*<Text style={styles.price3}><Text*/}
+                            {/*style={{*/}
+                                {/*color: '#FF3F3F',*/}
+                                {/*fontSize: 12*/}
+                            {/*}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>*/}
+                        {/*</Text>*/}
                         <View style={{flex: 1}}/>
                         <TouchableOpacity style={{flexDirection: 'row'}}
                                           onPress={() => {
