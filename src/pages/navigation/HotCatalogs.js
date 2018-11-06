@@ -10,13 +10,9 @@ import {isEmptyObject, logMsg} from "../../utils/ComonHelper";
 export default class HotCatalogs extends PureComponent {
 
     judge_city = () =>{
-        if(!isEmptyObject(global.city)){
-            if(toString(global.city_code) === "1853"){
-                return true;
-            }else{
-                return false
-            }
-        }else {
+        if(String(global.city_code) === "1853"){
+            return true;
+        }else{
             return false
         }
     };
