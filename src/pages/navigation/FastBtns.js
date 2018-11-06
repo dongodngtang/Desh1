@@ -131,7 +131,7 @@ export default class FastBtns extends Component {
                                     icon: item.icon
                                 })
                             } else if (item.type === 'visa') {
-                                // global.router.toFastFoodPage('fast_food')
+                                global.router.toVisaInfoPage()
                             } else if (item.type === 'coupon') {
                                 global.router.toHotelSearch({
                                     name: '优惠',

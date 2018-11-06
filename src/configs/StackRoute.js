@@ -145,9 +145,11 @@ import GameRulesPage from "../pages/lottery/GameRulesPage";
 import MyWardsPage from "../pages/lottery/MyWardsPage";
 import WardReceivePage from "../pages/lottery/WardReceivePage";
 import SearchHomePage from "../pages/navigation/SearchHomePage";
+import VisaInfoPage from "../pages/fastBtn/VisaInfoPage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="VisaInfoPage" component={VisaInfoPage} hideNavBar/>
         <Scene key="SearchHomePage" component={SearchHomePage} hideNavBar/>
         <Scene key="WardReceivePage" component={WardReceivePage} hideNavBar/>
         <Scene key="MyWardsPage" component={MyWardsPage} hideNavBar/>

@@ -67,6 +67,12 @@ export default class Router {
             }
         })
     }
+    toVisaInfoPage(){
+        this.stackPush({
+            name:'VisaInfoPage'
+        })
+    }
+
     toSunnaInfoPage(item){
         this.stackPush({
             name:'SunnaInfoPage',
