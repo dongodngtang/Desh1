@@ -48,10 +48,10 @@ kkandroid
 
 
 发布热ios更新:
-code-push release-react kkios ios -m --description "热更新测试-点击更新后请稍等片刻-首页输入框变化" -d Production
+code-push release-react kkios ios -m --description "热更新测试-点击更新后请稍等片刻-修复bug" -d Production
 
 发布热android更新:
-code-push release-react kkandroid android -m --description "热更新测试-点击更新后请稍等片刻-首页输入框变化" -d Production
+code-push release-react kkandroid android -m --description "热更新测试-点击更新后请稍等片刻-修复bug" -d Production
 
 
 查看ios发布情况
