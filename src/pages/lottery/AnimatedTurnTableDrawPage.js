@@ -613,7 +613,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                 <Text numberOfLines={1} style={{
                                     color: '#F3F3F3',
                                     fontSize: 12,
-                                    width: '80%'
+                                    alignSelf:'center',
+                                    width: '80%',
+                                    zIndex:999
                                 }}>{`恭喜用户${item.nick_name}转盘活动抽奖获得${item.prize}`}</Text>
                             </View>
                         })}
