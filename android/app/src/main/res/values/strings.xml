@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">8L1zOJbZ29sDwn4ZlNcZzZEqVDBG4ac6d3c3-441d-44e7-b580-2dcf21f4b042</string>
     <string name="app_name">澳门旅行</string>
 </resources>

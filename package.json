@@ -23,6 +23,7 @@
     "react-native-blur": "^3.2.2",
     "react-native-calendars": "git+https://github.com/dongodngtang/react-native-calendars.git",
     "react-native-camera": "^1.1.1",
+    "react-native-code-push": "5.3.5",
     "react-native-communications": "^2.2.1",
     "react-native-drawer": "^2.5.0",
     "react-native-fs": "^2.9.11",
