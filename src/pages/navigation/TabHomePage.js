@@ -49,8 +49,7 @@ class TabHomePage extends Component {
         info_page: 1,
         load_more: '',
         show_task: false,
-        lottery: false,
-        first_login:false
+        lottery: false
     };
 
     componentWillReceiveProps(newProps) {
@@ -94,13 +93,9 @@ class TabHomePage extends Component {
             storage.load({key: 'FirstLogin'}).then(first_users => {
                 logMsg('引导页只显示一次，已显示过', first_users)
                 this.setState({
-                    first_login : true,
                     lottery: true
                 })
             }).catch(err => {
-                this.setState({
-                    first_login : false
-                })
                 logMsg('引导页还没有显示')
             })
         })
@@ -350,7 +345,7 @@ class TabHomePage extends Component {
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>
 
-                {this.state.lottery && !isEmptyObject(global.login_user) && this.state.first_login ? <AnimatedTurnTableDrawPage pop={true}/> : null}
+                {this.state.lottery && !isEmptyObject(global.login_user) ? <AnimatedTurnTableDrawPage pop={true}/> : null}
 
             </View>
 
