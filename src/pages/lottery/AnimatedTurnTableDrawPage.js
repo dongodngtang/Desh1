@@ -46,11 +46,11 @@ import ShareView from '../comm/ShareToast'
 import {SHARE_CLOSE} from "../../actions/ActionTypes";
 
 
-const rule_list = [{id: 0, name: '每日登录', des: '每日可获得1次抽奖机会', image: Images.integral.login, status: '完成'},
-    {id: 1, name: '游戏分享', des: '每日可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
-    {id: 2, name: '好友邀请', des: '邀请好友注册可获得1次抽奖机会', image: Images.integral.frends, status: '未完成'},
+const rule_list = [{id: 0, name: '每日登录', des: '每日可获得2次抽奖机会', image: Images.integral.login, status: '完成'},
+    {id: 1, name: '游戏分享', des: '每分享一次可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
+    {id: 2, name: '好友邀请', des: '邀请好友注册成功可获得1次抽奖机会', image: Images.integral.frends, status: '未完成'},
     {id: 3, name: '积分兑换', des: '每200积分可购买1次抽奖机会', image: Images.integral.exchange, status: '兑换'}];
-const prompts = ['1.完成每日任务，最高每日可获得45积分', '2.成功购买商城现金商品，可获得等额积分', '3.转盘小游戏还有赢取积分的机会哦～ '];
+const prompts = ['1.完成每日任务，最高每日可获得45积分', '2.成功购买商城现金商品，可获得等额积分', '3.转盘小游戏还有赢取积分的机会哦～'];
 
 export default class AnimatedTurnTableDrawPage extends Component {
 

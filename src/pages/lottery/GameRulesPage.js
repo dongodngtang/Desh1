@@ -8,14 +8,14 @@ import {
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
 
-const rules = ['1.新人首次登陆即可获得2次机会','2.每日登陆，获得1次机会','3.每日游戏分享1次，可获得1次机会',
+const rules = ['1.新人首次登陆即可获得3次机会','2.每日登陆，获得2次机会','3.每日游戏分享，可获得1次机会',
 '4.每成功邀请1位朋友，可获得1次抽奖机会','5.每200积分可购买1次机会',
-    '6.如发现存在任何作弊或者恶意刷奖行为，官方将有权取消该用户参与资格。','7.本次活动最终解释权归"澳门旅行APP"所有。'];
+    '6.如发现存在任何作弊或者恶意刷奖行为，官方将有权取消该用户参与资格','7.本次活动最终解释权归"澳门旅行 APP"所有。'];
 
-const prompts = ['1.完成每日任务，最高每日可获得45积分','2.成功购买商城现金商品，可获得等额积分 ',
-    '3.转盘小游戏还有赢取积分的机会哦～ '];
+const prompts = ['1.完成每日任务，最高每日可获得45积分','2.成功购买商城现金商品，可获得等额积分',
+    '3.转盘小游戏还有赢取积分的机会哦～'];
 
-const game_rules = ['1.抽中后请尽快兑换，奖品将从抽中后当天算起，有效期为期1个月。',
+const game_rules = ['1.奖品将从抽中后当天算起，有效期为期1个月。',
     '2.请点击“我的”-头像-地址，完善地址部分，避免耽误实体物件的寄件，周末以及节假日不发货。',
     '3.现金奖可在钱包内查询金额，提现需要3个工作日，节假日顺延。',
     '4.餐券仅限凼仔威尼斯人美食广场，详细请联系客服。',
@@ -50,7 +50,7 @@ export default class IntegralPage extends Component {
 
                         <Text style={[styles.txt1,{marginTop:17}]}>兑奖规则</Text>
 
-                        {rules.map((rule,index)=>{
+                        {game_rules.map((rule,index)=>{
                             return <Text style={[styles.txt2,{marginTop:3}]} key={index}>{rule}</Text>
                         })}
 
