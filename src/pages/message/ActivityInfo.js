@@ -9,6 +9,7 @@ import I18n from 'react-native-i18n';
 import {getActivityInfo} from '../../services/AccountDao';
 import {NavigationBar, MarkdownPlat} from '../../components';
 import {isEmptyObject, uShareActivity} from '../../utils/ComonHelper';
+import RenderHtml from '../comm/RenderHtml';
 
 export default class ActivityInfo extends Component {
 
@@ -56,9 +57,11 @@ export default class ActivityInfo extends Component {
                     uShareActivity(activity_detail.title,activity_detail.description,
                         activity_detail.banner,activity_detail.id)
                 }}/>
-            <MarkdownPlat
-                markdownStr={activity_detail.description}
-            />
+            <ScrollView style={{marginTop:10,marginLeft:17,marginRight:17}}>
+                <RenderHtml
+                    html={activity_detail.description}
+                />
+            </ScrollView>
         </View>)
     }
 }

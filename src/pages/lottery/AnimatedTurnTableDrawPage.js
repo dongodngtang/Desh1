@@ -518,14 +518,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     backgroundColor: 'rgba(0,0,0,0.6)',
                     opacity: this.state.fadeOutOpacity
                 }}>
-                    <View style={{marginTop: 40, alignItems: 'center'}}>
+                    <View style={{marginTop: Metrics.reallySize(40), alignItems: 'center'}}>
                         {this.carousel()}
 
                         {this.content_show()}
                     </View>
 
 
-                    <View style={{position: 'absolute', bottom: 40}}>
+                    <View style={{position: 'absolute', bottom: Metrics.reallySize(20)}}>
                         <View style={{
                             alignSelf: 'center',
                             paddingLeft: 10,
