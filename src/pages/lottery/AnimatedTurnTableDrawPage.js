@@ -89,8 +89,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
     componentDidMount() {
         this.fadeOutAnimated.start(() => this.state.fadeOutOpacity.setValue(1));
         this.getTime();
-        this.refresh();
         this.prizeMessage();
+        this.refresh();
     }
 
     changed_status = (item) => {
@@ -488,9 +488,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
 
     render() {
-        const {showShare, shareParam} = this.state;
-        const {shareTitle, shareText, shareImage, shareLink} = shareParam
+        const {showShare, shareParam,prize_messages,drawData} = this.state;
 
+        const {shareTitle, shareText, shareImage, shareLink} = shareParam
+        if(isEmptyObject(prize_messages) || isEmptyObject(drawData)){
+            return (
+                <View/>
+            )
+        }
         return (
             <Modal
                 animationType={"none"}
