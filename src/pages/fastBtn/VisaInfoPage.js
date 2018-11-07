@@ -29,7 +29,8 @@ export default class VisaInfoPage extends Component {
                 </Text>
 
                 <TouchableOpacity onPress={() => {
-                    call('13169674979')
+                    let phone = "13169674979"
+                    call(phone);
                 }}>
                     <Text>请联系电话：+86-13169674979</Text>
                 </TouchableOpacity>

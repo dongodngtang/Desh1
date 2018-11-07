@@ -34,10 +34,10 @@ export default class HotCatalogs extends PureComponent {
 
                 }
             }, err => {
-                console.log("获取位置失败");
+                console.log("获取位置失败",err);
             })
         },err=>{
-            alert('获取定位失败')
+            logMsg('获取定位失败',err)
         })
     }
 
