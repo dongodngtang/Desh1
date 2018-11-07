@@ -55,6 +55,7 @@ export function getBaseURL(callback) {
             client.setBaseURL(ret);
             callback();
         }).catch(err => {
+        logMsg("catch", err)
         client.setBaseURL(Api.production);
         setBaseURL(Api.production);
         callback();
@@ -161,7 +162,7 @@ let netCount = 0
 /*token过期*/
 function netError(response, reject) {
     try {
-        logMsg('错误信息',response)
+        logMsg('错误信息', response)
         let msgErr = '';
         if (response.status === 401) {
             clearLoginUser();
@@ -173,13 +174,13 @@ function netError(response, reject) {
             msgErr = I18n.t('SERVER_ERROR');
         else if (response.problem === TIMEOUT_ERROR)
             msgErr = I18n.t('TIMEOUT_ERROR');
-        else if(response.problem === "CLIENT_ERROR"){
+        else if (response.problem === "CLIENT_ERROR") {
             // netinfo(netCount++)
             reject && reject(response)
             return
         }
 
-        if(strNotNull(msgErr)){
+        if (strNotNull(msgErr)) {
             showToast(msgErr);
             reject && reject(msgErr);
         }
@@ -192,7 +193,7 @@ function netError(response, reject) {
 
 
 function netinfo(count) {
-    logMsg('网络问题次数',count)
+    logMsg('网络问题次数', count)
     if (count > 4) {
         netCount = 0;
         NetInfo.getConnectionInfo().then((connectionInfo) => {
@@ -201,7 +202,7 @@ function netinfo(count) {
                 permissionAlert('澳门旅行网络权限已被关闭或当前网路不可用')
             }
         });
-    }else{
+    } else {
         showToast('网路加载慢，请稍后再试！')
     }
 
@@ -211,7 +212,7 @@ function handle(response, resolve, reject, isKkapiUrl = true) {
     try {
         if (response.ok) {
             if (!isKkapiUrl) return resolve(response.data);
-            
+
             const {code, msg} = response.data;
             if (code === 0) {
                 resolve(response.data);

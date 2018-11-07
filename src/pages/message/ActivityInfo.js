@@ -57,7 +57,7 @@ export default class ActivityInfo extends Component {
                     uShareActivity(activity_detail.title,activity_detail.description,
                         activity_detail.banner,activity_detail.id)
                 }}/>
-            <ScrollView style={{marginTop:10,marginLeft:17,marginRight:17}}>
+            <ScrollView style={{marginTop:10,paddingLeft:17,paddingRight:17,paddingBottom:50}}>
                 <RenderHtml
                     html={activity_detail.description}
                 />
