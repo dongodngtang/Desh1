@@ -32,6 +32,7 @@ import _ from 'lodash';
 import HomeTabBar from './HomeTabBar';
 import HotCatalogs from './HotCatalogs';
 import AnimatedTurnTableDrawPage from '../lottery/AnimatedTurnTableDrawPage'
+import {getBaseURL} from "../../services/RequestHelper";
 
 class TabHomePage extends Component {
     state = {
@@ -75,18 +76,6 @@ class TabHomePage extends Component {
     componentWillMount() {
         this.router = this.router || new Router();
         global.router = this.router;
-        storage.load({key: 'FirstLogin'}).then(first_users => {
-            logMsg('引导页只显示一次，已显示过', first_users)
-            this.setState({
-                first_login : true,
-                lottery: true
-            })
-        }).catch(err => {
-            this.setState({
-                first_login : false
-            })
-            logMsg('引导页还没有显示')
-        })
 
     };
 
@@ -100,8 +89,22 @@ class TabHomePage extends Component {
     };
 
     componentDidMount() {
+        getBaseURL(()=>{
+            this._getData()
+            storage.load({key: 'FirstLogin'}).then(first_users => {
+                logMsg('引导页只显示一次，已显示过', first_users)
+                this.setState({
+                    first_login : true,
+                    lottery: true
+                })
+            }).catch(err => {
+                this.setState({
+                    first_login : false
+                })
+                logMsg('引导页还没有显示')
+            })
+        })
 
-        setTimeout(this._getData, 300)
 
     }
 
