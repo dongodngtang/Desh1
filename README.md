@@ -45,3 +45,9 @@ kkandroid
 ├────────────┼──────────────────────────────────────────────────────────────────┤
 │ Staging    │ HwzbQzvi_tIn-WWPt0Z_wriLpnLA4ac6d3c3-441d-44e7-b580-2dcf21f4b042 │
 └────────────┴──────────────────────────────────────────────────────────────────┘
+
+
+发布热更新:
+code-push release-react kkios ios -m --description "热更新测试-点击更新后请稍等片刻-首页输入框变化" -d Production
+
+code-push release-react kkandroid android -m --description "热更新测试-点击更新后请稍等片刻-首页输入框变化" -d Production
