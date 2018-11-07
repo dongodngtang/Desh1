@@ -39,7 +39,7 @@ export default class SunnaItem extends Component {
                 <View style={styles.message}>
                     <Text style={styles.name} numberOfLines={1}>{title}</Text>
                     {star_level > 0 ? <View style={styles.starView}>
-                        <Text style={{color: '#999999', fontSize: 12}}>酒店星级：</Text>
+                        <Text style={{color: '#999999', fontSize: 12}}>服务星级：</Text>
                         {this._star(item.star_level).map((index) => {
                             return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                         })}
@@ -47,7 +47,7 @@ export default class SunnaItem extends Component {
                     <Text style={styles.location} numberOfLines={1}>地址：{location}</Text>
                     <View style={{flex: 1}}/>
                     <View style={styles.priceView}>
-                        <Text style={{color: '#E54A2E', fontSize: 16}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>
+                        {/*<Text style={{color: '#E54A2E', fontSize: 16}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>*/}
                         <View style={{flex: 1}}/>
                         <Text style={{color: '#4A90E2', fontSize: 12}}>{strNotNull(distance) ? distance.toFixed(2) : distance}km</Text>
                     </View>

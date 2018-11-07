@@ -157,6 +157,7 @@ class TabHomePage extends Component {
         });
         this._getPushActivity();
         getMainBanners(data => {
+            logMsg("banner",data)
             this.setState({
                 banners: data.items
             });

@@ -150,14 +150,14 @@ export default class SunnaInfoPage extends PureComponent {
                 iosalwaysBounceVertical={false}
                 scrollEventThrottle={16}
                 onScroll={this._onScroll}>
-                <Image source={{uri:logo}} style={{height: 200, width: '100%'}}/>
+                <Image source={{uri: logo}} style={{height: 200, width: '100%'}}/>
 
                 <View style={styles.nav_view}>
 
                     <View style={{width: '70%'}}>
                         <Text style={styles.title}>{title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 5, alignItems: 'center'}}>
-                            <Text style={{color: '#999999', fontSize: 12}}>酒店星级：</Text>
+                            <Text style={{color: '#999999', fontSize: 12}}>服务星级：</Text>
                             {this._star(star_level).map((index) => {
                                 return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                             })}
@@ -168,10 +168,10 @@ export default class SunnaInfoPage extends PureComponent {
 
                     <View style={{marginRight: 22, flexDirection: 'column', alignItems: 'flex-end'}}>
                         {/*<Text style={styles.price3}><Text*/}
-                            {/*style={{*/}
-                                {/*color: '#FF3F3F',*/}
-                                {/*fontSize: 12*/}
-                            {/*}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>*/}
+                        {/*style={{*/}
+                        {/*color: '#FF3F3F',*/}
+                        {/*fontSize: 12*/}
+                        {/*}}>{`人均¥${strNotNull(price) ? price : ''}`}</Text>*/}
                         {/*</Text>*/}
                         <View style={{flex: 1}}/>
                         <TouchableOpacity style={{flexDirection: 'row'}}
@@ -214,7 +214,12 @@ export default class SunnaInfoPage extends PureComponent {
                 }}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}/>
+                leftBtnPress={() => router.pop()}
+                rightBtnIcon={Images.phone}
+                rightImageStyle={{marginRight: 17, height: 22, width: 22}}
+                rightBtnPress={() => {
+                    call(telephone)
+                }}/>
 
             <PopAction
                 ref={ref => this.popAction = ref}

@@ -1,4 +1,5 @@
 const images = {
+    phone:require('../../source/phone.png'),
     gift:require('../../source/gift.gif'),
     weather: require('../../source/weather.png'),
     callPerson: require('../../source/call.png'),
