@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
         flex:1,
         paddingRight:15,
         paddingLeft:17,
-        marginTop:21
+        marginTop:21,
+        paddingBottom:50
     },
     txt1:{
         color:'#444444',

@@ -518,7 +518,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     backgroundColor: 'rgba(0,0,0,0.6)',
                     opacity: this.state.fadeOutOpacity
                 }}>
-                    <View style={{marginTop: 50, alignItems: 'center'}}>
+                    <View style={{marginTop: 40, alignItems: 'center'}}>
                         {this.carousel()}
 
                         {this.content_show()}

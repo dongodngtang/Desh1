@@ -54,7 +54,7 @@ export default class VisaInfoPage extends Component {
                         if (getApiType() === 'test') {
                             global.router.toMallInfoPage({id: 10})
                         } else {
-                            global.router.toMallInfoPage({id: 35})
+                            global.router.toMallInfoPage({id: 68})
                         }
                     }}
                                       style={[styles.btn,{backgroundColor:"#4A90E2",marginTop: 20}]}>
