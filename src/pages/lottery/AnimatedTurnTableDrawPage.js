@@ -116,7 +116,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     // uShareActivity(title, description, banner, id);
                     let param = {
                         shareTitle: title,
-                        shareText: shareTxt(description),
+                        shareText: shareTxt(description.replace(/<[^>]+>/g,"")),
                         shareImage: getShareIcon(banner),
                         shareLink: shareHost() + "activities/" + id,
                     };
