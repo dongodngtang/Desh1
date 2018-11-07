@@ -162,6 +162,11 @@ export default class SunnaInfoPage extends PureComponent {
                                 return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                             })}
                         </View>
+                        <TouchableOpacity onPress={() => {
+                            call(telephone)
+                        }}>
+                            <Text style={styles.location2} numberOfLines={1}>联系电话：{telephone}</Text>
+                        </TouchableOpacity>
                         <Text selectable={true} style={styles.location2} numberOfLines={2}>地址：{location}</Text>
                     </View>
                     <View style={{flex: 1}}/>
