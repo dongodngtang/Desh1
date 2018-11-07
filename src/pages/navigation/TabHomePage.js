@@ -88,20 +88,13 @@ class TabHomePage extends Component {
     };
 
     componentDidMount() {
-        this.setState({
-            lottery: true
+
+        getBaseURL(()=>{
+            this._getData()
+            this.setState({
+                lottery: true
+            })
         })
-        // getBaseURL(()=>{
-        //     this._getData()
-        //     storage.load({key: 'FirstLogin'}).then(first_users => {
-        //         logMsg('引导页只显示一次，已显示过', first_users)
-        //         this.setState({
-        //             lottery: true
-        //         })
-        //     }).catch(err => {
-        //         logMsg('引导页还没有显示')
-        //     })
-        // })
 
 
     }
@@ -292,6 +285,7 @@ class TabHomePage extends Component {
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
                     onScroll={this._onScroll}
+                    removeClippedSubviews={false}
                     showsVerticalScrollIndicator={false}
                     refreshControl={<RefreshControl
                         refreshing={this.state.isRefreshing}

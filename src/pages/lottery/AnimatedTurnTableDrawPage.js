@@ -73,7 +73,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
             rule_lists: rule_list,
             fadeOutOpacity: new Animated.Value(0),
             showShare: false,
-            shareParam: {}
+            shareParam: {},
+            visibleSwiper: false
         };
 
         this.fadeOutAnimated = Animated.timing(
@@ -91,6 +92,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
         this.getTime();
         this.prizeMessage();
         this.refresh();
+        setTimeout(() => {
+            this.setState({
+                visibleSwiper: true
+            })
+        }, 500)
     }
 
     changed_status = (item) => {
@@ -407,7 +413,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             )
         } else {
             const {wheel_image, prize_counts} = this.state.drawData
-            if(isEmptyObject(this.state.drawData)){
+            if (isEmptyObject(this.state.drawData)) {
                 return (
                     <TouchableOpacity onPress={() => {
                         if (this.state.offOn)
@@ -488,10 +494,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
 
     render() {
-        const {showShare, shareParam,prize_messages,drawData} = this.state;
+        const {showShare, shareParam, prize_messages, drawData} = this.state;
 
         const {shareTitle, shareText, shareImage, shareLink} = shareParam
-        if(isEmptyObject(prize_messages) || isEmptyObject(drawData)){
+        if (isEmptyObject(prize_messages) || isEmptyObject(drawData)) {
             return (
                 <View/>
             )
@@ -564,9 +570,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 </Animated.View>
 
                 {showShare ? <ShareView hiddenShareAction={() => {
-                   this.setState({
-                       showShare:false
-                   })
+                    this.setState({
+                        showShare: false
+                    })
                 }}
                                         shareClick={() => {
                                             //点击分享回调
@@ -593,15 +599,17 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 <View style={{
                     height: 24,
                     backgroundColor: 'rgba(0, 0, 0,0.59)',
-                    width: Metrics.screenWidth
+                    width: Metrics.screenWidth,
+                    zIndex: 999
                 }}>
-
-                    <Swiper
+                    {this.state.visibleSwiper ? <Swiper
+                        containerStyle={{width: Metrics.screenWidth, height: 24}}
                         dotStyle={{width: 0, height: 0}}
                         activeDotStyle={{width: 0, height: 0}}
                         showsButtons={false}
                         autoplayTimeout={3}
-                        autoplay>
+                        autoplay={true}
+                        removeClippedSubviews={false}>
                         {prize_messages.map((item, key) => {
                             return <View key={key} style={{
                                 flexDirection: 'row',
@@ -613,15 +621,15 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                 <Text numberOfLines={1} style={{
                                     color: '#F3F3F3',
                                     fontSize: 12,
-                                    alignSelf:'center',
-                                    width: '80%',
-                                    zIndex:999
+                                    alignSelf: 'center',
+                                    width: '80%'
                                 }}>{`恭喜用户${item.nick_name}转盘活动抽奖获得${item.prize}`}</Text>
                             </View>
                         })}
 
 
-                    </Swiper>
+                    </Swiper> : null}
+
                 </View>
 
 
