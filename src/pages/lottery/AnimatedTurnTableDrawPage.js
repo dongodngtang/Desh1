@@ -112,11 +112,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 const {activity_id} = this.state.task_count;
                 getActivityInfo({id: activity_id}, data => {
                     console.log("activity_detail", data)
-                    const {title, description, banner, id} = data;
+                    const {title, description, intro,banner, id} = data;
                     // uShareActivity(title, description, banner, id);
                     let param = {
                         shareTitle: title,
-                        shareText: shareTxt(strNotNull(description)?description.replace(/<[^>]+>/g,""):''),
+                        shareText: shareTxt(intro),
                         shareImage: getShareIcon(banner),
                         shareLink: shareHost() + "activities/" + id,
                     };
