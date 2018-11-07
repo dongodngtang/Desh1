@@ -14,46 +14,49 @@ export default class VisaInfoPage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    title={'签证'}
-                    toolbarStyle={{
-                        backgroundColor: Colors._E54
-                    }}
-                    leftBtnIcon={Images.sign_return}
+                    toolbarStyle={{backgroundColor: 'white'}}
+                    titleStyle={{fontSize: 18, color: '#444444'}}
+                    title="签证"
+                    leftBtnIcon={Images.coupon.return_hei}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}
+                    leftBtnPress={() => {
+                        router.pop();
+                    }}
                 />
-                <Text style={styles.txt1}>港澳通行证团队旅游L签续签办理</Text>
-                <Text>合作商铺地址：珠海市香洲区拱北地下口岸广场t字通道
-                </Text>
-                <Text>营业时间：11:30 至20:30
-                </Text>
+                <View style={{flex:1,marginTop:1,backgroundColor:'white',paddingLeft:17,paddingRight:17}}>
+                    <Text style={[styles.txt1,{marginTop:20}]}>港澳通行证团队旅游L签续签办理</Text>
+                    <Text style={[styles.txt2,{marginTop:20}]}>合作商铺地址：珠海市香洲区拱北地下口岸广场t字通道
+                    </Text>
+                    <Text style={[styles.txt2,{marginTop:5}]}>营业时间：11:30 至20:30
+                    </Text>
 
-                <TouchableOpacity onPress={() => {
-                    let phone = "13169674979"
-                    call(phone);
-                }}>
-                    <Text>请联系电话：+86-13169674979</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        let phone = "13169674979"
+                        call(phone);
+                    }}>
+                        <Text style={[styles.txt2,{marginTop:5}]}>请联系电话：+86-13169674979</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {
-                    if (getApiType() === 'test') {
-                        global.router.toMallInfoPage({id: 9})
-                    } else {
-                        global.router.toMallInfoPage({id: 67})
-                    }
+                    <TouchableOpacity onPress={() => {
+                        if (getApiType() === 'test') {
+                            global.router.toMallInfoPage({id: 9})
+                        } else {
+                            global.router.toMallInfoPage({id: 67})
+                        }
 
-                }}>
-                    <Text>快签办理点击前往</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    if (getApiType() === 'test') {
-                        global.router.toMallInfoPage({id: 10})
-                    } else {
-                        global.router.toMallInfoPage({id: 35})
-                    }
-                }}>
-                    <Text>慢签办理点击前往</Text>
-                </TouchableOpacity>
+                    }}>
+                        <Text style={[styles.txt3,{marginTop:36,textDecorationLine:'underline',alignSelf:'center'}]}>快签办理点击前往>></Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        if (getApiType() === 'test') {
+                            global.router.toMallInfoPage({id: 10})
+                        } else {
+                            global.router.toMallInfoPage({id: 35})
+                        }
+                    }}>
+                        <Text style={[styles.txt3,{marginTop:20,textDecorationLine:'underline',alignSelf:'center'}]}>慢签办理点击前往>></Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -65,5 +68,13 @@ const styles = StyleSheet.create({
         color: '#444444',
         fontSize: 18,
         fontWeight: 'bold'
+    },
+    txt2:{
+        color: '#444444',
+        fontSize: 14
+    },
+    txt3:{
+        color: '#4A90E2',
+        fontSize: 18
     }
 })
