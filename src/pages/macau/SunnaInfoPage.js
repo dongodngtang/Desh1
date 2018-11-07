@@ -164,8 +164,9 @@ export default class SunnaInfoPage extends PureComponent {
                         </View>
                         <TouchableOpacity onPress={() => {
                             call(telephone)
-                        }}>
-                            <Text style={styles.location2} numberOfLines={1}>联系电话：{telephone}</Text>
+                        }}
+                        style={{marginTop:8}}>
+                            <Text style={{color: '#999999',fontSize: 12}} numberOfLines={1}>联系电话：{telephone}</Text>
                         </TouchableOpacity>
                         <Text selectable={true} style={styles.location2} numberOfLines={2}>地址：{location}</Text>
                     </View>
