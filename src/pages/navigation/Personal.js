@@ -534,8 +534,8 @@ const stylesP = StyleSheet.create({
         marginLeft: 30
     },
     personalImg: {
-        width: 8,
-        height: 15,
+        width: Metrics.reallySize(8),
+        height: Metrics.reallySize(15),
         marginRight: 18
     },
 
