@@ -49,7 +49,7 @@ class TabHomePage extends Component {
         load_more: '',
         show_task: false,
         lottery: false,
-        first_login:true
+        first_login:false
     };
 
     componentWillReceiveProps(newProps) {
@@ -64,12 +64,12 @@ class TabHomePage extends Component {
             logMsg('引导页只显示一次，已显示过', first_users)
             if (newProps.profile.new_user && first_users.indexOf(newProps.profile.user_id) === -1) {
                 this.setState({
-                    first_login : false
+                    first_login : true
                 })
             }
         }).catch(err => {
             this.setState({
-                first_login : true
+                first_login : false
             })
             logMsg('引导页还没有显示')
         })
@@ -348,7 +348,7 @@ class TabHomePage extends Component {
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>
 
-                {this.state.lottery && !isEmptyObject(global.login_user) ? <AnimatedTurnTableDrawPage pop={true}/> : null}
+                {this.state.lottery && !isEmptyObject(global.login_user) && this.state.first_login ? <AnimatedTurnTableDrawPage pop={true}/> : null}
 
             </View>
 
