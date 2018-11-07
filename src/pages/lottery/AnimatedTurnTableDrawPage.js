@@ -544,19 +544,23 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             </ImageBackground>
                             <TouchableOpacity style={{position: 'absolute', right: 10}}
                                               onPress={() => {
-                                                  this.refresh();
-                                                  this.getTime();
-                                                  this.setState({
-                                                      rule_show: true
-                                                  })
+                                                  if (this.state.offOn){
+                                                      this.refresh();
+                                                      this.getTime();
+                                                      this.setState({
+                                                          rule_show: true
+                                                      })
+                                                  }
                                               }}>
                                 <Image style={{width: 30, height: 30}} source={Images.lottery.ward_add}/>
                             </TouchableOpacity>
                         </View>
 
                         <TouchableOpacity onPress={() => {
-                            this.toggle();
-                            global.router.toGameRulesPage(this.toggle)
+                            if (this.state.offOn){
+                                this.toggle();
+                                global.router.toGameRulesPage(this.toggle)
+                            }
                         }} style={{marginTop: 10, alignSelf: 'center'}}>
                             <Text style={{
                                 fontSize: 18,
