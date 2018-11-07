@@ -497,7 +497,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
         const {showShare, shareParam, prize_messages, drawData} = this.state;
 
         const {shareTitle, shareText, shareImage, shareLink} = shareParam
-        if (isEmptyObject(prize_messages) || isEmptyObject(drawData)) {
+        if (isEmptyObject(drawData)) {
             return (
                 <View/>
             )
