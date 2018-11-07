@@ -88,17 +88,20 @@ class TabHomePage extends Component {
     };
 
     componentDidMount() {
-        getBaseURL(()=>{
-            this._getData()
-            storage.load({key: 'FirstLogin'}).then(first_users => {
-                logMsg('引导页只显示一次，已显示过', first_users)
-                this.setState({
-                    lottery: true
-                })
-            }).catch(err => {
-                logMsg('引导页还没有显示')
-            })
+        this.setState({
+            lottery: true
         })
+        // getBaseURL(()=>{
+        //     this._getData()
+        //     storage.load({key: 'FirstLogin'}).then(first_users => {
+        //         logMsg('引导页只显示一次，已显示过', first_users)
+        //         this.setState({
+        //             lottery: true
+        //         })
+        //     }).catch(err => {
+        //         logMsg('引导页还没有显示')
+        //     })
+        // })
 
 
     }
