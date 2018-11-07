@@ -60,19 +60,7 @@ class TabHomePage extends Component {
                 show_task: newProps.profile.new_user
             })
         }
-        storage.load({key: 'FirstLogin'}).then(first_users => {
-            logMsg('引导页只显示一次，已显示过', first_users)
-            if (newProps.profile.new_user && first_users.indexOf(newProps.profile.user_id) === -1) {
-                this.setState({
-                    first_login : true
-                })
-            }
-        }).catch(err => {
-            this.setState({
-                first_login : false
-            })
-            logMsg('引导页还没有显示')
-        })
+
         //
         // if (newProps.actionType === BACK_TOP) {
         //     if (this.mainScroll)
@@ -87,9 +75,19 @@ class TabHomePage extends Component {
     componentWillMount() {
         this.router = this.router || new Router();
         global.router = this.router;
-        this.setState({
-            lottery: true
+        storage.load({key: 'FirstLogin'}).then(first_users => {
+            logMsg('引导页只显示一次，已显示过', first_users)
+            this.setState({
+                first_login : true,
+                lottery: true
+            })
+        }).catch(err => {
+            this.setState({
+                first_login : false
+            })
+            logMsg('引导页还没有显示')
         })
+
     };
 
     refresh = () => {
@@ -104,6 +102,7 @@ class TabHomePage extends Component {
     componentDidMount() {
 
         setTimeout(this._getData, 300)
+
     }
 
     _getPushActivity = () => {
