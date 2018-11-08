@@ -25,13 +25,11 @@ export default class ActivitiesPage extends Component {
         const {status, banner, is_wheel} = item;
         return (
             <TouchableOpacity onPress={() => {
-                if (isEmptyObject(global.login_user)){
+                if (isEmptyObject(global.login_user)) {
                     global.router.toLoginFirstPage()
-                }else{
+                } else {
                     if (is_wheel) {
-                        this.setState({
-                            lottery:!this.state.lottery
-                        })
+                        this.popAnimated && this.popAnimated.toggle2();
                     } else {
                         global.router.toActivityInfo(this.props, item);
                     }
@@ -118,7 +116,7 @@ export default class ActivitiesPage extends Component {
                     }}
                 />
 
-                {this.state.lottery && !isEmptyObject(global.login_user) ? <AnimatedTurnTableDrawPage pop={false}/> : null}
+                <AnimatedTurnTableDrawPage pop={false} ref={ref => this.popAnimated = ref}/>
             </View>
         )
     }

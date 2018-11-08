@@ -64,7 +64,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             lottery: 1,
             offOn: true,
             rotateDeg: new Animated.Value(0),
-            visible: true,
+            visible: this.props.pop,
             total_points: 0,
             rule_show: false,
             wheel_times: 0,
@@ -81,7 +81,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             this.state.fadeOutOpacity,
             {
                 toValue: 1,  //透明度动画最终值
-                duration: 2000,   //动画时长3000毫秒
+                duration: 1000,   //动画时长3000毫秒
                 easing: Easing.in,
             }
         );
@@ -190,6 +190,13 @@ export default class AnimatedTurnTableDrawPage extends Component {
         }
 
 
+    }
+    toggle2=()=>{
+        if(!isEmptyObject(global.login_user)){
+            this.setState({
+                visible: !this.state.visible
+            })
+        }
     }
 
     toggle = () => {
@@ -503,7 +510,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     render() {
         const {showShare, shareParam, prize_messages, drawData} = this.state;
-
+        logMsg("ppppp",drawData)
         const {shareTitle, shareText, shareImage, shareLink} = shareParam
         if (isEmptyObject(drawData)) {
             return (
@@ -533,7 +540,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     </View>
 
 
-                    <View style={{position: 'absolute', bottom: Metrics.reallySize(20)}}>
+                    <View style={{marginTop: Metrics.reallySize(20)}}>
                         <View style={{
                             alignSelf: 'center',
                             paddingLeft: 10,
