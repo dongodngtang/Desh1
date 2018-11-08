@@ -172,8 +172,16 @@ export default class AnimatedTurnTableDrawPage extends Component {
         if (!isEmptyObject(global.login_user)) {
             getTaskCount(data => {
                 console.log("我的积分", data)
+                let rules = [...this.state.rule_lists];
+                const {today_invite_times, invite_limit_times, today_share_times, share_limit_times} = data;
+                if(today_invite_times === invite_limit_times){
+                    rules[2].status = '已完成'
+                }else if(today_share_times === share_limit_times){
+                    rules[1].status = '已完成'
+                }
                 this.setState({
-                    task_count: data
+                    task_count: data,
+                    rule_lists:rules
                 })
 
             }, err => {
