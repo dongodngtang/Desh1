@@ -25,11 +25,11 @@ const game_rules = ['1.奖品将从抽中后当天算起，有效期为期1个�
     '8.如发现存在任何作弊或者恶意刷奖行为，官方将有权取消该用户参与资格。',
     '9.本次活动最终解释权归"澳门旅行 APP"所有。']
 export default class IntegralPage extends Component {
-
     render(){
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
+                    barStyle={'dark-content'}
                     refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: 'white'}}
                     title={'活动规则'}

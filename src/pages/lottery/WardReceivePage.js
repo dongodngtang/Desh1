@@ -56,6 +56,7 @@ export default class WardReceivePage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
+                    barStyle={'dark-content'}
                     refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: 'white'}}
                     title={'领取奖品'}

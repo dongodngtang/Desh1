@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, Image, TouchableOpacity,
-    ScrollView, InteractionManager, FlatList
+    ScrollView, InteractionManager, FlatList, Platform,StatusBar
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
@@ -13,7 +13,9 @@ export default class VisaInfoPage extends Component {
     render() {
         return (
             <View style={ApplicationStyles.bgContainer}>
+
                 <NavigationBar
+                    barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
                     titleStyle={{fontSize: 18, color: '#444444'}}
                     title="签证"

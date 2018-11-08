@@ -74,6 +74,7 @@ export default class MyWardsPage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
+                    barStyle={'dark-content'}
                     refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor: 'white'}}
                     title={'我的奖品'}

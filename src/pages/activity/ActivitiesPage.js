@@ -77,6 +77,7 @@ export default class ActivitiesPage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
+                    barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
                     titleStyle={{fontSize: 18, color: '#444444'}}
                     title="活动"
