@@ -12,6 +12,7 @@ import {isEmptyObject, showToast,utcDate} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 import {visit_other} from "../../services/SocialDao";
 import {UltimateListView} from "../../components";
+import {getApiType} from "../../services/RequestHelper";
 
 export default class MyWardsPage extends Component {
 
@@ -23,7 +24,7 @@ export default class MyWardsPage extends Component {
     getImUser = () => {
         // this.loading && this.loading.open();
 
-        const user_id = 'fd433a53b54c0a4f21a8c07e73f43a0c';
+        const user_id = (getApiType() === 'test') ? '5c8cb559463ddb3a1395fc9063ae54d5' : 'fd433a53b54c0a4f21a8c07e73f43a0c';
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (user) => {
 

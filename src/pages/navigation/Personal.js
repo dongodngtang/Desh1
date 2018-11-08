@@ -21,6 +21,7 @@ import {NavigationBar} from '../../components';
 import NewUserTask from "./NewUserTask";
 import {getJmessageInfo} from "../../services/AccountDao";
 import {visit_other} from "../../services/SocialDao";
+import {getApiType} from "../../services/RequestHelper";
 
 class Personal extends Component {
 
@@ -260,7 +261,7 @@ class Personal extends Component {
     getImUser = () => {
         this.loading && this.loading.open();
 
-        const user_id = 'fd433a53b54c0a4f21a8c07e73f43a0c';
+        const user_id = (getApiType() === 'test') ? '5c8cb559463ddb3a1395fc9063ae54d5' : 'fd433a53b54c0a4f21a8c07e73f43a0c';
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (user) => {
 
@@ -293,10 +294,10 @@ class Personal extends Component {
 
             {title === '联系客服' && !isEmptyObject(global.login_user) ? <Text
                     style={{
-                        width:130,
+                        width: 130,
                         fontSize: 12,
                         color: '#AAAAAA',
-                        marginRight:12
+                        marginRight: 12
                     }}>(工作时间：周一至周五10:00 - 18:00)</Text>
                 : null}
 
