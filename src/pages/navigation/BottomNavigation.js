@@ -200,7 +200,7 @@ class BottomNavigation extends Component {
 
                 {util.isEmpty(this.state.app_update) ? null : <ForcedUpdate app_update={this.state.app_update}/>}
 
-                {this.state.FirstLogin ? <GuidePage/> : null}
+                {/*{this.state.FirstLogin ? <GuidePage/> : null}*/}
 
             </View>
 

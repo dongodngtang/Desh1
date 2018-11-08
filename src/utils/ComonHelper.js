@@ -278,8 +278,8 @@ function getUserId() {
 
 export function uShareLoad() {
     let param = {
-        shareTitle: '【澳门旅行APP】下载立送200元优惠券',
-        shareText: '在这里，可以随时随地找美食、定酒店！还有家庭旅行订制化服务等你体验！',
+        shareTitle: '【澳门旅行APP】下载后免费抽奖，最高可获得iPhone XS！',
+        shareText: '在这里，可以随时随地找美食、定酒店！更有幸运大转盘——百万大奖等你拿！',
         shareImage: shareIcon,
         // shareLink: shareHost() + "invite_load?id=" + getUserId()
         shareLink: shareHost() + "loadApp"
@@ -289,8 +289,8 @@ export function uShareLoad() {
 
 export function uShareRegistered() {
     let param = {
-        shareTitle: '【澳门旅行APP】下载立送200元优惠券',
-        shareText: '在这里，可以随时随地找美食、定酒店！还有家庭旅行订制化服务等你体验！',
+        shareTitle: '【澳门旅行APP】下载后免费抽奖，最高可获得iPhone XS！',
+        shareText: '在这里，可以随时随地找美食、定酒店！更有幸运大转盘——百万大奖等你拿！',
         shareImage: shareIcon,
         shareLink: shareHost() + "invite_load?id=" + getUserId()
     };

@@ -112,11 +112,11 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 const {activity_id} = this.state.task_count;
                 getActivityInfo({id: activity_id}, data => {
                     console.log("activity_detail", data)
-                    const {title, description, banner, id} = data;
+                    const {title, description, intro,banner, id} = data;
                     // uShareActivity(title, description, banner, id);
                     let param = {
                         shareTitle: title,
-                        shareText: shareTxt(description),
+                        shareText: shareTxt(intro),
                         shareImage: getShareIcon(banner),
                         shareLink: shareHost() + "activities/" + id,
                     };
@@ -497,7 +497,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
         const {showShare, shareParam, prize_messages, drawData} = this.state;
 
         const {shareTitle, shareText, shareImage, shareLink} = shareParam
-        if (isEmptyObject(prize_messages) || isEmptyObject(drawData)) {
+        if (isEmptyObject(drawData)) {
             return (
                 <View/>
             )
@@ -544,19 +544,23 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             </ImageBackground>
                             <TouchableOpacity style={{position: 'absolute', right: 10}}
                                               onPress={() => {
-                                                  this.refresh();
-                                                  this.getTime();
-                                                  this.setState({
-                                                      rule_show: true
-                                                  })
+                                                  if (this.state.offOn){
+                                                      this.refresh();
+                                                      this.getTime();
+                                                      this.setState({
+                                                          rule_show: true
+                                                      })
+                                                  }
                                               }}>
                                 <Image style={{width: 30, height: 30}} source={Images.lottery.ward_add}/>
                             </TouchableOpacity>
                         </View>
 
                         <TouchableOpacity onPress={() => {
-                            this.toggle();
-                            global.router.toGameRulesPage(this.toggle)
+                            if (this.state.offOn){
+                                this.toggle();
+                                global.router.toGameRulesPage(this.toggle)
+                            }
                         }} style={{marginTop: 10, alignSelf: 'center'}}>
                             <Text style={{
                                 fontSize: 18,
