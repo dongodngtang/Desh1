@@ -77,7 +77,7 @@ class Root extends Component {
             //     optionalIgnoreButtonLabel:'取消'
             // },
             updateDialog: false,
-            installMode: codePush.InstallMode.ON_NEXT_RESTART
+            installMode: codePush.InstallMode.ON_NEXT_RESUME
         })
     }
 
