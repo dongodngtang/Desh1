@@ -66,17 +66,18 @@ class Root extends Component {
         requestCameraPermission()
 
         codePush.sync({
-            updateDialog: {
-                appendReleaseDescription: true,
-                title: '更新通知',
-                mandatoryContinueButtonLabel: '更新',
-                descriptionPrefix: '更新内容：',
-                mandatoryUpdateMessage: '',
-                optionalUpdateMessage:'',
-                optionalInstallButtonLabel:'更新',
-                optionalIgnoreButtonLabel:'取消'
-            },
-            installMode: codePush.InstallMode.IMMEDIATE
+            // updateDialog: {
+            //     appendReleaseDescription: true,
+            //     title: '更新通知',
+            //     mandatoryContinueButtonLabel: '更新',
+            //     descriptionPrefix: '更新内容：',
+            //     mandatoryUpdateMessage: '',
+            //     optionalUpdateMessage:'',
+            //     optionalInstallButtonLabel:'更新',
+            //     optionalIgnoreButtonLabel:'取消'
+            // },
+            updateDialog: false,
+            installMode: codePush.InstallMode.ON_NEXT_RESTART
         })
     }
 
