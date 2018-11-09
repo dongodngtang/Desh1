@@ -84,10 +84,10 @@ export default class ShareToast extends Component {
                                   return (
                                       <ShareItem item={item.item}
                                                  itemClick={()=>{
-                                                     this.props.shareClick && this.props.shareClick()
                                                      this.hiddenShare()
 
                                                  }}
+                                                 shareClick={this.props.shareClick}
                                                  shareTitle={this.props.shareTitle}
                                                  shareText={this.props.shareText}
                                                  shareLink={this.props.shareLink}
