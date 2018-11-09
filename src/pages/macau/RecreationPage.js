@@ -41,11 +41,15 @@ export default class RecreationPage extends PureComponent {
                 if(getApiType()=== 'test')
                     alert('定位城市：'+city_name)
                 if(city_name && city_name.indexOf('澳门')!== -1){
+                    this.listView && this.listView.postRefresh([])
                     this.setState({
                         isMacau:true,
                         name_index: 1
                     })
-                    this.refresh()
+                    setTimeout(()=>{
+                        this.refresh()
+                    },200)
+
 
                 }
             }, err => {
