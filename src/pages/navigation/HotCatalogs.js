@@ -17,7 +17,11 @@ export default class HotCatalogs extends PureComponent {
 
     componentDidMount() {
 
-        getPosition(data=>{
+        this.refresh();
+    }
+
+    refresh = () => {
+        getPosition(data => {
             const {longitude, latitude} = data;
             let body = {
                 longitude: longitude,
@@ -26,17 +30,17 @@ export default class HotCatalogs extends PureComponent {
             locations(body, data => {
                 let city_name = data.base.city_name
                 // if(getApiType()=== 'test')
-                if(city_name && city_name.indexOf('澳门')!== -1){
+                if (city_name && city_name.indexOf('澳门') !== -1) {
                     this.setState({
-                        isMacau:true
+                        isMacau: true
                     })
 
                 }
             }, err => {
-                console.log("获取位置失败",err);
+                console.log("获取位置失败", err);
             })
-        },err=>{
-            logMsg('获取定位失败',err)
+        }, err => {
+            logMsg('获取定位失败', err)
         })
     }
 
@@ -77,7 +81,8 @@ export default class HotCatalogs extends PureComponent {
                                 name: '娱乐',
                                 type: 'recreation',
                                 size: {height: 34, width: 36},
-                                icon: Images.macau.entertainment
+                                icon: Images.macau.entertainment,
+                                refresh:this.refresh
                             });
                         } else {
                             global.router.toHotelSearch({

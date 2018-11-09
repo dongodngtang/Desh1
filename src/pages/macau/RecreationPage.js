@@ -82,6 +82,7 @@ export default class RecreationPage extends PureComponent {
                         <TouchableOpacity
                             style={styles.btn_search}
                             onPress={() => {
+                                this.props.params.refresh && this.props.params.refresh();
                                 router.pop()
                             }}>
 
