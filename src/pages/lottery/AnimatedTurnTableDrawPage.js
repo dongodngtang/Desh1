@@ -51,6 +51,7 @@ const rule_list = [{id: 0, name: '每日登录', des: '每日可获得2次抽奖
     {id: 2, name: '好友邀请', des: '邀请好友注册成功可获得1次抽奖机会', image: Images.integral.frends, status: '未完成'},
     {id: 3, name: '积分兑换', des: '每200积分可购买1次抽奖机会', image: Images.integral.exchange, status: '兑换'}];
 const prompts = ['1.完成每日任务，最高每日可获得45积分', '2.成功购买商城现金商品，可获得等额积分', '3.转盘小游戏还有赢取积分的机会哦～'];
+const shareIcon = 'http://kkh5.deshpro.com/images/default_img.png';
 
 export default class AnimatedTurnTableDrawPage extends Component {
 
@@ -74,7 +75,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
             fadeOutOpacity: new Animated.Value(0),
             showShare: false,
             shareParam: {},
-            visibleSwiper: false
+            shareParam_invite:{},
+            visibleSwiper: false,
+            showInviteShare:false
         };
 
         this.fadeOutAnimated = Animated.timing(
@@ -108,7 +111,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             } else {
                 rules[1].status = '未完成';
                 this.setState({
-                    rule_show: !this.state.rule_show
+                    rule_show: true
                 });
                 const {activity_id} = this.state.task_count;
                 getActivityInfo({id: activity_id}, data => {
@@ -125,6 +128,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     this.setState({
                         shareParam: param,
                         showShare: true,
+                        showInviteShare:false,
                         rule_lists: rules
                     })
 
@@ -141,9 +145,33 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 rules[2].status = '未完成';
                 logMsg("进入邀请分享")
                 uShareRegistered();
+                this.setState({
+                    rule_show: true
+                });
+                let param = {
+                    shareTitle: '【澳门旅行APP】下载后免费抽奖，最高可获得iPhone XS！',
+                    shareText: '在这里，可以随时随地找美食、定酒店！更有幸运大转盘——百万大奖等你拿！',
+                    shareImage: shareIcon,
+                    shareLink: shareHost() + "invite_load?id=" + this.getUserId()
+                };
+
+                this.setState({
+                    shareParam_invite: param,
+                    showInviteShare: true,
+                    showShare:false,
+                    rule_lists: rules
+                })
             }
         }
     };
+
+
+    getUserId = () => {
+        if (!isEmptyObject(global.login_user) && strNotNull(global.login_user.user_id)) {
+            return login_user.user_id;
+        }
+        return '0';
+    }
 
     getTime = () => {
         getWheelTime(data => {
@@ -516,7 +544,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
 
     render() {
-        const {showShare, shareParam, prize_messages, drawData} = this.state;
+        const {showShare, shareParam, shareParam_invite, drawData,showInviteShare} = this.state;
         const {shareTitle, shareText, shareImage, shareLink} = shareParam
         if (isEmptyObject(drawData)) {
             return (
@@ -594,7 +622,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     </View>
                 </Animated.View>
 
-                {showShare ? <ShareView hiddenShareAction={() => {
+                {showShare && !showInviteShare ? <ShareView hiddenShareAction={() => {
                     this.setState({
                         showShare: false
                     })
@@ -613,6 +641,25 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                         shareText={shareText}
                                         shareLink={shareLink}
                                         shareImage={shareImage}/> : null}
+                {showInviteShare && !showShare ? <ShareView hiddenShareAction={() => {
+                    this.setState({
+                        showInviteShare: false
+                    })
+                }}
+                                        shareClick={() => {
+                                            //点击分享回调
+                                            postShareCount({from: 'wheel'}, data => {
+                                                logMsg("用户邀请分享成功:")
+                                                this.refresh();
+                                                this.getTime();
+                                            }, err => {
+
+                                            })
+                                        }}
+                                        shareTitle={shareParam_invite.shareTitle}
+                                        shareText={shareParam_invite.shareText}
+                                        shareLink={shareParam_invite.shareLink}
+                                        shareImage={shareParam_invite.shareImage}/> : null}
             </Modal>
         );
     }
