@@ -29,14 +29,14 @@ export default class RecreationPage extends PureComponent {
         getPosition(data => {
             const {longitude, latitude} = data;
 
-            let body = {
-                longitude: longitude,
-                latitude: latitude
-            }
             // let body = {
-            //     latitude:"22.203672",
-            //     longitude:"113.564241"
+            //     longitude: longitude,
+            //     latitude: latitude
             // }
+            let body = {
+                latitude:"22.203672",
+                longitude:"113.564241"
+            }
 
             this.sanna = body
             locations(body, data => {
