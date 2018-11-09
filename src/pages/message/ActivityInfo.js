@@ -54,7 +54,7 @@ export default class ActivityInfo extends Component {
                 rightBtnIcon={Images.share}
                 rightImageStyle={{height: 22, width: 23, marginRight: 24.8}}
                 rightBtnPress={() => {
-                    uShareActivity(activity_detail.title,activity_detail.description,
+                    uShareActivity(activity_detail.title,activity_detail.intro,
                         activity_detail.banner,activity_detail.id)
                 }}/>
             <ScrollView style={{marginTop:10,paddingLeft:17,paddingRight:17,paddingBottom:50}}>
