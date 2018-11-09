@@ -8,18 +8,53 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {hotels, info_types, getSaunas} from '../../services/MacauDao';
-import {isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
+import {getPosition, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
 import {FoodItem} from './HotelSearch'
+import {locations} from "../../services/SocialDao";
+import {getApiType} from "../../services/RequestHelper";
 
 export default class RecreationPage extends PureComponent {
     state = {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: 1
+        name_index: 0,
+        isMacau:false
     };
+
+    componentDidMount() {
+
+        getPosition(data=>{
+            const {longitude, latitude} = data;
+            let body = {
+                longitude: longitude,
+                latitude: latitude
+            }
+            // let body = {
+            //     latitude:"22.203672",
+            //     longitude:"113.564241"
+            // }
+            locations(body, data => {
+                let city_name = data.base.city_name
+                if(getApiType()=== 'test')
+                    alert('定位城市：'+city_name)
+                if(city_name && city_name.indexOf('澳门')!== -1){
+                    this.setState({
+                        isMacau:true,
+                        name_index: 1
+                    })
+                    this.refresh()
+
+                }
+            }, err => {
+                console.log("获取位置失败");
+            })
+        },err=>{
+            alert('获取定位失败')
+        })
+    }
 
     refresh = () => {
         this.setState({
@@ -29,48 +64,57 @@ export default class RecreationPage extends PureComponent {
     };
 
     change_content() {
-        const {name_index} = this.state;
-        return (
-            <View style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '40%',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-            }}>
-                <TouchableOpacity onPress={() => {
-                    this.listView && this.listView.postRefresh([])
-                    this.setState({
-                        name_index: 0
-                    })
-                    setTimeout(() => {
-                        this.refresh()
-                    }, 200)
+        const {name_index,isMacau} = this.state;
 
+        console.log("global.city_name",global.city_name)
+        if (isMacau) {
+            return (
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '40%',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                 }}>
-                    <Text
-                        style={{
-                            fontSize: name_index === 0 ? 18 : 14,
-                            color: name_index === 0 ? 'white' : '#FFCACA'
-                        }}>休闲娱乐</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    this.listView && this.listView.postRefresh([])
-                    this.setState({
-                        name_index: 1
-                    });
-                    setTimeout(() => {
-                        this.refresh()
-                    }, 200)
-                }}>
-                    <Text
-                        style={{
-                            fontSize: name_index === 1 ? 18 : 14,
-                            color: name_index === 1 ? 'white' : '#FFCACA'
-                        }}>桑拿水疗</Text>
-                </TouchableOpacity>
-            </View>
-        )
+                    <TouchableOpacity onPress={() => {
+                        this.listView && this.listView.postRefresh([])
+                        this.setState({
+                            name_index: 0
+                        })
+                        setTimeout(() => {
+                            this.refresh()
+                        }, 200)
+
+                    }}>
+                        <Text
+                            style={{
+                                fontSize: name_index === 0 ? 18 : 14,
+                                color: name_index === 0 ? 'white' : '#FFCACA'
+                            }}>休闲娱乐</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        this.listView && this.listView.postRefresh([])
+                        this.setState({
+                            name_index: 1
+                        });
+                        setTimeout(() => {
+                            this.refresh()
+                        }, 200)
+                    }}>
+                        <Text
+                            style={{
+                                fontSize: name_index === 1 ? 18 : 14,
+                                color: name_index === 1 ? 'white' : '#FFCACA'
+                            }}>桑拿水疗</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        } else {
+            return (
+                <Text style={[styles.title, {alignSelf: 'center'}]}>{'休闲娱乐'}</Text>
+            )
+        }
+
     }
 
     render() {
@@ -199,31 +243,39 @@ export default class RecreationPage extends PureComponent {
     };
 
     onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
-        if (isEmptyObject(global.city)) {
+        if (isEmptyObject(global.city_name)) {
             // startFetch(sunna_data, 18)
             abortFetch();
             return;
         }
-        const {latitude, longitude} = global.city;
-        let body = {
-            latitude: latitude,
-            longitude: longitude
-        };
-        try {
-            getSaunas(body, data => {
-                console.log("Saunas", data);
-                startFetch(data.items, 18)
-            }, err => {
-                console.log("Saunas_err", err)
-                this.setState({
-                    reject_problem: err.problem
-                })
+        getPosition(data=>{
+            const {longitude, latitude} = data;
+            let body = {
+                latitude: latitude,
+                longitude: longitude
+            };
+
+            // let body = {
+            //     latitude:"22.203672",
+            //     longitude:"113.564241"
+            // }
+            try {
+                getSaunas(body, data => {
+                    console.log("Saunas", data);
+                    startFetch(data.items, 18)
+                }, err => {
+                    console.log("Saunas_err", err)
+                    this.setState({
+                        reject_problem: err.problem
+                    })
+                    abortFetch()
+                });
+            } catch (err) {
+                console.log(err)
                 abortFetch()
-            });
-        } catch (err) {
-            console.log(err)
-            abortFetch()
-        }
+            }
+        })
+
     };
 
     onFetch_forEn = (page = 1, startFetch, abortFetch) => {
