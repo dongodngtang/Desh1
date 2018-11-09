@@ -106,13 +106,14 @@ export default class AnimatedTurnTableDrawPage extends Component {
             if (today_share_times === share_limit_times) {
                 rules[1].status = '已完成'
             } else {
+                rules[1].status = '未完成';
                 this.setState({
                     rule_show: !this.state.rule_show
                 });
                 const {activity_id} = this.state.task_count;
                 getActivityInfo({id: activity_id}, data => {
                     console.log("activity_detail", data)
-                    const {title, description, intro,banner, id} = data;
+                    const {title, description, intro, banner, id} = data;
                     // uShareActivity(title, description, banner, id);
                     let param = {
                         shareTitle: title,
@@ -123,7 +124,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
                     this.setState({
                         shareParam: param,
-                        showShare: true
+                        showShare: true,
+                        rule_lists: rules
                     })
 
                 }, err => {
@@ -136,6 +138,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             if (today_invite_times === invite_limit_times) {
                 rules[2].status = '已完成'
             } else {
+                rules[2].status = '未完成';
                 logMsg("进入邀请分享")
                 uShareRegistered();
             }
@@ -174,19 +177,19 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 console.log("我的积分", data)
                 let rules = [...this.state.rule_lists];
                 const {today_invite_times, invite_limit_times, today_share_times, share_limit_times} = data;
-                if(today_invite_times === invite_limit_times){
+                if (today_invite_times === invite_limit_times) {
                     rules[2].status = '已完成'
-                }else{
+                } else {
                     rules[2].status = '未完成'
                 }
-                if(today_share_times === share_limit_times){
+                if (today_share_times === share_limit_times) {
                     rules[1].status = '已完成'
-                }else{
+                } else {
                     rules[1].status = '未完成'
                 }
                 this.setState({
                     task_count: data,
-                    rule_lists:rules
+                    rule_lists: rules
                 })
 
             }, err => {
@@ -196,8 +199,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
 
     }
-    toggle2=()=>{
-        if(!isEmptyObject(global.login_user)){
+    toggle2 = () => {
+        if (!isEmptyObject(global.login_user)) {
             this.setState({
                 visible: !this.state.visible
             })
@@ -393,7 +396,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                                     });
                                                 }
 
-                                            }else{
+                                            } else {
                                                 this.changed_status(item)
                                             }
                                         }}>
@@ -562,7 +565,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             </ImageBackground>
                             <TouchableOpacity style={{position: 'absolute', right: 10}}
                                               onPress={() => {
-                                                  if (this.state.offOn){
+                                                  if (this.state.offOn) {
                                                       this.refresh();
                                                       this.getTime();
                                                       this.setState({
@@ -575,7 +578,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         </View>
 
                         <TouchableOpacity onPress={() => {
-                            if (this.state.offOn){
+                            if (this.state.offOn) {
                                 this.toggle();
                                 global.router.toGameRulesPage(this.toggle)
                             }
