@@ -144,7 +144,6 @@ export default class AnimatedTurnTableDrawPage extends Component {
             } else {
                 rules[2].status = '未完成';
                 logMsg("进入邀请分享")
-                uShareRegistered();
                 this.setState({
                     rule_show: true
                 });
