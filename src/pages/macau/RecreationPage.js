@@ -14,9 +14,6 @@ import SunnaItem from './SunnaItem';
 import {FoodItem} from './HotelSearch'
 import {locations} from "../../services/SocialDao";
 import {getApiType} from "../../services/RequestHelper";
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-
-const catergories = [{id: 0, name: '休闲娱乐'}, {id: 1, name: '桑拿水疗'}]
 
 export default class RecreationPage extends PureComponent {
     state = {
@@ -31,35 +28,38 @@ export default class RecreationPage extends PureComponent {
 
         getPosition(data => {
             const {longitude, latitude} = data;
-            // let body = {
-            //     longitude: longitude,
-            //     latitude: latitude
-            // }
+
             let body = {
-                latitude: "22.203672",
-                longitude: "113.564241"
+                longitude: longitude,
+                latitude: latitude
             }
+            // let body = {
+            //     latitude:"22.203672",
+            //     longitude:"113.564241"
+            // }
+
+            this.sanna = body
             locations(body, data => {
-                let city_name = data.base.city_name;
-                console.log("city_name", city_name)
-                // if(getApiType()=== 'test')
-                //     alert('定位城市：'+city_name)
+                let city_name = data.base.city_name
+                if (getApiType() === 'test')
+                    alert('定位城市：' + city_name)
                 if (city_name && city_name.indexOf('澳门') !== -1) {
-                    this.listView && this.listView.postRefresh()
+                    this.listView && this.listView.postRefresh([])
                     this.setState({
                         isMacau: true,
                         name_index: 1
                     })
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         this.refresh()
-                    },200)
+                    }, 200)
+
 
                 }
             }, err => {
-                console.log("获取位置失败", err);
+                console.log("获取位置失败");
             })
         }, err => {
-            alert('获取定位失败', err)
+            alert('获取定位失败')
         })
     }
 
@@ -73,7 +73,7 @@ export default class RecreationPage extends PureComponent {
     change_content() {
         const {name_index, isMacau} = this.state;
 
-        console.log("isMacau", isMacau)
+        console.log("global.city_name", global.city_name)
         if (isMacau) {
             return (
                 <View style={{
@@ -225,6 +225,7 @@ export default class RecreationPage extends PureComponent {
                         }}/> : <NoDataView/>;
                 }}
             />
+
         </View>
     }
 
@@ -249,38 +250,25 @@ export default class RecreationPage extends PureComponent {
     };
 
     onFetch_forSunna = (page = 1, startFetch, abortFetch) => {
-        if (isEmptyObject(global.city_name)) {
-            // startFetch(sunna_data, 18)
+        if (isEmptyObject(this.sanna)) {
             abortFetch();
             return;
         }
-        getPosition(data => {
-            const {longitude, latitude} = data;
-            let body = {
-                latitude: latitude,
-                longitude: longitude
-            };
-
-            // let body = {
-            //     latitude:"22.203672",
-            //     longitude:"113.564241"
-            // }
-            try {
-                getSaunas(body, data => {
-                    console.log("Saunas", data);
-                    startFetch(data.items, 18)
-                }, err => {
-                    console.log("Saunas_err", err)
-                    this.setState({
-                        reject_problem: err.problem
-                    })
-                    abortFetch()
-                });
-            } catch (err) {
-                console.log(err)
+        try {
+            getSaunas(this.sanna, data => {
+                console.log("Saunas", data);
+                startFetch(data.items, 18)
+            }, err => {
+                console.log("Saunas_err", err)
+                this.setState({
+                    reject_problem: err.problem
+                })
                 abortFetch()
-            }
-        })
+            });
+        } catch (err) {
+            console.log(err)
+            abortFetch()
+        }
 
     };
 
