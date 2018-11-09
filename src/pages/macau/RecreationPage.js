@@ -8,18 +8,45 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {hotels, info_types, getSaunas} from '../../services/MacauDao';
-import {isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
+import {getPosition, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
-import {FoodItem} from './HotelSearch'
+import {FoodItem} from './HotelSearch';
+import {locations} from "../../services/SocialDao";
 
 export default class RecreationPage extends PureComponent {
     state = {
         search: false,
         show_content: true,
         reject_problem: '',
-        name_index: 1
+        name_index: 1,
+        isMacau: false
     };
+
+    componentDidMount() {
+
+        getPosition(data => {
+            const {longitude, latitude} = data;
+            let body = {
+                longitude: longitude,
+                latitude: latitude
+            }
+            locations(body, data => {
+                let city_name = data.base.city_name
+                // if(getApiType()=== 'test')
+                if (city_name && city_name.indexOf('澳门') !== -1) {
+                    this.setState({
+                        isMacau: true
+                    })
+
+                }
+            }, err => {
+                console.log("获取位置失败", err);
+            })
+        }, err => {
+            logMsg('获取定位失败', err)
+        })
+    }
 
     refresh = () => {
         this.setState({

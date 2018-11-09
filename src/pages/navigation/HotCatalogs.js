@@ -11,39 +11,6 @@ import {locations} from "../../services/SocialDao";
 
 export default class HotCatalogs extends PureComponent {
 
-    state = {
-        isMacau: false
-    };
-
-    componentDidMount() {
-
-        this.refresh();
-    }
-
-    refresh = () => {
-        getPosition(data => {
-            const {longitude, latitude} = data;
-            let body = {
-                longitude: longitude,
-                latitude: latitude
-            }
-            locations(body, data => {
-                let city_name = data.base.city_name
-                // if(getApiType()=== 'test')
-                if (city_name && city_name.indexOf('澳门') !== -1) {
-                    this.setState({
-                        isMacau: true
-                    })
-
-                }
-            }, err => {
-                console.log("获取位置失败", err);
-            })
-        }, err => {
-            logMsg('获取定位失败', err)
-        })
-    }
-
     render() {
         return (
             <View style={styles.hotView}>
@@ -75,24 +42,13 @@ export default class HotCatalogs extends PureComponent {
                                          source={Images.navigation2.info_ng}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
-
-                        if (this.state.isMacau) {
-                            global.router.toRecreationPage({
-                                name: '娱乐',
-                                type: 'recreation',
-                                size: {height: 34, width: 36},
-                                icon: Images.macau.entertainment,
-                                refresh:this.refresh
-                            });
-                        } else {
-                            global.router.toHotelSearch({
-                                name: '休闲娱乐',
-                                type: 'recreation',
-                                size: {height: 34, width: 36},
-                                icon: Images.macau.entertainment
-                            })
-                        }
-
+                        global.router.toRecreationPage({
+                            name: '娱乐',
+                            type: 'recreation',
+                            size: {height: 34, width: 36},
+                            icon: Images.macau.entertainment,
+                            refresh:this.refresh
+                        });
                     }}>
                         <ImageBackground style={[styles.leftTop, {marginTop: 4}]}
                                          source={Images.navigation2.rec_bg}/>
