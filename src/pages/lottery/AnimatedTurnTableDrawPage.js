@@ -104,7 +104,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
         const {today_invite_times, invite_limit_times, today_share_times, share_limit_times} = this.state.task_count;
         if (item.name === '游戏分享') {
             if (today_share_times === share_limit_times) {
-                rules[item.id].status = '已完成'
+                rules[1].status = '已完成'
             } else {
                 this.setState({
                     rule_show: !this.state.rule_show
@@ -134,7 +134,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
             }
         } else if (item.name === '好友邀请') {
             if (today_invite_times === invite_limit_times) {
-                rules[item.id].status = '已完成'
+                rules[2].status = '已完成'
             } else {
                 logMsg("进入邀请分享")
                 uShareRegistered();
@@ -176,8 +176,13 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 const {today_invite_times, invite_limit_times, today_share_times, share_limit_times} = data;
                 if(today_invite_times === invite_limit_times){
                     rules[2].status = '已完成'
-                }else if(today_share_times === share_limit_times){
+                }else{
+                    rules[2].status = '未完成'
+                }
+                if(today_share_times === share_limit_times){
                     rules[1].status = '已完成'
+                }else{
+                    rules[1].status = '未完成'
                 }
                 this.setState({
                     task_count: data,
@@ -371,10 +376,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                         activeOpacity={1}
                                         style={[styles.statusView, {backgroundColor: this._background(item)}]}
                                         onPress={() => {
-                                            if (item.status === '未完成') {
-                                                this.changed_status(item)
-
-                                            } else if (item.status === '兑换') {
+                                            if (item.status === '兑换') {
                                                 if (total_points < 200) {
                                                     Alert.alert('澳门旅行', '积分不足')
                                                 } else {
@@ -391,6 +393,8 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                                     });
                                                 }
 
+                                            }else{
+                                                this.changed_status(item)
                                             }
                                         }}>
                                         <Text style={{color: '#FFFFFF', fontSize: 14}}>{item.status}</Text>
@@ -510,7 +514,6 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
     render() {
         const {showShare, shareParam, prize_messages, drawData} = this.state;
-        logMsg("ppppp",drawData)
         const {shareTitle, shareText, shareImage, shareLink} = shareParam
         if (isEmptyObject(drawData)) {
             return (

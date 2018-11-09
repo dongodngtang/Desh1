@@ -43,7 +43,7 @@ export default class HotCatalogs extends PureComponent {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         global.router.toRecreationPage({
-                            name: '娱乐',
+                            name: '休闲娱乐',
                             type: 'recreation',
                             size: {height: 34, width: 36},
                             icon: Images.macau.entertainment,
