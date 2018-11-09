@@ -169,12 +169,17 @@ export default class ShareItem extends Component {
     };
 
     _share_success = () => {
-        if (!isEmptyObject(global.login_user))
-            postShareCount({}, data => {
-                console.log("用户推荐好友分享成功:")
-            }, err => {
+        if(this.props.shareClick){
+            this.props.shareClick()
+        }else{
+            if (!isEmptyObject(global.login_user))
+                postShareCount({}, data => {
+                    console.log("用户推荐好友分享成功:")
+                }, err => {
 
-            })
+                })
+        }
+
     }
 
 
