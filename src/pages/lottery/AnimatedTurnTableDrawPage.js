@@ -75,9 +75,9 @@ export default class AnimatedTurnTableDrawPage extends Component {
             fadeOutOpacity: new Animated.Value(0),
             showShare: false,
             shareParam: {},
-            shareParam_invite:{},
+            shareParam_invite: {},
             visibleSwiper: false,
-            showInviteShare:false
+            showInviteShare: false
         };
 
         this.fadeOutAnimated = Animated.timing(
@@ -128,7 +128,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     this.setState({
                         shareParam: param,
                         showShare: true,
-                        showInviteShare:false,
+                        showInviteShare: false,
                         rule_lists: rules
                     })
 
@@ -157,7 +157,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 this.setState({
                     shareParam_invite: param,
                     showInviteShare: true,
-                    showShare:false,
+                    showShare: false,
                     rule_lists: rules
                 })
             }
@@ -345,7 +345,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
         const {invite_limit_times, share_limit_times} = this.state.task_count;
         if (item.name === '好友邀请') {
             return <Text
-                style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{`每日可获得${invite_limit_times}次抽奖机会`}</Text>
+                style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{`好友完成新手任务后,抽奖次数+1`}</Text>
         } else {
             return <Text style={{color: '#AAAAAA', fontSize: 12, marginTop: 3}}>{item.des}</Text>
         }
@@ -400,6 +400,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                             {this.showContent(item.name)}
                                         </View>
                                         {this.showDes(item)}
+
                                     </View>
                                     <View style={{flex: 1}}/>
                                     <TouchableOpacity
@@ -543,7 +544,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
 
     render() {
-        const {showShare, shareParam, shareParam_invite, drawData,showInviteShare} = this.state;
+        const {showShare, shareParam, shareParam_invite, drawData, showInviteShare} = this.state;
         const {shareTitle, shareText, shareImage, shareLink} = shareParam
         if (isEmptyObject(drawData)) {
             return (
@@ -626,39 +627,39 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         showShare: false
                     })
                 }}
-                                        shareClick={() => {
-                                            //点击分享回调
-                                            postShareCount({from: 'wheel'}, data => {
-                                                logMsg("用户好友分享成功:")
-                                                this.refresh();
-                                                this.getTime();
-                                            }, err => {
+                                                            shareClick={() => {
+                                                                //点击分享回调
+                                                                postShareCount({from: 'wheel'}, data => {
+                                                                    logMsg("用户好友分享成功:")
+                                                                    this.refresh();
+                                                                    this.getTime();
+                                                                }, err => {
 
-                                            })
-                                        }}
-                                        shareTitle={shareTitle}
-                                        shareText={shareText}
-                                        shareLink={shareLink}
-                                        shareImage={shareImage}/> : null}
+                                                                })
+                                                            }}
+                                                            shareTitle={shareTitle}
+                                                            shareText={shareText}
+                                                            shareLink={shareLink}
+                                                            shareImage={shareImage}/> : null}
                 {showInviteShare && !showShare ? <ShareView hiddenShareAction={() => {
                     this.setState({
                         showInviteShare: false
                     })
                 }}
-                                        shareClick={() => {
-                                            //点击分享回调
-                                            postShareCount({from: 'wheel'}, data => {
-                                                logMsg("用户邀请分享成功:")
-                                                this.refresh();
-                                                this.getTime();
-                                            }, err => {
+                                                            shareClick={() => {
+                                                                //点击分享回调
+                                                                postShareCount({from: 'wheel'}, data => {
+                                                                    logMsg("用户邀请分享成功:")
+                                                                    this.refresh();
+                                                                    this.getTime();
+                                                                }, err => {
 
-                                            })
-                                        }}
-                                        shareTitle={shareParam_invite.shareTitle}
-                                        shareText={shareParam_invite.shareText}
-                                        shareLink={shareParam_invite.shareLink}
-                                        shareImage={shareParam_invite.shareImage}/> : null}
+                                                                })
+                                                            }}
+                                                            shareTitle={shareParam_invite.shareTitle}
+                                                            shareText={shareParam_invite.shareText}
+                                                            shareLink={shareParam_invite.shareLink}
+                                                            shareImage={shareParam_invite.shareImage}/> : null}
             </Modal>
         );
     }
