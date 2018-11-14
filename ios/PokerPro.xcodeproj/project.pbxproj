@@ -60,6 +60,7 @@
 		48C8768420E0EB020029BEB8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C8768320E0EB020029BEB8 /* CoreMotion.framework */; };
 		48CB71771F68D5060079E438 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48CB71791F68D5060079E438 /* InfoPlist.strings */; };
 		4C7E94564F514643A32FB0D6 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3DFB4A75043F5A7D8217C /* libRCTOrientation.a */; };
+		59D3A0946C9C4DD8B49A6AB8 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 831E3A44805C44A2BDDB7F5F /* libRNDeviceInfo.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6517A2AA82984055A201FCBA /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790AC6ACF7EA486FBF06ECCB /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6A7FB8AA761D4E14AE705CEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F6ECA8F9AB4AB18B9D4725 /* Foundation.framework */; };
@@ -72,6 +73,7 @@
 		8BB3028C20635D860099FBD1 /* RCTJShareConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB3025420635D860099FBD1 /* RCTJShareConfig.plist */; };
 		8C2F01E590684A19B90EBE21 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9934670E83094A2B80DA3717 /* CoreTelephony.framework */; };
 		909710108EBF4664AF7E3883 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F65F9BBF16D94397A8309064 /* libRCTVideo.a */; };
+		90AE0D71DD2D498085AF69D6 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B93C65DDF354EF497A4193C /* libRNDeviceInfo-tvOS.a */; };
 		98FB495C07AE4A9D8F642D99 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBC59FE72164B86AFB40792 /* libRNSound.a */; };
 		A2D4672512D14CC49D8F5FAE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FC5B193421F4B229738D062 /* CFNetwork.framework */; };
 		AB716C99068A47648097209B /* libRCTJAnalyticsModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 700658508AF84D5FA9893AAF /* libRCTJAnalyticsModule.a */; };
@@ -359,6 +361,20 @@
 			remoteGlobalIDString = 9F90C2241D619E9400F3E238;
 			remoteInfo = RCTSplashScreen;
 		};
+		48373EAC219BC4D900BCCC5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0CD8FD5ED6F446583ADE02F /* RNDeviceInfo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA5891D81BA9A9FC002B4DB2;
+			remoteInfo = RNDeviceInfo;
+		};
+		48373EAE219BC4D900BCCC5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0CD8FD5ED6F446583ADE02F /* RNDeviceInfo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
+			remoteInfo = "RNDeviceInfo-tvOS";
+		};
 		4844C2FF2063504500889173 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 272A8816B5B747E195BA8E3B /* RNI18n.xcodeproj */;
@@ -619,6 +635,7 @@
 		00E356F21AD99517003FC87E /* PokerProTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokerProTests.m; sourceTree = "<group>"; };
 		054401E2EE0F479085CAC6CE /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		07E8D3EE65E44A0D9DC7CC82 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = "<group>"; };
+		0B93C65DDF354EF497A4193C /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
 		0BB93105F9F94FD7B3F0DABF /* AudioToolbox.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		10CD1131598743E48264F5C9 /* RCTJMessageModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJMessageModule.xcodeproj; path = "../node_modules/jmessage-react-plugin/ios/RCTJMessageModule.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -678,6 +695,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		790AC6ACF7EA486FBF06ECCB /* UserNotifications.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		7EEB06CC784E4FFBA927C498 /* CoreAudio.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		831E3A44805C44A2BDDB7F5F /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8875F8CAF7E64377A0A35972 /* RCTJPushModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJPushModule.xcodeproj; path = "../node_modules/jpush-react-native/ios/RCTJPushModule.xcodeproj"; sourceTree = "<group>"; };
 		8BB3025420635D860099FBD1 /* RCTJShareConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RCTJShareConfig.plist; sourceTree = "<group>"; };
@@ -695,6 +713,7 @@
 		AE121E4E3F8944D9A089BB19 /* libCodePush.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libCodePush.a; sourceTree = "<group>"; };
 		B7C5C319FB334460AC5CAEC5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BBBC59FE72164B86AFB40792 /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSound.a; sourceTree = "<group>"; };
+		C0CD8FD5ED6F446583ADE02F /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		C46CFC7F352E47F096E62C0E /* RCTJCoreModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJCoreModule.xcodeproj; path = "../node_modules/jcore-react-native/ios/RCTJCoreModule.xcodeproj"; sourceTree = "<group>"; };
 		CDAFB868B76D4FFFB21DA52E /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		D57A183A5C4642B8BA02052B /* Security.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -783,6 +802,7 @@
 				0E1CF91EEAE44570885EF681 /* libRNAudio.a in Frameworks */,
 				379C47C20B54447EAC7904AF /* libAlipayModule.a in Frameworks */,
 				E56E08F3B0AE446D8568D3C0 /* libCodePush.a in Frameworks */,
+				59D3A0946C9C4DD8B49A6AB8 /* libRNDeviceInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -799,6 +819,7 @@
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
 				2534E530E0944E30A9A39990 /* libRNI18n-tvOS.a in Frameworks */,
+				90AE0D71DD2D498085AF69D6 /* libRNDeviceInfo-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1031,6 +1052,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		48373EA8219BC4D900BCCC5F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				48373EAD219BC4D900BCCC5F /* libRNDeviceInfo.a */,
+				48373EAF219BC4D900BCCC5F /* libRNDeviceInfo-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4844C2FB2063504500889173 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1097,6 +1127,8 @@
 				E7A4B9ED360F446EAFE588FF /* libRNAudio.a */,
 				FA589A31768D445DB322724E /* libAlipayModule.a */,
 				AE121E4E3F8944D9A089BB19 /* libCodePush.a */,
+				831E3A44805C44A2BDDB7F5F /* libRNDeviceInfo.a */,
+				0B93C65DDF354EF497A4193C /* libRNDeviceInfo-tvOS.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1215,6 +1247,7 @@
 				3A1B09E885AA4383850487FB /* RNAudio.xcodeproj */,
 				92CBB0A3FFBD41918DE30671 /* AlipayModule.xcodeproj */,
 				5013EBFFEBFC49BABF20BB3F /* CodePush.xcodeproj */,
+				C0CD8FD5ED6F446583ADE02F /* RNDeviceInfo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1563,6 +1596,10 @@
 					ProjectRef = 8E5A5B9B364044BA85AF0C0F /* RNCamera.xcodeproj */;
 				},
 				{
+					ProductGroup = 48373EA8219BC4D900BCCC5F /* Products */;
+					ProjectRef = C0CD8FD5ED6F446583ADE02F /* RNDeviceInfo.xcodeproj */;
+				},
+				{
 					ProductGroup = 8BCBB027206B8A3300342E56 /* Products */;
 					ProjectRef = 6A934093880E444DBC962372 /* RNFS.xcodeproj */;
 				},
@@ -1840,6 +1877,20 @@
 			fileType = archive.ar;
 			path = libRCTSplashScreen.a;
 			remoteRef = 48358E401ED2CB8900997A6D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		48373EAD219BC4D900BCCC5F /* libRNDeviceInfo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNDeviceInfo.a;
+			remoteRef = 48373EAC219BC4D900BCCC5F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		48373EAF219BC4D900BCCC5F /* libRNDeviceInfo-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNDeviceInfo-tvOS.a";
+			remoteRef = 48373EAE219BC4D900BCCC5F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4844C3002063504500889173 /* libRNI18n.a */ = {
@@ -2243,12 +2294,15 @@
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
 					"$(SRCROOT)/../node_modules/react-native-yunpeng-alipay/ios/AlipayModule/**",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = PokerProTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2293,12 +2347,15 @@
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
 					"$(SRCROOT)/../node_modules/react-native-yunpeng-alipay/ios/AlipayModule/**",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = PokerProTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2352,6 +2409,7 @@
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
 					"$(SRCROOT)/../node_modules/react-native-yunpeng-alipay/ios/AlipayModule/**",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = PokerPro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2410,6 +2468,7 @@
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
 					"$(SRCROOT)/../node_modules/react-native-yunpeng-alipay/ios/AlipayModule/**",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = PokerPro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2468,11 +2527,14 @@
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
 					"$(SRCROOT)/../node_modules/react-native-yunpeng-alipay/ios/AlipayModule/**",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = "PokerPro-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2527,11 +2589,14 @@
 					"$(SRCROOT)/../node_modules/react-native-audio/ios",
 					"$(SRCROOT)/../node_modules/react-native-yunpeng-alipay/ios/AlipayModule/**",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = "PokerPro-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2566,6 +2631,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PokerPro-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2590,6 +2657,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
