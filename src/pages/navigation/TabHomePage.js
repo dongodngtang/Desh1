@@ -56,9 +56,14 @@ class TabHomePage extends Component {
 
         if (!_.isEqual(newProps.profile, this.props.profile)) {
             console.log('首页', newProps.profile)
-            this.setState({
-                show_task: newProps.profile.new_user
-            })
+            setTimeout(()=>{
+                this.setState({
+                    show_task: newProps.profile.new_user,
+                    lottery: true
+                })
+            },1000)
+
+
         }
 
         //
@@ -91,9 +96,6 @@ class TabHomePage extends Component {
 
         getBaseURL(()=>{
             this._getData()
-            this.setState({
-                lottery: true
-            })
         })
 
 
