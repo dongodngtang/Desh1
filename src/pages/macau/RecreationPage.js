@@ -59,7 +59,7 @@ export default class RecreationPage extends PureComponent {
                 console.log("获取位置失败");
             })
         }, err => {
-            alert('获取定位失败')
+            console.log('获取定位失败')
         })
     }
 
