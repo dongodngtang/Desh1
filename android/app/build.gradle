@@ -180,7 +180,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-device-info')
     compile project(':react-native-code-push')
     compile project(':react-native-amap-geolocation')
     compile project(':react-native-yunpeng-alipay')
