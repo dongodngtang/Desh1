@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
-import {getActivities, getJmessageInfo,getPrizes_info} from "../../services/AccountDao";
+import {getActivities, getJmessageInfo, getPrizes_info} from "../../services/AccountDao";
 import {isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 import {visit_other} from "../../services/SocialDao";
@@ -19,16 +19,16 @@ import {getApiType} from "../../services/RequestHelper";
 
 export default class WardReceivePage extends Component {
 
-    state={
-        prize_info:{}
+    state = {
+        prize_info: {}
     }
 
-    componentDidMount(){
-        const {prize,created_at,id,expired,prize_img} = this.props.params.item;
-        getPrizes_info({prize_id:id},data=>{
-            logMsg("奖品详情：",data);
+    componentDidMount() {
+        const {prize, created_at, id, expired, prize_img} = this.props.params.item;
+        getPrizes_info({prize_id: id}, data => {
+            logMsg("奖品详情：", data);
             this.setState({
-                prize_info:data
+                prize_info: data
             })
         })
     }
@@ -53,7 +53,7 @@ export default class WardReceivePage extends Component {
     };
 
     render() {
-        const {prize,created_at,id,expired,prize_img,description} = this.state.prize_info;
+        const {prize, created_at, id, expired, prize_img, description} = this.state.prize_info;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -83,12 +83,32 @@ export default class WardReceivePage extends Component {
                         }
                     }}/>
                 <ScrollView style={{paddingTop: 14, marginTop: 1, backgroundColor: 'white'}}>
-                    <Text style={{lineHeight:20,color:'#444444',fontSize:14,marginTop:3,marginLeft:17,marginRight:17}}>请联系客服领取奖品</Text>
-                    {strNotNull(prize_img) ? <View style={{marginLeft:17,marginRight:17,marginTop:15,justifyContent:'center',alignItems:'center'}}>
-                        <LeftAlignedImage source={{uri:prize_img}}/>
+                    <Text style={{
+                        lineHeight: 20,
+                        color: '#444444',
+                        fontSize: 14,
+                        marginTop: 3,
+                        marginLeft: 17,
+                        marginRight: 17
+                    }}>请联系客服领取奖品</Text>
+                    {strNotNull(prize_img) ? <View style={{
+                        marginLeft: Metrics.reallySize(17),
+                        marginRight: Metrics.reallySize(17),
+                        marginTop: 15,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <LeftAlignedImage source={{uri: prize_img}}/>
                         {/*<Image source={{uri:prize_img}} style={{alignSelf:'center',width:'100%'}}/>*/}
-                    </View> :null}
-                    <Text style={{color:'#444444',fontSize:18,marginTop:15,marginLeft:17,marginRight:17,marginBottom:10}}>兑奖规则</Text>
+                    </View> : null}
+                    <Text style={{
+                        color: '#444444',
+                        fontSize: 18,
+                        marginTop: 15,
+                        marginLeft: 17,
+                        marginRight: 17,
+                        marginBottom: 10
+                    }}>兑奖规则</Text>
                     <View style={{
                         backgroundColor: 'white',
                         alignItems: 'center',
