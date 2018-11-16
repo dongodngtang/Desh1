@@ -22,7 +22,6 @@ import {setLocalLanguage} from '../../services/ConfigDao';
 import {uShareLoad, call} from '../../utils/ComonHelper';
 import ƒ from "jmessage-react-plugin";
 import {getContacts} from "../../services/AccountDao";
-import DeviceInfo from 'react-native-device-info';
 
 class SettingPage extends Component {
     state = {
@@ -48,10 +47,6 @@ class SettingPage extends Component {
             })
         }).catch(err => {
         })
-
-        DeviceInfo.getIPAddress().then(ip => {
-            alert(ip)
-        });
     }
 
 
