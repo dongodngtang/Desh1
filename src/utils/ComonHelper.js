@@ -1395,6 +1395,18 @@ export function alertOrder(str, callback) {
         }
     }])
 }
+//中奖提示
+export function alertLotteryOrder(str, str2 , callback) {
+    Alert.alert(str, str2, [{
+        text: `知道了`, onPress: () => {
+
+        }
+    }, {
+        text: `前往领奖`, onPress: () => {
+            callback()
+        }
+    }])
+}
 
 export function permissionAlert(message) {
     Alert.alert('权限提示', message, [

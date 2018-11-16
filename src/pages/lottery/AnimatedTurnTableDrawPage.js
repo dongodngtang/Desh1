@@ -39,7 +39,7 @@ import {
     strNotNull,
     uShareActivity,
     uShareInfoItem,
-    uShareRegistered
+    uShareRegistered,alertLotteryOrder
 } from "../../utils/ComonHelper";
 import Swiper from 'react-native-swiper';
 import ShareView from '../comm/ShareToast'
@@ -287,11 +287,22 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 //动画结束时，会把toValue值，回调给callback
                 this.state.rotateDeg.stopAnimation(() => {
                     if (lottery.name === '谢谢参与') {
-                        Alert.alert('澳门旅行', `很遗憾没有抽中，谢谢参与`)
-                    } else if (lottery.name.indexOf('积分') !== -1) {
-                        Alert.alert('澳门旅行', `恭喜您获得${lottery.name}`)
+                        Alert.alert('澳门旅行', `很遗憾没有抽中，谢谢参与`,[{
+                            text: `知道了`, onPress: () => {
+
+                            }
+                        }])
+                    } else if (lottery.name.indexOf('积分') !== -1 || lottery.name.indexOf('红包') !== -1) {
+                        Alert.alert('澳门旅行', `恭喜您获得${lottery.name}`,[{
+                            text: `知道了`, onPress: () => {
+
+                            }
+                        }])
                     } else {
-                        Alert.alert('澳门旅行', `恭喜您抽中${lottery.name}，请前往我的奖品查看领取`)
+                        alertLotteryOrder('澳门旅行', `恭喜您抽中${lottery.name}，请前往我的奖品查看领取`,()=>{
+                            this.toggle();
+                            global.router.toMyWardsPage()
+                        })
                     }
                 })
 

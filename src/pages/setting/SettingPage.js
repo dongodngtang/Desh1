@@ -12,7 +12,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SetItemView, BtnLong, ActionSheet} from '../../components';
 import {
     clearLoginUser, getLoginUser, strNotNull,
-    isLoginUser, share, setSize, loadApp
+    isLoginUser, share, setSize, loadApp, logMsg
 } from '../../utils/ComonHelper';
 import {fetchGetRecentRaces, _getProfileOk, _getRecentRaces} from '../../actions/RacesAction';
 import {umengEvent} from '../../utils/UmengEvent';
@@ -22,7 +22,7 @@ import {setLocalLanguage} from '../../services/ConfigDao';
 import {uShareLoad, call} from '../../utils/ComonHelper';
 import ƒ from "jmessage-react-plugin";
 import {getContacts} from "../../services/AccountDao";
-
+import DeviceInfo from 'react-native-device-info';
 
 class SettingPage extends Component {
     state = {
@@ -46,7 +46,12 @@ class SettingPage extends Component {
             this.setState({
                 DESTRUCTIVE_INDEX: fontIndex
             })
-        }).catch(err=>{})
+        }).catch(err => {
+        })
+
+        DeviceInfo.getIPAddress().then(ip => {
+            alert(ip)
+        });
     }
 
 
@@ -131,13 +136,19 @@ class SettingPage extends Component {
             </View>
 
             <TouchableOpacity
-                style={{backgroundColor: Colors.setting, marginTop: 10, height: 50,flexDirection:'row', alignItems: 'center'}}
+                style={{
+                    backgroundColor: Colors.setting,
+                    marginTop: 10,
+                    height: 50,
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                }}
                 onPress={() => {
                     global.router.toBusinessPage()
                 }}>
                 <Text style={[Fonts.H17, {marginLeft: 17, marginRight: 17, color: '#333333', fontSize: 16}]}>商务合作</Text>
-                <View style={{flex:1}}/>
-                <Image style={{height: 15, width: 8,marginRight:17}}
+                <View style={{flex: 1}}/>
+                <Image style={{height: 15, width: 8, marginRight: 17}}
                        source={Images.set_more}/>
             </TouchableOpacity>
 
