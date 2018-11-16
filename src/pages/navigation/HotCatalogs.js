@@ -86,11 +86,13 @@ const styles = StyleSheet.create({
     },
     leftTop: {
         width: '100%',
-        height: 236
+        height: 236,
+        borderRadius:2
     },
     leftBottom: {
         width: '100%',
-        height: 94
+        height: 94,
+        borderRadius:2
     }
 });
 

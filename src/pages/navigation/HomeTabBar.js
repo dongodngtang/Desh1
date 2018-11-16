@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     imgCat: {
-        width: 28, height: 26, marginRight: 17
+        width: 30, height: 30, marginRight: 17
     }
 });

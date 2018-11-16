@@ -57,9 +57,25 @@ export default class RecreationPage extends PureComponent {
                 }
             }, err => {
                 console.log("获取位置失败");
+                this.listView && this.listView.postRefresh([])
+                this.setState({
+                    isMacau: true,
+                    name_index: 1
+                })
+                setTimeout(() => {
+                    this.refresh()
+                }, 200)
             })
         }, err => {
             console.log('获取定位失败')
+            this.listView && this.listView.postRefresh([])
+            this.setState({
+                isMacau: true,
+                name_index: 1
+            })
+            setTimeout(() => {
+                this.refresh()
+            }, 200)
         })
     }
 
@@ -92,10 +108,11 @@ export default class RecreationPage extends PureComponent {
                             this.refresh()
                         }, 200)
 
-                    }}>
+                    }}
+                                      style={[styles.btns,{backgroundColor:name_index === 1 ? 'transparent' : '#F37058'}]}>
                         <Text
                             style={{
-                                fontSize: name_index === 0 ? 18 : 14,
+                                fontSize: name_index === 0 ? 16 : 14,
                                 color: name_index === 0 ? 'white' : '#FFCACA'
                             }}>休闲娱乐</Text>
                     </TouchableOpacity>
@@ -107,10 +124,11 @@ export default class RecreationPage extends PureComponent {
                         setTimeout(() => {
                             this.refresh()
                         }, 200)
-                    }}>
+                    }}
+                                      style={[styles.btns,{backgroundColor:name_index === 0 ? 'transparent' : '#F37058'}]}>
                         <Text
                             style={{
-                                fontSize: name_index === 1 ? 18 : 14,
+                                fontSize: name_index === 1 ? 16 : 14,
                                 color: name_index === 1 ? 'white' : '#FFCACA'
                             }}>桑拿水疗</Text>
                     </TouchableOpacity>
@@ -304,6 +322,15 @@ export default class RecreationPage extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+    btns:{
+        paddingTop:2,
+        paddingBottom:2,
+        paddingLeft:10,
+        paddingRight:10,
+        borderRadius:4,
+        alignItems:'center',
+        justifyContent:'center'
+    },
     nav: {
         height: Metrics.navBarHeight,
         width: '100%',
