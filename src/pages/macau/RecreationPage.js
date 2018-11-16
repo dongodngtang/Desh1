@@ -57,25 +57,9 @@ export default class RecreationPage extends PureComponent {
                 }
             }, err => {
                 console.log("获取位置失败");
-                this.listView && this.listView.postRefresh([])
-                this.setState({
-                    isMacau: true,
-                    name_index: 1
-                })
-                setTimeout(() => {
-                    this.refresh()
-                }, 200)
             })
         }, err => {
-            console.log('获取定位失败')
-            this.listView && this.listView.postRefresh([])
-            this.setState({
-                isMacau: true,
-                name_index: 1
-            })
-            setTimeout(() => {
-                this.refresh()
-            }, 200)
+            console.log('获取定位失败');
         })
     }
 
