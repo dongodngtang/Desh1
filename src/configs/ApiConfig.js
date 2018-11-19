@@ -217,6 +217,8 @@ const api = {
     post_wheel_times:post_wheel_times,//积分兑换转盘次数的接口
     location_ios:location_ios,//ios定位
     prizes_info:prizes_info,//奖品详情
+    access_permission:'saunas/access_permission',//检查是否可访问桑拿的接口
+    home_img:'sets',//获取app的设置参数
 }
 
 export default api;

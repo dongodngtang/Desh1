@@ -7,7 +7,7 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
-import {hotels, info_types, getSaunas} from '../../services/MacauDao';
+import {hotels, info_types, getSaunas, getPermission} from '../../services/MacauDao';
 import {getPosition, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import RejectPage from "../comm/RejectPage";
 import SunnaItem from './SunnaItem';
@@ -34,16 +34,14 @@ export default class RecreationPage extends PureComponent {
                 latitude: latitude
             }
             // let body = {
-            //     latitude:"22.203672",
-            //     longitude:"113.564241"
+            //     latitude: "22.203672",
+            //     longitude: "113.564241"
             // }
 
             this.sanna = body;
-            locations(body, data => {
-                let city_name = data.base.city_name
-                // if (getApiType() === 'test')
-                //     alert('定位城市：' + city_name)
-                if (city_name && city_name.indexOf('澳门') !== -1) {
+            getPermission(body, data => {
+                logMsg("是否可访问", data);
+                if(data.code === 0){
                     this.listView && this.listView.postRefresh([])
                     this.setState({
                         isMacau: true,
@@ -52,12 +50,30 @@ export default class RecreationPage extends PureComponent {
                     setTimeout(() => {
                         this.refresh()
                     }, 200)
-
-
                 }
             }, err => {
-                console.log("获取位置失败");
+                console.log('获取定位失败1', err);
             })
+
+            // locations(body, data => {
+            //     let city_name = data.base.city_name
+            //     // if (getApiType() === 'test')
+            //     //     alert('定位城市：' + city_name)
+            //     if (city_name && city_name.indexOf('澳门') !== -1) {
+            //         this.listView && this.listView.postRefresh([])
+            //         this.setState({
+            //             isMacau: true,
+            //             name_index: 1
+            //         })
+            //         setTimeout(() => {
+            //             this.refresh()
+            //         }, 200)
+            //
+            //
+            //     }
+            // }, err => {
+            //     console.log("获取位置失败");
+            // })
         }, err => {
             console.log('获取定位失败');
         })
@@ -73,7 +89,6 @@ export default class RecreationPage extends PureComponent {
     change_content() {
         const {name_index, isMacau} = this.state;
 
-        console.log("global.city_name", global.city_name)
         if (isMacau) {
             return (
                 <View style={{
@@ -93,7 +108,7 @@ export default class RecreationPage extends PureComponent {
                         }, 200)
 
                     }}
-                                      style={[styles.btns,{backgroundColor:name_index === 1 ? 'transparent' : '#F37058'}]}>
+                                      style={[styles.btns, {backgroundColor: name_index === 1 ? 'transparent' : '#F37058'}]}>
                         <Text
                             style={{
                                 fontSize: name_index === 0 ? 16 : 14,
@@ -109,7 +124,7 @@ export default class RecreationPage extends PureComponent {
                             this.refresh()
                         }, 200)
                     }}
-                                      style={[styles.btns,{backgroundColor:name_index === 0 ? 'transparent' : '#F37058'}]}>
+                                      style={[styles.btns, {backgroundColor: name_index === 0 ? 'transparent' : '#F37058'}]}>
                         <Text
                             style={{
                                 fontSize: name_index === 1 ? 16 : 14,
@@ -306,14 +321,14 @@ export default class RecreationPage extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    btns:{
-        paddingTop:2,
-        paddingBottom:2,
-        paddingLeft:10,
-        paddingRight:10,
-        borderRadius:4,
-        alignItems:'center',
-        justifyContent:'center'
+    btns: {
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 4,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     nav: {
         height: Metrics.navBarHeight,

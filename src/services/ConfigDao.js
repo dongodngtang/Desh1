@@ -7,7 +7,7 @@ import {getSize, setLang, getCarts, logMsg, getPosition} from '../utils/ComonHel
 import {setDpLang} from '../services/RequestHelper';
 import {listVerified} from './AccountDao';
 import {Platform, PermissionsAndroid} from 'react-native'
-import {locations} from "./SocialDao";
+import {locations,getHomeImg} from "./SocialDao";
 
 export function init(resolve) {
     storage.load({key: StorageKey.Language})
@@ -43,6 +43,13 @@ export function init(resolve) {
       })
     },err=>{
 
+    })
+
+    //获取客服电话 主页图片
+    getHomeImg(data=>{
+
+    },err=>{
+        logMsg("设置",err)
     })
 
 }

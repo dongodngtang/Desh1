@@ -163,6 +163,12 @@ export function info_types(body, resolve, reject) {
     }, reject, body)
 }
 
+export function getPermission(body, resolve, reject) {
+    helper.get(Api.access_permission, ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function getSaunas(body, resolve, reject) {
     helper.get(Api.saunas, ret => {
         resolve(ret.data)

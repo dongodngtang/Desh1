@@ -35,6 +35,13 @@ export function postNearBys(body, resolve, reject) {
     }, reject)
 }
 
+export function getHomeImg(resolve, reject) {
+    helper.get(Api.home_img, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 export function getNearBys(resolve, reject) {
     helper.get(Api.nearbys(), ret => {
         resolve(ret.data)
