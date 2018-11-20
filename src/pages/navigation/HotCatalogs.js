@@ -10,9 +10,20 @@ import {getApiType} from "../../services/RequestHelper";
 import {locations} from "../../services/SocialDao";
 
 export default class HotCatalogs extends PureComponent {
+
+    state = {
+        home_imgs: {}
+    }
+
+    componentDidMount() {
+        this.setState({
+            home_imgs: global.homepage_images
+        })
+    }
+
+
     render() {
-        const home_imgs = global.homepage_images;
-        logMsg("djskdsld", home_imgs)
+        const {home_imgs} = this.state;
         return (
             <View style={styles.hotView}>
                 <View style={styles.viewLeft}>
