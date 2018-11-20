@@ -258,7 +258,7 @@ export default class HotelDetail extends PureComponent {
                         height: 60
                     }}
                     onPress={() => {
-                        call(telephone)
+                        call(strNotNull(global.hotel_contact) ? global.hotel_contact : telephone)
                     }}>
                     <Image style={{width: 27, height: 23}} source={Images.macau.callPhone}/>
                     <Text style={{color: "#666666", fontSize: 14, marginLeft: 11}}>联系客服</Text>

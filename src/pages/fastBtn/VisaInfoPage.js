@@ -26,18 +26,21 @@ export default class VisaInfoPage extends Component {
                     }}
                 />
                 <View style={{flex: 1, marginTop: 1, backgroundColor: 'white', paddingLeft: 17, paddingRight: 17}}>
-                    <Text style={[styles.txt1, {marginTop: 20}]}>港澳通行证团队旅游L签续签办理</Text>
-                    <Text style={[styles.txt2, {marginTop: 20}]}>合作商铺地址：珠海市香洲区拱北地下口岸广场t字通道
-                    </Text>
-                    <Text style={[styles.txt2, {marginTop: 5}]}>营业时间：11:30 至20:30
-                    </Text>
+                    {/*<Text style={[styles.txt1, {marginTop: 20}]}>港澳通行证团队旅游L签续签办理</Text>*/}
+                    {/*<Text style={[styles.txt2, {marginTop: 20}]}>合作商铺地址：珠海市香洲区拱北地下口岸广场t字通道*/}
+                    {/*</Text>*/}
+                    {/*<Text style={[styles.txt2, {marginTop: 5}]}>营业时间：11:30 至20:30*/}
+                    {/*</Text>*/}
 
-                    <TouchableOpacity onPress={() => {
-                        let phone = "13169674979"
-                        call(phone);
-                    }}>
-                        <Text style={[styles.txt2, {marginTop: 5}]}>请联系电话：+86-13169674979</Text>
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity onPress={() => {*/}
+                        {/*let phone = "13169674979"*/}
+                        {/*call(phone);*/}
+                    {/*}}>*/}
+                        {/*<Text style={[styles.txt2, {marginTop: 5}]}>请联系电话：+86-13169674979</Text>*/}
+                    {/*</TouchableOpacity>*/}
+
+                    <RenderHtml
+                        html={global.visa_description}/>
 
                     <TouchableOpacity onPress={() => {
                         if (getApiType() === 'test') {

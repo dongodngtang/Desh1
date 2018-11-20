@@ -33,6 +33,7 @@ import HomeTabBar from './HomeTabBar';
 import HotCatalogs from './HotCatalogs';
 import AnimatedTurnTableDrawPage from '../lottery/AnimatedTurnTableDrawPage'
 import {getBaseURL} from "../../services/RequestHelper";
+import {getHomeImg} from "../../services/SocialDao";
 
 class TabHomePage extends Component {
     state = {
@@ -95,10 +96,23 @@ class TabHomePage extends Component {
     componentDidMount() {
 
         getBaseURL(()=>{
+            this.getSets()
             this._getData()
         })
 
 
+    };
+
+    getSets=()=>{
+        //获取客服电话 主页图片
+        getHomeImg(data=>{
+            logMsg("设置sets",data);
+            global.homepage_images = data.homepage_images;
+            global.visa_description = data.visa_description;
+            global.hotel_contact = data.hotel_contact;
+        },err=>{
+            logMsg("设置sets",err)
+        })
     }
 
     _getPushActivity = () => {

@@ -45,12 +45,7 @@ export function init(resolve) {
 
     })
 
-    //获取客服电话 主页图片
-    getHomeImg(data=>{
-        logMsg("设置sets",data)
-    },err=>{
-        logMsg("设置sets",err)
-    })
+
 
 }
 
