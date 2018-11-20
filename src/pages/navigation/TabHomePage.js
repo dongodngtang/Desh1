@@ -50,7 +50,8 @@ class TabHomePage extends Component {
         info_page: 1,
         load_more: '',
         show_task: false,
-        lottery: false
+        lottery: false,
+        home_imgs:{}
     };
 
     componentWillReceiveProps(newProps) {
@@ -106,8 +107,12 @@ class TabHomePage extends Component {
     getSets=()=>{
         //获取客服电话 主页图片
         getHomeImg(data=>{
+            setTimeout(()=>{
+                this.setState({
+                    home_imgs: data.homepage_images
+                });
+            },100)
             logMsg("设置sets",data);
-            global.homepage_images = data.homepage_images;
             global.visa_description = data.visa_description;
             global.hotel_contact = data.hotel_contact;
         },err=>{
@@ -284,7 +289,8 @@ class TabHomePage extends Component {
     };
 
     render() {
-        const {banners, headlines, load_more, show_task, opacity} = this.state;
+
+        const {banners, headlines, load_more, show_task, opacity,home_imgs} = this.state;
         return (
 
             <View style={ApplicationStyles.bgContainer}>
@@ -311,7 +317,7 @@ class TabHomePage extends Component {
                     <MainBanner
                         banners={banners}/>
 
-                    <HotCatalogs/>
+                    <HotCatalogs home_imgs={home_imgs}/>
 
                     {/*<Catalog/>*/}
 
