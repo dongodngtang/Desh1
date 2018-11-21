@@ -41,7 +41,7 @@ export default class RecreationPage extends PureComponent {
             this.sanna = body;
             getPermission(body, data => {
                 logMsg("是否可访问", data);
-                if(!data.accessible){
+                if(data.accessible){
                     this.listView && this.listView.postRefresh([])
                     this.setState({
                         isMacau: true,

@@ -134,17 +134,19 @@ class SquareBar extends PureComponent {
                 goToPage(index)
             }}
             style={{
-                height: Metrics.navBarHeight - Metrics.statusBarHeight,
-                marginTop: Metrics.statusBarHeight,
+                height: 28,
+                marginTop: Metrics.statusBarHeight+8,
                 alignItems: 'center', justifyContent: 'center',
-                width: 65
+                width: 85,
+                backgroundColor: activeTab === index ? '#F37058' : 'transparent',
+                borderRadius:4
             }}>
-            <Text style={[{fontSize: 18},
-                activeTab === index ? {color: Colors.white} : {color: Colors.white}]}>{item}</Text>
-            {activeTab === index ? <View style={{
-            height: 2, width: 45, backgroundColor: Colors.white,
-            position: 'absolute', bottom: 0
-            }}/> : null}
+            <Text style={[{fontSize: activeTab === index ? 16 : 14},
+                activeTab === index ? {color: Colors.white} : {color:'#FFCACA'}]}>{item}</Text>
+            {/*{activeTab === index ? <View style={{*/}
+            {/*height: 2, width: 45, backgroundColor: Colors.white,*/}
+            {/*position: 'absolute', bottom: 0*/}
+            {/*}}/> : null}*/}
 
         </TouchableOpacity>);
 
