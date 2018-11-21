@@ -16,7 +16,7 @@ import {logMsg} from "../../utils/ComonHelper";
 export default class WinListPage extends Component {
 
     separator = () => {
-        return <View style={{width:Metrics.screenWidth - 52,height: 0.5, backgroundColor: '#666666'}}/>
+        return <View style={{height: 0.5, backgroundColor: '#666666'}}/>
     };
 
     separator2 = () => {
@@ -24,9 +24,15 @@ export default class WinListPage extends Component {
     };
 
     item_view = (item, index) => {
+        const {nick_name,prize} = item;
         return (
-            <View style={{width:Metrics.screenWidth - 52,height: 46,alignItems: 'center',backgroundColor:'#E54A2E'}}>
-
+            <View style={{width:Metrics.screenWidth - 52,paddingTop:14,paddingBottom:14,flexDirection: 'row',alignItems: 'center',backgroundColor:'#E54A2E'}}>
+                <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{nick_name}</Text>
+                </View>
+                <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{prize}</Text>
+                </View>
             </View>
         )
     };
@@ -110,9 +116,6 @@ export default class WinListPage extends Component {
                     startFetch(data.items, 18)
                 }, err => {
                     logMsg("reject:", err)
-                    this.setState({
-                        reject_problem: err.problem
-                    })
                     abortFetch()
                 }
             )

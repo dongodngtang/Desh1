@@ -219,7 +219,7 @@ const api = {
     prizes_info: prizes_info,//奖品详情
     access_permission: 'saunas/access_permission',//检查是否可访问桑拿的接口
     home_img: 'sets',//获取app的设置参数
-    win_history: win_history,//转盘中奖历史回顾
+    win_history: 'wheel/prize_messages/history',//转盘中奖历史回顾
 }
 
 export default api;
@@ -236,11 +236,6 @@ export function alipay(order_number) {
 }
 
 const page_size = 10;
-
-export function win_history(body) {
-    const {page, page_size} = body;
-    return `wheel/prize_messages/history?page_size=${page_size}`;
-}
 
 export function location_ios(body) {
     const {latitude, longitude} = body;
