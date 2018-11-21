@@ -200,25 +200,26 @@ const api = {
     other_invite: 'my_invites/indirect',//查看某个用户间接邀请的用户 [只有1级用户有权限]
     withdrawal: 'wallet/withdrawal',//用户钱包账户提现
     novice_task: novice_task,//获取新手红包任务进度
-    info_coupons:info_coupons,//获取咨询中的优惠券列表
-    receive_coupons:receive_coupons,//领取优惠券
-    coupons_infos:coupons_infos,//获取优惠券详情
-    hotlines:'hotlines',//服务热线电话列表
-    contacts:'contacts',//公司联系方式'
-    saunas:'saunas',//获取桑拿列表
-    sunna_detail:sunna_detail,//获取桑拿详情
-    all_infos:all_infos,//资讯全局搜索
-    elements:elements,//获取转盘元素
-    lottery:lottery,//转盘开始抽奖
-    wheel_time:wheel_time,//转盘剩余抽奖次数
-    prize_messages:prize_messages,//转盘轮播提示用户的中奖信息
-    prizes_list:prizes_list,//转盘活动我的奖品列表
-    task_count:task_count,//转盘剩余抽奖次数，用户积分剩余情况
-    post_wheel_times:post_wheel_times,//积分兑换转盘次数的接口
-    location_ios:location_ios,//ios定位
-    prizes_info:prizes_info,//奖品详情
-    access_permission:'saunas/access_permission',//检查是否可访问桑拿的接口
-    home_img:'sets',//获取app的设置参数
+    info_coupons: info_coupons,//获取咨询中的优惠券列表
+    receive_coupons: receive_coupons,//领取优惠券
+    coupons_infos: coupons_infos,//获取优惠券详情
+    hotlines: 'hotlines',//服务热线电话列表
+    contacts: 'contacts',//公司联系方式'
+    saunas: 'saunas',//获取桑拿列表
+    sunna_detail: sunna_detail,//获取桑拿详情
+    all_infos: all_infos,//资讯全局搜索
+    elements: elements,//获取转盘元素
+    lottery: lottery,//转盘开始抽奖
+    wheel_time: wheel_time,//转盘剩余抽奖次数
+    prize_messages: prize_messages,//转盘轮播提示用户的中奖信息
+    prizes_list: prizes_list,//转盘活动我的奖品列表
+    task_count: task_count,//转盘剩余抽奖次数，用户积分剩余情况
+    post_wheel_times: post_wheel_times,//积分兑换转盘次数的接口
+    location_ios: location_ios,//ios定位
+    prizes_info: prizes_info,//奖品详情
+    access_permission: 'saunas/access_permission',//检查是否可访问桑拿的接口
+    home_img: 'sets',//获取app的设置参数
+    win_history: win_history,//转盘中奖历史回顾
 }
 
 export default api;
@@ -236,8 +237,13 @@ export function alipay(order_number) {
 
 const page_size = 10;
 
+export function win_history(body) {
+    const {page, page_size} = body;
+    return `wheel/prize_messages/history?page_size=${page_size}`;
+}
+
 export function location_ios(body) {
-    const {latitude,longitude} = body;
+    const {latitude, longitude} = body;
     return `http://restapi.amap.com/v3/geocode/regeo?key=67d1f5cf8475c8db0ac8524878046f1e&location=${longitude},${latitude}`;
 }
 

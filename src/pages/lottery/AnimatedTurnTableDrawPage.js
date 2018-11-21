@@ -585,7 +585,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     </View>
 
 
-                    <View style={{marginTop: Metrics.reallySize(20)}}>
+                    <View style={{marginTop: Metrics.reallySize(20),flexDirection:'column',alignItems:'center'}}>
                         <View style={{
                             alignSelf: 'center',
                             paddingLeft: 10,
@@ -616,20 +616,43 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity onPress={() => {
-                            if (this.state.offOn) {
-                                this.toggle();
-                                global.router.toGameRulesPage(this.toggle)
-                            }
-                        }} style={{marginTop: 10, alignSelf: 'center'}}>
-                            <Text style={{
-                                fontSize: 18,
-                                color: '#6787EE',
-                                textDecorationLine: 'underline',
-                                textDecorationStyle: "solid",
-                                textDecorationColor: "#6787EE"
-                            }}>游戏规则></Text>
-                        </TouchableOpacity>
+                        <View style={{
+                            alignSelf: 'center',
+                            marginTop: 10,
+                            width:'60%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-around'
+                        }}>
+                            <TouchableOpacity onPress={() => {
+                                if (this.state.offOn) {
+                                    this.toggle();
+                                    global.router.toGameRulesPage(this.toggle)
+                                }
+                            }}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    color: '#6787EE',
+                                    textDecorationLine: 'underline',
+                                    textDecorationStyle: "solid",
+                                    textDecorationColor: "#6787EE"
+                                }}>游戏规则></Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                if (this.state.offOn) {
+                                    this.toggle();
+                                    global.router.toWinListPage(this.toggle)
+                                }
+                            }}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    color: '#29d2e1',
+                                    textDecorationLine: 'underline',
+                                    textDecorationStyle: "solid",
+                                    textDecorationColor: "#6787EE"
+                                }}>往期中奖></Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Animated.View>
 

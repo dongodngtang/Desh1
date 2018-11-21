@@ -163,6 +163,12 @@ export function info_types(body, resolve, reject) {
     }, reject, body)
 }
 
+export function getWin_history(body, resolve, reject) {
+    helper.get(Api.win_history(body), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function getPermission(body, resolve, reject) {
     helper.get(Api.access_permission, ret => {
         resolve(ret.data)
