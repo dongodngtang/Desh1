@@ -111,11 +111,11 @@ export default class RecreationPage extends PureComponent {
                                       style={styles.btns}>
 
                         <ImageBackground style={{width: 82, height: 28,borderRadius:4,alignItems:'center',justifyContent:'center'}}
-                                         source={name_index === 1 ? Images.navigation2.show2 : Images.navigation2.show1}>
+                                         source={name_index === 1 ? Images.navigation2.show1 : Images.navigation2.show2}>
                             <Text
                                 style={{marginBottom:3,
                                     fontSize: name_index === 0 ? 16 : 14,
-                                    color: name_index === 0 ? 'white' : '#FFCACA'
+                                    color: 'white'
                                 }}>休闲娱乐</Text>
                         </ImageBackground>
 
@@ -132,11 +132,11 @@ export default class RecreationPage extends PureComponent {
                                       style={styles.btns}>
 
                         <ImageBackground style={{width: 82, height: 28,borderRadius:4,alignItems:'center',justifyContent:'center'}}
-                                         source={name_index === 0 ? Images.navigation2.show2 : Images.navigation2.show1}>
+                                         source={name_index === 0 ? Images.navigation2.show1 : Images.navigation2.show2}>
                             <Text
                                 style={{marginBottom:3,
                                     fontSize: name_index === 1 ? 16 : 14,
-                                    color: name_index === 1 ? 'white' : '#FFCACA'
+                                    color: 'white'
                                 }}>桑拿水疗</Text>
                         </ImageBackground>
 

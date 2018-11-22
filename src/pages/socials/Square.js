@@ -136,15 +136,15 @@ class SquareBar extends PureComponent {
             }}
             style={{
                 height: Metrics.navBarHeight - Metrics.statusBarHeight,
-                marginTop: Metrics.statusBarHeight + 3,
+                marginTop: Metrics.statusBarHeight+2,
                 alignItems: 'center', justifyContent: 'center',
                 width: 105,
                 borderRadius:4
             }}>
             <ImageBackground style={{width: 82, height: 28,borderRadius:4,alignItems:'center',justifyContent:'center'}}
-                             source={activeTab === index ?  Images.navigation2.show1 : Images.navigation2.show2}>
+                             source={activeTab === index ?  Images.navigation2.show2 : Images.navigation2.show1}>
                 <Text style={[{marginBottom:3,fontSize: activeTab === index ? 16 : 14},
-                    activeTab === index ? {color: Colors.white} : {color:'#FFCACA'}]}>{item}</Text>
+                    activeTab === index ? {color: Colors.white} : {color:Colors.white}]}>{item}</Text>
             </ImageBackground>
 
             {/*{activeTab === index ? <View style={{*/}
