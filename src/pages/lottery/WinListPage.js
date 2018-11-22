@@ -32,7 +32,12 @@ export default class WinListPage extends Component {
                 paddingBottom: 14,
                 flexDirection: 'row',
                 alignItems: 'center',
-                backgroundColor: '#E54A2E'
+                backgroundColor: '#E54A2E',
+                borderTopWidth: index === 0 ? 1 : 0,
+                borderRightWidth: 1,
+                borderLeftWidth: 1,
+                borderBottomWidth: 0.5,
+                borderColor: '#FC8787'
             }}>
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <Text style={{color: '#FFFFFF', fontSize: 14}}>{nick_name}</Text>
@@ -46,14 +51,19 @@ export default class WinListPage extends Component {
 
     header = () => {
         return (
-            <View style={{width: Metrics.screenWidth - 52, alignItems: 'center'}}>
+            <View style={{width: Metrics.screenWidth - 52, alignItems: 'center',zIndex:99,borderBottomWidth:0}}>
                 <View style={{
                     width: Metrics.screenWidth - 52,
                     height: 46,
                     flexDirection:'row',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: '#C43319'
+                    backgroundColor: '#C43319',
+                    borderTopWidth: 1,
+                    borderRightWidth: 1,
+                    borderLeftWidth: 1,
+                    borderBottomWidth: 0.5,
+                    borderColor: '#FC8787'
                 }}>
                     <View style={{backgroundColor: '#FFFFFF', height: 1, width: 36}}/>
                     <Text style={{color: '#FFFFFF', fontSize: 18, marginLeft: 5, marginRight: 5}}>中奖名单</Text>
@@ -65,7 +75,11 @@ export default class WinListPage extends Component {
                     height: 46,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    backgroundColor: '#FF7056'
+                    backgroundColor: '#FF7056',
+                    borderTopWidth: 0.5,
+                    borderRightWidth: 1,
+                    borderLeftWidth: 1,
+                    borderColor: '#FC8787'
                 }}>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                         <Text style={{color: '#FFFFFF', fontSize: 14}}>ID</Text>
@@ -98,15 +112,15 @@ export default class WinListPage extends Component {
                     marginTop: 12,
                     width: Metrics.screenWidth - 52,
                     alignSelf: 'center',
-                    marginBottom: 74,
                     flexDirection: 'column',
                     alignItems: 'center',
-                    borderWidth: 1,
-                    borderColor: '#FC8787'
+                    marginBottom:150
                 }}>
+                    {this.header()}
+
                     <UltimateListView
+                        style={{width: Metrics.screenWidth - 52}}
                         showsVerticalScrollIndicator = {false}
-                        header={() => this.header()}
                         separator={() => this.separator2()}
                         keyExtractor={(item, index) => index + "item"}
                         ref={(ref) => this.listView = ref}
@@ -122,6 +136,9 @@ export default class WinListPage extends Component {
                         }}
                     />
                 </View>
+
+                <View style={{height:80}}/>
+
             </View>
         )
     }
