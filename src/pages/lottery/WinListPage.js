@@ -105,6 +105,7 @@ export default class WinListPage extends Component {
                     borderColor: '#FC8787'
                 }}>
                     <UltimateListView
+                        showsVerticalScrollIndicator = {false}
                         header={() => this.header()}
                         separator={() => this.separator2()}
                         keyExtractor={(item, index) => index + "item"}

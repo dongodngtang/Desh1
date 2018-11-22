@@ -619,10 +619,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
                         <View style={{
                             alignSelf: 'center',
                             marginTop: 10,
-                            width:'60%',
+                            width:220,
                             flexDirection: 'row',
                             alignItems: 'center',
-                            justifyContent: 'space-around'
+                            justifyContent: 'space-between',
                         }}>
                             <TouchableOpacity onPress={() => {
                                 if (this.state.offOn) {
