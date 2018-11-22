@@ -19,7 +19,7 @@ export default class HotCatalogs extends PureComponent {
                 <View style={styles.viewLeft}>
                     <TouchableOpacity onPress={() => {
                         global.router.toSelectTimePage();
-                    }}>
+                    }} style={styles.leftTop}>
                         <Image style={styles.leftTop}
                                          source={!isEmptyObject(home_imgs) && strNotNull(home_imgs.hotel_image) ? {uri:home_imgs.hotel_image} : Images.navigation2.hotel_bg}/>
                     </TouchableOpacity>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     hotView: {
         marginTop: 4,
         width: Metrics.screenWidth,
-        height: 335,
+
         flexDirection: 'row'
     },
     viewLeft: {
@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
     },
     leftTop: {
         width: (Metrics.screenWidth - 12)/2,
-        height: 237.96,
+        height: (((Metrics.screenWidth - 12)/2) * 472) /360,
         borderRadius: 2
     },
     leftBottom: {
         width: (Metrics.screenWidth - 12)/2,
-        height: 94.78,
+        height: (((Metrics.screenWidth - 12)/2) * 188) /360,
         borderRadius: 2
     }
 });
