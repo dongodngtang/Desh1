@@ -25,7 +25,6 @@ export default class RecreationPage extends PureComponent {
     };
 
     componentDidMount() {
-
         getPosition(data => {
             const {longitude, latitude} = data;
 
@@ -92,6 +91,7 @@ export default class RecreationPage extends PureComponent {
         if (isMacau) {
             return (
                 <View style={{
+                    marginTop:3,
                     display: 'flex',
                     flexDirection: 'row',
                     width: '50%',

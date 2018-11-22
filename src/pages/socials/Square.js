@@ -136,7 +136,7 @@ class SquareBar extends PureComponent {
             }}
             style={{
                 height: Metrics.navBarHeight - Metrics.statusBarHeight,
-                marginTop: Metrics.statusBarHeight,
+                marginTop: Metrics.statusBarHeight + 3,
                 alignItems: 'center', justifyContent: 'center',
                 width: 105,
                 borderRadius:4
