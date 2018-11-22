@@ -20,17 +20,24 @@ export default class WinListPage extends Component {
     };
 
     separator2 = () => {
-        return <View style={{width:Metrics.screenWidth - 52,height: 1, backgroundColor: '#FC8787'}}/>
+        return <View style={{width: Metrics.screenWidth - 52, height: 1, backgroundColor: '#FC8787'}}/>
     };
 
     item_view = (item, index) => {
-        const {nick_name,prize} = item;
+        const {nick_name, prize} = item;
         return (
-            <View style={{width:Metrics.screenWidth - 52,paddingTop:14,paddingBottom:14,flexDirection: 'row',alignItems: 'center',backgroundColor:'#E54A2E'}}>
-                <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+            <View style={{
+                width: Metrics.screenWidth - 52,
+                paddingTop: 14,
+                paddingBottom: 14,
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: '#E54A2E'
+            }}>
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <Text style={{color: '#FFFFFF', fontSize: 14}}>{nick_name}</Text>
                 </View>
-                <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <Text style={{color: '#FFFFFF', fontSize: 14}}>{prize}</Text>
                 </View>
             </View>
@@ -39,22 +46,31 @@ export default class WinListPage extends Component {
 
     header = () => {
         return (
-            <View style={{width:Metrics.screenWidth - 52,alignItems: 'center'}}>
-                <View style={{width:Metrics.screenWidth - 52,height: 46,alignItems: 'center', justifyContent: 'center', backgroundColor: '#C43319'}}>
-                    <Text style={{color: '#FFFFFF', fontSize: 18}}>———— 中奖名单 ————</Text>
+            <View style={{width: Metrics.screenWidth - 52, alignItems: 'center'}}>
+                <View style={{
+                    width: Metrics.screenWidth - 52,
+                    height: 46,
+                    flexDirection:'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#C43319'
+                }}>
+                    <View style={{backgroundColor: '#FFFFFF', height: 1, width: 36}}/>
+                    <Text style={{color: '#FFFFFF', fontSize: 18, marginLeft: 5, marginRight: 5}}>中奖名单</Text>
+                    <View style={{backgroundColor: '#FFFFFF', height: 1, width: 36}}/>
                 </View>
                 {this.separator2()}
                 <View style={{
-                    width:Metrics.screenWidth - 52,
+                    width: Metrics.screenWidth - 52,
                     height: 46,
                     flexDirection: 'row',
                     alignItems: 'center',
                     backgroundColor: '#FF7056'
                 }}>
-                    <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                         <Text style={{color: '#FFFFFF', fontSize: 14}}>ID</Text>
                     </View>
-                    <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                         <Text style={{color: '#FFFFFF', fontSize: 14}}>奖品</Text>
                     </View>
                 </View>
@@ -80,8 +96,8 @@ export default class WinListPage extends Component {
 
                 <View style={{
                     marginTop: 12,
-                    width:Metrics.screenWidth - 52,
-                    alignSelf:'center',
+                    width: Metrics.screenWidth - 52,
+                    alignSelf: 'center',
                     marginBottom: 74,
                     flexDirection: 'column',
                     alignItems: 'center',
