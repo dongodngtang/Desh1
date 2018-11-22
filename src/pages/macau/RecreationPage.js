@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground
+    StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import SearchBar from "../comm/SearchBar";
@@ -30,8 +30,9 @@ export default class RecreationPage extends PureComponent {
 
             let body = {
                 longitude: longitude,
-                latitude: latitude
-            }
+                latitude: latitude,
+                platform: Platform.OS === 'ios' ? 'ios' : 'android'
+            };
             // let body = {
             //     latitude: "22.203672",
             //     longitude: "113.564241"
@@ -91,7 +92,7 @@ export default class RecreationPage extends PureComponent {
         if (isMacau) {
             return (
                 <View style={{
-                    marginTop:3,
+                    marginTop: 3,
                     display: 'flex',
                     flexDirection: 'row',
                     width: '50%',
@@ -110,10 +111,17 @@ export default class RecreationPage extends PureComponent {
                     }}
                                       style={styles.btns}>
 
-                        <ImageBackground style={{width: 82, height: 28,borderRadius:4,alignItems:'center',justifyContent:'center'}}
+                        <ImageBackground style={{
+                            width: 82,
+                            height: 28,
+                            borderRadius: 4,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
                                          source={name_index === 1 ? Images.navigation2.show1 : Images.navigation2.show2}>
                             <Text
-                                style={{marginBottom:3,
+                                style={{
+                                    marginBottom: 3,
                                     fontSize: name_index === 0 ? 16 : 14,
                                     color: 'white'
                                 }}>休闲娱乐</Text>
@@ -131,10 +139,17 @@ export default class RecreationPage extends PureComponent {
                     }}
                                       style={styles.btns}>
 
-                        <ImageBackground style={{width: 82, height: 28,borderRadius:4,alignItems:'center',justifyContent:'center'}}
+                        <ImageBackground style={{
+                            width: 82,
+                            height: 28,
+                            borderRadius: 4,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
                                          source={name_index === 0 ? Images.navigation2.show1 : Images.navigation2.show2}>
                             <Text
-                                style={{marginBottom:3,
+                                style={{
+                                    marginBottom: 3,
                                     fontSize: name_index === 1 ? 16 : 14,
                                     color: 'white'
                                 }}>桑拿水疗</Text>

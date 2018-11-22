@@ -632,7 +632,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             }}>
                                 <Text style={{
                                     fontSize: 18,
-                                    color: '#6787EE',
+                                    color: '#85b0ff',
                                     textDecorationLine: 'underline',
                                     textDecorationStyle: "solid",
                                     textDecorationColor: "#6787EE"
