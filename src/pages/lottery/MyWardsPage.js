@@ -65,7 +65,7 @@ export default class MyWardsPage extends Component {
                                   global.router.toWardReceivePage(this.refresh,item)
                               }}>
                 <Text style={{color: '#444444', fontSize: 14}}>
-                    {`系统通知`}<Text style={{color: '#AAAAAA', fontSize: 14}}>{this.show_use(used,expired)}</Text>{`：恭喜您于${utcDate(created_at,'YYYY年MM月DD日HH：mm')}抽中${prize}，快点击进来兑换吧！`}
+                    {`系统通知`}<Text style={{color: '#AAAAAA', fontSize: 14}}>{this.show_use(used,expired)}</Text>{`：恭喜您于${utcDate(created_at,'YYYY年MM月DD日HH：mm')}抽中${prize}，快点戳我兑换奖品吧！`}
                 </Text>
             </TouchableOpacity>
         )
@@ -102,6 +102,7 @@ export default class MyWardsPage extends Component {
                     }}/>
 
                 <UltimateListView
+                    style={{overflowY:'hidden'}}
                     header={() => this.separator()}
                     separator={() => this.separator()}
                     keyExtractor={(item, index) => index + "item"}

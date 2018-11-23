@@ -46,7 +46,7 @@ import ShareView from '../comm/ShareToast'
 import {SHARE_CLOSE} from "../../actions/ActionTypes";
 
 
-const rule_list = [{id: 0, name: '每日登录', des: '每日可获得2次抽奖机会', image: Images.integral.login, status: '完成'},
+const rule_list = [{id: 0, name: '每日登录', des: '每日可获得2次抽奖机会', image: Images.integral.login, status: '已完成'},
     {id: 1, name: '游戏分享', des: '每分享一次可获得1次抽奖机会', image: Images.integral.share, status: '未完成'},
     {id: 2, name: '好友邀请', des: '邀请好友注册成功可获得1次抽奖机会', image: Images.integral.frends, status: '未完成'},
     {id: 3, name: '积分兑换', des: '每200积分可购买1次抽奖机会', image: Images.integral.exchange, status: '兑换'}];
@@ -585,7 +585,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                     </View>
 
 
-                    <View style={{marginTop: Metrics.reallySize(20)}}>
+                    <View style={{marginTop: Metrics.reallySize(20),flexDirection:'column',alignItems:'center'}}>
                         <View style={{
                             alignSelf: 'center',
                             paddingLeft: 10,
@@ -616,20 +616,43 @@ export default class AnimatedTurnTableDrawPage extends Component {
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity onPress={() => {
-                            if (this.state.offOn) {
-                                this.toggle();
-                                global.router.toGameRulesPage(this.toggle)
-                            }
-                        }} style={{marginTop: 10, alignSelf: 'center'}}>
-                            <Text style={{
-                                fontSize: 18,
-                                color: '#6787EE',
-                                textDecorationLine: 'underline',
-                                textDecorationStyle: "solid",
-                                textDecorationColor: "#6787EE"
-                            }}>游戏规则></Text>
-                        </TouchableOpacity>
+                        <View style={{
+                            alignSelf: 'center',
+                            marginTop: 10,
+                            width:220,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }}>
+                            <TouchableOpacity onPress={() => {
+                                if (this.state.offOn) {
+                                    this.toggle();
+                                    global.router.toGameRulesPage(this.toggle)
+                                }
+                            }}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    color: '#85b0ff',
+                                    textDecorationLine: 'underline',
+                                    textDecorationStyle: "solid",
+                                    textDecorationColor: "#6787EE"
+                                }}>游戏规则></Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                if (this.state.offOn) {
+                                    this.toggle();
+                                    global.router.toWinListPage(this.toggle)
+                                }
+                            }}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    color: '#29d2e1',
+                                    textDecorationLine: 'underline',
+                                    textDecorationStyle: "solid",
+                                    textDecorationColor: "#6787EE"
+                                }}>往期中奖></Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Animated.View>
 

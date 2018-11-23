@@ -360,7 +360,9 @@ const images = {
         rec_bg:require('../../source/navigation/rec_bg.png'),
         shop_bg:require('../../source/navigation/shop_bg.png'),
         visa:require('../../source/navigation/visa.png'),
-        tehui:require('../../source/navigation/tehui.png')
+        tehui:require('../../source/navigation/tehui.png'),
+        show1:require('../../source/navigation/show1.png'),
+        show2:require('../../source/navigation/show2.png')
     },
     fastBtn: {
         round1: require('../../source/fastBtn/round1.jpeg'),

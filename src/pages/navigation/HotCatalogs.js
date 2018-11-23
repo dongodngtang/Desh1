@@ -19,14 +19,14 @@ export default class HotCatalogs extends PureComponent {
                 <View style={styles.viewLeft}>
                     <TouchableOpacity onPress={() => {
                         global.router.toSelectTimePage();
-                    }}>
-                        <ImageBackground style={styles.leftTop}
+                    }} style={styles.leftTop}>
+                        <Image style={styles.leftTop}
                                          source={!isEmptyObject(home_imgs) && strNotNull(home_imgs.hotel_image) ? {uri:home_imgs.hotel_image} : Images.navigation2.hotel_bg}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         global.router.toRatePage();
                     }}>
-                        <ImageBackground style={[styles.leftBottom, {marginTop: 4}]}
+                        <Image style={[styles.leftBottom, {marginTop: 4}]}
                                          source={!isEmptyObject(home_imgs) && strNotNull(home_imgs.rate_image) ? {uri:home_imgs.rate_image} : Images.navigation2.rate_bg}/>
                     </TouchableOpacity>
 
@@ -40,7 +40,7 @@ export default class HotCatalogs extends PureComponent {
                             icon: Images.macau.food
                         })
                     }}>
-                        <ImageBackground style={styles.leftBottom}
+                        <Image style={styles.leftBottom}
                                          source={!isEmptyObject(home_imgs) && strNotNull(home_imgs.cate_image) ? {uri:home_imgs.cate_image} : Images.navigation2.info_ng}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
@@ -52,7 +52,7 @@ export default class HotCatalogs extends PureComponent {
                             refresh: this.refresh
                         });
                     }}>
-                        <ImageBackground style={[styles.leftTop, {marginTop: 4}]}
+                        <Image style={[styles.leftTop, {marginTop: 4}]}
                                          source={!isEmptyObject(home_imgs) && strNotNull(home_imgs.recreation_image) ? {uri:home_imgs.recreation_image} : Images.navigation2.rec_bg}/>
                     </TouchableOpacity>
 
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     hotView: {
         marginTop: 4,
         width: Metrics.screenWidth,
-        height: 335,
+
         flexDirection: 'row'
     },
     viewLeft: {
@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
     },
     leftTop: {
         width: (Metrics.screenWidth - 12)/2,
-        height: 237.96,
+        height: (((Metrics.screenWidth - 12)/2) * 472) /360,
         borderRadius: 2
     },
     leftBottom: {
         width: (Metrics.screenWidth - 12)/2,
-        height: 94.78,
+        height: (((Metrics.screenWidth - 12)/2) * 188) /360,
         borderRadius: 2
     }
 });

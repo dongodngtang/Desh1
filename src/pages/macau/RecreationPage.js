@@ -1,6 +1,6 @@
 import React, {PureComponent, Component} from 'react';
 import {
-    StyleSheet, Text, View, Image, TouchableOpacity
+    StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import SearchBar from "../comm/SearchBar";
@@ -25,14 +25,14 @@ export default class RecreationPage extends PureComponent {
     };
 
     componentDidMount() {
-
         getPosition(data => {
             const {longitude, latitude} = data;
 
             let body = {
                 longitude: longitude,
-                latitude: latitude
-            }
+                latitude: latitude,
+                platform: Platform.OS === 'ios' ? 'ios' : 'android'
+            };
             // let body = {
             //     latitude: "22.203672",
             //     longitude: "113.564241"
@@ -41,7 +41,7 @@ export default class RecreationPage extends PureComponent {
             this.sanna = body;
             getPermission(body, data => {
                 logMsg("是否可访问", data);
-                if(data.code === 0){
+                if (data.accessible) {
                     this.listView && this.listView.postRefresh([])
                     this.setState({
                         isMacau: true,
@@ -92,11 +92,12 @@ export default class RecreationPage extends PureComponent {
         if (isMacau) {
             return (
                 <View style={{
+                    marginTop: 3,
                     display: 'flex',
                     flexDirection: 'row',
-                    width: '40%',
+                    width: '50%',
                     alignItems: 'center',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-around'
                 }}>
                     <TouchableOpacity onPress={() => {
                         this.listView && this.listView.postRefresh([])
@@ -108,12 +109,24 @@ export default class RecreationPage extends PureComponent {
                         }, 200)
 
                     }}
-                                      style={[styles.btns, {backgroundColor: name_index === 1 ? 'transparent' : '#F37058'}]}>
-                        <Text
-                            style={{
-                                fontSize: name_index === 0 ? 16 : 14,
-                                color: name_index === 0 ? 'white' : '#FFCACA'
-                            }}>休闲娱乐</Text>
+                                      style={styles.btns}>
+
+                        <ImageBackground style={{
+                            width: 82,
+                            height: 28,
+                            borderRadius: 4,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                                         source={name_index === 1 ? Images.navigation2.show1 : Images.navigation2.show2}>
+                            <Text
+                                style={{
+                                    marginBottom: 3,
+                                    fontSize: name_index === 0 ? 16 : 14,
+                                    color: 'white'
+                                }}>休闲娱乐</Text>
+                        </ImageBackground>
+
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         this.listView && this.listView.postRefresh([])
@@ -124,12 +137,24 @@ export default class RecreationPage extends PureComponent {
                             this.refresh()
                         }, 200)
                     }}
-                                      style={[styles.btns, {backgroundColor: name_index === 0 ? 'transparent' : '#F37058'}]}>
-                        <Text
-                            style={{
-                                fontSize: name_index === 1 ? 16 : 14,
-                                color: name_index === 1 ? 'white' : '#FFCACA'
-                            }}>桑拿水疗</Text>
+                                      style={styles.btns}>
+
+                        <ImageBackground style={{
+                            width: 82,
+                            height: 28,
+                            borderRadius: 4,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                                         source={name_index === 0 ? Images.navigation2.show1 : Images.navigation2.show2}>
+                            <Text
+                                style={{
+                                    marginBottom: 3,
+                                    fontSize: name_index === 1 ? 16 : 14,
+                                    color: 'white'
+                                }}>桑拿水疗</Text>
+                        </ImageBackground>
+
                     </TouchableOpacity>
                 </View>
             )

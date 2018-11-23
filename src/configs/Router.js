@@ -67,6 +67,14 @@ export default class Router {
             }
         })
     }
+    toWinListPage(toggle){
+        this.stackPush({
+            name:'WinListPage',
+            params:{
+                toggle
+            }
+        })
+    }
     toVisaInfoPage(){
         this.stackPush({
             name:'VisaInfoPage'

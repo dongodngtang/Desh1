@@ -4,7 +4,8 @@ import {
     View,
     Image,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    ImageBackground
 } from 'react-native';
 import {reallySize} from "./Header";
 import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
@@ -135,16 +136,21 @@ class SquareBar extends PureComponent {
             }}
             style={{
                 height: Metrics.navBarHeight - Metrics.statusBarHeight,
-                marginTop: Metrics.statusBarHeight,
+                marginTop: Metrics.statusBarHeight+2,
                 alignItems: 'center', justifyContent: 'center',
-                width: 65
+                width: 105,
+                borderRadius:4
             }}>
-            <Text style={[{fontSize: 18},
-                activeTab === index ? {color: Colors.white} : {color: Colors.white}]}>{item}</Text>
-            {activeTab === index ? <View style={{
-            height: 2, width: 45, backgroundColor: Colors.white,
-            position: 'absolute', bottom: 0
-            }}/> : null}
+            <ImageBackground style={{width: 82, height: 28,borderRadius:4,alignItems:'center',justifyContent:'center'}}
+                             source={activeTab === index ?  Images.navigation2.show2 : Images.navigation2.show1}>
+                <Text style={[{marginBottom:3,fontSize: activeTab === index ? 16 : 14},
+                    activeTab === index ? {color: Colors.white} : {color:Colors.white}]}>{item}</Text>
+            </ImageBackground>
+
+            {/*{activeTab === index ? <View style={{*/}
+            {/*height: 2, width: 45, backgroundColor: Colors.white,*/}
+            {/*position: 'absolute', bottom: 0*/}
+            {/*}}/> : null}*/}
 
         </TouchableOpacity>);
 
