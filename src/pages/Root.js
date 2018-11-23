@@ -64,7 +64,7 @@ class Root extends Component {
         });
 
         requestCameraPermission()
-
+        codePush.disallowRestart()
         codePush.sync({
             // updateDialog: {
             //     appendReleaseDescription: true,
