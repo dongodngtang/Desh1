@@ -292,7 +292,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
 
                             }
                         }])
-                    } else if (lottery.name.indexOf('积分') !== -1 || lottery.name.indexOf('红包') !== -1) {
+                    } else if (lottery.name.indexOf('积分') !== -1) {
                         Alert.alert('澳门旅行', `恭喜您获得${lottery.name}`, [{
                             text: `知道了`, onPress: () => {
 
@@ -665,8 +665,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                                                 //点击分享回调
                                                                 postShareCount({from: 'wheel'}, data => {
                                                                     logMsg("用户好友分享成功:")
-                                                                    this.refresh();
-                                                                    this.getTime();
+                                                                    setTimeout(()=>{
+                                                                        this.refresh();
+                                                                        this.getTime();
+                                                                    },1000)
                                                                 }, err => {
 
                                                                 })
@@ -684,8 +686,10 @@ export default class AnimatedTurnTableDrawPage extends Component {
                                                                 //点击分享回调
                                                                 postShareCount({from: 'wheel'}, data => {
                                                                     logMsg("用户邀请分享成功:")
-                                                                    this.refresh();
-                                                                    this.getTime();
+                                                                    setTimeout(()=>{
+                                                                        this.refresh();
+                                                                        this.getTime();
+                                                                    },1000)
                                                                 }, err => {
 
                                                                 })
