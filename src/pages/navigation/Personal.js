@@ -214,9 +214,15 @@ class Personal extends Component {
 
                 })}
             <View style={{height: 1, width: '100%'}}/>
-            {this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},
-                I18n.t('setting'), () => {
-                    router.toSettingPage()
+            {/*{this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},*/}
+                {/*I18n.t('setting'), () => {*/}
+                    {/*router.toSettingPage()*/}
+
+                {/*})}*/}
+
+            {this._item(stylesP.item_view, Images.my_save, {width: 22, height: 22, marginLeft: 20},
+                '收藏', () => {
+                    global.router.toMySavePage()
 
                 })}
 
@@ -357,21 +363,38 @@ class Personal extends Component {
                 flexDirection: 'row-reverse'
             }}>
                 {/*<TouchableOpacity*/}
-                {/*style={{*/}
-                {/*justifyContent: 'center',*/}
-                {/*alignItems: 'center',*/}
-                {/*height: 44*/}
-                {/*}}*/}
-                {/*onPress={this.toMessagePage}>*/}
-                {/*<Image*/}
-                {/*source={this._imgNotice()}*/}
-                {/*style={{*/}
-                {/*height: 22,*/}
-                {/*width: 21,*/}
-                {/*marginRight: 20*/}
-                {/*}}/>*/}
+                    {/*style={{*/}
+                        {/*justifyContent: 'center',*/}
+                        {/*alignItems: 'center',*/}
+                        {/*height: 44*/}
+                    {/*}}*/}
+                    {/*onPress={this.toMessagePage}>*/}
+                    {/*<Image*/}
+                        {/*source={this._imgNotice()}*/}
+                        {/*style={{*/}
+                            {/*height: 22,*/}
+                            {/*width: 21,*/}
+                            {/*marginRight: 20*/}
+                        {/*}}/>*/}
 
                 {/*</TouchableOpacity>*/}
+                <TouchableOpacity
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: 44
+                    }}
+                    onPress={()=>{
+                        global.router.toSettingPage()
+                    }}>
+                    <Text
+                        style={{
+                            color:'white',
+                            fontSize:16,
+                            marginRight: 20
+                        }}>设置</Text>
+
+                </TouchableOpacity>
 
             </View>
 

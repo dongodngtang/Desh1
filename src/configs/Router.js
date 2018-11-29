@@ -12,6 +12,7 @@ import {SelectTimePage} from "../pages/macau/SelectTimePage";
 import WalletPage from "../pages/wallet/WalletPage";
 import NewUserTask from "../pages/navigation/NewUserTask";
 import FastFoodPage from "../pages/fastBtn/FastFoodPage";
+import MySavePage from "../pages/collection/MySavePage";
 
 
 const customFloatFromRight = '';
@@ -59,6 +60,11 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toMySavePage(){
+        this.stackPush({
+            name:'MySavePage'
+        })
+    }
     toGameRulesPage(toggle){
         this.stackPush({
             name:'GameRulesPage',
