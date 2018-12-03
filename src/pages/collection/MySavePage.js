@@ -7,7 +7,7 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
-import {getFavoritesList} from '../../services/MacauDao';
+import {getFavoritesList, getWin_history} from '../../services/MacauDao';
 import {getPosition, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import RejectPage from "../comm/RejectPage";
 import {locations} from "../../services/SocialDao";
@@ -16,11 +16,55 @@ import {NavigationBar} from '../../components';
 
 export default class MySavePage extends PureComponent {
 
-    componentDidMount(){
-        getFavoritesList(data=>{
-            logMsg("收藏列表：",data)
-        })
-    }
+
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+            getFavoritesList({page, page_size: 20}, data => {
+                logMsg("收藏列表：",data)
+                    startFetch(data.items, 18)
+                }, err => {
+                    logMsg("收藏reject:", err)
+                    abortFetch()
+                }
+            )
+        } catch (err) {
+            console.log(err)
+            abortFetch()
+        }
+    };
+
+    separator = () => {
+        return <View style={{width: Metrics.screenWidth - 52, height: 1, backgroundColor: '#FC8787'}}/>
+    };
+
+    item_view = (item, index) => {
+        if(item.target_type === 'info'){
+            const {title,preview_image,date,id} = item;
+            return (
+
+            )
+        }else if(item.target_type === 'hotel'){
+            const {title,preview_logo,location,id} = item;
+
+        }
+        return (
+            <View style={{
+                width: 52,
+                paddingLeft:17,
+                paddingRight:17,
+                flexDirection: 'column',
+                alignItems: 'center',
+                backgroundColor: 'white'
+            }}>
+                <View style={{flexDirection:'row', alignItems: 'center', marginTop:14}}>
+                    <Image source={}/>
+                </View>
+                <View style={{flexDirection:'row',  alignItems: 'center', marginBottom:14}}>
+                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{prize}</Text>
+                </View>
+            </View>
+        )
+    };
 
     render(){
         return(
@@ -37,7 +81,24 @@ export default class MySavePage extends PureComponent {
                     }}
                 />
 
-
+                <UltimateListView
+                    header={() => this.separator()}
+                    style={{width: Metrics.screenWidth - 52}}
+                    showsVerticalScrollIndicator = {false}
+                    separator={() => this.separator()}
+                    keyExtractor={(item, index) => index + "item"}
+                    ref={(ref) => this.listView = ref}
+                    onFetch={this.onFetch}
+                    item={this.item_view}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    emptyView={() => {
+                        return <NoDataView/>;
+                    }}
+                />
 
             </View>
         )
