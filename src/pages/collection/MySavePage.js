@@ -37,15 +37,22 @@ export default class MySavePage extends PureComponent {
         return <View style={{width: Metrics.screenWidth - 52, height: 1, backgroundColor: '#FC8787'}}/>
     };
 
+    setImage=(img)=>{
+        if(strNotNull(img)){
+            return img;
+        }else {
+            return Images.default_img
+        }
+    }
+
     item_view = (item, index) => {
+        let img = '';
         if(item.target_type === 'info'){
             const {title,preview_image,date,id} = item;
-            return (
-
-            )
+            img = item.preview_image;
         }else if(item.target_type === 'hotel'){
             const {title,preview_logo,location,id} = item;
-
+            img = item.preview_logo;
         }
         return (
             <View style={{
@@ -57,10 +64,12 @@ export default class MySavePage extends PureComponent {
                 backgroundColor: 'white'
             }}>
                 <View style={{flexDirection:'row', alignItems: 'center', marginTop:14}}>
-                    <Image source={}/>
+                    <Image style={{width:54,height:54}} source={this.setImage(img)}/>
+                    <Text style={{color: '#444444', fontSize: 18}}>{item.title}</Text>
                 </View>
-                <View style={{flexDirection:'row',  alignItems: 'center', marginBottom:14}}>
+                <View style={{flexDirection:'row',  alignItems: 'center', marginTop:8,marginBottom:14}}>
                     <Text style={{color: '#FFFFFF', fontSize: 14}}>{prize}</Text>
+                    <Text style={{color: '#444444', fontSize: 18}}>{item.title}</Text>
                 </View>
             </View>
         )
