@@ -666,23 +666,6 @@ export function getDateDiff(dateTimeStamp) {
     return result;
 }
 
-
-export function sharePage2(title, location, icon, url,id) {
-    let thumb = getShareIcon(icon);
-    let param = {
-        shareTitle: title,
-        shareText: location,
-        shareImage: thumb,
-        shareLink: url,
-        shareId: id,
-        shareType: 'topic',
-        show_favorites: true
-
-    };
-    getDispatchAction()["SHARE_OPEN"](param);
-}
-
-
 export function sharePage(title, location, icon, url) {
     let thumb = getShareIcon(icon);
     let param = {
