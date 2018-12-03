@@ -145,6 +145,12 @@ export function home_recommends(resolve, reject, params) {
     }, reject, params)
 }
 
+export function postFavorites(body,resolve, reject) {
+    helper.post(Api.post_favorites(), body,ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function getFavoritesList(resolve, reject) {
     helper.get(Api.favorites_list(), ret => {
         resolve(ret.data)

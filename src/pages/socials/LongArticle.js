@@ -19,7 +19,7 @@ import {
 } from "../../services/SocialDao";
 import {
     getDateDiff, isEmptyObject, showToast, strNotNull,
-    alertOrder, isFollowed, sharePage, shareHost
+    alertOrder, isFollowed, sharePage, sharePage2,shareHost
 } from "../../utils/ComonHelper";
 import CommentBar from '../comm/CommentBar';
 import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
@@ -263,8 +263,8 @@ export default class LongArticle extends PureComponent {
                     }}
                     share={() => {
 
-                        sharePage(user.nick_name,
-                            body_type === 'short' ? body : title, user.avatar, shareHost() + 'topics/' + id)
+                        sharePage2(user.nick_name,
+                            body_type === 'short' ? body : title, user.avatar, shareHost() + 'topics/' + id,id)
                     }}
                     like={() => {
 

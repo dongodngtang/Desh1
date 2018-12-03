@@ -9,9 +9,10 @@ import {
     Dimensions
 } from 'react-native';
 import JShareModule from "jshare-react-native";
+import {postFavorites} from '../../services/MacauDao';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import {Lang, strNotNull, showToast,isEmptyObject} from '../../utils/ComonHelper';
+import {Lang, strNotNull, showToast, isEmptyObject, logMsg} from '../../utils/ComonHelper';
 import fs from 'react-native-fs';
 import ImageResizer from 'react-native-image-resizer';
 import {postShareCount} from "../../services/AccountDao";
@@ -27,6 +28,8 @@ export default class ShareItem extends Component {
         shareText: null,//分享内容
         shareLink: null,//分享链接
         shareImage: null,//分享图片
+        shareId: null,//分享的ID
+        shareType: null,//分享的类型
     };
 
 
@@ -54,12 +57,26 @@ export default class ShareItem extends Component {
                 }
             });
         }
+        else if (platform === "favorites") {
+            logMsg("收藏进来了")
+            let body = {
+                target_id: this.props.shareId,
+                target_type: this.props.shareType
+            };
+            postFavorites(body, data => {
+                logMsg("收藏成功", data)
+                showToast("收藏成功")
+            },err=>{
+                logMsg("收藏失败",err)
+                showToast("收藏失败")
+            })
+        }
 
 
         if (isAllowShare) {
 
             let rootPath = fs.DocumentDirectoryPath;
-            let unix = new Date()/1000;
+            let unix = new Date() / 1000;
             let savePath = rootPath + `/${unix}temp_share.jpg`;
 
             console.log(this.props.shareImage);
@@ -169,9 +186,9 @@ export default class ShareItem extends Component {
     };
 
     _share_success = () => {
-        if(this.props.shareClick){
+        if (this.props.shareClick) {
             this.props.shareClick()
-        }else{
+        } else {
             if (!isEmptyObject(global.login_user))
                 postShareCount({}, data => {
                     console.log("用户推荐好友分享成功:")
