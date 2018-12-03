@@ -145,6 +145,12 @@ export function home_recommends(resolve, reject, params) {
     }, reject, params)
 }
 
+export function getFavoritesList(resolve, reject) {
+    helper.get(Api.favorites_list(), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function exchange_rates(resolve, reject) {
     helper.get(Api.exchange_rates, ret => {
         resolve(ret.data)

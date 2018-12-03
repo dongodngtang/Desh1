@@ -222,7 +222,11 @@ class Personal extends Component {
 
             {this._item(stylesP.item_view, Images.my_save, {width: 22, height: 22, marginLeft: 20},
                 '收藏', () => {
-                    global.router.toMySavePage()
+                    if (isEmptyObject(global.login_user))
+                        global.router.toLoginFirstPage()
+                    else{
+                        global.router.toMySavePage()
+                    }
 
                 })}
 

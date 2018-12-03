@@ -7,7 +7,7 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
-import {hotels, info_types, getSaunas, getPermission} from '../../services/MacauDao';
+import {getFavoritesList} from '../../services/MacauDao';
 import {getPosition, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
 import RejectPage from "../comm/RejectPage";
 import {locations} from "../../services/SocialDao";
@@ -17,7 +17,9 @@ import {NavigationBar} from '../../components';
 export default class MySavePage extends PureComponent {
 
     componentDidMount(){
-
+        getFavoritesList(data=>{
+            logMsg("收藏列表：",data)
+        })
     }
 
     render(){
@@ -34,6 +36,8 @@ export default class MySavePage extends PureComponent {
                         router.pop();
                     }}
                 />
+
+
 
             </View>
         )
