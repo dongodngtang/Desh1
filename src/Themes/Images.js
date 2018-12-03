@@ -231,6 +231,7 @@ const images = {
     icon_share_sina: require('../../source/share/icon_share_sina.png'),
     icon_share_wechat: require('../../source/share/icon_share_wechat.png'),
     icon_share_wxcircle: require('../../source/share/icon_share_wxcircle.png'),
+    favorites: require('../../source/share/favorites.png'),
     social: {
         close: require('../../source/social/close.png'),
         article: require('../../source/social/article.png'),
