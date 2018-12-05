@@ -5,15 +5,13 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
-import I18n from "react-native-i18n";
 import {LoadErrorView, NoDataView} from '../../components/load';
-import {getFavoritesList, getWin_history} from '../../services/MacauDao';
-import {getPosition, isEmptyObject, logMsg, strNotNull} from "../../utils/ComonHelper";
-import RejectPage from "../comm/RejectPage";
-import {locations} from "../../services/SocialDao";
-import {getApiType} from "../../services/RequestHelper";
+import {getFavoritesList, getWin_history, postCancelFavorites} from '../../services/MacauDao';
+import {alertOrder, getPosition, isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
+import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
 import moment from "moment/moment";
+import Swipeout from 'react-native-swipeout';
 
 export default class MySavePage extends PureComponent {
 
@@ -52,9 +50,21 @@ export default class MySavePage extends PureComponent {
         } else {
             return Images.empty_image
         }
-    }
+    };
+
+    closeThisFavorite=(item,target_type)=>{
+        postCancelFavorites({target_id:item.id,target_type}, data => {
+            logMsg("取消收藏成功", data)
+            showToast("取消收藏成功");
+            this.listView.refresh && this.listView.refresh();
+        },err=>{
+            logMsg("取消收藏失败",err)
+            showToast("取消收藏失败")
+        })
+    };
 
     item_view = (item, index) => {
+
         let item2 = {};
         let img = '';
         let intro = '';
@@ -69,39 +79,56 @@ export default class MySavePage extends PureComponent {
             intro = "酒店";
             item2 = item.hotel;
         }
-        return (
-            <TouchableOpacity style={{
-                width: Metrics.screenWidth,
-                flexDirection: 'column',
-                backgroundColor: 'white'
-            }} onPress={()=>{
-                if(item.target_type === 'hotel'){
-                    global.router.toHotelDetail(item2,this.state.date)
-                }else{
-                    global.router.toInfoPage(item2)
+        let swipeoutBtns = [
+            {
+                text: '取消收藏',
+                backgroundColor: '#F34A4A',
+                onPress: () => {
+                    alertOrder('确认取消', () => {
+                        this.closeThisFavorite(item2,item.target_type)
+                    });
+
                 }
-            }}>
-                <View style={{
-                    flexDirection: 'row',
-                    marginTop: 14,
-                    marginLeft: 17,
-                    marginRight: 17
+            }
+        ];
+
+        return (
+            <Swipeout
+                autoClose={true}
+                right={swipeoutBtns}>
+                <TouchableOpacity style={{
+                    width: Metrics.screenWidth,
+                    flexDirection: 'column',
+                    backgroundColor: 'white'
+                }} onPress={()=>{
+                    if(item.target_type === 'hotel'){
+                        global.router.toHotelDetail(item2,this.state.date)
+                    }else{
+                        global.router.toInfoPage(item2)
+                    }
                 }}>
-                    <Image style={{width: 54, height: 54,marginRight:16}} source={this.setImage(img)}/>
-                    <Text style={{color: '#444444', fontSize: 18,width:'85%'}} numberOfLines={2}>{item2.title}</Text>
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 8,
-                    marginBottom: 14,
-                    marginLeft: 17,
-                    marginRight: 17
-                }}>
-                    <Text style={{color: '#CCCCCC', fontSize: 12,marginRight:12,width:54}}>{intro}</Text>
-                    <Text style={{color: '#CCCCCC', fontSize: 12}}>{item2.title}</Text>
-                </View>
-            </TouchableOpacity>
+                    <View style={{
+                        flexDirection: 'row',
+                        marginTop: 14,
+                        marginLeft: 17,
+                        marginRight: 17
+                    }}>
+                        <Image style={{width: 54, height: 54,marginRight:16}} source={this.setImage(img)}/>
+                        <Text style={{color: '#444444', fontSize: 18,width:'85%'}} numberOfLines={2}>{item2.title}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: 8,
+                        marginBottom: 14,
+                        marginLeft: 17,
+                        marginRight: 17
+                    }}>
+                        <Text style={{color: '#CCCCCC', fontSize: 12,marginRight:12,width:54}}>{intro}</Text>
+                        <Text style={{color: '#CCCCCC', fontSize: 12}}>{item2.title}</Text>
+                    </View>
+                </TouchableOpacity>
+            </Swipeout>
         )
     };
 
