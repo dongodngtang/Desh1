@@ -151,10 +151,10 @@ export function postFavorites(body,resolve, reject) {
     }, reject)
 }
 
-export function getFavoritesList(resolve, reject) {
+export function getFavoritesList(body,resolve, reject) {
     helper.get(Api.favorites_list(), ret => {
-        resolve(ret.data)
-    }, reject)
+        resolve && resolve(ret.data)
+    }, reject,body)
 }
 
 export function exchange_rates(resolve, reject) {

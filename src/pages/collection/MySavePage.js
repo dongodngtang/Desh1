@@ -13,14 +13,23 @@ import RejectPage from "../comm/RejectPage";
 import {locations} from "../../services/SocialDao";
 import {getApiType} from "../../services/RequestHelper";
 import {NavigationBar} from '../../components';
+import moment from "moment/moment";
 
 export default class MySavePage extends PureComponent {
+
+    state={
+        date: {
+            begin_date: moment().format('YYYY-MM-DD'),
+            end_date: moment().add('hours', 24).format('YYYY-MM-DD'),
+            counts: 1
+        }
+    }
 
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
             getFavoritesList({page, page_size: 20}, data => {
-                logMsg("收藏列表：",data)
+                    logMsg("收藏列表：", data)
                     startFetch(data.items, 18)
                 }, err => {
                     logMsg("收藏reject:", err)
@@ -34,49 +43,70 @@ export default class MySavePage extends PureComponent {
     };
 
     separator = () => {
-        return <View style={{width: Metrics.screenWidth - 52, height: 1, backgroundColor: '#FC8787'}}/>
+        return <View style={{width: Metrics.screenWidth, height: 1, backgroundColor: '#F3F3F3'}}/>
     };
 
-    setImage=(img)=>{
-        if(strNotNull(img)){
+    setImage = (img) => {
+        if (strNotNull(img)) {
             return img;
-        }else {
-            return Images.default_img
+        } else {
+            return Images.empty_image
         }
     }
 
     item_view = (item, index) => {
+        let item2 = {};
         let img = '';
-        if(item.target_type === 'info'){
-            const {title,preview_image,date,id} = item;
+        let intro = '';
+        if (item.target_type === 'info') {
+            const {title, preview_image, date, id} = item;
             img = item.preview_image;
-        }else if(item.target_type === 'hotel'){
-            const {title,preview_logo,location,id} = item;
+            intro = "资讯";
+            item2 = item.info;
+        } else if (item.target_type === 'hotel') {
+            const {title, preview_logo, location, id} = item;
             img = item.preview_logo;
+            intro = "酒店";
+            item2 = item.hotel;
         }
         return (
-            <View style={{
-                width: 52,
-                paddingLeft:17,
-                paddingRight:17,
+            <TouchableOpacity style={{
+                width: Metrics.screenWidth,
                 flexDirection: 'column',
-                alignItems: 'center',
                 backgroundColor: 'white'
+            }} onPress={()=>{
+                if(item.target_type === 'hotel'){
+                    global.router.toHotelDetail(item2,this.state.date)
+                }else{
+                    global.router.toInfoPage(item2)
+                }
             }}>
-                <View style={{flexDirection:'row', alignItems: 'center', marginTop:14}}>
-                    <Image style={{width:54,height:54}} source={this.setImage(img)}/>
-                    <Text style={{color: '#444444', fontSize: 18}}>{item.title}</Text>
+                <View style={{
+                    flexDirection: 'row',
+                    marginTop: 14,
+                    marginLeft: 17,
+                    marginRight: 17
+                }}>
+                    <Image style={{width: 54, height: 54,marginRight:16}} source={this.setImage(img)}/>
+                    <Text style={{color: '#444444', fontSize: 18,width:'85%'}} numberOfLines={2}>{item2.title}</Text>
                 </View>
-                <View style={{flexDirection:'row',  alignItems: 'center', marginTop:8,marginBottom:14}}>
-                    <Text style={{color: '#FFFFFF', fontSize: 14}}>{prize}</Text>
-                    <Text style={{color: '#444444', fontSize: 18}}>{item.title}</Text>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 8,
+                    marginBottom: 14,
+                    marginLeft: 17,
+                    marginRight: 17
+                }}>
+                    <Text style={{color: '#CCCCCC', fontSize: 12,marginRight:12,width:54}}>{intro}</Text>
+                    <Text style={{color: '#CCCCCC', fontSize: 12}}>{item2.title}</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     };
 
-    render(){
-        return(
+    render() {
+        return (
             <View style={[ApplicationStyles.bgContainer, {backgroundColor: '#ECECEE'}]}>
                 <NavigationBar
                     barStyle={'dark-content'}
@@ -92,8 +122,7 @@ export default class MySavePage extends PureComponent {
 
                 <UltimateListView
                     header={() => this.separator()}
-                    style={{width: Metrics.screenWidth - 52}}
-                    showsVerticalScrollIndicator = {false}
+                    showsVerticalScrollIndicator={false}
                     separator={() => this.separator()}
                     keyExtractor={(item, index) => index + "item"}
                     ref={(ref) => this.listView = ref}
