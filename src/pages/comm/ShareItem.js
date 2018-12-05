@@ -12,7 +12,7 @@ import JShareModule from "jshare-react-native";
 import {postFavorites} from '../../services/MacauDao';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import {Lang, strNotNull, showToast, isEmptyObject, logMsg} from '../../utils/ComonHelper';
+import {Lang, strNotNull, showToast, isEmptyObject, logMsg, util, deleteProductFromCart} from '../../utils/ComonHelper';
 import fs from 'react-native-fs';
 import ImageResizer from 'react-native-image-resizer';
 import {postShareCount} from "../../services/AccountDao";

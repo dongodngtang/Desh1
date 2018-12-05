@@ -7,7 +7,7 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {getFavoritesList, getWin_history, postCancelFavorites} from '../../services/MacauDao';
-import {alertOrder, convertDate, isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
+import {alertOrder, convertDate, utcDate, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
 import moment from "moment/moment";
@@ -46,7 +46,7 @@ export default class MySavePage extends PureComponent {
 
     setImage = (img) => {
         if (strNotNull(img)) {
-            return img;
+            return {uri:img};
         } else {
             return Images.empty_image
         }
@@ -70,12 +70,12 @@ export default class MySavePage extends PureComponent {
         let intro = '';
         if (item.target_type === 'info') {
             const {title, preview_image, date, id} = item;
-            img = item.preview_image;
+            img = item.info.preview_image;
             intro = "资讯";
             item2 = item.info;
         } else if (item.target_type === 'hotel') {
             const {title, preview_logo, location, id} = item;
-            img = item.preview_logo;
+            img = item.hotel.preview_logo;
             intro = "酒店";
             item2 = item.hotel;
         }
@@ -114,7 +114,7 @@ export default class MySavePage extends PureComponent {
                         marginRight: 17
                     }}>
                         <Image style={{width: 54, height: 54,marginRight:16}} source={this.setImage(img)}/>
-                        <Text style={{color: '#444444', fontSize: 18,width:'85%'}} numberOfLines={2}>{item2.title}</Text>
+                        <Text style={{color: '#444444', fontSize: 18,width:'84%'}} numberOfLines={2}>{item2.title}</Text>
                     </View>
                     <View style={{
                         flexDirection: 'row',
@@ -125,7 +125,7 @@ export default class MySavePage extends PureComponent {
                         marginRight: 17
                     }}>
                         <Text style={{color: '#CCCCCC', fontSize: 12,marginRight:12,width:54}}>{intro}</Text>
-                        <Text style={{color: '#CCCCCC', fontSize: 12}}>{convertDate(item.created_at)}</Text>
+                        <Text style={{color: '#CCCCCC', fontSize: 12}}>{utcDate(item.created_at,'YYYY/MM/DD')}</Text>
                     </View>
                 </TouchableOpacity>
             </Swipeout>
