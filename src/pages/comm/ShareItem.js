@@ -58,18 +58,23 @@ export default class ShareItem extends Component {
             });
         }
         else if (platform === "favorites") {
-            logMsg("收藏进来了")
-            let body = {
-                target_id: this.props.shareId,
-                target_type: this.props.shareType
-            };
-            postFavorites(body, data => {
-                logMsg("收藏成功", data)
-                showToast("收藏成功")
-            },err=>{
-                logMsg("收藏失败",err)
-                showToast("收藏失败")
-            })
+            if (isEmptyObject(global.login_user)){
+                global.router.toLoginFirstPage()
+            }else{
+                logMsg("收藏进来了")
+                let body = {
+                    target_id: this.props.shareId,
+                    target_type: this.props.shareType
+                };
+                postFavorites(body, data => {
+                    logMsg("收藏成功", data)
+                    showToast("收藏成功")
+                },err=>{
+                    logMsg("收藏失败",err)
+                    showToast("已收藏")
+                })
+            }
+
         }
 
 
