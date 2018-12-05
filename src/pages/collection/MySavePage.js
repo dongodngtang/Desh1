@@ -7,7 +7,7 @@ import SearchBar from "../comm/SearchBar";
 import {UltimateListView, ImageLoad} from '../../components'
 import {LoadErrorView, NoDataView} from '../../components/load';
 import {getFavoritesList, getWin_history, postCancelFavorites} from '../../services/MacauDao';
-import {alertOrder, getPosition, isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
+import {alertOrder, convertDate, isEmptyObject, logMsg, showToast, strNotNull} from "../../utils/ComonHelper";
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
 import moment from "moment/moment";
@@ -125,7 +125,7 @@ export default class MySavePage extends PureComponent {
                         marginRight: 17
                     }}>
                         <Text style={{color: '#CCCCCC', fontSize: 12,marginRight:12,width:54}}>{intro}</Text>
-                        <Text style={{color: '#CCCCCC', fontSize: 12}}>{item2.title}</Text>
+                        <Text style={{color: '#CCCCCC', fontSize: 12}}>{convertDate(item.created_at)}</Text>
                     </View>
                 </TouchableOpacity>
             </Swipeout>
