@@ -104,10 +104,12 @@ export default class ShareToast extends Component {
             target_id: this.props.shareId,
             target_type: this.props.shareType
         };
-         if(this.props.show_favorites && isFavorite(body)){
-              shareLists = shareList3
-         }else{
-             shareLists = shareList2
+         if(this.props.show_favorites){
+             if(isFavorite(body)){
+                 shareLists = shareList3
+             }else{
+                 shareLists = shareList2
+             }
          }
         return (
             <Modal
