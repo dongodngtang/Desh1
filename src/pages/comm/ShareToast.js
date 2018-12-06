@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import ShareItem from "./ShareItem";
 import {Images} from '../../Themes';
-import {logMsg} from "../../utils/ComonHelper";
+import {isFavorite, logMsg} from "../../utils/ComonHelper";
 
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -60,6 +60,25 @@ let shareList2 = [
     },
 ];
 
+
+let shareList3 = [
+    {
+        platform: "wechat_session",
+        icon: Images.icon_share_wechat,
+        name: "微信",
+    },
+    {
+        platform: "wechat_timeLine",
+        icon: Images.icon_share_wxcircle,
+        name: "朋友圈",
+    },
+    {
+        platform: "favorites",
+        icon: Images.cancel_shoucang,
+        name: "取消收藏",
+    },
+];
+
 export default class ShareToast extends Component {
     static props = {
         hiddenShareAction: null,//关闭弹窗回调
@@ -79,7 +98,17 @@ export default class ShareToast extends Component {
     };
 
     render() {
-        logMsg("llll",this.props)
+
+         let shareLists = shareList;
+        let body = {
+            target_id: this.props.shareId,
+            target_type: this.props.shareType
+        };
+         if(this.props.show_favorites && isFavorite(body)){
+              shareLists = shareList3
+         }else{
+             shareLists = shareList2
+         }
         return (
             <Modal
                 onRequestClose={this.hiddenShare}
@@ -98,7 +127,7 @@ export default class ShareToast extends Component {
 
                 {/*分享平台*/}
                 <View style={[{backgroundColor: "#eaeff3"}, {flex: 1}, {width: DEVICE_WIDTH}, {alignItems: "center"}]}>
-                    <FlatList data={this.props.show_favorites ? shareList2 : shareList}
+                    <FlatList data={shareLists}
                               style={[{backgroundColor: "#eaeff3"}, {width: DEVICE_WIDTH - 40}]}
                               numColumns={4}
                               bounces={false}
