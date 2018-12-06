@@ -300,10 +300,7 @@ export function uShareMallInfo(title, desc, icon, id) {
         shareTitle: title,
         shareText: strNotNull(desc) ? desc : I18n.t('ads_poker'),
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "products/" + id,
-        shareId: id,
-        shareType: 'hotel',
-        show_favorites: true
+        shareLink: shareHost() + "products/" + id
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
