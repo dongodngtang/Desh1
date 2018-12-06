@@ -1159,6 +1159,29 @@ export function putLoginUser(ret) {
     });
 }
 
+/**
+ * 收藏是否存在
+ * @param target
+ * @returns {boolean}
+ */
+export function isFavorite(target) {
+
+    if(global.favorites && global.favorites.length>0){
+        //收藏列表查找，通过类型和id
+        let arr = global.favorites.filter(item=>{
+            if(item.target_type === target.target_type && item.hasOwnProperty(`${target.target_type}`)){
+              return item[`${target.target_type}`].id === target.target_id
+            }
+            return false
+        })
+
+        return arr.length > 0
+    }
+
+    return false
+
+}
+
 /*是否登陆*/
 export function isLoginUser() {
     if (!isEmptyObject(LoginUser) && strNotNull(LoginUser.user_id))

@@ -159,6 +159,7 @@ export function postFavorites(body,resolve, reject) {
 
 export function getFavoritesList(body,resolve, reject) {
     helper.get(Api.favorites_list(), ret => {
+        global.favorites=ret.data.items
         resolve && resolve(ret.data)
     }, reject,body)
 }

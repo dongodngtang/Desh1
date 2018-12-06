@@ -9,10 +9,13 @@ import {
     Dimensions
 } from 'react-native';
 import JShareModule from "jshare-react-native";
-import {postFavorites} from '../../services/MacauDao';
+import {postCancelFavorites, postFavorites} from '../../services/MacauDao';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import {Lang, strNotNull, showToast, isEmptyObject, logMsg, util, deleteProductFromCart} from '../../utils/ComonHelper';
+import {
+    Lang, strNotNull, showToast, isEmptyObject, logMsg, util, deleteProductFromCart,
+    isFavorite
+} from '../../utils/ComonHelper';
 import fs from 'react-native-fs';
 import ImageResizer from 'react-native-image-resizer';
 import {postShareCount} from "../../services/AccountDao";
@@ -61,18 +64,30 @@ export default class ShareItem extends Component {
             if (isEmptyObject(global.login_user)){
                 global.router.toLoginFirstPage()
             }else{
-                logMsg("收藏进来了")
                 let body = {
                     target_id: this.props.shareId,
                     target_type: this.props.shareType
                 };
-                postFavorites(body, data => {
-                    logMsg("收藏成功", data)
-                    showToast("收藏成功")
-                },err=>{
-                    logMsg("收藏失败",err)
-                    showToast("已收藏")
-                })
+                let can = isFavorite(body)
+                logMsg("收藏进来了",can)
+                if(can){
+                    postCancelFavorites(body, data => {
+                        logMsg("取消收藏成功", data)
+                        showToast("取消收藏");
+                    },err=>{
+                        logMsg("取消收藏失败",err)
+                        showToast("取消收藏失败")
+                    })
+                }else{
+                    postFavorites(body, data => {
+                        logMsg("收藏成功", data)
+                        showToast("收藏成功")
+                    },err=>{
+                        logMsg("收藏失败",err)
+                        showToast("已收藏")
+                    })
+                }
+
             }
 
         }
@@ -109,6 +124,7 @@ export default class ShareItem extends Component {
                     }
                 });
             } else {
+                if(platform !== "favorites")
                 this.shareUrl(item.platform, '')
             }
 
