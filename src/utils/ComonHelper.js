@@ -56,52 +56,50 @@ export const picker = {
 };
 
 
-
-export function getPosition(resolve,reject) {
-  checkPermission('location', ret => {
-    if (ret) {
-        if(Platform.OS === 'ios'){
-          navigator.geolocation.getCurrentPosition(data => {
-            const {coords} = data
-            logMsg('iOS定位',ret)
-              resolve &&resolve(coords)
-          }, err => {
-            logMsg('iOS定位', err)
-              reject && reject(err)
-          },{enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
-        }else{
-          Geolocation.start()
-          Geolocation.getLastLocation().then(ret=>{
-              logMsg('amap定位',ret)
-              Geolocation.stop()
-              if(ret){
-                  resolve && resolve(ret)
-              }else{
-                  navigator.geolocation.getCurrentPosition(data => {
-                      const {coords} = data
-                      logMsg('native 定位',ret)
-                      resolve && resolve(coords)
-                  }, err => {
-                      logMsg('native 定位', err)
-                      reject && reject(err)
-                  },{enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
-              }
-
+export function getPosition(resolve, reject) {
+    checkPermission('location', ret => {
+        if (ret) {
+            if (Platform.OS === 'ios') {
+                navigator.geolocation.getCurrentPosition(data => {
+                    const {coords} = data
+                    logMsg('iOS定位', ret)
+                    resolve && resolve(coords)
+                }, err => {
+                    logMsg('iOS定位', err)
+                    reject && reject(err)
+                }, {enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
+            } else {
+                Geolocation.start()
+                Geolocation.getLastLocation().then(ret => {
+                    logMsg('amap定位', ret)
+                    Geolocation.stop()
+                    if (ret) {
+                        resolve && resolve(ret)
+                    } else {
+                        navigator.geolocation.getCurrentPosition(data => {
+                            const {coords} = data
+                            logMsg('native 定位', ret)
+                            resolve && resolve(coords)
+                        }, err => {
+                            logMsg('native 定位', err)
+                            reject && reject(err)
+                        }, {enableHighAccuracy: Platform.OS !== 'android', timeout: 10000})
+                    }
 
 
-          }).catch(err=>{
-            logMsg('amap定位 err', err)
-              Geolocation.stop()
-              reject && reject(err)
+                }).catch(err => {
+                    logMsg('amap定位 err', err)
+                    Geolocation.stop()
+                    reject && reject(err)
 
-          })
+                })
+            }
+
+
+        } else {
+
         }
-
-
-    }else{
-
-    }
-  })
+    })
 }
 
 /**
@@ -302,7 +300,7 @@ export function uShareMallInfo(title, desc, icon, id) {
         shareTitle: title,
         shareText: strNotNull(desc) ? desc : I18n.t('ads_poker'),
         shareImage: getShareIcon(icon),
-        shareLink: shareHost() + "products/" + id,
+        shareLink: shareHost() + "products/" + id
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -313,6 +311,9 @@ export function uShareInfoItem(title, desc, icon, id) {
         shareText: strNotNull(desc) ? desc : I18n.t('ads_poker'),
         shareImage: getShareIcon(icon),
         shareLink: shareHost() + "infos/" + id,
+        shareId: id,
+        shareType: 'info',
+        show_favorites: true
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -417,7 +418,8 @@ export function getCarts() {
         .then(ret => {
             console.log('shoppingCarts:', ret);
             global.shoppingCarts = ret;
-        }).catch(err=>{})
+        }).catch(err => {
+    })
 
 }
 
@@ -667,7 +669,8 @@ export function sharePage(title, location, icon, url) {
         shareTitle: title,
         shareText: location,
         shareImage: thumb,
-        shareLink: url,
+        shareLink: url
+
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -1153,6 +1156,29 @@ export function putLoginUser(ret) {
     });
 }
 
+/**
+ * 收藏是否存在
+ * @param target
+ * @returns {boolean}
+ */
+export function isFavorite(target) {
+
+    if(global.favorites && global.favorites.length>0){
+        //收藏列表查找，通过类型和id
+        let arr = global.favorites.filter(item=>{
+            if(item.target_type === target.target_type && item.hasOwnProperty(`${target.target_type}`)){
+              return item[`${target.target_type}`].id === target.target_id
+            }
+            return false
+        })
+
+        return arr.length > 0
+    }
+
+    return false
+
+}
+
 /*是否登陆*/
 export function isLoginUser() {
     if (!isEmptyObject(LoginUser) && strNotNull(LoginUser.user_id))
@@ -1200,12 +1226,14 @@ export function getUserData() {
     storage.load({key: StorageKey.UserData})
         .then((ret) => {
             userData = ret
-        }).catch(err=>{})
+        }).catch(err => {
+    })
     storage.load({key: StorageKey.PayCountDown})
         .then(time => {
             console.log("payRecodes", time)
             global.timeRecodes = time;
-        }).catch(err=>{})
+        }).catch(err => {
+    })
 }
 
 export let FontSize = {
@@ -1237,7 +1265,8 @@ export function getSize() {
                 h12: 12 + sizeNum,
                 h9: 9 + sizeNum,
             }
-        }).catch(err=>{})
+        }).catch(err => {
+    })
 }
 
 
@@ -1395,8 +1424,9 @@ export function alertOrder(str, callback) {
         }
     }])
 }
+
 //中奖提示
-export function alertLotteryOrder(str, str2 , callback) {
+export function alertLotteryOrder(str, str2, callback) {
     Alert.alert(str, str2, [{
         text: `知道了`, onPress: () => {
 

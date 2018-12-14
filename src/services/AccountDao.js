@@ -9,6 +9,7 @@ import {isEmptyObject, logMsg, showToast} from '../utils/ComonHelper';
 import {getAddressList} from './OrderDao';
 import JMessage from 'jmessage-react-plugin';
 import {followships, postNearBys} from './SocialDao';
+import {getFavoritesList} from "./MacauDao";
 
 // let image = require("../../source/home/home_avatar.png")
 
@@ -395,6 +396,11 @@ export function setLoginUser(ret) {
 
             //上传用户位置
             postLocation();
+
+            //用户收藏
+            getFavoritesList({},data=>{
+                logMsg('用户收藏',global.favorites)
+            },err=>{})
 
         }, 100);
 

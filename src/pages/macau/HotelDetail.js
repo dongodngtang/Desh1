@@ -156,7 +156,7 @@ export default class HotelDetail extends PureComponent {
 
     render() {
         const {hotel} = this.props.params;
-        const {images, location, title, description, telephone, amap_poiid, amap_navigation_url, amap_location} = this.state.hotel;
+        const {images, location, title, description, telephone, amap_poiid, star_level,amap_navigation_url, amap_location,start_price,discount_amount} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 
@@ -172,7 +172,7 @@ export default class HotelDetail extends PureComponent {
                         <Text style={styles.title}>{title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 5, alignItems: 'center'}}>
                             <Text style={{color: '#999999', fontSize: 12}}>酒店星级：</Text>
-                            {this._star(hotel.star_level).map((index) => {
+                            {this._star(star_level).map((index) => {
                                 return <Image key={index} style={styles.stars} source={Images.macau.star}/>
                             })}
                         </View>
@@ -181,11 +181,11 @@ export default class HotelDetail extends PureComponent {
                     <View style={{flex: 1}}/>
 
                     <View style={{marginRight: 22, flexDirection: 'column', alignItems: 'flex-end'}}>
-                        {hotel.start_price !== '0.0' ? <Text style={styles.price3}><Text
+                        {start_price !== '0.0' ? <Text style={styles.price3}><Text
                             style={{
                                 color: '#FF3F3F',
                                 fontSize: 12
-                            }}>¥</Text>{this._discount(hotel.start_price, hotel.discount_amount)}<Text
+                            }}>¥</Text>{this._discount(start_price, discount_amount)}<Text
                             style={{color: '#AAAAAA', fontSize: 12}}>起</Text></Text> : null}
                         <View style={{flex: 1}}/>
                         <TouchableOpacity style={{flexDirection: 'row'}}

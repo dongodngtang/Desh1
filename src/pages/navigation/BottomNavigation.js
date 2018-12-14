@@ -129,7 +129,7 @@ class BottomNavigation extends Component {
     render() {
         const {index} = this.props.navigationState;
         const {jumpToIndex, actionType, share_param} = this.props;
-        const {shareLink, shareTitle, shareImage, shareText} = share_param;
+        const {shareLink, shareTitle, shareImage, shareText,show_favorites,shareId,shareType} = share_param;
         this.props._swichTab(index)
 
         return (
@@ -191,10 +191,13 @@ class BottomNavigation extends Component {
                 {!isEmptyObject(share_param) ? <ShareToast hiddenShareAction={() => {
                     getDispatchAction()[SHARE_CLOSE]()
                 }}
+                                                           show_favorites={show_favorites}
                                                            shareTitle={shareTitle}
                                                            shareText={shareText}
                                                            shareLink={shareLink}
-                                                           shareImage={shareImage}/> : null}
+                                                           shareImage={shareImage}
+                                                           shareId={shareId}
+                                                           shareType={shareType}/> : null}
 
                 <PopRelease ref={ref => this.popRelease = ref}/>
 

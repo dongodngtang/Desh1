@@ -136,6 +136,7 @@ const images = {
     verified_exmple: require('../../source/verified/exmple.png'),
     verifed_passport: require('../../source/verified/passport.png'),
 
+    my_save: require('../../source/navigation/my_save.png'),
     right2: require('../../source/navigation/right2.png'),
     task_close: require('../../source/navigation/task_close.png'),
     new_user_task: require('../../source/navigation/new_user_task.png'),
@@ -230,6 +231,8 @@ const images = {
     icon_share_sina: require('../../source/share/icon_share_sina.png'),
     icon_share_wechat: require('../../source/share/icon_share_wechat.png'),
     icon_share_wxcircle: require('../../source/share/icon_share_wxcircle.png'),
+    favorites: require('../../source/share/favorites.png'),
+    cancel_shoucang: require('../../source/share/cancel_shoucang.png'),
     social: {
         close: require('../../source/social/close.png'),
         article: require('../../source/social/article.png'),

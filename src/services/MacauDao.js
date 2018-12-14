@@ -1,5 +1,6 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
+import {logMsg} from "../utils/ComonHelper";
 
 export function sunnaDetail(body, resolve, reject) {
     helper.get(Api.sunna_detail(body), ret => {
@@ -143,6 +144,33 @@ export function home_recommends(resolve, reject, params) {
     helper.get(Api.recommends, ret => {
         resolve(ret.data)
     }, reject, params)
+}
+
+export function postCancelFavorites(body,resolve, reject) {
+    helper.post(Api.post_cancel_favorites(), body,ret => {
+        resolve(ret.data)
+        //用户收藏
+        getFavoritesList({},data=>{
+            logMsg('用户收藏',global.favorites)
+        },err=>{})
+    }, reject)
+}
+
+export function postFavorites(body,resolve, reject) {
+    helper.post(Api.post_favorites(), body,ret => {
+        resolve(ret.data)
+        //用户收藏
+        getFavoritesList({},data=>{
+            logMsg('用户收藏',global.favorites)
+        },err=>{})
+    }, reject)
+}
+
+export function getFavoritesList(body,resolve, reject) {
+    helper.get(Api.favorites_list(), ret => {
+        global.favorites=ret.data.items
+        resolve && resolve(ret.data)
+    }, reject,body)
 }
 
 export function exchange_rates(resolve, reject) {

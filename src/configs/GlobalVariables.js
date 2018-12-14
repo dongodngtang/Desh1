@@ -29,6 +29,7 @@ global.reportList = [
 ];//举报列表
 global.imUser = {};//极光登录用户
 
+global.favorites = []
 
 
 

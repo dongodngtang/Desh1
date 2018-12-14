@@ -220,6 +220,9 @@ const api = {
     access_permission: 'saunas/access_permission',//检查是否可访问桑拿的接口
     home_img: 'sets',//获取app的设置参数
     win_history: 'wheel/prize_messages/history',//转盘中奖历史回顾
+    favorites_list: favorites_list,//获取用户收藏列表
+    post_favorites: post_favorites,//用户收藏某个话题
+    post_cancel_favorites: post_cancel_favorites,//用户取消收藏某个话题
 }
 
 export default api;
@@ -229,6 +232,18 @@ function getUserId() {
         return login_user.user_id;
     }
     return '0';
+}
+
+export function post_cancel_favorites() {
+    return `users/${getUserId()}/favorites/cancel`
+}
+
+export function post_favorites() {
+    return `users/${getUserId()}/favorites`
+}
+
+export function favorites_list() {
+    return `users/${getUserId()}/favorites`
 }
 
 export function alipay(order_number) {

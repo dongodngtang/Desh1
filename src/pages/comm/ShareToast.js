@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import ShareItem from "./ShareItem";
 import {Images} from '../../Themes';
+import {isFavorite, logMsg} from "../../utils/ComonHelper";
 
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -41,6 +42,43 @@ let shareList = [
     // },
 ];
 
+let shareList2 = [
+    {
+        platform: "wechat_session",
+        icon: Images.icon_share_wechat,
+        name: "微信",
+    },
+    {
+        platform: "wechat_timeLine",
+        icon: Images.icon_share_wxcircle,
+        name: "朋友圈",
+    },
+    {
+        platform: "favorites",
+        icon: Images.favorites,
+        name: "收藏",
+    },
+];
+
+
+let shareList3 = [
+    {
+        platform: "wechat_session",
+        icon: Images.icon_share_wechat,
+        name: "微信",
+    },
+    {
+        platform: "wechat_timeLine",
+        icon: Images.icon_share_wxcircle,
+        name: "朋友圈",
+    },
+    {
+        platform: "favorites",
+        icon: Images.cancel_shoucang,
+        name: "取消收藏",
+    },
+];
+
 export default class ShareToast extends Component {
     static props = {
         hiddenShareAction: null,//关闭弹窗回调
@@ -48,6 +86,9 @@ export default class ShareToast extends Component {
         shareText: null,//分享内容
         shareLink: null,//分享链接
         shareImage: null,//分享图片
+        shareId: null,//分享的ID
+        shareType: null,//分享的类型
+        show_favorites: false
     };
 
     ///关闭分享弹窗
@@ -57,6 +98,19 @@ export default class ShareToast extends Component {
     };
 
     render() {
+
+         let shareLists = shareList;
+        let body = {
+            target_id: this.props.shareId,
+            target_type: this.props.shareType
+        };
+         if(this.props.show_favorites){
+             if(isFavorite(body)){
+                 shareLists = shareList3
+             }else{
+                 shareLists = shareList2
+             }
+         }
         return (
             <Modal
                 onRequestClose={this.hiddenShare}
@@ -75,7 +129,7 @@ export default class ShareToast extends Component {
 
                 {/*分享平台*/}
                 <View style={[{backgroundColor: "#eaeff3"}, {flex: 1}, {width: DEVICE_WIDTH}, {alignItems: "center"}]}>
-                    <FlatList data={shareList}
+                    <FlatList data={shareLists}
                               style={[{backgroundColor: "#eaeff3"}, {width: DEVICE_WIDTH - 40}]}
                               numColumns={4}
                               bounces={false}
@@ -83,7 +137,7 @@ export default class ShareToast extends Component {
                               renderItem={(item) => {
                                   return (
                                       <ShareItem item={item.item}
-                                                 itemClick={()=>{
+                                                 itemClick={() => {
                                                      this.hiddenShare()
 
                                                  }}
@@ -92,6 +146,8 @@ export default class ShareToast extends Component {
                                                  shareText={this.props.shareText}
                                                  shareLink={this.props.shareLink}
                                                  shareImage={this.props.shareImage}
+                                                 shareId={this.props.shareId}
+                                                 shareType={this.props.shareType}
                                       />
                                   );
                               }}

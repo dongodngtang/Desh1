@@ -8,7 +8,7 @@ import {
 import {ApplicationStyles, Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
 import {getPrizesList, getJmessageInfo} from "../../services/AccountDao";
-import {isEmptyObject, showToast,utcDate} from "../../utils/ComonHelper";
+import {isEmptyObject, showToast, utcDate} from "../../utils/ComonHelper";
 import I18n from "react-native-i18n";
 import {visit_other} from "../../services/SocialDao";
 import {UltimateListView} from "../../components";
@@ -40,18 +40,18 @@ export default class MyWardsPage extends Component {
         });
     };
 
-    show_use=(used,expired)=>{
-        if(expired){
+    show_use = (used, expired) => {
+        if (expired) {
             return "(已过期)"
-        }else if(used){
+        } else if (used) {
             return "(已使用)"
-        }else {
+        } else {
             return ''
         }
     }
 
-    item_view = (item,index) => {
-        const {prize,created_at,id,used,expired} = item;
+    item_view = (item, index) => {
+        const {prize, created_at, id, used, expired, pocket_money} = item;
         return (
             <TouchableOpacity style={{
                 paddingTop: 14,
@@ -59,14 +59,25 @@ export default class MyWardsPage extends Component {
                 paddingLeft: 17,
                 paddingRight: 17,
                 backgroundColor: 'white',
-                justifyContent:'center'
+                justifyContent: 'center'
             }}
                               onPress={() => {
-                                  global.router.toWardReceivePage(this.refresh,item)
+                                  if(!pocket_money){
+                                      global.router.toWardReceivePage(this.refresh, item)
+                                  }
                               }}>
-                <Text style={{color: '#444444', fontSize: 14}}>
-                    {`系统通知`}<Text style={{color: '#AAAAAA', fontSize: 14}}>{this.show_use(used,expired)}</Text>{`：恭喜您于${utcDate(created_at,'YYYY年MM月DD日HH：mm')}抽中${prize}，快点戳我兑换奖品吧！`}
-                </Text>
+                {pocket_money ? <Text style={{color: '#444444', fontSize: 14}}>
+                    {`系统通知`}<Text style={{
+                    color: '#AAAAAA',
+                    fontSize: 14
+                }}>{`(已发放)`}</Text>{`：恭喜您于${utcDate(created_at, 'YYYY年MM月DD日HH:mm')}抽中${prize}，可到首页-我的-钱包处查看！`}
+                </Text> : <Text style={{color: '#444444', fontSize: 14}}>
+                    {`系统通知`}<Text style={{
+                    color: '#AAAAAA',
+                    fontSize: 14
+                }}>{this.show_use(used, expired)}</Text>{`：恭喜您于${utcDate(created_at, 'YYYY年MM月DD日HH:mm')}抽中${prize}，快点戳我兑换奖品吧！`}
+                </Text>}
+
             </TouchableOpacity>
         )
     }
@@ -102,7 +113,6 @@ export default class MyWardsPage extends Component {
                     }}/>
 
                 <UltimateListView
-                    style={{overflowY:'hidden'}}
                     header={() => this.separator()}
                     separator={() => this.separator()}
                     keyExtractor={(item, index) => index + "item"}
@@ -115,9 +125,9 @@ export default class MyWardsPage extends Component {
                     allLoadedText={I18n.t('no_more')}
                     waitingSpinnerText={I18n.t('loading')}
                     emptyView={() => {
-                       return <View style={{flex: 1, alignItems: 'center',marginTop:50}}>
-                            <Text style={{color:'#CCCCCC',fontSize:24}}>暂无奖品</Text>
-                           <Text  style={{color:'#CCCCCC',fontSize:14,marginTop:5}}>赶紧参与活动赢取大奖吧</Text>
+                        return <View style={{flex: 1, alignItems: 'center', marginTop: 50}}>
+                            <Text style={{color: '#CCCCCC', fontSize: 24}}>暂无奖品</Text>
+                            <Text style={{color: '#CCCCCC', fontSize: 14, marginTop: 5}}>赶紧参与活动赢取大奖吧</Text>
                         </View>
                     }}
                 />

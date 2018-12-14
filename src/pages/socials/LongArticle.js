@@ -19,7 +19,7 @@ import {
 } from "../../services/SocialDao";
 import {
     getDateDiff, isEmptyObject, showToast, strNotNull,
-    alertOrder, isFollowed, sharePage, shareHost
+    alertOrder, isFollowed, sharePage,shareHost
 } from "../../utils/ComonHelper";
 import CommentBar from '../comm/CommentBar';
 import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
