@@ -198,13 +198,12 @@ export default class NewAddress extends Component {
 
 
     _postAdr = () => {
-        if (!checkPhone(this.phoneNum)) {
-            return;
+        if (!strNotNull(this.phoneNum)) {
+            showToast("手机号不能为空");
+            return
         }
-        if(!checkZip(this.zip)){
-            return;
-        }
-        if(this.receiverAdr2.length<=5){
+
+        if(this.receiverAdr2 && this.receiverAdr2.length<=5){
             showToast("详细地址不少于五个字");
             return;
         }
@@ -233,6 +232,7 @@ export default class NewAddress extends Component {
                 router.pop();
 
             }, err => {
+                showToast(err)
                 console.log(err)
             })
 
