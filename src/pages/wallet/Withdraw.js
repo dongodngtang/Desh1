@@ -152,9 +152,8 @@ export default class Withdraw extends Component {
                                 maxLength={10}
                                 numberOfLines={1}
                                 placeholderTextColor={'#CCCCCC'}
-                                placeholder={strNotNull(this.bank) ? '' : '填写银行开户行'}
+                                placeholder={ '填写银行开户行'}
                                 underlineColorAndroid={'transparent'}
-                                value={this.bank}
                                 onChangeText={txt => {
                                     this.bank=txt
                                 }}
@@ -207,8 +206,7 @@ export default class Withdraw extends Component {
                             maxLength={20}
                             numberOfLines={1}
                             placeholderTextColor={'#CCCCCC'}
-                            placeholder={strNotNull(this.name) ? '' : `填写真实姓名`}
-                            value={this.name}
+                            placeholder={`填写真实姓名`}
                             underlineColorAndroid={'transparent'}
                             onChangeText={txt => {
                                 this.name=txt
