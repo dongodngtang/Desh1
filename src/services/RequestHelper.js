@@ -109,7 +109,7 @@ export function post(url, body, resolve, reject) {
 
         }).catch((error) => {
         console.log(TAG, error);
-        showToast(error);
+
         reject('Network response was not ok.');
     });
 }
@@ -122,7 +122,7 @@ export function del(url, body, resolve, reject) {
             handle(response, resolve, reject)
 
         }).catch((error) => {
-        showToast(error);
+
         console.log(TAG, error);
         reject('Network response was not ok.');
     });
@@ -151,7 +151,7 @@ export function get(url, resolve, reject, params = {}) {
             handle(response, resolve, reject, isKkapiUrl)
 
         }).catch((error) => {
-        showToast(error);
+
         console.log(TAG, error);
         reject('Network response was not ok.');
     });
@@ -217,6 +217,7 @@ function handle(response, resolve, reject, isKkapiUrl = true) {
             if (code === 0) {
                 resolve(response.data);
             } else {
+                msg && showToast(msg)
                 reject && reject(msg);
             }
         } else {

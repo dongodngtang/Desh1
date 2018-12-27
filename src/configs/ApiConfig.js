@@ -2,8 +2,9 @@
  * Created by lorne on 2016/12/20.
  */
 import {LoginUser} from '../services/AccountDao';
-import {strNotNull, isEmptyObject} from '../utils/ComonHelper';
+import {strNotNull, isEmptyObject, logMsg} from '../utils/ComonHelper';
 import {invite_count} from "../services/WallDao";
+import md5 from "react-native-md5";
 
 const api = {
     //内部测试
@@ -227,11 +228,63 @@ const api = {
 
 export default api;
 
+const chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+function generateMixed(n) {
+    let res = "";
+    for (let i = 0; i < n; i++) {
+        let id = Math.ceil(Math.random() * 35);
+        res += chars[id];
+    }
+    return res;
+}
+
+function rstr2b64(input) {
+    try {
+        b64pad
+    } catch (e) {
+        b64pad = '';
+    }
+    let tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    let output = "";
+    let len = input.length;
+    for (let i = 0; i < len; i += 3) {
+        let triplet = (input.charCodeAt(i) << 16)
+            | (i + 1 < len ? input.charCodeAt(i + 1) << 8 : 0)
+            | (i + 2 < len ? input.charCodeAt(i + 2) : 0);
+        for (let j = 0; j < 4; j++) {
+            if (i * 8 + j * 6 > input.length * 8) output += b64pad;
+            else output += tab.charAt((triplet >>> 6 * (3 - j)) & 0x3F);
+        }
+    }
+    return output;
+}
+
+
 function getUserId() {
     if (!isEmptyObject(global.login_user) && strNotNull(global.login_user.user_id)) {
         return login_user.user_id;
     }
     return '0';
+}
+
+function getSignature_str() {
+    let timestamp = Date.parse(new Date());
+    // logMsg("时间戳：", timestamp);
+    let random_str = generateMixed(6);
+    // logMsg("随机数：", random_str);
+    let token = "desh2019";
+    let signature_str = `timestamp=${timestamp}&random_str=${random_str}&token=${token}`;
+    // logMsg("signature_str：", signature_str);
+    let signature_md501 = md5.hex_md5(signature_str);
+    // logMsg("signature_md501：", signature_md501);
+    let signature_md5 = md5.hex_md5(`desh${signature_md501}`);
+    // logMsg("signature_md5：", signature_md5);
+    let signature = signature_md5.toUpperCase();
+    // logMsg("signature：", signature);
+    let str = `timestamp=${timestamp}&random_str=${random_str}&signature=${signature}`;
+    // logMsg("str：", str);
+    return str;
 }
 
 export function post_cancel_favorites() {
@@ -283,7 +336,7 @@ export function wheel_time() {
 }
 
 export function lottery() {
-    return `wheel/lotteries`;
+    return `wheel/lotteries/?${getSignature_str()}`;
 }
 
 export function elements() {
@@ -345,7 +398,7 @@ export function using_coupon(body) {
 }
 
 export function share_count(body) {
-    return `users/${getUserId()}/share_count`
+    return `users/${getUserId()}/share_count?${getSignature_str()}`
 }
 
 export function exchange_coupon(body) {

@@ -248,7 +248,7 @@ export default class AnimatedTurnTableDrawPage extends Component {
                 this.rotateImg1(data, prize_counts)
 
             }, err => {
-                showToast(err);
+
                 logMsg("抽奖问题", err)
             });
 
