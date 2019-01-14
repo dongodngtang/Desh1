@@ -125,7 +125,7 @@ export default class HotelDetail extends PureComponent {
 
     componentWillMount() {
         const {hotel, date} = this.props.params;
-        let body = {id: hotel.id, date: date.begin_date}
+        let body = {id: hotel.id, date: date.begin_date};
         hotelDetail(body, data => {
             console.log("hotel:", data)
             this.setState({
