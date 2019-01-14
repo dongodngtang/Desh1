@@ -124,7 +124,9 @@ export default class HotelDetail extends PureComponent {
     }
 
     componentWillMount() {
-        hotelDetail(this.props.params.hotel, data => {
+        const {hotel, date} = this.props.params;
+        let body = {id: hotel.id, date: date.begin_date}
+        hotelDetail(body, data => {
             console.log("hotel:", data)
             this.setState({
                 hotel: data.hotel
@@ -156,7 +158,7 @@ export default class HotelDetail extends PureComponent {
 
     render() {
         const {hotel} = this.props.params;
-        const {images, location, title, description, telephone, amap_poiid, star_level,amap_navigation_url, amap_location,start_price,discount_amount} = this.state.hotel;
+        const {images, location, title, description, telephone, amap_poiid, star_level, amap_navigation_url, amap_location, start_price, discount_amount} = this.state.hotel;
         return <View style={ApplicationStyles.bgContainer}>
 
 

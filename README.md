@@ -57,7 +57,7 @@ code-push release-react kkandroid android -m -d Production
 code-push release-react kkandroid android -m --description "热更新测试-点击更新后请稍等片刻-修复bug" -d Production
 code-push release-react kkandroid android  -d Production
 
-查看ios发布情况
+查看ios发布情况K
  code-push deployment h kkios Production
 ┌───────┬────────────────┬─────────────┬───────────┬──────────────────────────┬──────────────────────┐
 │ Label │ Release Time   │ App Version │ Mandatory │ Description              │ Install Metrics      │

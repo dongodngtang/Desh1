@@ -5,7 +5,7 @@ import {logMsg} from "../utils/ComonHelper";
 export function sunnaDetail(body, resolve, reject) {
     helper.get(Api.sunna_detail(body), ret => {
         resolve(ret.data)
-    }, reject,body)
+    }, reject, body)
 }
 
 export function postReceiveCoupons(body, resolve, reject) {
@@ -146,31 +146,33 @@ export function home_recommends(resolve, reject, params) {
     }, reject, params)
 }
 
-export function postCancelFavorites(body,resolve, reject) {
-    helper.post(Api.post_cancel_favorites(), body,ret => {
+export function postCancelFavorites(body, resolve, reject) {
+    helper.post(Api.post_cancel_favorites(), body, ret => {
         resolve(ret.data)
         //用户收藏
-        getFavoritesList({},data=>{
-            logMsg('用户收藏',global.favorites)
-        },err=>{})
+        getFavoritesList({}, data => {
+            logMsg('用户收藏', global.favorites)
+        }, err => {
+        })
     }, reject)
 }
 
-export function postFavorites(body,resolve, reject) {
-    helper.post(Api.post_favorites(), body,ret => {
+export function postFavorites(body, resolve, reject) {
+    helper.post(Api.post_favorites(), body, ret => {
         resolve(ret.data)
         //用户收藏
-        getFavoritesList({},data=>{
-            logMsg('用户收藏',global.favorites)
-        },err=>{})
+        getFavoritesList({}, data => {
+            logMsg('用户收藏', global.favorites)
+        }, err => {
+        })
     }, reject)
 }
 
-export function getFavoritesList(body,resolve, reject) {
+export function getFavoritesList(body, resolve, reject) {
     helper.get(Api.favorites_list(), ret => {
-        global.favorites=ret.data.items
+        global.favorites = ret.data.items
         resolve && resolve(ret.data)
-    }, reject,body)
+    }, reject, body)
 }
 
 export function exchange_rates(resolve, reject) {
@@ -194,7 +196,7 @@ export function info_types(body, resolve, reject) {
 export function getWin_history(body, resolve, reject) {
     helper.get(Api.win_history, ret => {
         resolve(ret.data)
-    }, reject,body)
+    }, reject, body)
 }
 
 export function getPermission(body, resolve, reject) {
@@ -216,7 +218,7 @@ export function hotels(body, resolve, reject) {
 }
 
 export function hotelDetail(body, resolve, reject) {
-    helper.get(Api.hotels + `/${body.id}`, ret => {
+    helper.get(Api.hotels + `/${body.id}`,ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject,body.date)
 }
