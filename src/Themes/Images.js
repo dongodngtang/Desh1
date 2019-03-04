@@ -365,7 +365,8 @@ const images = {
         visa:require('../../source/navigation/visa.png'),
         tehui:require('../../source/navigation/tehui.png'),
         show1:require('../../source/navigation/show1.png'),
-        show2:require('../../source/navigation/show2.png')
+        show2:require('../../source/navigation/show2.png'),
+        rec_bg2:require('../../source/navigation/rec_bg2.png')
     },
     fastBtn: {
         round1: require('../../source/fastBtn/round1.jpeg'),

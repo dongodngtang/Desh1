@@ -53,7 +53,7 @@ export default class HotCatalogs extends PureComponent {
                         });
                     }}>
                         <Image style={[styles.leftTop, {marginTop: 4}]}
-                                         source={!isEmptyObject(home_imgs) && strNotNull(home_imgs.recreation_image) ? {uri:home_imgs.recreation_image} : Images.navigation2.rec_bg}/>
+                                         source={!isEmptyObject(home_imgs) && strNotNull(home_imgs.recreation_image) ? {uri:home_imgs.recreation_image} : Images.navigation2.rec_bg2}/>
                     </TouchableOpacity>
 
                 </View>
