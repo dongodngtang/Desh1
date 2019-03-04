@@ -37,7 +37,7 @@ const catalogs = [{
 const catalogs_two = [{
     name: '演唱会',
     type: 'raiders',
-    size: {height: 19, width: 19},
+    size: {height: 21, width: 20},
     icon: Images.navigation2.raiders_bg
 },
     {
