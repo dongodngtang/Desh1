@@ -124,7 +124,7 @@ export default class RecreationPage extends PureComponent {
                                     marginBottom: 3,
                                     fontSize: name_index === 0 ? 16 : 14,
                                     color: 'white'
-                                }}>休闲娱乐</Text>
+                                }}>娱乐攻略</Text>
                         </ImageBackground>
 
                     </TouchableOpacity>
@@ -160,7 +160,7 @@ export default class RecreationPage extends PureComponent {
             )
         } else {
             return (
-                <Text style={[styles.title, {alignSelf: 'center'}]}>{'休闲娱乐'}</Text>
+                <Text style={[styles.title, {alignSelf: 'center'}]}>{'娱乐攻略'}</Text>
             )
         }
 

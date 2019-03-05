@@ -126,7 +126,7 @@ export default class FastBtns extends Component {
                             if (item.type === 'raiders') {
                                 global.router.toHotelSearch({
                                     name: '活动',
-                                    type: 'strategy',
+                                    type: 'activity',
                                     size: item.size,
                                     icon: item.icon
                                 })
