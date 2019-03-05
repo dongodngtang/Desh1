@@ -35,7 +35,7 @@ const catalogs = [{
     }];
 
 const catalogs_two = [{
-    name: '演唱会',
+    name: '活动',
     type: 'raiders',
     size: {height: 21, width: 20},
     icon: Images.navigation2.raiders_bg
@@ -125,7 +125,7 @@ export default class FastBtns extends Component {
                         onPress={() => {
                             if (item.type === 'raiders') {
                                 global.router.toHotelSearch({
-                                    name: '演唱会',
+                                    name: '活动',
                                     type: 'strategy',
                                     size: item.size,
                                     icon: item.icon
